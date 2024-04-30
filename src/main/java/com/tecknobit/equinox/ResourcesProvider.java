@@ -1,11 +1,12 @@
 package com.tecknobit.equinox;
 
-import org.springframework.context.annotation.Configuration;
-import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-import org.springframework.web.servlet.resource.PathResourceResolver;
+import com.tecknobit.apimanager.annotations.Wrapper;
 
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.HashSet;
+import java.util.List;
 
 /**
  * The {@code ResourcesProvider} class is useful to create the resources directories and manage the main resources files
@@ -28,107 +29,132 @@ public class ResourcesProvider {
      * @implSpec take a look <a href="https://docs.spring.io/spring-boot/docs/current/reference/html/application-properties.html">here</a>
      * to get more information about the custom configuration for properties that you can use
      */
-    public static final String CUSTOM_CONFIGURATION_FILE_PATH = "nova.properties";
+    public static final String CUSTOM_CONFIGURATION_FILE_PATH = "custom.properties";
 
-    /**
-     * {@code RESOURCES_PATH} the main path of the resources directories
-     */
-    public static final String RESOURCES_PATH = "resources/";
+    private static final String CONFIGURATION_FILE_CONTENT = """
+       
+            import org.springframework.context.annotation.Configuration;
+            import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+            import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+            import org.springframework.web.servlet.resource.PathResourceResolver;
 
-    /**
-     * {@code RESOURCES_DIRECTORIES} the list of the resources directories
-     */
-    public static final String[] RESOURCES_DIRECTORIES = {"profiles", "logos", "assets", "reports"};
+            /**
+             * The {@code ResourceConfigs} class is useful to set the configuration of the resources to correctly serve the
+             * images by the server
+             *
+             * @author N7ghtm4r3 - Tecknobit
+             * @see WebMvcConfigurer
+             */
+            @Configuration
+            public class ResourcesConfig implements WebMvcConfigurer {
 
-    /**
-     * {@code PROFILES_DIRECTORY} the profiles directory where are stored the pics of the users
-     */
-    public static final String PROFILES_DIRECTORY = RESOURCES_DIRECTORIES[0];
+                /**
+                 * Add handlers to serve static resources such as images, js, and, css
+                 * files from specific locations under web application root, the classpath,
+                 * and others.
+                 *
+                 * @see ResourceHandlerRegistry
+                 */
+                @Override
+                public void addResourceHandlers(ResourceHandlerRegistry registry) {
+                    registry.addResourceHandler("/**")
+                            .addResourceLocations("file:<list>")
+                            .setCachePeriod(0)
+                            .resourceChain(true)
+                            .addResolver(new PathResourceResolver());
+                }
 
-    /**
-     * {@code LOGOS_DIRECTORY} the logos directory where are stored the logos of the projects
-     */
-    public static final String LOGOS_DIRECTORY = RESOURCES_DIRECTORIES[1];
+            }""";
 
-    /**
-     * {@code ASSETS_DIRECTORY} the assets directory where are stored the assets of the releases uploaded
-     */
-    public static final String ASSETS_DIRECTORY = RESOURCES_DIRECTORIES[2];
+    protected HashSet<String> containers;
 
-    /**
-     * {@code REPORTS_DIRECTORY} the reports directory where are stored the reports of the releases created
-     */
-    public static final String REPORTS_DIRECTORY = RESOURCES_DIRECTORIES[3];
+    protected final String containerDirectory;
 
-    /**
-     * {@code RESOURCES_REPORTS_PATH} the complete reports path from resources directory
-     */
-    public static final String RESOURCES_REPORTS_PATH = RESOURCES_PATH + REPORTS_DIRECTORY + "/";
+    protected final List<String> subDirectories;
 
-    /**
-     * Constructor to init the {@link ResourcesProvider} controller <br>
-     * No-any params required
-     */
-    private ResourcesProvider() {
+    public ResourcesProvider(String containerDirectory) {
+        this(containerDirectory, List.of());
     }
 
-    /**
-     * Method to create all the resources directories <br>
-     * No-any params required
-     */
-    public static void createResourceDirectories() {
-        createResourceDirectory(RESOURCES_PATH);
-        for (String directory : RESOURCES_DIRECTORIES)
-            createResourceDirectory(RESOURCES_PATH + directory);
+    public ResourcesProvider(String containerDirectory, List<String> subDirectories) {
+        if(!containerDirectory.endsWith(File.separator))
+            containerDirectory += File.separator;
+        this.containerDirectory = containerDirectory;
+        this.subDirectories = subDirectories;
+        containers = new HashSet<>();
     }
 
-    /**
-     * Method to create a specific resources directory from {@link #RESOURCES_DIRECTORIES} list
-     *
-     * @param resDirectory: the specific resources directory to create
-     */
-    private static void createResourceDirectory(String resDirectory) {
+    @Wrapper
+    public void createContainerDirectory() {
+        createContainerDirectory(containerDirectory);
+    }
+
+    public void createContainerDirectory(String containerDirectory) {
+        createResourceDirectory(containerDirectory);
+        containers.add(containerDirectory);
+    }
+
+    @Wrapper
+    public void createSubDirectory(String subDirectory) {
+        createSubDirectory(containerDirectory, subDirectory);
+    }
+
+    public void createSubDirectory(String containerDirectory, String subDirectory) {
+        containerDirectory = formatDirectory(containerDirectory);
+        createResourceDirectory(containerDirectory + subDirectory);
+    }
+
+    @Wrapper
+    public void createSubDirectories() {
+        createSubDirectories(containerDirectory, subDirectories);
+    }
+
+    public void createSubDirectories(String containerDirectory, List<String> subDirectories) {
+        containerDirectory = formatDirectory(containerDirectory);
+        for (String directory : subDirectories)
+            createResourceDirectory(containerDirectory + directory);
+    }
+
+    private void createResourceDirectory(String resDirectory) {
         File directory = new File(resDirectory);
         if(!directory.exists())
             if(!directory.mkdir())
                 printError(resDirectory.replaceAll("/", ""));
     }
 
+    private String formatDirectory(String directory) {
+        if(!directory.endsWith(File.separator))
+            directory += File.separator;
+        return directory;
+    }
+
     /**
      * Method to print the error occurred during the creation of a resources directory
      * @param directory: the directory when, during the creation, occurred an error
      */
-    private static void printError(String directory) {
-        System.err.println("Error during the creation of the \"" + directory + "\" folder");
+    private void printError(String directory) {
+        System.err.println("Error during the creation of the \"" + directory + "\" folder check if the container directory " +
+                "exists or the path is valid ");
         System.exit(-1);
     }
 
-    /**
-     * The {@code ResourceConfigs} class is useful to set the configuration of the resources to correctly serve the
-     * images by the server
-     *
-     * @author N7ghtm4r3 - Tecknobit
-     * @see WebMvcConfigurer
-     */
-    @Configuration
-    public static class ResourcesConfigs implements WebMvcConfigurer {
-
-        /**
-         * Add handlers to serve static resources such as images, js, and, css
-         * files from specific locations under web application root, the classpath,
-         * and others.
-         *
-         * @see ResourceHandlerRegistry
-         */
-        @Override
-        public void addResourceHandlers(ResourceHandlerRegistry registry) {
-            registry.addResourceHandler("/**")
-                    .addResourceLocations("file:" + RESOURCES_PATH)
-                    .setCachePeriod(0)
-                    .resourceChain(true)
-                    .addResolver(new PathResourceResolver());
-        }
-
+    public void createResourcesConfigFile(Class<?> context) throws IOException {
+        String packageName = context.getPackageName();
+        String configsPath = System.getProperty("user.dir") + "\\src\\main\\java\\" + packageName
+                .replaceAll("\\.", "\\\\") + "\\ResourcesConfig.java";
+        FileWriter writer = new FileWriter(configsPath);
+        String content;
+        if(!packageName.isEmpty())
+            content = "package " + packageName + ";\n" + CONFIGURATION_FILE_CONTENT;
+        else
+            content = CONFIGURATION_FILE_CONTENT;
+        writer.write(content.replace("<list>", containers.toString()
+                .replaceAll("\\\\", "/")
+                .replaceAll("\\[", "")
+                .replaceAll("]", ""))
+        );
+        writer.flush();
+        writer.close();
     }
 
 }
