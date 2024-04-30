@@ -1,6 +1,7 @@
 package com.tecknobit.equinox;
 
 import com.tecknobit.apimanager.annotations.Wrapper;
+import kotlin.Metadata;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -31,7 +32,7 @@ public class ResourcesProvider {
      */
     public static final String CUSTOM_CONFIGURATION_FILE_PATH = "custom.properties";
 
-    private static final String CONFIGURATION_FILE_CONTENT = """
+    private static final String JAVA_CONFIGURATION_FILE_CONTENT = """
        
             import org.springframework.context.annotation.Configuration;
             import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
@@ -65,6 +66,42 @@ public class ResourcesProvider {
                 }
 
             }""";
+
+
+    private static final String KOTLIN_CONFIGURATION_FILE_CONTENT = """
+            
+            import org.springframework.context.annotation.Configuration
+            import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
+            import org.springframework.web.servlet.config.annotation.WebMvcConfigurer
+            import org.springframework.web.servlet.resource.PathResourceResolver
+
+            /**
+             * The `ResourceConfigs` class is useful to set the configuration of the resources to correctly serve the
+             * images by the server
+             *
+             * @author N7ghtm4r3 - Tecknobit
+             * @see WebMvcConfigurer
+             */
+            @Configuration
+            class ResourcesConfig : WebMvcConfigurer {
+            
+                /**
+                 * Add handlers to serve static resources such as images, js, and, css
+                 * files from specific locations under web application root, the classpath,
+                 * and others.
+                 *
+                 * @see ResourceHandlerRegistry
+                 */
+                override fun addResourceHandlers(registry: ResourceHandlerRegistry) {
+                    registry.addResourceHandler("/**")
+                        .addResourceLocations("file:<list>")
+                        .setCachePeriod(0)
+                        .resourceChain(true)
+                        .addResolver(PathResourceResolver())
+                }
+                
+            }"""
+       ;
 
     protected HashSet<String> containers;
 
@@ -140,14 +177,20 @@ public class ResourcesProvider {
 
     public void createResourcesConfigFile(Class<?> context) throws IOException {
         String packageName = context.getPackageName();
-        String configsPath = System.getProperty("user.dir") + "\\src\\main\\java\\" + packageName
-                .replaceAll("\\.", "\\\\") + "\\ResourcesConfig.java";
-        FileWriter writer = new FileWriter(configsPath);
+        boolean isKotlinClass = isKotlinClass(context);
         String content;
-        if(!packageName.isEmpty())
-            content = "package " + packageName + ";\n" + CONFIGURATION_FILE_CONTENT;
-        else
-            content = CONFIGURATION_FILE_CONTENT;
+        if(isKotlinClass) {
+            if(!packageName.isEmpty())
+                content = "package " + packageName + "\n" + KOTLIN_CONFIGURATION_FILE_CONTENT;
+            else
+                content = KOTLIN_CONFIGURATION_FILE_CONTENT;
+        } else {
+            if(!packageName.isEmpty())
+                content = "package " + packageName + ";\n" + JAVA_CONFIGURATION_FILE_CONTENT;
+            else
+                content = JAVA_CONFIGURATION_FILE_CONTENT;
+        }
+        FileWriter writer = new FileWriter(getConfigsPath(context, isKotlinClass));
         writer.write(content.replace("<list>", containers.toString()
                 .replaceAll("\\\\", "/")
                 .replaceAll("\\[", "")
@@ -155,6 +198,28 @@ public class ResourcesProvider {
         );
         writer.flush();
         writer.close();
+    }
+
+    private boolean isKotlinClass(Class<?> context) {
+        try {
+            return context.getAnnotation(Metadata.class).k() == 1;
+        } catch (NullPointerException e) {
+            return false;
+        }
+    }
+
+    private String getConfigsPath(Class<?> context, boolean isKotlinClass) {
+        String subPath;
+        String extension;
+        if(isKotlinClass) {
+            subPath = "kotlin";
+            extension = ".kt";
+        } else {
+            subPath = "java";
+            extension = ".java";
+        }
+        return System.getProperty("user.dir") + "\\src\\main\\" + subPath + "\\" + context.getPackageName()
+                .replaceAll("\\.", "\\\\") + "\\ResourcesConfig" + extension;
     }
 
 }
