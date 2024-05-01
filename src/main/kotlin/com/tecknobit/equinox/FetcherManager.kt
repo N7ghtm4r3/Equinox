@@ -2,10 +2,12 @@ package com.tecknobit.equinox
 
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.cancelChildren
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class FetcherManager(
-    private val refreshRoutine: CoroutineScope
+    private val refreshRoutine: CoroutineScope,
+    private val refreshDelay: Long = 1000L
 ) {
 
     companion object {
@@ -55,13 +57,21 @@ class FetcherManager(
     }
 
     fun execute(
-        block: suspend CoroutineScope.() -> Unit
+        currentContext: Class<*>,
+        routine: () -> Unit,
+        repeatRoutine: Boolean = true
     ) {
         if(canStart()) {
             restart()
-            refreshRoutine.launch(
-                block = block
-            )
+            refreshRoutine.launch {
+                if(repeatRoutine) {
+                    while (continueToFetch(currentContext)) {
+                        routine.invoke()
+                        delay(refreshDelay)
+                    }
+                } else
+                    routine.invoke()
+            }
         }
     }
 
@@ -80,7 +90,44 @@ class FetcherManager(
         return activeContext == currentContext
     }
 
-    interface FetcherConnector {
+    /**
+     * abstract class Base : FetcherManagerWrapper {
+     *
+     *     protected val refreshRoutine = CoroutineScope(Dispatchers.Default)
+     *
+     *     private val fetcherManager = FetcherManager(refreshRoutine)
+     *
+     *     override fun canRefresherStart(): Boolean {
+     *         return fetcherManager.canStart()
+     *     }
+     *
+     *     override fun suspendRefresher() {
+     *         fetcherManager.suspend()
+     *     }
+     *
+     *     override fun restartRefresher() {
+     *         fetcherManager.restart()
+     *     }
+     *
+     *     override fun continueToFetch(currentContext: Class<*>): Boolean {
+     *         return fetcherManager.continueToFetch(currentContext)
+     *     }
+     *
+     *     override fun execRefreshingRoutine(
+     *         currentContext: Class<*>,
+     *         routine: () -> Unit,
+     *         repeatRoutine: Boolean
+     *     ) {
+     *         fetcherManager.execute(
+     *             currentContext = currentContext,
+     *             routine = routine,
+     *             repeatRoutine = repeatRoutine
+     *         )
+     *     }
+     *
+     * }
+     */
+    interface FetcherManagerWrapper {
 
         /**
          * Function to get whether the [refreshRoutine] can start, so if there aren't other jobs that
@@ -112,7 +159,9 @@ class FetcherManager(
         fun restartRefresher()
 
         fun execRefreshingRoutine(
-            block: suspend CoroutineScope.() -> Unit
+            currentContext: Class<*>,
+            routine: () -> Unit,
+            repeatRoutine: Boolean = true
         )
 
         /**
