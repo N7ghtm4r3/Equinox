@@ -20,13 +20,19 @@ import java.io.IOException
  *
  * @author N7ghtm4r3 - Tecknobit
  */
-open class Requester (
-    public var host: String,
-    public var userId: String? = null,
-    public var userToken: String? = null
+abstract class Requester (
+    var host: String,
+    var userId: String? = null,
+    var userToken: String? = null,
+    private val connectionErrorMessage: String,
+    private val enableCertificatesValidation: Boolean = false
 ) {
 
     companion object {
+
+        const val USER_IDENTIFIER_KEY = "id"
+
+        const val USER_TOKEN_KEY = "token"
 
         /**
          * **RESPONSE_STATUS_KEY** the key for the <b>"status"</b> field
@@ -38,18 +44,12 @@ open class Requester (
          */
         const val RESPONSE_MESSAGE_KEY: String = "response"
 
-        /**
-         * **SERVER_NOT_REACHABLE** message to send when the server is not available at the moment when the
-         * request has been sent
-         */
-        const val SERVER_NOT_REACHABLE = "Server is temporarily unavailable"
-
     }
 
     /**
      * **apiRequest** -> the instance to communicate and make the requests to the backend
      */
-    protected val apiRequest = APIRequest(5000)
+    private val apiRequest = APIRequest(5000)
 
     /**
      * **headers** the headers used in the request
@@ -60,20 +60,19 @@ open class Requester (
      * **mustValidateCertificates** flag whether the requests must validate the SSL certificates, this need for example
      * when the SSL is a self-signed certificate
      */
-    //TODO: ENABLE OR NOT THIS FEATURE
-    protected var mustValidateCertificates = host.startsWith("https")
+    protected var mustValidateCertificates: Boolean = false
 
-    /*init {
+    init {
         changeHost(host)
         setUserCredentials(userId, userToken)
-    }*/
+    }
 
     /**
      * Function to set the user credentials used to make the authenticated requests
      *
      * @param userId: the user identifier to use
      * @param userToken: the user token to use
-     *
+     */
     fun setUserCredentials(
         userId: String?,
         userToken: String?
@@ -81,21 +80,22 @@ open class Requester (
         this.userId = userId
         this.userToken = userToken
         if(userToken != null)
-            headers.addHeader(TOKEN_KEY, userToken)
+            headers.addHeader(USER_TOKEN_KEY, userToken)
     }
 
-    *
+    /**
      * Function to change during the runtime, for example when the local session changed, the host address to make the
      * requests
      *
      * @param host: the new host address to use
-     *
+     */
     fun changeHost(
         host: String
     ) {
-        this.host = host + BASE_ENDPOINT
-        mustValidateCertificates = host.startsWith("https")
-    }*/
+        this.host = host
+        if(enableCertificatesValidation)
+            mustValidateCertificates = host.startsWith("https")
+    }
 
     /**
      * Function to execute a [RequestMethod.GET] request to the backend
@@ -105,7 +105,7 @@ open class Requester (
      * @return the result of the request as [JSONObject]
      */
     @Wrapper
-    private fun execGet(
+    protected fun execGet(
         endpoint: String
     ) : JSONObject {
         return execRequest(
@@ -123,7 +123,7 @@ open class Requester (
      * @return the result of the request as [JSONObject]
      */
     @Wrapper
-    private fun execPost(
+    protected fun execPost(
         endpoint: String,
         payload: Params
     ) : JSONObject {
@@ -143,7 +143,7 @@ open class Requester (
      * @return the result of the request as [JSONObject]
      */
     @Wrapper
-    private fun execPut(
+    protected fun execPut(
         endpoint: String,
         payload: Params
     ) : JSONObject {
@@ -163,7 +163,7 @@ open class Requester (
      * @return the result of the request as [JSONObject]
      */
     @Wrapper
-    private fun execPatch(
+    protected fun execPatch(
         endpoint: String,
         payload: Params
     ) : JSONObject {
@@ -183,7 +183,7 @@ open class Requester (
      * @return the result of the request as [JSONObject]
      */
     @Wrapper
-    private fun execDelete(
+    protected fun execDelete(
         endpoint: String,
         payload: Params? = null
     ) : JSONObject {
@@ -233,12 +233,12 @@ open class Requester (
                         }
                         response = apiRequest.response
                     } catch (e: IOException) {
-                        response = connectionErrorMessage(SERVER_NOT_REACHABLE)
+                        response = connectionErrorMessage().toString()
                     }
                 }.await()
                 jResponse = JSONObject(response)
             } catch (e: Exception) {
-                jResponse = JSONObject(connectionErrorMessage(SERVER_NOT_REACHABLE))
+                jResponse = connectionErrorMessage()
             }
         }
         return jResponse
@@ -247,15 +247,28 @@ open class Requester (
     /**
      * Function to set the [RESPONSE_STATUS_KEY] to send when an error during the connection occurred
      *
-     * @param error: the error to use
+     * No-any params required
      *
-     * @return the error message as [String]
+     * @return the error message as [JSONObject]
      */
-    protected fun connectionErrorMessage(error: String): String {
+    private fun connectionErrorMessage(): JSONObject {
         return JSONObject()
-            .put(RESPONSE_STATUS_KEY, GENERIC_RESPONSE)
-            .put(RESPONSE_MESSAGE_KEY, error)
-            .toString()
+            .put(RESPONSE_STATUS_KEY, GENERIC_RESPONSE.name)
+            .put(RESPONSE_MESSAGE_KEY, connectionErrorMessage)
+    }
+
+    @Wrapper
+    fun sendRequest(
+        request: () -> JSONObject,
+        onResponse: (JsonHelper) -> Unit,
+        onConnectionError: ((JsonHelper) -> Unit)? = null
+    ) {
+        return sendRequest(
+            request = request,
+            onSuccess = onResponse,
+            onFailure = onResponse,
+            onConnectionError = onConnectionError
+        )
     }
 
     /**
@@ -269,19 +282,20 @@ open class Requester (
     fun sendRequest(
         request: () -> JSONObject,
         onSuccess: (JsonHelper) -> Unit,
-        onFailure: (JSONObject) -> Unit,
+        onFailure: (JsonHelper) -> Unit,
         onConnectionError: ((JsonHelper) -> Unit)? = null
     ) {
         val response = request.invoke()
+        val hResponse = JsonHelper(response)
         when(isSuccessfulResponse(response)) {
-            SUCCESSFUL -> onSuccess.invoke(JsonHelper(response))
+            SUCCESSFUL -> onSuccess.invoke(hResponse)
             GENERIC_RESPONSE -> {
                 if(onConnectionError != null)
-                    onConnectionError.invoke(JsonHelper(response))
+                    onConnectionError.invoke(hResponse)
                 else
-                    onFailure.invoke(response)
+                    onFailure.invoke(hResponse)
             }
-            else -> onFailure.invoke(response)
+            else -> onFailure.invoke(hResponse)
         }
     }
 
@@ -292,7 +306,7 @@ open class Requester (
      *
      * @return whether the request has been successful or not as [StandardResponseCode]
      */
-    protected fun isSuccessfulResponse(
+    private fun isSuccessfulResponse(
         response: JSONObject?
     ): StandardResponseCode {
         if(response == null || !response.has(RESPONSE_STATUS_KEY))
