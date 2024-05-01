@@ -318,36 +318,4 @@ abstract class Requester (
         }
     }
 
-    /**
-     * The **ListFetcher** interface is useful to manage the requests to refresh a list of items
-     *
-     * @author N7ghtm4r3 - Tecknobit
-     */
-    interface ListFetcher {
-
-        /**
-         * Function to refresh a list of item
-         *
-         * No-any params required
-         */
-        fun refreshList()
-
-    }
-
-    /**
-     * The **ItemFetcher** interface is useful to manage the requests to refresh a single item
-     *
-     * @author N7ghtm4r3 - Tecknobit
-     */
-    interface ItemFetcher {
-
-        /**
-         * Function to refresh a single item
-         *
-         * No-any params required
-         */
-        fun refreshItem()
-
-    }
-
 }
