@@ -2,6 +2,7 @@ package com.tecknobit.equinox;
 
 import com.tecknobit.apimanager.annotations.Wrapper;
 import kotlin.Metadata;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -26,12 +27,27 @@ public class ResourcesProvider {
      * {@code CUSTOM_CONFIGURATION_FILE_PATH} the path of the custom server configuration file
      *
      * @apiNote to use your custom configuration <b>you must save the file in the same folder where you placed the
-     * server file (.jar) and call it "nova.properties"</b>
+     * server file (.jar) and call it "custom.properties"</b>
      * @implSpec take a look <a href="https://docs.spring.io/spring-boot/docs/current/reference/html/application-properties.html">here</a>
      * to get more information about the custom configuration for properties that you can use
      */
     public static final String CUSTOM_CONFIGURATION_FILE_PATH = "custom.properties";
 
+    /**
+     * {@code JAVA_CONFIGURATION_FILE_CONTENT} the content of the {@link WebMvcConfigurer}, as <b>Java class</b>, to
+     * allow the serve of the static resources by the backend
+     *
+     * @apiNote this class will be created in the same package where has been invoked the {@link #createResourcesConfigFile(Class)}
+     * method e.g. :
+     * <pre>
+     *     {@code
+     *         com.your.package
+     *          |
+     *          |-> Caller.java
+     *          |-> ResourcesConfig.java
+     *     }
+     * </pre>
+     */
     private static final String JAVA_CONFIGURATION_FILE_CONTENT = """
        
             import org.springframework.context.annotation.Configuration;
@@ -67,7 +83,21 @@ public class ResourcesProvider {
 
             }""";
 
-
+    /**
+     * {@code KOTLIN_CONFIGURATION_FILE_CONTENT} the content of the {@link WebMvcConfigurer}, as <b>Kotlin class</b>, to
+     * allow the serve of the static resources by the backend
+     *
+     * @apiNote this class will be created in the same package where has been invoked the {@link #createResourcesConfigFile(Class)}
+     * method e.g. :
+     * <pre>
+     *     {@code
+     *         com.your.package
+     *          |
+     *          |-> Caller.kt
+     *          |-> ResourcesConfig.kt
+     *     }
+     * </pre>
+     */
     private static final String KOTLIN_CONFIGURATION_FILE_CONTENT = """
             
             import org.springframework.context.annotation.Configuration
@@ -99,20 +129,54 @@ public class ResourcesProvider {
                         .resourceChain(true)
                         .addResolver(PathResourceResolver())
                 }
-                
+           
             }"""
        ;
 
+    /**
+     * {@code containers} the set of the containers folder which contains other subfolders to store the resources
+     *
+     * @apiNote e.g. containers folder:
+     * <pre>
+     *     {@code
+     *          containerFolder_1
+     *          |
+     *          |-> subfolder_1
+     *          |-> subfolder_2
+     *          containerFolder_2
+     *          |
+     *          |-> subfolder_1
+     *          |-> subfolder_2
+     *     }
+     * </pre>
+     */
     protected HashSet<String> containers;
 
+    /**
+     * {@code containerDirectory} the main container directory to create
+     */
     protected final String containerDirectory;
 
+    /**
+     * {@code subDirectories} the subdirectories of the {@link #containerDirectory} folder
+     */
     protected final List<String> subDirectories;
 
+    /**
+     * Constructor to init the {@link ResourcesProvider} class
+     *
+     * @param containerDirectory: the main container directory to create
+     */
     public ResourcesProvider(String containerDirectory) {
         this(containerDirectory, List.of());
     }
 
+    /**
+     * Constructor to init the {@link ResourcesProvider} class
+     *
+     * @param containerDirectory: the main container directory to create
+     * @param subDirectories: the subdirectories of the {@link #containerDirectory} folder
+     */
     public ResourcesProvider(String containerDirectory, List<String> subDirectories) {
         if(!containerDirectory.endsWith(File.separator))
             containerDirectory += File.separator;
@@ -121,37 +185,74 @@ public class ResourcesProvider {
         containers = new HashSet<>();
     }
 
+    /**
+     * Method to create the {@link #containerDirectory} <br>
+     *
+     * No-any params required
+     */
     @Wrapper
     public void createContainerDirectory() {
         createContainerDirectory(containerDirectory);
     }
 
+    /**
+     * Method to create a new container directory
+     *
+     * @param containerDirectory: the new container directory to create
+     */
     public void createContainerDirectory(String containerDirectory) {
         createResourceDirectory(containerDirectory);
         containers.add(containerDirectory);
     }
 
+    /**
+     * Method to create a new subdirectory for the {@link #containerDirectory}
+     *
+     * @param subDirectory: the new subdirectory to create
+     */
     @Wrapper
     public void createSubDirectory(String subDirectory) {
         createSubDirectory(containerDirectory, subDirectory);
     }
 
+    /**
+     * Method to create a new subdirectory
+     *
+     * @param containerDirectory: the container folder where create the new subdirectory
+     * @param subDirectory: the new subdirectory to create
+     */
     public void createSubDirectory(String containerDirectory, String subDirectory) {
         containerDirectory = formatDirectory(containerDirectory);
         createResourceDirectory(containerDirectory + subDirectory);
     }
 
+    /**
+     * Method to create the list of the {@link #subDirectories} for the {@link #containerDirectory} <br>
+     *
+     * No-any params required
+     */
     @Wrapper
     public void createSubDirectories() {
         createSubDirectories(containerDirectory, subDirectories);
     }
 
+    /**
+     * Method to create the list of the subDirectories for a container directory
+     *
+     * @param containerDirectory: the container directory to create
+     * @param subDirectories: the subdirectories of the subDirectories folder
+     */
     public void createSubDirectories(String containerDirectory, List<String> subDirectories) {
         containerDirectory = formatDirectory(containerDirectory);
         for (String directory : subDirectories)
             createResourceDirectory(containerDirectory + directory);
     }
 
+    /**
+     * Method to create a new resource directory
+     *
+     * @param resDirectory: the pathname of the new folder to create, if not already exists
+     */
     private void createResourceDirectory(String resDirectory) {
         File directory = new File(resDirectory);
         if(!directory.exists())
@@ -159,6 +260,12 @@ public class ResourcesProvider {
                 printError(resDirectory.replaceAll("/", ""));
     }
 
+    /**
+     * Method to format the pathname of a directory
+     *
+     * @param directory: the raw pathname to format, sample path: directory
+     * @return the pathname formatted as {@link String}, sample path formatted: directory/
+     */
     private String formatDirectory(String directory) {
         if(!directory.endsWith(File.separator))
             directory += File.separator;
@@ -175,6 +282,22 @@ public class ResourcesProvider {
         System.exit(-1);
     }
 
+    /**
+     * Method to create the {@link WebMvcConfigurer} to correctly serve the static resources by backend
+     *
+     * @param context: the {@link Class} where this method has been invoked
+     * @throws IOException when an error during the creation or fetching the path is occurred
+     *
+     * @apiNote this class will be created in the same package where this method has been invoked
+     * <pre>
+     *     {@code
+     *         com.your.package
+     *          |
+     *          |-> Caller.java/kt
+     *          |-> ResourcesConfig.java/kt
+     *     }
+     * </pre>
+     */
     public void createResourcesConfigFile(Class<?> context) throws IOException {
         String packageName = context.getPackageName();
         boolean isKotlinClass = isKotlinClass(context);
@@ -200,6 +323,12 @@ public class ResourcesProvider {
         writer.close();
     }
 
+    /**
+     * Method to get whether the caller class is a <b>Kotlin</b> class
+     *
+     * @param context: the {@link Class} where the {@link #createResourcesConfigFile(Class)} method has been invoked
+     * @return whether the caller class is a <b>Kotlin</b> class as boolean
+     */
     private boolean isKotlinClass(Class<?> context) {
         try {
             return context.getAnnotation(Metadata.class).k() == 1;
@@ -208,6 +337,13 @@ public class ResourcesProvider {
         }
     }
 
+    /**
+     * Method to get the path where place the "ResourcesConfig.java/kt" class
+     *
+     * @param context: the {@link Class} where the {@link #createResourcesConfigFile(Class)} method has been invoked
+     * @param isKotlinClass: whether the caller class is a <b>Kotlin</b> class
+     * @return the path where place the "ResourcesConfig.java/kt" class as {@link String}
+     */
     private String getConfigsPath(Class<?> context, boolean isKotlinClass) {
         String subPath;
         String extension;

@@ -5,25 +5,36 @@ import kotlinx.coroutines.cancelChildren
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
+/**
+ * The **FetcherManager** class is useful to manage the requests to the backend executing these requests
+ * with a [CoroutineScope] so to execute in background and not working in the main UI thread
+ *
+ * @param refreshRoutine: the coroutine used to execute the refresh routines
+ *
+ * @author N7ghtm4r3 - Tecknobit
+ */
 class FetcherManager(
     private val refreshRoutine: CoroutineScope,
-    private val refreshDelay: Long = 1000L
 ) {
 
     companion object {
 
+        /**
+         * **activeContext** the active [Class] where a [refreshRoutine] is executing its workflow
+         */
         @Volatile
         lateinit var activeContext: Class<*>
 
     }
 
-    @Volatile
+    /**
+     * **isRefreshing** -> whether the [refreshRoutine] is already refreshing
+     */
     private var isRefreshing: Boolean = false
 
     /**
      * Function to get whether the [refreshRoutine] can start, so if there aren't other jobs that
      * routine is already executing
-     * host
      *
      * No-any params required
      *
@@ -35,7 +46,7 @@ class FetcherManager(
 
     /**
      * Function to suspend the current [refreshRoutine] to execute other requests to the backend,
-     * the [isRefreshing] will be set as **false** to allow the restart of the routine after executing
+     * the [isRefreshing] instance will be set as **false** to allow the restart of the routine after executing
      * the other requests
      *
      * No-any params required
@@ -47,7 +58,7 @@ class FetcherManager(
 
     /**
      * Function to restart the current [refreshRoutine] after other requests has been executed,
-     * the [isRefreshing] will be set as **true** to deny the restart of the routine after executing
+     * the [isRefreshing] instance will be set as **true** to deny the restart of the routine after executing
      * the other requests
      *
      * No-any params required
@@ -56,10 +67,19 @@ class FetcherManager(
         isRefreshing = true
     }
 
+    /**
+     * Function to execute the refresh routine designed
+     *
+     * @param currentContext: the current context where the [refreshRoutine] is executing
+     * @param routine: the refresh routine to execute
+     * @param repeatRoutine: whether repeat the routine or execute a single time
+     * @param refreshDelay: the delay between the execution of the requests
+     */
     fun execute(
         currentContext: Class<*>,
         routine: () -> Unit,
-        repeatRoutine: Boolean = true
+        repeatRoutine: Boolean = true,
+        refreshDelay: Long = 1000L
     ) {
         if(canStart()) {
             restart()
@@ -91,7 +111,14 @@ class FetcherManager(
     }
 
     /**
-     * abstract class Base : FetcherManagerWrapper {
+     * The **FetcherManagerWrapper** interface is useful for wrapping and facilitating operation with the
+     * [FetcherManager], so the inheriting classes will invoke just the wrapper methods for a clean readability
+     * of the code, for example:
+     *
+     * ```kotlin
+     *
+     * // the super class from which the other classes will be inherited
+     * abstract class AbstractClass : FetcherManagerWrapper {
      *
      *     protected val refreshRoutine = CoroutineScope(Dispatchers.Default)
      *
@@ -116,23 +143,48 @@ class FetcherManager(
      *     override fun execRefreshingRoutine(
      *         currentContext: Class<*>,
      *         routine: () -> Unit,
-     *         repeatRoutine: Boolean
+     *         repeatRoutine: Boolean,
+     *         refreshDelay: Long
      *     ) {
      *         fetcherManager.execute(
      *             currentContext = currentContext,
      *             routine = routine,
-     *             repeatRoutine = repeatRoutine
+     *             repeatRoutine = repeatRoutine,
+     *             refreshDelay = delay
      *         )
      *     }
      *
      * }
+     *
+     * // an inherit class example
+     * class ExampleClass : AbstractClass {
+     *
+     *     fun example() {
+     *         execRefreshingRoutine(
+     *             currentContext = this::class.java,
+     *             routine = {
+     *                 // your routine
+     *             }
+     *         )
+     *     }
+     *
+     *     fun example1() {
+     *         suspendRefresher()
+     *     }
+     *
+     * }
+     * ```
+     *
+     * @author N7ghtm4r3 - Tecknobit
+     *
+     * @see FetcherManager
+     *
      */
     interface FetcherManagerWrapper {
 
         /**
          * Function to get whether the [refreshRoutine] can start, so if there aren't other jobs that
          * routine is already executing
-         * host
          *
          * No-any params required
          *
@@ -142,7 +194,7 @@ class FetcherManager(
 
         /**
          * Function to suspend the current [refreshRoutine] to execute other requests to the backend,
-         * the [isRefreshing] will be set as **false** to allow the restart of the routine after executing
+         * the [isRefreshing] instance will be set as **false** to allow the restart of the routine after executing
          * the other requests
          *
          * No-any params required
@@ -151,17 +203,26 @@ class FetcherManager(
 
         /**
          * Function to restart the current [refreshRoutine] after other requests has been executed,
-         * the [isRefreshing] will be set as **true** to deny the restart of the routine after executing
+         * the [isRefreshing] instance will be set as **true** to deny the restart of the routine after executing
          * the other requests
          *
          * No-any params required
          */
         fun restartRefresher()
 
+        /**
+         * Function to execute the refresh routine designed
+         *
+         * @param currentContext: the current context where the [refreshRoutine] is executing
+         * @param routine: the refresh routine to execute
+         * @param repeatRoutine: whether repeat the routine or execute a single time
+         * @param refreshDelay: the delay between the execution of the requests
+         */
         fun execRefreshingRoutine(
             currentContext: Class<*>,
             routine: () -> Unit,
-            repeatRoutine: Boolean = true
+            repeatRoutine: Boolean = true,
+            refreshDelay: Long = 1000L
         )
 
         /**
@@ -211,6 +272,14 @@ class FetcherManager(
 
     }
 
+    /**
+     * The **GenericFetcher** interface is useful to manage the requests to refresh a list of items and
+     * a single item
+     *
+     * @author N7ghtm4r3 - Tecknobit
+     * @see ItemFetcher
+     * @see ListFetcher
+     */
     interface GenericFetcher: ItemFetcher, ListFetcher
 
 }

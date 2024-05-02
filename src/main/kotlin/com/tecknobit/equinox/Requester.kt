@@ -12,11 +12,14 @@ import org.json.JSONObject
 import java.io.IOException
 
 /**
- * The **Requester** class is useful to communicate with the Nova's backend
+ * The **Requester** class is useful to communicate with backend based on the **SpringBoot** framework
  *
- * @param host: the host where is running the Nova's backend
+ * @param host: the host address where is running the backend
  * @param userId: the user identifier
  * @param userToken: the user token
+ * @param connectionErrorMessage: the error to send when a connection error occurred
+ * @param enableCertificatesValidation: whether enable the **SSL** certificates validation, this for example
+ * when the certificate is a self-signed certificate to by-pass
  *
  * @author N7ghtm4r3 - Tecknobit
  */
@@ -30,8 +33,14 @@ abstract class Requester (
 
     companion object {
 
+        /**
+         * **USER_IDENTIFIER_KEY** the key for the user <b>"id"</b> field
+         */
         const val USER_IDENTIFIER_KEY = "id"
 
+        /**
+         * **USER_TOKEN_KEY** the key for the user <b>"token"</b> field
+         */
         const val USER_TOKEN_KEY = "token"
 
         /**
@@ -57,7 +66,7 @@ abstract class Requester (
     protected val headers = Headers()
 
     /**
-     * **mustValidateCertificates** flag whether the requests must validate the SSL certificates, this need for example
+     * **mustValidateCertificates** flag whether the requests must validate the **SSL** certificates, this for example
      * when the SSL is a self-signed certificate
      */
     protected var mustValidateCertificates: Boolean = false
@@ -84,7 +93,7 @@ abstract class Requester (
     }
 
     /**
-     * Function to change during the runtime, for example when the local session changed, the host address to make the
+     * Function to change, during the runtime for example when the session changed, the host address to make the
      * requests
      *
      * @param host: the new host address to use
@@ -257,6 +266,13 @@ abstract class Requester (
             .put(RESPONSE_MESSAGE_KEY, connectionErrorMessage)
     }
 
+    /**
+     * Function to execute and manage the response of a request
+     *
+     * @param request: the request to execute
+     * @param onResponse: the action to execute when a response is returned from the backend
+     * @param onConnectionError: the action to execute if the request has been failed for a connection error
+     */
     @Wrapper
     fun sendRequest(
         request: () -> JSONObject,
