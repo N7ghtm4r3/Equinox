@@ -14,8 +14,8 @@ repositories {
 
 dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0")
-    testImplementation(platform("org.junit:junit-bom:5.9.1"))
-    testImplementation("org.junit.jupiter:junit-jupiter")
+    testImplementation("org.junit.jupiter:junit-jupiter-api:5.9.0")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.9.0")
     implementation("org.springframework.boot:spring-boot-starter-data-jpa:3.2.3")
     implementation("org.springframework.boot:spring-boot-starter-web:3.2.3")
     implementation("org.springframework:spring-web:6.1.5")
