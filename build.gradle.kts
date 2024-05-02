@@ -35,9 +35,6 @@ afterEvaluate {
             }
         }
     }
-    repositories {
-        mavenLocal()
-    }
 }
 
 tasks.test {
