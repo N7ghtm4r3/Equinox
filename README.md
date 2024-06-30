@@ -77,6 +77,8 @@ Add the JitPack repository to your build file
 ## APIs available
 
 - <a href="https://github.com/N7ghtm4r3/Equinox/blob/main/documd/ResourcesProvider.md">**ResourcesProvider**</a> allows you to manage the static resources to serve to the clients
+- <a href="https://github.com/N7ghtm4r3/Equinox/blob/main/documd/ConfigsGenerator.md">**ConfigsGenerator**</a> allows
+  you to create automatically the configuration file for your backend
 - <a href="https://github.com/N7ghtm4r3/Equinox/blob/main/documd/Requester.md">**Requester**</a> allows you to communicate with the backend from the clients
 - <a href="https://github.com/N7ghtm4r3/Equinox/blob/main/documd/FetcherManager.md">**FetcherManager**</a> allows you to execute the refresh requests the data to display in the UI
   you to use the resources folder easily
