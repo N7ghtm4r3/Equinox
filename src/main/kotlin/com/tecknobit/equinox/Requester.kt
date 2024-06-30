@@ -70,6 +70,11 @@ abstract class Requester (
     }
 
     /**
+     * `timeFormatter` the formatter used to format the timestamp values
+     */
+    protected val timeFormatter: TimeFormatter = TimeFormatter.getInstance()
+
+    /**
      * **apiRequest** -> the instance to communicate and make the requests to the backend
      */
     protected val apiRequest = APIRequest(5000)
@@ -416,7 +421,7 @@ abstract class Requester (
     ) {
         if (debugMode) {
             synchronized(this) {
-                println("----------- REQUEST ${TimeFormatter.getStringDate(System.currentTimeMillis())} -----------")
+                println("----------- REQUEST ${timeFormatter.formatNowAsString()} -----------")
                 println("-URL\n$requestUrl")
                 requestPayloadInfo.invoke()
                 if (response != null)

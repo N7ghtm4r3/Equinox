@@ -10,6 +10,7 @@ version = "1.0.1"
 repositories {
     mavenCentral()
     maven("https://jitpack.io")
+    maven("https://repo.clojars.org")
 }
 
 dependencies {
@@ -19,8 +20,9 @@ dependencies {
     implementation("org.springframework:spring-web:6.1.5")
     implementation("com.fasterxml.jackson.core:jackson-databind:2.15.4")
     implementation("com.squareup.okhttp3:okhttp:4.12.0")
-    implementation("com.github.N7ghtm4r3:APIManager:2.2.1")
+    implementation("com.github.N7ghtm4r3:APIManager:2.2.3")
     implementation("org.json:json:20231013")
+    implementation("com.github.N7ghtm4r3:Mantis:1.0.0")
     implementation("commons-validator:commons-validator:1.7")
 }
 
