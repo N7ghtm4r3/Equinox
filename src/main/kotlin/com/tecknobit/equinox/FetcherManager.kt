@@ -23,7 +23,18 @@ class FetcherManager(
          * **activeContext** the active [Class] where a [refreshRoutine] is executing its workflow
          */
         @Volatile
-        lateinit var activeContext: Class<*>
+        private lateinit var activeContext: Class<*>
+
+        /**
+         * Function to set the current active context where the [refreshRoutine] is executing
+         *
+         * @param currentContext: the current active context to set
+         */
+        fun setActiveContext(
+            currentContext: Class<*>
+        ) {
+            activeContext = currentContext
+        }
 
     }
 
@@ -31,6 +42,12 @@ class FetcherManager(
      * **isRefreshing** -> whether the [refreshRoutine] is already refreshing
      */
     private var isRefreshing: Boolean = false
+
+    /**
+     * **lastRoutineExecuted** -> the last routine executed by the [execute] method must re-launched after the [suspend]
+     * method has been invoked
+     */
+    private lateinit var lastRoutineExecuted: FetcherRoutine
 
     /**
      * Function to get whether the [refreshRoutine] can start, so if there aren't other jobs that
@@ -64,7 +81,12 @@ class FetcherManager(
      * No-any params required
      */
     fun restart() {
-        isRefreshing = true
+        execute(
+            currentContext = lastRoutineExecuted.currentContext,
+            routine = lastRoutineExecuted.routine,
+            repeatRoutine = lastRoutineExecuted.repeatRoutine,
+            refreshDelay = lastRoutineExecuted.refreshDelay
+        )
     }
 
     /**
@@ -82,7 +104,13 @@ class FetcherManager(
         refreshDelay: Long = 1000L
     ) {
         if(canStart()) {
-            restart()
+            isRefreshing = true
+            lastRoutineExecuted = FetcherRoutine(
+                currentContext = currentContext,
+                routine = routine,
+                repeatRoutine = repeatRoutine,
+                refreshDelay = refreshDelay
+            )
             refreshRoutine.launch {
                 if(repeatRoutine) {
                     while (continueToFetch(currentContext)) {
@@ -109,6 +137,21 @@ class FetcherManager(
     ) : Boolean {
         return activeContext == currentContext
     }
+
+    /**
+     * The **FetcherRoutine** data class is useful to memorize the last routine executed by the [execute] method
+     *
+     * @param currentContext: the current context where the [refreshRoutine] is executing
+     * @param routine: the refresh routine to execute
+     * @param repeatRoutine: whether repeat the routine or execute a single time
+     * @param refreshDelay: the delay between the execution of the requests
+     */
+    private data class FetcherRoutine(
+        val currentContext: Class<*>,
+        val routine: () -> Unit,
+        val repeatRoutine: Boolean = true,
+        val refreshDelay: Long = 1000L
+    )
 
     /**
      * The **FetcherManagerWrapper** interface is useful for wrapping and facilitating operation with the
@@ -237,6 +280,17 @@ class FetcherManager(
         fun continueToFetch(
             currentContext: Class<*>
         ) : Boolean
+
+        /**
+         * Function to set the current active context where the [refreshRoutine] is executing
+         *
+         * @param currentContext: the current active context to set
+         */
+        fun setActiveContext(
+            currentContext: Class<*>
+        ) {
+            FetcherManager.setActiveContext(currentContext)
+        }
 
     }
 
