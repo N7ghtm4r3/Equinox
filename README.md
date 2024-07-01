@@ -1,6 +1,6 @@
 # Equinox
 
-**v1.0.0**
+**v1.0.1**
 
 Utilities for backend services based on Springboot framework. Is a support library to implement some utilities both for backend and for client also who comunicate with that Springboot backend
 
@@ -36,7 +36,7 @@ Add the JitPack repository to your build file
 
     ```gradle
     dependencies {
-        implementation 'com.github.N7ghtm4r3:Equinox:1.0.0'
+        implementation 'com.github.N7ghtm4r3:Equinox:1.0.1'
     }
     ```
 
@@ -44,7 +44,7 @@ Add the JitPack repository to your build file
 
     ```gradle
     dependencies {
-        implementation("com.github.N7ghtm4r3:Equinox:1.0.0")
+        implementation("com.github.N7ghtm4r3:Equinox:1.0.1")
     }
     ```
 
@@ -66,7 +66,7 @@ Add the JitPack repository to your build file
 <dependency>
     <groupId>com.github.N7ghtm4r3</groupId>
   <artifactId>Equinox</artifactId>
-  <version>1.0.0</version>
+  <version>1.0.1</version>
 </dependency>
 ```
 
@@ -77,11 +77,23 @@ Add the JitPack repository to your build file
 ## APIs available
 
 - <a href="https://github.com/N7ghtm4r3/Equinox/blob/main/documd/ResourcesProvider.md">**ResourcesProvider**</a> allows you to manage the static resources to serve to the clients
+- <a href="https://github.com/N7ghtm4r3/Equinox/blob/main/documd/ConfigsGenerator.md">**ConfigsGenerator**</a> allows
+  you to create automatically the configuration file for your backend
 - <a href="https://github.com/N7ghtm4r3/Equinox/blob/main/documd/Requester.md">**Requester**</a> allows you to communicate with the backend from the clients
 - <a href="https://github.com/N7ghtm4r3/Equinox/blob/main/documd/FetcherManager.md">**FetcherManager**</a> allows you to execute the refresh requests the data to display in the UI
   you to use the resources folder easily
 
 The other apis will be gradually released
+
+## Basic environment available
+
+Equinox gives a basic _out-of-the-box_ environment to directly create a **SpringApplication** following the Equinox
+implementation philosophy
+to automatically manage some recurring operations such the users related requests or the inputs validation.
+This environment will be constantly updated. You can take a
+look [here](https://github.com/N7ghtm4r3/Equinox/blob/main/documd/EquinoxEnvironment.md) to check how it works and how
+to implement
+it on your own backend
 
 ## Authors
 
