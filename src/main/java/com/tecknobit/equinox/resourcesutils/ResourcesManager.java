@@ -19,9 +19,14 @@ import java.util.Objects;
 public interface ResourcesManager {
 
     /**
+     * {@code RESOURCES_KEY} the key of the <b>resources</b> folder where the resources will be saved
+     */
+    String RESOURCES_KEY = "resources";
+
+    /**
      * {@code RESOURCES_PATH} the folder where the resources will be saved
      */
-    String RESOURCES_PATH = "resources/";
+    String RESOURCES_PATH = RESOURCES_KEY + "/";
 
     /**
      * {@code PROFILES_DIRECTORY} the folder where the profile pics will be saved

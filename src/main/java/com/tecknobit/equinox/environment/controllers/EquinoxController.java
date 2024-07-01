@@ -2,22 +2,20 @@ package com.tecknobit.equinox.environment.controllers;
 
 import com.tecknobit.apimanager.apis.ServerProtector;
 import com.tecknobit.apimanager.apis.sockets.SocketManager.StandardResponseCode;
-import com.tecknobit.apimanager.exceptions.SaveData;
 import com.tecknobit.apimanager.formatters.JsonHelper;
+import com.tecknobit.equinox.configurationsutils.ConfigsGenerator;
 import com.tecknobit.equinox.environment.helpers.services.repositories.EquinoxUsersRepository;
 import com.tecknobit.equinox.environment.records.EquinoxUser;
+import com.tecknobit.equinox.resourcesutils.ResourcesProvider;
 import com.tecknobit.mantis.Mantis;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.SpringApplication;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
-import java.security.NoSuchAlgorithmException;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 import static com.tecknobit.apimanager.apis.sockets.SocketManager.StandardResponseCode.FAILED;
 import static com.tecknobit.apimanager.apis.sockets.SocketManager.StandardResponseCode.SUCCESSFUL;
@@ -25,6 +23,8 @@ import static com.tecknobit.equinox.Requester.RESPONSE_MESSAGE_KEY;
 import static com.tecknobit.equinox.Requester.RESPONSE_STATUS_KEY;
 import static com.tecknobit.equinox.environment.helpers.EquinoxBaseEndpointsSet.BASE_EQUINOX_ENDPOINT;
 import static com.tecknobit.equinox.inputs.InputValidator.DEFAULT_LANGUAGE;
+import static com.tecknobit.equinox.resourcesutils.ResourcesManager.PROFILES_DIRECTORY;
+import static com.tecknobit.equinox.resourcesutils.ResourcesManager.RESOURCES_KEY;
 
 /**
  * The {@code EquinoxController} class is useful to give the base behavior of the <b>Equinox's controllers</b>
@@ -226,23 +226,67 @@ abstract public class EquinoxController {
     }
 
     /**
-     * Method to init the {@link #serverProtector}
+     * Method to init the {@link #serverProtector} and create the resources directories correctly
      *
      * @param storagePath: instance to manage the storage of the server secret
      * @param saveMessage: the message to print when the server secret has been generated,
      *                     the start of the message is <b>"Note: is not an error, but is an alert!
      *                     Please you should safely save: server_secret_token_generated"</b>
+     * @param context: the launcher {@link Class} where this method has been invoked
+     * @param args: custom arguments to share with {@link SpringApplication} and with the {@link #serverProtector}
+     *
+     * @apiNote the arguments scheme:
+     * <ul>
+     *     <li>
+     *         {@link #serverProtector} ->
+     *         <ul>
+     *          <li>
+     *             <b>rss</b> -> launch your java application with "rss" to recreate the server secret <br>
+     *                       e.g java -jar your_backend.jar rss
+     *             </li>
+     *              <li>
+     *                  <b>dss</b> -> launch your java application with "dss" to delete the current server secret <br>
+     *                       e.g java -jar your_backend.jar dss
+     *              </li>
+     *              <li>
+     *                  <b>dssi</b> -> launch your java application with "dssi" to delete the current server secret and interrupt
+     *                        the current workflow of the server <br>
+     *                        e.g java -jar your_backend.jar dssi
+     *              </li>
+     *          </ul>
+     *     </li>
+     *     <li>
+     *         {@link SpringApplication} -> see the allowed arguments <a href="https://docs.spring.io/spring-boot/docs/current/reference/html/application-properties.html">here</a>
+     *     </li>
+     * </ul>
      */
-    public static void initServerProtector(String storagePath, String saveMessage, String[] args) {
+    public static void initEquinoxEnvironment(String storagePath, String saveMessage, Class<?> context, String[] args) {
         try {
             if (serverProtector == null) {
                 serverProtector = new ServerProtector(storagePath, saveMessage);
                 serverProtector.launch(args);
+                setBasicResourcesConfiguration(context);
             } else
                 throw new IllegalAccessException("The protector has been already instantiated");
-        } catch (IllegalAccessException | NoSuchAlgorithmException | SaveData e) {
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
+    }
+
+    /**
+     * Method to configure the resources folders required by the Equinox's environment and the beans classes to
+     * correctly serve the static resources and set the CORS policy
+     *
+     * @param context: the launcher {@link Class} where this method has been invoked
+     * @throws IOException when an error during the creation of the files occurred
+     */
+    private static void setBasicResourcesConfiguration(Class<?> context) throws IOException {
+        ResourcesProvider resourcesProvider = new ResourcesProvider(RESOURCES_KEY, List.of(PROFILES_DIRECTORY));
+        resourcesProvider.createContainerDirectory();
+        resourcesProvider.createSubDirectories();
+        ConfigsGenerator configsGenerator = new ConfigsGenerator(context);
+        configsGenerator.createResourcesConfigFile(resourcesProvider.getContainers());
+        configsGenerator.crateCorsAdviceFile();
     }
 
 }
