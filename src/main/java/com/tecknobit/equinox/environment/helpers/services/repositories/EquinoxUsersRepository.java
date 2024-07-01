@@ -17,6 +17,8 @@ import static com.tecknobit.equinox.environment.records.EquinoxUser.*;
  * @author N7ghtm4r3 - Tecknobit
  * @see JpaRepository
  * @see EquinoxUser
+ *
+ * @since 1.0.1
  */
 @Service
 @Repository

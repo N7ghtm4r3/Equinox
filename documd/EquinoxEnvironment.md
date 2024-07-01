@@ -13,12 +13,16 @@ The base environment gives a base set of classes:
 - User utilities set
     - [EquinoxUser](https://github.com/N7ghtm4r3/Equinox/blob/main/src/main/java/com/tecknobit/equinox/environment/records/EquinoxUser.java) ->
       standard Equinox's user
+  - [EquinoxLocalUser](https://github.com/N7ghtm4r3/Equinox/blob/main/src/main/java/com/tecknobit/equinox/environment/records/EquinoxLocalUser.java) ->
+    local user helper, useful to manage the local session of a user in the clients applications
     - [EquinoxUsersController](https://github.com/N7ghtm4r3/Equinox/blob/main/src/main/java/com/tecknobit/equinox/environment/controllers/EquinoxUsersController.java) ->
       controller to manage the operations on the **EquinoxUser**
     - [EquinoxUsersHelper](https://github.com/N7ghtm4r3/Equinox/blob/main/src/main/java/com/tecknobit/equinox/environment/helpers/services/EquinoxUsersHelper.java) ->
       helper used by the **EquinoxUsersController** to interact with the database
     - [EquinoxUsersRepository](https://github.com/N7ghtm4r3/Equinox/blob/main/src/main/java/com/tecknobit/equinox/environment/helpers/services/repositories/EquinoxUsersRepository.java) ->
       the **JpaRepository** to make the related queries to the database
+- [EquinoxRequester](https://github.com/N7ghtm4r3/Equinox/blob/main/src/main/kotlin/com/tecknobit/equinox/environment/helpers/EquinoxRequester.kt) ->
+  the requester helper with the **EquinoxUser** requests pre-implemented to execute the operations on the user
 - [InputValidator](https://github.com/N7ghtm4r3/Equinox/blob/main/src/main/java/com/tecknobit/equinox/inputs/InputValidator.java) ->
   utility class to validate the inputs, gives a set of the method to validate the **EquinoxUser** details
 
@@ -383,7 +387,7 @@ public class Launcher {
 ```
 
 > [!NOTE]  
-> The REQUIRED annotations are not more necessary because using the @Primary annotations the `"com.tecknobit.*"` package
+> The REQUIRED annotations are not more necessary because using the `@Primary` annotations the `com.tecknobit.` package
 > is not more useful to search the repositories, entities and components pre-implemented
 
 ## Authors

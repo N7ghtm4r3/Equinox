@@ -30,6 +30,8 @@ import static com.tecknobit.equinox.resourcesutils.ResourcesManager.RESOURCES_KE
  * The {@code EquinoxController} class is useful to give the base behavior of the <b>Equinox's controllers</b>
  *
  * @author N7ghtm4r3 - Tecknobit
+ *
+ * @since 1.0.1
  */
 @RestController
 @RequestMapping(BASE_EQUINOX_ENDPOINT)

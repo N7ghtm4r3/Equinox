@@ -20,6 +20,8 @@ import static com.tecknobit.equinox.inputs.InputValidator.*;
  *
  * @author N7ghtm4r3 - Tecknobit
  * @see EquinoxController
+ *
+ * @since 1.0.1
  */
 @RestController
 public class EquinoxUsersController extends EquinoxController {
