@@ -6,10 +6,21 @@ import com.tecknobit.apimanager.apis.APIRequest.*
 import com.tecknobit.apimanager.apis.sockets.SocketManager.StandardResponseCode
 import com.tecknobit.apimanager.apis.sockets.SocketManager.StandardResponseCode.*
 import com.tecknobit.apimanager.formatters.JsonHelper
+import com.tecknobit.apimanager.formatters.TimeFormatter
 import kotlinx.coroutines.async
 import kotlinx.coroutines.runBlocking
+import okhttp3.Headers.Companion.toHeaders
+import okhttp3.MultipartBody
+import okhttp3.OkHttpClient
+import okhttp3.Request
 import org.json.JSONObject
 import java.io.IOException
+import java.security.SecureRandom
+import java.security.cert.X509Certificate
+import javax.net.ssl.SSLContext
+import javax.net.ssl.SSLSession
+import javax.net.ssl.TrustManager
+import javax.net.ssl.X509TrustManager
 
 /**
  * The **Requester** class is useful to communicate with backend based on the **SpringBoot** framework
@@ -17,6 +28,8 @@ import java.io.IOException
  * @param host: the host address where is running the backend
  * @param userId: the user identifier
  * @param userToken: the user token
+ * @param debugMode: whether the requester is still in development and who is developing needs the log of the requester's
+ * workflow, if it is enabled all the details of the requests sent and the errors occurred will be printed in the console
  * @param connectionErrorMessage: the error to send when a connection error occurred
  * @param enableCertificatesValidation: whether enable the **SSL** certificates validation, this for example
  * when the certificate is a self-signed certificate to by-pass
@@ -24,11 +37,12 @@ import java.io.IOException
  * @author N7ghtm4r3 - Tecknobit
  */
 abstract class Requester (
-    var host: String,
-    var userId: String? = null,
-    var userToken: String? = null,
-    private val connectionErrorMessage: String,
-    private val enableCertificatesValidation: Boolean = false
+    protected var host: String,
+    protected var userId: String? = null,
+    protected var userToken: String? = null,
+    protected var debugMode: Boolean = false,
+    protected val connectionErrorMessage: String,
+    protected val enableCertificatesValidation: Boolean = false
 ) {
 
     companion object {
@@ -56,9 +70,14 @@ abstract class Requester (
     }
 
     /**
+     * `timeFormatter` the formatter used to format the timestamp values
+     */
+    protected val timeFormatter: TimeFormatter = TimeFormatter.getInstance()
+
+    /**
      * **apiRequest** -> the instance to communicate and make the requests to the backend
      */
-    private val apiRequest = APIRequest(5000)
+    protected val apiRequest = APIRequest(5000)
 
     /**
      * **headers** the headers used in the request
@@ -71,8 +90,17 @@ abstract class Requester (
      */
     protected var mustValidateCertificates: Boolean = false
 
+    /**
+     * **initHost** function to init correctly the [host] value
+     */
+    private val initHost by lazy {
+        {
+            changeHost(host)
+        }
+    }
+
     init {
-        changeHost(host)
+        initHost.invoke()
         setUserCredentials(userId, userToken)
     }
 
@@ -98,7 +126,7 @@ abstract class Requester (
      *
      * @param host: the new host address to use
      */
-    fun changeHost(
+    open fun changeHost(
         host: String
     ) {
         this.host = host
@@ -134,7 +162,7 @@ abstract class Requester (
     @Wrapper
     protected fun execPost(
         endpoint: String,
-        payload: Params
+        payload: Params = Params()
     ) : JSONObject {
         return execRequest(
             method = RequestMethod.POST,
@@ -221,10 +249,10 @@ abstract class Requester (
         var jResponse: JSONObject
         if(mustValidateCertificates)
             apiRequest.validateSelfSignedCertificate()
+        val requestUrl = host + endpoint
         runBlocking {
             try {
                 async {
-                    val requestUrl = host + endpoint
                     try {
                         if(payload != null) {
                             apiRequest.sendJSONPayloadedAPIRequest(
@@ -241,16 +269,178 @@ abstract class Requester (
                             )
                         }
                         response = apiRequest.response
+                        if (response == null)
+                            response = apiRequest.errorResponse
                     } catch (e: IOException) {
+                        logError(
+                            exception = e
+                        )
                         response = connectionErrorMessage().toString()
                     }
                 }.await()
                 jResponse = JSONObject(response)
             } catch (e: Exception) {
+                logError(
+                    exception = e
+                )
                 jResponse = connectionErrorMessage()
             }
         }
+        logRequestInfo(
+            requestUrl = requestUrl,
+            requestPayloadInfo = {
+                if (payload != null) {
+                    println("\n-PAYLOAD")
+                    println(payload.createJSONPayload().toString(4))
+                }
+            },
+            response = jResponse
+        )
         return jResponse
+    }
+
+    /**
+     * Function to exec a multipart body  request
+     *
+     * @param endpoint: the endpoint path of the url
+     * @param body: the body payload of the request
+     *
+     * @return the result of the request as [JSONObject]
+     */
+    protected fun execMultipartRequest(
+        endpoint: String,
+        body: MultipartBody
+    ): JSONObject {
+        val mHeaders = mutableMapOf<String, String>()
+        headers.headersKeys.forEach { headerKey ->
+            mHeaders[headerKey] = headers.getHeader(headerKey)
+        }
+        val requestUrl = "$host$endpoint"
+        val request: Request = Request.Builder()
+            .headers(mHeaders.toHeaders())
+            .url(requestUrl)
+            .post(body)
+            .build()
+        val client = validateSelfSignedCertificate(OkHttpClient())
+        var response: JSONObject? = null
+        runBlocking {
+            try {
+                async {
+                    response = try {
+                        client.newCall(request).execute().body?.string()?.let { JSONObject(it) }
+                    } catch (e: IOException) {
+                        logError(
+                            exception = e
+                        )
+                        JSONObject(connectionErrorMessage())
+                    }
+                }.await()
+            } catch (e: Exception) {
+                logError(
+                    exception = e
+                )
+                response = JSONObject(connectionErrorMessage())
+            }
+        }
+        logRequestInfo(
+            requestUrl = requestUrl,
+            requestPayloadInfo = {
+                println("\n-PAYLOAD")
+                body.parts.forEachIndexed { index, part ->
+                    println("---------------------- $index ----------------------------")
+                    val bodyPart = part.body
+                    print("| " + part.headers)
+                    println("| Content-Type: ${bodyPart.contentType()}")
+                    println("| Content-Length: ${bodyPart.contentLength()}")
+                    if (index == (body.size - 1))
+                        println("-----------------------------------------------------")
+                }
+            },
+            response = response
+        )
+        return response!!
+    }
+
+    /**
+     * Method to validate a self-signed SLL certificate and bypass the checks of its validity<br></br>
+     * No-any params required
+     *
+     * @apiNote this method disable all checks on the SLL certificate validity, so is recommended to use for test only or
+     * in a private distribution on own infrastructure
+     */
+    private fun validateSelfSignedCertificate(
+        okHttpClient: OkHttpClient
+    ): OkHttpClient {
+        if (mustValidateCertificates) {
+            val trustAllCerts = arrayOf<TrustManager>(
+                object : X509TrustManager {
+                    override fun getAcceptedIssuers(): Array<X509Certificate> {
+                        return arrayOf()
+                    }
+
+
+                    override fun checkClientTrusted(
+                        certs: Array<X509Certificate>,
+                        authType: String
+                    ) {
+                    }
+
+                    override fun checkServerTrusted(
+                        certs: Array<X509Certificate>,
+                        authType: String
+                    ) {
+                    }
+                })
+            val builder = okHttpClient.newBuilder()
+            try {
+                val sslContext = SSLContext.getInstance("TLS")
+                sslContext.init(null, trustAllCerts, SecureRandom())
+                builder.sslSocketFactory(
+                    sslContext.socketFactory,
+                    trustAllCerts[0] as X509TrustManager
+                )
+                builder.hostnameVerifier { _: String?, _: SSLSession? -> true }
+                return builder.build()
+            } catch (ignored: java.lang.Exception) {
+            }
+        }
+        return OkHttpClient()
+    }
+
+    /**
+     * Function to print the details of the request sent if the [debugMode] is enabled
+     *
+     * @param requestUrl: the url of the request
+     * @param requestPayloadInfo: the payload of the request if sent with the request
+     * @param response: the response of the request sent
+     */
+    private fun logRequestInfo(
+        requestUrl: String,
+        requestPayloadInfo: () -> Unit,
+        response: JSONObject?
+    ) {
+        if (debugMode) {
+            synchronized(this) {
+                println("----------- REQUEST ${timeFormatter.formatNowAsString()} -----------")
+                println("-URL\n$requestUrl")
+                requestPayloadInfo.invoke()
+                if (response != null)
+                    println("\n-RESPONSE\n${response.toString(4)}")
+                println("---------------------------------------------------")
+            }
+        }
+    }
+
+    /**
+     * Function to print a log of an exception occurred during a request sent if the [debugMode] is enabled
+     *
+     * @param exception: the exception occurred
+     */
+    private fun logError(
+        exception: Exception
+    ) {
+        if (debugMode)
+            exception.printStackTrace()
     }
 
     /**
@@ -260,7 +450,7 @@ abstract class Requester (
      *
      * @return the error message as [JSONObject]
      */
-    private fun connectionErrorMessage(): JSONObject {
+    protected fun connectionErrorMessage(): JSONObject {
         return JSONObject()
             .put(RESPONSE_STATUS_KEY, GENERIC_RESPONSE.name)
             .put(RESPONSE_MESSAGE_KEY, connectionErrorMessage)
