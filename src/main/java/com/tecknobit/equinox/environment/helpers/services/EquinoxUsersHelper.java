@@ -19,6 +19,8 @@ import static java.lang.System.currentTimeMillis;
  *
  * @author N7ghtm4r3 - Tecknobit
  * @see com.tecknobit.equinox.resourcesutils.ResourcesManager
+ *
+ * @since 1.0.1
  */
 @Service
 public class EquinoxUsersHelper implements ResourcesManager {

@@ -14,6 +14,8 @@ import org.json.JSONObject;
  *
  * @author N7ghtm4r3 - Tecknobit
  * @see EquinoxItem
+ *
+ * @since 1.0.1
  */
 @Structure
 @MappedSuperclass

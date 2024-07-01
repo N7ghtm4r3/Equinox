@@ -4,6 +4,8 @@ package com.tecknobit.equinox.environment.helpers;
  * The {@code EquinoxBaseEndpointsSet} class is a container with all the Equinox's system base endpoints
  *
  * @author N7ghtm4r3 - Tecknobit
+ *
+ * @since 1.0.1
  */
 public class EquinoxBaseEndpointsSet {
 

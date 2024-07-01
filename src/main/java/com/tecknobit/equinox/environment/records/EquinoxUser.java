@@ -21,6 +21,8 @@ import static com.tecknobit.equinox.inputs.InputValidator.LANGUAGES_SUPPORTED;
  *
  * @author N7ghtm4r3 - Tecknobit
  * @see EquinoxItem
+ *
+ * @since 1.0.1
  */
 @Entity
 @Table(name = USERS_KEY)
