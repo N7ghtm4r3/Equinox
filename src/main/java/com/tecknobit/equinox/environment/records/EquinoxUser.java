@@ -122,7 +122,7 @@ public class EquinoxUser extends EquinoxItem {
             columnDefinition = "VARCHAR(32) NOT NULL",
             unique = true
     )
-    private final String token;
+    protected final String token;
 
     /**
      * {@code name} the name of the user
@@ -131,7 +131,7 @@ public class EquinoxUser extends EquinoxItem {
             name = NAME_KEY,
             columnDefinition = "VARCHAR(20) NOT NULL"
     )
-    private final String name;
+    protected final String name;
 
     /**
      * {@code surname} the surname of the user
@@ -140,7 +140,7 @@ public class EquinoxUser extends EquinoxItem {
             name = SURNAME_KEY,
             columnDefinition = "VARCHAR(30) NOT NULL"
     )
-    private final String surname;
+    protected final String surname;
 
     /**
      * {@code email} the email of the user
@@ -150,7 +150,7 @@ public class EquinoxUser extends EquinoxItem {
             columnDefinition = "VARCHAR(75) NOT NULL",
             unique = true
     )
-    private final String email;
+    protected final String email;
 
     /**
      * {@code password} the password of the user
@@ -160,7 +160,7 @@ public class EquinoxUser extends EquinoxItem {
             nullable = false
     )
     @JsonIgnore
-    private final String password;
+    protected final String password;
 
     /**
      * {@code profilePic} the profile pic of the user
@@ -170,7 +170,7 @@ public class EquinoxUser extends EquinoxItem {
             columnDefinition = "TEXT DEFAULT '" + DEFAULT_PROFILE_PIC + "'",
             insertable = false
     )
-    private final String profilePic;
+    protected final String profilePic;
 
     /**
      * {@code language} the language of the user
@@ -179,13 +179,13 @@ public class EquinoxUser extends EquinoxItem {
             name = LANGUAGE_KEY,
             columnDefinition = "VARCHAR(2) NOT NULL"
     )
-    private final String language;
+    protected final String language;
 
     /**
      * {@code theme} the theme of the user
      */
     @Transient
-    private final ApplicationTheme theme;
+    protected final ApplicationTheme theme;
 
     /**
      * Constructor to init the {@link EquinoxUser} class <br>

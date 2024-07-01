@@ -85,6 +85,16 @@ Add the JitPack repository to your build file
 
 The other apis will be gradually released
 
+## Basic environment available
+
+Equinox gives a basic _out-of-the-box_ environment to directly create a **SpringApplication** following the Equinox
+implementation philosophy
+to automatically manage some recurring operations such the users related requests or the inputs validation.
+This environment will be constantly updated. You can take a
+look [here](https://github.com/N7ghtm4r3/Equinox/blob/main/documd/EquinoxEnvironment.md) to check how it works and how
+to implement
+it on your own backend
+
 ## Authors
 
 - [@N7ghtm4r3](https://www.github.com/N7ghtm4r3)

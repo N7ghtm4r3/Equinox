@@ -2,6 +2,7 @@ package com.tecknobit.equinox.environment.controllers;
 
 import com.tecknobit.apimanager.apis.ServerProtector;
 import com.tecknobit.apimanager.apis.sockets.SocketManager.StandardResponseCode;
+import com.tecknobit.apimanager.exceptions.SaveData;
 import com.tecknobit.apimanager.formatters.JsonHelper;
 import com.tecknobit.equinox.environment.helpers.services.repositories.EquinoxUsersRepository;
 import com.tecknobit.equinox.environment.records.EquinoxUser;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -53,7 +55,7 @@ abstract public class EquinoxController {
      *     </li>
      * </ul>
      */
-    public static ServerProtector serverProtector;
+    protected static ServerProtector serverProtector;
 
     /**
      * {@code mantis} the translations manager
@@ -221,6 +223,26 @@ abstract public class EquinoxController {
      */
     public static String generateIdentifier() {
         return UUID.randomUUID().toString().replaceAll("-", "");
+    }
+
+    /**
+     * Method to init the {@link #serverProtector}
+     *
+     * @param storagePath: instance to manage the storage of the server secret
+     * @param saveMessage: the message to print when the server secret has been generated,
+     *                     the start of the message is <b>"Note: is not an error, but is an alert!
+     *                     Please you should safely save: server_secret_token_generated"</b>
+     */
+    public static void initServerProtector(String storagePath, String saveMessage, String[] args) {
+        try {
+            if (serverProtector == null) {
+                serverProtector = new ServerProtector(storagePath, saveMessage);
+                serverProtector.launch(args);
+            } else
+                throw new IllegalAccessException("The protector has been already instantiated");
+        } catch (IllegalAccessException | NoSuchAlgorithmException | SaveData e) {
+            throw new RuntimeException(e);
+        }
     }
 
 }
