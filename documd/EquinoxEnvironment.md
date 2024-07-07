@@ -111,7 +111,6 @@ apply(plugin = "io.spring.dependency-management")
 
 repositories {
     mavenCentral()
-    mavenLocal()
     maven("https://jitpack.io")
     maven("https://repo.clojars.org")
 }
