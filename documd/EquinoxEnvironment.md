@@ -380,6 +380,11 @@ public class Launcher {
 }
 ```
 
+### Mantis resources set
+
+You can create your own resources set for internationalizate your backend, but to do it you need to create a [resources.mantis](https://github.com/N7ghtm4r3/Equinox/blob/main/src/main/resources/resources.mantis)
+file in the resources folder, and **to copy** the set already given
+
 > [!NOTE]  
 > The REQUIRED annotations are not more necessary because using the `@Primary` annotations the `com.tecknobit.` package
 > is not more useful to search the repositories, entities and components pre-implemented
