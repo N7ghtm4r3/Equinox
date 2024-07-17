@@ -30,6 +30,7 @@ import javax.net.ssl.X509TrustManager
  * @param userToken: the user token
  * @param debugMode: whether the requester is still in development and who is developing needs the log of the requester's
  * workflow, if it is enabled all the details of the requests sent and the errors occurred will be printed in the console
+ * @param connectionTimeout: time to keep alive request then throw the connection refused error
  * @param connectionErrorMessage: the error to send when a connection error occurred
  * @param enableCertificatesValidation: whether enable the **SSL** certificates validation, this for example
  * when the certificate is a self-signed certificate to by-pass
@@ -41,6 +42,7 @@ abstract class Requester (
     protected var userId: String? = null,
     protected var userToken: String? = null,
     protected var debugMode: Boolean = false,
+    protected val connectionTimeout: Int = DEFAULT_REQUEST_TIMEOUT,
     protected val connectionErrorMessage: String = DEFAULT_CONNECTION_ERROR_MESSAGE,
     protected val enableCertificatesValidation: Boolean = false
 ) {
@@ -83,7 +85,7 @@ abstract class Requester (
     /**
      * **apiRequest** -> the instance to communicate and make the requests to the backend
      */
-    protected val apiRequest = APIRequest(5000)
+    protected val apiRequest = APIRequest(connectionTimeout)
 
     /**
      * **headers** the headers used in the request
@@ -138,6 +140,17 @@ abstract class Requester (
         this.host = host
         if(enableCertificatesValidation)
             mustValidateCertificates = host.startsWith("https")
+    }
+
+    /**
+     * Function to set programmatically timeout for the requests
+     *
+     * @param connectionTimeout: timeout for the requests
+     */
+    fun setConnectionTimeout(
+        connectionTimeout: Int
+    ) {
+        apiRequest.setRequestTimeout(connectionTimeout)
     }
 
     /**
