@@ -110,19 +110,4 @@ public interface EquinoxUsersRepository extends JpaRepository<EquinoxUser, Strin
             @Param(IDENTIFIER_KEY) String id
     );
 
-    /**
-     * Method to execute the query to delete the {@link EquinoxUser} who requested a transfer from the current server
-     *
-     * @param id: the identifier of the user
-     */
-    @Modifying(clearAutomatically = true)
-    @Transactional
-    @Query(
-            value = "DELETE FROM " + USERS_KEY + " WHERE " + IDENTIFIER_KEY + "=:" + IDENTIFIER_KEY,
-            nativeQuery = true
-    )
-    void deleteAfterTransferred(
-            @Param(IDENTIFIER_KEY) String id
-    );
-
 }

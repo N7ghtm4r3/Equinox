@@ -346,6 +346,7 @@ public class EquinoxUser extends EquinoxItem {
      *
      * @return {@link #name} instance as {@link ApplicationTheme}
      */
+    @JsonIgnore
     public ApplicationTheme getTheme() {
         return theme;
     }

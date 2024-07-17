@@ -1,5 +1,6 @@
 {
     "en": {
+        "connection_error_message_key": "Server is temporarily unavailable",
         "wrong_procedure_key": "Wrong procedure",
         "wrong_password_key": "Password is not valid",
         "wrong_currency_key": "Currency is not supported",
@@ -12,6 +13,7 @@
     },
     "ignored_resources": {},
     "it": {
+        "connection_error_message_key": "Il server è temporaneamente non disponibile",
         "wrong_procedure_key": "Procedura sbagliata",
         "wrong_password_key": "Password non valida",
         "wrong_currency_key": "Valuta non supportata",
@@ -23,6 +25,7 @@
         "not_authorized_key": "Non autorizzat o dati errati"
     },
     "fr": {
+        "connection_error_message_key": "Le serveur est temporairement indisponible",
         "wrong_procedure_key": "Mauvaise procadure",
         "wrong_password_key": "Mot de passe n'est pas valide",
         "wrong_currency_key": "La monnaie n'est pas prise en charge",
@@ -34,6 +37,7 @@
         "not_authorized_key": "Non autorisa ou faux datails"
     },
     "es": {
+        "connection_error_message_key": "El servidor no està disponible temporalmente",
         "wrong_procedure_key": "Procedimiento incorrecto",
         "wrong_password_key": "La contraseÃ±a no es valida",
         "wrong_currency_key": "No se admite la moneda",
@@ -41,7 +45,7 @@
         "wrong_name_key": "El nombre no es valido",
         "wrong_surname_key": "El apellido no es valido",
         "wrong_language_key": "El idioma no es compatible",
-        "wrong_email_key": "El correo electrÃ³nico no es valido",
+        "wrong_email_key": "El correo electrinico no es valido",
         "not_authorized_key": "No autorizados o datos incorrectos"
     }
 }

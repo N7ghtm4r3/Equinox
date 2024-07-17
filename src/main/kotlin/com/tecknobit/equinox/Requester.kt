@@ -41,7 +41,7 @@ abstract class Requester (
     protected var userId: String? = null,
     protected var userToken: String? = null,
     protected var debugMode: Boolean = false,
-    protected val connectionErrorMessage: String,
+    protected val connectionErrorMessage: String = DEFAULT_CONNECTION_ERROR_MESSAGE,
     protected val enableCertificatesValidation: Boolean = false
 ) {
 
@@ -66,6 +66,12 @@ abstract class Requester (
          * **RESPONSE_MESSAGE_KEY** the key for the <b>"response"</b> field
          */
         const val RESPONSE_MESSAGE_KEY: String = "response"
+
+        /**
+         * **DEFAULT_CONNECTION_ERROR_MESSAGE** the message to send when an error during the communication with the
+         * backend occurred
+         */
+        const val DEFAULT_CONNECTION_ERROR_MESSAGE = "connection_error_message_key"
 
     }
 
@@ -182,7 +188,7 @@ abstract class Requester (
     @Wrapper
     protected fun execPut(
         endpoint: String,
-        payload: Params
+        payload: Params = Params()
     ) : JSONObject {
         return execRequest(
             method = RequestMethod.PUT,
@@ -202,7 +208,7 @@ abstract class Requester (
     @Wrapper
     protected fun execPatch(
         endpoint: String,
-        payload: Params
+        payload: Params = Params()
     ) : JSONObject {
         return execRequest(
             method = RequestMethod.PATCH,
