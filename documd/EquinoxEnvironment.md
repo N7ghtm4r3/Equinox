@@ -43,9 +43,6 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.annotation.PropertySources;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
-import static com.tecknobit.equinox.resourcesutils.ResourcesProvider.CUSTOM_CONFIGURATION_FILE_PATH;
-import static com.tecknobit.equinox.resourcesutils.ResourcesProvider.DEFAULT_CONFIGURATION_FILE_PATH;
-
 @EnableAutoConfiguration
 @EnableJpaRepositories(
         value = {"com.tecknobit.*" /* REQUIRED */, "other.packages..."}
@@ -114,7 +111,6 @@ apply(plugin = "io.spring.dependency-management")
 
 repositories {
     mavenCentral()
-    mavenLocal()
     maven("https://jitpack.io")
     maven("https://repo.clojars.org")
 }
@@ -128,6 +124,7 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-maven-plugin:3.2.0")
     implementation("org.springframework.boot:spring-boot-starter-data-jpa:3.2.3")
     implementation("mysql:mysql-connector-java:8.0.33")
+    implementation("com.github.N7ghtm4r3:APIManager:2.2.3")
     implementation("com.github.N7ghtm4r3:Equinox:1.0.1")
     implementation("org.json:json:20231013")
 
@@ -349,9 +346,6 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.annotation.PropertySources;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
-import static com.tecknobit.equinox.resourcesutils.ResourcesProvider.CUSTOM_CONFIGURATION_FILE_PATH;
-import static com.tecknobit.equinox.resourcesutils.ResourcesProvider.DEFAULT_CONFIGURATION_FILE_PATH;
-
 @EnableAutoConfiguration
 @EnableJpaRepositories(
         value = {"other.packages..."}
@@ -385,6 +379,11 @@ public class Launcher {
     
 }
 ```
+
+### Mantis resources set
+
+You can create your own resources set for internationalizate your backend, but to do it you need to create a [resources.mantis](https://github.com/N7ghtm4r3/Equinox/blob/main/src/main/resources/resources.mantis)
+file in the resources folder, and **to copy** the set already given
 
 > [!NOTE]  
 > The REQUIRED annotations are not more necessary because using the `@Primary` annotations the `com.tecknobit.` package
