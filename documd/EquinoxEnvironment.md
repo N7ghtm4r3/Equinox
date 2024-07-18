@@ -228,8 +228,7 @@ each classes, but it does not affect to the previous queries implemented for the
 
 ### Create the dedicated JpaRepository
 
-You need to create the dedicated repository to work with your custom user, so, you can extend the *
-*EquinoxUsersRepository**
+You need to create the dedicated repository to work with your custom user, so, you can extend the **EquinoxUsersRepository**
 interface and add the custom additional queries. The interface will be as the following:
 
 ```java
