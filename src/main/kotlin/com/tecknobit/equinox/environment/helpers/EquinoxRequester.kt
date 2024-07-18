@@ -24,6 +24,7 @@ import java.io.File
  * @param userToken: the user token
  * @param debugMode: whether the requester is still in development and who is developing needs the log of the requester's
  * workflow, if it is enabled all the details of the requests sent and the errors occurred will be printed in the console
+ * @param connectionTimeout: time to keep alive request then throw the connection refused error
  * @param connectionErrorMessage: the error to send when a connection error occurred
  * @param enableCertificatesValidation: whether enable the **SSL** certificates validation, this for example
  * when the certificate is a self-signed certificate to by-pass
@@ -37,6 +38,7 @@ abstract class EquinoxRequester(
     userId: String? = null,
     userToken: String? = null,
     debugMode: Boolean = false,
+    connectionTimeout: Int,
     connectionErrorMessage: String,
     enableCertificatesValidation: Boolean = false
 ) : Requester(
@@ -44,6 +46,7 @@ abstract class EquinoxRequester(
     userId = userId,
     userToken = userToken,
     debugMode = debugMode,
+    connectionTimeout = connectionTimeout,
     connectionErrorMessage = connectionErrorMessage,
     enableCertificatesValidation = enableCertificatesValidation
 ) {

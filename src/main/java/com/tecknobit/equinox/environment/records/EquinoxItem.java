@@ -22,6 +22,11 @@ import org.json.JSONObject;
 public abstract class EquinoxItem {
 
     /**
+     * {@code DISCRIMINATOR_VALUE_KEY} the key for the <b>"dtype"</b> field
+     */
+    public static final String DISCRIMINATOR_VALUE_KEY = "dtype";
+
+    /**
      * {@code IDENTIFIER_KEY} the key for the <b>"id"</b> field
      */
     public static final String IDENTIFIER_KEY = "id";

@@ -18,11 +18,6 @@ import static com.tecknobit.equinox.inputs.InputValidator.HOST_ADDRESS_KEY;
 public abstract class EquinoxLocalUser {
 
     /**
-     * {@code PREFERENCES_FILE} the name of the preferences file
-     */
-    protected static final String PREFERENCES_FILE = "Neutron";
-
-    /**
      * {@code hostAddress} the host address which the user communicate
      */
     protected String hostAddress;

@@ -81,12 +81,14 @@ class FetcherManager(
      * No-any params required
      */
     fun restart() {
-        execute(
-            currentContext = lastRoutineExecuted.currentContext,
-            routine = lastRoutineExecuted.routine,
-            repeatRoutine = lastRoutineExecuted.repeatRoutine,
-            refreshDelay = lastRoutineExecuted.refreshDelay
-        )
+        if (::lastRoutineExecuted.isInitialized) {
+            execute(
+                currentContext = lastRoutineExecuted.currentContext,
+                routine = lastRoutineExecuted.routine,
+                repeatRoutine = lastRoutineExecuted.repeatRoutine,
+                refreshDelay = lastRoutineExecuted.refreshDelay
+            )
+        }
     }
 
     /**

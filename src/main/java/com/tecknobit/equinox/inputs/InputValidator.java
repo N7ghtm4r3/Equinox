@@ -96,12 +96,12 @@ public class InputValidator {
     /**
      * {@code emailValidator} helper to validate the emails values
      */
-    private static final EmailValidator emailValidator = EmailValidator.getInstance();
+    protected static final EmailValidator emailValidator = EmailValidator.getInstance();
 
     /**
      * {@code urlValidator} helper to validate the urls values
      */
-    private static final UrlValidator urlValidator = UrlValidator.getInstance();
+    protected static final UrlValidator urlValidator = UrlValidator.getInstance();
 
     /**
      * {@code LANGUAGES_SUPPORTED} list of the supported languages
@@ -117,7 +117,7 @@ public class InputValidator {
 
     /**
      * Constructor to init the {@link InputValidator} class <br>
-     * <p>
+     *
      * No-any params required
      */
     protected InputValidator() {

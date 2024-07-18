@@ -5,7 +5,7 @@ plugins {
 }
 
 group = "com.tecknobit"
-version = "1.0.1"
+version = "1.0.2"
 
 repositories {
     mavenCentral()
@@ -32,7 +32,7 @@ afterEvaluate {
             create<MavenPublication>("maven") {
                 groupId = "com.tecknobit.equinox"
                 artifactId = "Equinox"
-                version = "1.0.1"
+                version = "1.0.2"
                 from(components["java"])
             }
         }

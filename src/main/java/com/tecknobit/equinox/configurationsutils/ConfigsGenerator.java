@@ -7,6 +7,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.HashSet;
+import java.util.prefs.Preferences;
 
 /**
  * The {@code ConfigsGenerator} class is useful to create automatically some configuration files
@@ -30,6 +31,12 @@ public class ConfigsGenerator {
      * {@code context} the {@link Class} where this method has been invoked
      */
     private final Class<?> context;
+
+    /**
+     * {@code preferences} helper to check with the {@link #configFileStillNotCreated(String)} method if a config file
+     * has been already created or not
+     */
+    private final Preferences preferences;
 
     /**
      * {@code isKotlinClass} whether the caller class ({@link #context}) is a <b>Kotlin</b> class
@@ -247,6 +254,7 @@ public class ConfigsGenerator {
      */
     public ConfigsGenerator(Class<?> context) {
         this.context = context;
+        preferences = Preferences.userNodeForPackage(context);
         isKotlinClass = isKotlinClass();
     }
 
@@ -286,6 +294,7 @@ public class ConfigsGenerator {
         String path = getConfigsPath(RESOURCES_CONFIG_FILE_NAME);
         String content = getConfigFileContent(KOTLIN_CONFIGURATION_FILE_CONTENT, JAVA_CONFIGURATION_FILE_CONTENT);
         createConfigFile(path, content.replace("<list>", containers.toString()));
+        preferences.putBoolean(RESOURCES_CONFIG_FILE_NAME, true);
     }
 
     /**
@@ -310,6 +319,7 @@ public class ConfigsGenerator {
         String path = getConfigsPath(CORS_ADVICE_FILE_NAME);
         String content = getConfigFileContent(KOTLIN_CORS_ADVICE_FILE_CONTENT, JAVA_CORS_ADVICE_FILE_CONTENT);
         createConfigFile(path, content);
+        preferences.putBoolean(CORS_ADVICE_FILE_NAME, true);
     }
 
     /**
@@ -347,7 +357,7 @@ public class ConfigsGenerator {
      * that file
      */
     private void createConfigFile(String configsPath, String content) throws IOException {
-        if (!new File(configsPath).exists()) {
+        if (!new File(configsPath).exists() && configFileStillNotCreated(configsPath)) {
             FileWriter writer = new FileWriter(configsPath);
             writer.write(content.replaceAll("\\\\", "/")
                     .replaceAll("\\[", "")
@@ -356,6 +366,21 @@ public class ConfigsGenerator {
             writer.flush();
             writer.close();
         }
+    }
+
+    /**
+     * Method to check if a config file has been already created for the current project,
+     * so to skip its creation
+     *
+     * @param configsPath: the path where the configuration file is stored
+     */
+    private boolean configFileStillNotCreated(String configsPath) {
+        String configFileName;
+        if (configsPath.contains(CORS_ADVICE_FILE_NAME))
+            configFileName = CORS_ADVICE_FILE_NAME;
+        else
+            configFileName = RESOURCES_CONFIG_FILE_NAME;
+        return !preferences.getBoolean(configFileName, false);
     }
 
     /**

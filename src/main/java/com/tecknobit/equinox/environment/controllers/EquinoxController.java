@@ -8,6 +8,7 @@ import com.tecknobit.equinox.environment.helpers.services.repositories.EquinoxUs
 import com.tecknobit.equinox.environment.records.EquinoxUser;
 import com.tecknobit.equinox.resourcesutils.ResourcesProvider;
 import com.tecknobit.mantis.Mantis;
+import jakarta.annotation.PostConstruct;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
@@ -35,7 +36,7 @@ import static com.tecknobit.equinox.resourcesutils.ResourcesManager.RESOURCES_KE
  */
 @RestController
 @RequestMapping(BASE_EQUINOX_ENDPOINT)
-abstract public class EquinoxController {
+abstract public class EquinoxController<T extends EquinoxUser> {
 
     /**
      * {@code protector} the instance to launch the server protector to manage the server accesses
@@ -91,8 +92,8 @@ abstract public class EquinoxController {
     /**
      * {@code usersRepository} instance for the user repository
      */
-    @Autowired
-    protected EquinoxUsersRepository usersRepository;
+    @Autowired(required = false)
+    protected EquinoxUsersRepository<T> usersRepository;
 
     /**
      * {@code jsonHelper} helper to work with JSON values
@@ -102,15 +103,17 @@ abstract public class EquinoxController {
     /**
      * {@code me} user representing the user who made a request on the server
      */
-    protected EquinoxUser me;
+    protected T me;
 
     /**
-     * Constructor to init the {@link EquinoxController} class <br>
-     * <p>
+     * Method to check if the status of the environment has been set up correctly
+     * based on the use or not of the {@link #usersRepository} <br>
+     *
      * No-any params required
      */
-    public EquinoxController() {
-        if (serverProtector == null) {
+    @PostConstruct
+    private void checkEnvironmentStatus() {
+        if (usersRepository != null && serverProtector == null) {
             try {
                 throw new Exception("The server protector must be initialized first");
             } catch (Exception e) {
@@ -147,7 +150,7 @@ abstract public class EquinoxController {
      * @return whether the user is an authorized user as boolean
      */
     protected boolean isMe(String id, String token) {
-        Optional<EquinoxUser> query = usersRepository.findById(id);
+        Optional<T> query = usersRepository.findById(id);
         me = query.orElse(null);
         boolean isMe = me != null && me.getToken().equals(token);
         if (!isMe) {

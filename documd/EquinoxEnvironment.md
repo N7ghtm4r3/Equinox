@@ -8,6 +8,9 @@ The base environment gives a base set of classes:
   set of endpoints already created for the **EquinoxUsersController** methods
 - [EquinoxController](https://github.com/N7ghtm4r3/Equinox/blob/main/src/main/java/com/tecknobit/equinox/environment/controllers/EquinoxController.java) ->
   to manage the other **RestController** of the backend
+- [DefaultEquinoxController](https://github.com/N7ghtm4r3/Equinox/blob/main/src/main/java/com/tecknobit/equinox/environment/controllers/DefaultEquinoxController.java) ->
+  to manage the other **RestController** of the backend with the default usage of
+  the [EquinoxUser](https://github.com/N7ghtm4r3/Equinox/blob/main/src/main/java/com/tecknobit/equinox/environment/records/EquinoxUser.java)
 - [EquinoxItem](https://github.com/N7ghtm4r3/Equinox/blob/main/src/main/java/com/tecknobit/equinox/environment/records/EquinoxItem.java) ->
   base class for the items used by an Equinox backend based
 - User utilities set
@@ -60,7 +63,7 @@ public class Launcher {
 
         // used to init the server protector to manage the server accesses
         // if it is not done will be thrown a RuntimeException
-        // required if you create your own RestController extending it from EquinoxController
+      // required if you need to use EquinoxUser or your own customization of that class
         EquinoxController.initEquinoxEnvironment(
                 "the path where storage the server secret",
                 "the message to print when the server secret has been generated",
@@ -125,7 +128,7 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-data-jpa:3.2.3")
     implementation("mysql:mysql-connector-java:8.0.33")
     implementation("com.github.N7ghtm4r3:APIManager:2.2.3")
-    implementation("com.github.N7ghtm4r3:Equinox:1.0.1")
+    implementation("com.github.N7ghtm4r3:Equinox:1.0.2")
     implementation("org.json:json:20231013")
 
     ...
@@ -143,7 +146,36 @@ after your own customization, in this example you need to add the **currency** f
 related
 change request.
 
-### Customized the **EquinoxUser**
+### Backend with no database needed
+
+If your architecture does not include a database usage you exclude it as following:
+
+```java
+package other.packages
+
+...
+
+import com.tecknobit.equinox.environment.controllers.EquinoxController;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.annotation.PropertySources;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+
+@EnableAutoConfiguration(
+        exclude = {DataSourceAutoConfiguration.class, HibernateJpaAutoConfiguration.class}
+)
+// others basic  SpringBoot's annotations
+public class Launcher {
+
+  // Rest of the Launcher class ...
+
+}
+```
+
+### Customize the **EquinoxUser**
 
 To add the custom field you need to extend your custom users from the base **EquinoxUser**, the class will be as
 the following:
@@ -196,8 +228,7 @@ each classes, but it does not affect to the previous queries implemented for the
 
 ### Create the dedicated JpaRepository
 
-You need to create the dedicated repository to work with your custom user, so, you can extend the *
-*EquinoxUsersRepository**
+You need to create the dedicated repository to work with your custom user, so, you can extend the **EquinoxUsersRepository**
 interface and add the custom additional queries. The interface will be as the following:
 
 ```java
@@ -218,7 +249,7 @@ import static com.tecknobit.equinox.environment.records.EquinoxUser.USERS_KEY;
 @Service
 @Repository
 @Primary // this is REQUIRED to use correctly this repository instead the EquinoxUsersRepository
-public interface CustomUsersRepository extends EquinoxUsersRepository {
+public interface CustomUsersRepository extends EquinoxUsersRepository<CustomUser> {
 
     @Modifying(clearAutomatically = true)
     @Transactional
@@ -250,7 +281,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @Primary // this is REQUIRED to use correctly this helper instead the EquinoxUsersHelper
-public class CustomUsersHelper extends EquinoxUsersHelper {
+public class CustomUsersHelper extends EquinoxUsersHelper<CustomUser> {
 
     @Autowired
     private CustomUsersRepository customUsersRepository;
@@ -278,7 +309,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Map;
 
 @RestController
-public class CustomUsersController extends EquinoxUsersController {
+public class CustomUsersController extends EquinoxUsersController<CustomUser> {
 
     private final CustomUsersHelper customUsersHelper;
 
@@ -328,55 +359,12 @@ public class CustomUsersController extends EquinoxUsersController {
 }
 ```
 
-### Edit your Launcher class
-
-Instead of the
-first [Launcher](https://github.com/N7ghtm4r3/Equinox/blob/main/documd/EquinoxEnvironment.md#usageexamples)
-class, you need to customize it to correctly launch the backend
+You can also create your own default controller
+as [DefaultEquinoxController](https://github.com/N7ghtm4r3/Equinox/blob/main/src/main/java/com/tecknobit/equinox/environment/controllers/DefaultEquinoxController.java)
+with your own CustomUser instead:
 
 ```java
-package other.packages...
-
-import com.tecknobit.equinox.environment.controllers.EquinoxController;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.domain.EntityScan;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.PropertySource;
-import org.springframework.context.annotation.PropertySources;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
-
-@EnableAutoConfiguration
-@EnableJpaRepositories(
-        value = {"other.packages..."}
-)
-@EntityScan(
-        value = {"other.packages..."}
-)
-@ComponentScan(
-        value = {"other.packages..."}
-)
-@SpringBootApplication
-public class Launcher {
-
-    public static void main(String[] args) {
-
-        // used to init the server protector to manage the server accesses
-        // if it is not done will be thrown a RuntimeException
-        // required if you create your own RestController extending it from EquinoxController
-        EquinoxController.initEquinoxEnvironment(
-                "the path where storage the server secret",
-                "the message to print when the server secret has been generated",
-                Launcher.class,
-                args);
-
-        // ... your code ...
-
-        // normally launch your SpringBoot's application
-        SpringApplication.run(Launcher.class, args);
-
-    }
-    
+public abstract class DefaultMyOwnController extends EquinoxController<CustomUser> {
 }
 ```
 
