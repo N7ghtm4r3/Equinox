@@ -146,7 +146,36 @@ after your own customization, in this example you need to add the **currency** f
 related
 change request.
 
-### Customized the **EquinoxUser**
+### Backend with no database needed
+
+If your architecture does not include a database usage you exclude it as following:
+
+```java
+package other.packages
+
+...
+
+import com.tecknobit.equinox.environment.controllers.EquinoxController;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.annotation.PropertySources;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+
+@EnableAutoConfiguration(
+        exclude = {DataSourceAutoConfiguration.class, HibernateJpaAutoConfiguration.class}
+)
+// others basic  SpringBoot's annotations
+public class Launcher {
+
+  // Rest of the Launcher class ...
+
+}
+```
+
+### Customize the **EquinoxUser**
 
 To add the custom field you need to extend your custom users from the base **EquinoxUser**, the class will be as
 the following:
