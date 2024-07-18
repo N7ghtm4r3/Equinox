@@ -24,19 +24,19 @@ import static com.tecknobit.equinox.inputs.InputValidator.*;
  * @since 1.0.1
  */
 @RestController
-public class EquinoxUsersController extends EquinoxController {
+public class EquinoxUsersController<T extends EquinoxUser> extends EquinoxController<T> {
 
     /**
      * {@code usersHelper} helper to manage the users database operations
      */
-    private final EquinoxUsersHelper usersHelper;
+    private final EquinoxUsersHelper<T> usersHelper;
 
     /**
      * Constructor to init the {@link EquinoxUsersController} controller
      *
      * @param usersHelper: helper to manage the users database operations
      */
-    public EquinoxUsersController(EquinoxUsersHelper usersHelper) {
+    public EquinoxUsersController(EquinoxUsersHelper<T> usersHelper) {
         super();
         this.usersHelper = usersHelper;
     }

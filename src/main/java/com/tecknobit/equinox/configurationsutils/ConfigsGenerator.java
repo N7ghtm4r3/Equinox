@@ -32,7 +32,10 @@ public class ConfigsGenerator {
      */
     private final Class<?> context;
 
-    //TODO: TO COMMENT
+    /**
+     * {@code preferences} helper to check with the {@link #configFileStillNotCreated(String)} method if a config file
+     * has been already created or not
+     */
     private final Preferences preferences;
 
     /**
@@ -365,7 +368,12 @@ public class ConfigsGenerator {
         }
     }
 
-    //TODO: TO COMMENT
+    /**
+     * Method to check if a config file has been already created for the current project,
+     * so to skip its creation
+     *
+     * @param configsPath: the path where the configuration file is stored
+     */
     private boolean configFileStillNotCreated(String configsPath) {
         String configFileName;
         if (configsPath.contains(CORS_ADVICE_FILE_NAME))

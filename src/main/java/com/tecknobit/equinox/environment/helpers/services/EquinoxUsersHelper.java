@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.lang.reflect.ParameterizedType;
 import java.security.NoSuchAlgorithmException;
 
 import static com.tecknobit.apimanager.apis.APIRequest.SHA256_ALGORITHM;
@@ -18,21 +19,30 @@ import static java.lang.System.currentTimeMillis;
  * The {@code EquinoxUsersHelper} class is useful to manage all the user database operations
  *
  * @author N7ghtm4r3 - Tecknobit
- * @see com.tecknobit.equinox.resourcesutils.ResourcesManager
+ * @see ResourcesManager
  *
  * @since 1.0.1
  */
 @Service
-public class EquinoxUsersHelper implements ResourcesManager {
+public class EquinoxUsersHelper<T extends EquinoxUser> implements ResourcesManager {
 
     /**
      * {@code usersRepository} instance for the users repository
      */
     @Autowired
-    private EquinoxUsersRepository usersRepository;
+    private EquinoxUsersRepository<T> usersRepository;
+
+    //TODO: TO COMMENT
+    private final String discriminatorValue;
+
+    //TODO: TO COMMENT
+    public EquinoxUsersHelper() {
+        discriminatorValue = ((Class<T>) ((ParameterizedType) getClass().getGenericSuperclass())
+                .getActualTypeArguments()[0]).getSimpleName();
+    }
 
     /**
-     * Method to sign up a new user in the Nova's system
+     * Method to sign up a new user in the system
      *
      * @param id:       the identifier of the user
      * @param token:    the token of the user
@@ -44,7 +54,8 @@ public class EquinoxUsersHelper implements ResourcesManager {
      */
     public void signUpUser(String id, String token, String name, String surname, String email, String password,
                            String language) throws NoSuchAlgorithmException {
-        usersRepository.save(new EquinoxUser(
+        usersRepository.saveUser(
+                discriminatorValue,
                 id,
                 token,
                 name,
@@ -52,7 +63,7 @@ public class EquinoxUsersHelper implements ResourcesManager {
                 email,
                 hash(password),
                 language
-        ));
+        );
     }
 
     /**
