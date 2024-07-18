@@ -3,10 +3,7 @@ package com.tecknobit.equinox.environment.records;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.tecknobit.apimanager.annotations.Returner;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
-import jakarta.persistence.Transient;
+import jakarta.persistence.*;
 import org.json.JSONObject;
 
 import java.util.Locale;
@@ -26,6 +23,7 @@ import static com.tecknobit.equinox.inputs.InputValidator.LANGUAGES_SUPPORTED;
  */
 @Entity
 @Table(name = USERS_KEY)
+@DiscriminatorColumn
 public class EquinoxUser extends EquinoxItem {
 
     /**

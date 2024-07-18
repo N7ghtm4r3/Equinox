@@ -36,7 +36,6 @@ import static com.tecknobit.equinox.resourcesutils.ResourcesManager.RESOURCES_KE
  */
 @RestController
 @RequestMapping(BASE_EQUINOX_ENDPOINT)
-//TODO: TO FIX
 abstract public class EquinoxController<T extends EquinoxUser> {
 
     /**

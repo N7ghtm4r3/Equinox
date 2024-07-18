@@ -32,13 +32,23 @@ public class EquinoxUsersHelper<T extends EquinoxUser> implements ResourcesManag
     @Autowired
     private EquinoxUsersRepository<T> usersRepository;
 
-    //TODO: TO COMMENT
-    private final String discriminatorValue;
+    /**
+     * {@code discriminatorValue} value of the discriminator to use to save the users in the related table
+     */
+    private String discriminatorValue;
 
-    //TODO: TO COMMENT
+    /**
+     * Constructor to init the {@link EquinoxUsersHelper} controller <br>
+     * <p>
+     * No-any params required
+     */
     public EquinoxUsersHelper() {
-        discriminatorValue = ((Class<T>) ((ParameterizedType) getClass().getGenericSuperclass())
-                .getActualTypeArguments()[0]).getSimpleName();
+        try {
+            discriminatorValue = ((Class<T>) ((ParameterizedType) getClass().getGenericSuperclass())
+                    .getActualTypeArguments()[0]).getSimpleName();
+        } catch (ClassCastException e) {
+            discriminatorValue = "EquinoxUser";
+        }
     }
 
     /**
