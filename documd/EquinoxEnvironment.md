@@ -129,6 +129,7 @@ dependencies {
     implementation("mysql:mysql-connector-java:8.0.33")
     implementation("com.github.N7ghtm4r3:APIManager:2.2.3")
     implementation("com.github.N7ghtm4r3:Equinox:1.0.2")
+    implementation("com.github.N7ghtm4r3:Mantis:1.0.0")
     implementation("org.json:json:20231013")
     implementation("commons-validator:commons-validator:1.7")
 
