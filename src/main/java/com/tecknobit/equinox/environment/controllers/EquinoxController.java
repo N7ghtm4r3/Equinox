@@ -61,6 +61,11 @@ abstract public class EquinoxController<T extends EquinoxUser> {
     protected static ServerProtector serverProtector;
 
     /**
+     * {@code resourcesProvider} the resources provider and manager
+     */
+    public static ResourcesProvider resourcesProvider;
+
+    /**
      * {@code mantis} the translations manager
      */
     protected static final Mantis mantis;
@@ -239,6 +244,7 @@ abstract public class EquinoxController<T extends EquinoxUser> {
      *                     Please you should safely save: server_secret_token_generated"</b>
      * @param context: the launcher {@link Class} where this method has been invoked
      * @param args: custom arguments to share with {@link SpringApplication} and with the {@link #serverProtector}
+     * @param customSubDirectories: the custom subdirectories of the user
      *
      * @apiNote the arguments scheme:
      * <ul>
@@ -265,12 +271,13 @@ abstract public class EquinoxController<T extends EquinoxUser> {
      *     </li>
      * </ul>
      */
-    public static void initEquinoxEnvironment(String storagePath, String saveMessage, Class<?> context, String[] args) {
+    public static void initEquinoxEnvironment(String storagePath, String saveMessage, Class<?> context, String[] args,
+                                              String... customSubDirectories) {
         try {
             if (serverProtector == null) {
                 serverProtector = new ServerProtector(storagePath, saveMessage);
                 serverProtector.launch(args);
-                setBasicResourcesConfiguration(context);
+                setBasicResourcesConfiguration(context, customSubDirectories);
             } else
                 throw new IllegalAccessException("The protector has been already instantiated");
         } catch (Exception e) {
@@ -283,10 +290,13 @@ abstract public class EquinoxController<T extends EquinoxUser> {
      * correctly serve the static resources and set the CORS policy
      *
      * @param context: the launcher {@link Class} where this method has been invoked
+     * @param customSubDirectories: the custom subdirectories of the user
      * @throws IOException when an error during the creation of the files occurred
      */
-    private static void setBasicResourcesConfiguration(Class<?> context) throws IOException {
-        ResourcesProvider resourcesProvider = new ResourcesProvider(RESOURCES_KEY, List.of(PROFILES_DIRECTORY));
+    private static void setBasicResourcesConfiguration(Class<?> context, String... customSubDirectories) throws IOException {
+        List<String> subDirectories = new ArrayList<>(Arrays.stream(customSubDirectories).toList());
+        subDirectories.add(PROFILES_DIRECTORY);
+        resourcesProvider = new ResourcesProvider(RESOURCES_KEY, subDirectories);
         resourcesProvider.createContainerDirectory();
         resourcesProvider.createSubDirectories();
         ConfigsGenerator configsGenerator = new ConfigsGenerator(context);

@@ -1,6 +1,7 @@
 package com.tecknobit.equinox.environment.helpers
 
 import com.tecknobit.apimanager.annotations.RequestPath
+import com.tecknobit.apimanager.apis.APIRequest.DEFAULT_REQUEST_TIMEOUT
 import com.tecknobit.apimanager.apis.APIRequest.Params
 import com.tecknobit.apimanager.apis.APIRequest.RequestMethod.*
 import com.tecknobit.apimanager.apis.ServerProtector.SERVER_SECRET_KEY
@@ -38,8 +39,8 @@ abstract class EquinoxRequester(
     userId: String? = null,
     userToken: String? = null,
     debugMode: Boolean = false,
-    connectionTimeout: Int,
-    connectionErrorMessage: String,
+    connectionTimeout: Int = DEFAULT_REQUEST_TIMEOUT,
+    connectionErrorMessage: String = DEFAULT_CONNECTION_ERROR_MESSAGE,
     enableCertificatesValidation: Boolean = false
 ) : Requester(
     host = host,
@@ -215,6 +216,33 @@ abstract class EquinoxRequester(
     open fun deleteAccount(): JSONObject {
         return execDelete(
             endpoint = assembleUsersEndpointPath()
+        )
+    }
+
+    /**
+     * Function to assemble the endpoint to make the request to the custom controllers
+     *
+     * @param customEndpoint: the custom endpoint of the request, the main part of the complete url
+     * @param subEndpoint: the sub-endpoint path of the url
+     * @param query: the query to attach to the request
+     *
+     * @return an endpoint to make the request as [String]
+     */
+    protected fun assembleCustomEndpointPath(
+        customEndpoint: String,
+        subEndpoint: String = "",
+        query: String = ""
+    ): String {
+        val subPath = if (subEndpoint.isNotBlank())
+            "/$subEndpoint"
+        else
+            subEndpoint
+        val requestUrl = "$customEndpoint$subPath$query"
+        return assembleUsersEndpointPath(
+            endpoint = if (customEndpoint.startsWith("/"))
+                requestUrl
+            else
+                "/$requestUrl"
         )
     }
 
