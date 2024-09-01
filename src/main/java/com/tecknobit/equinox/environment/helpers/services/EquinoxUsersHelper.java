@@ -35,7 +35,7 @@ public class EquinoxUsersHelper<T extends EquinoxUser> implements ResourcesManag
     /**
      * {@code discriminatorValue} value of the discriminator to use to save the users in the related table
      */
-    private String discriminatorValue;
+    protected String discriminatorValue;
 
     /**
      * Constructor to init the {@link EquinoxUsersHelper} controller <br>
@@ -83,8 +83,8 @@ public class EquinoxUsersHelper<T extends EquinoxUser> implements ResourcesManag
      * @param password: the password of the user
      * @return the authenticated user as {@link EquinoxUser} if the credentials inserted were correct
      */
-    public EquinoxUser signInUser(String email, String password) throws NoSuchAlgorithmException {
-        EquinoxUser user = usersRepository.findUserByEmail(email);
+    public T signInUser(String email, String password) throws NoSuchAlgorithmException {
+        T user = usersRepository.findUserByEmail(email);
         if (user != null && user.getPassword().equals(hash(password)))
             return user;
         return null;
@@ -150,7 +150,7 @@ public class EquinoxUsersHelper<T extends EquinoxUser> implements ResourcesManag
      * @param secret: the user value to hash
      * @throws NoSuchAlgorithmException when the hash of the user value fails
      */
-    private String hash(String secret) throws NoSuchAlgorithmException {
+    protected String hash(String secret) throws NoSuchAlgorithmException {
         return APIRequest.base64Digest(secret, SHA256_ALGORITHM);
     }
 

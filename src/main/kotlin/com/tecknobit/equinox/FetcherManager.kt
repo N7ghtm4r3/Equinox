@@ -36,6 +36,15 @@ class FetcherManager(
             activeContext = currentContext
         }
 
+        /**
+         * Function to get the current active context where the [refreshRoutine] is executing
+         *
+         * No-any params required
+         */
+        fun getActiveContext(): Class<*> {
+            return activeContext
+        }
+
     }
 
     /**

@@ -29,7 +29,7 @@ public class EquinoxUsersController<T extends EquinoxUser> extends EquinoxContro
     /**
      * {@code usersHelper} helper to manage the users database operations
      */
-    private final EquinoxUsersHelper<T> usersHelper;
+    protected final EquinoxUsersHelper<T> usersHelper;
 
     /**
      * Constructor to init the {@link EquinoxUsersController} controller
@@ -104,7 +104,7 @@ public class EquinoxUsersController<T extends EquinoxUser> extends EquinoxContro
      * @param personalData: the personal data of the user like name and surname
      * @return the result of the auth operation as {@link String}
      */
-    private String executeAuth(Map<String, String> payload, String... personalData) {
+    protected String executeAuth(Map<String, String> payload, String... personalData) {
         loadJsonHelper(payload);
         String email = jsonHelper.getString(EMAIL_KEY);
         String password = jsonHelper.getString(PASSWORD_KEY);
