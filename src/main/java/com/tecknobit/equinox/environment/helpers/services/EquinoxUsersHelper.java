@@ -4,6 +4,9 @@ import com.tecknobit.apimanager.apis.APIRequest;
 import com.tecknobit.equinox.environment.helpers.services.repositories.EquinoxUsersRepository;
 import com.tecknobit.equinox.environment.records.EquinoxUser;
 import com.tecknobit.equinox.resourcesutils.ResourcesManager;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -11,8 +14,13 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.lang.reflect.ParameterizedType;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import static com.tecknobit.apimanager.apis.APIRequest.SHA256_ALGORITHM;
+import static com.tecknobit.equinox.environment.records.EquinoxItem.IDENTIFIER_KEY;
+import static com.tecknobit.equinox.environment.records.EquinoxUser.*;
 import static java.lang.System.currentTimeMillis;
 
 /**
@@ -24,7 +32,27 @@ import static java.lang.System.currentTimeMillis;
  * @since 1.0.1
  */
 @Service
+@Transactional
 public class EquinoxUsersHelper<T extends EquinoxUser> implements ResourcesManager {
+
+    //TODO: TO COMMENT
+    protected static final String SINGLE_QUOTE = "'";
+
+    //TODO: TO COMMENT
+    protected static final String COMMA = ",";
+
+    //TODO: TO COMMENT
+    protected static final String ROUND_BRACKET = ")";
+
+    //TODO: TO COMMENT
+    protected static final String VALUES_QUERY_PART = " VALUES (";
+
+    //TODO: TO COMMENT
+    protected static final String BASE_SIGN_UP_QUERY = "INSERT INTO " + USERS_KEY + "(";
+
+    //TODO: TO COMMENT
+    protected static final List<String> DEFAULT_USER_VALUES_KEYS = List.of(DISCRIMINATOR_VALUE_KEY, IDENTIFIER_KEY,
+            TOKEN_KEY, NAME_KEY, SURNAME_KEY, EMAIL_KEY, PASSWORD_KEY, LANGUAGE_KEY);
 
     /**
      * {@code usersRepository} instance for the users repository
@@ -36,6 +64,12 @@ public class EquinoxUsersHelper<T extends EquinoxUser> implements ResourcesManag
      * {@code discriminatorValue} value of the discriminator to use to save the users in the related table
      */
     protected String discriminatorValue;
+
+    /**
+     * {@code entityManager} entity manager helper
+     */
+    @PersistenceContext
+    protected EntityManager entityManager;
 
     /**
      * Constructor to init the {@link EquinoxUsersHelper} controller <br>
@@ -62,18 +96,39 @@ public class EquinoxUsersHelper<T extends EquinoxUser> implements ResourcesManag
      * @param password: the password of the user
      * @param language: the language of the user
      */
-    public void signUpUser(String id, String token, String name, String surname, String email, String password,
-                           String language) throws NoSuchAlgorithmException {
-        usersRepository.saveUser(
-                discriminatorValue,
-                id,
-                token,
-                name,
-                surname,
-                email,
-                hash(password),
-                language
-        );
+    //TODO: TO COMMENT
+    public int signUpUser(String id, String token, String name, String surname, String email, String password,
+                          String language, Object... custom) throws NoSuchAlgorithmException {
+        StringBuilder queryBuilder = new StringBuilder(BASE_SIGN_UP_QUERY);
+        arrangeQuery(queryBuilder, getQueryValuesKeys(), false);
+        List<Object> values = new ArrayList<>(List.of(discriminatorValue, id, token, name, surname, email, hash(password),
+                language));
+        values.addAll(Arrays.stream(custom).toList());
+        queryBuilder.append(VALUES_QUERY_PART);
+        arrangeQuery(queryBuilder, values, true);
+        return entityManager.createNativeQuery(queryBuilder.toString()).executeUpdate();
+    }
+
+    //TODO: TO COMMENT
+    protected List<String> getQueryValuesKeys() {
+        return DEFAULT_USER_VALUES_KEYS;
+    }
+
+    //TODO: TO COMMENT
+    private <E> void arrangeQuery(StringBuilder queryBuilder, List<E> list, boolean escape) {
+        int listSize = list.size();
+        int lastIndex = listSize - 1;
+        for (int j = 0; j < listSize; j++) {
+            if (escape)
+                queryBuilder.append(SINGLE_QUOTE);
+            queryBuilder.append(list.get(j));
+            if (escape)
+                queryBuilder.append(SINGLE_QUOTE);
+            if (j < lastIndex)
+                queryBuilder.append(COMMA);
+            else
+                queryBuilder.append(ROUND_BRACKET);
+        }
     }
 
     /**
@@ -83,11 +138,17 @@ public class EquinoxUsersHelper<T extends EquinoxUser> implements ResourcesManag
      * @param password: the password of the user
      * @return the authenticated user as {@link EquinoxUser} if the credentials inserted were correct
      */
-    public T signInUser(String email, String password) throws NoSuchAlgorithmException {
+    //TODO: TO COMMENT
+    public T signInUser(String email, String password, Object... custom) throws NoSuchAlgorithmException {
         T user = usersRepository.findUserByEmail(email);
-        if (user != null && user.getPassword().equals(hash(password)))
+        if (validateSignIn(user, password, custom))
             return user;
         return null;
+    }
+
+    //TODO: TO COMMENT
+    protected boolean validateSignIn(T user, String password, Object... custom) throws NoSuchAlgorithmException {
+        return user != null && user.getPassword().equals(hash(password));
     }
 
     /**

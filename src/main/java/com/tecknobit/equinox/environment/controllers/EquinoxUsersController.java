@@ -66,15 +66,60 @@ public class EquinoxUsersController<T extends EquinoxUser> extends EquinoxContro
         if (serverProtector.serverSecretMatches(jsonHelper.getString(SERVER_SECRET_KEY))) {
             String name = jsonHelper.getString(NAME_KEY);
             String surname = jsonHelper.getString(SURNAME_KEY);
-            if (isNameValid(name)) {
-                if (isSurnameValid(surname))
-                    return executeAuth(payload, name, surname);
-                else
-                    return failedResponse(WRONG_SURNAME_MESSAGE);
-            } else
-                return failedResponse(WRONG_NAME_MESSAGE);
+            String email = jsonHelper.getString(EMAIL_KEY);
+            String password = jsonHelper.getString(PASSWORD_KEY);
+            String language = jsonHelper.getString(LANGUAGE_KEY, DEFAULT_LANGUAGE);
+            mantis.changeCurrentLocale(language);
+            Object[] custom = getSignUpCustomParams();
+            String signUpValidation = validateSignUp(name, surname, email, password, language, custom);
+            if (signUpValidation != null)
+                return failedResponse(signUpValidation);
+            try {
+                JSONObject response = new JSONObject();
+                String id = generateIdentifier();
+                String token = generateIdentifier();
+                usersHelper.signUpUser(
+                        id,
+                        token,
+                        name,
+                        surname,
+                        email.toLowerCase(),
+                        password,
+                        language,
+                        custom
+                );
+                mantis.changeCurrentLocale(DEFAULT_LANGUAGE);
+                return successResponse(response
+                        .put(IDENTIFIER_KEY, id)
+                        .put(TOKEN_KEY, token)
+                        .put(PROFILE_PIC_KEY, DEFAULT_PROFILE_PIC)
+                );
+            } catch (Exception e) {
+                return failedResponse(WRONG_PROCEDURE_MESSAGE);
+            }
         } else
             return failedResponse(NOT_AUTHORIZED_OR_WRONG_DETAILS_MESSAGE);
+    }
+
+    //TODO: TO COMMENT
+    protected Object[] getSignUpCustomParams() {
+        return new Object[0];
+    }
+
+    //TODO: TO COMMENT
+    protected String validateSignUp(String name, String surname, String email, String password, String language,
+                                    Object... custom) {
+        if (!isNameValid(name))
+            return WRONG_NAME_MESSAGE;
+        if (!isSurnameValid(surname))
+            return WRONG_SURNAME_MESSAGE;
+        if (!isEmailValid(email))
+            return WRONG_EMAIL_MESSAGE;
+        if (!isPasswordValid(password))
+            return WRONG_PASSWORD_MESSAGE;
+        if (!isLanguageValid(language))
+            return WRONG_LANGUAGE_MESSAGE;
+        return null;
     }
 
     /**
@@ -94,7 +139,53 @@ public class EquinoxUsersController<T extends EquinoxUser> extends EquinoxContro
     @PostMapping(path = SIGN_IN_ENDPOINT)
     @RequestPath(path = "/api/v1/users/signIn", method = POST)
     public String signIn(@RequestBody Map<String, String> payload) {
-        return executeAuth(payload);
+        loadJsonHelper(payload);
+        String email = jsonHelper.getString(EMAIL_KEY);
+        String password = jsonHelper.getString(PASSWORD_KEY);
+        String language = jsonHelper.getString(LANGUAGE_KEY, DEFAULT_LANGUAGE);
+        mantis.changeCurrentLocale(language);
+        Object[] custom = getSignInCustomParams();
+        String signInValidation = validateSignIn(email, password, language, custom);
+        if (signInValidation != null)
+            return failedResponse(signInValidation);
+        try {
+            T user = usersHelper.signInUser(email.toLowerCase(), password, custom);
+            if (user != null) {
+                mantis.changeCurrentLocale(DEFAULT_LANGUAGE);
+                return successResponse(assembleSignInSuccessResponse(user));
+            } else
+                return failedResponse(NOT_AUTHORIZED_OR_WRONG_DETAILS_MESSAGE);
+        } catch (Exception e) {
+            return failedResponse(WRONG_PROCEDURE_MESSAGE);
+        }
+    }
+
+    //TODO: TO COMMENT
+    protected Object[] getSignInCustomParams() {
+        return new Object[0];
+    }
+
+    //TODO: TO COMMENT
+    protected String validateSignIn(String email, String password, String language, Object... custom) {
+        if (!isEmailValid(email))
+            return WRONG_EMAIL_MESSAGE;
+        if (!isPasswordValid(password))
+            return WRONG_PASSWORD_MESSAGE;
+        if (!isLanguageValid(language))
+            return WRONG_LANGUAGE_MESSAGE;
+        return null;
+    }
+
+    //TODO: TO COMMENT
+    protected JSONObject assembleSignInSuccessResponse(T user) {
+        JSONObject response = new JSONObject();
+        response.put(IDENTIFIER_KEY, user.getId());
+        response.put(TOKEN_KEY, user.getToken());
+        response.put(PROFILE_PIC_KEY, user.getProfilePic());
+        response.put(NAME_KEY, user.getName());
+        response.put(SURNAME_KEY, user.getSurname());
+        response.put(LANGUAGE_KEY, user.getLanguage());
+        return response;
     }
 
     /**
@@ -104,6 +195,7 @@ public class EquinoxUsersController<T extends EquinoxUser> extends EquinoxContro
      * @param personalData: the personal data of the user like name and surname
      * @return the result of the auth operation as {@link String}
      */
+    @Deprecated(since = "1.0.3", forRemoval = true)
     protected String executeAuth(Map<String, String> payload, String... personalData) {
         loadJsonHelper(payload);
         String email = jsonHelper.getString(EMAIL_KEY);
