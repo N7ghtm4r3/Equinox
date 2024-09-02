@@ -95,9 +95,39 @@ public abstract class EquinoxLocalUser {
      * @param password:    the password of the user
      * @param language:    the language of the user
      * @param hResponse:   the payload response received from an authentication request
+     * @param custom: the custom parameters added in a customization of the {@link EquinoxUser}
+     * @apiNote workflow example:
+     * <pre>
+     *     {@code
+     *          public class CustomLocalUser extends EquinoxLocalUser {
+     *
+     *              private String currency;
+     *
+     *              @Override
+     *              @CustomParametersOrder(order = {"currency"})
+     *              public void insertNewUser(String hostAddress, String name, String surname, String email, String password,
+     *                                      String language, JsonHelper hResponse, Object... custom) {
+     *                  // set first your custom parameters
+     *                  setCurrency(custom[0].toString());
+     *                  // then invoke the super method
+     *                  super.insertNewUser(hostAddress, name, surname, email, password, language, hResponse);
+     *              }
+     *
+     *              public void setCurrency(String currency) {
+     *                  this.setPreference("currency", currency);
+     *                  this.currency = currency;
+     *              }
+     *
+     *               public String getCurrency() {
+     *                  return this.currency;
+     *              }
+     *
+     *          }
+     *     }
+     * </pre>
      */
     public void insertNewUser(String hostAddress, String name, String surname, String email, String password,
-                              String language, JsonHelper hResponse) {
+                              String language, JsonHelper hResponse, Object... custom) {
         setHostAddress(hostAddress);
         setUserId(hResponse.getString(IDENTIFIER_KEY));
         setUserToken(hResponse.getString(TOKEN_KEY));

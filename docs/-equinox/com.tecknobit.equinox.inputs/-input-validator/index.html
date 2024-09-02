@@ -1,0 +1,1102 @@
+<!DOCTYPE html>
+<html class="no-js">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
+    <title>InputValidator</title>
+    <link href="../../../images/logo-icon.svg" rel="icon" type="image/svg">
+    <script>var pathToRoot = "../../../";</script>
+    <script>document.documentElement.classList.replace("no-js","js");</script>
+    <script>const storage = localStorage.getItem("dokka-dark-mode")
+    if (storage == null) {
+        const osDarkSchemePreferred = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+        if (osDarkSchemePreferred === true) {
+            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+    } else {
+        const savedDarkMode = JSON.parse(storage)
+        if(savedDarkMode === true) {
+            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+    }
+    </script>
+    <script type="text/javascript" src="https://unpkg.com/kotlin-playground@1/dist/playground.min.js"
+            async="async"></script>
+    <script type="text/javascript" src="../../../scripts/sourceset_dependencies.js" async="async"></script>
+    <link href="../../../styles/style.css" rel="Stylesheet">
+    <link href="../../../styles/main.css" rel="Stylesheet">
+    <link href="../../../styles/prism.css" rel="Stylesheet">
+    <link href="../../../styles/logo-styles.css" rel="Stylesheet">
+    <link href="../../../styles/font-jb-sans-auto.css" rel="Stylesheet">
+    <script type="text/javascript" src="../../../scripts/clipboard.js" async="async"></script>
+    <script type="text/javascript" src="../../../scripts/navigation-loader.js" async="async"></script>
+    <script type="text/javascript" src="../../../scripts/platform-content-handler.js" async="async"></script>
+    <script type="text/javascript" src="../../../scripts/main.js" defer="defer"></script>
+    <script type="text/javascript" src="../../../scripts/prism.js" async="async"></script>
+    <script type="text/javascript" src="../../../scripts/symbol-parameters-wrapper_deferred.js" defer="defer"></script>
+</head>
+<body>
+<div class="root">
+    <nav class="navigation" id="navigation-wrapper">
+        <div class="navigation--inner">
+            <div class="navigation-title">
+                <button class="menu-toggle" id="menu-toggle" type="button">toggle menu</button>
+                <div class="library-name">
+                    <a class="library-name--link" href="../../../index.html">
+                        Equinox
+                    </a>
+                </div>
+                <div class="library-version">
+                    1.0.3
+                </div>
+            </div>
+            <div class="filter-section" id="filter-section">
+                <button class="platform-tag platform-selector jvm-like" data-active="" data-filter=":dokkaHtml/main">
+                    jvm
+                </button>
+            </div>
+        </div>
+        <div class="navigation-controls">
+            <button class="navigation-controls--btn navigation-controls--theme" id="theme-toggle-button" type="button">
+                switch theme
+            </button>
+            <div class="navigation-controls--btn navigation-controls--search" id="searchBar" role="button">search in
+                API
+            </div>
+        </div>
+    </nav>
+    <div id="container">
+        <div class="sidebar" id="leftColumn">
+            <div class="sidebar--inner" id="sideMenu"></div>
+        </div>
+        <div id="main">
+            <div class="main-content" data-page-type="classlike" id="content"
+                 pageIds="Equinox::com.tecknobit.equinox.inputs/InputValidator///PointingToDeclaration//769193423">
+                <div class="breadcrumbs"><a href="../../../index.html">Equinox</a><span class="delimiter">/</span><a
+                        href="../index.html">com.tecknobit.equinox.inputs</a><span class="delimiter">/</span><span
+                        class="current">InputValidator</span></div>
+                <div class="cover ">
+                    <h1 class="cover"><span>Input</span>
+                        <wbr></wbr>
+                        <span><span>Validator</span></span></h1>
+                    <div class="platform-hinted " data-platform-hinted="data-platform-hinted">
+                        <div class="content sourceset-dependent-content" data-active=""
+                             data-togglable=":dokkaHtml/main">
+                            <div class="symbol monospace"><span class="token keyword">open </span><span
+                                    class="token keyword">class </span><a href="index.html">InputValidator</a></div>
+                            <p class="paragraph">The <code class="lang-kotlin">InputValidator</code> class is useful to
+                                validate the inputs</p><span class="kdoc-tag"><h4 class="">Author</h4><p
+                                class="paragraph">N7ghtm4r3 - Tecknobit</p></span><span class="kdoc-tag"><h4 class="">Since</h4><p
+                                class="paragraph">1.0.1</p></span></div>
+                    </div>
+                </div>
+                <div class="tabbedcontent">
+                    <div class="tabs-section" tabs-section="tabs-section">
+                        <button class="section-tab" data-active="" data-togglable="CONSTRUCTOR,TYPE,PROPERTY,FUNCTION">
+                            Members
+                        </button>
+                    </div>
+                    <div class="tabs-section-body">
+                        <div data-togglable="CONSTRUCTOR">
+                            <h2 class="">Constructors</h2>
+                            <div class="table"><a data-name="-494992363%2FConstructors%2F769193423"
+                                                  anchor-label="InputValidator"
+                                                  id="-494992363%2FConstructors%2F769193423"
+                                                  data-filterable-set=":dokkaHtml/main"></a>
+                                <div class="table-row" data-togglable="CONSTRUCTOR"
+                                     data-filterable-current=":dokkaHtml/main" data-filterable-set=":dokkaHtml/main">
+                                    <div class="main-subrow keyValue ">
+                                        <div class=""><span class="inline-flex">
+                  <div><a href="-input-validator.html"><span>Input</span><wbr></wbr><span><span>Validator</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-494992363%2FConstructors%2F769193423"></span>
+                    <div class="copy-popup-wrapper "><span
+                            class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+                                        <div>
+                                            <div class="title">
+                                                <div class="platform-hinted "
+                                                     data-platform-hinted="data-platform-hinted">
+                                                    <div class="content sourceset-dependent-content" data-active=""
+                                                         data-togglable=":dokkaHtml/main">
+                                                        <div class="symbol monospace"><span class="token keyword">protected </span><span
+                                                                class="token keyword">constructor</span><span
+                                                                class="token punctuation">(</span><span
+                                                                class="token punctuation">)</span></div>
+                                                        <div class="brief ">Constructor to init the <a
+                                                                href="index.html">InputValidator</a> class No-any params
+                                                            required
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div data-togglable="PROPERTY">
+                            <h2 class="">Properties</h2>
+                            <div class="table"><a data-name="874995431%2FProperties%2F769193423"
+                                                  anchor-label="DEFAULT_LANGUAGE"
+                                                  id="874995431%2FProperties%2F769193423"
+                                                  data-filterable-set=":dokkaHtml/main"></a>
+                                <div class="table-row" data-filterable-current=":dokkaHtml/main"
+                                     data-filterable-set=":dokkaHtml/main">
+                                    <div class="main-subrow keyValue ">
+                                        <div class=""><span class="inline-flex">
+                  <div><a href="-d-e-f-a-u-l-t_-l-a-n-g-u-a-g-e.html"><span><span>DEFAULT_LANGUAGE</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="874995431%2FProperties%2F769193423"></span>
+                    <div class="copy-popup-wrapper "><span
+                            class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+                                        <div>
+                                            <div class="title">
+                                                <div class="platform-hinted "
+                                                     data-platform-hinted="data-platform-hinted">
+                                                    <div class="content sourceset-dependent-content" data-active=""
+                                                         data-togglable=":dokkaHtml/main">
+                                                        <div class="symbol monospace"><span
+                                                                class="token keyword">val </span><a
+                                                                href="-d-e-f-a-u-l-t_-l-a-n-g-u-a-g-e.html">DEFAULT_LANGUAGE</a><span
+                                                                class="token operator">: </span><a
+                                                                href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html">String</a><span
+                                                                class="token operator"> = </span><span
+                                                                class="token string">&quot;en&quot;</span></div>
+                                                        <div class="brief "><code
+                                                                class="lang-kotlin">DEFAULT_LANGUAGE</code> default
+                                                            language used
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <a data-name="-1335506055%2FProperties%2F769193423" anchor-label="EMAIL_MAX_LENGTH"
+                                   id="-1335506055%2FProperties%2F769193423" data-filterable-set=":dokkaHtml/main"></a>
+                                <div class="table-row" data-filterable-current=":dokkaHtml/main"
+                                     data-filterable-set=":dokkaHtml/main">
+                                    <div class="main-subrow keyValue ">
+                                        <div class=""><span class="inline-flex">
+                  <div><a href="-e-m-a-i-l_-m-a-x_-l-e-n-g-t-h.html"><span><span>EMAIL_MAX_LENGTH</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1335506055%2FProperties%2F769193423"></span>
+                    <div class="copy-popup-wrapper "><span
+                            class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+                                        <div>
+                                            <div class="title">
+                                                <div class="platform-hinted "
+                                                     data-platform-hinted="data-platform-hinted">
+                                                    <div class="content sourceset-dependent-content" data-active=""
+                                                         data-togglable=":dokkaHtml/main">
+                                                        <div class="symbol monospace"><span
+                                                                class="token keyword">val </span><a
+                                                                href="-e-m-a-i-l_-m-a-x_-l-e-n-g-t-h.html">EMAIL_MAX_LENGTH</a><span
+                                                                class="token operator">: </span><a
+                                                                href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span
+                                                                class="token operator"> = </span><span
+                                                                class="token constant">75</span></div>
+                                                        <div class="brief "><code
+                                                                class="lang-kotlin">EMAIL_MAX_LENGTH</code> the max
+                                                            valid length for the email
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <a data-name="-1397396601%2FProperties%2F769193423" anchor-label="emailValidator"
+                                   id="-1397396601%2FProperties%2F769193423" data-filterable-set=":dokkaHtml/main"></a>
+                                <div class="table-row" data-filterable-current=":dokkaHtml/main"
+                                     data-filterable-set=":dokkaHtml/main">
+                                    <div class="main-subrow keyValue ">
+                                        <div class=""><span class="inline-flex">
+                  <div><a href="email-validator.html"><span>email</span><wbr></wbr><span><span>Validator</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1397396601%2FProperties%2F769193423"></span>
+                    <div class="copy-popup-wrapper "><span
+                            class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+                                        <div>
+                                            <div class="title">
+                                                <div class="platform-hinted "
+                                                     data-platform-hinted="data-platform-hinted">
+                                                    <div class="content sourceset-dependent-content" data-active=""
+                                                         data-togglable=":dokkaHtml/main">
+                                                        <div class="symbol monospace"><span class="token keyword">protected </span><span
+                                                                class="token keyword">val </span><a
+                                                                href="email-validator.html">emailValidator</a><span
+                                                                class="token operator">: </span><span
+                                                                data-unresolved-link="org.apache.commons.validator.routines/EmailValidator///PointingToDeclaration/">EmailValidator</span>
+                                                        </div>
+                                                        <div class="brief "><code
+                                                                class="lang-kotlin">emailValidator</code> helper to
+                                                            validate the emails values
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <a data-name="1577565504%2FProperties%2F769193423" anchor-label="HOST_ADDRESS_KEY"
+                                   id="1577565504%2FProperties%2F769193423" data-filterable-set=":dokkaHtml/main"></a>
+                                <div class="table-row" data-filterable-current=":dokkaHtml/main"
+                                     data-filterable-set=":dokkaHtml/main">
+                                    <div class="main-subrow keyValue ">
+                                        <div class=""><span class="inline-flex">
+                  <div><a href="-h-o-s-t_-a-d-d-r-e-s-s_-k-e-y.html"><span><span>HOST_ADDRESS_KEY</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1577565504%2FProperties%2F769193423"></span>
+                    <div class="copy-popup-wrapper "><span
+                            class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+                                        <div>
+                                            <div class="title">
+                                                <div class="platform-hinted "
+                                                     data-platform-hinted="data-platform-hinted">
+                                                    <div class="content sourceset-dependent-content" data-active=""
+                                                         data-togglable=":dokkaHtml/main">
+                                                        <div class="symbol monospace"><span
+                                                                class="token keyword">val </span><a
+                                                                href="-h-o-s-t_-a-d-d-r-e-s-s_-k-e-y.html">HOST_ADDRESS_KEY</a><span
+                                                                class="token operator">: </span><a
+                                                                href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html">String</a><span
+                                                                class="token operator"> = </span><span
+                                                                class="token string">&quot;host_address&quot;</span>
+                                                        </div>
+                                                        <div class="brief "><code
+                                                                class="lang-kotlin">HOST_ADDRESS_KEY</code> the key for
+                                                            the <strong>&quot;host_address&quot;</strong> field
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <a data-name="-149298285%2FProperties%2F769193423" anchor-label="LANGUAGES_SUPPORTED"
+                                   id="-149298285%2FProperties%2F769193423" data-filterable-set=":dokkaHtml/main"></a>
+                                <div class="table-row" data-filterable-current=":dokkaHtml/main"
+                                     data-filterable-set=":dokkaHtml/main">
+                                    <div class="main-subrow keyValue ">
+                                        <div class=""><span class="inline-flex">
+                  <div><a href="-l-a-n-g-u-a-g-e-s_-s-u-p-p-o-r-t-e-d.html"><span><span>LANGUAGES_SUPPORTED</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-149298285%2FProperties%2F769193423"></span>
+                    <div class="copy-popup-wrapper "><span
+                            class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+                                        <div>
+                                            <div class="title">
+                                                <div class="platform-hinted "
+                                                     data-platform-hinted="data-platform-hinted">
+                                                    <div class="content sourceset-dependent-content" data-active=""
+                                                         data-togglable=":dokkaHtml/main">
+                                                        <div class="symbol monospace"><span
+                                                                class="token keyword">val </span><a
+                                                                href="-l-a-n-g-u-a-g-e-s_-s-u-p-p-o-r-t-e-d.html">LANGUAGES_SUPPORTED</a><span
+                                                                class="token operator">: </span><a
+                                                                href="https://docs.oracle.com/javase/8/docs/api/java/util/HashMap.html">HashMap</a><span
+                                                                class="token operator">&lt;</span><a
+                                                                href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html">String</a><span
+                                                                class="token punctuation">, </span><a
+                                                                href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html">String</a><span
+                                                                class="token operator">&gt;</span></div>
+                                                        <div class="brief "><code class="lang-kotlin">LANGUAGES_SUPPORTED</code>
+                                                            list of the supported languages
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <a data-name="1644053554%2FProperties%2F769193423"
+                                   anchor-label="MAX_REVENUE_LABELS_NUMBER" id="1644053554%2FProperties%2F769193423"
+                                   data-filterable-set=":dokkaHtml/main"></a>
+                                <div class="table-row" data-filterable-current=":dokkaHtml/main"
+                                     data-filterable-set=":dokkaHtml/main">
+                                    <div class="main-subrow keyValue ">
+                                        <div class=""><span class="inline-flex">
+                  <div><a href="-m-a-x_-r-e-v-e-n-u-e_-l-a-b-e-l-s_-n-u-m-b-e-r.html"><span><span>MAX_REVENUE_LABELS_NUMBER</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1644053554%2FProperties%2F769193423"></span>
+                    <div class="copy-popup-wrapper "><span
+                            class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+                                        <div>
+                                            <div class="title">
+                                                <div class="platform-hinted "
+                                                     data-platform-hinted="data-platform-hinted">
+                                                    <div class="content sourceset-dependent-content" data-active=""
+                                                         data-togglable=":dokkaHtml/main">
+                                                        <div class="symbol monospace"><span
+                                                                class="token keyword">val </span><a
+                                                                href="-m-a-x_-r-e-v-e-n-u-e_-l-a-b-e-l-s_-n-u-m-b-e-r.html">MAX_REVENUE_LABELS_NUMBER</a><span
+                                                                class="token operator">: </span><a
+                                                                href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span
+                                                                class="token operator"> = </span><span
+                                                                class="token constant">5</span></div>
+                                                        <div class="brief "><code class="lang-kotlin">MAX_REVENUE_LABELS_NUMBER_LENGTH</code>
+                                                            the max valid number of labels for revenue
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <a data-name="1738815176%2FProperties%2F769193423" anchor-label="NAME_MAX_LENGTH"
+                                   id="1738815176%2FProperties%2F769193423" data-filterable-set=":dokkaHtml/main"></a>
+                                <div class="table-row" data-filterable-current=":dokkaHtml/main"
+                                     data-filterable-set=":dokkaHtml/main">
+                                    <div class="main-subrow keyValue ">
+                                        <div class=""><span class="inline-flex">
+                  <div><a href="-n-a-m-e_-m-a-x_-l-e-n-g-t-h.html"><span><span>NAME_MAX_LENGTH</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1738815176%2FProperties%2F769193423"></span>
+                    <div class="copy-popup-wrapper "><span
+                            class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+                                        <div>
+                                            <div class="title">
+                                                <div class="platform-hinted "
+                                                     data-platform-hinted="data-platform-hinted">
+                                                    <div class="content sourceset-dependent-content" data-active=""
+                                                         data-togglable=":dokkaHtml/main">
+                                                        <div class="symbol monospace"><span
+                                                                class="token keyword">val </span><a
+                                                                href="-n-a-m-e_-m-a-x_-l-e-n-g-t-h.html">NAME_MAX_LENGTH</a><span
+                                                                class="token operator">: </span><a
+                                                                href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span
+                                                                class="token operator"> = </span><span
+                                                                class="token constant">20</span></div>
+                                                        <div class="brief "><code
+                                                                class="lang-kotlin">NAME_MAX_LENGTH</code> the max valid
+                                                            length for the username
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <a data-name="255112920%2FProperties%2F769193423" anchor-label="PASSWORD_MAX_LENGTH"
+                                   id="255112920%2FProperties%2F769193423" data-filterable-set=":dokkaHtml/main"></a>
+                                <div class="table-row" data-filterable-current=":dokkaHtml/main"
+                                     data-filterable-set=":dokkaHtml/main">
+                                    <div class="main-subrow keyValue ">
+                                        <div class=""><span class="inline-flex">
+                  <div><a href="-p-a-s-s-w-o-r-d_-m-a-x_-l-e-n-g-t-h.html"><span><span>PASSWORD_MAX_LENGTH</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="255112920%2FProperties%2F769193423"></span>
+                    <div class="copy-popup-wrapper "><span
+                            class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+                                        <div>
+                                            <div class="title">
+                                                <div class="platform-hinted "
+                                                     data-platform-hinted="data-platform-hinted">
+                                                    <div class="content sourceset-dependent-content" data-active=""
+                                                         data-togglable=":dokkaHtml/main">
+                                                        <div class="symbol monospace"><span
+                                                                class="token keyword">val </span><a
+                                                                href="-p-a-s-s-w-o-r-d_-m-a-x_-l-e-n-g-t-h.html">PASSWORD_MAX_LENGTH</a><span
+                                                                class="token operator">: </span><a
+                                                                href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span
+                                                                class="token operator"> = </span><span
+                                                                class="token constant">32</span></div>
+                                                        <div class="brief "><code class="lang-kotlin">PASSWORD_MAX_LENGTH</code>
+                                                            the max valid length for the password
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <a data-name="231047110%2FProperties%2F769193423" anchor-label="PASSWORD_MIN_LENGTH"
+                                   id="231047110%2FProperties%2F769193423" data-filterable-set=":dokkaHtml/main"></a>
+                                <div class="table-row" data-filterable-current=":dokkaHtml/main"
+                                     data-filterable-set=":dokkaHtml/main">
+                                    <div class="main-subrow keyValue ">
+                                        <div class=""><span class="inline-flex">
+                  <div><a href="-p-a-s-s-w-o-r-d_-m-i-n_-l-e-n-g-t-h.html"><span><span>PASSWORD_MIN_LENGTH</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="231047110%2FProperties%2F769193423"></span>
+                    <div class="copy-popup-wrapper "><span
+                            class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+                                        <div>
+                                            <div class="title">
+                                                <div class="platform-hinted "
+                                                     data-platform-hinted="data-platform-hinted">
+                                                    <div class="content sourceset-dependent-content" data-active=""
+                                                         data-togglable=":dokkaHtml/main">
+                                                        <div class="symbol monospace"><span
+                                                                class="token keyword">val </span><a
+                                                                href="-p-a-s-s-w-o-r-d_-m-i-n_-l-e-n-g-t-h.html">PASSWORD_MIN_LENGTH</a><span
+                                                                class="token operator">: </span><a
+                                                                href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span
+                                                                class="token operator"> = </span><span
+                                                                class="token constant">8</span></div>
+                                                        <div class="brief "><code class="lang-kotlin">PASSWORD_MIN_LENGTH</code>
+                                                            the min valid length for the password
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <a data-name="-1695735402%2FProperties%2F769193423"
+                                   anchor-label="REVENUE_DESCRIPTION_MAX_LENGTH"
+                                   id="-1695735402%2FProperties%2F769193423" data-filterable-set=":dokkaHtml/main"></a>
+                                <div class="table-row" data-filterable-current=":dokkaHtml/main"
+                                     data-filterable-set=":dokkaHtml/main">
+                                    <div class="main-subrow keyValue ">
+                                        <div class=""><span class="inline-flex">
+                  <div><a href="-r-e-v-e-n-u-e_-d-e-s-c-r-i-p-t-i-o-n_-m-a-x_-l-e-n-g-t-h.html"><span><span>REVENUE_DESCRIPTION_MAX_LENGTH</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1695735402%2FProperties%2F769193423"></span>
+                    <div class="copy-popup-wrapper "><span
+                            class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+                                        <div>
+                                            <div class="title">
+                                                <div class="platform-hinted "
+                                                     data-platform-hinted="data-platform-hinted">
+                                                    <div class="content sourceset-dependent-content" data-active=""
+                                                         data-togglable=":dokkaHtml/main">
+                                                        <div class="symbol monospace"><span
+                                                                class="token keyword">val </span><a
+                                                                href="-r-e-v-e-n-u-e_-d-e-s-c-r-i-p-t-i-o-n_-m-a-x_-l-e-n-g-t-h.html">REVENUE_DESCRIPTION_MAX_LENGTH</a><span
+                                                                class="token operator">: </span><a
+                                                                href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span
+                                                                class="token operator"> = </span><span
+                                                                class="token constant">250</span></div>
+                                                        <div class="brief "><code class="lang-kotlin">REVENUE_DESCRIPTION_MAX_LENGTH</code>
+                                                            the max valid length for the revenue description
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <a data-name="-1520001102%2FProperties%2F769193423"
+                                   anchor-label="REVENUE_TITLE_MAX_LENGTH" id="-1520001102%2FProperties%2F769193423"
+                                   data-filterable-set=":dokkaHtml/main"></a>
+                                <div class="table-row" data-filterable-current=":dokkaHtml/main"
+                                     data-filterable-set=":dokkaHtml/main">
+                                    <div class="main-subrow keyValue ">
+                                        <div class=""><span class="inline-flex">
+                  <div><a href="-r-e-v-e-n-u-e_-t-i-t-l-e_-m-a-x_-l-e-n-g-t-h.html"><span><span>REVENUE_TITLE_MAX_LENGTH</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1520001102%2FProperties%2F769193423"></span>
+                    <div class="copy-popup-wrapper "><span
+                            class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+                                        <div>
+                                            <div class="title">
+                                                <div class="platform-hinted "
+                                                     data-platform-hinted="data-platform-hinted">
+                                                    <div class="content sourceset-dependent-content" data-active=""
+                                                         data-togglable=":dokkaHtml/main">
+                                                        <div class="symbol monospace"><span
+                                                                class="token keyword">val </span><a
+                                                                href="-r-e-v-e-n-u-e_-t-i-t-l-e_-m-a-x_-l-e-n-g-t-h.html">REVENUE_TITLE_MAX_LENGTH</a><span
+                                                                class="token operator">: </span><a
+                                                                href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span
+                                                                class="token operator"> = </span><span
+                                                                class="token constant">30</span></div>
+                                                        <div class="brief "><code class="lang-kotlin">REVENUE_TITLE_MAX_LENGTH</code>
+                                                            the max valid length for the revenue title
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <a data-name="26810680%2FProperties%2F769193423" anchor-label="SURNAME_MAX_LENGTH"
+                                   id="26810680%2FProperties%2F769193423" data-filterable-set=":dokkaHtml/main"></a>
+                                <div class="table-row" data-filterable-current=":dokkaHtml/main"
+                                     data-filterable-set=":dokkaHtml/main">
+                                    <div class="main-subrow keyValue ">
+                                        <div class=""><span class="inline-flex">
+                  <div><a href="-s-u-r-n-a-m-e_-m-a-x_-l-e-n-g-t-h.html"><span><span>SURNAME_MAX_LENGTH</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="26810680%2FProperties%2F769193423"></span>
+                    <div class="copy-popup-wrapper "><span
+                            class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+                                        <div>
+                                            <div class="title">
+                                                <div class="platform-hinted "
+                                                     data-platform-hinted="data-platform-hinted">
+                                                    <div class="content sourceset-dependent-content" data-active=""
+                                                         data-togglable=":dokkaHtml/main">
+                                                        <div class="symbol monospace"><span
+                                                                class="token keyword">val </span><a
+                                                                href="-s-u-r-n-a-m-e_-m-a-x_-l-e-n-g-t-h.html">SURNAME_MAX_LENGTH</a><span
+                                                                class="token operator">: </span><a
+                                                                href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span
+                                                                class="token operator"> = </span><span
+                                                                class="token constant">30</span></div>
+                                                        <div class="brief "><code
+                                                                class="lang-kotlin">SURNAME_MAX_LENGTH</code> the max
+                                                            valid length for the surname
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <a data-name="1733474458%2FProperties%2F769193423" anchor-label="urlValidator"
+                                   id="1733474458%2FProperties%2F769193423" data-filterable-set=":dokkaHtml/main"></a>
+                                <div class="table-row" data-filterable-current=":dokkaHtml/main"
+                                     data-filterable-set=":dokkaHtml/main">
+                                    <div class="main-subrow keyValue ">
+                                        <div class=""><span class="inline-flex">
+                  <div><a href="url-validator.html"><span>url</span><wbr></wbr><span><span>Validator</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1733474458%2FProperties%2F769193423"></span>
+                    <div class="copy-popup-wrapper "><span
+                            class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+                                        <div>
+                                            <div class="title">
+                                                <div class="platform-hinted "
+                                                     data-platform-hinted="data-platform-hinted">
+                                                    <div class="content sourceset-dependent-content" data-active=""
+                                                         data-togglable=":dokkaHtml/main">
+                                                        <div class="symbol monospace"><span class="token keyword">protected </span><span
+                                                                class="token keyword">val </span><a
+                                                                href="url-validator.html">urlValidator</a><span
+                                                                class="token operator">: </span><span
+                                                                data-unresolved-link="org.apache.commons.validator.routines/UrlValidator///PointingToDeclaration/">UrlValidator</span>
+                                                        </div>
+                                                        <div class="brief "><code
+                                                                class="lang-kotlin">urlValidator</code> helper to
+                                                            validate the urls values
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <a data-name="-1770905070%2FProperties%2F769193423"
+                                   anchor-label="WRONG_CURRENCY_MESSAGE" id="-1770905070%2FProperties%2F769193423"
+                                   data-filterable-set=":dokkaHtml/main"></a>
+                                <div class="table-row" data-filterable-current=":dokkaHtml/main"
+                                     data-filterable-set=":dokkaHtml/main">
+                                    <div class="main-subrow keyValue ">
+                                        <div class=""><span class="inline-flex">
+                  <div><a href="-w-r-o-n-g_-c-u-r-r-e-n-c-y_-m-e-s-s-a-g-e.html"><span><span>WRONG_CURRENCY_MESSAGE</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1770905070%2FProperties%2F769193423"></span>
+                    <div class="copy-popup-wrapper "><span
+                            class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+                                        <div>
+                                            <div class="title">
+                                                <div class="platform-hinted "
+                                                     data-platform-hinted="data-platform-hinted">
+                                                    <div class="content sourceset-dependent-content" data-active=""
+                                                         data-togglable=":dokkaHtml/main">
+                                                        <div class="symbol monospace"><span
+                                                                class="token keyword">val </span><a
+                                                                href="-w-r-o-n-g_-c-u-r-r-e-n-c-y_-m-e-s-s-a-g-e.html">WRONG_CURRENCY_MESSAGE</a><span
+                                                                class="token operator">: </span><a
+                                                                href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html">String</a><span
+                                                                class="token operator"> = </span><span
+                                                                class="token string">&quot;wrong_currency_key&quot;</span>
+                                                        </div>
+                                                        <div class="brief "><code class="lang-kotlin">WRONG_CURRENCY_MESSAGE</code>
+                                                            error message used when the currency inserted is not valid
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <a data-name="-1822817557%2FProperties%2F769193423" anchor-label="WRONG_EMAIL_MESSAGE"
+                                   id="-1822817557%2FProperties%2F769193423" data-filterable-set=":dokkaHtml/main"></a>
+                                <div class="table-row" data-filterable-current=":dokkaHtml/main"
+                                     data-filterable-set=":dokkaHtml/main">
+                                    <div class="main-subrow keyValue ">
+                                        <div class=""><span class="inline-flex">
+                  <div><a href="-w-r-o-n-g_-e-m-a-i-l_-m-e-s-s-a-g-e.html"><span><span>WRONG_EMAIL_MESSAGE</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1822817557%2FProperties%2F769193423"></span>
+                    <div class="copy-popup-wrapper "><span
+                            class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+                                        <div>
+                                            <div class="title">
+                                                <div class="platform-hinted "
+                                                     data-platform-hinted="data-platform-hinted">
+                                                    <div class="content sourceset-dependent-content" data-active=""
+                                                         data-togglable=":dokkaHtml/main">
+                                                        <div class="symbol monospace"><span
+                                                                class="token keyword">val </span><a
+                                                                href="-w-r-o-n-g_-e-m-a-i-l_-m-e-s-s-a-g-e.html">WRONG_EMAIL_MESSAGE</a><span
+                                                                class="token operator">: </span><a
+                                                                href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html">String</a><span
+                                                                class="token operator"> = </span><span
+                                                                class="token string">&quot;wrong_email_key&quot;</span>
+                                                        </div>
+                                                        <div class="brief "><code class="lang-kotlin">WRONG_EMAIL_MESSAGE</code>
+                                                            error message used when the email inserted is not valid
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <a data-name="-1889844309%2FProperties%2F769193423"
+                                   anchor-label="WRONG_LANGUAGE_MESSAGE" id="-1889844309%2FProperties%2F769193423"
+                                   data-filterable-set=":dokkaHtml/main"></a>
+                                <div class="table-row" data-filterable-current=":dokkaHtml/main"
+                                     data-filterable-set=":dokkaHtml/main">
+                                    <div class="main-subrow keyValue ">
+                                        <div class=""><span class="inline-flex">
+                  <div><a href="-w-r-o-n-g_-l-a-n-g-u-a-g-e_-m-e-s-s-a-g-e.html"><span><span>WRONG_LANGUAGE_MESSAGE</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1889844309%2FProperties%2F769193423"></span>
+                    <div class="copy-popup-wrapper "><span
+                            class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+                                        <div>
+                                            <div class="title">
+                                                <div class="platform-hinted "
+                                                     data-platform-hinted="data-platform-hinted">
+                                                    <div class="content sourceset-dependent-content" data-active=""
+                                                         data-togglable=":dokkaHtml/main">
+                                                        <div class="symbol monospace"><span
+                                                                class="token keyword">val </span><a
+                                                                href="-w-r-o-n-g_-l-a-n-g-u-a-g-e_-m-e-s-s-a-g-e.html">WRONG_LANGUAGE_MESSAGE</a><span
+                                                                class="token operator">: </span><a
+                                                                href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html">String</a><span
+                                                                class="token operator"> = </span><span
+                                                                class="token string">&quot;wrong_language_key&quot;</span>
+                                                        </div>
+                                                        <div class="brief "><code class="lang-kotlin">WRONG_LANGUAGE_MESSAGE</code>
+                                                            error message used when the language inserted is not valid
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <a data-name="-34247208%2FProperties%2F769193423" anchor-label="WRONG_NAME_MESSAGE"
+                                   id="-34247208%2FProperties%2F769193423" data-filterable-set=":dokkaHtml/main"></a>
+                                <div class="table-row" data-filterable-current=":dokkaHtml/main"
+                                     data-filterable-set=":dokkaHtml/main">
+                                    <div class="main-subrow keyValue ">
+                                        <div class=""><span class="inline-flex">
+                  <div><a href="-w-r-o-n-g_-n-a-m-e_-m-e-s-s-a-g-e.html"><span><span>WRONG_NAME_MESSAGE</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-34247208%2FProperties%2F769193423"></span>
+                    <div class="copy-popup-wrapper "><span
+                            class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+                                        <div>
+                                            <div class="title">
+                                                <div class="platform-hinted "
+                                                     data-platform-hinted="data-platform-hinted">
+                                                    <div class="content sourceset-dependent-content" data-active=""
+                                                         data-togglable=":dokkaHtml/main">
+                                                        <div class="symbol monospace"><span
+                                                                class="token keyword">val </span><a
+                                                                href="-w-r-o-n-g_-n-a-m-e_-m-e-s-s-a-g-e.html">WRONG_NAME_MESSAGE</a><span
+                                                                class="token operator">: </span><a
+                                                                href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html">String</a><span
+                                                                class="token operator"> = </span><span
+                                                                class="token string">&quot;wrong_name_key&quot;</span>
+                                                        </div>
+                                                        <div class="brief "><code
+                                                                class="lang-kotlin">WRONG_NAME_MESSAGE</code> error
+                                                            message used when the name inserted is not valid
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <a data-name="-273329976%2FProperties%2F769193423" anchor-label="WRONG_PASSWORD_MESSAGE"
+                                   id="-273329976%2FProperties%2F769193423" data-filterable-set=":dokkaHtml/main"></a>
+                                <div class="table-row" data-filterable-current=":dokkaHtml/main"
+                                     data-filterable-set=":dokkaHtml/main">
+                                    <div class="main-subrow keyValue ">
+                                        <div class=""><span class="inline-flex">
+                  <div><a href="-w-r-o-n-g_-p-a-s-s-w-o-r-d_-m-e-s-s-a-g-e.html"><span><span>WRONG_PASSWORD_MESSAGE</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-273329976%2FProperties%2F769193423"></span>
+                    <div class="copy-popup-wrapper "><span
+                            class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+                                        <div>
+                                            <div class="title">
+                                                <div class="platform-hinted "
+                                                     data-platform-hinted="data-platform-hinted">
+                                                    <div class="content sourceset-dependent-content" data-active=""
+                                                         data-togglable=":dokkaHtml/main">
+                                                        <div class="symbol monospace"><span
+                                                                class="token keyword">val </span><a
+                                                                href="-w-r-o-n-g_-p-a-s-s-w-o-r-d_-m-e-s-s-a-g-e.html">WRONG_PASSWORD_MESSAGE</a><span
+                                                                class="token operator">: </span><a
+                                                                href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html">String</a><span
+                                                                class="token operator"> = </span><span
+                                                                class="token string">&quot;wrong_password_key&quot;</span>
+                                                        </div>
+                                                        <div class="brief "><code class="lang-kotlin">WRONG_PASSWORD_MESSAGE</code>
+                                                            error message used when the password inserted is not valid
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <a data-name="225751308%2FProperties%2F769193423" anchor-label="WRONG_SURNAME_MESSAGE"
+                                   id="225751308%2FProperties%2F769193423" data-filterable-set=":dokkaHtml/main"></a>
+                                <div class="table-row" data-filterable-current=":dokkaHtml/main"
+                                     data-filterable-set=":dokkaHtml/main">
+                                    <div class="main-subrow keyValue ">
+                                        <div class=""><span class="inline-flex">
+                  <div><a href="-w-r-o-n-g_-s-u-r-n-a-m-e_-m-e-s-s-a-g-e.html"><span><span>WRONG_SURNAME_MESSAGE</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="225751308%2FProperties%2F769193423"></span>
+                    <div class="copy-popup-wrapper "><span
+                            class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+                                        <div>
+                                            <div class="title">
+                                                <div class="platform-hinted "
+                                                     data-platform-hinted="data-platform-hinted">
+                                                    <div class="content sourceset-dependent-content" data-active=""
+                                                         data-togglable=":dokkaHtml/main">
+                                                        <div class="symbol monospace"><span
+                                                                class="token keyword">val </span><a
+                                                                href="-w-r-o-n-g_-s-u-r-n-a-m-e_-m-e-s-s-a-g-e.html">WRONG_SURNAME_MESSAGE</a><span
+                                                                class="token operator">: </span><a
+                                                                href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html">String</a><span
+                                                                class="token operator"> = </span><span
+                                                                class="token string">&quot;wrong_surname_key&quot;</span>
+                                                        </div>
+                                                        <div class="brief "><code class="lang-kotlin">WRONG_SURNAME_MESSAGE</code>
+                                                            error message used when the surname inserted is not valid
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div data-togglable="FUNCTION">
+                            <h2 class="">Functions</h2>
+                            <div class="table"><a data-name="-642670962%2FFunctions%2F769193423"
+                                                  anchor-label="isEmailValid" id="-642670962%2FFunctions%2F769193423"
+                                                  data-filterable-set=":dokkaHtml/main"></a>
+                                <div class="table-row" data-filterable-current=":dokkaHtml/main"
+                                     data-filterable-set=":dokkaHtml/main">
+                                    <div class="main-subrow keyValue ">
+                                        <div class=""><span class="inline-flex">
+                  <div><a href="is-email-valid.html"><span>is</span><wbr></wbr><span>Email</span><wbr></wbr><span><span>Valid</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-642670962%2FFunctions%2F769193423"></span>
+                    <div class="copy-popup-wrapper "><span
+                            class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+                                        <div>
+                                            <div class="title">
+                                                <div class="platform-hinted "
+                                                     data-platform-hinted="data-platform-hinted">
+                                                    <div class="content sourceset-dependent-content" data-active=""
+                                                         data-togglable=":dokkaHtml/main">
+                                                        <div class="symbol monospace"><span
+                                                                class="token keyword">open </span><span
+                                                                class="token keyword">fun </span><a
+                                                                href="is-email-valid.html"><span class="token function">isEmailValid</span></a><span
+                                                                class="token punctuation">(</span><span
+                                                                class="parameters "><span class="parameter ">email<span
+                                                                class="token operator">: </span><a
+                                                                href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html">String</a></span></span><span
+                                                                class="token punctuation">)</span><span
+                                                                class="token operator">: </span><a
+                                                                href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html">Boolean</a>
+                                                        </div>
+                                                        <div class="brief ">Method to validate an email</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <a data-name="-2141202514%2FFunctions%2F769193423" anchor-label="isHostValid"
+                                   id="-2141202514%2FFunctions%2F769193423" data-filterable-set=":dokkaHtml/main"></a>
+                                <div class="table-row" data-filterable-current=":dokkaHtml/main"
+                                     data-filterable-set=":dokkaHtml/main">
+                                    <div class="main-subrow keyValue ">
+                                        <div class=""><span class="inline-flex">
+                  <div><a href="is-host-valid.html"><span>is</span><wbr></wbr><span>Host</span><wbr></wbr><span><span>Valid</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-2141202514%2FFunctions%2F769193423"></span>
+                    <div class="copy-popup-wrapper "><span
+                            class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+                                        <div>
+                                            <div class="title">
+                                                <div class="platform-hinted "
+                                                     data-platform-hinted="data-platform-hinted">
+                                                    <div class="content sourceset-dependent-content" data-active=""
+                                                         data-togglable=":dokkaHtml/main">
+                                                        <div class="symbol monospace"><span
+                                                                class="token keyword">open </span><span
+                                                                class="token keyword">fun </span><a
+                                                                href="is-host-valid.html"><span class="token function">isHostValid</span></a><span
+                                                                class="token punctuation">(</span><span
+                                                                class="parameters "><span class="parameter ">host<span
+                                                                class="token operator">: </span><a
+                                                                href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html">String</a></span></span><span
+                                                                class="token punctuation">)</span><span
+                                                                class="token operator">: </span><a
+                                                                href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html">Boolean</a>
+                                                        </div>
+                                                        <div class="brief ">Method to validate a host</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <a data-name="870877756%2FFunctions%2F769193423" anchor-label="isInputValid"
+                                   id="870877756%2FFunctions%2F769193423" data-filterable-set=":dokkaHtml/main"></a>
+                                <div class="table-row" data-filterable-current=":dokkaHtml/main"
+                                     data-filterable-set=":dokkaHtml/main">
+                                    <div class="main-subrow keyValue ">
+                                        <div class=""><span class="inline-flex">
+                  <div><a href="is-input-valid.html"><span>is</span><wbr></wbr><span>Input</span><wbr></wbr><span><span>Valid</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="870877756%2FFunctions%2F769193423"></span>
+                    <div class="copy-popup-wrapper "><span
+                            class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+                                        <div>
+                                            <div class="title">
+                                                <div class="platform-hinted "
+                                                     data-platform-hinted="data-platform-hinted">
+                                                    <div class="content sourceset-dependent-content" data-active=""
+                                                         data-togglable=":dokkaHtml/main">
+                                                        <div class="symbol monospace"><span class="token keyword">protected </span><span
+                                                                class="token keyword">open </span><span
+                                                                class="token keyword">fun </span><a
+                                                                href="is-input-valid.html"><span class="token function">isInputValid</span></a><span
+                                                                class="token punctuation">(</span><span
+                                                                class="parameters "><span class="parameter ">field<span
+                                                                class="token operator">: </span><a
+                                                                href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html">String</a></span></span><span
+                                                                class="token punctuation">)</span><span
+                                                                class="token operator">: </span><a
+                                                                href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html">Boolean</a>
+                                                        </div>
+                                                        <div class="brief ">Method to validate an input</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <a data-name="-1946772386%2FFunctions%2F769193423" anchor-label="isLanguageValid"
+                                   id="-1946772386%2FFunctions%2F769193423" data-filterable-set=":dokkaHtml/main"></a>
+                                <div class="table-row" data-filterable-current=":dokkaHtml/main"
+                                     data-filterable-set=":dokkaHtml/main">
+                                    <div class="main-subrow keyValue ">
+                                        <div class=""><span class="inline-flex">
+                  <div><a href="is-language-valid.html"><span>is</span><wbr></wbr><span>Language</span><wbr></wbr><span><span>Valid</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1946772386%2FFunctions%2F769193423"></span>
+                    <div class="copy-popup-wrapper "><span
+                            class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+                                        <div>
+                                            <div class="title">
+                                                <div class="platform-hinted "
+                                                     data-platform-hinted="data-platform-hinted">
+                                                    <div class="content sourceset-dependent-content" data-active=""
+                                                         data-togglable=":dokkaHtml/main">
+                                                        <div class="symbol monospace"><span
+                                                                class="token keyword">open </span><span
+                                                                class="token keyword">fun </span><a
+                                                                href="is-language-valid.html"><span
+                                                                class="token function">isLanguageValid</span></a><span
+                                                                class="token punctuation">(</span><span
+                                                                class="parameters "><span
+                                                                class="parameter ">language<span class="token operator">: </span><a
+                                                                href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html">String</a></span></span><span
+                                                                class="token punctuation">)</span><span
+                                                                class="token operator">: </span><a
+                                                                href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html">Boolean</a>
+                                                        </div>
+                                                        <div class="brief ">Method to validate a language</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <a data-name="-202684591%2FFunctions%2F769193423" anchor-label="isNameValid"
+                                   id="-202684591%2FFunctions%2F769193423" data-filterable-set=":dokkaHtml/main"></a>
+                                <div class="table-row" data-filterable-current=":dokkaHtml/main"
+                                     data-filterable-set=":dokkaHtml/main">
+                                    <div class="main-subrow keyValue ">
+                                        <div class=""><span class="inline-flex">
+                  <div><a href="is-name-valid.html"><span>is</span><wbr></wbr><span>Name</span><wbr></wbr><span><span>Valid</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-202684591%2FFunctions%2F769193423"></span>
+                    <div class="copy-popup-wrapper "><span
+                            class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+                                        <div>
+                                            <div class="title">
+                                                <div class="platform-hinted "
+                                                     data-platform-hinted="data-platform-hinted">
+                                                    <div class="content sourceset-dependent-content" data-active=""
+                                                         data-togglable=":dokkaHtml/main">
+                                                        <div class="symbol monospace"><span
+                                                                class="token keyword">open </span><span
+                                                                class="token keyword">fun </span><a
+                                                                href="is-name-valid.html"><span class="token function">isNameValid</span></a><span
+                                                                class="token punctuation">(</span><span
+                                                                class="parameters "><span class="parameter ">name<span
+                                                                class="token operator">: </span><a
+                                                                href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html">String</a></span></span><span
+                                                                class="token punctuation">)</span><span
+                                                                class="token operator">: </span><a
+                                                                href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html">Boolean</a>
+                                                        </div>
+                                                        <div class="brief ">Method to validate a name</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <a data-name="-415660447%2FFunctions%2F769193423" anchor-label="isPasswordValid"
+                                   id="-415660447%2FFunctions%2F769193423" data-filterable-set=":dokkaHtml/main"></a>
+                                <div class="table-row" data-filterable-current=":dokkaHtml/main"
+                                     data-filterable-set=":dokkaHtml/main">
+                                    <div class="main-subrow keyValue ">
+                                        <div class=""><span class="inline-flex">
+                  <div><a href="is-password-valid.html"><span>is</span><wbr></wbr><span>Password</span><wbr></wbr><span><span>Valid</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-415660447%2FFunctions%2F769193423"></span>
+                    <div class="copy-popup-wrapper "><span
+                            class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+                                        <div>
+                                            <div class="title">
+                                                <div class="platform-hinted "
+                                                     data-platform-hinted="data-platform-hinted">
+                                                    <div class="content sourceset-dependent-content" data-active=""
+                                                         data-togglable=":dokkaHtml/main">
+                                                        <div class="symbol monospace"><span
+                                                                class="token keyword">open </span><span
+                                                                class="token keyword">fun </span><a
+                                                                href="is-password-valid.html"><span
+                                                                class="token function">isPasswordValid</span></a><span
+                                                                class="token punctuation">(</span><span
+                                                                class="parameters "><span
+                                                                class="parameter ">password<span class="token operator">: </span><a
+                                                                href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html">String</a></span></span><span
+                                                                class="token punctuation">)</span><span
+                                                                class="token operator">: </span><a
+                                                                href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html">Boolean</a>
+                                                        </div>
+                                                        <div class="brief ">Method to validate a password</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <a data-name="-923848551%2FFunctions%2F769193423" anchor-label="isServerSecretValid"
+                                   id="-923848551%2FFunctions%2F769193423" data-filterable-set=":dokkaHtml/main"></a>
+                                <div class="table-row" data-filterable-current=":dokkaHtml/main"
+                                     data-filterable-set=":dokkaHtml/main">
+                                    <div class="main-subrow keyValue ">
+                                        <div class=""><span class="inline-flex">
+                  <div><a href="is-server-secret-valid.html"><span>is</span><wbr></wbr><span>Server</span><wbr></wbr><span>Secret</span><wbr></wbr><span><span>Valid</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-923848551%2FFunctions%2F769193423"></span>
+                    <div class="copy-popup-wrapper "><span
+                            class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+                                        <div>
+                                            <div class="title">
+                                                <div class="platform-hinted "
+                                                     data-platform-hinted="data-platform-hinted">
+                                                    <div class="content sourceset-dependent-content" data-active=""
+                                                         data-togglable=":dokkaHtml/main">
+                                                        <div class="symbol monospace"><span
+                                                                class="token keyword">open </span><span
+                                                                class="token keyword">fun </span><a
+                                                                href="is-server-secret-valid.html"><span
+                                                                class="token function">isServerSecretValid</span></a><span
+                                                                class="token punctuation">(</span><span
+                                                                class="parameters "><span class="parameter ">serverSecret<span
+                                                                class="token operator">: </span><a
+                                                                href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html">String</a></span></span><span
+                                                                class="token punctuation">)</span><span
+                                                                class="token operator">: </span><a
+                                                                href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html">Boolean</a>
+                                                        </div>
+                                                        <div class="brief ">Method to validate a server secret</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <a data-name="-2039234547%2FFunctions%2F769193423" anchor-label="isSurnameValid"
+                                   id="-2039234547%2FFunctions%2F769193423" data-filterable-set=":dokkaHtml/main"></a>
+                                <div class="table-row" data-filterable-current=":dokkaHtml/main"
+                                     data-filterable-set=":dokkaHtml/main">
+                                    <div class="main-subrow keyValue ">
+                                        <div class=""><span class="inline-flex">
+                  <div><a href="is-surname-valid.html"><span>is</span><wbr></wbr><span>Surname</span><wbr></wbr><span><span>Valid</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-2039234547%2FFunctions%2F769193423"></span>
+                    <div class="copy-popup-wrapper "><span
+                            class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+                                        <div>
+                                            <div class="title">
+                                                <div class="platform-hinted "
+                                                     data-platform-hinted="data-platform-hinted">
+                                                    <div class="content sourceset-dependent-content" data-active=""
+                                                         data-togglable=":dokkaHtml/main">
+                                                        <div class="symbol monospace"><span
+                                                                class="token keyword">open </span><span
+                                                                class="token keyword">fun </span><a
+                                                                href="is-surname-valid.html"><span
+                                                                class="token function">isSurnameValid</span></a><span
+                                                                class="token punctuation">(</span><span
+                                                                class="parameters "><span
+                                                                class="parameter ">surname<span
+                                                                class="token operator">: </span><a
+                                                                href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html">String</a></span></span><span
+                                                                class="token punctuation">)</span><span
+                                                                class="token operator">: </span><a
+                                                                href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html">Boolean</a>
+                                                        </div>
+                                                        <div class="brief ">Method to validate a surname</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span class="go-to-top-icon"><a href="#content"
+                                                id="go-to-top-link"></a></span><span>(c) 2024 Tecknobit</span><span
+                    class="pull-right"><span>Generated by </span><a
+                    href="https://github.com/Kotlin/dokka"><span>dokka</span><span
+                    class="padded-icon"></span></a></span>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

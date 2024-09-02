@@ -1,6 +1,7 @@
 package com.tecknobit.equinox.environment.helpers
 
 import com.tecknobit.apimanager.annotations.RequestPath
+import com.tecknobit.apimanager.apis.APIRequest.DEFAULT_REQUEST_TIMEOUT
 import com.tecknobit.apimanager.apis.APIRequest.Params
 import com.tecknobit.apimanager.apis.APIRequest.RequestMethod.*
 import com.tecknobit.apimanager.apis.ServerProtector.SERVER_SECRET_KEY
@@ -38,8 +39,8 @@ abstract class EquinoxRequester(
     userId: String? = null,
     userToken: String? = null,
     debugMode: Boolean = false,
-    connectionTimeout: Int,
-    connectionErrorMessage: String,
+    connectionTimeout: Int = DEFAULT_REQUEST_TIMEOUT - 1,
+    connectionErrorMessage: String = DEFAULT_CONNECTION_ERROR_MESSAGE,
     enableCertificatesValidation: Boolean = false
 ) : Requester(
     host = host,
@@ -62,27 +63,86 @@ abstract class EquinoxRequester(
     }
 
     /**
-     * Function to execute the request to sign up in the Neutron's system
+     * Function to execute the request to sign up in the Equinox's system
      *
-     * @param serverSecret: the secret of the personal Neutron's backend
+     * @param serverSecret: the secret of the personal Equinox's backend
      * @param name: the name of the user
      * @param surname: the surname of the user
      * @param email: the email of the user
      * @param password: the password of the user
      * @param language: the language of the user
+     * @param custom: the custom parameters added in a customization of the [EquinoxUser] to execute a customized sign-up
      *
      * @return the result of the request as [JSONObject]
      *
      */
     @RequestPath(path = "/api/v1/users/signUp", method = POST)
-    open fun signUp(
+    fun signUp(
         serverSecret: String,
         name: String,
         surname: String,
         email: String,
         password: String,
-        language: String
+        language: String,
+        vararg custom: Any?
     ): JSONObject {
+        val payload = getSignUpPayload(
+            serverSecret = serverSecret,
+            name = name,
+            surname = surname,
+            email = email,
+            password = password,
+            language = language,
+            custom = custom
+        )
+        return execPost(
+            endpoint = SIGN_UP_ENDPOINT,
+            payload = payload
+        )
+    }
+
+    /**
+     * Function to create the payload for the [signUp] request.
+     *
+     * #### Usage example:
+     *
+     * ```
+     * @CustomParametersOrder(order = ["currency"]) // optional
+     * override fun getSignUpPayload(
+     *      serverSecret: String,
+     *      name: String,
+     *      surname: String,
+     *      email: String,
+     *      password: String,
+     *      language: String,
+     *      vararg custom: Any
+     * ): Params {
+     *      val payload = super.getSignUpPayload(serverSecret, name, surname, email, password, language)
+     *      payload.addParam("currency", custom[0])
+     *      return payload
+     * }
+     * ```
+     *
+     * @param serverSecret: the secret of the personal Equinox's backend
+     * @param name: the name of the user
+     * @param surname: the surname of the user
+     * @param email: the email of the user
+     * @param password: the password of the user
+     * @param language: the language of the user
+     * @param custom: the custom parameters added in a customization of the [EquinoxUser] to execute a customized sign-up
+     *
+     * @return the payload for the request as [Params]
+     *
+     */
+    protected open fun getSignUpPayload(
+        serverSecret: String,
+        name: String,
+        surname: String,
+        email: String,
+        password: String,
+        language: String,
+        vararg custom: Any?
+    ): Params {
         val payload = Params()
         payload.addParam(SERVER_SECRET_KEY, serverSecret)
         payload.addParam(NAME_KEY, name)
@@ -96,17 +156,15 @@ abstract class EquinoxRequester(
             else
                 language
         )
-        return execPost(
-            endpoint = SIGN_UP_ENDPOINT,
-            payload = payload
-        )
+        return payload
     }
 
     /**
-     * Function to execute the request to sign in the Neutron's system
+     * Function to execute the request to sign in the Equinox's system
      *
      * @param email: the email of the user
      * @param password: the password of the user
+     * @param custom: the custom parameters added in a customization of the [EquinoxUser] to execute a customized sign-in
      *
      * @return the result of the request as [JSONObject]
      *
@@ -114,15 +172,50 @@ abstract class EquinoxRequester(
     @RequestPath(path = "/api/v1/users/signIn", method = POST)
     open fun signIn(
         email: String,
-        password: String
+        password: String,
+        vararg custom: Any?
     ): JSONObject {
-        val payload = Params()
-        payload.addParam(EMAIL_KEY, email)
-        payload.addParam(PASSWORD_KEY, password)
+        val payload = getSignInPayload(
+            email = email,
+            password = password,
+            custom = custom
+        )
         return execPost(
             endpoint = SIGN_IN_ENDPOINT,
             payload = payload
         )
+    }
+
+    /**
+     * Function to create the payload for the [signIn] request.
+     *
+     * #### Usage example:
+     *
+     * ```
+     * @CustomParametersOrder(order = ["currency"])
+     * override fun getSignInPayload(email: String, password: String, vararg custom: Any?): Params {
+     *   val payload = super.getSignInPayload(email, password)
+     *   payload.addParam("currency", custom[0])
+     *   return payload
+     * }
+     * ```
+     *
+     * @param email: the email of the user
+     * @param password: the password of the user
+     * @param custom: the custom parameters added in a customization of the [EquinoxUser] to execute a customized sign-in
+     *
+     * @return the payload for the request as [Params]
+     *
+     */
+    protected open fun getSignInPayload(
+        email: String,
+        password: String,
+        vararg custom: Any?
+    ): Params {
+        val payload = Params()
+        payload.addParam(EMAIL_KEY, email)
+        payload.addParam(PASSWORD_KEY, password)
+        return payload
     }
 
     /**
@@ -215,6 +308,33 @@ abstract class EquinoxRequester(
     open fun deleteAccount(): JSONObject {
         return execDelete(
             endpoint = assembleUsersEndpointPath()
+        )
+    }
+
+    /**
+     * Function to assemble the endpoint to make the request to the custom controllers
+     *
+     * @param customEndpoint: the custom endpoint of the request, the main part of the complete url
+     * @param subEndpoint: the sub-endpoint path of the url
+     * @param query: the query to attach to the request
+     *
+     * @return an endpoint to make the request as [String]
+     */
+    protected fun assembleCustomEndpointPath(
+        customEndpoint: String,
+        subEndpoint: String = "",
+        query: String = ""
+    ): String {
+        val subPath = if (subEndpoint.isNotBlank())
+            "/$subEndpoint"
+        else
+            subEndpoint
+        val requestUrl = "$customEndpoint$subPath$query"
+        return assembleUsersEndpointPath(
+            endpoint = if (customEndpoint.startsWith("/"))
+                requestUrl
+            else
+                "/$requestUrl"
         )
     }
 

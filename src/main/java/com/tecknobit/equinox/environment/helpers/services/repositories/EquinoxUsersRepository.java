@@ -27,53 +27,6 @@ import static com.tecknobit.equinox.environment.records.EquinoxUser.*;
 public interface EquinoxUsersRepository<T extends EquinoxUser> extends JpaRepository<T, String> {
 
     /**
-     * Method to execute the query to save a new user in the system
-     *
-     * @param discriminatorValue: the discriminator value
-     * @param id:                 the identifier of the user
-     * @param token:              the token of the user
-     * @param name:               the name of the user
-     * @param surname:            the surname of the user
-     * @param email:              the email of the user
-     * @param password:           the password of the user
-     * @param language:           the language of the user
-     */
-    @Modifying(clearAutomatically = true)
-    @Transactional
-    @Query(
-            value = "INSERT INTO " + USERS_KEY + "(" +
-                    DISCRIMINATOR_VALUE_KEY + "," +
-                    IDENTIFIER_KEY + "," +
-                    TOKEN_KEY + "," +
-                    NAME_KEY + "," +
-                    SURNAME_KEY + "," +
-                    EMAIL_KEY + "," +
-                    PASSWORD_KEY + "," +
-                    LANGUAGE_KEY
-                    + ") VALUES (" +
-                    ":" + DISCRIMINATOR_VALUE_KEY + "," +
-                    ":" + IDENTIFIER_KEY + "," +
-                    ":" + TOKEN_KEY + "," +
-                    ":" + NAME_KEY + "," +
-                    ":" + SURNAME_KEY + "," +
-                    ":" + EMAIL_KEY + "," +
-                    ":" + PASSWORD_KEY + "," +
-                    ":" + LANGUAGE_KEY +
-                    ")",
-            nativeQuery = true
-    )
-    void saveUser(
-            @Param(DISCRIMINATOR_VALUE_KEY) String discriminatorValue,
-            @Param(IDENTIFIER_KEY) String id,
-            @Param(TOKEN_KEY) String token,
-            @Param(NAME_KEY) String name,
-            @Param(SURNAME_KEY) String surname,
-            @Param(EMAIL_KEY) String email,
-            @Param(PASSWORD_KEY) String password,
-            @Param(LANGUAGE_KEY) String language
-    );
-
-    /**
      * Method to execute the query to find a {@link EquinoxUser} by email field
      *
      * @param email: the email to find the user
