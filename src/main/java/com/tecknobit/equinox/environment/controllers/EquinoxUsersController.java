@@ -42,7 +42,7 @@ public class EquinoxUsersController<T extends EquinoxUser> extends EquinoxContro
     }
 
     /**
-     * Method to sign up in the <b>Neutron's system</b>
+     * Method to sign up in the <b>Equinox's system</b>
      *
      * @param payload: payload of the request
      *                 <pre>
@@ -167,7 +167,7 @@ public class EquinoxUsersController<T extends EquinoxUser> extends EquinoxContro
     }
 
     /**
-     * Method to sign in the <b>Neutron's system</b>
+     * Method to sign in the <b>Equinox's system</b>
      *
      * @param payload: payload of the request
      *                 <pre>

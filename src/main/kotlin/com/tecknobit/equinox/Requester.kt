@@ -44,7 +44,7 @@ abstract class Requester (
     protected var userId: String? = null,
     protected var userToken: String? = null,
     protected var debugMode: Boolean = false,
-    protected val connectionTimeout: Int = DEFAULT_REQUEST_TIMEOUT,
+    protected val connectionTimeout: Int = DEFAULT_REQUEST_TIMEOUT - 1,
     protected val connectionErrorMessage: String = DEFAULT_CONNECTION_ERROR_MESSAGE,
     protected val enableCertificatesValidation: Boolean = false
 ) {
