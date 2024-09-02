@@ -35,22 +35,34 @@ import static java.lang.System.currentTimeMillis;
 @Transactional
 public class EquinoxUsersHelper<T extends EquinoxUser> implements ResourcesManager {
 
-    //TODO: TO COMMENT
-    protected static final String SINGLE_QUOTE = "'";
+    /**
+     * {@code SINGLE_QUOTE} single quote character
+     */
+    public static final String SINGLE_QUOTE = "'";
 
-    //TODO: TO COMMENT
-    protected static final String COMMA = ",";
+    /**
+     * {@code ROUND_BRACKET} round bracket character
+     */
+    public static final String ROUND_BRACKET = ")";
 
-    //TODO: TO COMMENT
-    protected static final String ROUND_BRACKET = ")";
+    /**
+     * {@code COMMA} comma character
+     */
+    public static final String COMMA = ",";
 
-    //TODO: TO COMMENT
+    /**
+     * {@code VALUES_QUERY_PART} values query part
+     */
     protected static final String VALUES_QUERY_PART = " VALUES (";
 
-    //TODO: TO COMMENT
+    /**
+     * {@code BASE_SIGN_UP_QUERY} base part of the insertion query
+     */
     protected static final String BASE_SIGN_UP_QUERY = "INSERT INTO " + USERS_KEY + "(";
 
-    //TODO: TO COMMENT
+    /**
+     * {@code DEFAULT_USER_VALUES_KEYS} the default keys of the values to use in the {@link #BASE_SIGN_UP_QUERY}
+     */
     protected static final List<String> DEFAULT_USER_VALUES_KEYS = List.of(DISCRIMINATOR_VALUE_KEY, IDENTIFIER_KEY,
             TOKEN_KEY, NAME_KEY, SURNAME_KEY, EMAIL_KEY, PASSWORD_KEY, LANGUAGE_KEY);
 
@@ -95,9 +107,11 @@ public class EquinoxUsersHelper<T extends EquinoxUser> implements ResourcesManag
      * @param email:    the email of the user
      * @param password: the password of the user
      * @param language: the language of the user
+     * @param custom: the custom parameters to add in the default query
+     *
+     * @apiNote the order of the custom parameters must be the same of that specified in the {@link #getQueryValuesKeys()}
      */
-    //TODO: TO COMMENT
-    public int signUpUser(String id, String token, String name, String surname, String email, String password,
+    public void signUpUser(String id, String token, String name, String surname, String email, String password,
                           String language, Object... custom) throws NoSuchAlgorithmException {
         StringBuilder queryBuilder = new StringBuilder(BASE_SIGN_UP_QUERY);
         arrangeQuery(queryBuilder, getQueryValuesKeys(), false);
@@ -106,15 +120,29 @@ public class EquinoxUsersHelper<T extends EquinoxUser> implements ResourcesManag
         values.addAll(Arrays.stream(custom).toList());
         queryBuilder.append(VALUES_QUERY_PART);
         arrangeQuery(queryBuilder, values, true);
-        return entityManager.createNativeQuery(queryBuilder.toString()).executeUpdate();
+        entityManager.createNativeQuery(queryBuilder.toString()).executeUpdate();
     }
 
-    //TODO: TO COMMENT
+    /**
+     * Method to get the list of keys to use in the {@link #BASE_SIGN_UP_QUERY} <br>
+     * No-any params required
+     *
+     * @return a list of keys as {@link List} of {@link String}
+     * @apiNote This method allows a customizable sign-up with custom parameters added in a customization of the {@link EquinoxUser}
+     */
     protected List<String> getQueryValuesKeys() {
         return DEFAULT_USER_VALUES_KEYS;
     }
 
-    //TODO: TO COMMENT
+    /**
+     * Method to arrange the {@link #BASE_SIGN_UP_QUERY} with dynamic list of values to use in that query
+     *
+     * @param queryBuilder: the builder of the query to execute
+     * @param list: the list to arrange
+     * @param escape: whether the values of the list must be escaped with the {@link #SINGLE_QUOTE} character
+     *
+     * @param <E>: type of the element in the list
+     */
     private <E> void arrangeQuery(StringBuilder queryBuilder, List<E> list, boolean escape) {
         int listSize = list.size();
         int lastIndex = listSize - 1;
@@ -136,9 +164,10 @@ public class EquinoxUsersHelper<T extends EquinoxUser> implements ResourcesManag
      *
      * @param email:    the email of the user
      * @param password: the password of the user
+     * @param custom: the custom parameters added in a customization of the {@link EquinoxUser}
+     *
      * @return the authenticated user as {@link EquinoxUser} if the credentials inserted were correct
      */
-    //TODO: TO COMMENT
     public T signInUser(String email, String password, Object... custom) throws NoSuchAlgorithmException {
         T user = usersRepository.findUserByEmail(email);
         if (validateSignIn(user, password, custom))
@@ -146,7 +175,16 @@ public class EquinoxUsersHelper<T extends EquinoxUser> implements ResourcesManag
         return null;
     }
 
-    //TODO: TO COMMENT
+    /**
+     * Method to validate the sign in request
+     *
+     * @param user:    the user to validated
+     * @param password: the password of the user
+     * @param custom: the custom parameters added in a customization of the {@link EquinoxUser} to execute a customized
+     *             sign in validation
+     *
+     * @return the authenticated user as {@link EquinoxUser} if the credentials inserted were correct null otherwise
+     */
     protected boolean validateSignIn(T user, String password, Object... custom) throws NoSuchAlgorithmException {
         return user != null && user.getPassword().equals(hash(password));
     }

@@ -101,12 +101,56 @@ public class EquinoxUsersController<T extends EquinoxUser> extends EquinoxContro
             return failedResponse(NOT_AUTHORIZED_OR_WRONG_DETAILS_MESSAGE);
     }
 
-    //TODO: TO COMMENT
+    /**
+     * Method to get the list of the custom parameters of a custom {@link EquinoxUser} from the payload of the {@link #signUp(Map)}
+     * method <br>
+     * <p>
+     * No-any params required
+     *
+     * @return the custom parameters as array of {@link Object}
+     * @apiNote to get the parameters from the payload you have to use the {@link #jsonHelper} instance previously loaded
+     * by the {@link #signUp(Map)} method:
+     * <pre>
+     *     {@code
+     *          protected Object[] getSignUpCustomParams() {
+     *              return new Object[]{jsonHelper.getString("anything")};
+     *          }
+     *     }
+     * </pre>
+     * @implNote as default will be returned an empty array, so that means no customized user has being used
+     */
     protected Object[] getSignUpCustomParams() {
         return new Object[0];
     }
 
-    //TODO: TO COMMENT
+    /**
+     * Method to validate the inputs of the {@link #signUp(Map)} method to correctly execute a sign-up operation
+     *
+     * @param name: the name of the user
+     * @param surname: the surname of the user
+     * @param email: the email of the user
+     * @param password: the password of the user
+     * @param language: the language of the user
+     * @param custom: the custom parameters added in a customization of the {@link EquinoxUser} to execute a customized
+     *             sign up validation
+     *
+     * @return the key of the error if any inputs is wrong, null otherwise as {@link String}
+     *
+     * @apiNote workflow example:
+     * <pre>
+     *     {@code
+     *          @Override
+     *          protected String validateSignUp(String name, String surname, String email, String password, String language, Object... custom) {
+     *              String validation = super.validateSignUp(name, surname, email, password, language, custom);
+     *              if (validation != null)
+     *                  return validation;
+     *              if(custom[0] == null)
+     *                  return "error_key";
+     *              return null;
+     *          }
+     *     }
+     * </pre>
+     */
     protected String validateSignUp(String name, String surname, String email, String password, String language,
                                     Object... custom) {
         if (!isNameValid(name))
@@ -160,12 +204,56 @@ public class EquinoxUsersController<T extends EquinoxUser> extends EquinoxContro
         }
     }
 
-    //TODO: TO COMMENT
+    /**
+     * Method to get the list of the custom parameters of a custom {@link EquinoxUser} from the payload of the {@link #signIn(Map)}
+     * method <br>
+     *
+     * No-any params required
+     *
+     * @return the custom parameters as array of {@link Object}
+     *
+     * @apiNote to get the parameters from the payload you have to use the {@link #jsonHelper} instance previously loaded
+     * by the {@link #signIn(Map)} method:
+     * <pre>
+     *     {@code
+     *          protected Object[] getSignInCustomParams() {
+     *              return new Object[]{jsonHelper.getString("anything")};
+     *          }
+     *     }
+     * </pre>
+     *
+     * @implNote as default will be returned an empty array, so that means no customized user has being used
+     */
     protected Object[] getSignInCustomParams() {
         return new Object[0];
     }
 
-    //TODO: TO COMMENT
+    /**
+     * Method to validate the inputs of the {@link #signIn(Map)} method to correctly execute a sign-in operation
+     *
+     * @param email: the email of the user
+     * @param password: the password of the user
+     * @param language: the language of the user
+     * @param custom: the custom parameters added in a customization of the {@link EquinoxUser} to execute a customized
+     *             sign-in validation
+     *
+     * @return the key of the error if any inputs is wrong, null otherwise as {@link String}
+     *
+     * @apiNote workflow example:
+     * <pre>
+     *     {@code
+     *          @Override
+     *          protected String validateSignIn(String email, String password, String language, Object... custom) {
+     *              String validation = super.validateSignIn(email, password, language, custom);
+     *              if (validation != null)
+     *                  return validation;
+     *              if(custom[0] == null)
+     *                  return "error_key";
+     *              return null;
+     *          }
+     *     }
+     * </pre>
+     */
     protected String validateSignIn(String email, String password, String language, Object... custom) {
         if (!isEmailValid(email))
             return WRONG_EMAIL_MESSAGE;
@@ -176,7 +264,25 @@ public class EquinoxUsersController<T extends EquinoxUser> extends EquinoxContro
         return null;
     }
 
-    //TODO: TO COMMENT
+    /**
+     * Method to assemble the sign-in response with the user details
+     *
+     * @param user: the user authenticated in that operation
+     *
+     * @return the response as {@link JSONObject}
+     *
+     * @apiNote workflow example to add custom user property of a custom {@link EquinoxUser}:
+     * <pre>
+     *     {@code
+     *          @Override
+     *          protected JSONObject assembleSignInSuccessResponse(CustomUser user) {
+     *              JSONObject response = super.assembleSignInSuccessResponse(user);
+     *              response.put("custom_property", user.customProperty());
+     *              return response;
+     *          }
+     *     }
+     * </pre>
+     */
     protected JSONObject assembleSignInSuccessResponse(T user) {
         JSONObject response = new JSONObject();
         response.put(IDENTIFIER_KEY, user.getId());
