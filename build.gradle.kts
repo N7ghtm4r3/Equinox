@@ -1,7 +1,19 @@
+import org.jetbrains.dokka.DokkaConfiguration.Visibility.*
+import org.jetbrains.dokka.base.DokkaBase
+import org.jetbrains.dokka.base.DokkaBaseConfiguration
+import org.jetbrains.dokka.gradle.DokkaTask
+
 plugins {
     id("java")
     id("maven-publish")
     kotlin("jvm")
+    id("org.jetbrains.dokka") version "1.9.20"
+}
+
+buildscript {
+    dependencies {
+        classpath("org.jetbrains.dokka:dokka-base:1.9.20")
+    }
 }
 
 group = "com.tecknobit"
@@ -41,4 +53,17 @@ afterEvaluate {
 
 kotlin {
     jvmToolchain(18)
+}
+
+tasks.withType<DokkaTask>().configureEach {
+    outputDirectory.set(layout.projectDirectory.dir("docs"))
+    dokkaSourceSets.configureEach {
+        sourceRoots.from(file("src/main/kotlin"))
+        sourceRoots.from(file("src/main/java"))
+        includeNonPublic.set(true)
+        documentedVisibilities.set(setOf(PUBLIC, PROTECTED, PRIVATE))
+    }
+    pluginConfiguration<DokkaBase, DokkaBaseConfiguration> {
+        footerMessage = "(c) 2024 Tecknobit"
+    }
 }
