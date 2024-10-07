@@ -23,6 +23,10 @@ import static com.tecknobit.equinox.inputs.InputValidator.*;
  * @author N7ghtm4r3 - Tecknobit
  * @see EquinoxController
  *
+ * @param <T>: the type of the {@link EquinoxUser} used in the system, is generic to avoid manual casts if it has been customized
+ * @param <R>: the type of the {@link EquinoxUsersRepository} used in the system, is generic to avoid manual casts if it has been customized
+ * @param <H>: the type of the {@link EquinoxUsersHelper} used in the system, is generic to avoid manual casts if it has been customized
+ *
  * @since 1.0.1
  */
 @RestController

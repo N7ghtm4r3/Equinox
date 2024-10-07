@@ -67,15 +67,52 @@ abstract class Requester (
         const val RESPONSE_STATUS_KEY: String = "status"
 
         /**
-         * **RESPONSE_MESSAGE_KEY** the key for the <b>"response"</b> field
+         * **RESPONSE_DATA_KEY** the key for the <b>"response"</b> field
          */
-        const val RESPONSE_MESSAGE_KEY: String = "response"
+        const val RESPONSE_DATA_KEY: String = "response"
 
         /**
          * **DEFAULT_CONNECTION_ERROR_MESSAGE** the message to send when an error during the communication with the
          * backend occurred
          */
         const val DEFAULT_CONNECTION_ERROR_MESSAGE = "connection_error_message_key"
+
+        /**
+         * Extension function to get directly the response data from the request response
+         *
+         * No-any params required
+         *
+         * @return the [RESPONSE_DATA_KEY] value as [String]
+         *
+         * ### Example
+         * - The complete response
+         *
+         * ```json
+         * {
+         *   "response": "Response data", // in the example is String, but with any types is the same workflow
+         *   "status": "SUCCESSFUL"
+         * }
+         * ```
+         *
+         * - Use the [responseData] function:
+         *
+         * ```kotlin
+         * requester.sendRequest(
+         *     request = {
+         *         // make a request
+         *     },
+         *     onResponse = { response ->
+         *        val data: Any = response.responseData()
+         *        println(data) // will be printed Response data
+         *    }
+         * )
+         * ```
+         *
+         */
+        @Suppress("UNCHECKED_CAST")
+        fun <T> JsonHelper.responseData(): T {
+            return this.get(RESPONSE_DATA_KEY) as T
+        }
 
     }
 
@@ -448,12 +485,30 @@ abstract class Requester (
         if (debugMode) {
             synchronized(this) {
                 println("----------- REQUEST ${timeFormatter.formatNowAsString()} -----------")
+                logHeaders()
                 println("-URL\n$requestUrl")
                 requestPayloadInfo.invoke()
                 if (response != null)
                     println("\n-RESPONSE\n${response.toString(4)}")
                 println("---------------------------------------------------")
             }
+        }
+    }
+
+    /**
+     * Function to log the current headers used in the requests
+     *
+     * No-any params required
+     */
+    private fun logHeaders() {
+        val headerKeys = headers.headersKeys
+        if (headerKeys.isNotEmpty()) {
+            println("\n-HEADERS")
+            val headers = JSONObject()
+            headerKeys.forEach { key ->
+                headers.put(key, this.headers.getHeader(key))
+            }
+            println(headers.toString(4) + "\n")
         }
     }
 
@@ -479,7 +534,7 @@ abstract class Requester (
     protected fun connectionErrorMessage(): JSONObject {
         return JSONObject()
             .put(RESPONSE_STATUS_KEY, GENERIC_RESPONSE.name)
-            .put(RESPONSE_MESSAGE_KEY, mantis.getResource(connectionErrorMessage))
+            .put(RESPONSE_DATA_KEY, mantis.getResource(connectionErrorMessage))
     }
 
     /**

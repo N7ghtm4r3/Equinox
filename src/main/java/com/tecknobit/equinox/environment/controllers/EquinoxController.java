@@ -21,7 +21,7 @@ import java.util.*;
 
 import static com.tecknobit.apimanager.apis.sockets.SocketManager.StandardResponseCode.FAILED;
 import static com.tecknobit.apimanager.apis.sockets.SocketManager.StandardResponseCode.SUCCESSFUL;
-import static com.tecknobit.equinox.Requester.RESPONSE_MESSAGE_KEY;
+import static com.tecknobit.equinox.Requester.RESPONSE_DATA_KEY;
 import static com.tecknobit.equinox.Requester.RESPONSE_STATUS_KEY;
 import static com.tecknobit.equinox.environment.helpers.EquinoxBaseEndpointsSet.BASE_EQUINOX_ENDPOINT;
 import static com.tecknobit.equinox.inputs.InputValidator.DEFAULT_LANGUAGE;
@@ -33,9 +33,9 @@ import static com.tecknobit.equinox.resourcesutils.ResourcesManager.RESOURCES_KE
  *
  * @author N7ghtm4r3 - Tecknobit
  *
- * @param <T>
- * @param <R>
- * @param <H>
+ * @param <T>: the type of the {@link EquinoxUser} used in the system, is generic to avoid manual casts if it has been customized
+ * @param <R>: the type of the {@link EquinoxUsersRepository} used in the system, is generic to avoid manual casts if it has been customized
+ * @param <H>: the type of the {@link EquinoxUsersHelper} used in the system, is generic to avoid manual casts if it has been customized
  * @since 1.0.1
  */
 @RestController
@@ -190,7 +190,7 @@ abstract public class EquinoxController<T extends EquinoxUser, R extends Equinox
      */
     protected <V> HashMap<String, V> successResponse(V value) {
         HashMap<String, V> response = new HashMap<>();
-        response.put(RESPONSE_MESSAGE_KEY, value);
+        response.put(RESPONSE_DATA_KEY, value);
         response.put(RESPONSE_STATUS_KEY, (V) SUCCESSFUL);
         return response;
     }
@@ -204,7 +204,7 @@ abstract public class EquinoxController<T extends EquinoxUser, R extends Equinox
     protected String successResponse(JSONObject message) {
         return new JSONObject()
                 .put(RESPONSE_STATUS_KEY, SUCCESSFUL)
-                .put(RESPONSE_MESSAGE_KEY, message).toString();
+                .put(RESPONSE_DATA_KEY, message).toString();
     }
 
     /**
@@ -227,7 +227,7 @@ abstract public class EquinoxController<T extends EquinoxUser, R extends Equinox
     private String plainResponse(StandardResponseCode responseCode, String message) {
         return new JSONObject()
                 .put(RESPONSE_STATUS_KEY, responseCode)
-                .put(RESPONSE_MESSAGE_KEY, message).toString();
+                .put(RESPONSE_DATA_KEY, message).toString();
     }
 
     /**

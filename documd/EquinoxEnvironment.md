@@ -334,7 +334,7 @@ public class CustomUsersController extends EquinoxUsersController<CustomUser, Cu
             @RequestBody Map<String, String> payload
     ) {
         if(isMe(id, token)) {
-          usersHelper.changeCurrency(payload.get("currency"), id);
+            usersHelper.changeCurrency(payload.get("currency"), id);
             return successResponse();
         } else
             return failedResponse(NOT_AUTHORIZED_OR_WRONG_DETAILS_MESSAGE);
