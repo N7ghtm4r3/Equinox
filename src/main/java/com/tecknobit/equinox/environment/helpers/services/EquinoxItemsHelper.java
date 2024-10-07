@@ -56,8 +56,6 @@ public abstract class EquinoxItemsHelper<T extends EquinoxItem> {
 
         ArrayList<String> getCurrentIds();
 
-        String deleteQuery();
-
         String[] getColumns();
 
     }
@@ -90,7 +88,22 @@ public abstract class EquinoxItemsHelper<T extends EquinoxItem> {
     /**
      * {@code VALUES} values query part
      */
-    private static final String VALUES = " VALUES ";
+    private static final String _VALUES_ = " VALUES ";
+
+    /**
+     * {@code DELETE_FROM_} delete from query command
+     */
+    private static final String DELETE_FROM_ = "DELETE FROM ";
+
+    /**
+     * {@code WHERE} where query part
+     */
+    private static final String _WHERE_ = " WHERE ";
+
+    /**
+     * {@code IN_CLAUSE} in clause query part
+     */
+    private static final String _IN_CLAUSE_ = " IN ";
 
     /**
      * {@code entityManager} entity manager helper
@@ -100,50 +113,38 @@ public abstract class EquinoxItemsHelper<T extends EquinoxItem> {
 
     protected void syncBatch(SyncBatchWorkflow workflow, String table, String targetId, List<String> updatedIds,
                              BatchQuery batchQuery) {
+        String[] columns = workflow.getColumns();
         ArrayList<String> currentIds = workflow.getCurrentIds();
-        batchInsert(INSERT_IGNORE_INTO, table, updatedIds, batchQuery, workflow.getColumns());
+        batchInsert(INSERT_IGNORE_INTO, table, updatedIds, batchQuery, columns);
         currentIds.removeAll(updatedIds);
-        batchDelete(table, List.of("inhabitants_id", "home_id"), List.of(currentIds));
+        batchDelete(table, List.of(List.of(targetId), currentIds), columns);
     }
 
     protected <V> void batchInsert(InsertCommand command, String table, List<V> values, BatchQuery batchQuery,
                                    String... columns) {
         if (values.isEmpty())
             return;
-        String insertQuery = createBatchInsertQueryStart(command, table, columns);
+        String insertQuery = command.sql + table + " " + formatColumns(columns) + _VALUES_;
         String placeHolder = formatPlaceholder(columns);
-        Query query = assembleBatchInsertQuery(insertQuery, placeHolder, values);
+        String insertQueryComplete = formatValuesForQuery(insertQuery, values, placeHolder, false);
+        Query query = entityManager.createNativeQuery(insertQueryComplete);
         batchQuery.prepareQuery(query);
         query.executeUpdate();
     }
 
-    private String createBatchInsertQueryStart(InsertCommand command, String table, String... columns) {
-        return command.sql + table + " " + formatColumns(columns) + VALUES;
-    }
-
-    private <V> Query assembleBatchInsertQuery(String insertQuery, String valuesSlice, List<V> values) {
-        String queryAssembled = formatValuesForQuery(insertQuery, values, valuesSlice, false);
-        return entityManager.createNativeQuery(queryAssembled);
-    }
-
-    protected <V> void batchDelete(String table, List<String> inColumns, List<List<V>> inValues) {
-
-        //  "DELETE FROM " + "users_home" + " WHERE " + "inhabitants_id" + "='%s' " + "AND " + "home_id" + " IN (";
-        if (inColumns.isEmpty())
+    protected <V> void batchDelete(String table, List<List<V>> inValues, String... inColumns) {
+        int columns = inColumns.length;
+        if (columns == 0)
             return;
-        String columnsFormated = formatValuesForQuery(OPENED_ROUND_BRACKET, inColumns, null, true);
         List<V> mergedValues = mergeAlternativelyInColumnsValues(inValues);
         if (mergedValues.isEmpty())
             return;
-        String inClause = formatInClause(inColumns.size(), mergedValues);
-        String deleteQuery = "DELETE FROM " + table + " WHERE " + columnsFormated + " IN " + inClause;
-        System.out.println(deleteQuery);
-
-
-        /*if (inValues.isEmpty())
-            return;
-        Query query = assembleBatchDeleteQuery(deleteQuery, itemToDeleteId, values);
-        query.executeUpdate();*/
+        String columnsFormated = formatValuesForQuery(OPENED_ROUND_BRACKET, Arrays.stream(inColumns).toList(),
+                null, true);
+        String inClause = formatInClause(columns, mergedValues);
+        String deleteQuery = DELETE_FROM_ + table + _WHERE_ + columnsFormated + _IN_CLAUSE_ + inClause;
+        Query query = entityManager.createNativeQuery(deleteQuery);
+        query.executeUpdate();
     }
 
     private <V> List<V> mergeAlternativelyInColumnsValues(List<List<V>> inValues) {
@@ -176,10 +177,10 @@ public abstract class EquinoxItemsHelper<T extends EquinoxItem> {
         int totalValues = inValues.size();
         int lastValue = totalValues - 1;
         int lastColumn = columns - 1;
-        for (int j = 0; j < totalValues; j++) {
+        for (int j = 0; j < totalValues; ) {
             inClause.append(OPENED_ROUND_BRACKET);
-            for (int i = 0; i < columns; i++) {
-                inClause.append(inValues.get(j * i));
+            for (int i = 0; i < columns; i++, j++) {
+                inClause.append(SINGLE_QUOTE).append(inValues.get(j)).append(SINGLE_QUOTE);
                 if (i < lastColumn)
                     inClause.append(COMMA);
             }
@@ -189,19 +190,6 @@ public abstract class EquinoxItemsHelper<T extends EquinoxItem> {
         }
         inClause.append(CLOSED_ROUND_BRACKET);
         return inClause.toString();
-    }
-
-    private <V> Query assembleBatchDeleteQuery(String deleteQuery, String itemToDeleteId, List<V> values) {
-        deleteQuery = String.format(deleteQuery, itemToDeleteId);
-        StringBuilder queryAssembler = new StringBuilder(deleteQuery);
-        int size = values.size();
-        for (int j = 0; j < size; j++) {
-            queryAssembler.append(SINGLE_QUOTE).append(values.get(j)).append(SINGLE_QUOTE);
-            if (j < size - 1)
-                queryAssembler.append(COMMA);
-        }
-        queryAssembler.append(CLOSED_ROUND_BRACKET);
-        return entityManager.createNativeQuery(queryAssembler.toString());
     }
 
     private String formatColumns(String... columns) {
