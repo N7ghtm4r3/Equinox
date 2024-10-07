@@ -33,7 +33,7 @@ import static java.lang.System.currentTimeMillis;
  */
 @Service
 @Transactional
-public class EquinoxUsersHelper<T extends EquinoxUser> implements ResourcesManager {
+public class EquinoxUsersHelper<T extends EquinoxUser, R extends EquinoxUsersRepository<T>> implements ResourcesManager {
 
     /**
      * {@code SINGLE_QUOTE} single quote character
@@ -70,7 +70,7 @@ public class EquinoxUsersHelper<T extends EquinoxUser> implements ResourcesManag
      * {@code usersRepository} instance for the users repository
      */
     @Autowired
-    private EquinoxUsersRepository<T> usersRepository;
+    protected R usersRepository;
 
     /**
      * {@code discriminatorValue} value of the discriminator to use to save the users in the related table

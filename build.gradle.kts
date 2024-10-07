@@ -17,7 +17,7 @@ buildscript {
 }
 
 group = "com.tecknobit"
-version = "1.0.3"
+version = "1.0.4"
 
 repositories {
     mavenCentral()
@@ -32,8 +32,8 @@ dependencies {
     implementation("org.springframework:spring-web:6.1.5")
     implementation("com.fasterxml.jackson.core:jackson-databind:2.15.4")
     implementation("com.squareup.okhttp3:okhttp:4.12.0")
-    implementation("com.github.N7ghtm4r3:APIManager:2.2.3")
-    implementation("org.json:json:20231013")
+    implementation("com.github.N7ghtm4r3:APIManager:2.2.4")
+    implementation("org.json:json:20240303")
     implementation("com.github.N7ghtm4r3:Mantis:1.0.0")
     implementation("commons-validator:commons-validator:1.7")
 }
@@ -44,7 +44,7 @@ afterEvaluate {
             create<MavenPublication>("maven") {
                 groupId = "com.tecknobit.equinox"
                 artifactId = "Equinox"
-                version = "1.0.3"
+                version = "1.0.4"
                 from(components["java"])
             }
         }

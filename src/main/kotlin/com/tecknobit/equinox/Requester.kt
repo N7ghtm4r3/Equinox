@@ -44,7 +44,7 @@ abstract class Requester (
     protected var userId: String? = null,
     protected var userToken: String? = null,
     protected var debugMode: Boolean = false,
-    protected val connectionTimeout: Int = DEFAULT_REQUEST_TIMEOUT - 1,
+    protected val connectionTimeout: Long = DEFAULT_REQUEST_TIMEOUT.toLong(),
     protected val connectionErrorMessage: String = DEFAULT_CONNECTION_ERROR_MESSAGE,
     protected val enableCertificatesValidation: Boolean = false
 ) {
@@ -155,9 +155,9 @@ abstract class Requester (
      * @param connectionTimeout: timeout for the requests
      */
     fun setConnectionTimeout(
-        connectionTimeout: Int
+        connectionTimeout: Long
     ) {
-        apiRequest.setRequestTimeout(connectionTimeout)
+        apiRequest.setConnectionTimeout(connectionTimeout)
     }
 
     /**

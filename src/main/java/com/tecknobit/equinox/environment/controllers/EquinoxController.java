@@ -4,6 +4,7 @@ import com.tecknobit.apimanager.apis.ServerProtector;
 import com.tecknobit.apimanager.apis.sockets.SocketManager.StandardResponseCode;
 import com.tecknobit.apimanager.formatters.JsonHelper;
 import com.tecknobit.equinox.configurationsutils.ConfigsGenerator;
+import com.tecknobit.equinox.environment.helpers.services.EquinoxUsersHelper;
 import com.tecknobit.equinox.environment.helpers.services.repositories.EquinoxUsersRepository;
 import com.tecknobit.equinox.environment.records.EquinoxUser;
 import com.tecknobit.equinox.resourcesutils.ResourcesProvider;
@@ -32,11 +33,15 @@ import static com.tecknobit.equinox.resourcesutils.ResourcesManager.RESOURCES_KE
  *
  * @author N7ghtm4r3 - Tecknobit
  *
+ * @param <T>
+ * @param <R>
+ * @param <H>
  * @since 1.0.1
  */
 @RestController
 @RequestMapping(BASE_EQUINOX_ENDPOINT)
-abstract public class EquinoxController<T extends EquinoxUser> {
+abstract public class EquinoxController<T extends EquinoxUser, R extends EquinoxUsersRepository<T>,
+        H extends EquinoxUsersHelper<T, R>> {
 
     /**
      * {@code protector} the instance to launch the server protector to manage the server accesses
@@ -98,7 +103,7 @@ abstract public class EquinoxController<T extends EquinoxUser> {
      * {@code usersRepository} instance for the user repository
      */
     @Autowired(required = false)
-    protected EquinoxUsersRepository<T> usersRepository;
+    protected R usersRepository;
 
     /**
      * {@code jsonHelper} helper to work with JSON values
