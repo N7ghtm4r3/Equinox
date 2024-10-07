@@ -7,8 +7,11 @@ import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.Query;
 import jakarta.transaction.Transactional;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import static com.tecknobit.equinox.environment.helpers.services.EquinoxItemsHelper.InsertCommand.INSERT_IGNORE_INTO;
 
 /**
  * The {@code EquinoxItemsHelper} class is useful to manage all the {@link EquinoxItem} database operations
@@ -51,23 +54,13 @@ public abstract class EquinoxItemsHelper<T extends EquinoxItem> {
 
     public interface SyncBatchWorkflow {
 
-        List<String> getCurrentIds();
-
-        String insertQuery();
+        ArrayList<String> getCurrentIds();
 
         String deleteQuery();
 
+        String[] getColumns();
+
     }
-
-    /**
-     * {@code COUPLE_VALUES_PLACEHOLDER} the placeholder used to insert in the table new row composed by two elements
-     */
-    protected static final String COUPLE_VALUES_PLACEHOLDER = "(?, ?)";
-
-    /**
-     * {@code TUPLE_VALUES_PLACEHOLDER} the placeholder used to insert in the table new row composed by three elements
-     */
-    protected static final String TUPLE_VALUES_PLACEHOLDER = "(?, ?, ?)";
 
     /**
      * {@code SINGLE_QUOTE} single quote character
@@ -105,46 +98,110 @@ public abstract class EquinoxItemsHelper<T extends EquinoxItem> {
     @PersistenceContext
     protected EntityManager entityManager;
 
-    @Wrapper
-    protected void syncBatch(SyncBatchWorkflow workflow, String targetId, List<String> updatedIds) {
-        syncBatch(workflow, COUPLE_VALUES_PLACEHOLDER, targetId, updatedIds,
-                query -> {
-                    int index = 1;
-                    for (String id : updatedIds) {
-                        query.setParameter(index++, id);
-                        query.setParameter(index++, targetId);
-                    }
-                }
-        );
-    }
-
-    protected void syncBatch(SyncBatchWorkflow workflow, String valuePlaceholders, String targetId,
-                             List<String> updatedIds, BatchQuery batchQuery) {
-        List<String> currentIds = workflow.getCurrentIds();
-        batchInsert(workflow.insertQuery(), valuePlaceholders, updatedIds, batchQuery);
+    protected void syncBatch(SyncBatchWorkflow workflow, String table, String targetId, List<String> updatedIds,
+                             BatchQuery batchQuery) {
+        ArrayList<String> currentIds = workflow.getCurrentIds();
+        batchInsert(INSERT_IGNORE_INTO, table, updatedIds, batchQuery, workflow.getColumns());
         currentIds.removeAll(updatedIds);
-        batchDelete(workflow.deleteQuery(), targetId, currentIds);
+        batchDelete(table, List.of("inhabitants_id", "home_id"), List.of(currentIds));
     }
 
-    @Wrapper
     protected <V> void batchInsert(InsertCommand command, String table, List<V> values, BatchQuery batchQuery,
                                    String... columns) {
-        String query = command.sql + table + " " + formatColumns(columns) + VALUES;
-        String placeHolder = formatPlaceholder(columns);
-        batchInsert(query, placeHolder, values, batchQuery);
-    }
-
-    protected <V> void batchInsert(String insertQuery, String valuePlaceholders, List<V> values, BatchQuery batchQuery) {
         if (values.isEmpty())
             return;
-        Query query = assembleBatchInsertQuery(insertQuery, valuePlaceholders, values);
+        String insertQuery = createBatchInsertQueryStart(command, table, columns);
+        String placeHolder = formatPlaceholder(columns);
+        Query query = assembleBatchInsertQuery(insertQuery, placeHolder, values);
         batchQuery.prepareQuery(query);
         query.executeUpdate();
+    }
+
+    private String createBatchInsertQueryStart(InsertCommand command, String table, String... columns) {
+        return command.sql + table + " " + formatColumns(columns) + VALUES;
     }
 
     private <V> Query assembleBatchInsertQuery(String insertQuery, String valuesSlice, List<V> values) {
         String queryAssembled = formatValuesForQuery(insertQuery, values, valuesSlice, false);
         return entityManager.createNativeQuery(queryAssembled);
+    }
+
+    protected <V> void batchDelete(String table, List<String> inColumns, List<List<V>> inValues) {
+
+        //  "DELETE FROM " + "users_home" + " WHERE " + "inhabitants_id" + "='%s' " + "AND " + "home_id" + " IN (";
+        if (inColumns.isEmpty())
+            return;
+        String columnsFormated = formatValuesForQuery(OPENED_ROUND_BRACKET, inColumns, null, true);
+        List<V> mergedValues = mergeAlternativelyInColumnsValues(inValues);
+        if (mergedValues.isEmpty())
+            return;
+        String inClause = formatInClause(inColumns.size(), mergedValues);
+        String deleteQuery = "DELETE FROM " + table + " WHERE " + columnsFormated + " IN " + inClause;
+        System.out.println(deleteQuery);
+
+
+        /*if (inValues.isEmpty())
+            return;
+        Query query = assembleBatchDeleteQuery(deleteQuery, itemToDeleteId, values);
+        query.executeUpdate();*/
+    }
+
+    private <V> List<V> mergeAlternativelyInColumnsValues(List<List<V>> inValues) {
+        List<V> mergedValues = new ArrayList<>();
+        int maxSize = findMaxSize(inValues);
+        for (int j = 0; j < maxSize; j++) {
+            for (List<V> values : inValues) {
+                int valuesSize = values.size();
+                if (j < valuesSize)
+                    mergedValues.add(values.get(j));
+                else
+                    mergedValues.add(values.get(valuesSize - 1));
+            }
+        }
+        return mergedValues;
+    }
+
+    private <V> int findMaxSize(List<List<V>> inValues) {
+        int maxSize = 0;
+        for (List<V> values : inValues) {
+            int valuesSize = values.size();
+            if (maxSize < valuesSize)
+                maxSize = valuesSize;
+        }
+        return maxSize;
+    }
+
+    private <V> String formatInClause(int columns, List<V> inValues) {
+        StringBuilder inClause = new StringBuilder(OPENED_ROUND_BRACKET);
+        int totalValues = inValues.size();
+        int lastValue = totalValues - 1;
+        int lastColumn = columns - 1;
+        for (int j = 0; j < totalValues; j++) {
+            inClause.append(OPENED_ROUND_BRACKET);
+            for (int i = 0; i < columns; i++) {
+                inClause.append(inValues.get(j * i));
+                if (i < lastColumn)
+                    inClause.append(COMMA);
+            }
+            inClause.append(CLOSED_ROUND_BRACKET);
+            if (j < lastValue)
+                inClause.append(COMMA);
+        }
+        inClause.append(CLOSED_ROUND_BRACKET);
+        return inClause.toString();
+    }
+
+    private <V> Query assembleBatchDeleteQuery(String deleteQuery, String itemToDeleteId, List<V> values) {
+        deleteQuery = String.format(deleteQuery, itemToDeleteId);
+        StringBuilder queryAssembler = new StringBuilder(deleteQuery);
+        int size = values.size();
+        for (int j = 0; j < size; j++) {
+            queryAssembler.append(SINGLE_QUOTE).append(values.get(j)).append(SINGLE_QUOTE);
+            if (j < size - 1)
+                queryAssembler.append(COMMA);
+        }
+        queryAssembler.append(CLOSED_ROUND_BRACKET);
+        return entityManager.createNativeQuery(queryAssembler.toString());
     }
 
     private String formatColumns(String... columns) {
@@ -171,26 +228,6 @@ public abstract class EquinoxItemsHelper<T extends EquinoxItem> {
         if (isToClose)
             formattedColumns.append(CLOSED_ROUND_BRACKET);
         return formattedColumns.toString();
-    }
-
-    protected <V> void batchDelete(String deleteQuery, String itemToDeleteId, List<V> values) {
-        if (values.isEmpty())
-            return;
-        Query query = assembleBatchDeleteQuery(deleteQuery, itemToDeleteId, values);
-        query.executeUpdate();
-    }
-
-    private <V> Query assembleBatchDeleteQuery(String deleteQuery, String itemToDeleteId, List<V> values) {
-        deleteQuery = String.format(deleteQuery, itemToDeleteId);
-        StringBuilder queryAssembler = new StringBuilder(deleteQuery);
-        int size = values.size();
-        for (int j = 0; j < size; j++) {
-            queryAssembler.append(SINGLE_QUOTE).append(values.get(j)).append(SINGLE_QUOTE);
-            if (j < size - 1)
-                queryAssembler.append(COMMA);
-        }
-        queryAssembler.append(CLOSED_ROUND_BRACKET);
-        return entityManager.createNativeQuery(queryAssembler.toString());
     }
 
 }
