@@ -7,8 +7,6 @@ import com.tecknobit.apimanager.apis.sockets.SocketManager.StandardResponseCode
 import com.tecknobit.apimanager.apis.sockets.SocketManager.StandardResponseCode.*
 import com.tecknobit.apimanager.formatters.JsonHelper
 import com.tecknobit.apimanager.formatters.TimeFormatter
-import com.tecknobit.equinox.inputs.InputValidator.DEFAULT_LANGUAGE
-import com.tecknobit.mantis.Mantis
 import kotlinx.coroutines.async
 import kotlinx.coroutines.runBlocking
 import okhttp3.Headers.Companion.toHeaders
@@ -45,7 +43,7 @@ abstract class Requester (
     protected var userToken: String? = null,
     protected var debugMode: Boolean = false,
     protected val connectionTimeout: Long = DEFAULT_REQUEST_TIMEOUT.toLong(),
-    protected val connectionErrorMessage: String = DEFAULT_CONNECTION_ERROR_MESSAGE,
+    protected val connectionErrorMessage: String,
     protected val enableCertificatesValidation: Boolean = false
 ) {
 
@@ -115,11 +113,6 @@ abstract class Requester (
         }
 
     }
-
-    /**
-     * `mantis` the translations manager
-     */
-    protected val mantis = Mantis(DEFAULT_LANGUAGE)
 
     /**
      * `timeFormatter` the formatter used to format the timestamp values
@@ -534,7 +527,7 @@ abstract class Requester (
     protected fun connectionErrorMessage(): JSONObject {
         return JSONObject()
             .put(RESPONSE_STATUS_KEY, GENERIC_RESPONSE.name)
-            .put(RESPONSE_DATA_KEY, mantis.getResource(connectionErrorMessage))
+            .put(RESPONSE_DATA_KEY, connectionErrorMessage)
     }
 
     /**

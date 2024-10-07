@@ -40,7 +40,7 @@ abstract class EquinoxRequester(
     userToken: String? = null,
     debugMode: Boolean = false,
     connectionTimeout: Long = DEFAULT_REQUEST_TIMEOUT.toLong(),
-    connectionErrorMessage: String = DEFAULT_CONNECTION_ERROR_MESSAGE,
+    connectionErrorMessage: String,
     enableCertificatesValidation: Boolean = false
 ) : Requester(
     host = host,
