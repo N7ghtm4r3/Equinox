@@ -4,7 +4,6 @@ import com.tecknobit.apimanager.annotations.RequestPath;
 import com.tecknobit.equinox.environment.helpers.services.EquinoxUsersHelper;
 import com.tecknobit.equinox.environment.helpers.services.repositories.EquinoxUsersRepository;
 import com.tecknobit.equinox.environment.records.EquinoxUser;
-import jakarta.annotation.PostConstruct;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -39,11 +38,6 @@ public class EquinoxUsersController<T extends EquinoxUser, R extends EquinoxUser
      */
     @Autowired
     protected H usersHelper;
-
-    @PostConstruct
-    private void removeNotRequiredEquinoxUserParameters() {
-        usersHelper.removeNotRequiredEquinoxUserParameters();
-    }
 
     /**
      * Method to sign up in the <b>Equinox's system</b>
@@ -157,15 +151,15 @@ public class EquinoxUsersController<T extends EquinoxUser, R extends EquinoxUser
      */
     protected String validateSignUp(String name, String surname, String email, String password, String language,
                                     Object... custom) {
-        if (!isNameValid(name) && usersHelper.isDefaultParamRequired(NAME_KEY))
+        if (!isNameValid(name))
             return WRONG_NAME_MESSAGE;
-        if (!isSurnameValid(surname) && usersHelper.isDefaultParamRequired(SURNAME_KEY))
+        if (!isSurnameValid(surname))
             return WRONG_SURNAME_MESSAGE;
         if (!isEmailValid(email))
             return WRONG_EMAIL_MESSAGE;
         if (!isPasswordValid(password))
             return WRONG_PASSWORD_MESSAGE;
-        if (!isLanguageValid(language) && usersHelper.isDefaultParamRequired(LANGUAGE_KEY))
+        if (!isLanguageValid(language))
             return WRONG_LANGUAGE_MESSAGE;
         return null;
     }
@@ -263,7 +257,7 @@ public class EquinoxUsersController<T extends EquinoxUser, R extends EquinoxUser
             return WRONG_EMAIL_MESSAGE;
         if (!isPasswordValid(password))
             return WRONG_PASSWORD_MESSAGE;
-        if (!isLanguageValid(language) && usersHelper.isDefaultParamRequired(LANGUAGE_KEY))
+        if (!isLanguageValid(language))
             return WRONG_LANGUAGE_MESSAGE;
         return null;
     }
@@ -291,14 +285,10 @@ public class EquinoxUsersController<T extends EquinoxUser, R extends EquinoxUser
         JSONObject response = new JSONObject();
         response.put(IDENTIFIER_KEY, user.getId());
         response.put(TOKEN_KEY, user.getToken());
-        if (usersHelper.isDefaultParamRequired(PROFILE_PIC_KEY))
-            response.put(PROFILE_PIC_KEY, user.getProfilePic());
-        if (usersHelper.isDefaultParamRequired(NAME_KEY))
-            response.put(NAME_KEY, user.getName());
-        if (usersHelper.isDefaultParamRequired(SURNAME_KEY))
-            response.put(SURNAME_KEY, user.getSurname());
-        if (usersHelper.isDefaultParamRequired(LANGUAGE_KEY))
-            response.put(LANGUAGE_KEY, user.getLanguage());
+        response.put(PROFILE_PIC_KEY, user.getProfilePic());
+        response.put(NAME_KEY, user.getName());
+        response.put(SURNAME_KEY, user.getSurname());
+        response.put(LANGUAGE_KEY, user.getLanguage());
         return response;
     }
 
