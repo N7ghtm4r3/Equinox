@@ -1,14 +1,20 @@
 package com.tecknobit.equinox.environment.controllers;
 
 import com.tecknobit.apimanager.annotations.RequestPath;
+import com.tecknobit.apimanager.apis.ResourcesUtils;
 import com.tecknobit.equinox.environment.helpers.services.EquinoxUsersHelper;
 import com.tecknobit.equinox.environment.helpers.services.repositories.EquinoxUsersRepository;
 import com.tecknobit.equinox.environment.records.EquinoxUser;
+import jakarta.annotation.PostConstruct;
+import org.json.JSONException;
 import org.json.JSONObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.Map;
 
 import static com.tecknobit.apimanager.apis.APIRequest.RequestMethod.*;
@@ -38,6 +44,20 @@ public class EquinoxUsersController<T extends EquinoxUser, R extends EquinoxUser
      */
     @Autowired
     protected H usersHelper;
+
+    @PostConstruct
+    private void removeNotRequiredEquinoxUserParameters() {
+        try {
+            String configRawContent = ResourcesUtils.getResourceContent(EQUINOX_USER_CONFIG_FILE, EquinoxUsersController.class);
+            JSONObject config = new JSONObject(configRawContent);
+            usersHelper.removeNotRequiredEquinoxUserParameters(config);
+        } catch (IOException e) {
+            Logger logger = LoggerFactory.getLogger(EquinoxUsersController.class);
+            logger.info("Remove default EquinoxUser parameters SKIPPED");
+        } catch (JSONException e) {
+            throw new IllegalArgumentException("Invalid EquinoxUser configuration", e);
+        }
+    }
 
     /**
      * Method to sign up in the <b>Equinox's system</b>

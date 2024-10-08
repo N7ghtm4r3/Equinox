@@ -1,12 +1,12 @@
 package com.tecknobit.equinox.environment.helpers.services;
 
 import com.tecknobit.apimanager.apis.APIRequest;
+import com.tecknobit.apimanager.formatters.JsonHelper;
 import com.tecknobit.equinox.environment.helpers.services.repositories.EquinoxUsersRepository;
 import com.tecknobit.equinox.environment.records.EquinoxUser;
 import com.tecknobit.equinox.resourcesutils.ResourcesManager;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
-import jakarta.transaction.Transactional;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -17,6 +17,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 
 import static com.tecknobit.apimanager.apis.APIRequest.SHA256_ALGORITHM;
 import static com.tecknobit.equinox.environment.records.EquinoxItem.IDENTIFIER_KEY;
@@ -35,23 +36,18 @@ import static java.lang.System.currentTimeMillis;
  * @since 1.0.1
  */
 @Service
-@Transactional
-public class EquinoxUsersHelper<T extends EquinoxUser, R extends EquinoxUsersRepository<T>> implements ResourcesManager {
+public class EquinoxUsersHelper<T extends EquinoxUser, R extends EquinoxUsersRepository<T>>
+        extends EquinoxItemsHelper<T> implements ResourcesManager {
 
     /**
-     * {@code SINGLE_QUOTE} single quote character
+     * {@code ALTER_TABLE_} query command
      */
-    public static final String SINGLE_QUOTE = "'";
+    protected static final String ALTER_TABLE_ = "ALTER TABLE ";
 
     /**
-     * {@code ROUND_BRACKET} round bracket character
+     * {@code _DROP_COLUMN_} query command
      */
-    public static final String ROUND_BRACKET = ")";
-
-    /**
-     * {@code COMMA} comma character
-     */
-    public static final String COMMA = ",";
+    protected static final String _DROP_COLUMN_ = " DROP COLUMN ";
 
     /**
      * {@code VALUES_QUERY_PART} values query part
@@ -69,6 +65,8 @@ public class EquinoxUsersHelper<T extends EquinoxUser, R extends EquinoxUsersRep
     protected static final List<String> DEFAULT_USER_VALUES_KEYS = List.of(DISCRIMINATOR_VALUE_KEY, IDENTIFIER_KEY,
             TOKEN_KEY, NAME_KEY, SURNAME_KEY, EMAIL_KEY, PASSWORD_KEY, LANGUAGE_KEY);
 
+    private static final Set<String> REQUIRED_DEFAULT_PARAMETERS = Set.of(DISCRIMINATOR_VALUE_KEY, IDENTIFIER_KEY,
+            TOKEN_KEY, EMAIL_KEY, PASSWORD_KEY);
     /**
      * {@code usersRepository} instance for the users repository
      */
@@ -79,12 +77,6 @@ public class EquinoxUsersHelper<T extends EquinoxUser, R extends EquinoxUsersRep
      * {@code discriminatorValue} value of the discriminator to use to save the users in the related table
      */
     protected String discriminatorValue;
-
-    /**
-     * {@code entityManager} entity manager helper
-     */
-    @PersistenceContext
-    protected EntityManager entityManager;
 
     /**
      * Constructor to init the {@link EquinoxUsersHelper} controller <br>
@@ -98,6 +90,25 @@ public class EquinoxUsersHelper<T extends EquinoxUser, R extends EquinoxUsersRep
         } catch (ClassCastException e) {
             discriminatorValue = "EquinoxUser";
         }
+    }
+
+    public void removeNotRequiredEquinoxUserParameters(JSONObject equinoxUserConfig) {
+        JSONArray parameters = new JsonHelper(equinoxUserConfig).getJSONArray(PARAMETERS_TO_REMOVE_KEY, new JSONArray());
+        if (parameters.isEmpty())
+            return;
+        StringBuilder alterQuery = new StringBuilder(ALTER_TABLE_ + USERS_KEY);
+        int columnsToDrop = parameters.length();
+        int lastColumn = columnsToDrop - 1;
+        for (int j = 0; j < columnsToDrop; j++) {
+            String parameterToRemove = parameters.getString(j);
+            if (REQUIRED_DEFAULT_PARAMETERS.contains(parameterToRemove))
+                throw new IllegalArgumentException("The '" + parameterToRemove + "' parameter cannot be removed because is required");
+            else
+                alterQuery.append(_DROP_COLUMN_).append(parameterToRemove);
+            if (j < lastColumn)
+                alterQuery.append(COMMA);
+        }
+        entityManager.createNativeQuery(alterQuery.toString()).executeUpdate();
     }
 
     /**
@@ -115,7 +126,7 @@ public class EquinoxUsersHelper<T extends EquinoxUser, R extends EquinoxUsersRep
      * @apiNote the order of the custom parameters must be the same of that specified in the {@link #getQueryValuesKeys()}
      */
     public void signUpUser(String id, String token, String name, String surname, String email, String password,
-                          String language, Object... custom) throws NoSuchAlgorithmException {
+                           String language, Object... custom) throws NoSuchAlgorithmException {
         StringBuilder queryBuilder = new StringBuilder(BASE_SIGN_UP_QUERY);
         arrangeQuery(queryBuilder, getQueryValuesKeys(), false);
         List<Object> values = new ArrayList<>(List.of(discriminatorValue, id, token, name, surname, email, hash(password),
@@ -158,7 +169,7 @@ public class EquinoxUsersHelper<T extends EquinoxUser, R extends EquinoxUsersRep
             if (j < lastIndex)
                 queryBuilder.append(COMMA);
             else
-                queryBuilder.append(ROUND_BRACKET);
+                queryBuilder.append(CLOSED_ROUND_BRACKET);
         }
     }
 

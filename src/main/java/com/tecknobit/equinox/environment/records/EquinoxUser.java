@@ -27,6 +27,16 @@ import static com.tecknobit.equinox.inputs.InputValidator.LANGUAGES_SUPPORTED;
 public class EquinoxUser extends EquinoxItem {
 
     /**
+     * {@code EQUINOX_USER_CONFIG_FILE} the pathname of the configuration file for the {@link EquinoxUser}
+     */
+    public static final String EQUINOX_USER_CONFIG_FILE = "equinoxuser.config";
+
+    /**
+     * {@code PARAMETERS_TO_REMOVE_KEY} the key for the <b>"remove"</b> field
+     */
+    public static final String PARAMETERS_TO_REMOVE_KEY = "remove";
+
+    /**
      * {@code USERS_KEY} the key for the <b>"users"</b> field
      */
     public static final String USERS_KEY = "users";

@@ -118,6 +118,7 @@ public abstract class EquinoxItemsHelper<T extends EquinoxItem> {
      *          public void prepareQuery(Query query) {
      *              int index = 1; // mandatory starts from one due the SQL starts from one
      *              for (String carId : carsIds) {
+     *                  // the order of the parameters setting is the same of the table
      *                  query.setParameter(index++, userId);
      *                  query.setParameter(index++, carId);
      *             }
@@ -140,42 +141,42 @@ public abstract class EquinoxItemsHelper<T extends EquinoxItem> {
     /**
      * {@code SINGLE_QUOTE} single quote character
      */
-    private static final String SINGLE_QUOTE = "'";
+    public static final String SINGLE_QUOTE = "'";
 
     /**
      * {@code OPENED_ROUND_BRACKET} opened round bracket character
      */
-    private static final String OPENED_ROUND_BRACKET = "(";
+    public static final String OPENED_ROUND_BRACKET = "(";
 
     /**
      * {@code CLOSED_ROUND_BRACKET} closed round bracket character
      */
-    private static final String CLOSED_ROUND_BRACKET = ")";
+    public static final String CLOSED_ROUND_BRACKET = ")";
 
     /**
      * {@code COMMA} comma character
      */
-    private static final String COMMA = ",";
+    public static final String COMMA = ",";
 
     /**
      * {@code QUESTION_MARK} question mark character
      */
-    private static final String QUESTION_MARK = "?";
+    public static final String QUESTION_MARK = "?";
 
     /**
      * {@code VALUES} values query part
      */
-    private static final String _VALUES_ = " VALUES ";
+    public static final String _VALUES_ = " VALUES ";
 
     /**
      * {@code DELETE_FROM_} delete from query command
      */
-    private static final String DELETE_FROM_ = "DELETE FROM ";
+    public static final String DELETE_FROM_ = "DELETE FROM ";
 
     /**
      * {@code WHERE} where query part
      */
-    private static final String _WHERE_ = " WHERE ";
+    public static final String _WHERE_ = " WHERE ";
 
     /**
      * {@code IN_CLAUSE} in clause query part
