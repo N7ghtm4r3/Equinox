@@ -28,6 +28,10 @@ The base environment gives a base set of classes:
   the requester helper with the **EquinoxUser** requests pre-implemented to execute the operations on the user
 - [InputValidator](https://github.com/N7ghtm4r3/Equinox/blob/main/src/main/java/com/tecknobit/equinox/inputs/InputValidator.java) ->
   utility class to validate the inputs, gives a set of the method to validate the **EquinoxUser** details
+- [EquinoxItemsHelper](https://github.com/N7ghtm4r3/Equinox/blob/main/src/main/java/com/tecknobit/equinox/environment/helpers/services/EquinoxItemsHelper.java) ->
+  helper for manage the database operations of
+  the [EquinoxItem](https://github.com/N7ghtm4r3/Equinox/blob/main/src/main/java/com/tecknobit/equinox/environment/records/EquinoxItem.java)
+  such batch queries execution
 
 ### Usage/Examples
 

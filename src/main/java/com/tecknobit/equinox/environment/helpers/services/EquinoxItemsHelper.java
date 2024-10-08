@@ -94,6 +94,37 @@ public abstract class EquinoxItemsHelper<T extends EquinoxItem> {
      * The {@code BatchQuery} interface is useful to manage the batch queries to insert or delete values in batch
      *
      * @author N7ghtm4r3 - Tecknobit
+     *
+     * @apiNote example usage for a join table of user and his/her cars:
+     * <table>
+     *     <thead>
+     *         <tr>
+     *             <th>user_id</th>
+     *             <th>car_id</th>
+     *         </tr>
+     *     </thead>
+     *     <tbody>
+     *         <tr>
+     *             <td>userId</td>
+     *             <td>carId</td>
+     *         </tr>
+     *     </tbody>
+     * </table>
+     * <pre>
+     * {@code
+     *     ArrayList<String> carsIds = fetchCarsIdentifiers();
+     *     BatchQuery batchQuery = new BatchQuery() {
+     *          @Override
+     *          public void prepareQuery(Query query) {
+     *              int index = 1; // mandatory starts from one due the SQL starts from one
+     *              for (String carId : carsIds) {
+     *                  query.setParameter(index++, userId);
+     *                  query.setParameter(index++, carId);
+     *             }
+     *         }
+     *     }
+     * }
+     * </pre>
      */
     public interface BatchQuery {
 
