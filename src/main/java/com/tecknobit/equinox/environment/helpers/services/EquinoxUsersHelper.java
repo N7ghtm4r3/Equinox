@@ -1,12 +1,17 @@
 package com.tecknobit.equinox.environment.helpers.services;
 
 import com.tecknobit.apimanager.apis.APIRequest;
+import com.tecknobit.apimanager.apis.ResourcesUtils;
 import com.tecknobit.apimanager.formatters.JsonHelper;
+import com.tecknobit.equinox.environment.controllers.EquinoxUsersController;
 import com.tecknobit.equinox.environment.helpers.services.repositories.EquinoxUsersRepository;
 import com.tecknobit.equinox.environment.records.EquinoxUser;
 import com.tecknobit.equinox.resourcesutils.ResourcesManager;
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -14,10 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.lang.reflect.ParameterizedType;
 import java.security.NoSuchAlgorithmException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 import static com.tecknobit.apimanager.apis.APIRequest.SHA256_ALGORITHM;
 import static com.tecknobit.equinox.environment.records.EquinoxItem.IDENTIFIER_KEY;
@@ -67,6 +69,9 @@ public class EquinoxUsersHelper<T extends EquinoxUser, R extends EquinoxUsersRep
 
     private static final Set<String> REQUIRED_DEFAULT_PARAMETERS = Set.of(DISCRIMINATOR_VALUE_KEY, IDENTIFIER_KEY,
             TOKEN_KEY, EMAIL_KEY, PASSWORD_KEY);
+
+    private static final HashSet<String> DEFAULT_PARAMETERS_REMOVED = new HashSet<>();
+
     /**
      * {@code usersRepository} instance for the users repository
      */
@@ -92,10 +97,31 @@ public class EquinoxUsersHelper<T extends EquinoxUser, R extends EquinoxUsersRep
         }
     }
 
-    public void removeNotRequiredEquinoxUserParameters(JSONObject equinoxUserConfig) {
-        JSONArray parameters = new JsonHelper(equinoxUserConfig).getJSONArray(PARAMETERS_TO_REMOVE_KEY, new JSONArray());
+    public void removeNotRequiredEquinoxUserParameters() {
+        JSONObject equinoxUserConfiguration = getEquinoxUserConfiguration();
+        if (equinoxUserConfiguration == null)
+            return;
+        JSONArray parameters = new JsonHelper(equinoxUserConfiguration).getJSONArray(PARAMETERS_TO_REMOVE_KEY, new JSONArray());
         if (parameters.isEmpty())
             return;
+        String alterQuery = getEquinoxUserAlterQuery(parameters);
+        entityManager.createNativeQuery(alterQuery).executeUpdate();
+    }
+
+    private JSONObject getEquinoxUserConfiguration() {
+        try {
+            String configRawContent = ResourcesUtils.getResourceContent(EQUINOX_USER_CONFIG_FILE, EquinoxUsersController.class);
+            return new JSONObject(configRawContent);
+        } catch (IOException e) {
+            Logger logger = LoggerFactory.getLogger(EquinoxUsersController.class);
+            logger.info("Remove default EquinoxUser parameters SKIPPED");
+            return null;
+        } catch (JSONException e) {
+            throw new IllegalArgumentException("Invalid EquinoxUser configuration", e);
+        }
+    }
+
+    private String getEquinoxUserAlterQuery(JSONArray parameters) {
         StringBuilder alterQuery = new StringBuilder(ALTER_TABLE_ + USERS_KEY);
         int columnsToDrop = parameters.length();
         int lastColumn = columnsToDrop - 1;
@@ -103,12 +129,14 @@ public class EquinoxUsersHelper<T extends EquinoxUser, R extends EquinoxUsersRep
             String parameterToRemove = parameters.getString(j);
             if (REQUIRED_DEFAULT_PARAMETERS.contains(parameterToRemove))
                 throw new IllegalArgumentException("The '" + parameterToRemove + "' parameter cannot be removed because is required");
-            else
+            else {
                 alterQuery.append(_DROP_COLUMN_).append(parameterToRemove);
+                DEFAULT_PARAMETERS_REMOVED.add(parameterToRemove);
+            }
             if (j < lastColumn)
                 alterQuery.append(COMMA);
         }
-        entityManager.createNativeQuery(alterQuery.toString()).executeUpdate();
+        return alterQuery.toString();
     }
 
     /**
@@ -129,8 +157,14 @@ public class EquinoxUsersHelper<T extends EquinoxUser, R extends EquinoxUsersRep
                            String language, Object... custom) throws NoSuchAlgorithmException {
         StringBuilder queryBuilder = new StringBuilder(BASE_SIGN_UP_QUERY);
         arrangeQuery(queryBuilder, getQueryValuesKeys(), false);
-        List<Object> values = new ArrayList<>(List.of(discriminatorValue, id, token, name, surname, email, hash(password),
-                language));
+        ArrayList<Object> values = new ArrayList<>(List.of(discriminatorValue, id, token));
+        if (!DEFAULT_PARAMETERS_REMOVED.contains(NAME_KEY))
+            values.add(name);
+        if (!DEFAULT_PARAMETERS_REMOVED.contains(SURNAME_KEY))
+            values.add(surname);
+        values.addAll(List.of(email, hash(password)));
+        if (!DEFAULT_PARAMETERS_REMOVED.contains(LANGUAGE_KEY))
+            values.add(language);
         values.addAll(Arrays.stream(custom).toList());
         queryBuilder.append(VALUES_QUERY_PART);
         arrangeQuery(queryBuilder, values, true);
@@ -145,7 +179,9 @@ public class EquinoxUsersHelper<T extends EquinoxUser, R extends EquinoxUsersRep
      * @apiNote This method allows a customizable sign-up with custom parameters added in a customization of the {@link EquinoxUser}
      */
     protected List<String> getQueryValuesKeys() {
-        return DEFAULT_USER_VALUES_KEYS;
+        ArrayList<String> queryValuesKeys = new ArrayList<>(DEFAULT_USER_VALUES_KEYS);
+        queryValuesKeys.removeIf(DEFAULT_PARAMETERS_REMOVED::contains);
+        return queryValuesKeys;
     }
 
     /**
@@ -265,6 +301,10 @@ public class EquinoxUsersHelper<T extends EquinoxUser, R extends EquinoxUsersRep
      */
     protected String hash(String secret) throws NoSuchAlgorithmException {
         return APIRequest.base64Digest(secret, SHA256_ALGORITHM);
+    }
+
+    public boolean isDefaultParamRequired(String defaultParamsKey) {
+        return !DEFAULT_PARAMETERS_REMOVED.contains(defaultParamsKey);
     }
 
 }

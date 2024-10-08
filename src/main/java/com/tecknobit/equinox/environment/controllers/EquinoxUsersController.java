@@ -1,20 +1,15 @@
 package com.tecknobit.equinox.environment.controllers;
 
 import com.tecknobit.apimanager.annotations.RequestPath;
-import com.tecknobit.apimanager.apis.ResourcesUtils;
 import com.tecknobit.equinox.environment.helpers.services.EquinoxUsersHelper;
 import com.tecknobit.equinox.environment.helpers.services.repositories.EquinoxUsersRepository;
 import com.tecknobit.equinox.environment.records.EquinoxUser;
 import jakarta.annotation.PostConstruct;
-import org.json.JSONException;
 import org.json.JSONObject;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
 import java.util.Map;
 
 import static com.tecknobit.apimanager.apis.APIRequest.RequestMethod.*;
@@ -47,16 +42,7 @@ public class EquinoxUsersController<T extends EquinoxUser, R extends EquinoxUser
 
     @PostConstruct
     private void removeNotRequiredEquinoxUserParameters() {
-        try {
-            String configRawContent = ResourcesUtils.getResourceContent(EQUINOX_USER_CONFIG_FILE, EquinoxUsersController.class);
-            JSONObject config = new JSONObject(configRawContent);
-            usersHelper.removeNotRequiredEquinoxUserParameters(config);
-        } catch (IOException e) {
-            Logger logger = LoggerFactory.getLogger(EquinoxUsersController.class);
-            logger.info("Remove default EquinoxUser parameters SKIPPED");
-        } catch (JSONException e) {
-            throw new IllegalArgumentException("Invalid EquinoxUser configuration", e);
-        }
+        usersHelper.removeNotRequiredEquinoxUserParameters();
     }
 
     /**
@@ -171,15 +157,15 @@ public class EquinoxUsersController<T extends EquinoxUser, R extends EquinoxUser
      */
     protected String validateSignUp(String name, String surname, String email, String password, String language,
                                     Object... custom) {
-        if (!isNameValid(name))
+        if (!isNameValid(name) && usersHelper.isDefaultParamRequired(NAME_KEY))
             return WRONG_NAME_MESSAGE;
-        if (!isSurnameValid(surname))
+        if (!isSurnameValid(surname) && usersHelper.isDefaultParamRequired(SURNAME_KEY))
             return WRONG_SURNAME_MESSAGE;
         if (!isEmailValid(email))
             return WRONG_EMAIL_MESSAGE;
         if (!isPasswordValid(password))
             return WRONG_PASSWORD_MESSAGE;
-        if (!isLanguageValid(language))
+        if (!isLanguageValid(language) && usersHelper.isDefaultParamRequired(LANGUAGE_KEY))
             return WRONG_LANGUAGE_MESSAGE;
         return null;
     }
@@ -277,7 +263,7 @@ public class EquinoxUsersController<T extends EquinoxUser, R extends EquinoxUser
             return WRONG_EMAIL_MESSAGE;
         if (!isPasswordValid(password))
             return WRONG_PASSWORD_MESSAGE;
-        if (!isLanguageValid(language))
+        if (!isLanguageValid(language) && usersHelper.isDefaultParamRequired(LANGUAGE_KEY))
             return WRONG_LANGUAGE_MESSAGE;
         return null;
     }
@@ -305,10 +291,14 @@ public class EquinoxUsersController<T extends EquinoxUser, R extends EquinoxUser
         JSONObject response = new JSONObject();
         response.put(IDENTIFIER_KEY, user.getId());
         response.put(TOKEN_KEY, user.getToken());
-        response.put(PROFILE_PIC_KEY, user.getProfilePic());
-        response.put(NAME_KEY, user.getName());
-        response.put(SURNAME_KEY, user.getSurname());
-        response.put(LANGUAGE_KEY, user.getLanguage());
+        if (usersHelper.isDefaultParamRequired(PROFILE_PIC_KEY))
+            response.put(PROFILE_PIC_KEY, user.getProfilePic());
+        if (usersHelper.isDefaultParamRequired(NAME_KEY))
+            response.put(NAME_KEY, user.getName());
+        if (usersHelper.isDefaultParamRequired(SURNAME_KEY))
+            response.put(SURNAME_KEY, user.getSurname());
+        if (usersHelper.isDefaultParamRequired(LANGUAGE_KEY))
+            response.put(LANGUAGE_KEY, user.getLanguage());
         return response;
     }
 
