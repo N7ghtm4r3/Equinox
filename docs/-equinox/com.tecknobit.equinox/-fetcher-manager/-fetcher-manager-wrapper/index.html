@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html class="no-js">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
+    <title>FetcherManagerWrapper</title>
+    <link href="../../../../images/logo-icon.svg" rel="icon" type="image/svg">
+    <script>var pathToRoot = "../../../../";</script>
+    <script>document.documentElement.classList.replace("no-js","js");</script>
+    <script>const storage = localStorage.getItem("dokka-dark-mode")
+    if (storage == null) {
+        const osDarkSchemePreferred = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+        if (osDarkSchemePreferred === true) {
+            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+    } else {
+        const savedDarkMode = JSON.parse(storage)
+        if(savedDarkMode === true) {
+            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+    }
+    </script>
+    <script type="text/javascript" src="https://unpkg.com/kotlin-playground@1/dist/playground.min.js"
+            async="async"></script>
+    <script type="text/javascript" src="../../../../scripts/sourceset_dependencies.js" async="async"></script>
+    <link href="../../../../styles/style.css" rel="Stylesheet">
+    <link href="../../../../styles/main.css" rel="Stylesheet">
+    <link href="../../../../styles/prism.css" rel="Stylesheet">
+    <link href="../../../../styles/logo-styles.css" rel="Stylesheet">
+    <link href="../../../../styles/font-jb-sans-auto.css" rel="Stylesheet">
+    <script type="text/javascript" src="../../../../scripts/clipboard.js" async="async"></script>
+    <script type="text/javascript" src="../../../../scripts/navigation-loader.js" async="async"></script>
+    <script type="text/javascript" src="../../../../scripts/platform-content-handler.js" async="async"></script>
+    <script type="text/javascript" src="../../../../scripts/main.js" defer="defer"></script>
+    <script type="text/javascript" src="../../../../scripts/prism.js" async="async"></script>
+    <script type="text/javascript" src="../../../../scripts/symbol-parameters-wrapper_deferred.js"
+            defer="defer"></script>
+</head>
+<body>
+<div class="root">
+    <nav class="navigation" id="navigation-wrapper">
+        <div class="navigation--inner">
+            <div class="navigation-title">
+                <button class="menu-toggle" id="menu-toggle" type="button">toggle menu</button>
+                <div class="library-name">
+                    <a class="library-name--link" href="../../../../index.html">
+                        Equinox
+                    </a>
+                </div>
+                <div class="library-version">
+                    1.0.4
+                </div>
+            </div>
+            <div class="filter-section" id="filter-section">
+                <button class="platform-tag platform-selector jvm-like" data-active="" data-filter=":dokkaHtml/main">
+                    jvm
+                </button>
+            </div>
+        </div>
+        <div class="navigation-controls">
+            <button class="navigation-controls--btn navigation-controls--theme" id="theme-toggle-button" type="button">
+                switch theme
+            </button>
+            <div class="navigation-controls--btn navigation-controls--search" id="searchBar" role="button">search in
+                API
+            </div>
+        </div>
+    </nav>
+    <div id="container">
+        <div class="sidebar" id="leftColumn">
+            <div class="sidebar--inner" id="sideMenu"></div>
+        </div>
+        <div id="main">
+            <div class="main-content" data-page-type="classlike" id="content"
+                 pageIds="Equinox::com.tecknobit.equinox/FetcherManager.FetcherManagerWrapper///PointingToDeclaration//769193423">
+                <div class="breadcrumbs"><a href="../../../../index.html">Equinox</a><span class="delimiter">/</span><a
+                        href="../../index.html">com.tecknobit.equinox</a><span class="delimiter">/</span><a
+                        href="../index.html">FetcherManager</a><span class="delimiter">/</span><span class="current">FetcherManagerWrapper</span>
+                </div>
+                <div class="cover ">
+                    <h1 class="cover"><span>Fetcher</span>
+                        <wbr></wbr>
+                        <span>Manager</span>
+                        <wbr></wbr>
+                        <span><span>Wrapper</span></span></h1>
+                    <div class="platform-hinted " data-platform-hinted="data-platform-hinted">
+                        <div class="content sourceset-dependent-content" data-active=""
+                             data-togglable=":dokkaHtml/main">
+                            <div class="symbol monospace"><span class="token keyword">interface </span><a
+                                    href="index.html">FetcherManagerWrapper</a></div>
+                            <p class="paragraph">The <strong>FetcherManagerWrapper</strong> interface is useful for
+                                wrapping and facilitating operation with the <a href="../index.html">FetcherManager</a>,
+                                so the inheriting classes will invoke just the wrapper methods for a clean readability
+                                of the code, for example:</p>
+                            <div class="sample-container">
+                                <pre><code class="block lang-kotlin" theme="idea">// the super class from which the other classes will be inherited<br>abstract class AbstractClass : FetcherManagerWrapper {<br><br>    protected val refreshRoutine = CoroutineScope(Dispatchers.Default)<br><br>    private val fetcherManager = FetcherManager(refreshRoutine)<br><br>    override fun canRefresherStart(): Boolean {<br>        return fetcherManager.canStart()<br>    }<br><br>    override fun suspendRefresher() {<br>        fetcherManager.suspend()<br>    }<br><br>    override fun restartRefresher() {<br>        fetcherManager.restart()<br>    }<br><br>    override fun continueToFetch(currentContext: Class&lt;*&gt;): Boolean {<br>        return fetcherManager.continueToFetch(currentContext)<br>    }<br><br>    override fun execRefreshingRoutine(<br>        currentContext: Class&lt;*&gt;,<br>        routine: () -&gt; Unit,<br>        repeatRoutine: Boolean,<br>        refreshDelay: Long<br>    ) {<br>        fetcherManager.execute(<br>            currentContext = currentContext,<br>            routine = routine,<br>            repeatRoutine = repeatRoutine,<br>            refreshDelay = delay<br>        )<br>    }<br><br>}<br><br>// an inherit class example<br>class ExampleClass : AbstractClass {<br><br>    fun example() {<br>        execRefreshingRoutine(<br>            currentContext = this::class.java,<br>            routine = {<br>                // your routine<br>            }<br>        )<br>    }<br><br>    fun example1() {<br>        suspendRefresher()<br>    }<br><br>}</code></pre>
+                                <span class="top-right-position"><span class="copy-icon"></span><div
+                                        class="copy-popup-wrapper popup-to-left"><span
+                                        class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span>
+                            </div>
+                            <span class="kdoc-tag"><h4 class="">Author</h4><p
+                                    class="paragraph">N7ghtm4r3 - Tecknobit</p></span><h4 class="">See also</h4>
+                            <div class="table">
+                                <div class="table-row" data-filterable-current=":dokkaHtml/main"
+                                     data-filterable-set=":dokkaHtml/main">
+                                    <div class="main-subrow keyValue ">
+                                        <div class=""><span class="inline-flex"><div><a href="../index.html"><span>Fetcher</span><wbr></wbr><span><span>Manager</span></span></a></div></span>
+                                        </div>
+                                        <div></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tabbedcontent">
+                    <div class="tabs-section" tabs-section="tabs-section">
+                        <button class="section-tab" data-active="" data-togglable="CONSTRUCTOR,TYPE,PROPERTY,FUNCTION">
+                            Members
+                        </button>
+                    </div>
+                    <div class="tabs-section-body">
+                        <div data-togglable="FUNCTION">
+                            <h2 class="">Functions</h2>
+                            <div class="table"><a data-name="-1093596099%2FFunctions%2F769193423"
+                                                  anchor-label="canRefresherStart"
+                                                  id="-1093596099%2FFunctions%2F769193423"
+                                                  data-filterable-set=":dokkaHtml/main"></a>
+                                <div class="table-row" data-filterable-current=":dokkaHtml/main"
+                                     data-filterable-set=":dokkaHtml/main">
+                                    <div class="main-subrow keyValue ">
+                                        <div class=""><span class="inline-flex">
+                  <div><a href="can-refresher-start.html"><span>can</span><wbr></wbr><span>Refresher</span><wbr></wbr><span><span>Start</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1093596099%2FFunctions%2F769193423"></span>
+                    <div class="copy-popup-wrapper "><span
+                            class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+                                        <div>
+                                            <div class="title">
+                                                <div class="platform-hinted "
+                                                     data-platform-hinted="data-platform-hinted">
+                                                    <div class="content sourceset-dependent-content" data-active=""
+                                                         data-togglable=":dokkaHtml/main">
+                                                        <div class="symbol monospace"><span class="token keyword">abstract </span><span
+                                                                class="token keyword">fun </span><a
+                                                                href="can-refresher-start.html"><span
+                                                                class="token function">canRefresherStart</span></a><span
+                                                                class="token punctuation">(</span><span
+                                                                class="token punctuation">)</span><span
+                                                                class="token operator">: </span><a
+                                                                href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html">Boolean</a>
+                                                        </div>
+                                                        <div class="brief "><p class="paragraph">Function to get whether
+                                                            the <a href="../refresh-routine.html">refreshRoutine</a> can
+                                                            start, so if there aren't other jobs that routine is already
+                                                            executing</p></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <a data-name="2098334181%2FFunctions%2F769193423" anchor-label="continueToFetch"
+                                   id="2098334181%2FFunctions%2F769193423" data-filterable-set=":dokkaHtml/main"></a>
+                                <div class="table-row" data-filterable-current=":dokkaHtml/main"
+                                     data-filterable-set=":dokkaHtml/main">
+                                    <div class="main-subrow keyValue ">
+                                        <div class=""><span class="inline-flex">
+                  <div><a href="continue-to-fetch.html"><span>continue</span><wbr></wbr><span>To</span><wbr></wbr><span><span>Fetch</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="2098334181%2FFunctions%2F769193423"></span>
+                    <div class="copy-popup-wrapper "><span
+                            class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+                                        <div>
+                                            <div class="title">
+                                                <div class="platform-hinted "
+                                                     data-platform-hinted="data-platform-hinted">
+                                                    <div class="content sourceset-dependent-content" data-active=""
+                                                         data-togglable=":dokkaHtml/main">
+                                                        <div class="symbol monospace"><span class="token keyword">abstract </span><span
+                                                                class="token keyword">fun </span><a
+                                                                href="continue-to-fetch.html"><span
+                                                                class="token function">continueToFetch</span></a><span
+                                                                class="token punctuation">(</span><span
+                                                                class="parameters "><span class="parameter ">currentContext<span
+                                                                class="token operator">: </span><a
+                                                                href="https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html">Class</a><span
+                                                                class="token operator">&lt;</span><span
+                                                                class="token operator">*</span><span
+                                                                class="token operator">&gt;</span></span></span><span
+                                                                class="token punctuation">)</span><span
+                                                                class="token operator">: </span><a
+                                                                href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html">Boolean</a>
+                                                        </div>
+                                                        <div class="brief "><p class="paragraph">Function to check if
+                                                            the <a href="../refresh-routine.html">refreshRoutine</a> can
+                                                            continue to refresh or need to be stopped, this for example
+                                                            when the UI displayed changes and the requests to refresh
+                                                            the UI data also changes</p></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <a data-name="-2146984250%2FFunctions%2F769193423" anchor-label="execRefreshingRoutine"
+                                   id="-2146984250%2FFunctions%2F769193423" data-filterable-set=":dokkaHtml/main"></a>
+                                <div class="table-row" data-filterable-current=":dokkaHtml/main"
+                                     data-filterable-set=":dokkaHtml/main">
+                                    <div class="main-subrow keyValue ">
+                                        <div class=""><span class="inline-flex">
+                  <div><a href="exec-refreshing-routine.html"><span>exec</span><wbr></wbr><span>Refreshing</span><wbr></wbr><span><span>Routine</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-2146984250%2FFunctions%2F769193423"></span>
+                    <div class="copy-popup-wrapper "><span
+                            class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+                                        <div>
+                                            <div class="title">
+                                                <div class="platform-hinted "
+                                                     data-platform-hinted="data-platform-hinted">
+                                                    <div class="content sourceset-dependent-content" data-active=""
+                                                         data-togglable=":dokkaHtml/main">
+                                                        <div class="symbol monospace"><span class="token keyword">abstract </span><span
+                                                                class="token keyword">fun </span><a
+                                                                href="exec-refreshing-routine.html"><span
+                                                                class="token function">execRefreshingRoutine</span></a><span
+                                                                class="token punctuation">(</span><span
+                                                                class="parameters "><span class="parameter ">currentContext<span
+                                                                class="token operator">: </span><a
+                                                                href="https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html">Class</a><span
+                                                                class="token operator">&lt;</span><span
+                                                                class="token operator">*</span><span
+                                                                class="token operator">&gt;</span><span
+                                                                class="token punctuation">, </span></span><span
+                                                                class="parameter ">routine<span
+                                                                class="token operator">: </span><span
+                                                                class="token punctuation">(</span><span
+                                                                class="token punctuation">)</span><span
+                                                                class="token operator"> -&gt; </span><a
+                                                                href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html">Unit</a><span
+                                                                class="token punctuation">, </span></span><span
+                                                                class="parameter ">repeatRoutine<span
+                                                                class="token operator">: </span><a
+                                                                href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html">Boolean</a><span
+                                                                class="token operator"> = </span><span
+                                                                class="token boolean">true</span><span
+                                                                class="token punctuation">, </span></span><span
+                                                                class="parameter ">refreshDelay<span
+                                                                class="token operator">: </span><a
+                                                                href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html">Long</a><span
+                                                                class="token operator"> = </span><span
+                                                                class="token constant">1000</span></span></span><span
+                                                                class="token punctuation">)</span></div>
+                                                        <div class="brief "><p class="paragraph">Function to execute the
+                                                            refresh routine designed</p></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <a data-name="348561274%2FFunctions%2F769193423" anchor-label="restartRefresher"
+                                   id="348561274%2FFunctions%2F769193423" data-filterable-set=":dokkaHtml/main"></a>
+                                <div class="table-row" data-filterable-current=":dokkaHtml/main"
+                                     data-filterable-set=":dokkaHtml/main">
+                                    <div class="main-subrow keyValue ">
+                                        <div class=""><span class="inline-flex">
+                  <div><a href="restart-refresher.html"><span>restart</span><wbr></wbr><span><span>Refresher</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="348561274%2FFunctions%2F769193423"></span>
+                    <div class="copy-popup-wrapper "><span
+                            class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+                                        <div>
+                                            <div class="title">
+                                                <div class="platform-hinted "
+                                                     data-platform-hinted="data-platform-hinted">
+                                                    <div class="content sourceset-dependent-content" data-active=""
+                                                         data-togglable=":dokkaHtml/main">
+                                                        <div class="symbol monospace"><span class="token keyword">abstract </span><span
+                                                                class="token keyword">fun </span><a
+                                                                href="restart-refresher.html"><span
+                                                                class="token function">restartRefresher</span></a><span
+                                                                class="token punctuation">(</span><span
+                                                                class="token punctuation">)</span></div>
+                                                        <div class="brief "><p class="paragraph">Function to restart the
+                                                            current <a href="../refresh-routine.html">refreshRoutine</a>
+                                                            after other requests has been executed, the <a
+                                                                    href="../is-refreshing.html">isRefreshing</a>
+                                                            instance will be set as <strong>true</strong> to deny the
+                                                            restart of the routine after executing the other requests
+                                                        </p></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <a data-name="-1916544478%2FFunctions%2F769193423" anchor-label="restartRefresherIf"
+                                   id="-1916544478%2FFunctions%2F769193423" data-filterable-set=":dokkaHtml/main"></a>
+                                <div class="table-row" data-filterable-current=":dokkaHtml/main"
+                                     data-filterable-set=":dokkaHtml/main">
+                                    <div class="main-subrow keyValue ">
+                                        <div class=""><span class="inline-flex">
+                  <div><a href="restart-refresher-if.html"><span>restart</span><wbr></wbr><span>Refresher</span><wbr></wbr><span><span>If</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1916544478%2FFunctions%2F769193423"></span>
+                    <div class="copy-popup-wrapper "><span
+                            class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+                                        <div>
+                                            <div class="title">
+                                                <div class="platform-hinted "
+                                                     data-platform-hinted="data-platform-hinted">
+                                                    <div class="content sourceset-dependent-content" data-active=""
+                                                         data-togglable=":dokkaHtml/main">
+                                                        <div class="symbol monospace"><span
+                                                                class="token keyword">open </span><span
+                                                                class="token keyword">fun </span><a
+                                                                href="restart-refresher-if.html"><span
+                                                                class="token function">restartRefresherIf</span></a><span
+                                                                class="token punctuation">(</span><span
+                                                                class="parameters "><span
+                                                                class="parameter ">condition<span
+                                                                class="token operator">: </span><a
+                                                                href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html">Boolean</a></span></span><span
+                                                                class="token punctuation">)</span></div>
+                                                        <div class="brief "><p class="paragraph">Function to
+                                                            conditionally restart the current <a
+                                                                    href="../refresh-routine.html">refreshRoutine</a>
+                                                            after other requests has been executed, the <a
+                                                                    href="../is-refreshing.html">isRefreshing</a>
+                                                            instance will be set as <strong>true</strong> to deny the
+                                                            restart of the routine after executing the other requests
+                                                        </p></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <a data-name="-894075838%2FFunctions%2F769193423" anchor-label="setActiveContext"
+                                   id="-894075838%2FFunctions%2F769193423" data-filterable-set=":dokkaHtml/main"></a>
+                                <div class="table-row" data-filterable-current=":dokkaHtml/main"
+                                     data-filterable-set=":dokkaHtml/main">
+                                    <div class="main-subrow keyValue ">
+                                        <div class=""><span class="inline-flex">
+                  <div><a href="set-active-context.html"><span>set</span><wbr></wbr><span>Active</span><wbr></wbr><span><span>Context</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-894075838%2FFunctions%2F769193423"></span>
+                    <div class="copy-popup-wrapper "><span
+                            class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+                                        <div>
+                                            <div class="title">
+                                                <div class="platform-hinted "
+                                                     data-platform-hinted="data-platform-hinted">
+                                                    <div class="content sourceset-dependent-content" data-active=""
+                                                         data-togglable=":dokkaHtml/main">
+                                                        <div class="symbol monospace"><span
+                                                                class="token keyword">open </span><span
+                                                                class="token keyword">fun </span><a
+                                                                href="set-active-context.html"><span
+                                                                class="token function">setActiveContext</span></a><span
+                                                                class="token punctuation">(</span><span
+                                                                class="parameters "><span class="parameter ">currentContext<span
+                                                                class="token operator">: </span><a
+                                                                href="https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html">Class</a><span
+                                                                class="token operator">&lt;</span><span
+                                                                class="token operator">*</span><span
+                                                                class="token operator">&gt;</span></span></span><span
+                                                                class="token punctuation">)</span></div>
+                                                        <div class="brief "><p class="paragraph">Function to set the
+                                                            current active context where the <a
+                                                                    href="../refresh-routine.html">refreshRoutine</a> is
+                                                            executing</p></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <a data-name="-1642998169%2FFunctions%2F769193423" anchor-label="suspendRefresher"
+                                   id="-1642998169%2FFunctions%2F769193423" data-filterable-set=":dokkaHtml/main"></a>
+                                <div class="table-row" data-filterable-current=":dokkaHtml/main"
+                                     data-filterable-set=":dokkaHtml/main">
+                                    <div class="main-subrow keyValue ">
+                                        <div class=""><span class="inline-flex">
+                  <div><a href="suspend-refresher.html"><span>suspend</span><wbr></wbr><span><span>Refresher</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1642998169%2FFunctions%2F769193423"></span>
+                    <div class="copy-popup-wrapper "><span
+                            class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+                                        <div>
+                                            <div class="title">
+                                                <div class="platform-hinted "
+                                                     data-platform-hinted="data-platform-hinted">
+                                                    <div class="content sourceset-dependent-content" data-active=""
+                                                         data-togglable=":dokkaHtml/main">
+                                                        <div class="symbol monospace"><span class="token keyword">abstract </span><span
+                                                                class="token keyword">fun </span><a
+                                                                href="suspend-refresher.html"><span
+                                                                class="token function">suspendRefresher</span></a><span
+                                                                class="token punctuation">(</span><span
+                                                                class="token punctuation">)</span></div>
+                                                        <div class="brief "><p class="paragraph">Function to suspend the
+                                                            current <a href="../refresh-routine.html">refreshRoutine</a>
+                                                            to execute other requests to the backend, the <a
+                                                                    href="../is-refreshing.html">isRefreshing</a>
+                                                            instance will be set as <strong>false</strong> to allow the
+                                                            restart of the routine after executing the other requests
+                                                        </p></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <a data-name="-1557817585%2FFunctions%2F769193423" anchor-label="suspendRefresherIf"
+                                   id="-1557817585%2FFunctions%2F769193423" data-filterable-set=":dokkaHtml/main"></a>
+                                <div class="table-row" data-filterable-current=":dokkaHtml/main"
+                                     data-filterable-set=":dokkaHtml/main">
+                                    <div class="main-subrow keyValue ">
+                                        <div class=""><span class="inline-flex">
+                  <div><a href="suspend-refresher-if.html"><span>suspend</span><wbr></wbr><span>Refresher</span><wbr></wbr><span><span>If</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1557817585%2FFunctions%2F769193423"></span>
+                    <div class="copy-popup-wrapper "><span
+                            class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+                                        <div>
+                                            <div class="title">
+                                                <div class="platform-hinted "
+                                                     data-platform-hinted="data-platform-hinted">
+                                                    <div class="content sourceset-dependent-content" data-active=""
+                                                         data-togglable=":dokkaHtml/main">
+                                                        <div class="symbol monospace"><span
+                                                                class="token keyword">open </span><span
+                                                                class="token keyword">fun </span><a
+                                                                href="suspend-refresher-if.html"><span
+                                                                class="token function">suspendRefresherIf</span></a><span
+                                                                class="token punctuation">(</span><span
+                                                                class="parameters "><span
+                                                                class="parameter ">condition<span
+                                                                class="token operator">: </span><a
+                                                                href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html">Boolean</a></span></span><span
+                                                                class="token punctuation">)</span></div>
+                                                        <div class="brief "><p class="paragraph">Function to
+                                                            conditionally suspend the current <a
+                                                                    href="../refresh-routine.html">refreshRoutine</a> to
+                                                            execute other requests to the backend, the <a
+                                                                    href="../is-refreshing.html">isRefreshing</a>
+                                                            instance will be set as <strong>false</strong> to allow the
+                                                            restart of the routine after executing the other requests
+                                                        </p></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span class="go-to-top-icon"><a href="#content"
+                                                id="go-to-top-link"></a></span><span>(c) 2024 Tecknobit</span><span
+                    class="pull-right"><span>Generated by </span><a
+                    href="https://github.com/Kotlin/dokka"><span>dokka</span><span
+                    class="padded-icon"></span></a></span>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -247,6 +247,20 @@ class FetcherManager(
         fun canRefresherStart(): Boolean
 
         /**
+         * Function to conditionally suspend the current [refreshRoutine] to execute other requests to the backend,
+         * the [isRefreshing] instance will be set as **false** to allow the restart of the routine after executing
+         * the other requests
+         *
+         * @param condition: the condition to verify whether suspend or not the refresher
+         */
+        fun suspendRefresherIf(
+            condition: Boolean
+        ) {
+            if (condition)
+                suspendRefresher()
+        }
+
+        /**
          * Function to suspend the current [refreshRoutine] to execute other requests to the backend,
          * the [isRefreshing] instance will be set as **false** to allow the restart of the routine after executing
          * the other requests
@@ -254,6 +268,20 @@ class FetcherManager(
          * No-any params required
          */
         fun suspendRefresher()
+
+        /**
+         * Function to conditionally restart the current [refreshRoutine] after other requests has been executed,
+         * the [isRefreshing] instance will be set as **true** to deny the restart of the routine after executing
+         * the other requests
+         *
+         * @param condition: the condition to verify whether restart or not the refresher
+         */
+        fun restartRefresherIf(
+            condition: Boolean
+        ) {
+            if (condition)
+                restartRefresher()
+        }
 
         /**
          * Function to restart the current [refreshRoutine] after other requests has been executed,
