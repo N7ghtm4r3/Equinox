@@ -54,7 +54,10 @@ public interface ResourcesManager {
      * @return the pathname created of the resource file
      */
     default String createResource(MultipartFile resource, String resourcesDirectory, String resourceId) {
-        return resourcesDirectory + "/" + resourceId + getSuffixResource(resource);
+        String suffix = "";
+        if (!resourceId.contains("."))
+            suffix = getSuffixResource(resource);
+        return resourcesDirectory + "/" + resourceId + suffix;
     }
 
     /**

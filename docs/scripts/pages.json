@@ -20,6 +20,26 @@
     ]
   },
   {
+    "name": "INSERT_IGNORE_INTO",
+    "description": "com.tecknobit.equinox.environment.helpers.services.EquinoxItemsHelper.InsertCommand.INSERT_IGNORE_INTO",
+    "location": "-equinox/com.tecknobit.equinox.environment.helpers.services/-equinox-items-helper/-insert-command/-i-n-s-e-r-t_-i-g-n-o-r-e_-i-n-t-o/index.html",
+    "searchKeys": [
+      "INSERT_IGNORE_INTO",
+      "INSERT_IGNORE_INTO",
+      "com.tecknobit.equinox.environment.helpers.services.EquinoxItemsHelper.InsertCommand.INSERT_IGNORE_INTO"
+    ]
+  },
+  {
+    "name": "INSERT_INTO",
+    "description": "com.tecknobit.equinox.environment.helpers.services.EquinoxItemsHelper.InsertCommand.INSERT_INTO",
+    "location": "-equinox/com.tecknobit.equinox.environment.helpers.services/-equinox-items-helper/-insert-command/-i-n-s-e-r-t_-i-n-t-o/index.html",
+    "searchKeys": [
+      "INSERT_INTO",
+      "INSERT_INTO",
+      "com.tecknobit.equinox.environment.helpers.services.EquinoxItemsHelper.InsertCommand.INSERT_INTO"
+    ]
+  },
+  {
     "name": "Light",
     "description": "com.tecknobit.equinox.environment.records.EquinoxUser.ApplicationTheme.Light",
     "location": "-equinox/com.tecknobit.equinox.environment.records/-equinox-user/-application-theme/-light/index.html",
@@ -30,22 +50,32 @@
     ]
   },
   {
-    "name": "abstract class DefaultEquinoxController : EquinoxController<T> ",
+    "name": "REPLACE_INTO",
+    "description": "com.tecknobit.equinox.environment.helpers.services.EquinoxItemsHelper.InsertCommand.REPLACE_INTO",
+    "location": "-equinox/com.tecknobit.equinox.environment.helpers.services/-equinox-items-helper/-insert-command/-r-e-p-l-a-c-e_-i-n-t-o/index.html",
+    "searchKeys": [
+      "REPLACE_INTO",
+      "REPLACE_INTO",
+      "com.tecknobit.equinox.environment.helpers.services.EquinoxItemsHelper.InsertCommand.REPLACE_INTO"
+    ]
+  },
+  {
+    "name": "abstract class DefaultEquinoxController : EquinoxController<T, R, H> ",
     "description": "com.tecknobit.equinox.environment.controllers.DefaultEquinoxController",
     "location": "-equinox/com.tecknobit.equinox.environment.controllers/-default-equinox-controller/index.html",
     "searchKeys": [
       "DefaultEquinoxController",
-      "abstract class DefaultEquinoxController : EquinoxController<T> ",
+      "abstract class DefaultEquinoxController : EquinoxController<T, R, H> ",
       "com.tecknobit.equinox.environment.controllers.DefaultEquinoxController"
     ]
   },
   {
-    "name": "abstract class EquinoxController<T : EquinoxUser?>",
+    "name": "abstract class EquinoxController<T : EquinoxUser?, R : EquinoxUsersRepository<T>?, H : EquinoxUsersHelper<T, R>?>",
     "description": "com.tecknobit.equinox.environment.controllers.EquinoxController",
     "location": "-equinox/com.tecknobit.equinox.environment.controllers/-equinox-controller/index.html",
     "searchKeys": [
       "EquinoxController",
-      "abstract class EquinoxController<T : EquinoxUser?>",
+      "abstract class EquinoxController<T : EquinoxUser?, R : EquinoxUsersRepository<T>?, H : EquinoxUsersHelper<T, R>?>",
       "com.tecknobit.equinox.environment.controllers.EquinoxController"
     ]
   },
@@ -60,6 +90,16 @@
     ]
   },
   {
+    "name": "abstract class EquinoxItemsHelper<T : EquinoxItem?>",
+    "description": "com.tecknobit.equinox.environment.helpers.services.EquinoxItemsHelper",
+    "location": "-equinox/com.tecknobit.equinox.environment.helpers.services/-equinox-items-helper/index.html",
+    "searchKeys": [
+      "EquinoxItemsHelper",
+      "abstract class EquinoxItemsHelper<T : EquinoxItem?>",
+      "com.tecknobit.equinox.environment.helpers.services.EquinoxItemsHelper"
+    ]
+  },
+  {
     "name": "abstract class EquinoxLocalUser",
     "description": "com.tecknobit.equinox.environment.records.EquinoxLocalUser",
     "location": "-equinox/com.tecknobit.equinox.environment.records/-equinox-local-user/index.html",
@@ -70,23 +110,33 @@
     ]
   },
   {
-    "name": "abstract class EquinoxRequester(var host: String, var userId: String? = null, var userToken: String? = null, var debugMode: Boolean = false, val connectionTimeout: Int = DEFAULT_REQUEST_TIMEOUT - 1, val connectionErrorMessage: String = DEFAULT_CONNECTION_ERROR_MESSAGE, val enableCertificatesValidation: Boolean = false) : Requester",
+    "name": "abstract class EquinoxRequester(var host: String, var userId: String? = null, var userToken: String? = null, var debugMode: Boolean = false, val connectionTimeout: Long = DEFAULT_REQUEST_TIMEOUT.toLong(), val connectionErrorMessage: String, val enableCertificatesValidation: Boolean = false) : Requester",
     "description": "com.tecknobit.equinox.environment.helpers.EquinoxRequester",
     "location": "-equinox/com.tecknobit.equinox.environment.helpers/-equinox-requester/index.html",
     "searchKeys": [
       "EquinoxRequester",
-      "abstract class EquinoxRequester(var host: String, var userId: String? = null, var userToken: String? = null, var debugMode: Boolean = false, val connectionTimeout: Int = DEFAULT_REQUEST_TIMEOUT - 1, val connectionErrorMessage: String = DEFAULT_CONNECTION_ERROR_MESSAGE, val enableCertificatesValidation: Boolean = false) : Requester",
+      "abstract class EquinoxRequester(var host: String, var userId: String? = null, var userToken: String? = null, var debugMode: Boolean = false, val connectionTimeout: Long = DEFAULT_REQUEST_TIMEOUT.toLong(), val connectionErrorMessage: String, val enableCertificatesValidation: Boolean = false) : Requester",
       "com.tecknobit.equinox.environment.helpers.EquinoxRequester"
     ]
   },
   {
-    "name": "abstract class Requester(var host: String, var userId: String? = null, var userToken: String? = null, var debugMode: Boolean = false, val connectionTimeout: Int = DEFAULT_REQUEST_TIMEOUT - 1, val connectionErrorMessage: String = DEFAULT_CONNECTION_ERROR_MESSAGE, val enableCertificatesValidation: Boolean = false)",
+    "name": "abstract class Requester(var host: String, var userId: String? = null, var userToken: String? = null, var debugMode: Boolean = false, val connectionTimeout: Long = DEFAULT_REQUEST_TIMEOUT.toLong(), val connectionErrorMessage: String, val enableCertificatesValidation: Boolean = false)",
     "description": "com.tecknobit.equinox.Requester",
     "location": "-equinox/com.tecknobit.equinox/-requester/index.html",
     "searchKeys": [
       "Requester",
-      "abstract class Requester(var host: String, var userId: String? = null, var userToken: String? = null, var debugMode: Boolean = false, val connectionTimeout: Int = DEFAULT_REQUEST_TIMEOUT - 1, val connectionErrorMessage: String = DEFAULT_CONNECTION_ERROR_MESSAGE, val enableCertificatesValidation: Boolean = false)",
+      "abstract class Requester(var host: String, var userId: String? = null, var userToken: String? = null, var debugMode: Boolean = false, val connectionTimeout: Long = DEFAULT_REQUEST_TIMEOUT.toLong(), val connectionErrorMessage: String, val enableCertificatesValidation: Boolean = false)",
       "com.tecknobit.equinox.Requester"
+    ]
+  },
+  {
+    "name": "abstract fun <V> getCurrentData(): ArrayList<V>",
+    "description": "com.tecknobit.equinox.environment.helpers.services.EquinoxItemsHelper.SyncBatchContainer.getCurrentData",
+    "location": "-equinox/com.tecknobit.equinox.environment.helpers.services/-equinox-items-helper/-sync-batch-container/get-current-data.html",
+    "searchKeys": [
+      "getCurrentData",
+      "abstract fun <V> getCurrentData(): ArrayList<V>",
+      "com.tecknobit.equinox.environment.helpers.services.EquinoxItemsHelper.SyncBatchContainer.getCurrentData"
     ]
   },
   {
@@ -180,6 +230,16 @@
     ]
   },
   {
+    "name": "abstract fun getColumns(): Array<String>",
+    "description": "com.tecknobit.equinox.environment.helpers.services.EquinoxItemsHelper.SyncBatchContainer.getColumns",
+    "location": "-equinox/com.tecknobit.equinox.environment.helpers.services/-equinox-items-helper/-sync-batch-container/get-columns.html",
+    "searchKeys": [
+      "getColumns",
+      "abstract fun getColumns(): Array<String>",
+      "com.tecknobit.equinox.environment.helpers.services.EquinoxItemsHelper.SyncBatchContainer.getColumns"
+    ]
+  },
+  {
     "name": "abstract fun order(): Array<String>",
     "description": "com.tecknobit.equinox.annotations.CustomParametersOrder.order",
     "location": "-equinox/com.tecknobit.equinox.annotations/-custom-parameters-order/order.html",
@@ -187,6 +247,16 @@
       "order",
       "abstract fun order(): Array<String>",
       "com.tecknobit.equinox.annotations.CustomParametersOrder.order"
+    ]
+  },
+  {
+    "name": "abstract fun prepareQuery(query: Query)",
+    "description": "com.tecknobit.equinox.environment.helpers.services.EquinoxItemsHelper.BatchQuery.prepareQuery",
+    "location": "-equinox/com.tecknobit.equinox.environment.helpers.services/-equinox-items-helper/-batch-query/prepare-query.html",
+    "searchKeys": [
+      "prepareQuery",
+      "abstract fun prepareQuery(query: Query)",
+      "com.tecknobit.equinox.environment.helpers.services.EquinoxItemsHelper.BatchQuery.prepareQuery"
     ]
   },
   {
@@ -260,13 +330,13 @@
     ]
   },
   {
-    "name": "const val RESPONSE_MESSAGE_KEY: String",
-    "description": "com.tecknobit.equinox.Requester.Companion.RESPONSE_MESSAGE_KEY",
-    "location": "-equinox/com.tecknobit.equinox/-requester/-companion/-r-e-s-p-o-n-s-e_-m-e-s-s-a-g-e_-k-e-y.html",
+    "name": "const val RESPONSE_DATA_KEY: String",
+    "description": "com.tecknobit.equinox.Requester.Companion.RESPONSE_DATA_KEY",
+    "location": "-equinox/com.tecknobit.equinox/-requester/-companion/-r-e-s-p-o-n-s-e_-d-a-t-a_-k-e-y.html",
     "searchKeys": [
-      "RESPONSE_MESSAGE_KEY",
-      "const val RESPONSE_MESSAGE_KEY: String",
-      "com.tecknobit.equinox.Requester.Companion.RESPONSE_MESSAGE_KEY"
+      "RESPONSE_DATA_KEY",
+      "const val RESPONSE_DATA_KEY: String",
+      "com.tecknobit.equinox.Requester.Companion.RESPONSE_DATA_KEY"
     ]
   },
   {
@@ -317,6 +387,26 @@
       "EquinoxController",
       "constructor()",
       "com.tecknobit.equinox.environment.controllers.EquinoxController.EquinoxController"
+    ]
+  },
+  {
+    "name": "constructor()",
+    "description": "com.tecknobit.equinox.environment.controllers.EquinoxUsersController.EquinoxUsersController",
+    "location": "-equinox/com.tecknobit.equinox.environment.controllers/-equinox-users-controller/-equinox-users-controller.html",
+    "searchKeys": [
+      "EquinoxUsersController",
+      "constructor()",
+      "com.tecknobit.equinox.environment.controllers.EquinoxUsersController.EquinoxUsersController"
+    ]
+  },
+  {
+    "name": "constructor()",
+    "description": "com.tecknobit.equinox.environment.helpers.services.EquinoxItemsHelper.EquinoxItemsHelper",
+    "location": "-equinox/com.tecknobit.equinox.environment.helpers.services/-equinox-items-helper/-equinox-items-helper.html",
+    "searchKeys": [
+      "EquinoxItemsHelper",
+      "constructor()",
+      "com.tecknobit.equinox.environment.helpers.services.EquinoxItemsHelper.EquinoxItemsHelper"
     ]
   },
   {
@@ -390,22 +480,22 @@
     ]
   },
   {
-    "name": "constructor(host: String, userId: String? = null, userToken: String? = null, debugMode: Boolean = false, connectionTimeout: Int = DEFAULT_REQUEST_TIMEOUT - 1, connectionErrorMessage: String = DEFAULT_CONNECTION_ERROR_MESSAGE, enableCertificatesValidation: Boolean = false)",
+    "name": "constructor(host: String, userId: String? = null, userToken: String? = null, debugMode: Boolean = false, connectionTimeout: Long = DEFAULT_REQUEST_TIMEOUT.toLong(), connectionErrorMessage: String, enableCertificatesValidation: Boolean = false)",
     "description": "com.tecknobit.equinox.Requester.Requester",
     "location": "-equinox/com.tecknobit.equinox/-requester/-requester.html",
     "searchKeys": [
       "Requester",
-      "constructor(host: String, userId: String? = null, userToken: String? = null, debugMode: Boolean = false, connectionTimeout: Int = DEFAULT_REQUEST_TIMEOUT - 1, connectionErrorMessage: String = DEFAULT_CONNECTION_ERROR_MESSAGE, enableCertificatesValidation: Boolean = false)",
+      "constructor(host: String, userId: String? = null, userToken: String? = null, debugMode: Boolean = false, connectionTimeout: Long = DEFAULT_REQUEST_TIMEOUT.toLong(), connectionErrorMessage: String, enableCertificatesValidation: Boolean = false)",
       "com.tecknobit.equinox.Requester.Requester"
     ]
   },
   {
-    "name": "constructor(host: String, userId: String? = null, userToken: String? = null, debugMode: Boolean = false, connectionTimeout: Int = DEFAULT_REQUEST_TIMEOUT - 1, connectionErrorMessage: String = DEFAULT_CONNECTION_ERROR_MESSAGE, enableCertificatesValidation: Boolean = false)",
+    "name": "constructor(host: String, userId: String? = null, userToken: String? = null, debugMode: Boolean = false, connectionTimeout: Long = DEFAULT_REQUEST_TIMEOUT.toLong(), connectionErrorMessage: String, enableCertificatesValidation: Boolean = false)",
     "description": "com.tecknobit.equinox.environment.helpers.EquinoxRequester.EquinoxRequester",
     "location": "-equinox/com.tecknobit.equinox.environment.helpers/-equinox-requester/-equinox-requester.html",
     "searchKeys": [
       "EquinoxRequester",
-      "constructor(host: String, userId: String? = null, userToken: String? = null, debugMode: Boolean = false, connectionTimeout: Int = DEFAULT_REQUEST_TIMEOUT - 1, connectionErrorMessage: String = DEFAULT_CONNECTION_ERROR_MESSAGE, enableCertificatesValidation: Boolean = false)",
+      "constructor(host: String, userId: String? = null, userToken: String? = null, debugMode: Boolean = false, connectionTimeout: Long = DEFAULT_REQUEST_TIMEOUT.toLong(), connectionErrorMessage: String, enableCertificatesValidation: Boolean = false)",
       "com.tecknobit.equinox.environment.helpers.EquinoxRequester.EquinoxRequester"
     ]
   },
@@ -470,16 +560,6 @@
     ]
   },
   {
-    "name": "constructor(usersHelper: EquinoxUsersHelper<T>)",
-    "description": "com.tecknobit.equinox.environment.controllers.EquinoxUsersController.EquinoxUsersController",
-    "location": "-equinox/com.tecknobit.equinox.environment.controllers/-equinox-users-controller/-equinox-users-controller.html",
-    "searchKeys": [
-      "EquinoxUsersController",
-      "constructor(usersHelper: EquinoxUsersHelper<T>)",
-      "com.tecknobit.equinox.environment.controllers.EquinoxUsersController.EquinoxUsersController"
-    ]
-  },
-  {
     "name": "enum ApplicationTheme",
     "description": "com.tecknobit.equinox.environment.records.EquinoxUser.ApplicationTheme",
     "location": "-equinox/com.tecknobit.equinox.environment.records/-equinox-user/-application-theme/index.html",
@@ -487,6 +567,26 @@
       "ApplicationTheme",
       "enum ApplicationTheme",
       "com.tecknobit.equinox.environment.records.EquinoxUser.ApplicationTheme"
+    ]
+  },
+  {
+    "name": "enum InsertCommand",
+    "description": "com.tecknobit.equinox.environment.helpers.services.EquinoxItemsHelper.InsertCommand",
+    "location": "-equinox/com.tecknobit.equinox.environment.helpers.services/-equinox-items-helper/-insert-command/index.html",
+    "searchKeys": [
+      "InsertCommand",
+      "enum InsertCommand",
+      "com.tecknobit.equinox.environment.helpers.services.EquinoxItemsHelper.InsertCommand"
+    ]
+  },
+  {
+    "name": "fun <T> JsonHelper.responseData(): T",
+    "description": "com.tecknobit.equinox.Requester.Companion.responseData",
+    "location": "-equinox/com.tecknobit.equinox/-requester/-companion/response-data.html",
+    "searchKeys": [
+      "responseData",
+      "fun <T> JsonHelper.responseData(): T",
+      "com.tecknobit.equinox.Requester.Companion.responseData"
     ]
   },
   {
@@ -570,12 +670,12 @@
     ]
   },
   {
-    "name": "fun setConnectionTimeout(connectionTimeout: Int)",
+    "name": "fun setConnectionTimeout(connectionTimeout: Long)",
     "description": "com.tecknobit.equinox.Requester.setConnectionTimeout",
     "location": "-equinox/com.tecknobit.equinox/-requester/set-connection-timeout.html",
     "searchKeys": [
       "setConnectionTimeout",
-      "fun setConnectionTimeout(connectionTimeout: Int)",
+      "fun setConnectionTimeout(connectionTimeout: Long)",
       "com.tecknobit.equinox.Requester.setConnectionTimeout"
     ]
   },
@@ -607,6 +707,16 @@
       "suspend",
       "fun suspend()",
       "com.tecknobit.equinox.FetcherManager.suspend"
+    ]
+  },
+  {
+    "name": "interface BatchQuery",
+    "description": "com.tecknobit.equinox.environment.helpers.services.EquinoxItemsHelper.BatchQuery",
+    "location": "-equinox/com.tecknobit.equinox.environment.helpers.services/-equinox-items-helper/-batch-query/index.html",
+    "searchKeys": [
+      "BatchQuery",
+      "interface BatchQuery",
+      "com.tecknobit.equinox.environment.helpers.services.EquinoxItemsHelper.BatchQuery"
     ]
   },
   {
@@ -670,6 +780,16 @@
     ]
   },
   {
+    "name": "interface SyncBatchContainer",
+    "description": "com.tecknobit.equinox.environment.helpers.services.EquinoxItemsHelper.SyncBatchContainer",
+    "location": "-equinox/com.tecknobit.equinox.environment.helpers.services/-equinox-items-helper/-sync-batch-container/index.html",
+    "searchKeys": [
+      "SyncBatchContainer",
+      "interface SyncBatchContainer",
+      "com.tecknobit.equinox.environment.helpers.services.EquinoxItemsHelper.SyncBatchContainer"
+    ]
+  },
+  {
     "name": "object Companion",
     "description": "com.tecknobit.equinox.FetcherManager.Companion",
     "location": "-equinox/com.tecknobit.equinox/-fetcher-manager/-companion/index.html",
@@ -720,22 +840,22 @@
     ]
   },
   {
-    "name": "open class EquinoxUsersController<T : EquinoxUser?> : EquinoxController<T> ",
+    "name": "open class EquinoxUsersController<T : EquinoxUser?, R : EquinoxUsersRepository<T>?, H : EquinoxUsersHelper<T, R>?> : EquinoxController<T, R, H> ",
     "description": "com.tecknobit.equinox.environment.controllers.EquinoxUsersController",
     "location": "-equinox/com.tecknobit.equinox.environment.controllers/-equinox-users-controller/index.html",
     "searchKeys": [
       "EquinoxUsersController",
-      "open class EquinoxUsersController<T : EquinoxUser?> : EquinoxController<T> ",
+      "open class EquinoxUsersController<T : EquinoxUser?, R : EquinoxUsersRepository<T>?, H : EquinoxUsersHelper<T, R>?> : EquinoxController<T, R, H> ",
       "com.tecknobit.equinox.environment.controllers.EquinoxUsersController"
     ]
   },
   {
-    "name": "open class EquinoxUsersHelper<T : EquinoxUser?> : ResourcesManager",
+    "name": "open class EquinoxUsersHelper<T : EquinoxUser?, R : EquinoxUsersRepository<T>?> : EquinoxItemsHelper<T> , ResourcesManager",
     "description": "com.tecknobit.equinox.environment.helpers.services.EquinoxUsersHelper",
     "location": "-equinox/com.tecknobit.equinox.environment.helpers.services/-equinox-users-helper/index.html",
     "searchKeys": [
       "EquinoxUsersHelper",
-      "open class EquinoxUsersHelper<T : EquinoxUser?> : ResourcesManager",
+      "open class EquinoxUsersHelper<T : EquinoxUser?, R : EquinoxUsersRepository<T>?> : EquinoxItemsHelper<T> , ResourcesManager",
       "com.tecknobit.equinox.environment.helpers.services.EquinoxUsersHelper"
     ]
   },
@@ -1410,6 +1530,16 @@
     ]
   },
   {
+    "name": "open fun restartRefresherIf(condition: Boolean)",
+    "description": "com.tecknobit.equinox.FetcherManager.FetcherManagerWrapper.restartRefresherIf",
+    "location": "-equinox/com.tecknobit.equinox/-fetcher-manager/-fetcher-manager-wrapper/restart-refresher-if.html",
+    "searchKeys": [
+      "restartRefresherIf",
+      "open fun restartRefresherIf(condition: Boolean)",
+      "com.tecknobit.equinox.FetcherManager.FetcherManagerWrapper.restartRefresherIf"
+    ]
+  },
+  {
     "name": "open fun saveResource(resource: MultipartFile, path: String)",
     "description": "com.tecknobit.equinox.resourcesutils.ResourcesManager.saveResource",
     "location": "-equinox/com.tecknobit.equinox.resourcesutils/-resources-manager/save-resource.html",
@@ -1580,6 +1710,16 @@
     ]
   },
   {
+    "name": "open fun suspendRefresherIf(condition: Boolean)",
+    "description": "com.tecknobit.equinox.FetcherManager.FetcherManagerWrapper.suspendRefresherIf",
+    "location": "-equinox/com.tecknobit.equinox/-fetcher-manager/-fetcher-manager-wrapper/suspend-refresher-if.html",
+    "searchKeys": [
+      "suspendRefresherIf",
+      "open fun suspendRefresherIf(condition: Boolean)",
+      "com.tecknobit.equinox.FetcherManager.FetcherManagerWrapper.suspendRefresherIf"
+    ]
+  },
+  {
     "name": "open fun toString(): String",
     "description": "com.tecknobit.equinox.environment.records.EquinoxItem.toString",
     "location": "-equinox/com.tecknobit.equinox.environment.records/-equinox-item/to-string.html",
@@ -1590,6 +1730,16 @@
     ]
   },
   {
+    "name": "open fun valueOf(name: String): EquinoxItemsHelper.InsertCommand",
+    "description": "com.tecknobit.equinox.environment.helpers.services.EquinoxItemsHelper.InsertCommand.valueOf",
+    "location": "-equinox/com.tecknobit.equinox.environment.helpers.services/-equinox-items-helper/-insert-command/value-of.html",
+    "searchKeys": [
+      "valueOf",
+      "open fun valueOf(name: String): EquinoxItemsHelper.InsertCommand",
+      "com.tecknobit.equinox.environment.helpers.services.EquinoxItemsHelper.InsertCommand.valueOf"
+    ]
+  },
+  {
     "name": "open fun valueOf(name: String): EquinoxUser.ApplicationTheme",
     "description": "com.tecknobit.equinox.environment.records.EquinoxUser.ApplicationTheme.valueOf",
     "location": "-equinox/com.tecknobit.equinox.environment.records/-equinox-user/-application-theme/value-of.html",
@@ -1597,6 +1747,16 @@
       "valueOf",
       "open fun valueOf(name: String): EquinoxUser.ApplicationTheme",
       "com.tecknobit.equinox.environment.records.EquinoxUser.ApplicationTheme.valueOf"
+    ]
+  },
+  {
+    "name": "open fun values(): Array<EquinoxItemsHelper.InsertCommand>",
+    "description": "com.tecknobit.equinox.environment.helpers.services.EquinoxItemsHelper.InsertCommand.values",
+    "location": "-equinox/com.tecknobit.equinox.environment.helpers.services/-equinox-items-helper/-insert-command/values.html",
+    "searchKeys": [
+      "values",
+      "open fun values(): Array<EquinoxItemsHelper.InsertCommand>",
+      "com.tecknobit.equinox.environment.helpers.services.EquinoxItemsHelper.InsertCommand.values"
     ]
   },
   {
@@ -1627,6 +1787,16 @@
       "resourcesProvider",
       "open var resourcesProvider: ResourcesProvider",
       "com.tecknobit.equinox.environment.controllers.EquinoxController.resourcesProvider"
+    ]
+  },
+  {
+    "name": "private constructor(sql: String)",
+    "description": "com.tecknobit.equinox.environment.helpers.services.EquinoxItemsHelper.InsertCommand.InsertCommand",
+    "location": "-equinox/com.tecknobit.equinox.environment.helpers.services/-equinox-items-helper/-insert-command/-insert-command.html",
+    "searchKeys": [
+      "InsertCommand",
+      "private constructor(sql: String)",
+      "com.tecknobit.equinox.environment.helpers.services.EquinoxItemsHelper.InsertCommand.InsertCommand"
     ]
   },
   {
@@ -1667,6 +1837,16 @@
       "logError",
       "private fun logError(exception: Exception)",
       "com.tecknobit.equinox.Requester.logError"
+    ]
+  },
+  {
+    "name": "private fun logHeaders()",
+    "description": "com.tecknobit.equinox.Requester.logHeaders",
+    "location": "-equinox/com.tecknobit.equinox/-requester/log-headers.html",
+    "searchKeys": [
+      "logHeaders",
+      "private fun logHeaders()",
+      "com.tecknobit.equinox.Requester.logHeaders"
     ]
   },
   {
@@ -1760,6 +1940,26 @@
     ]
   },
   {
+    "name": "private open fun findMaxSize(inValues: List<List<out Any>>): Int",
+    "description": "com.tecknobit.equinox.environment.helpers.services.EquinoxItemsHelper.findMaxSize",
+    "location": "-equinox/com.tecknobit.equinox.environment.helpers.services/-equinox-items-helper/find-max-size.html",
+    "searchKeys": [
+      "findMaxSize",
+      "private open fun findMaxSize(inValues: List<List<out Any>>): Int",
+      "com.tecknobit.equinox.environment.helpers.services.EquinoxItemsHelper.findMaxSize"
+    ]
+  },
+  {
+    "name": "private open fun formatColumns(columns: Array<String>): String",
+    "description": "com.tecknobit.equinox.environment.helpers.services.EquinoxItemsHelper.formatColumns",
+    "location": "-equinox/com.tecknobit.equinox.environment.helpers.services/-equinox-items-helper/format-columns.html",
+    "searchKeys": [
+      "formatColumns",
+      "private open fun formatColumns(columns: Array<String>): String",
+      "com.tecknobit.equinox.environment.helpers.services.EquinoxItemsHelper.formatColumns"
+    ]
+  },
+  {
     "name": "private open fun formatDirectory(directory: String): String",
     "description": "com.tecknobit.equinox.resourcesutils.ResourcesProvider.formatDirectory",
     "location": "-equinox/com.tecknobit.equinox.resourcesutils/-resources-provider/format-directory.html",
@@ -1767,6 +1967,36 @@
       "formatDirectory",
       "private open fun formatDirectory(directory: String): String",
       "com.tecknobit.equinox.resourcesutils.ResourcesProvider.formatDirectory"
+    ]
+  },
+  {
+    "name": "private open fun formatInClause(columns: Int, inValues: List<out Any>): String",
+    "description": "com.tecknobit.equinox.environment.helpers.services.EquinoxItemsHelper.formatInClause",
+    "location": "-equinox/com.tecknobit.equinox.environment.helpers.services/-equinox-items-helper/format-in-clause.html",
+    "searchKeys": [
+      "formatInClause",
+      "private open fun formatInClause(columns: Int, inValues: List<out Any>): String",
+      "com.tecknobit.equinox.environment.helpers.services.EquinoxItemsHelper.formatInClause"
+    ]
+  },
+  {
+    "name": "private open fun formatPlaceholder(columns: Array<String>): String",
+    "description": "com.tecknobit.equinox.environment.helpers.services.EquinoxItemsHelper.formatPlaceholder",
+    "location": "-equinox/com.tecknobit.equinox.environment.helpers.services/-equinox-items-helper/format-placeholder.html",
+    "searchKeys": [
+      "formatPlaceholder",
+      "private open fun formatPlaceholder(columns: Array<String>): String",
+      "com.tecknobit.equinox.environment.helpers.services.EquinoxItemsHelper.formatPlaceholder"
+    ]
+  },
+  {
+    "name": "private open fun formatValuesForQuery(start: String, values: List<out Any>, formatter: String, isToClose: Boolean): String",
+    "description": "com.tecknobit.equinox.environment.helpers.services.EquinoxItemsHelper.formatValuesForQuery",
+    "location": "-equinox/com.tecknobit.equinox.environment.helpers.services/-equinox-items-helper/format-values-for-query.html",
+    "searchKeys": [
+      "formatValuesForQuery",
+      "private open fun formatValuesForQuery(start: String, values: List<out Any>, formatter: String, isToClose: Boolean): String",
+      "com.tecknobit.equinox.environment.helpers.services.EquinoxItemsHelper.formatValuesForQuery"
     ]
   },
   {
@@ -1800,6 +2030,16 @@
     ]
   },
   {
+    "name": "private open fun mergeAlternativelyInColumnsValues(inValues: List<List<out Any>>): List<out Any>",
+    "description": "com.tecknobit.equinox.environment.helpers.services.EquinoxItemsHelper.mergeAlternativelyInColumnsValues",
+    "location": "-equinox/com.tecknobit.equinox.environment.helpers.services/-equinox-items-helper/merge-alternatively-in-columns-values.html",
+    "searchKeys": [
+      "mergeAlternativelyInColumnsValues",
+      "private open fun mergeAlternativelyInColumnsValues(inValues: List<List<out Any>>): List<out Any>",
+      "com.tecknobit.equinox.environment.helpers.services.EquinoxItemsHelper.mergeAlternativelyInColumnsValues"
+    ]
+  },
+  {
     "name": "private open fun plainResponse(responseCode: SocketManager.StandardResponseCode, message: String): String",
     "description": "com.tecknobit.equinox.environment.controllers.EquinoxController.plainResponse",
     "location": "-equinox/com.tecknobit.equinox.environment.controllers/-equinox-controller/plain-response.html",
@@ -1827,16 +2067,6 @@
       "setBasicResourcesConfiguration",
       "private open fun setBasicResourcesConfiguration(context: Class<out Any>, customSubDirectories: Array<String>)",
       "com.tecknobit.equinox.environment.controllers.EquinoxController.setBasicResourcesConfiguration"
-    ]
-  },
-  {
-    "name": "private open var usersRepository: EquinoxUsersRepository<T>",
-    "description": "com.tecknobit.equinox.environment.helpers.services.EquinoxUsersHelper.usersRepository",
-    "location": "-equinox/com.tecknobit.equinox.environment.helpers.services/-equinox-users-helper/users-repository.html",
-    "searchKeys": [
-      "usersRepository",
-      "private open var usersRepository: EquinoxUsersRepository<T>",
-      "com.tecknobit.equinox.environment.helpers.services.EquinoxUsersHelper.usersRepository"
     ]
   },
   {
@@ -1900,6 +2130,16 @@
     ]
   },
   {
+    "name": "private val _IN_CLAUSE_: String = \" IN \"",
+    "description": "com.tecknobit.equinox.environment.helpers.services.EquinoxItemsHelper._IN_CLAUSE_",
+    "location": "-equinox/com.tecknobit.equinox.environment.helpers.services/-equinox-items-helper/_-i-n_-c-l-a-u-s-e_.html",
+    "searchKeys": [
+      "_IN_CLAUSE_",
+      "private val _IN_CLAUSE_: String = \" IN \"",
+      "com.tecknobit.equinox.environment.helpers.services.EquinoxItemsHelper._IN_CLAUSE_"
+    ]
+  },
+  {
     "name": "private val context: Class<out Any>",
     "description": "com.tecknobit.equinox.configurationsutils.ConfigsGenerator.context",
     "location": "-equinox/com.tecknobit.equinox.configurationsutils/-configs-generator/context.html",
@@ -1937,6 +2177,16 @@
       "refreshRoutine",
       "private val refreshRoutine: CoroutineScope",
       "com.tecknobit.equinox.FetcherManager.refreshRoutine"
+    ]
+  },
+  {
+    "name": "private val sql: String",
+    "description": "com.tecknobit.equinox.environment.helpers.services.EquinoxItemsHelper.InsertCommand.sql",
+    "location": "-equinox/com.tecknobit.equinox.environment.helpers.services/-equinox-items-helper/-insert-command/sql.html",
+    "searchKeys": [
+      "sql",
+      "private val sql: String",
+      "com.tecknobit.equinox.environment.helpers.services.EquinoxItemsHelper.InsertCommand.sql"
     ]
   },
   {
@@ -2100,6 +2350,16 @@
     ]
   },
   {
+    "name": "protected open fun <V> syncBatch(container: EquinoxItemsHelper.SyncBatchContainer, table: String, targetId: String, updatedData: List<V>, batchQuery: EquinoxItemsHelper.BatchQuery)",
+    "description": "com.tecknobit.equinox.environment.helpers.services.EquinoxItemsHelper.syncBatch",
+    "location": "-equinox/com.tecknobit.equinox.environment.helpers.services/-equinox-items-helper/sync-batch.html",
+    "searchKeys": [
+      "syncBatch",
+      "protected open fun <V> syncBatch(container: EquinoxItemsHelper.SyncBatchContainer, table: String, targetId: String, updatedData: List<V>, batchQuery: EquinoxItemsHelper.BatchQuery)",
+      "com.tecknobit.equinox.environment.helpers.services.EquinoxItemsHelper.syncBatch"
+    ]
+  },
+  {
     "name": "protected open fun assembleSignInSuccessResponse(user: T): JSONObject",
     "description": "com.tecknobit.equinox.environment.controllers.EquinoxUsersController.assembleSignInSuccessResponse",
     "location": "-equinox/com.tecknobit.equinox.environment.controllers/-equinox-users-controller/assemble-sign-in-success-response.html",
@@ -2110,13 +2370,23 @@
     ]
   },
   {
-    "name": "protected open fun executeAuth(payload: Map<String, String>, personalData: Array<String>): String",
-    "description": "com.tecknobit.equinox.environment.controllers.EquinoxUsersController.executeAuth",
-    "location": "-equinox/com.tecknobit.equinox.environment.controllers/-equinox-users-controller/execute-auth.html",
+    "name": "protected open fun batchDelete(table: String, values: List<List<out Any>>, columns: Array<String>)",
+    "description": "com.tecknobit.equinox.environment.helpers.services.EquinoxItemsHelper.batchDelete",
+    "location": "-equinox/com.tecknobit.equinox.environment.helpers.services/-equinox-items-helper/batch-delete.html",
     "searchKeys": [
-      "executeAuth",
-      "protected open fun executeAuth(payload: Map<String, String>, personalData: Array<String>): String",
-      "com.tecknobit.equinox.environment.controllers.EquinoxUsersController.executeAuth"
+      "batchDelete",
+      "protected open fun batchDelete(table: String, values: List<List<out Any>>, columns: Array<String>)",
+      "com.tecknobit.equinox.environment.helpers.services.EquinoxItemsHelper.batchDelete"
+    ]
+  },
+  {
+    "name": "protected open fun batchInsert(command: EquinoxItemsHelper.InsertCommand, table: String, values: List<out Any>, batchQuery: EquinoxItemsHelper.BatchQuery, columns: Array<String>)",
+    "description": "com.tecknobit.equinox.environment.helpers.services.EquinoxItemsHelper.batchInsert",
+    "location": "-equinox/com.tecknobit.equinox.environment.helpers.services/-equinox-items-helper/batch-insert.html",
+    "searchKeys": [
+      "batchInsert",
+      "protected open fun batchInsert(command: EquinoxItemsHelper.InsertCommand, table: String, values: List<out Any>, batchQuery: EquinoxItemsHelper.BatchQuery, columns: Array<String>)",
+      "com.tecknobit.equinox.environment.helpers.services.EquinoxItemsHelper.batchInsert"
     ]
   },
   {
@@ -2311,12 +2581,12 @@
   },
   {
     "name": "protected open var entityManager: EntityManager",
-    "description": "com.tecknobit.equinox.environment.helpers.services.EquinoxUsersHelper.entityManager",
-    "location": "-equinox/com.tecknobit.equinox.environment.helpers.services/-equinox-users-helper/entity-manager.html",
+    "description": "com.tecknobit.equinox.environment.helpers.services.EquinoxItemsHelper.entityManager",
+    "location": "-equinox/com.tecknobit.equinox.environment.helpers.services/-equinox-items-helper/entity-manager.html",
     "searchKeys": [
       "entityManager",
       "protected open var entityManager: EntityManager",
-      "com.tecknobit.equinox.environment.helpers.services.EquinoxUsersHelper.entityManager"
+      "com.tecknobit.equinox.environment.helpers.services.EquinoxItemsHelper.entityManager"
     ]
   },
   {
@@ -2440,13 +2710,43 @@
     ]
   },
   {
-    "name": "protected open var usersRepository: EquinoxUsersRepository<T>",
+    "name": "protected open var usersHelper: H",
+    "description": "com.tecknobit.equinox.environment.controllers.EquinoxUsersController.usersHelper",
+    "location": "-equinox/com.tecknobit.equinox.environment.controllers/-equinox-users-controller/users-helper.html",
+    "searchKeys": [
+      "usersHelper",
+      "protected open var usersHelper: H",
+      "com.tecknobit.equinox.environment.controllers.EquinoxUsersController.usersHelper"
+    ]
+  },
+  {
+    "name": "protected open var usersRepository: R",
     "description": "com.tecknobit.equinox.environment.controllers.EquinoxController.usersRepository",
     "location": "-equinox/com.tecknobit.equinox.environment.controllers/-equinox-controller/users-repository.html",
     "searchKeys": [
       "usersRepository",
-      "protected open var usersRepository: EquinoxUsersRepository<T>",
+      "protected open var usersRepository: R",
       "com.tecknobit.equinox.environment.controllers.EquinoxController.usersRepository"
+    ]
+  },
+  {
+    "name": "protected open var usersRepository: R",
+    "description": "com.tecknobit.equinox.environment.helpers.services.EquinoxUsersHelper.usersRepository",
+    "location": "-equinox/com.tecknobit.equinox.environment.helpers.services/-equinox-users-helper/users-repository.html",
+    "searchKeys": [
+      "usersRepository",
+      "protected open var usersRepository: R",
+      "com.tecknobit.equinox.environment.helpers.services.EquinoxUsersHelper.usersRepository"
+    ]
+  },
+  {
+    "name": "protected val ALTER_TABLE_: String = \"ALTER TABLE \"",
+    "description": "com.tecknobit.equinox.environment.helpers.services.EquinoxUsersHelper.ALTER_TABLE_",
+    "location": "-equinox/com.tecknobit.equinox.environment.helpers.services/-equinox-users-helper/-a-l-t-e-r_-t-a-b-l-e_.html",
+    "searchKeys": [
+      "ALTER_TABLE_",
+      "protected val ALTER_TABLE_: String = \"ALTER TABLE \"",
+      "com.tecknobit.equinox.environment.helpers.services.EquinoxUsersHelper.ALTER_TABLE_"
     ]
   },
   {
@@ -2480,6 +2780,16 @@
     ]
   },
   {
+    "name": "protected val _DROP_COLUMN_: String = \" DROP COLUMN \"",
+    "description": "com.tecknobit.equinox.environment.helpers.services.EquinoxUsersHelper._DROP_COLUMN_",
+    "location": "-equinox/com.tecknobit.equinox.environment.helpers.services/-equinox-users-helper/_-d-r-o-p_-c-o-l-u-m-n_.html",
+    "searchKeys": [
+      "_DROP_COLUMN_",
+      "protected val _DROP_COLUMN_: String = \" DROP COLUMN \"",
+      "com.tecknobit.equinox.environment.helpers.services.EquinoxUsersHelper._DROP_COLUMN_"
+    ]
+  },
+  {
     "name": "protected val apiRequest: APIRequest",
     "description": "com.tecknobit.equinox.Requester.apiRequest",
     "location": "-equinox/com.tecknobit.equinox/-requester/api-request.html",
@@ -2490,12 +2800,12 @@
     ]
   },
   {
-    "name": "protected val connectionTimeout: Int",
+    "name": "protected val connectionTimeout: Long",
     "description": "com.tecknobit.equinox.Requester.connectionTimeout",
     "location": "-equinox/com.tecknobit.equinox/-requester/connection-timeout.html",
     "searchKeys": [
       "connectionTimeout",
-      "protected val connectionTimeout: Int",
+      "protected val connectionTimeout: Long",
       "com.tecknobit.equinox.Requester.connectionTimeout"
     ]
   },
@@ -2577,16 +2887,6 @@
       "language",
       "protected val language: String",
       "com.tecknobit.equinox.environment.records.EquinoxUser.language"
-    ]
-  },
-  {
-    "name": "protected val mantis: Mantis",
-    "description": "com.tecknobit.equinox.Requester.mantis",
-    "location": "-equinox/com.tecknobit.equinox/-requester/mantis.html",
-    "searchKeys": [
-      "mantis",
-      "protected val mantis: Mantis",
-      "com.tecknobit.equinox.Requester.mantis"
     ]
   },
   {
@@ -2700,16 +3000,6 @@
     ]
   },
   {
-    "name": "protected val usersHelper: EquinoxUsersHelper<T>",
-    "description": "com.tecknobit.equinox.environment.controllers.EquinoxUsersController.usersHelper",
-    "location": "-equinox/com.tecknobit.equinox.environment.controllers/-equinox-users-controller/users-helper.html",
-    "searchKeys": [
-      "usersHelper",
-      "protected val usersHelper: EquinoxUsersHelper<T>",
-      "com.tecknobit.equinox.environment.controllers.EquinoxUsersController.usersHelper"
-    ]
-  },
-  {
     "name": "protected var debugMode: Boolean",
     "description": "com.tecknobit.equinox.Requester.debugMode",
     "location": "-equinox/com.tecknobit.equinox/-requester/debug-mode.html",
@@ -2810,13 +3100,23 @@
     ]
   },
   {
+    "name": "val CLOSED_ROUND_BRACKET: String = \")\"",
+    "description": "com.tecknobit.equinox.environment.helpers.services.EquinoxItemsHelper.CLOSED_ROUND_BRACKET",
+    "location": "-equinox/com.tecknobit.equinox.environment.helpers.services/-equinox-items-helper/-c-l-o-s-e-d_-r-o-u-n-d_-b-r-a-c-k-e-t.html",
+    "searchKeys": [
+      "CLOSED_ROUND_BRACKET",
+      "val CLOSED_ROUND_BRACKET: String = \")\"",
+      "com.tecknobit.equinox.environment.helpers.services.EquinoxItemsHelper.CLOSED_ROUND_BRACKET"
+    ]
+  },
+  {
     "name": "val COMMA: String = \",\"",
-    "description": "com.tecknobit.equinox.environment.helpers.services.EquinoxUsersHelper.COMMA",
-    "location": "-equinox/com.tecknobit.equinox.environment.helpers.services/-equinox-users-helper/-c-o-m-m-a.html",
+    "description": "com.tecknobit.equinox.environment.helpers.services.EquinoxItemsHelper.COMMA",
+    "location": "-equinox/com.tecknobit.equinox.environment.helpers.services/-equinox-items-helper/-c-o-m-m-a.html",
     "searchKeys": [
       "COMMA",
       "val COMMA: String = \",\"",
-      "com.tecknobit.equinox.environment.helpers.services.EquinoxUsersHelper.COMMA"
+      "com.tecknobit.equinox.environment.helpers.services.EquinoxItemsHelper.COMMA"
     ]
   },
   {
@@ -2857,6 +3157,16 @@
       "DEFAULT_PROFILE_PIC",
       "val DEFAULT_PROFILE_PIC: String = \"profiles/defProfilePic.png\"",
       "com.tecknobit.equinox.environment.records.EquinoxUser.DEFAULT_PROFILE_PIC"
+    ]
+  },
+  {
+    "name": "val DELETE_FROM_: String = \"DELETE FROM \"",
+    "description": "com.tecknobit.equinox.environment.helpers.services.EquinoxItemsHelper.DELETE_FROM_",
+    "location": "-equinox/com.tecknobit.equinox.environment.helpers.services/-equinox-items-helper/-d-e-l-e-t-e_-f-r-o-m_.html",
+    "searchKeys": [
+      "DELETE_FROM_",
+      "val DELETE_FROM_: String = \"DELETE FROM \"",
+      "com.tecknobit.equinox.environment.helpers.services.EquinoxItemsHelper.DELETE_FROM_"
     ]
   },
   {
@@ -2970,6 +3280,16 @@
     ]
   },
   {
+    "name": "val OPENED_ROUND_BRACKET: String = \"(\"",
+    "description": "com.tecknobit.equinox.environment.helpers.services.EquinoxItemsHelper.OPENED_ROUND_BRACKET",
+    "location": "-equinox/com.tecknobit.equinox.environment.helpers.services/-equinox-items-helper/-o-p-e-n-e-d_-r-o-u-n-d_-b-r-a-c-k-e-t.html",
+    "searchKeys": [
+      "OPENED_ROUND_BRACKET",
+      "val OPENED_ROUND_BRACKET: String = \"(\"",
+      "com.tecknobit.equinox.environment.helpers.services.EquinoxItemsHelper.OPENED_ROUND_BRACKET"
+    ]
+  },
+  {
     "name": "val PASSWORD_KEY: String = \"password\"",
     "description": "com.tecknobit.equinox.environment.records.EquinoxUser.PASSWORD_KEY",
     "location": "-equinox/com.tecknobit.equinox.environment.records/-equinox-user/-p-a-s-s-w-o-r-d_-k-e-y.html",
@@ -3017,6 +3337,16 @@
       "PROFILE_PIC_KEY",
       "val PROFILE_PIC_KEY: String = \"profile_pic\"",
       "com.tecknobit.equinox.environment.records.EquinoxUser.PROFILE_PIC_KEY"
+    ]
+  },
+  {
+    "name": "val QUESTION_MARK: String = \"?\"",
+    "description": "com.tecknobit.equinox.environment.helpers.services.EquinoxItemsHelper.QUESTION_MARK",
+    "location": "-equinox/com.tecknobit.equinox.environment.helpers.services/-equinox-items-helper/-q-u-e-s-t-i-o-n_-m-a-r-k.html",
+    "searchKeys": [
+      "QUESTION_MARK",
+      "val QUESTION_MARK: String = \"?\"",
+      "com.tecknobit.equinox.environment.helpers.services.EquinoxItemsHelper.QUESTION_MARK"
     ]
   },
   {
@@ -3070,16 +3400,6 @@
     ]
   },
   {
-    "name": "val ROUND_BRACKET: String = \")\"",
-    "description": "com.tecknobit.equinox.environment.helpers.services.EquinoxUsersHelper.ROUND_BRACKET",
-    "location": "-equinox/com.tecknobit.equinox.environment.helpers.services/-equinox-users-helper/-r-o-u-n-d_-b-r-a-c-k-e-t.html",
-    "searchKeys": [
-      "ROUND_BRACKET",
-      "val ROUND_BRACKET: String = \")\"",
-      "com.tecknobit.equinox.environment.helpers.services.EquinoxUsersHelper.ROUND_BRACKET"
-    ]
-  },
-  {
     "name": "val SIGN_IN_ENDPOINT: String = \"users/signIn\"",
     "description": "com.tecknobit.equinox.environment.helpers.EquinoxBaseEndpointsSet.SIGN_IN_ENDPOINT",
     "location": "-equinox/com.tecknobit.equinox.environment.helpers/-equinox-base-endpoints-set/-s-i-g-n_-i-n_-e-n-d-p-o-i-n-t.html",
@@ -3101,12 +3421,12 @@
   },
   {
     "name": "val SINGLE_QUOTE: String = \"'\"",
-    "description": "com.tecknobit.equinox.environment.helpers.services.EquinoxUsersHelper.SINGLE_QUOTE",
-    "location": "-equinox/com.tecknobit.equinox.environment.helpers.services/-equinox-users-helper/-s-i-n-g-l-e_-q-u-o-t-e.html",
+    "description": "com.tecknobit.equinox.environment.helpers.services.EquinoxItemsHelper.SINGLE_QUOTE",
+    "location": "-equinox/com.tecknobit.equinox.environment.helpers.services/-equinox-items-helper/-s-i-n-g-l-e_-q-u-o-t-e.html",
     "searchKeys": [
       "SINGLE_QUOTE",
       "val SINGLE_QUOTE: String = \"'\"",
-      "com.tecknobit.equinox.environment.helpers.services.EquinoxUsersHelper.SINGLE_QUOTE"
+      "com.tecknobit.equinox.environment.helpers.services.EquinoxItemsHelper.SINGLE_QUOTE"
     ]
   },
   {
@@ -3227,6 +3547,26 @@
       "WRONG_SURNAME_MESSAGE",
       "val WRONG_SURNAME_MESSAGE: String = \"wrong_surname_key\"",
       "com.tecknobit.equinox.inputs.InputValidator.WRONG_SURNAME_MESSAGE"
+    ]
+  },
+  {
+    "name": "val _VALUES_: String = \" VALUES \"",
+    "description": "com.tecknobit.equinox.environment.helpers.services.EquinoxItemsHelper._VALUES_",
+    "location": "-equinox/com.tecknobit.equinox.environment.helpers.services/-equinox-items-helper/_-v-a-l-u-e-s_.html",
+    "searchKeys": [
+      "_VALUES_",
+      "val _VALUES_: String = \" VALUES \"",
+      "com.tecknobit.equinox.environment.helpers.services.EquinoxItemsHelper._VALUES_"
+    ]
+  },
+  {
+    "name": "val _WHERE_: String = \" WHERE \"",
+    "description": "com.tecknobit.equinox.environment.helpers.services.EquinoxItemsHelper._WHERE_",
+    "location": "-equinox/com.tecknobit.equinox.environment.helpers.services/-equinox-items-helper/_-w-h-e-r-e_.html",
+    "searchKeys": [
+      "_WHERE_",
+      "val _WHERE_: String = \" WHERE \"",
+      "com.tecknobit.equinox.environment.helpers.services.EquinoxItemsHelper._WHERE_"
     ]
   },
   {

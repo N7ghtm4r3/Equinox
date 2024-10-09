@@ -4,6 +4,7 @@ import com.tecknobit.apimanager.apis.ServerProtector;
 import com.tecknobit.apimanager.apis.sockets.SocketManager.StandardResponseCode;
 import com.tecknobit.apimanager.formatters.JsonHelper;
 import com.tecknobit.equinox.configurationsutils.ConfigsGenerator;
+import com.tecknobit.equinox.environment.helpers.services.EquinoxUsersHelper;
 import com.tecknobit.equinox.environment.helpers.services.repositories.EquinoxUsersRepository;
 import com.tecknobit.equinox.environment.records.EquinoxUser;
 import com.tecknobit.equinox.resourcesutils.ResourcesProvider;
@@ -20,7 +21,7 @@ import java.util.*;
 
 import static com.tecknobit.apimanager.apis.sockets.SocketManager.StandardResponseCode.FAILED;
 import static com.tecknobit.apimanager.apis.sockets.SocketManager.StandardResponseCode.SUCCESSFUL;
-import static com.tecknobit.equinox.Requester.RESPONSE_MESSAGE_KEY;
+import static com.tecknobit.equinox.Requester.RESPONSE_DATA_KEY;
 import static com.tecknobit.equinox.Requester.RESPONSE_STATUS_KEY;
 import static com.tecknobit.equinox.environment.helpers.EquinoxBaseEndpointsSet.BASE_EQUINOX_ENDPOINT;
 import static com.tecknobit.equinox.inputs.InputValidator.DEFAULT_LANGUAGE;
@@ -32,11 +33,15 @@ import static com.tecknobit.equinox.resourcesutils.ResourcesManager.RESOURCES_KE
  *
  * @author N7ghtm4r3 - Tecknobit
  *
+ * @param <T>: the type of the {@link EquinoxUser} used in the system, is generic to avoid manual casts if it has been customized
+ * @param <R>: the type of the {@link EquinoxUsersRepository} used in the system, is generic to avoid manual casts if it has been customized
+ * @param <H>: the type of the {@link EquinoxUsersHelper} used in the system, is generic to avoid manual casts if it has been customized
  * @since 1.0.1
  */
 @RestController
 @RequestMapping(BASE_EQUINOX_ENDPOINT)
-abstract public class EquinoxController<T extends EquinoxUser> {
+abstract public class EquinoxController<T extends EquinoxUser, R extends EquinoxUsersRepository<T>,
+        H extends EquinoxUsersHelper<T, R>> {
 
     /**
      * {@code protector} the instance to launch the server protector to manage the server accesses
@@ -98,7 +103,7 @@ abstract public class EquinoxController<T extends EquinoxUser> {
      * {@code usersRepository} instance for the user repository
      */
     @Autowired(required = false)
-    protected EquinoxUsersRepository<T> usersRepository;
+    protected R usersRepository;
 
     /**
      * {@code jsonHelper} helper to work with JSON values
@@ -185,7 +190,7 @@ abstract public class EquinoxController<T extends EquinoxUser> {
      */
     protected <V> HashMap<String, V> successResponse(V value) {
         HashMap<String, V> response = new HashMap<>();
-        response.put(RESPONSE_MESSAGE_KEY, value);
+        response.put(RESPONSE_DATA_KEY, value);
         response.put(RESPONSE_STATUS_KEY, (V) SUCCESSFUL);
         return response;
     }
@@ -199,7 +204,7 @@ abstract public class EquinoxController<T extends EquinoxUser> {
     protected String successResponse(JSONObject message) {
         return new JSONObject()
                 .put(RESPONSE_STATUS_KEY, SUCCESSFUL)
-                .put(RESPONSE_MESSAGE_KEY, message).toString();
+                .put(RESPONSE_DATA_KEY, message).toString();
     }
 
     /**
@@ -222,7 +227,7 @@ abstract public class EquinoxController<T extends EquinoxUser> {
     private String plainResponse(StandardResponseCode responseCode, String message) {
         return new JSONObject()
                 .put(RESPONSE_STATUS_KEY, responseCode)
-                .put(RESPONSE_MESSAGE_KEY, message).toString();
+                .put(RESPONSE_DATA_KEY, message).toString();
     }
 
     /**

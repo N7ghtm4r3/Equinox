@@ -46,7 +46,7 @@
                     </a>
                 </div>
                 <div class="library-version">
-                    1.0.3
+                    1.0.4
                 </div>
             </div>
             <div class="filter-section" id="filter-section">
@@ -99,12 +99,65 @@
                                     href="index.html">EquinoxController</a><span class="token operator">&lt;</span><a
                                     href="index.html">T</a><span class="token operator"> : </span><a
                                     href="../../com.tecknobit.equinox.environment.records/-equinox-user/index.html">EquinoxUser</a><span
-                                    class="token operator">?</span><span class="token operator">&gt;</span></div>
+                                    class="token operator">?</span><span class="token punctuation">, </span><a
+                                    href="index.html">R</a><span class="token operator"> : </span><a
+                                    href="../../com.tecknobit.equinox.environment.helpers.services.repositories/-equinox-users-repository/index.html">EquinoxUsersRepository</a><span
+                                    class="token operator">&lt;</span><a href="index.html">T</a><span
+                                    class="token operator">&gt;</span><span class="token operator">?</span><span
+                                    class="token punctuation">, </span><a href="index.html">H</a><span
+                                    class="token operator"> : </span><a
+                                    href="../../com.tecknobit.equinox.environment.helpers.services/-equinox-users-helper/index.html">EquinoxUsersHelper</a><span
+                                    class="token operator">&lt;</span><a href="index.html">T</a><span
+                                    class="token punctuation">, </span><a href="index.html">R</a><span
+                                    class="token operator">&gt;</span><span class="token operator">?</span><span
+                                    class="token operator">&gt;</span></div>
                             <p class="paragraph">The <code class="lang-kotlin">EquinoxController</code> class is useful
                                 to give the base behavior of the <strong>Equinox's controllers</strong></p><span
                                 class="kdoc-tag"><h4 class="">Author</h4><p class="paragraph">N7ghtm4r3 - Tecknobit</p></span><span
                                 class="kdoc-tag"><h4 class="">Since</h4><p class="paragraph">1.0.1</p></span><h4
-                                class="">Inheritors</h4>
+                                class="">Parameters</h4>
+                            <div class="table">
+                                <div class="table-row" data-filterable-current=":dokkaHtml/main"
+                                     data-filterable-set=":dokkaHtml/main">
+                                    <div class="main-subrow keyValue ">
+                                        <div class=""><span class="inline-flex"><div><u><span><span>&lt;T&gt;</span></span></u></div></span>
+                                        </div>
+                                        <div>
+                                            <div class="title"><p class="paragraph">: the type of the <a
+                                                    href="../../com.tecknobit.equinox.environment.records/-equinox-user/index.html">EquinoxUser</a>
+                                                used in the system, is generic to avoid manual casts if it has been
+                                                customized</p></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="table-row" data-filterable-current=":dokkaHtml/main"
+                                     data-filterable-set=":dokkaHtml/main">
+                                    <div class="main-subrow keyValue ">
+                                        <div class=""><span class="inline-flex"><div><u><span><span>&lt;R&gt;</span></span></u></div></span>
+                                        </div>
+                                        <div>
+                                            <div class="title"><p class="paragraph">: the type of the <a
+                                                    href="../../com.tecknobit.equinox.environment.helpers.services.repositories/-equinox-users-repository/index.html">EquinoxUsersRepository</a>
+                                                used in the system, is generic to avoid manual casts if it has been
+                                                customized</p></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="table-row" data-filterable-current=":dokkaHtml/main"
+                                     data-filterable-set=":dokkaHtml/main">
+                                    <div class="main-subrow keyValue ">
+                                        <div class=""><span class="inline-flex"><div><u><span><span>&lt;H&gt;</span></span></u></div></span>
+                                        </div>
+                                        <div>
+                                            <div class="title"><p class="paragraph">: the type of the <a
+                                                    href="../../com.tecknobit.equinox.environment.helpers.services/-equinox-users-helper/index.html">EquinoxUsersHelper</a>
+                                                used in the system, is generic to avoid manual casts if it has been
+                                                customized</p></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <h4 class="">Inheritors</h4>
                             <div class="table">
                                 <div class="table-row" data-filterable-current=":dokkaHtml/main"
                                      data-filterable-set=":dokkaHtml/main">
@@ -440,10 +493,7 @@
                                                                 class="token keyword">var </span><a
                                                                 href="users-repository.html">usersRepository</a><span
                                                                 class="token operator">: </span><a
-                                                                href="../../com.tecknobit.equinox.environment.helpers.services.repositories/-equinox-users-repository/index.html">EquinoxUsersRepository</a><span
-                                                                class="token operator">&lt;</span><a
-                                                                href="index.html">T</a><span
-                                                                class="token operator">&gt;</span></div>
+                                                                href="index.html">R</a></div>
                                                         <div class="brief "><code
                                                                 class="lang-kotlin">usersRepository</code> instance for
                                                             the user repository

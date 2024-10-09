@@ -28,6 +28,10 @@ The base environment gives a base set of classes:
   the requester helper with the **EquinoxUser** requests pre-implemented to execute the operations on the user
 - [InputValidator](https://github.com/N7ghtm4r3/Equinox/blob/main/src/main/java/com/tecknobit/equinox/inputs/InputValidator.java) ->
   utility class to validate the inputs, gives a set of the method to validate the **EquinoxUser** details
+- [EquinoxItemsHelper](https://github.com/N7ghtm4r3/Equinox/blob/main/src/main/java/com/tecknobit/equinox/environment/helpers/services/EquinoxItemsHelper.java) ->
+  helper for manage the database operations of
+  the [EquinoxItem](https://github.com/N7ghtm4r3/Equinox/blob/main/src/main/java/com/tecknobit/equinox/environment/records/EquinoxItem.java)
+  such batch queries execution
 
 ### Usage/Examples
 
@@ -68,7 +72,8 @@ public class Launcher {
                 "the path where storage the server secret",
                 "the message to print when the server secret has been generated",
                 Launcher.class,
-                args);
+                args,
+                customSubDirectoryOne, customSubDirectoryTwo, ...)
 
         // ... your code ...
 
@@ -127,10 +132,10 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-maven-plugin:3.2.0")
     implementation("org.springframework.boot:spring-boot-starter-data-jpa:3.2.3")
     implementation("mysql:mysql-connector-java:8.0.33")
-    implementation("com.github.N7ghtm4r3:APIManager:2.2.3")
-    implementation("com.github.N7ghtm4r3:Equinox:1.0.3")
+    implementation("com.github.N7ghtm4r3:APIManager:2.2.4")
+    implementation("com.github.N7ghtm4r3:Equinox:1.0.4")
     implementation("com.github.N7ghtm4r3:Mantis:1.0.0")
-    implementation("org.json:json:20231013")
+    implementation("org.json:json:20240303")
     implementation("commons-validator:commons-validator:1.7")
 
     ...
@@ -283,13 +288,10 @@ import org.springframework.stereotype.Service;
 
 @Service
 @Primary // this is REQUIRED to use correctly this helper instead the EquinoxUsersHelper
-public class CustomUsersHelper extends EquinoxUsersHelper<CustomUser> {
-
-    @Autowired
-    private CustomUsersRepository customUsersRepository;
+public class CustomUsersHelper extends EquinoxUsersHelper<CustomUser, CustomUsersRepository> {
 
     public void changeCurrency(String newCurrency, String userId) {
-        customUsersRepository.changeCurrency(newCurrency, userId);
+      usersRepository.changeCurrency(newCurrency, userId);
     }
 
 }
@@ -311,25 +313,9 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Map;
 
 @RestController
-public class CustomUsersController extends EquinoxUsersController<CustomUser> {
+public class CustomUsersController extends EquinoxUsersController<CustomUser, CustomUsersRepository, CustomUsersHelper> {
 
-    private final CustomUsersHelper customUsersHelper;
-
-    // you DON'T have to use this constructor
-    /*public CustomUsersController(EquinoxUsersHelper usersHelper) {
-        super(usersHelper);
-        this.customUsersHelper = usersHelper;
-    }*/
-
-    // but override the helper type with your custom helper,
-    // so you can use the additional methods you have implemented and also 
-    // the base methods already implemented
-    public CustomUsersController(CustomUsersHelper usersHelper) {
-        super(usersHelper);
-        this.customUsersHelper = usersHelper;
-    }
-
-    // you can override an implemented method to customize the response as you necessities
+  // you can override an implemented method to customize the response as you necessities
     @Override
     public String changeEmail(
             String id, 
@@ -352,7 +338,7 @@ public class CustomUsersController extends EquinoxUsersController<CustomUser> {
             @RequestBody Map<String, String> payload
     ) {
         if(isMe(id, token)) {
-            customUsersHelper.changeCurrency(payload.get("currency"), id);
+            usersHelper.changeCurrency(payload.get("currency"), id);
             return successResponse();
         } else
             return failedResponse(NOT_AUTHORIZED_OR_WRONG_DETAILS_MESSAGE);
@@ -366,7 +352,7 @@ as [DefaultEquinoxController](https://github.com/N7ghtm4r3/Equinox/blob/main/src
 with your own CustomUser instead:
 
 ```java
-public abstract class DefaultMyOwnController extends EquinoxController<CustomUser> {
+public abstract class DefaultMyOwnController extends EquinoxController<CustomUser, CustomUsersRepository, CustomUsersHelper> {
 }
 ```
 
@@ -393,7 +379,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @Primary
-public class CustomUsersHelper extends EquinoxUsersHelper<CustomUser> {
+public class CustomUsersHelper extends EquinoxUsersHelper<CustomUser, CustomUsersRepository> {
 
   @Override
   protected List<String> getQueryValuesKeys() {
@@ -423,7 +409,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Map;
 
 @RestController
-public class CustomUsersController extends EquinoxUsersController<CustomUser> {
+public class CustomUsersController extends EquinoxUsersController<CustomUser, CustomUsersRepository, CustomUsersHelper> {
 
   @Override
   @CustomParametersOrder(order = {"currency"}) // optional
@@ -450,7 +436,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Map;
 
 @RestController
-public class CustomUsersController extends EquinoxUsersController<CustomUser> {
+public class CustomUsersController extends EquinoxUsersController<CustomUser, CustomUsersRepository, CustomUsersHelper> {
 
   @Override
   @CustomParametersOrder(order = {"currency"}) // optional
@@ -487,7 +473,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @Primary
-public class CustomUsersHelper extends EquinoxUsersHelper<CustomUser> {
+public class CustomUsersHelper extends EquinoxUsersHelper<CustomUser, CustomUsersRepository> {
 
   @Override
   @CustomParametersOrder(order = {"currency"}) // optional
@@ -516,7 +502,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Map;
 
 @RestController
-public class CustomUsersController extends EquinoxUsersController<CustomUser> {
+public class CustomUsersController extends EquinoxUsersController<CustomUser, CustomUsersRepository, CustomUsersHelper> {
 
   @Override
   @CustomParametersOrder(order = {"currency"}) // optional
@@ -543,7 +529,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Map;
 
 @RestController
-public class CustomUsersController extends EquinoxUsersController<CustomUser> {
+public class CustomUsersController extends EquinoxUsersController<CustomUser, CustomUsersRepository, CustomUsersHelper> {
 
   @Override
   @CustomParametersOrder(order = {"currency"}) // optional
@@ -575,7 +561,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Map;
 
 @RestController
-public class CustomUsersController extends EquinoxUsersController<CustomUser> {
+public class CustomUsersController extends EquinoxUsersController<CustomUser, CustomUsersRepository, CustomUsersHelper> {
 
   @Override
   protected JSONObject assembleSignInSuccessResponse(CustomUser user) {

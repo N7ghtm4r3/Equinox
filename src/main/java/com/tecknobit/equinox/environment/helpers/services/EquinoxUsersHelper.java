@@ -4,9 +4,6 @@ import com.tecknobit.apimanager.apis.APIRequest;
 import com.tecknobit.equinox.environment.helpers.services.repositories.EquinoxUsersRepository;
 import com.tecknobit.equinox.environment.records.EquinoxUser;
 import com.tecknobit.equinox.resourcesutils.ResourcesManager;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
-import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -29,26 +26,24 @@ import static java.lang.System.currentTimeMillis;
  * @author N7ghtm4r3 - Tecknobit
  * @see ResourcesManager
  *
+ * @param <T>: the type of the {@link EquinoxUser} used in the system, is generic to avoid manual casts if it has been customized
+ * @param <R>: the type of the {@link EquinoxUsersRepository} used in the system, is generic to avoid manual casts if it has been customized
+ *
  * @since 1.0.1
  */
 @Service
-@Transactional
-public class EquinoxUsersHelper<T extends EquinoxUser> implements ResourcesManager {
+public class EquinoxUsersHelper<T extends EquinoxUser, R extends EquinoxUsersRepository<T>>
+        extends EquinoxItemsHelper<T> implements ResourcesManager {
 
     /**
-     * {@code SINGLE_QUOTE} single quote character
+     * {@code ALTER_TABLE_} query command
      */
-    public static final String SINGLE_QUOTE = "'";
+    protected static final String ALTER_TABLE_ = "ALTER TABLE ";
 
     /**
-     * {@code ROUND_BRACKET} round bracket character
+     * {@code _DROP_COLUMN_} query command
      */
-    public static final String ROUND_BRACKET = ")";
-
-    /**
-     * {@code COMMA} comma character
-     */
-    public static final String COMMA = ",";
+    protected static final String _DROP_COLUMN_ = " DROP COLUMN ";
 
     /**
      * {@code VALUES_QUERY_PART} values query part
@@ -70,18 +65,12 @@ public class EquinoxUsersHelper<T extends EquinoxUser> implements ResourcesManag
      * {@code usersRepository} instance for the users repository
      */
     @Autowired
-    private EquinoxUsersRepository<T> usersRepository;
+    protected R usersRepository;
 
     /**
      * {@code discriminatorValue} value of the discriminator to use to save the users in the related table
      */
     protected String discriminatorValue;
-
-    /**
-     * {@code entityManager} entity manager helper
-     */
-    @PersistenceContext
-    protected EntityManager entityManager;
 
     /**
      * Constructor to init the {@link EquinoxUsersHelper} controller <br>
@@ -112,7 +101,7 @@ public class EquinoxUsersHelper<T extends EquinoxUser> implements ResourcesManag
      * @apiNote the order of the custom parameters must be the same of that specified in the {@link #getQueryValuesKeys()}
      */
     public void signUpUser(String id, String token, String name, String surname, String email, String password,
-                          String language, Object... custom) throws NoSuchAlgorithmException {
+                           String language, Object... custom) throws NoSuchAlgorithmException {
         StringBuilder queryBuilder = new StringBuilder(BASE_SIGN_UP_QUERY);
         arrangeQuery(queryBuilder, getQueryValuesKeys(), false);
         List<Object> values = new ArrayList<>(List.of(discriminatorValue, id, token, name, surname, email, hash(password),
@@ -155,7 +144,7 @@ public class EquinoxUsersHelper<T extends EquinoxUser> implements ResourcesManag
             if (j < lastIndex)
                 queryBuilder.append(COMMA);
             else
-                queryBuilder.append(ROUND_BRACKET);
+                queryBuilder.append(CLOSED_ROUND_BRACKET);
         }
     }
 

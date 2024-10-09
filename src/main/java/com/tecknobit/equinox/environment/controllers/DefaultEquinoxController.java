@@ -1,5 +1,7 @@
 package com.tecknobit.equinox.environment.controllers;
 
+import com.tecknobit.equinox.environment.helpers.services.EquinoxUsersHelper;
+import com.tecknobit.equinox.environment.helpers.services.repositories.EquinoxUsersRepository;
 import com.tecknobit.equinox.environment.records.EquinoxUser;
 
 /**
@@ -36,5 +38,6 @@ import com.tecknobit.equinox.environment.records.EquinoxUser;
  * @author N7ghtm4r3 - Tecknobit
  * @since 1.0.2
  */
-public abstract class DefaultEquinoxController extends EquinoxController<EquinoxUser> {
+public abstract class DefaultEquinoxController extends EquinoxController<EquinoxUser, EquinoxUsersRepository<EquinoxUser>,
+        EquinoxUsersHelper<EquinoxUser, EquinoxUsersRepository<EquinoxUser>>> {
 }

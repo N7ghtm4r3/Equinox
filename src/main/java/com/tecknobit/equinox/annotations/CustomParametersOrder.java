@@ -14,7 +14,7 @@ import static java.lang.annotation.RetentionPolicy.SOURCE;
  *
  * @author N7ghtm4r3 - Tecknobit
  * @apiNote This annotation is useful when the {@link EquinoxUser} has been customized
- * @since 1.0.3
+ * @since 1.0.4
  */
 @Target(METHOD)
 @Retention(SOURCE)

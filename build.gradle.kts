@@ -1,3 +1,6 @@
+import com.vanniktech.maven.publish.JavadocJar
+import com.vanniktech.maven.publish.KotlinJvm
+import com.vanniktech.maven.publish.SonatypeHost
 import org.jetbrains.dokka.DokkaConfiguration.Visibility.*
 import org.jetbrains.dokka.base.DokkaBase
 import org.jetbrains.dokka.base.DokkaBaseConfiguration
@@ -5,9 +8,9 @@ import org.jetbrains.dokka.gradle.DokkaTask
 
 plugins {
     id("java")
-    id("maven-publish")
     kotlin("jvm")
     id("org.jetbrains.dokka") version "1.9.20"
+    id("com.vanniktech.maven.publish") version "0.29.0"
 }
 
 buildscript {
@@ -17,7 +20,7 @@ buildscript {
 }
 
 group = "com.tecknobit"
-version = "1.0.3"
+version = "1.0.4"
 
 repositories {
     mavenCentral()
@@ -32,23 +35,50 @@ dependencies {
     implementation("org.springframework:spring-web:6.1.5")
     implementation("com.fasterxml.jackson.core:jackson-databind:2.15.4")
     implementation("com.squareup.okhttp3:okhttp:4.12.0")
-    implementation("com.github.N7ghtm4r3:APIManager:2.2.3")
-    implementation("org.json:json:20231013")
+    implementation("com.github.N7ghtm4r3:APIManager:2.2.4")
+    implementation("org.json:json:20240303")
     implementation("com.github.N7ghtm4r3:Mantis:1.0.0")
     implementation("commons-validator:commons-validator:1.7")
 }
 
-afterEvaluate {
-    publishing {
-        publications {
-            create<MavenPublication>("maven") {
-                groupId = "com.tecknobit.equinox"
-                artifactId = "Equinox"
-                version = "1.0.3"
-                from(components["java"])
+mavenPublishing {
+    configure(
+        platform = KotlinJvm(
+            javadocJar = JavadocJar.Dokka("dokkaHtml"),
+            sourcesJar = true
+        )
+    )
+    coordinates(
+        groupId = "io.github.n7ghtm4r3",
+        artifactId = "Equinox",
+        version = "1.0.4"
+    )
+    pom {
+        name.set("Equinox")
+        description.set("Utilities for backend services based on Springboot framework. Is a support library to implement some utilities both for backend and for client also who comunicate with that Springboot backend")
+        inceptionYear.set("2024")
+        url.set("https://github.com/N7ghtm4r3/Equinox")
+
+        licenses {
+            license {
+                name.set("MIT")
+                url.set("https://opensource.org/license/mit")
             }
         }
+        developers {
+            developer {
+                id.set("N7ghtm4r3")
+                name.set("Manuel Maurizio")
+                email.set("maurizio.manuel2003@gmail.com")
+                url.set("https://github.com/N7ghtm4r3")
+            }
+        }
+        scm {
+            url.set("https://github.com/N7ghtm4r3/Equinox")
+        }
     }
+    publishToMavenCentral(SonatypeHost.CENTRAL_PORTAL)
+    signAllPublications()
 }
 
 kotlin {

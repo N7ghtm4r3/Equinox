@@ -1,6 +1,6 @@
 # Equinox
 
-**v1.0.3**
+**v1.0.4**
 
 Utilities for backend services based on Springboot framework. Is a support library to implement some utilities both for backend and for client also who comunicate with that Springboot backend
 
@@ -38,7 +38,7 @@ Add the JitPack repository to your build file
 
     ```gradle
     dependencies {
-        implementation 'com.github.N7ghtm4r3:Equinox:1.0.3'
+        implementation 'com.github.N7ghtm4r3:Equinox:1.0.4'
     }
     ```
 
@@ -46,7 +46,7 @@ Add the JitPack repository to your build file
 
     ```gradle
     dependencies {
-        implementation("com.github.N7ghtm4r3:Equinox:1.0.3")
+        implementation("com.github.N7ghtm4r3:Equinox:1.0.4")
     }
     ```
 
@@ -68,7 +68,7 @@ Add the JitPack repository to your build file
 <dependency>
     <groupId>com.github.N7ghtm4r3</groupId>
   <artifactId>Equinox</artifactId>
-  <version>1.0.3</version>
+  <version>1.0.4</version>
 </dependency>
 ```
 

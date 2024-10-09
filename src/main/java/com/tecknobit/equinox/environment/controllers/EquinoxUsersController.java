@@ -2,8 +2,10 @@ package com.tecknobit.equinox.environment.controllers;
 
 import com.tecknobit.apimanager.annotations.RequestPath;
 import com.tecknobit.equinox.environment.helpers.services.EquinoxUsersHelper;
+import com.tecknobit.equinox.environment.helpers.services.repositories.EquinoxUsersRepository;
 import com.tecknobit.equinox.environment.records.EquinoxUser;
 import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -21,25 +23,21 @@ import static com.tecknobit.equinox.inputs.InputValidator.*;
  * @author N7ghtm4r3 - Tecknobit
  * @see EquinoxController
  *
+ * @param <T>: the type of the {@link EquinoxUser} used in the system, is generic to avoid manual casts if it has been customized
+ * @param <R>: the type of the {@link EquinoxUsersRepository} used in the system, is generic to avoid manual casts if it has been customized
+ * @param <H>: the type of the {@link EquinoxUsersHelper} used in the system, is generic to avoid manual casts if it has been customized
+ *
  * @since 1.0.1
  */
 @RestController
-public class EquinoxUsersController<T extends EquinoxUser> extends EquinoxController<T> {
+public class EquinoxUsersController<T extends EquinoxUser, R extends EquinoxUsersRepository<T>,
+        H extends EquinoxUsersHelper<T, R>> extends EquinoxController<T, R, H> {
 
     /**
      * {@code usersHelper} helper to manage the users database operations
      */
-    protected final EquinoxUsersHelper<T> usersHelper;
-
-    /**
-     * Constructor to init the {@link EquinoxUsersController} controller
-     *
-     * @param usersHelper: helper to manage the users database operations
-     */
-    public EquinoxUsersController(EquinoxUsersHelper<T> usersHelper) {
-        super();
-        this.usersHelper = usersHelper;
-    }
+    @Autowired
+    protected H usersHelper;
 
     /**
      * Method to sign up in the <b>Equinox's system</b>
@@ -292,74 +290,6 @@ public class EquinoxUsersController<T extends EquinoxUser> extends EquinoxContro
         response.put(SURNAME_KEY, user.getSurname());
         response.put(LANGUAGE_KEY, user.getLanguage());
         return response;
-    }
-
-    /**
-     * Method to execute the auth operations
-     *
-     * @param payload:      the payload received with the auth request
-     * @param personalData: the personal data of the user like name and surname
-     * @return the result of the auth operation as {@link String}
-     */
-    @Deprecated(since = "1.0.3", forRemoval = true)
-    protected String executeAuth(Map<String, String> payload, String... personalData) {
-        loadJsonHelper(payload);
-        String email = jsonHelper.getString(EMAIL_KEY);
-        String password = jsonHelper.getString(PASSWORD_KEY);
-        String language = jsonHelper.getString(LANGUAGE_KEY, DEFAULT_LANGUAGE);
-        mantis.changeCurrentLocale(language);
-        if (isEmailValid(email)) {
-            if (isPasswordValid(password)) {
-                if (isLanguageValid(language)) {
-                    String id;
-                    String token;
-                    String profilePicUrl;
-                    JSONObject response = new JSONObject();
-                    if (personalData.length == 2) {
-                        id = generateIdentifier();
-                        token = generateIdentifier();
-                        profilePicUrl = DEFAULT_PROFILE_PIC;
-                        try {
-                            usersHelper.signUpUser(
-                                    id,
-                                    token,
-                                    personalData[0],
-                                    personalData[1],
-                                    email.toLowerCase(),
-                                    password,
-                                    language
-                            );
-                        } catch (Exception e) {
-                            return failedResponse(NOT_AUTHORIZED_OR_WRONG_DETAILS_MESSAGE);
-                        }
-                    } else {
-                        try {
-                            EquinoxUser user = usersHelper.signInUser(email.toLowerCase(), password);
-                            if (user != null) {
-                                id = user.getId();
-                                token = user.getToken();
-                                profilePicUrl = user.getProfilePic();
-                                response.put(NAME_KEY, user.getName());
-                                response.put(SURNAME_KEY, user.getSurname());
-                                response.put(LANGUAGE_KEY, user.getLanguage());
-                            } else
-                                return failedResponse(NOT_AUTHORIZED_OR_WRONG_DETAILS_MESSAGE);
-                        } catch (Exception e) {
-                            return failedResponse(WRONG_PROCEDURE_MESSAGE);
-                        }
-                    }
-                    mantis.changeCurrentLocale(DEFAULT_LANGUAGE);
-                    return successResponse(response
-                            .put(IDENTIFIER_KEY, id)
-                            .put(TOKEN_KEY, token)
-                            .put(PROFILE_PIC_KEY, profilePicUrl)
-                    );
-                } else
-                    return failedResponse(WRONG_LANGUAGE_MESSAGE);
-            } else
-                return failedResponse(WRONG_PASSWORD_MESSAGE);
-        } else
-            return failedResponse(WRONG_EMAIL_MESSAGE);
     }
 
     /**
