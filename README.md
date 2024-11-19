@@ -38,7 +38,7 @@ Add the JitPack repository to your build file
 
     ```gradle
     dependencies {
-        implementation 'io.github.n7ghtm4r3:Equinox:1.0.4'
+        implementation 'io.github.n7ghtm4r3:Equinox:1.0.5'
     }
     ```
 
@@ -46,7 +46,7 @@ Add the JitPack repository to your build file
 
     ```gradle
     dependencies {
-        implementation("io.github.n7ghtm4r3:Equinox:1.0.4")
+        implementation("io.github.n7ghtm4r3:Equinox:1.0.5")
     }
     ```
 
@@ -68,7 +68,7 @@ Add the JitPack repository to your build file
 <dependency>
     <groupId>io.github.n7ghtm4r3</groupId>
     <artifactId>Equinox</artifactId>
-    <version>1.0.4</version>
+    <version>1.0.5</version>
 </dependency>
 ```
 

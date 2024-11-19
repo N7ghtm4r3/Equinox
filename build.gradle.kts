@@ -20,7 +20,7 @@ buildscript {
 }
 
 group = "com.tecknobit"
-version = "1.0.4"
+version = "1.0.5"
 
 repositories {
     mavenCentral()
@@ -32,7 +32,7 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0")
     implementation("org.springframework.boot:spring-boot-starter-data-jpa:3.2.3")
     implementation("org.springframework.boot:spring-boot-starter-web:3.2.3")
-    implementation("org.springframework:spring-web:6.1.5")
+    implementation("org.springframework:spring-web:6.1.12")
     implementation("com.fasterxml.jackson.core:jackson-databind:2.15.4")
     implementation("com.squareup.okhttp3:okhttp:4.12.0")
     implementation("com.github.N7ghtm4r3:APIManager:2.2.4")
@@ -51,7 +51,7 @@ mavenPublishing {
     coordinates(
         groupId = "io.github.n7ghtm4r3",
         artifactId = "Equinox",
-        version = "1.0.4"
+        version = "1.0.5"
     )
     pom {
         name.set("Equinox")

@@ -7,6 +7,9 @@ import com.tecknobit.apimanager.apis.sockets.SocketManager.StandardResponseCode
 import com.tecknobit.apimanager.apis.sockets.SocketManager.StandardResponseCode.*
 import com.tecknobit.apimanager.formatters.JsonHelper
 import com.tecknobit.apimanager.formatters.TimeFormatter
+import com.tecknobit.equinox.pagination.PaginatedResponse
+import com.tecknobit.equinox.pagination.PaginatedResponse.Companion.PAGE_KEY
+import com.tecknobit.equinox.pagination.PaginatedResponse.Companion.PAGE_SIZE_KEY
 import kotlinx.coroutines.async
 import kotlinx.coroutines.runBlocking
 import okhttp3.Headers.Companion.toHeaders
@@ -25,13 +28,13 @@ import javax.net.ssl.X509TrustManager
 /**
  * The **Requester** class is useful to communicate with backend based on the **SpringBoot** framework
  *
- * @param host: the host address where is running the backend
- * @param userId: the user identifier
- * @param userToken: the user token
+ * @param host The host address where is running the backend
+ * @param userId The user identifier
+ * @param userToken The user token
  * @param debugMode: whether the requester is still in development and who is developing needs the log of the requester's
  * workflow, if it is enabled all the details of the requests sent and the errors occurred will be printed in the console
- * @param connectionTimeout: time to keep alive request then throw the connection refused error
- * @param connectionErrorMessage: the error to send when a connection error occurred
+ * @param connectionTimeout Time to keep alive request then throw the connection refused error
+ * @param connectionErrorMessage The error to send when a connection error occurred
  * @param enableCertificatesValidation: whether enable the **SSL** certificates validation, this for example
  * when the certificate is a self-signed certificate to by-pass
  *
@@ -76,7 +79,7 @@ abstract class Requester (
         const val DEFAULT_CONNECTION_ERROR_MESSAGE = "connection_error_message_key"
 
         /**
-         * Extension function to get directly the response data from the request response
+         * Extension Method to get directly the response data from the request response
          *
          * No-any params required
          *
@@ -92,7 +95,7 @@ abstract class Requester (
          * }
          * ```
          *
-         * - Use the [responseData] function:
+         * - Use the [responseData] Method:
          *
          * ```kotlin
          * requester.sendRequest(
@@ -136,7 +139,13 @@ abstract class Requester (
     protected var mustValidateCertificates: Boolean = false
 
     /**
-     * **initHost** function to init correctly the [host] value
+     * **interceptorAction** the action of the interceptor to execute when a request has been sent, if not specified is
+     * **null** by default and no interceptions will be executed
+     */
+    protected var interceptorAction: (() -> Unit)? = null
+
+    /**
+     * **initHost** Method to init correctly the [host] value
      */
     private val initHost by lazy {
         {
@@ -150,162 +159,159 @@ abstract class Requester (
     }
 
     /**
-     * Function to set the user credentials used to make the authenticated requests
+     * Method to execute a [RequestMethod.GET] request to the backend
      *
-     * @param userId: the user identifier to use
-     * @param userToken: the user token to use
-     */
-    fun setUserCredentials(
-        userId: String?,
-        userToken: String?
-    ) {
-        this.userId = userId
-        this.userToken = userToken
-        if(userToken != null)
-            headers.addHeader(USER_TOKEN_KEY, userToken)
-    }
-
-    /**
-     * Function to change, during the runtime for example when the session changed, the host address to make the
-     * requests
-     *
-     * @param host: the new host address to use
-     */
-    open fun changeHost(
-        host: String
-    ) {
-        this.host = host
-        if(enableCertificatesValidation)
-            mustValidateCertificates = host.startsWith("https")
-    }
-
-    /**
-     * Function to set programmatically timeout for the requests
-     *
-     * @param connectionTimeout: timeout for the requests
-     */
-    fun setConnectionTimeout(
-        connectionTimeout: Long
-    ) {
-        apiRequest.setConnectionTimeout(connectionTimeout)
-    }
-
-    /**
-     * Function to execute a [RequestMethod.GET] request to the backend
-     *
-     * @param endpoint: the endpoint path of the request url
+     * @param endpoint The endpoint path of the request url
+     * @param query The query parameters of the request
      *
      * @return the result of the request as [JSONObject]
      */
     @Wrapper
     protected fun execGet(
-        endpoint: String
+        endpoint: String,
+        query: Params? = null
     ) : JSONObject {
         return execRequest(
             method = RequestMethod.GET,
-            endpoint = endpoint
+            endpoint = endpoint,
+            query = query
         )
     }
 
     /**
-     * Function to execute a [RequestMethod.POST] request to the backend
+     * Method to execute a [RequestMethod.POST] request to the backend
      *
-     * @param endpoint: the endpoint path of the request url
-     * @param payload: the payload of the request
+     * @param endpoint The endpoint path of the request url
+     * @param query The query parameters of the request
+     * @param payload The payload of the request
      *
      * @return the result of the request as [JSONObject]
      */
     @Wrapper
     protected fun execPost(
         endpoint: String,
+        query: Params? = null,
         payload: Params = Params()
     ) : JSONObject {
         return execRequest(
             method = RequestMethod.POST,
             endpoint = endpoint,
-            payload = payload
+            payload = payload,
+            query = query
         )
     }
 
     /**
-     * Function to execute a [RequestMethod.PUT] request to the backend
+     * Method to execute a [RequestMethod.PUT] request to the backend
      *
-     * @param endpoint: the endpoint path of the request url
-     * @param payload: the payload of the request
+     * @param endpoint The endpoint path of the request url
+     * @param query The query parameters of the request
+     * @param payload The payload of the request
      *
      * @return the result of the request as [JSONObject]
      */
     @Wrapper
     protected fun execPut(
         endpoint: String,
+        query: Params? = null,
         payload: Params = Params()
     ) : JSONObject {
         return execRequest(
             method = RequestMethod.PUT,
             endpoint = endpoint,
-            payload = payload
+            payload = payload,
+            query = query
         )
     }
 
     /**
-     * Function to execute a [RequestMethod.PATCH] request to the backend
+     * Method to execute a [RequestMethod.PATCH] request to the backend
      *
-     * @param endpoint: the endpoint path of the request url
-     * @param payload: the payload of the request
+     * @param endpoint The endpoint path of the request url
+     * @param query The query parameters of the request
+     * @param payload The payload of the request
      *
      * @return the result of the request as [JSONObject]
      */
     @Wrapper
     protected fun execPatch(
         endpoint: String,
+        query: Params? = null,
         payload: Params = Params()
     ) : JSONObject {
         return execRequest(
             method = RequestMethod.PATCH,
             endpoint = endpoint,
-            payload = payload
+            payload = payload,
+            query = query
         )
     }
 
     /**
-     * Function to execute a [RequestMethod.DELETE] request to the backend
+     * Method to execute a [RequestMethod.DELETE] request to the backend
      *
-     * @param endpoint: the endpoint path of the request url
-     * @param payload: the payload of the request
+     * @param endpoint The endpoint path of the request url
+     * @param query The query parameters of the request
+     * @param payload The payload of the request
      *
      * @return the result of the request as [JSONObject]
      */
     @Wrapper
     protected fun execDelete(
         endpoint: String,
+        query: Params? = null,
         payload: Params? = null
     ) : JSONObject {
         return execRequest(
             method = RequestMethod.DELETE,
             endpoint = endpoint,
-            payload = payload
+            payload = payload,
+            query = query
         )
     }
 
     /**
-     * Function to execute a request to the backend
+     * Method to create the query with the pagination parameters
      *
-     * @param method: the method of the request
-     * @param endpoint: the endpoint path of the request url
-     * @param payload: the payload of the request
+     * @param page The number of the page to request to the backend
+     * @param pageSize The size of the result for the page
+     *
+     * @return the paginated query as [Params]
+     */
+    protected fun createPaginationQuery(
+        page: Int,
+        pageSize: Int,
+    ): Params {
+        val query = Params()
+        query.addParam(PAGE_KEY, page.toString())
+        query.addParam(PAGE_SIZE_KEY, pageSize.toString())
+        return query
+    }
+
+    /**
+     * Method to execute a request to the backend
+     *
+     * @param method The method of the request
+     * @param endpoint The endpoint path of the request url
+     * @param query The query parameters of the request
+     * @param payload The payload of the request
      *
      * @return the result of the request as [JSONObject]
      */
     private fun execRequest(
         method: RequestMethod,
         endpoint: String,
+        query: Params? = null,
         payload: Params? = null
     ) : JSONObject {
         var response: String? = null
         var jResponse: JSONObject
         if(mustValidateCertificates)
             apiRequest.validateSelfSignedCertificate()
-        val requestUrl = host + endpoint
+        var requestUrl = host + endpoint
+        query?.let {
+            requestUrl += query.createQueryString()
+        }
         runBlocking {
             try {
                 async {
@@ -327,6 +333,7 @@ abstract class Requester (
                         response = apiRequest.response
                         if (response == null)
                             response = apiRequest.errorResponse
+                        interceptRequest()
                     } catch (e: IOException) {
                         logError(
                             exception = e
@@ -356,22 +363,26 @@ abstract class Requester (
     }
 
     /**
-     * Function to exec a multipart body  request
+     * Method to exec a multipart body  request
      *
-     * @param endpoint: the endpoint path of the url
-     * @param body: the body payload of the request
+     * @param endpoint The endpoint path of the url
+     * @param body The body payload of the request
      *
      * @return the result of the request as [JSONObject]
      */
     protected fun execMultipartRequest(
         endpoint: String,
+        query: Params? = null,
         body: MultipartBody
     ): JSONObject {
         val mHeaders = mutableMapOf<String, String>()
         headers.headersKeys.forEach { headerKey ->
             mHeaders[headerKey] = headers.getHeader(headerKey)
         }
-        val requestUrl = "$host$endpoint"
+        var requestUrl = "$host$endpoint"
+        query?.let {
+            requestUrl += query.createQueryString()
+        }
         val request: Request = Request.Builder()
             .headers(mHeaders.toHeaders())
             .url(requestUrl)
@@ -390,6 +401,7 @@ abstract class Requester (
                         )
                         JSONObject(connectionErrorMessage())
                     }
+                    interceptRequest()
                 }.await()
             } catch (e: Exception) {
                 logError(
@@ -464,11 +476,11 @@ abstract class Requester (
     }
 
     /**
-     * Function to print the details of the request sent if the [debugMode] is enabled
+     * Method to print the details of the request sent if the [debugMode] is enabled
      *
-     * @param requestUrl: the url of the request
-     * @param requestPayloadInfo: the payload of the request if sent with the request
-     * @param response: the response of the request sent
+     * @param requestUrl The url of the request
+     * @param requestPayloadInfo The payload of the request if sent with the request
+     * @param response The response of the request sent
      */
     private fun logRequestInfo(
         requestUrl: String,
@@ -489,7 +501,7 @@ abstract class Requester (
     }
 
     /**
-     * Function to log the current headers used in the requests
+     * Method to log the current headers used in the requests
      *
      * No-any params required
      */
@@ -506,9 +518,9 @@ abstract class Requester (
     }
 
     /**
-     * Function to print a log of an exception occurred during a request sent if the [debugMode] is enabled
+     * Method to print a log of an exception occurred during a request sent if the [debugMode] is enabled
      *
-     * @param exception: the exception occurred
+     * @param exception The exception occurred
      */
     private fun logError(
         exception: Exception
@@ -518,7 +530,7 @@ abstract class Requester (
     }
 
     /**
-     * Function to set the [RESPONSE_STATUS_KEY] to send when an error during the connection occurred
+     * Method to set the [RESPONSE_STATUS_KEY] to send when an error during the connection occurred
      *
      * No-any params required
      *
@@ -531,11 +543,11 @@ abstract class Requester (
     }
 
     /**
-     * Function to execute and manage the response of a request
+     * Method to execute and manage the response of a request
      *
-     * @param request: the request to execute
-     * @param onResponse: the action to execute when a response is returned from the backend
-     * @param onConnectionError: the action to execute if the request has been failed for a connection error
+     * @param request The request to execute
+     * @param onResponse The action to execute when a response is returned from the backend
+     * @param onConnectionError The action to execute if the request has been failed for a connection error
      */
     @Wrapper
     fun sendRequest(
@@ -552,12 +564,12 @@ abstract class Requester (
     }
 
     /**
-     * Function to execute and manage the response of a request
+     * Method to execute and manage the response of a request
      *
-     * @param request: the request to execute
-     * @param onSuccess: the action to execute if the request has been successful
-     * @param onFailure: the action to execute if the request has been failed
-     * @param onConnectionError: the action to execute if the request has been failed for a connection error
+     * @param request The request to execute
+     * @param onSuccess The action to execute if the request has been successful
+     * @param onFailure The action to execute if the request has been failed
+     * @param onConnectionError The action to execute if the request has been failed for a connection error
      */
     fun sendRequest(
         request: () -> JSONObject,
@@ -580,9 +592,42 @@ abstract class Requester (
     }
 
     /**
-     * Function to get whether the request has been successful or not
+     * Method to execute and manage the paginated response of a request
      *
-     * @param response: the response of the request
+     * @param request The request to execute
+     * @param supplier The supplier Method to instantiate a [T] item
+     * @param onSuccess The action to execute if the request has been successful
+     * @param onFailure The action to execute if the request has been failed
+     * @param onConnectionError The action to execute if the request has been failed for a connection error
+     *
+     * @param T generic type of the items in the page response
+     */
+    fun <T> sendPaginatedRequest(
+        request: () -> JSONObject,
+        supplier: (JSONObject) -> T,
+        onSuccess: (PaginatedResponse<T>) -> Unit,
+        onFailure: (JsonHelper) -> Unit,
+        onConnectionError: ((JsonHelper) -> Unit)? = null
+    ) {
+        sendRequest(
+            request = request,
+            onSuccess = { responsePage ->
+                onSuccess.invoke(
+                    PaginatedResponse(
+                        hPage = responsePage,
+                        supplier = supplier
+                    )
+                )
+            },
+            onFailure = onFailure,
+            onConnectionError = onConnectionError
+        )
+    }
+
+    /**
+     * Method to get whether the request has been successful or not
+     *
+     * @param response The response of the request
      *
      * @return whether the request has been successful or not as [StandardResponseCode]
      */
@@ -596,6 +641,65 @@ abstract class Requester (
             GENERIC_RESPONSE.name -> GENERIC_RESPONSE
             else -> FAILED
         }
+    }
+
+    /**
+     * Method to set the user credentials used to make the authenticated requests
+     *
+     * @param userId The user identifier to use
+     * @param userToken The user token to use
+     */
+    fun setUserCredentials(
+        userId: String?,
+        userToken: String?
+    ) {
+        this.userId = userId
+        this.userToken = userToken
+        if (userToken != null)
+            headers.addHeader(USER_TOKEN_KEY, userToken)
+    }
+
+    /**
+     * Method to change, during the runtime for example when the session changed, the host address to make the
+     * requests
+     *
+     * @param host The new host address to use
+     */
+    open fun changeHost(
+        host: String
+    ) {
+        this.host = host
+        if (enableCertificatesValidation)
+            mustValidateCertificates = host.startsWith("https")
+    }
+
+    /**
+     * Method to set programmatically timeout for the requests
+     *
+     * @param connectionTimeout Timeout for the requests
+     */
+    fun setConnectionTimeout(
+        connectionTimeout: Long
+    ) {
+        apiRequest.setConnectionTimeout(connectionTimeout)
+    }
+
+    /**
+     * Method to attach a new interceptor to the [Requester] to execute it when a request has been sent
+     *
+     * @param interceptor The interceptor action to attach
+     */
+    fun attachInterceptorOnRequest(
+        interceptor: () -> Unit
+    ) {
+        this.interceptorAction = interceptor
+    }
+
+    /**
+     * Method to execute the [interceptorAction] if it is specified by the [attachInterceptorOnRequest] method
+     */
+    protected fun interceptRequest() {
+        interceptorAction?.invoke()
     }
 
 }

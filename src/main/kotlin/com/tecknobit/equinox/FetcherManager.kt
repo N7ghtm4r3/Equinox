@@ -26,7 +26,7 @@ class FetcherManager(
         private lateinit var activeContext: Class<*>
 
         /**
-         * Function to set the current active context where the [refreshRoutine] is executing
+         * Method to set the current active context where the [refreshRoutine] is executing
          *
          * @param currentContext: the current active context to set
          */
@@ -37,7 +37,7 @@ class FetcherManager(
         }
 
         /**
-         * Function to get the current active context where the [refreshRoutine] is executing
+         * Method to get the current active context where the [refreshRoutine] is executing
          *
          * No-any params required
          */
@@ -59,7 +59,7 @@ class FetcherManager(
     private lateinit var lastRoutineExecuted: FetcherRoutine
 
     /**
-     * Function to get whether the [refreshRoutine] can start, so if there aren't other jobs that
+     * Method to get whether the [refreshRoutine] can start, so if there aren't other jobs that
      * routine is already executing
      *
      * No-any params required
@@ -71,7 +71,7 @@ class FetcherManager(
     }
 
     /**
-     * Function to suspend the current [refreshRoutine] to execute other requests to the backend,
+     * Method to suspend the current [refreshRoutine] to execute other requests to the backend,
      * the [isRefreshing] instance will be set as **false** to allow the restart of the routine after executing
      * the other requests
      *
@@ -83,7 +83,7 @@ class FetcherManager(
     }
 
     /**
-     * Function to restart the current [refreshRoutine] after other requests has been executed,
+     * Method to restart the current [refreshRoutine] after other requests has been executed,
      * the [isRefreshing] instance will be set as **true** to deny the restart of the routine after executing
      * the other requests
      *
@@ -101,7 +101,7 @@ class FetcherManager(
     }
 
     /**
-     * Function to execute the refresh routine designed
+     * Method to execute the refresh routine designed
      *
      * @param currentContext: the current context where the [refreshRoutine] is executing
      * @param routine: the refresh routine to execute
@@ -135,7 +135,7 @@ class FetcherManager(
     }
 
     /**
-     * Function to check if the [refreshRoutine] can continue to refresh or need to be stopped, this for
+     * Method to check if the [refreshRoutine] can continue to refresh or need to be stopped, this for
      * example when the UI displayed changes and the requests to refresh the UI data
      * also changes
      *
@@ -237,7 +237,7 @@ class FetcherManager(
     interface FetcherManagerWrapper {
 
         /**
-         * Function to get whether the [refreshRoutine] can start, so if there aren't other jobs that
+         * Method to get whether the [refreshRoutine] can start, so if there aren't other jobs that
          * routine is already executing
          *
          * No-any params required
@@ -247,7 +247,7 @@ class FetcherManager(
         fun canRefresherStart(): Boolean
 
         /**
-         * Function to conditionally suspend the current [refreshRoutine] to execute other requests to the backend,
+         * Method to conditionally suspend the current [refreshRoutine] to execute other requests to the backend,
          * the [isRefreshing] instance will be set as **false** to allow the restart of the routine after executing
          * the other requests
          *
@@ -261,7 +261,7 @@ class FetcherManager(
         }
 
         /**
-         * Function to suspend the current [refreshRoutine] to execute other requests to the backend,
+         * Method to suspend the current [refreshRoutine] to execute other requests to the backend,
          * the [isRefreshing] instance will be set as **false** to allow the restart of the routine after executing
          * the other requests
          *
@@ -270,7 +270,7 @@ class FetcherManager(
         fun suspendRefresher()
 
         /**
-         * Function to conditionally restart the current [refreshRoutine] after other requests has been executed,
+         * Method to conditionally restart the current [refreshRoutine] after other requests has been executed,
          * the [isRefreshing] instance will be set as **true** to deny the restart of the routine after executing
          * the other requests
          *
@@ -284,7 +284,7 @@ class FetcherManager(
         }
 
         /**
-         * Function to restart the current [refreshRoutine] after other requests has been executed,
+         * Method to restart the current [refreshRoutine] after other requests has been executed,
          * the [isRefreshing] instance will be set as **true** to deny the restart of the routine after executing
          * the other requests
          *
@@ -293,7 +293,7 @@ class FetcherManager(
         fun restartRefresher()
 
         /**
-         * Function to execute the refresh routine designed
+         * Method to execute the refresh routine designed
          *
          * @param currentContext: the current context where the [refreshRoutine] is executing
          * @param routine: the refresh routine to execute
@@ -308,7 +308,7 @@ class FetcherManager(
         )
 
         /**
-         * Function to check if the [refreshRoutine] can continue to refresh or need to be stopped, this for
+         * Method to check if the [refreshRoutine] can continue to refresh or need to be stopped, this for
          * example when the UI displayed changes and the requests to refresh the UI data
          * also changes
          *
@@ -321,7 +321,7 @@ class FetcherManager(
         ) : Boolean
 
         /**
-         * Function to set the current active context where the [refreshRoutine] is executing
+         * Method to set the current active context where the [refreshRoutine] is executing
          *
          * @param currentContext: the current active context to set
          */
@@ -341,7 +341,7 @@ class FetcherManager(
     interface ListFetcher {
 
         /**
-         * Function to refresh a list of item
+         * Method to refresh a list of item
          *
          * No-any params required
          */
@@ -357,7 +357,7 @@ class FetcherManager(
     interface ItemFetcher {
 
         /**
-         * Function to refresh a single item
+         * Method to refresh a single item
          *
          * No-any params required
          */

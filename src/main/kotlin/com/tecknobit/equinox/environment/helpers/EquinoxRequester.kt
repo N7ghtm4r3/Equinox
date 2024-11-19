@@ -20,13 +20,13 @@ import java.io.File
  * The **EquinoxRequester** class is useful to communicate with backend based on the **SpringBoot** framework with the
  * [EquinoxUser] requests pre-implemented
  *
- * @param host: the host address where is running the backend
- * @param userId: the user identifier
- * @param userToken: the user token
+ * @param host The host address where is running the backend
+ * @param userId The user identifier
+ * @param userToken The user token
  * @param debugMode: whether the requester is still in development and who is developing needs the log of the requester's
  * workflow, if it is enabled all the details of the requests sent and the errors occurred will be printed in the console
- * @param connectionTimeout: time to keep alive request then throw the connection refused error
- * @param connectionErrorMessage: the error to send when a connection error occurred
+ * @param connectionTimeout Time to keep alive request then throw the connection refused error
+ * @param connectionErrorMessage The error to send when a connection error occurred
  * @param enableCertificatesValidation: whether enable the **SSL** certificates validation, this for example
  * when the certificate is a self-signed certificate to by-pass
  *
@@ -53,25 +53,25 @@ abstract class EquinoxRequester(
 ) {
 
     /**
-     * Function to change, during the runtime for example when the session changed, the host address to make the
+     * Method to change, during the runtime for example when the session changed, the host address to make the
      * requests
      *
-     * @param host: the new host address to use
+     * @param host The new host address to use
      */
     override fun changeHost(host: String) {
         super.changeHost("$host$BASE_EQUINOX_ENDPOINT")
     }
 
     /**
-     * Function to execute the request to sign up in the Equinox's system
+     * Method to execute the request to sign up in the Equinox's system
      *
-     * @param serverSecret: the secret of the personal Equinox's backend
-     * @param name: the name of the user
-     * @param surname: the surname of the user
-     * @param email: the email of the user
-     * @param password: the password of the user
-     * @param language: the language of the user
-     * @param custom: the custom parameters added in a customization of the [EquinoxUser] to execute a customized sign-up
+     * @param serverSecret The secret of the personal Equinox's backend
+     * @param name The name of the user
+     * @param surname The surname of the user
+     * @param email The email of the user
+     * @param password The password of the user
+     * @param language The language of the user
+     * @param custom The custom parameters added in a customization of the [EquinoxUser] to execute a customized sign-up
      *
      * @return the result of the request as [JSONObject]
      *
@@ -102,7 +102,7 @@ abstract class EquinoxRequester(
     }
 
     /**
-     * Function to create the payload for the [signUp] request.
+     * Method to create the payload for the [signUp] request.
      *
      * #### Usage example:
      *
@@ -123,13 +123,13 @@ abstract class EquinoxRequester(
      * }
      * ```
      *
-     * @param serverSecret: the secret of the personal Equinox's backend
-     * @param name: the name of the user
-     * @param surname: the surname of the user
-     * @param email: the email of the user
-     * @param password: the password of the user
-     * @param language: the language of the user
-     * @param custom: the custom parameters added in a customization of the [EquinoxUser] to execute a customized sign-up
+     * @param serverSecret The secret of the personal Equinox's backend
+     * @param name The name of the user
+     * @param surname The surname of the user
+     * @param email The email of the user
+     * @param password The password of the user
+     * @param language The language of the user
+     * @param custom The custom parameters added in a customization of the [EquinoxUser] to execute a customized sign-up
      *
      * @return the payload for the request as [Params]
      *
@@ -160,11 +160,11 @@ abstract class EquinoxRequester(
     }
 
     /**
-     * Function to execute the request to sign in the Equinox's system
+     * Method to execute the request to sign in the Equinox's system
      *
-     * @param email: the email of the user
-     * @param password: the password of the user
-     * @param custom: the custom parameters added in a customization of the [EquinoxUser] to execute a customized sign-in
+     * @param email The email of the user
+     * @param password The password of the user
+     * @param custom The custom parameters added in a customization of the [EquinoxUser] to execute a customized sign-in
      *
      * @return the result of the request as [JSONObject]
      *
@@ -187,7 +187,7 @@ abstract class EquinoxRequester(
     }
 
     /**
-     * Function to create the payload for the [signIn] request.
+     * Method to create the payload for the [signIn] request.
      *
      * #### Usage example:
      *
@@ -200,9 +200,9 @@ abstract class EquinoxRequester(
      * }
      * ```
      *
-     * @param email: the email of the user
-     * @param password: the password of the user
-     * @param custom: the custom parameters added in a customization of the [EquinoxUser] to execute a customized sign-in
+     * @param email The email of the user
+     * @param password The password of the user
+     * @param custom The custom parameters added in a customization of the [EquinoxUser] to execute a customized sign-in
      *
      * @return the payload for the request as [Params]
      *
@@ -219,14 +219,16 @@ abstract class EquinoxRequester(
     }
 
     /**
-     * Function to execute the request to change the profile pic of the user
+     * Method to execute the request to change the profile pic of the user
      *
-     * @param profilePic: the profile pic chosen by the user to set as the new profile pic
+     * @param profilePic The profile pic chosen by the user to set as the new profile pic
      *
      * @return the result of the request as [JSONObject]
      */
     @RequestPath(path = "/api/v1/users/{id}/changeProfilePic", method = POST)
-    open fun changeProfilePic(profilePic: File): JSONObject {
+    open fun changeProfilePic(
+        profilePic: File
+    ): JSONObject {
         val body = MultipartBody.Builder().setType(MultipartBody.FORM)
             .addFormDataPart(
                 PROFILE_PIC_KEY,
@@ -241,9 +243,9 @@ abstract class EquinoxRequester(
     }
 
     /**
-     * Function to execute the request to change the email of the user
+     * Method to execute the request to change the email of the user
      *
-     * @param newEmail: the new email of the user
+     * @param newEmail The new email of the user
      *
      * @return the result of the request as [JSONObject]
      */
@@ -260,9 +262,9 @@ abstract class EquinoxRequester(
     }
 
     /**
-     * Function to execute the request to change the password of the user
+     * Method to execute the request to change the password of the user
      *
-     * @param newPassword: the new password of the user
+     * @param newPassword The new password of the user
      *
      * @return the result of the request as [JSONObject]
      */
@@ -279,9 +281,9 @@ abstract class EquinoxRequester(
     }
 
     /**
-     * Function to execute the request to change the language of the user
+     * Method to execute the request to change the language of the user
      *
-     * @param newLanguage: the new language of the user
+     * @param newLanguage The new language of the user
      *
      * @return the result of the request as [JSONObject]
      */
@@ -298,7 +300,7 @@ abstract class EquinoxRequester(
     }
 
     /**
-     * Function to execute the request to delete the account of the user
+     * Method to execute the request to delete the account of the user
      *
      * No-any params required
      *
@@ -312,24 +314,22 @@ abstract class EquinoxRequester(
     }
 
     /**
-     * Function to assemble the endpoint to make the request to the custom controllers
+     * Method to assemble the endpoint to make the request to the custom controllers
      *
-     * @param customEndpoint: the custom endpoint of the request, the main part of the complete url
-     * @param subEndpoint: the sub-endpoint path of the url
-     * @param query: the query to attach to the request
+     * @param customEndpoint The custom endpoint of the request, the main part of the complete url
+     * @param subEndpoint The sub-endpoint path of the url
      *
      * @return an endpoint to make the request as [String]
      */
     protected fun assembleCustomEndpointPath(
         customEndpoint: String,
-        subEndpoint: String = "",
-        query: String = ""
+        subEndpoint: String = ""
     ): String {
         val subPath = if (subEndpoint.isNotBlank())
             "/$subEndpoint"
         else
             subEndpoint
-        val requestUrl = "$customEndpoint$subPath$query"
+        val requestUrl = "$customEndpoint$subPath"
         return assembleUsersEndpointPath(
             endpoint = if (customEndpoint.startsWith("/"))
                 requestUrl
@@ -339,9 +339,9 @@ abstract class EquinoxRequester(
     }
 
     /**
-     * Function to assemble the endpoint to make the request to the users controller
+     * Method to assemble the endpoint to make the request to the users controller
      *
-     * @param endpoint: the endpoint path of the url
+     * @param endpoint The endpoint path of the url
      *
      * @return an endpoint to make the request as [String]
      */
