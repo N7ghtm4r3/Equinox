@@ -8,8 +8,8 @@ import com.tecknobit.apimanager.apis.ServerProtector.SERVER_SECRET_KEY
 import com.tecknobit.equinoxbackend.Requester
 import com.tecknobit.equinoxbackend.environment.helpers.EquinoxBaseEndpointsSet.*
 import com.tecknobit.equinoxbackend.environment.records.EquinoxUser.*
-import com.tecknobit.equinoxbackend.inputs.InputValidator.DEFAULT_LANGUAGE
-import com.tecknobit.equinoxbackend.inputs.InputValidator.isLanguageValid
+import com.tecknobit.equinoxcore.helpers.InputsValidator.Companion.DEFAULT_LANGUAGE
+import com.tecknobit.equinoxcore.helpers.InputsValidator.Companion.isLanguageValid
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.toRequestBody

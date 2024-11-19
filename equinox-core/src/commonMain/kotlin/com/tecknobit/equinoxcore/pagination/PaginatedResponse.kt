@@ -1,10 +1,7 @@
-package com.tecknobit.equinoxbackend.pagination
+package com.tecknobit.equinoxcore.pagination
 
-import com.fasterxml.jackson.annotation.JsonGetter
-import com.fasterxml.jackson.annotation.JsonIgnore
-import com.tecknobit.apimanager.formatters.JsonHelper
-import org.json.JSONObject
-import org.springframework.data.repository.CrudRepository
+import com.tecknobit.equinoxcore.helpers.JsonHelper
+import kotlinx.serialization.SerialName
 
 /**
  * The **PaginatedResponse** class is formatter for the responses of pagination requests providing easy access
@@ -16,10 +13,6 @@ import org.springframework.data.repository.CrudRepository
  *
  * @author N7ghtm4r3 - Tecknobit
  */
-@Deprecated(
-    message = "This class will be moved in the Equinox-Compose library in the next version",
-    level = DeprecationLevel.WARNING
-)
 class PaginatedResponse<T> {
 
     companion object {
@@ -84,33 +77,33 @@ class PaginatedResponse<T> {
     /**
      * **pageSize** -> the size of the maximum items for page
      */
-    @get:JsonGetter(PAGE_SIZE_KEY)
+    @SerialName(PAGE_SIZE_KEY)
     val pageSize: Int
 
     /**
      * **previousPage** -> the number of the previous page
      */
-    @get:JsonIgnore
+    @kotlinx.serialization.Transient
     val previousPage: Int
         get() = page - 1
 
     /**
      * **nextPage** -> the number of the next page
      */
-    @get:JsonIgnore
+    @kotlinx.serialization.Transient
     val nextPage: Int
         get() = page + 1
 
     /**
      * **isLastPage** -> whether the current [page] is the last one available
      */
-    @get:JsonGetter(IS_LAST_PAGE_KEY)
+    @SerialName(IS_LAST_PAGE_KEY)
     val isLastPage: Boolean
 
     /**
      * **dataSize** -> the size of the [data] retrieved for the current [page]
      */
-    @get:JsonGetter(DATA_SIZE_KEY)
+    @SerialName(DATA_SIZE_KEY)
     val dataSize: Int
         get() = data.size
 

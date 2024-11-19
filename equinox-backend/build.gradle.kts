@@ -31,6 +31,7 @@ dependencies {
     implementation("org.json:json:20240303")
     implementation("com.github.N7ghtm4r3:Mantis:1.0.0")
     implementation("commons-validator:commons-validator:1.7")
+    implementation(project(":equinox-core"))
 }
 
 mavenPublishing {
