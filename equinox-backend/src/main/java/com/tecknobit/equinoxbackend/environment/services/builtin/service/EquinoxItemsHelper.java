@@ -1,4 +1,4 @@
-package com.tecknobit.equinoxbackend.environment.helpers.services;
+package com.tecknobit.equinoxbackend.environment.services.builtin.service;
 
 import com.tecknobit.apimanager.annotations.Wrapper;
 import com.tecknobit.equinoxbackend.environment.records.EquinoxItem;
@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static com.tecknobit.equinoxbackend.environment.helpers.services.EquinoxItemsHelper.InsertCommand.INSERT_IGNORE_INTO;
+import static com.tecknobit.equinoxbackend.environment.services.builtin.service.EquinoxItemsHelper.InsertCommand.INSERT_IGNORE_INTO;
 
 /**
  * The {@code EquinoxItemsHelper} class is useful to manage all the {@link EquinoxItem} database operations

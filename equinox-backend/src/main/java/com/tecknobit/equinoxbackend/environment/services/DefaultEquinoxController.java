@@ -1,8 +1,9 @@
-package com.tecknobit.equinoxbackend.environment.controllers;
+package com.tecknobit.equinoxbackend.environment.services;
 
-import com.tecknobit.equinoxbackend.environment.helpers.services.EquinoxUsersHelper;
-import com.tecknobit.equinoxbackend.environment.helpers.services.repositories.EquinoxUsersRepository;
 import com.tecknobit.equinoxbackend.environment.records.EquinoxUser;
+import com.tecknobit.equinoxbackend.environment.services.builtin.controller.EquinoxController;
+import com.tecknobit.equinoxbackend.environment.services.users.repository.EquinoxUsersRepository;
+import com.tecknobit.equinoxbackend.environment.services.users.service.EquinoxUsersHelper;
 
 /**
  * The {@code DefaultEquinoxController} class is useful to give the base behavior of the <b>Equinox's controllers</b>

@@ -43,7 +43,7 @@ package other.packages
 
 ...
 
-import com.tecknobit.equinoxbackend.environment.controllers.EquinoxController;
+import com.tecknobit.equinoxbackend.environment.services.builtin.controller.EquinoxController;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
@@ -65,37 +65,37 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @SpringBootApplication
 public class Launcher {
 
-    public static void main(String[] args) {
+  public static void main(String[] args) {
 
-        // used to init the server protector to manage the server accesses
-        // if it is not done will be thrown a RuntimeException
-        // required if you need to use EquinoxUser or your own customization of that class
-        EquinoxController.initEquinoxEnvironment(
-                "the path where storage the server secret",
-                "the message to print when the server secret has been generated",
-                Launcher.class,
-                args,
-                customSubDirectoryOne, customSubDirectoryTwo, ...)
+    // used to init the server protector to manage the server accesses
+    // if it is not done will be thrown a RuntimeException
+    // required if you need to use EquinoxUser or your own customization of that class
+    EquinoxController.initEquinoxEnvironment(
+            "the path where storage the server secret",
+            "the message to print when the server secret has been generated",
+            Launcher.class,
+            args,
+            customSubDirectoryOne, customSubDirectoryTwo, ...)
 
-        // ... your code ...
+    // ... your code ...
 
-        // normally launch your SpringBoot's application
-        SpringApplication.run(Launcher.class, args);
+    // normally launch your SpringBoot's application
+    SpringApplication.run(Launcher.class, args);
 
-    }
+  }
 
-    // to check the current mapped endpoints you can use this method
-    // this also to check if any inherited controllers from EquinoxController you have created are mapped correctly
-    @EventListener
-    public void handleContextRefresh(ContextRefreshedEvent event) {
-        ApplicationContext applicationContext = event.getApplicationContext();
-        RequestMappingHandlerMapping requestMappingHandlerMapping = applicationContext
-                .getBean("requestMappingHandlerMapping", RequestMappingHandlerMapping.class);
-        Map<RequestMappingInfo, HandlerMethod> map = requestMappingHandlerMapping.getHandlerMethods();
-        System.out.println("----------- CURRENT ENDPOINTS MAPPED -----------");
-        map.forEach((key, value) -> System.out.println("| " + key + value));
-        System.out.println("--------------------------------------------");
-    }
+  // to check the current mapped endpoints you can use this method
+  // this also to check if any inherited controllers from EquinoxController you have created are mapped correctly
+  @EventListener
+  public void handleContextRefresh(ContextRefreshedEvent event) {
+    ApplicationContext applicationContext = event.getApplicationContext();
+    RequestMappingHandlerMapping requestMappingHandlerMapping = applicationContext
+            .getBean("requestMappingHandlerMapping", RequestMappingHandlerMapping.class);
+    Map<RequestMappingInfo, HandlerMethod> map = requestMappingHandlerMapping.getHandlerMethods();
+    System.out.println("----------- CURRENT ENDPOINTS MAPPED -----------");
+    map.forEach((key, value) -> System.out.println("| " + key + value));
+    System.out.println("--------------------------------------------");
+  }
 
 }
 ```
@@ -164,7 +164,7 @@ package other.packages
 
 ...
 
-import com.tecknobit.equinoxbackend.environment.controllers.EquinoxController;
+import com.tecknobit.equinoxbackend.environment.services.builtin.controller.EquinoxController;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
@@ -179,7 +179,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 // others basic  SpringBoot's annotations
 public class Launcher {
 
-    // Rest of the Launcher class ...
+  // Rest of the Launcher class ...
 
 }
 ```
@@ -247,7 +247,7 @@ package other.packages
 
 ...
 
-import com.tecknobit.equinoxbackend.environment.helpers.services.repositories.EquinoxUsersRepository;
+import com.tecknobit.equinoxbackend.environment.services.users.repository.EquinoxUsersRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.context.annotation.Primary;
 import org.springframework.data.jpa.repository.Modifying;
@@ -289,7 +289,7 @@ package other.packages
 
 ...
 
-import com.tecknobit.equinoxbackend.environment.helpers.services.EquinoxUsersHelper;
+import com.tecknobit.equinoxbackend.environment.services.users.service.EquinoxUsersHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
@@ -316,7 +316,7 @@ package other.packages
 
 ...
 
-import com.tecknobit.equinoxbackend.environment.controllers.EquinoxUsersController;
+import com.tecknobit.equinoxbackend.environment.services.users.controller.EquinoxUsersController;
 import org.json.JSONObject;
 import org.springframework.web.bind.annotation.*;
 
@@ -382,7 +382,7 @@ package other.packages
 
 ...
 
-import com.tecknobit.equinoxbackend.environment.helpers.services.EquinoxUsersHelper;
+import com.tecknobit.equinoxbackend.environment.services.users.service.EquinoxUsersHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
@@ -412,7 +412,7 @@ package other.packages
 
 ...
 
-import com.tecknobit.equinoxbackend.environment.controllers.EquinoxUsersController;
+import com.tecknobit.equinoxbackend.environment.services.users.controller.EquinoxUsersController;
 import org.json.JSONObject;
 import org.springframework.web.bind.annotation.*;
 
@@ -437,7 +437,7 @@ package other.packages
 
 ...
 
-import com.tecknobit.equinoxbackend.environment.controllers.EquinoxUsersController;
+import com.tecknobit.equinoxbackend.environment.services.users.controller.EquinoxUsersController;
 import org.json.JSONObject;
 import org.springframework.web.bind.annotation.*;
 
@@ -472,7 +472,7 @@ package other.packages
 
 ...
 
-import com.tecknobit.equinoxbackend.environment.helpers.services.EquinoxUsersHelper;
+import com.tecknobit.equinoxbackend.environment.services.users.service.EquinoxUsersHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
@@ -501,7 +501,7 @@ package other.packages
 
 ...
 
-import com.tecknobit.equinoxbackend.environment.controllers.EquinoxUsersController;
+import com.tecknobit.equinoxbackend.environment.services.users.controller.EquinoxUsersController;
 import org.json.JSONObject;
 import org.springframework.web.bind.annotation.*;
 
@@ -526,7 +526,7 @@ package other.packages
 
 ...
 
-import com.tecknobit.equinoxbackend.environment.controllers.EquinoxUsersController;
+import com.tecknobit.equinoxbackend.environment.services.users.controller.EquinoxUsersController;
 import org.json.JSONObject;
 import org.springframework.web.bind.annotation.*;
 
@@ -556,7 +556,7 @@ package other.packages
 
 ...
 
-import com.tecknobit.equinoxbackend.environment.controllers.EquinoxUsersController;
+import com.tecknobit.equinoxbackend.environment.services.users.controller.EquinoxUsersController;
 import org.json.JSONObject;
 import org.springframework.web.bind.annotation.*;
 

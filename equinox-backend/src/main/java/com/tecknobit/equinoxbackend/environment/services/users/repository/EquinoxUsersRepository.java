@@ -1,4 +1,4 @@
-package com.tecknobit.equinoxbackend.environment.helpers.services.repositories;
+package com.tecknobit.equinoxbackend.environment.services.users.repository;
 
 import com.tecknobit.equinoxbackend.environment.records.EquinoxUser;
 import jakarta.transaction.Transactional;

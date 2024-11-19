@@ -1,8 +1,9 @@
-package com.tecknobit.equinoxbackend.environment.helpers.services;
+package com.tecknobit.equinoxbackend.environment.services.users.service;
 
 import com.tecknobit.apimanager.apis.APIRequest;
-import com.tecknobit.equinoxbackend.environment.helpers.services.repositories.EquinoxUsersRepository;
 import com.tecknobit.equinoxbackend.environment.records.EquinoxUser;
+import com.tecknobit.equinoxbackend.environment.services.builtin.service.EquinoxItemsHelper;
+import com.tecknobit.equinoxbackend.environment.services.users.repository.EquinoxUsersRepository;
 import com.tecknobit.equinoxbackend.resourcesutils.ResourcesManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -176,6 +177,16 @@ public class EquinoxUsersHelper<T extends EquinoxUser, R extends EquinoxUsersRep
      */
     protected boolean validateSignIn(T user, String password, Object... custom) throws NoSuchAlgorithmException {
         return user != null && user.getPassword().equals(hash(password));
+    }
+
+    /**
+     * Method to get whether the user is present in the database
+     *
+     * @param userId The identifier of the user to check
+     * @return whether the user exists as {@code boolean}
+     */
+    public boolean userExists(String userId) {
+        return usersRepository.findById(userId).isPresent();
     }
 
     /**

@@ -1,12 +1,12 @@
-package com.tecknobit.equinoxbackend.environment.controllers;
+package com.tecknobit.equinoxbackend.environment.services.builtin.controller;
 
 import com.tecknobit.apimanager.apis.ServerProtector;
 import com.tecknobit.apimanager.apis.sockets.SocketManager.StandardResponseCode;
 import com.tecknobit.apimanager.formatters.JsonHelper;
 import com.tecknobit.equinoxbackend.configurationsutils.ConfigsGenerator;
-import com.tecknobit.equinoxbackend.environment.helpers.services.EquinoxUsersHelper;
-import com.tecknobit.equinoxbackend.environment.helpers.services.repositories.EquinoxUsersRepository;
 import com.tecknobit.equinoxbackend.environment.records.EquinoxUser;
+import com.tecknobit.equinoxbackend.environment.services.users.repository.EquinoxUsersRepository;
+import com.tecknobit.equinoxbackend.environment.services.users.service.EquinoxUsersHelper;
 import com.tecknobit.equinoxbackend.resourcesutils.ResourcesProvider;
 import com.tecknobit.mantis.Mantis;
 import jakarta.annotation.PostConstruct;
@@ -24,18 +24,18 @@ import static com.tecknobit.apimanager.apis.sockets.SocketManager.StandardRespon
 import static com.tecknobit.equinoxbackend.Requester.RESPONSE_DATA_KEY;
 import static com.tecknobit.equinoxbackend.Requester.RESPONSE_STATUS_KEY;
 import static com.tecknobit.equinoxbackend.environment.helpers.EquinoxBaseEndpointsSet.BASE_EQUINOX_ENDPOINT;
-import static com.tecknobit.equinoxbackend.inputs.InputValidator.DEFAULT_LANGUAGE;
 import static com.tecknobit.equinoxbackend.resourcesutils.ResourcesManager.PROFILES_DIRECTORY;
 import static com.tecknobit.equinoxbackend.resourcesutils.ResourcesManager.RESOURCES_KEY;
+import static com.tecknobit.equinoxcore.helpers.InputsValidator.DEFAULT_LANGUAGE;
 
 /**
  * The {@code EquinoxController} class is useful to give the base behavior of the <b>Equinox's controllers</b>
  *
  * @author N7ghtm4r3 - Tecknobit
  *
- * @param <T>: the type of the {@link EquinoxUser} used in the system, is generic to avoid manual casts if it has been customized
- * @param <R>: the type of the {@link EquinoxUsersRepository} used in the system, is generic to avoid manual casts if it has been customized
- * @param <H>: the type of the {@link EquinoxUsersHelper} used in the system, is generic to avoid manual casts if it has been customized
+ * @param <T> The type of the {@link EquinoxUser} used in the system, is generic to avoid manual casts if it has been customized
+ * @param <R> The type of the {@link EquinoxUsersRepository} used in the system, is generic to avoid manual casts if it has been customized
+ * @param <H> The type of the {@link EquinoxUsersHelper} used in the system, is generic to avoid manual casts if it has been customized
  * @since 1.0.1
  */
 @RestController
@@ -135,7 +135,7 @@ abstract public class EquinoxController<T extends EquinoxUser, R extends Equinox
     /**
      * Method to load the {@link #jsonHelper}
      *
-     * @param payload: the payload received with the request
+     * @param payload The payload received with the request
      * @param <V>      generic type for the values in the payload
      */
     protected <V> void loadJsonHelper(Map<String, V> payload) {
@@ -145,7 +145,7 @@ abstract public class EquinoxController<T extends EquinoxUser, R extends Equinox
     /**
      * Method to load the {@link #jsonHelper}
      *
-     * @param payload: the payload received with the request
+     * @param payload The payload received with the request
      */
     protected void loadJsonHelper(String payload) {
         jsonHelper.setJSONObjectSource(payload);
@@ -156,7 +156,7 @@ abstract public class EquinoxController<T extends EquinoxUser, R extends Equinox
      * If the user is authorized the {@link #me} instance is loaded
      *
      * @param id:    the identifier of the user
-     * @param token: the token of the user
+     * @param token The token of the user
      * @return whether the user is an authorized user as boolean
      */
     protected boolean isMe(String id, String token) {
@@ -184,7 +184,7 @@ abstract public class EquinoxController<T extends EquinoxUser, R extends Equinox
     /**
      * Method to get the payload for a successful response
      *
-     * @param value: the value to send as response
+     * @param value The value to send as response
      * @param <V>    generic type for the values in the payload
      * @return the payload for a successful response as {@link HashMap} of {@link V}
      */
@@ -198,7 +198,7 @@ abstract public class EquinoxController<T extends EquinoxUser, R extends Equinox
     /**
      * Method to get the payload for a successful response
      *
-     * @param message: the message to send as response
+     * @param message The message to send as response
      * @return the payload for a successful response as {@link String}
      */
     protected String successResponse(JSONObject message) {
@@ -208,9 +208,19 @@ abstract public class EquinoxController<T extends EquinoxUser, R extends Equinox
     }
 
     /**
+     * Method to get the payload for a successful response
+     *
+     * @param message The message to send as response
+     * @return the payload for a successful response as {@link String}
+     */
+    protected String successResponse(String message) {
+        return plainResponse(SUCCESSFUL, mantis.getResource(message));
+    }
+
+    /**
      * Method to get the payload for a failed response
      *
-     * @param error: the error message to send as response
+     * @param error The error message to send as response
      * @return the payload for a failed response as {@link String}
      */
     protected String failedResponse(String error) {
@@ -220,8 +230,8 @@ abstract public class EquinoxController<T extends EquinoxUser, R extends Equinox
     /**
      * Method to assemble the payload for a response
      *
-     * @param responseCode: the response code value
-     * @param message:      the message to send as response
+     * @param responseCode The response code value
+     * @param message The message to send as response
      * @return the payload for a response as {@link String}
      */
     private String plainResponse(StandardResponseCode responseCode, String message) {
@@ -243,13 +253,13 @@ abstract public class EquinoxController<T extends EquinoxUser, R extends Equinox
     /**
      * Method to init the {@link #serverProtector} and create the resources directories correctly
      *
-     * @param storagePath: instance to manage the storage of the server secret
-     * @param saveMessage: the message to print when the server secret has been generated,
+     * @param storagePath Instance to manage the storage of the server secret
+     * @param saveMessage The message to print when the server secret has been generated,
      *                     the start of the message is <b>"Note: is not an error, but is an alert!
      *                     Please you should safely save: server_secret_token_generated"</b>
-     * @param context: the launcher {@link Class} where this method has been invoked
-     * @param args: custom arguments to share with {@link SpringApplication} and with the {@link #serverProtector}
-     * @param customSubDirectories: the custom subdirectories of the user
+     * @param context The launcher {@link Class} where this method has been invoked
+     * @param args Custom arguments to share with {@link SpringApplication} and with the {@link #serverProtector}
+     * @param customSubDirectories The custom subdirectories of the user
      *
      * @apiNote the arguments scheme:
      * <ul>
@@ -294,8 +304,8 @@ abstract public class EquinoxController<T extends EquinoxUser, R extends Equinox
      * Method to configure the resources folders required by the Equinox's environment and the beans classes to
      * correctly serve the static resources and set the CORS policy
      *
-     * @param context: the launcher {@link Class} where this method has been invoked
-     * @param customSubDirectories: the custom subdirectories of the user
+     * @param context The launcher {@link Class} where this method has been invoked
+     * @param customSubDirectories The custom subdirectories of the user
      * @throws IOException when an error during the creation of the files occurred
      */
     private static void setBasicResourcesConfiguration(Class<?> context, String... customSubDirectories) throws IOException {

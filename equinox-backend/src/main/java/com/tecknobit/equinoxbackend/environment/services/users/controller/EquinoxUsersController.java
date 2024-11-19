@@ -1,9 +1,10 @@
-package com.tecknobit.equinoxbackend.environment.controllers;
+package com.tecknobit.equinoxbackend.environment.services.users.controller;
 
 import com.tecknobit.apimanager.annotations.RequestPath;
-import com.tecknobit.equinoxbackend.environment.helpers.services.EquinoxUsersHelper;
-import com.tecknobit.equinoxbackend.environment.helpers.services.repositories.EquinoxUsersRepository;
 import com.tecknobit.equinoxbackend.environment.records.EquinoxUser;
+import com.tecknobit.equinoxbackend.environment.services.builtin.controller.EquinoxController;
+import com.tecknobit.equinoxbackend.environment.services.users.repository.EquinoxUsersRepository;
+import com.tecknobit.equinoxbackend.environment.services.users.service.EquinoxUsersHelper;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -15,7 +16,7 @@ import static com.tecknobit.apimanager.apis.APIRequest.RequestMethod.*;
 import static com.tecknobit.apimanager.apis.ServerProtector.SERVER_SECRET_KEY;
 import static com.tecknobit.equinoxbackend.environment.helpers.EquinoxBaseEndpointsSet.*;
 import static com.tecknobit.equinoxbackend.environment.records.EquinoxUser.*;
-import static com.tecknobit.equinoxbackend.inputs.InputValidator.*;
+import static com.tecknobit.equinoxcore.helpers.InputsValidator.*;
 
 /**
  * The {@code EquinoxUsersController} class is useful to manage all the user operations
@@ -151,15 +152,15 @@ public class EquinoxUsersController<T extends EquinoxUser, R extends EquinoxUser
      */
     protected String validateSignUp(String name, String surname, String email, String password, String language,
                                     Object... custom) {
-        if (!isNameValid(name))
+        if (!Companion.isNameValid(name))
             return WRONG_NAME_MESSAGE;
-        if (!isSurnameValid(surname))
+        if (!Companion.isSurnameValid(surname))
             return WRONG_SURNAME_MESSAGE;
-        if (!isEmailValid(email))
+        if (!Companion.isEmailValid(email))
             return WRONG_EMAIL_MESSAGE;
-        if (!isPasswordValid(password))
+        if (!Companion.isPasswordValid(password))
             return WRONG_PASSWORD_MESSAGE;
-        if (!isLanguageValid(language))
+        if (!Companion.isLanguageValid(language))
             return WRONG_LANGUAGE_MESSAGE;
         return null;
     }
@@ -253,11 +254,11 @@ public class EquinoxUsersController<T extends EquinoxUser, R extends EquinoxUser
      * </pre>
      */
     protected String validateSignIn(String email, String password, String language, Object... custom) {
-        if (!isEmailValid(email))
+        if (!Companion.isEmailValid(email))
             return WRONG_EMAIL_MESSAGE;
-        if (!isPasswordValid(password))
+        if (!Companion.isPasswordValid(password))
             return WRONG_PASSWORD_MESSAGE;
-        if (!isLanguageValid(language))
+        if (!Companion.isLanguageValid(language))
             return WRONG_LANGUAGE_MESSAGE;
         return null;
     }
@@ -358,7 +359,7 @@ public class EquinoxUsersController<T extends EquinoxUser, R extends EquinoxUser
         if (isMe(id, token)) {
             loadJsonHelper(payload);
             String email = jsonHelper.getString(EMAIL_KEY);
-            if (isEmailValid(email)) {
+            if (Companion.isEmailValid(email)) {
                 try {
                     usersHelper.changeEmail(email, id);
                     return successResponse();
@@ -401,7 +402,7 @@ public class EquinoxUsersController<T extends EquinoxUser, R extends EquinoxUser
         if (isMe(id, token)) {
             loadJsonHelper(payload);
             String password = jsonHelper.getString(PASSWORD_KEY);
-            if (isPasswordValid(password)) {
+            if (Companion.isPasswordValid(password)) {
                 try {
                     usersHelper.changePassword(password, id);
                     return successResponse();
@@ -444,7 +445,7 @@ public class EquinoxUsersController<T extends EquinoxUser, R extends EquinoxUser
         if (isMe(id, token)) {
             loadJsonHelper(payload);
             String language = jsonHelper.getString(LANGUAGE_KEY);
-            if (isLanguageValid(language)) {
+            if (Companion.isLanguageValid(language)) {
                 try {
                     usersHelper.changeLanguage(language, id);
                     return successResponse();
