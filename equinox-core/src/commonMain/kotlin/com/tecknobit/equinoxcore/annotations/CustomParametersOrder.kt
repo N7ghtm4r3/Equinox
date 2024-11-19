@@ -12,8 +12,10 @@ import kotlin.annotation.AnnotationRetention.SOURCE
  */
 @Retention(SOURCE)
 annotation class CustomParametersOrder(
+
     /**
      * The order of the custom parameters of a user customization
      */
-    val order: Array<String>
+    vararg val order: String
+
 )

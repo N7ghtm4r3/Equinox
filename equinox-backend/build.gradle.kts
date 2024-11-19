@@ -6,7 +6,7 @@ plugins {
     id("java")
     kotlin("jvm")
     id("org.springframework.boot") version "3.2.3"
-    id("com.vanniktech.maven.publish") version "0.29.0"
+    id("com.vanniktech.maven.publish") version "0.30.0"
 }
 
 apply(plugin = "io.spring.dependency-management")

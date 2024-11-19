@@ -1,26 +1,76 @@
+
 import com.vanniktech.maven.publish.JavadocJar
-import com.vanniktech.maven.publish.KotlinJvm
+import com.vanniktech.maven.publish.KotlinMultiplatform
 import com.vanniktech.maven.publish.SonatypeHost
+import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import org.jetbrains.kotlin.gradle.targets.js.dsl.ExperimentalWasmDsl
 
 plugins {
-    kotlin("jvm")
-    id("com.vanniktech.maven.publish") version "0.29.0"
+    kotlin("multiplatform")
+    id("com.android.library") version "8.2.2"
+    id("com.vanniktech.maven.publish") version "0.30.0"
 }
 
 group = "com.tecknobit.equinox"
 version = "1.0.5"
 
 repositories {
+    google()
     mavenCentral()
 }
 
-dependencies {
+kotlin {
+    jvm {
+        compilations.all {
+            @OptIn(ExperimentalKotlinGradlePluginApi::class)
+            this@jvm.compilerOptions {
+                jvmTarget.set(JvmTarget.JVM_18)
+            }
+        }
+    }
+    androidTarget {
+        publishLibraryVariants("release")
+        @OptIn(ExperimentalKotlinGradlePluginApi::class)
+        compilerOptions {
+            jvmTarget.set(JvmTarget.JVM_18)
+        }
+    }
+    listOf(
+        iosX64(),
+        iosArm64(),
+        iosSimulatorArm64()
+    ).forEach { iosTarget ->
+        iosTarget.binaries.framework {
+            baseName = "Equinox-Core"
+            isStatic = true
+        }
+    }
+    @OptIn(ExperimentalWasmDsl::class)
+    wasmJs {
+        binaries.executable()
+        browser {
+            webpackTask {
+                dependencies {
+                }
+            }
+        }
+    }
 
+    sourceSets {
+
+        val commonMain by getting {
+
+        }
+
+    }
+
+    jvmToolchain(18)
 }
 
 mavenPublishing {
     configure(
-        platform = KotlinJvm(
+        platform = KotlinMultiplatform(
             javadocJar = JavadocJar.Dokka("dokkaHtml"),
             sourcesJar = true
         )
@@ -58,7 +108,10 @@ mavenPublishing {
     signAllPublications()
 }
 
-kotlin {
-    jvmToolchain(18)
+android {
+    namespace = "com.tecknobit.equinoxcore"
+    compileSdk = 34
+    defaultConfig {
+        minSdk = 24
+    }
 }
-

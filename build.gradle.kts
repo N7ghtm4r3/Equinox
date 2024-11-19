@@ -7,7 +7,8 @@ import org.jetbrains.dokka.gradle.DokkaTaskPartial
 plugins {
     kotlin("jvm")
     id("org.jetbrains.dokka") version "1.9.20"
-    id("com.vanniktech.maven.publish") version "0.29.0"
+    id("com.vanniktech.maven.publish") version "0.30.0"
+    id("com.android.library") version "8.2.2" apply false
 }
 
 buildscript {
