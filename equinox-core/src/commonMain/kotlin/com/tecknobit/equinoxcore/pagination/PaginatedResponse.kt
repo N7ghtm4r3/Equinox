@@ -2,6 +2,7 @@ package com.tecknobit.equinoxcore.pagination
 
 import com.tecknobit.equinoxcore.helpers.JsonHelper
 import kotlinx.serialization.SerialName
+import kotlinx.serialization.json.JsonObject
 
 /**
  * The **PaginatedResponse** class is formatter for the responses of pagination requests providing easy access
@@ -113,22 +114,6 @@ class PaginatedResponse<T> {
      * @param data The data retrieved by the request
      * @param page The number of the page requested
      * @param pageSize The size of the maximum items for page
-     * @param repository The [CrudRepository] used to retrieve the data from the database, it is used to automatically
-     * detect if the [page] is the last one available
-     */
-    constructor(data: List<T>, page: Int, pageSize: Int, repository: CrudRepository<*, *>) : this(
-        data,
-        page,
-        pageSize,
-        repository.count()
-    )
-
-    /**
-     * Constructor to init the [PaginatedResponse]
-     *
-     * @param data The data retrieved by the request
-     * @param page The number of the page requested
-     * @param pageSize The size of the maximum items for page
      * @param totalDataCount The total amount of data available, it is used to automatically
      * detect if the [page] is the last one available
      */
@@ -165,9 +150,9 @@ class PaginatedResponse<T> {
      */
     constructor(
         hPage: JsonHelper,
-        supplier: (JSONObject) -> T
+        supplier: (JsonObject) -> T,
     ) {
-        val jData: ArrayList<JSONObject> = hPage.fetchList(DATA_KEY)
+        val jData: ArrayList<JsonObject> = hPage.fetchList(DATA_KEY)
         val data = arrayListOf<T>()
         jData.forEach { item ->
             val instantiatedItem = supplier.invoke(item)

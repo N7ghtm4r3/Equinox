@@ -7,9 +7,11 @@ import com.tecknobit.apimanager.apis.sockets.SocketManager.StandardResponseCode
 import com.tecknobit.apimanager.apis.sockets.SocketManager.StandardResponseCode.*
 import com.tecknobit.apimanager.formatters.JsonHelper
 import com.tecknobit.apimanager.formatters.TimeFormatter
-import com.tecknobit.equinoxbackend.pagination.PaginatedResponse
-import com.tecknobit.equinoxbackend.pagination.PaginatedResponse.Companion.PAGE_KEY
-import com.tecknobit.equinoxbackend.pagination.PaginatedResponse.Companion.PAGE_SIZE_KEY
+import com.tecknobit.equinoxcore.pagination.PaginatedResponse
+import com.tecknobit.equinoxcore.pagination.PaginatedResponse.Companion.DATA_KEY
+import com.tecknobit.equinoxcore.pagination.PaginatedResponse.Companion.IS_LAST_PAGE_KEY
+import com.tecknobit.equinoxcore.pagination.PaginatedResponse.Companion.PAGE_KEY
+import com.tecknobit.equinoxcore.pagination.PaginatedResponse.Companion.PAGE_SIZE_KEY
 import kotlinx.coroutines.async
 import kotlinx.coroutines.runBlocking
 import okhttp3.Headers.Companion.toHeaders
@@ -615,11 +617,20 @@ abstract class Requester (
     ) {
         sendRequest(
             request = request,
-            onSuccess = { responsePage ->
+            onSuccess = { hPage ->
+                // TODO: WHEN MIGRATED TO EQUINOX-COMPOSE USE DIRECTLY THE CORRECT PaginatedResponse CONSTRUCTOR TO INIT IT
+                val jData: ArrayList<JSONObject> = hPage.fetchList(DATA_KEY)
+                val data = arrayListOf<T>()
+                jData.forEach { item ->
+                    val instantiatedItem = supplier.invoke(item)
+                    data.add(instantiatedItem)
+                }
                 onSuccess.invoke(
                     PaginatedResponse(
-                        hPage = responsePage,
-                        supplier = supplier
+                        data = data,
+                        page = hPage.getInt(PAGE_KEY),
+                        pageSize = hPage.getInt(PAGE_SIZE_KEY),
+                        isLastPage = hPage.getBoolean(IS_LAST_PAGE_KEY)
                     )
                 )
             },
