@@ -1,12 +1,13 @@
 package com.tecknobit.equinoxbackend.environment.records;
 
-import com.tecknobit.apimanager.annotations.Structure;
 import com.tecknobit.apimanager.formatters.JsonHelper;
+import com.tecknobit.equinoxcore.annotations.RequiresSuperCall;
+import com.tecknobit.equinoxcore.annotations.Structure;
 
 import static com.tecknobit.equinoxbackend.environment.records.EquinoxItem.IDENTIFIER_KEY;
 import static com.tecknobit.equinoxbackend.environment.records.EquinoxUser.*;
 import static com.tecknobit.equinoxbackend.environment.records.EquinoxUser.ApplicationTheme.Auto;
-import static com.tecknobit.equinoxbackend.inputs.InputValidator.HOST_ADDRESS_KEY;
+import static com.tecknobit.equinoxcore.helpers.InputsValidator.HOST_ADDRESS_KEY;
 
 /**
  * The {@code EquinoxLocalUser} class is useful to represent a user in the client application
@@ -69,9 +70,10 @@ public abstract class EquinoxLocalUser {
 
     /**
      * Method to init the local user session <br>
-     * <p>
+     *
      * No-any params required
      */
+    @RequiresSuperCall
     protected void initLocalUser() {
         hostAddress = getHostAddress();
         userId = getPreference(IDENTIFIER_KEY);
@@ -104,6 +106,7 @@ public abstract class EquinoxLocalUser {
      *              private String currency;
      *
      *              @Override
+     *              @RequiresSuperCall
      *              @CustomParametersOrder(order = {"currency"})
      *              public void insertNewUser(String hostAddress, String name, String surname, String email, String password,
      *                                      String language, JsonHelper hResponse, Object... custom) {
@@ -126,6 +129,7 @@ public abstract class EquinoxLocalUser {
      *     }
      * </pre>
      */
+    @RequiresSuperCall
     public void insertNewUser(String hostAddress, String name, String surname, String email, String password,
                               String language, JsonHelper hResponse, Object... custom) {
         setHostAddress(hostAddress);

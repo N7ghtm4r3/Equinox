@@ -1,63 +1,44 @@
 package com.tecknobit.equinoxcore.annotations
 
-// TODO: TO WORK ON 
-/*
- * `"@RequestPath"` annotation is applied to those methods offered by libraries that allow to make a request. <br></br>
- * This annotation is useful to make the request path and its possible path parameters more readable
- * <pre>
- * `//with no parameters
- * = GET, path = "https://play.google.com/store/apps/developer")
- * public void sendRequest() {
- * APIRequest apiRequest = new APIRequest();
- * apiRequest.sendAPIRequest("https://play.google.com/store/apps/developer", GET);
- * }
+import com.tecknobit.equinoxcore.network.RequestMethod
+
+/**
+ * Annotation that defines the request path and its parameters for API requests.
  *
- * //with path parameters
- * = GET, path = "https://play.google.com/store/apps/developer?{id}", path_parameters = "id")
- * public void sendRequest() {
- * APIRequest apiRequest = new APIRequest();
- * apiRequest.sendAPIRequest("https://play.google.com/store/apps/developer?id=Tecknobit", GET);
- * }
-` *
-</pre> *
+ * The `@RequestPath` annotation is used to make the request path, path parameters, query parameters,
+ * and body parameters more readable and easier to manage in API request methods. It supports multiple
+ * types of parameters including path, query, and body parameters, helping to organize the API request
+ * construction in a more structured and understandable way.
  *
  * @author N7ghtm4r3 - Tecknobit
- *
-@Retention(AnnotationRetention.BINARY)
-@Target(AnnotationTarget.FUNCTION, AnnotationTarget.PROPERTY_GETTER, AnnotationTarget.PROPERTY_SETTER)
+ */
+@Retention(AnnotationRetention.SOURCE)
+@Target(AnnotationTarget.FUNCTION)
 annotation class RequestPath(
 
     /**
-     * `method` of the request
+     * The HTTP method for the request
      */
     val method: RequestMethod,
 
     /**
-     * `path` of the request
+     * The base URL or path of the request endpoint
      */
     val path: String = "",
 
     /**
-     * `path_parameters` path parameters of the request -> endpoint/{parameter}
+     * A comma-separated list of path parameter names for dynamic segments in the URL
      */
     val pathParameters: String = "",
 
     /**
-     * `query_parameters` query parameters of the request -> endpoint?{parameter}&{parameter1}
+     * A list of query parameters for the request, formatted as `key_parameter_one, key_parameter_two`
      */
-    vararg val query: String,
+    val queryParameters: String = "",
 
     /**
-     * `body_parameters` body parameters of the request ->
-     * <pre>
-     * `{
-     * parameter : parameter value,
-     * parameter1 : parameter1 value
-     * }
-    ` *
-    </pre> *
+     * The body parameters of the request formatted as `key_parameter_one, key_parameter_two`
      */
-    val bodyParameters: String = ""
+    val bodyParameters: String = "",
 
-)
-*/
+    )

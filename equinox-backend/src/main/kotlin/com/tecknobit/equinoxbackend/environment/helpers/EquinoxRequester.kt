@@ -1,15 +1,15 @@
 package com.tecknobit.equinoxbackend.environment.helpers
 
-import com.tecknobit.apimanager.annotations.RequestPath
 import com.tecknobit.apimanager.apis.APIRequest.DEFAULT_REQUEST_TIMEOUT
 import com.tecknobit.apimanager.apis.APIRequest.Params
-import com.tecknobit.apimanager.apis.APIRequest.RequestMethod.*
 import com.tecknobit.apimanager.apis.ServerProtector.SERVER_SECRET_KEY
 import com.tecknobit.equinoxbackend.Requester
 import com.tecknobit.equinoxbackend.environment.helpers.EquinoxBaseEndpointsSet.*
 import com.tecknobit.equinoxbackend.environment.records.EquinoxUser.*
+import com.tecknobit.equinoxcore.annotations.RequestPath
 import com.tecknobit.equinoxcore.helpers.InputsValidator.Companion.DEFAULT_LANGUAGE
 import com.tecknobit.equinoxcore.helpers.InputsValidator.Companion.isLanguageValid
+import com.tecknobit.equinoxcore.network.RequestMethod.*
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.toRequestBody

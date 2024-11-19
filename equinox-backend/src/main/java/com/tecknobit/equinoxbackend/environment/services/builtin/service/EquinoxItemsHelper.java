@@ -2,6 +2,7 @@ package com.tecknobit.equinoxbackend.environment.services.builtin.service;
 
 import com.tecknobit.apimanager.annotations.Wrapper;
 import com.tecknobit.equinoxbackend.environment.records.EquinoxItem;
+import com.tecknobit.equinoxcore.annotations.RequiresSuperCall;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.Query;
@@ -199,6 +200,7 @@ public abstract class EquinoxItemsHelper<T extends EquinoxItem> {
      * @param updatedData: the list of the updated data to synchronize
      * @param batchQuery:  the manager of the batch query to execute
      */
+    @RequiresSuperCall
     protected <V> void syncBatch(SyncBatchContainer container, String table, String targetId, List<V> updatedData,
                                  BatchQuery batchQuery) {
         String[] columns = container.getColumns();

@@ -6,12 +6,8 @@ import com.tecknobit.apimanager.annotations.Returner;
 import jakarta.persistence.*;
 import org.json.JSONObject;
 
-import java.util.Locale;
-
 import static com.tecknobit.equinoxbackend.environment.records.EquinoxUser.ApplicationTheme.Auto;
 import static com.tecknobit.equinoxbackend.environment.records.EquinoxUser.USERS_KEY;
-import static com.tecknobit.equinoxbackend.inputs.InputValidator.DEFAULT_LANGUAGE;
-import static com.tecknobit.equinoxbackend.inputs.InputValidator.LANGUAGES_SUPPORTED;
 
 /**
  * The {@code EquinoxUser} class is useful to represent a base Equinox's system user
@@ -360,20 +356,6 @@ public class EquinoxUser extends EquinoxItem {
         if (jUser != null)
             return new EquinoxUser(jUser);
         return null;
-    }
-
-    /**
-     * Method to get a supported language for the user <br>
-     * <p>
-     * No-any params required
-     *
-     * @return a supported language for the user as {@link String}
-     */
-    public static String getValidUserLanguage() {
-        String currentLanguageTag = Locale.getDefault().toLanguageTag().substring(0, 2);
-        if (LANGUAGES_SUPPORTED.get(currentLanguageTag) == null)
-            return DEFAULT_LANGUAGE;
-        return currentLanguageTag;
     }
 
 }
