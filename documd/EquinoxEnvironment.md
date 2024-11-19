@@ -39,9 +39,11 @@ To correctly launch the base environment _out-of-the-box_ you can simply follow 
 representing the main of a  **SpringApplication**:
 
 ```java
-package other.packages...
+package other.packages
 
-import com.tecknobit.equinox.environment.controllers.EquinoxController;
+...
+
+import com.tecknobit.equinoxbackend.environment.controllers.EquinoxController;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
@@ -67,7 +69,7 @@ public class Launcher {
 
         // used to init the server protector to manage the server accesses
         // if it is not done will be thrown a RuntimeException
-      // required if you need to use EquinoxUser or your own customization of that class
+        // required if you need to use EquinoxUser or your own customization of that class
         EquinoxController.initEquinoxEnvironment(
                 "the path where storage the server secret",
                 "the message to print when the server secret has been generated",
@@ -94,7 +96,7 @@ public class Launcher {
         map.forEach((key, value) -> System.out.println("| " + key + value));
         System.out.println("--------------------------------------------");
     }
-    
+
 }
 ```
 
@@ -162,7 +164,7 @@ package other.packages
 
 ...
 
-import com.tecknobit.equinox.environment.controllers.EquinoxController;
+import com.tecknobit.equinoxbackend.environment.controllers.EquinoxController;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
@@ -177,7 +179,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 // others basic  SpringBoot's annotations
 public class Launcher {
 
-  // Rest of the Launcher class ...
+    // Rest of the Launcher class ...
 
 }
 ```
@@ -188,9 +190,11 @@ To add the custom field you need to extend your custom users from the base **Equ
 the following:
 
 ```java
-package other.packages...
+package other.packages
 
-import com.tecknobit.equinox.environment.records.EquinoxUser;
+...
+
+import com.tecknobit.equinoxbackend.environment.records.EquinoxUser;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import org.json.JSONObject;
@@ -239,9 +243,11 @@ You need to create the dedicated repository to work with your custom user, so, y
 interface and add the custom additional queries. The interface will be as the following:
 
 ```java
-package other.packages...
+package other.packages
 
-import com.tecknobit.equinox.environment.helpers.services.repositories.EquinoxUsersRepository;
+...
+
+import com.tecknobit.equinoxbackend.environment.helpers.services.repositories.EquinoxUsersRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.context.annotation.Primary;
 import org.springframework.data.jpa.repository.Modifying;
@@ -250,8 +256,8 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
-import static com.tecknobit.equinox.environment.records.EquinoxItem.IDENTIFIER_KEY;
-import static com.tecknobit.equinox.environment.records.EquinoxUser.USERS_KEY;
+import static com.tecknobit.equinoxbackend.environment.records.EquinoxItem.IDENTIFIER_KEY;
+import static com.tecknobit.equinoxbackend.environment.records.EquinoxUser.USERS_KEY;
 
 @Service
 @Repository
@@ -279,9 +285,11 @@ You need to create the dedicated helper to execute the dedicated operations for 
 **EquinoxUsersHelper** class and add the custom additional methods. The helper will be as the following:
 
 ```java
-package other.packages...
+package other.packages
 
-import com.tecknobit.equinox.environment.helpers.services.EquinoxUsersHelper;
+...
+
+import com.tecknobit.equinoxbackend.environment.helpers.services.EquinoxUsersHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
@@ -291,7 +299,7 @@ import org.springframework.stereotype.Service;
 public class CustomUsersHelper extends EquinoxUsersHelper<CustomUser, CustomUsersRepository> {
 
     public void changeCurrency(String newCurrency, String userId) {
-      usersRepository.changeCurrency(newCurrency, userId);
+        usersRepository.changeCurrency(newCurrency, userId);
     }
 
 }
@@ -304,9 +312,11 @@ the
 **EquinoxUsersController** class and add the custom additional methods. The controller will be as the following:
 
 ```java
-package other.packages...
+package other.packages
 
-import com.tecknobit.equinox.environment.controllers.EquinoxUsersController;
+...
+
+import com.tecknobit.equinoxbackend.environment.controllers.EquinoxUsersController;
 import org.json.JSONObject;
 import org.springframework.web.bind.annotation.*;
 
@@ -315,11 +325,11 @@ import java.util.Map;
 @RestController
 public class CustomUsersController extends EquinoxUsersController<CustomUser, CustomUsersRepository, CustomUsersHelper> {
 
-  // you can override an implemented method to customize the response as you necessities
+    // you can override an implemented method to customize the response as you necessities
     @Override
     public String changeEmail(
-            String id, 
-            String token, 
+            String id,
+            String token,
             Map<String, String> payload
     ) {
         String response = super.changeEmail(id, token, payload);
@@ -329,15 +339,15 @@ public class CustomUsersController extends EquinoxUsersController<CustomUser, Cu
     }
 
     @PatchMapping(
-            path = { "users/{id}/changeCurrency" },
-            headers = { TOKEN_KEY }
+            path = {"users/{id}/changeCurrency"},
+            headers = {TOKEN_KEY}
     )
     public String changeCurrency(
             @PathVariable("id") String id,
             @RequestHeader("token") String token,
             @RequestBody Map<String, String> payload
     ) {
-        if(isMe(id, token)) {
+        if (isMe(id, token)) {
             usersHelper.changeCurrency(payload.get("currency"), id);
             return successResponse();
         } else
@@ -372,7 +382,7 @@ package other.packages
 
 ...
 
-import com.tecknobit.equinox.environment.helpers.services.EquinoxUsersHelper;
+import com.tecknobit.equinoxbackend.environment.helpers.services.EquinoxUsersHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
@@ -381,12 +391,12 @@ import org.springframework.stereotype.Service;
 @Primary
 public class CustomUsersHelper extends EquinoxUsersHelper<CustomUser, CustomUsersRepository> {
 
-  @Override
-  protected List<String> getQueryValuesKeys() {
-    ArrayList<String> custom = new ArrayList<>(super.getQueryValuesKeys());
-    custom.add("currency");
-    return custom;
-  }
+    @Override
+    protected List<String> getQueryValuesKeys() {
+        ArrayList<String> custom = new ArrayList<>(super.getQueryValuesKeys());
+        custom.add("currency");
+        return custom;
+    }
 
 }
 ```
@@ -402,20 +412,18 @@ package other.packages
 
 ...
 
-import com.tecknobit.equinox.environment.controllers.EquinoxUsersController;
+import com.tecknobit.equinoxbackend.environment.controllers.EquinoxUsersController;
 import org.json.JSONObject;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Map;
 
 @RestController
 public class CustomUsersController extends EquinoxUsersController<CustomUser, CustomUsersRepository, CustomUsersHelper> {
 
-  @Override
-  @CustomParametersOrder(order = {"currency"}) // optional
-  protected Object[] getSignUpCustomParams() {
-    return new Object[]{jsonHelper.getString("currency", null), /* other parameters */};
-  }
+    @Override
+    @CustomParametersOrder(order = {"currency"}) // optional
+    protected Object[] getSignUpCustomParams() {
+        return new Object[]{jsonHelper.getString("currency", null), /* other parameters */};
+    }
 
 }
 ```
@@ -429,25 +437,23 @@ package other.packages
 
 ...
 
-import com.tecknobit.equinox.environment.controllers.EquinoxUsersController;
+import com.tecknobit.equinoxbackend.environment.controllers.EquinoxUsersController;
 import org.json.JSONObject;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Map;
 
 @RestController
 public class CustomUsersController extends EquinoxUsersController<CustomUser, CustomUsersRepository, CustomUsersHelper> {
 
-  @Override
-  @CustomParametersOrder(order = {"currency"}) // optional
-  protected String validateSignUp(String name, String surname, String email, String password, String language, Object... custom) {
-    String validation = super.validateSignUp(name, surname, email, password, language, custom);
-    if (validation != null)
-      return validation;
-    if (custom[0] == null)
-      return "wrong_currency_key";
-    return null;
-  }
+    @Override
+    @CustomParametersOrder(order = {"currency"}) // optional
+    protected String validateSignUp(String name, String surname, String email, String password, String language, Object... custom) {
+        String validation = super.validateSignUp(name, surname, email, password, language, custom);
+        if (validation != null)
+            return validation;
+        if (custom[0] == null)
+            return "wrong_currency_key";
+        return null;
+    }
 
 }
 ```
@@ -466,7 +472,7 @@ package other.packages
 
 ...
 
-import com.tecknobit.equinox.environment.helpers.services.EquinoxUsersHelper;
+import com.tecknobit.equinoxbackend.environment.helpers.services.EquinoxUsersHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
@@ -475,11 +481,11 @@ import org.springframework.stereotype.Service;
 @Primary
 public class CustomUsersHelper extends EquinoxUsersHelper<CustomUser, CustomUsersRepository> {
 
-  @Override
-  @CustomParametersOrder(order = {"currency"}) // optional
-  protected boolean validateSignIn(CustomUser user, String password, Object... custom) throws NoSuchAlgorithmException {
-    return super.validateSignIn(user, password, custom) && user.getCurrency().equals(custom[0]);
-  }
+    @Override
+    @CustomParametersOrder(order = {"currency"}) // optional
+    protected boolean validateSignIn(CustomUser user, String password, Object... custom) throws NoSuchAlgorithmException {
+        return super.validateSignIn(user, password, custom) && user.getCurrency().equals(custom[0]);
+    }
 
 }
 ```
@@ -495,20 +501,18 @@ package other.packages
 
 ...
 
-import com.tecknobit.equinox.environment.controllers.EquinoxUsersController;
+import com.tecknobit.equinoxbackend.environment.controllers.EquinoxUsersController;
 import org.json.JSONObject;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Map;
 
 @RestController
 public class CustomUsersController extends EquinoxUsersController<CustomUser, CustomUsersRepository, CustomUsersHelper> {
 
-  @Override
-  @CustomParametersOrder(order = {"currency"}) // optional
-  protected Object[] getSignInCustomParams() {
-    return new Object[]{jsonHelper.getString("currency", null)};
-  }
+    @Override
+    @CustomParametersOrder(order = {"currency"}) // optional
+    protected Object[] getSignInCustomParams() {
+        return new Object[]{jsonHelper.getString("currency", null)};
+    }
 
 }
 ```
@@ -522,25 +526,23 @@ package other.packages
 
 ...
 
-import com.tecknobit.equinox.environment.controllers.EquinoxUsersController;
+import com.tecknobit.equinoxbackend.environment.controllers.EquinoxUsersController;
 import org.json.JSONObject;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Map;
 
 @RestController
 public class CustomUsersController extends EquinoxUsersController<CustomUser, CustomUsersRepository, CustomUsersHelper> {
 
-  @Override
-  @CustomParametersOrder(order = {"currency"}) // optional
-  protected String validateSignIn(String email, String password, String language, Object... custom) {
-    String validation = super.validateSignIn(email, password, language, custom);
-    if (validation != null)
-      return validation;
-    if (custom[0] == null)
-      return "wrong_currency_key";
-    return null;
-  }
+    @Override
+    @CustomParametersOrder(order = {"currency"}) // optional
+    protected String validateSignIn(String email, String password, String language, Object... custom) {
+        String validation = super.validateSignIn(email, password, language, custom);
+        if (validation != null)
+            return validation;
+        if (custom[0] == null)
+            return "wrong_currency_key";
+        return null;
+    }
 
 }
 ```
@@ -554,21 +556,19 @@ package other.packages
 
 ...
 
-import com.tecknobit.equinox.environment.controllers.EquinoxUsersController;
+import com.tecknobit.equinoxbackend.environment.controllers.EquinoxUsersController;
 import org.json.JSONObject;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Map;
 
 @RestController
 public class CustomUsersController extends EquinoxUsersController<CustomUser, CustomUsersRepository, CustomUsersHelper> {
 
-  @Override
-  protected JSONObject assembleSignInSuccessResponse(CustomUser user) {
-    JSONObject response = super.assembleSignInSuccessResponse(user);
-    response.put("currency", user.getCurrency());
-    return response;
-  }
+    @Override
+    protected JSONObject assembleSignInSuccessResponse(CustomUser user) {
+        JSONObject response = super.assembleSignInSuccessResponse(user);
+        response.put("currency", user.getCurrency());
+        return response;
+    }
 
 }
 ```
