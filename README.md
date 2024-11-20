@@ -10,7 +10,6 @@ backend and for client also who communicate with that Spring Boot backend
 |       Module        | Description                                                 | Technologies                | Purpose                                                                           | Version                                                                                                                |
 |:-------------------:|-------------------------------------------------------------|-----------------------------|-----------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------|
 | **equinox-backend** | Set of utilities for JVM-based backend                      | Java, Kotlin (JVM) & Spring | Backend services, API logic, database interaction                                 | ![Maven Central](https://img.shields.io/maven-central/v/io.github.n7ghtm4r3/equinox-backend.svg?label=Maven%20Central) |
-|
 |  **equinox-core**   | Set of utilities **Kotlin Multiplatform Project** compliant | Kotlin & KMP                | Shared business logic, cross-platform functionality (Android, Desktop, iOS & Web) | ![Maven Central](https://img.shields.io/maven-central/v/io.github.n7ghtm4r3/equinox-core.svg?label=Maven%20Central)    |
 
 ## Implementation
