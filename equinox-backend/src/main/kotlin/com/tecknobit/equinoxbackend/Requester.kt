@@ -156,7 +156,7 @@ abstract class Requester (
             sendRequest(
                 request = request,
                 onSuccess = { hPage ->
-                    // TODO: WHEN MIGRATED TO EQUINOX-COMPOSE USE DIRECTLY THE CORRECT PaginatedResponse CONSTRUCTOR TO INIT IT
+                    // TODO: WHEN MIGRATED TO EQUINOX-CORE USE DIRECTLY THE CORRECT PaginatedResponse CONSTRUCTOR TO INIT IT
                     val jData: ArrayList<JSONObject> = hPage.fetchList(DATA_KEY, arrayListOf<JSONObject>())
                     val data = arrayListOf<T>()
                     jData.forEach { item ->

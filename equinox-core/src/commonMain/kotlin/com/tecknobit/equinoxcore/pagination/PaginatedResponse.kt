@@ -1,6 +1,6 @@
 package com.tecknobit.equinoxcore.pagination
 
-import kotlinx.serialization.Transient
+import kotlinx.serialization.Serializable
 
 /**
  * The **PaginatedResponse** class is formatter for the responses of pagination requests providing easy access
@@ -12,6 +12,7 @@ import kotlinx.serialization.Transient
  *
  * @author N7ghtm4r3 - Tecknobit
  */
+@Serializable
 class PaginatedResponse<T> {
 
     companion object {
@@ -39,7 +40,7 @@ class PaginatedResponse<T> {
         /**
          * **IS_LAST_PAGE_KEY** -> the key of the "isLastPage" value
          */
-        const val IS_LAST_PAGE_KEY: String = "isLastPage"
+        const val IS_LAST_PAGE_KEY: String = "lastPage"
 
         /**
          * **DEFAULT_PAGE** -> the default page value
@@ -81,14 +82,12 @@ class PaginatedResponse<T> {
     /**
      * **previousPage** -> the number of the previous page
      */
-    @Transient
     val previousPage: Int
         get() = page - 1
 
     /**
      * **nextPage** -> the number of the next page
      */
-    @Transient
     val nextPage: Int
         get() = page + 1
 

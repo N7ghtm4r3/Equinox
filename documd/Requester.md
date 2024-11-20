@@ -44,7 +44,7 @@ fun main() {
     // send the request and manage the response scenarios
     requester.sendRequest(
         request = {
-            requester.sendYourRequest()
+            sendYourRequest()
         },
         onSuccess = {
             // manage a successful request
