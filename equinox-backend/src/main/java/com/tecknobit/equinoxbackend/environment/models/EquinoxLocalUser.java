@@ -1,12 +1,13 @@
-package com.tecknobit.equinoxbackend.environment.records;
+package com.tecknobit.equinoxbackend.environment.models;
 
 import com.tecknobit.apimanager.formatters.JsonHelper;
 import com.tecknobit.equinoxcore.annotations.RequiresSuperCall;
 import com.tecknobit.equinoxcore.annotations.Structure;
+import kotlin.Deprecated;
 
-import static com.tecknobit.equinoxbackend.environment.records.EquinoxItem.IDENTIFIER_KEY;
-import static com.tecknobit.equinoxbackend.environment.records.EquinoxUser.*;
-import static com.tecknobit.equinoxbackend.environment.records.EquinoxUser.ApplicationTheme.Auto;
+import static com.tecknobit.equinoxbackend.environment.models.EquinoxItem.IDENTIFIER_KEY;
+import static com.tecknobit.equinoxbackend.environment.models.EquinoxUser.*;
+import static com.tecknobit.equinoxbackend.environment.models.EquinoxUser.ApplicationTheme.Auto;
 import static com.tecknobit.equinoxcore.helpers.InputsValidator.HOST_ADDRESS_KEY;
 
 /**
@@ -15,6 +16,9 @@ import static com.tecknobit.equinoxcore.helpers.InputsValidator.HOST_ADDRESS_KEY
  * @author N7ghtm4r3 - Tecknobit
  * @since 1.0.1
  */
+@Deprecated(
+        message = "This class will be moved in the Equinox-Compose library in the next version"
+)
 @Structure
 public abstract class EquinoxLocalUser {
 

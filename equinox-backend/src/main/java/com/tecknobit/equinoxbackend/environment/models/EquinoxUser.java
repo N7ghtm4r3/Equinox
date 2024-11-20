@@ -1,4 +1,4 @@
-package com.tecknobit.equinoxbackend.environment.records;
+package com.tecknobit.equinoxbackend.environment.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -6,8 +6,8 @@ import com.tecknobit.apimanager.annotations.Returner;
 import jakarta.persistence.*;
 import org.json.JSONObject;
 
-import static com.tecknobit.equinoxbackend.environment.records.EquinoxUser.ApplicationTheme.Auto;
-import static com.tecknobit.equinoxbackend.environment.records.EquinoxUser.USERS_KEY;
+import static com.tecknobit.equinoxbackend.environment.models.EquinoxUser.ApplicationTheme.Auto;
+import static com.tecknobit.equinoxbackend.environment.models.EquinoxUser.USERS_KEY;
 
 /**
  * The {@code EquinoxUser} class is useful to represent a base Equinox's system user

@@ -4,33 +4,33 @@ This is a group of classes to create a SpringBoot's environment based on the Equ
 
 The base environment gives a base set of classes:
 
-- [EquinoxBaseEndpointsSet](https://github.com/N7ghtm4r3/Equinox/blob/main/src/main/java/com/tecknobit/equinox/environment/helpers/EquinoxBaseEndpointsSet.java) ->
+- [EquinoxBaseEndpointsSet](https://github.com/N7ghtm4r3/Equinox/blob/main/equinox-backend/src/main/java/com/tecknobit/equinoxbackend/environment/helpers/EquinoxBaseEndpointsSet.java) ->
   set of endpoints already created for the **EquinoxUsersController** methods
-- [EquinoxController](https://github.com/N7ghtm4r3/Equinox/blob/main/src/main/java/com/tecknobit/equinox/environment/controllers/EquinoxController.java) ->
+- [EquinoxController](https://github.com/N7ghtm4r3/Equinox/blob/main/equinox-backend/src/main/java/com/tecknobit/equinoxbackend/environment/services/builtin/controller/EquinoxController.java) ->
   to manage the other **RestController** of the backend
-- [DefaultEquinoxController](https://github.com/N7ghtm4r3/Equinox/blob/main/src/main/java/com/tecknobit/equinox/environment/controllers/DefaultEquinoxController.java) ->
+- [DefaultEquinoxController](https://github.com/N7ghtm4r3/Equinox/blob/main/equinox-backend/src/main/java/com/tecknobit/equinoxbackend/environment/services/DefaultEquinoxController.java) ->
   to manage the other **RestController** of the backend with the default usage of
-  the [EquinoxUser](https://github.com/N7ghtm4r3/Equinox/blob/main/src/main/java/com/tecknobit/equinox/environment/records/EquinoxUser.java)
-- [EquinoxItem](https://github.com/N7ghtm4r3/Equinox/blob/main/src/main/java/com/tecknobit/equinox/environment/records/EquinoxItem.java) ->
+  the [EquinoxUser](https://github.com/N7ghtm4r3/Equinox/blob/main/src/main/java/com/tecknobit/equinox/environment/models/EquinoxUser.java)
+- [EquinoxItem](https://github.com/N7ghtm4r3/Equinox/blob/main/src/main/java/com/tecknobit/equinox/environment/models/EquinoxItem.java) ->
   base class for the items used by an Equinox backend based
 - User utilities set
-  - [EquinoxUser](https://github.com/N7ghtm4r3/Equinox/blob/main/src/main/java/com/tecknobit/equinox/environment/records/EquinoxUser.java) ->
+  - [EquinoxUser](https://github.com/N7ghtm4r3/Equinox/blob/main/equinox-backend/src/main/java/com/tecknobit/equinoxbackend/environment/models/EquinoxUser.java) ->
   standard Equinox's user
-  - [EquinoxLocalUser](https://github.com/N7ghtm4r3/Equinox/blob/main/src/main/java/com/tecknobit/equinox/environment/records/EquinoxLocalUser.java) ->
+  - [EquinoxLocalUser](https://github.com/N7ghtm4r3/Equinox/blob/main/equinox-backend/src/main/java/com/tecknobit/equinoxbackend/environment/models/EquinoxLocalUser.java) ->
   local user helper, useful to manage the local session of a user in the clients applications
-  - [EquinoxUsersController](https://github.com/N7ghtm4r3/Equinox/blob/main/src/main/java/com/tecknobit/equinox/environment/controllers/EquinoxUsersController.java) ->
+  - [EquinoxUsersController](https://github.com/N7ghtm4r3/Equinox/blob/main/equinox-backend/src/main/java/com/tecknobit/equinoxbackend/environment/services/users/controller/EquinoxUsersController.java) ->
   controller to manage the operations on the **EquinoxUser**
-  - [EquinoxUsersHelper](https://github.com/N7ghtm4r3/Equinox/blob/main/src/main/java/com/tecknobit/equinox/environment/helpers/services/EquinoxUsersHelper.java) ->
+  - [EquinoxUsersHelper](https://github.com/N7ghtm4r3/Equinox/blob/main/equinox-backend/src/main/java/com/tecknobit/equinoxbackend/environment/services/users/service/EquinoxUsersHelper.java) ->
   helper used by the **EquinoxUsersController** to interact with the database
-  - [EquinoxUsersRepository](https://github.com/N7ghtm4r3/Equinox/blob/main/src/main/java/com/tecknobit/equinox/environment/helpers/services/repositories/EquinoxUsersRepository.java) ->
+  - [EquinoxUsersRepository](https://github.com/N7ghtm4r3/Equinox/blob/main/equinox-backend/src/main/java/com/tecknobit/equinoxbackend/environment/services/users/repository/EquinoxUsersRepository.java) ->
   the **JpaRepository** to make the related queries to the database
-- [EquinoxRequester](https://github.com/N7ghtm4r3/Equinox/blob/main/src/main/kotlin/com/tecknobit/equinox/environment/helpers/EquinoxRequester.kt) ->
+- [EquinoxRequester](https://github.com/N7ghtm4r3/Equinox/blob/main/equinox-backend/src/main/kotlin/com/tecknobit/equinoxbackend/environment/helpers/EquinoxRequester.kt) ->
   the requester helper with the **EquinoxUser** requests pre-implemented to execute the operations on the user
-- [InputValidator](https://github.com/N7ghtm4r3/Equinox/blob/main/src/main/java/com/tecknobit/equinox/inputs/InputValidator.java) ->
+- [InputsValidator](https://github.com/N7ghtm4r3/Equinox/blob/main/equinox-core/src/commonMain/kotlin/com/tecknobit/equinoxcore/helpers/InputsValidator.kt) ->
   utility class to validate the inputs, gives a set of the method to validate the **EquinoxUser** details
-- [EquinoxItemsHelper](https://github.com/N7ghtm4r3/Equinox/blob/main/src/main/java/com/tecknobit/equinox/environment/helpers/services/EquinoxItemsHelper.java) ->
+- [EquinoxItemsHelper](https://github.com/N7ghtm4r3/Equinox/blob/main/equinox-backend/src/main/java/com/tecknobit/equinoxbackend/environment/services/builtin/service/EquinoxItemsHelper.java) ->
   helper for manage the database operations of
-  the [EquinoxItem](https://github.com/N7ghtm4r3/Equinox/blob/main/src/main/java/com/tecknobit/equinox/environment/records/EquinoxItem.java)
+  the [EquinoxItem](https://github.com/N7ghtm4r3/Equinox/blob/main/equinox-backend/src/main/java/com/tecknobit/equinoxbackend/environment/models/EquinoxItem.java)
   such batch queries execution
 
 ### Usage/Examples
@@ -135,10 +135,15 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-data-jpa:3.2.3")
     implementation("mysql:mysql-connector-java:8.0.33")
     implementation("com.github.N7ghtm4r3:APIManager:2.2.4")
-    implementation("io.github.n7ghtm4r3:Equinox:1.0.5")
     implementation("com.github.N7ghtm4r3:Mantis:1.0.0")
     implementation("org.json:json:20240303")
     implementation("commons-validator:commons-validator:1.7")
+
+    // implement the backend utilities
+    implementation("io.github.n7ghtm4r3:equinox-backend:1.0.5")
+    
+    // implement the core utilities
+    implementation("io.github.n7ghtm4r3:equinox-core:1.0.5")
 
     ...
 
@@ -194,7 +199,7 @@ package other.packages
 
 ...
 
-import com.tecknobit.equinoxbackend.environment.records.EquinoxUser;
+import com.tecknobit.equinoxbackend.environment.models.EquinoxUser;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import org.json.JSONObject;
@@ -202,33 +207,33 @@ import org.json.JSONObject;
 @Entity
 public class CustomUser extends EquinoxUser {
 
-    @Column
-    private final String currency;
+  @Column
+  private final String currency;
 
-    public CustomUser(String currency) {
-        this.currency = currency;
-    }
+  public CustomUser(String currency) {
+    this.currency = currency;
+  }
 
-    public CustomUser(String id, String token, String name, String surname, String email, String password, String language,
-                      String currency) {
-        super(id, token, name, surname, email, password, language);
-        this.currency = currency;
-    }
+  public CustomUser(String id, String token, String name, String surname, String email, String password, String language,
+                    String currency) {
+    super(id, token, name, surname, email, password, language);
+    this.currency = currency;
+  }
 
-    public CustomUser(String id, String token, String name, String surname, String email, String password, String profilePic,
-                      String language, ApplicationTheme theme, String currency) {
-        super(id, token, name, surname, email, password, profilePic, language, theme);
-        this.currency = currency;
-    }
+  public CustomUser(String id, String token, String name, String surname, String email, String password, String profilePic,
+                    String language, ApplicationTheme theme, String currency) {
+    super(id, token, name, surname, email, password, profilePic, language, theme);
+    this.currency = currency;
+  }
 
-    public CustomUser(JSONObject jUser, String currency) {
-        super(jUser);
-        this.currency = currency;
-    }
+  public CustomUser(JSONObject jUser, String currency) {
+    super(jUser);
+    this.currency = currency;
+  }
 
-    public String getCurrency() {
-        return currency;
-    }
+  public String getCurrency() {
+    return currency;
+  }
 
 }
 ```
@@ -256,25 +261,25 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
-import static com.tecknobit.equinoxbackend.environment.records.EquinoxItem.IDENTIFIER_KEY;
-import static com.tecknobit.equinoxbackend.environment.records.EquinoxUser.USERS_KEY;
+import static com.tecknobit.equinoxbackend.environment.models.EquinoxItem.IDENTIFIER_KEY;
+import static com.tecknobit.equinoxbackend.environment.models.EquinoxUser.USERS_KEY;
 
 @Service
 @Repository
 @Primary // this is REQUIRED to use correctly this repository instead the EquinoxUsersRepository
 public interface CustomUsersRepository extends EquinoxUsersRepository<CustomUser> {
 
-    @Modifying(clearAutomatically = true)
-    @Transactional
-    @Query(
-            value = "UPDATE " + USERS_KEY + " SET " + "currency" + "=:" + "currency" + " WHERE "
-                    + IDENTIFIER_KEY + "=:" + IDENTIFIER_KEY,
-            nativeQuery = true
-    )
-    void changeCurrency(
-            @Param("currency") String newCurrency,
-            @Param(IDENTIFIER_KEY) String id
-    );
+  @Modifying(clearAutomatically = true)
+  @Transactional
+  @Query(
+          value = "UPDATE " + USERS_KEY + " SET " + "currency" + "=:" + "currency" + " WHERE "
+                  + IDENTIFIER_KEY + "=:" + IDENTIFIER_KEY,
+          nativeQuery = true
+  )
+  void changeCurrency(
+          @Param("currency") String newCurrency,
+          @Param(IDENTIFIER_KEY) String id
+  );
 
 }
 ```
@@ -600,18 +605,22 @@ Thank you for your help!
 [![](https://img.shields.io/badge/Google_Play-414141?style=for-the-badge&logo=google-play&logoColor=white)](https://play.google.com/store/apps/developer?id=Tecknobit)
 [![Twitter](https://img.shields.io/badge/Twitter-1DA1F2?style=for-the-badge&logo=twitter&logoColor=white)](https://twitter.com/tecknobit)
 
-[![](https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=java&logoColor=white)](https://www.oracle.com/java/)
+[![](https://img.shields.io/badge/Spring_Boot-F2F4F9?style=for-the-badge&logo=spring-boot)](https://spring.io/projects/spring-boot)
+[![](https://img.shields.io/badge/Jetpack%20Compose-4285F4.svg?style=for-the-badge&logo=Jetpack-Compose&logoColor=white)](https://www.jetbrains.com/lp/compose-multiplatform/)
 
-[![](https://jitpack.io/v/N7ghtm4r3/Equinox.svg)](https://jitpack.io/#N7ghtm4r3/Equinox)
+[![](https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=java&logoColor=white)](https://www.oracle.com/java/)
+[![](https://img.shields.io/badge/Kotlin-B125EA?style=for-the-badge&logo=kotlin&logoColor=white)](https://kotlinlang.org/)
+
 
 ## Donations
 
 If you want support project and developer
 
-| Crypto                                                                                              | Address                                        | Network  |
-|-----------------------------------------------------------------------------------------------------|------------------------------------------------|----------|
-| ![](https://img.shields.io/badge/Bitcoin-000000?style=for-the-badge&logo=bitcoin&logoColor=white)   | **3H3jyCzcRmnxroHthuXh22GXXSmizin2yp**         | Bitcoin  |
-| ![](https://img.shields.io/badge/Ethereum-3C3C3D?style=for-the-badge&logo=Ethereum&logoColor=white) | **0x1b45bc41efeb3ed655b078f95086f25fc83345c4** | Ethereum |
+| Crypto                                                                                              | Address                                          | Network  |
+|-----------------------------------------------------------------------------------------------------|--------------------------------------------------|----------|
+| ![](https://img.shields.io/badge/Bitcoin-000000?style=for-the-badge&logo=bitcoin&logoColor=white)   | **3H3jyCzcRmnxroHthuXh22GXXSmizin2yp**           | Bitcoin  |
+| ![](https://img.shields.io/badge/Ethereum-3C3C3D?style=for-the-badge&logo=Ethereum&logoColor=white) | **0x1b45bc41efeb3ed655b078f95086f25fc83345c4**   | Ethereum |
+| ![](https://img.shields.io/badge/Solana-000?style=for-the-badge&logo=Solana&logoColor=9945FF)       | **AtPjUnxYFHw3a6Si9HinQtyPTqsdbfdKX3dJ1xiDjbrL** | Solana   |
 
 If you want support project and developer
 with <a href="https://www.paypal.com/donate/?hosted_button_id=5QMN5UQH7LDT4">PayPal</a>

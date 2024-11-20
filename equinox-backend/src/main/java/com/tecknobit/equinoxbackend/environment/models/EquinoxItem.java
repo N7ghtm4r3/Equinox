@@ -1,4 +1,4 @@
-package com.tecknobit.equinoxbackend.environment.records;
+package com.tecknobit.equinoxbackend.environment.models;
 
 import com.tecknobit.apimanager.annotations.Structure;
 import com.tecknobit.apimanager.formatters.JsonHelper;

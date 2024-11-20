@@ -21,7 +21,7 @@ repositories {
 }
 
 dependencies {
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.9.0")
     implementation("org.springframework.boot:spring-boot-starter-data-jpa:3.2.3")
     implementation("org.springframework.boot:spring-boot-starter-web:3.2.3")
     implementation("org.springframework:spring-web:6.1.12")
@@ -90,3 +90,8 @@ kotlin {
         footerMessage = "(c) 2024 Tecknobit"
     }
 }*/
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_18
+    targetCompatibility = JavaVersion.VERSION_18
+}

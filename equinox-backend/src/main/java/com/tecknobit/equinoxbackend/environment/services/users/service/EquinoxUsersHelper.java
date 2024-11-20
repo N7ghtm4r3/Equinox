@@ -1,7 +1,7 @@
 package com.tecknobit.equinoxbackend.environment.services.users.service;
 
 import com.tecknobit.apimanager.apis.APIRequest;
-import com.tecknobit.equinoxbackend.environment.records.EquinoxUser;
+import com.tecknobit.equinoxbackend.environment.models.EquinoxUser;
 import com.tecknobit.equinoxbackend.environment.services.builtin.service.EquinoxItemsHelper;
 import com.tecknobit.equinoxbackend.environment.services.users.repository.EquinoxUsersRepository;
 import com.tecknobit.equinoxbackend.resourcesutils.ResourcesManager;
@@ -17,8 +17,8 @@ import java.util.Arrays;
 import java.util.List;
 
 import static com.tecknobit.apimanager.apis.APIRequest.SHA256_ALGORITHM;
-import static com.tecknobit.equinoxbackend.environment.records.EquinoxItem.IDENTIFIER_KEY;
-import static com.tecknobit.equinoxbackend.environment.records.EquinoxUser.*;
+import static com.tecknobit.equinoxbackend.environment.models.EquinoxItem.IDENTIFIER_KEY;
+import static com.tecknobit.equinoxbackend.environment.models.EquinoxUser.*;
 import static java.lang.System.currentTimeMillis;
 
 /**

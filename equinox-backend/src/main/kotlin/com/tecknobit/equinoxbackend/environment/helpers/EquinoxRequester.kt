@@ -5,7 +5,7 @@ import com.tecknobit.apimanager.apis.APIRequest.Params
 import com.tecknobit.apimanager.apis.ServerProtector.SERVER_SECRET_KEY
 import com.tecknobit.equinoxbackend.Requester
 import com.tecknobit.equinoxbackend.environment.helpers.EquinoxBaseEndpointsSet.*
-import com.tecknobit.equinoxbackend.environment.records.EquinoxUser.*
+import com.tecknobit.equinoxbackend.environment.models.EquinoxUser.*
 import com.tecknobit.equinoxcore.annotations.RequestPath
 import com.tecknobit.equinoxcore.helpers.InputsValidator.Companion.DEFAULT_LANGUAGE
 import com.tecknobit.equinoxcore.helpers.InputsValidator.Companion.isLanguageValid

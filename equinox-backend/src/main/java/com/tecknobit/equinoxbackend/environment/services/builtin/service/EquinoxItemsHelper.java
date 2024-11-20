@@ -1,7 +1,7 @@
 package com.tecknobit.equinoxbackend.environment.services.builtin.service;
 
 import com.tecknobit.apimanager.annotations.Wrapper;
-import com.tecknobit.equinoxbackend.environment.records.EquinoxItem;
+import com.tecknobit.equinoxbackend.environment.models.EquinoxItem;
 import com.tecknobit.equinoxcore.annotations.RequiresSuperCall;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
