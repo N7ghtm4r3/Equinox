@@ -1,6 +1,5 @@
 package com.tecknobit.equinoxcore.pagination
 
-import kotlinx.serialization.SerialName
 import kotlinx.serialization.Transient
 
 /**
@@ -28,19 +27,19 @@ class PaginatedResponse<T> {
         const val PAGE_KEY: String = "page"
 
         /**
-         * **DATA_SIZE_KEY** -> the key of the "data_size" value
+         * **DATA_SIZE_KEY** -> the key of the "dataSize" value
          */
-        const val DATA_SIZE_KEY: String = "data_size"
+        const val DATA_SIZE_KEY: String = "dataSize"
 
         /**
-         * **PAGE_SIZE_KEY** -> the key of the "page_size" value
+         * **PAGE_SIZE_KEY** -> the key of the "pageSize" value
          */
-        const val PAGE_SIZE_KEY: String = "page_size"
+        const val PAGE_SIZE_KEY: String = "pageSize"
 
         /**
-         * **IS_LAST_PAGE_KEY** -> the key of the "is_last_page" value
+         * **IS_LAST_PAGE_KEY** -> the key of the "isLastPage" value
          */
-        const val IS_LAST_PAGE_KEY: String = "is_last_page"
+        const val IS_LAST_PAGE_KEY: String = "isLastPage"
 
         /**
          * **DEFAULT_PAGE** -> the default page value
@@ -77,7 +76,6 @@ class PaginatedResponse<T> {
     /**
      * **pageSize** -> the size of the maximum items for page
      */
-    @SerialName(PAGE_SIZE_KEY)
     val pageSize: Int
 
     /**
@@ -97,13 +95,11 @@ class PaginatedResponse<T> {
     /**
      * **isLastPage** -> whether the current [page] is the last one available
      */
-    @SerialName(IS_LAST_PAGE_KEY)
     val isLastPage: Boolean
 
     /**
      * **dataSize** -> the size of the [data] retrieved for the current [page]
      */
-    @SerialName(DATA_SIZE_KEY)
     val dataSize: Int
         get() = data.size
 
@@ -152,27 +148,5 @@ class PaginatedResponse<T> {
         this.pageSize = pageSize
         this.isLastPage = isLastPage
     }
-
-    /**
-     * Constructor to init the [PaginatedResponse]
-     *
-     * @param hPage The helper to fetch from the response the data to use for the [PaginatedResponse]
-     * @param supplier The supplier Method to instantiate the [T] item for the [data] list
-     *
-    constructor(
-        hPage: JsonHelper,
-        supplier: (JsonObject) -> T,
-    ) {
-        val jData: ArrayList<JsonObject> = hPage.fetchList(DATA_KEY)
-        val data = arrayListOf<T>()
-        jData.forEach { item ->
-            val instantiatedItem = supplier.invoke(item)
-            data.add(instantiatedItem)
-        }
-        this.data = data
-        page = hPage.getInt(PAGE_KEY)
-        pageSize = hPage.getInt(PAGE_SIZE_KEY)
-        isLastPage = hPage.getBoolean(IS_LAST_PAGE_KEY)
-    }*/
 
 }

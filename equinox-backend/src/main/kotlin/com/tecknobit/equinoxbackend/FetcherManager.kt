@@ -14,7 +14,7 @@ import kotlinx.coroutines.launch
  * @author N7ghtm4r3 - Tecknobit
  */
 @Deprecated(
-    message = "This class will be moved in the Equinox-Compose library in the next version",
+    message = "This class will be moved in the equinox-core module in the next version",
     level = DeprecationLevel.WARNING
 )
 class FetcherManager(

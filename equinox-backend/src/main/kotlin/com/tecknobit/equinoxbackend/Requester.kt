@@ -43,7 +43,7 @@ import javax.net.ssl.X509TrustManager
  * @author N7ghtm4r3 - Tecknobit
  */
 @Deprecated(
-    message = "This class will be moved in the Equinox-Compose library in the next version",
+    message = "This class will be moved in the equinox-core module in the next version",
     level = DeprecationLevel.WARNING
 )
 abstract class Requester (
@@ -83,6 +83,118 @@ abstract class Requester (
          * backend occurred
          */
         const val DEFAULT_CONNECTION_ERROR_MESSAGE = "connection_error_message_key"
+
+
+        /**
+         * Method to execute and manage the response of a request
+         *
+         * @param request The request to execute
+         * @param onResponse The action to execute when a response is returned from the backend
+         * @param onConnectionError The action to execute if the request has been failed for a connection error
+         */
+        @Wrapper
+        fun <R : Requester> R.sendRequest(
+            request: R.() -> JSONObject,
+            onResponse: (JsonHelper) -> Unit,
+            onConnectionError: ((JsonHelper) -> Unit)? = null,
+        ) {
+            return sendRequest(
+                request = request,
+                onSuccess = onResponse,
+                onFailure = onResponse,
+                onConnectionError = onConnectionError
+            )
+        }
+
+        /**
+         * Method to execute and manage the response of a request
+         *
+         * @param request The request to execute
+         * @param onSuccess The action to execute if the request has been successful
+         * @param onFailure The action to execute if the request has been failed
+         * @param onConnectionError The action to execute if the request has been failed for a connection error
+         */
+        fun <R : Requester> R.sendRequest(
+            request: R.() -> JSONObject,
+            onSuccess: (JsonHelper) -> Unit,
+            onFailure: (JsonHelper) -> Unit,
+            onConnectionError: ((JsonHelper) -> Unit)? = null,
+        ) {
+            val response = request.invoke(this)
+            val hResponse = JsonHelper(response)
+            when (isSuccessfulResponse(response)) {
+                SUCCESSFUL -> onSuccess.invoke(hResponse)
+                GENERIC_RESPONSE -> {
+                    if (onConnectionError != null)
+                        onConnectionError.invoke(hResponse)
+                    else
+                        onFailure.invoke(hResponse)
+                }
+
+                else -> onFailure.invoke(hResponse)
+            }
+        }
+
+        /**
+         * Method to execute and manage the paginated response of a request
+         *
+         * @param request The request to execute
+         * @param supplier The supplier Method to instantiate a [T] item
+         * @param onSuccess The action to execute if the request has been successful
+         * @param onFailure The action to execute if the request has been failed
+         * @param onConnectionError The action to execute if the request has been failed for a connection error
+         *
+         * @param T generic type of the items in the page response
+         */
+        fun <R : Requester, T> R.sendPaginatedRequest(
+            request: R.() -> JSONObject,
+            supplier: (JSONObject) -> T,
+            onSuccess: (PaginatedResponse<T>) -> Unit,
+            onFailure: (JsonHelper) -> Unit,
+            onConnectionError: ((JsonHelper) -> Unit)? = null,
+        ) {
+            sendRequest(
+                request = request,
+                onSuccess = { hPage ->
+                    // TODO: WHEN MIGRATED TO EQUINOX-COMPOSE USE DIRECTLY THE CORRECT PaginatedResponse CONSTRUCTOR TO INIT IT
+                    val jData: ArrayList<JSONObject> = hPage.fetchList(DATA_KEY, arrayListOf<JSONObject>())
+                    val data = arrayListOf<T>()
+                    jData.forEach { item ->
+                        val instantiatedItem = supplier.invoke(item)
+                        data.add(instantiatedItem)
+                    }
+                    onSuccess.invoke(
+                        PaginatedResponse(
+                            data = data,
+                            page = hPage.getInt(PAGE_KEY),
+                            pageSize = hPage.getInt(PAGE_SIZE_KEY),
+                            isLastPage = hPage.getBoolean(IS_LAST_PAGE_KEY)
+                        )
+                    )
+                },
+                onFailure = onFailure,
+                onConnectionError = onConnectionError
+            )
+        }
+
+        /**
+         * Method to get whether the request has been successful or not
+         *
+         * @param response The response of the request
+         *
+         * @return whether the request has been successful or not as [StandardResponseCode]
+         */
+        private fun isSuccessfulResponse(
+            response: JSONObject?,
+        ): StandardResponseCode {
+            if (response == null || !response.has(RESPONSE_STATUS_KEY))
+                return FAILED
+            return when (response.getString(RESPONSE_STATUS_KEY)) {
+                SUCCESSFUL.name -> SUCCESSFUL
+                GENERIC_RESPONSE.name -> GENERIC_RESPONSE
+                else -> FAILED
+            }
+        }
 
         /**
          * Extension Method to get directly the response data from the request response
@@ -546,116 +658,6 @@ abstract class Requester (
         return JSONObject()
             .put(RESPONSE_STATUS_KEY, GENERIC_RESPONSE.name)
             .put(RESPONSE_DATA_KEY, connectionErrorMessage)
-    }
-
-    /**
-     * Method to execute and manage the response of a request
-     *
-     * @param request The request to execute
-     * @param onResponse The action to execute when a response is returned from the backend
-     * @param onConnectionError The action to execute if the request has been failed for a connection error
-     */
-    @Wrapper
-    fun sendRequest(
-        request: () -> JSONObject,
-        onResponse: (JsonHelper) -> Unit,
-        onConnectionError: ((JsonHelper) -> Unit)? = null
-    ) {
-        return sendRequest(
-            request = request,
-            onSuccess = onResponse,
-            onFailure = onResponse,
-            onConnectionError = onConnectionError
-        )
-    }
-
-    /**
-     * Method to execute and manage the response of a request
-     *
-     * @param request The request to execute
-     * @param onSuccess The action to execute if the request has been successful
-     * @param onFailure The action to execute if the request has been failed
-     * @param onConnectionError The action to execute if the request has been failed for a connection error
-     */
-    fun sendRequest(
-        request: () -> JSONObject,
-        onSuccess: (JsonHelper) -> Unit,
-        onFailure: (JsonHelper) -> Unit,
-        onConnectionError: ((JsonHelper) -> Unit)? = null
-    ) {
-        val response = request.invoke()
-        val hResponse = JsonHelper(response)
-        when(isSuccessfulResponse(response)) {
-            SUCCESSFUL -> onSuccess.invoke(hResponse)
-            GENERIC_RESPONSE -> {
-                if(onConnectionError != null)
-                    onConnectionError.invoke(hResponse)
-                else
-                    onFailure.invoke(hResponse)
-            }
-            else -> onFailure.invoke(hResponse)
-        }
-    }
-
-    /**
-     * Method to execute and manage the paginated response of a request
-     *
-     * @param request The request to execute
-     * @param supplier The supplier Method to instantiate a [T] item
-     * @param onSuccess The action to execute if the request has been successful
-     * @param onFailure The action to execute if the request has been failed
-     * @param onConnectionError The action to execute if the request has been failed for a connection error
-     *
-     * @param T generic type of the items in the page response
-     */
-    fun <T> sendPaginatedRequest(
-        request: () -> JSONObject,
-        supplier: (JSONObject) -> T,
-        onSuccess: (PaginatedResponse<T>) -> Unit,
-        onFailure: (JsonHelper) -> Unit,
-        onConnectionError: ((JsonHelper) -> Unit)? = null
-    ) {
-        sendRequest(
-            request = request,
-            onSuccess = { hPage ->
-                // TODO: WHEN MIGRATED TO EQUINOX-COMPOSE USE DIRECTLY THE CORRECT PaginatedResponse CONSTRUCTOR TO INIT IT
-                val jData: ArrayList<JSONObject> = hPage.fetchList(DATA_KEY)
-                val data = arrayListOf<T>()
-                jData.forEach { item ->
-                    val instantiatedItem = supplier.invoke(item)
-                    data.add(instantiatedItem)
-                }
-                onSuccess.invoke(
-                    PaginatedResponse(
-                        data = data,
-                        page = hPage.getInt(PAGE_KEY),
-                        pageSize = hPage.getInt(PAGE_SIZE_KEY),
-                        isLastPage = hPage.getBoolean(IS_LAST_PAGE_KEY)
-                    )
-                )
-            },
-            onFailure = onFailure,
-            onConnectionError = onConnectionError
-        )
-    }
-
-    /**
-     * Method to get whether the request has been successful or not
-     *
-     * @param response The response of the request
-     *
-     * @return whether the request has been successful or not as [StandardResponseCode]
-     */
-    private fun isSuccessfulResponse(
-        response: JSONObject?
-    ): StandardResponseCode {
-        if(response == null || !response.has(RESPONSE_STATUS_KEY))
-            return FAILED
-        return when(response.getString(RESPONSE_STATUS_KEY)) {
-            SUCCESSFUL.name -> SUCCESSFUL
-            GENERIC_RESPONSE.name -> GENERIC_RESPONSE
-            else -> FAILED
-        }
     }
 
     /**
