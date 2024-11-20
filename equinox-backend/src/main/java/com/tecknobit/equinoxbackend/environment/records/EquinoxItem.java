@@ -3,6 +3,7 @@ package com.tecknobit.equinoxbackend.environment.records;
 import com.tecknobit.apimanager.annotations.Structure;
 import com.tecknobit.apimanager.formatters.JsonHelper;
 import com.tecknobit.apimanager.formatters.TimeFormatter;
+import com.tecknobit.equinoxcore.annotations.Wrapper;
 import jakarta.persistence.Column;
 import jakarta.persistence.Id;
 import jakarta.persistence.MappedSuperclass;
@@ -65,9 +66,19 @@ public abstract class EquinoxItem {
      *
      * @param jItem: item formatted as JSON
      */
+    @Wrapper
     public EquinoxItem(JSONObject jItem) {
+        this(jItem, IDENTIFIER_KEY);
+    }
+
+    /**
+     * Constructor to init the {@link EquinoxItem} class
+     *
+     * @param jItem: item formatted as JSON
+     */
+    public EquinoxItem(JSONObject jItem, String identifierKey) {
         hItem = new JsonHelper(jItem);
-        id = hItem.getString(IDENTIFIER_KEY);
+        id = hItem.getString(identifierKey);
     }
 
     /**

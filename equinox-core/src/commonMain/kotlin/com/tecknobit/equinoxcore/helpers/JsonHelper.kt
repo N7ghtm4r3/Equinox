@@ -1,8 +1,6 @@
 package com.tecknobit.equinoxcore.helpers
 
-import com.tecknobit.equinoxcore.annotations.Wrapper
 import kotlinx.serialization.json.*
-import org.json.JSONException
 
 /**
  * The `JsonHelper` class is a useful utility class for working with the `"JSON"` data format.
@@ -20,7 +18,7 @@ import org.json.JSONException
  * the requested results.
  *
  * @author N7ghtm4r3 - Tecknobit
- */
+ *
 class JsonHelper {
 
     companion object {
@@ -1389,3 +1387,4 @@ class JsonHelper {
     }
 
 }
+ */

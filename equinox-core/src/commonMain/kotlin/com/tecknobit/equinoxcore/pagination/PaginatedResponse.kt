@@ -1,8 +1,7 @@
 package com.tecknobit.equinoxcore.pagination
 
-import com.tecknobit.equinoxcore.helpers.JsonHelper
 import kotlinx.serialization.SerialName
-import kotlinx.serialization.json.JsonObject
+import kotlinx.serialization.Transient
 
 /**
  * The **PaginatedResponse** class is formatter for the responses of pagination requests providing easy access
@@ -84,14 +83,14 @@ class PaginatedResponse<T> {
     /**
      * **previousPage** -> the number of the previous page
      */
-    @kotlinx.serialization.Transient
+    @Transient
     val previousPage: Int
         get() = page - 1
 
     /**
      * **nextPage** -> the number of the next page
      */
-    @kotlinx.serialization.Transient
+    @Transient
     val nextPage: Int
         get() = page + 1
 
@@ -117,12 +116,19 @@ class PaginatedResponse<T> {
      * @param totalDataCount The total amount of data available, it is used to automatically
      * detect if the [page] is the last one available
      */
-    constructor(data: List<T>, page: Int, pageSize: Int, totalDataCount: Long) {
+    constructor(
+        data: List<T>,
+        page: Int,
+        pageSize: Int,
+        totalDataCount: Long,
+    ) {
         this.data = data
         this.page = page
         this.pageSize = pageSize
-        val balancer = if ((totalDataCount % pageSize) == 0L) 1
-        else 0
+        val balancer = if ((totalDataCount % pageSize) == 0L)
+            1
+        else
+            0
         val maxPages = (totalDataCount / pageSize).toInt() - balancer
         this.isLastPage = totalDataCount < pageSize || page >= maxPages
     }
@@ -135,7 +141,12 @@ class PaginatedResponse<T> {
      * @param pageSize The size of the maximum items for page
      * @param isLastPage Whether the retrieved [page] is the last available
      */
-    constructor(data: List<T>, page: Int, pageSize: Int, isLastPage: Boolean) {
+    constructor(
+        data: List<T>,
+        page: Int,
+        pageSize: Int,
+        isLastPage: Boolean,
+    ) {
         this.data = data
         this.page = page
         this.pageSize = pageSize
@@ -147,7 +158,7 @@ class PaginatedResponse<T> {
      *
      * @param hPage The helper to fetch from the response the data to use for the [PaginatedResponse]
      * @param supplier The supplier Method to instantiate the [T] item for the [data] list
-     */
+     *
     constructor(
         hPage: JsonHelper,
         supplier: (JsonObject) -> T,
@@ -162,6 +173,6 @@ class PaginatedResponse<T> {
         page = hPage.getInt(PAGE_KEY)
         pageSize = hPage.getInt(PAGE_SIZE_KEY)
         isLastPage = hPage.getBoolean(IS_LAST_PAGE_KEY)
-    }
+    }*/
 
 }
