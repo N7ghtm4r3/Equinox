@@ -78,19 +78,6 @@ kotlin {
     jvmToolchain(18)
 }
 
-/*tasks.withType<DokkaTask>().configureEach {
-    outputDirectory.set(layout.projectDirectory.dir("docs"))
-    dokkaSourceSets.configureEach {
-        sourceRoots.from(file("src/main/kotlin"))
-        sourceRoots.from(file("src/main/java"))
-        includeNonPublic.set(true)
-        documentedVisibilities.set(setOf(PUBLIC, PROTECTED, PRIVATE))
-    }
-    pluginConfiguration<DokkaBase, DokkaBaseConfiguration> {
-        footerMessage = "(c) 2024 Tecknobit"
-    }
-}*/
-
 java {
     sourceCompatibility = JavaVersion.VERSION_18
     targetCompatibility = JavaVersion.VERSION_18

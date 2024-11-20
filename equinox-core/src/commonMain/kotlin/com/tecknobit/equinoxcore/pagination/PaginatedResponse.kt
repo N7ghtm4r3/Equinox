@@ -38,7 +38,7 @@ class PaginatedResponse<T> {
         const val PAGE_SIZE_KEY: String = "pageSize"
 
         /**
-         * **IS_LAST_PAGE_KEY** -> the key of the "isLastPage" value
+         * **IS_LAST_PAGE_KEY** -> the key of the "lastPage" value
          */
         const val IS_LAST_PAGE_KEY: String = "lastPage"
 

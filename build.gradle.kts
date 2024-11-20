@@ -21,8 +21,6 @@ subprojects {
     apply(plugin = "org.jetbrains.dokka")
     tasks.withType<DokkaTaskPartial>().configureEach {
         dokkaSourceSets.configureEach {
-            sourceRoots.from(file("src/main/kotlin"))
-            sourceRoots.from(file("src/main/java"))
             includeNonPublic.set(true)
             documentedVisibilities.set(setOf(PUBLIC, PROTECTED, PRIVATE))
         }
