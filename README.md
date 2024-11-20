@@ -1,18 +1,35 @@
 # Equinox
 
-**v1.0.4**
+**v1.0.5**
 
-Utilities for backend services based on Springboot framework. Is a support library to implement some utilities both for backend and for client also who comunicate with that Springboot backend
+Utilities for backend services based on Spring Boot framework. Is a support library to implement some utilities both for
+backend and for client also who communicate with that Spring Boot backend
+
+### Architecture Overview
+
+|       Module        | Description                                                 | Technologies                | Purpose                                                                           | Version                                                                                                                |
+|:-------------------:|-------------------------------------------------------------|-----------------------------|-----------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------|
+| **equinox-backend** | Set of utilities for JVM-based backend                      | Java, Kotlin (JVM) & Spring | Backend services, API logic, database interaction                                 | ![Maven Central](https://img.shields.io/maven-central/v/io.github.n7ghtm4r3/equinox-backend.svg?label=Maven%20Central) |
+|  **equinox-core**   | Set of utilities **Kotlin Multiplatform Project** compliant | Kotlin & KMP                | Shared business logic, cross-platform functionality (Android, Desktop, iOS & Web) | ![Maven Central](https://img.shields.io/maven-central/v/io.github.n7ghtm4r3/equinox-core.svg?label=Maven%20Central)    |
 
 ## Implementation
 
-Add the JitPack repository to your build file
+### Version catalog
+
+```gradle
+[versions]
+equinox = "1.0.5"
+
+[libraries]
+equinox-backend = { module = "io.github.n7ghtm4r3:equinox-backend", version.ref = "equinox" }
+equinox-core = { module = "io.github.n7ghtm4r3:equinox-core", version.ref = "equinox" }
+```
 
 ### Gradle
 
-- Add it in your root build.gradle at the end of repositories
+Add the JitPack repository to your build file
 
-  #### Gradle (Short)
+- Add it in your root build.gradle at the end of repositories
 
     ```gradle
     repositories {
@@ -34,11 +51,14 @@ Add the JitPack repository to your build file
 
 - Add the dependency
 
-  #### Gradle (Short)
-
     ```gradle
     dependencies {
-        implementation 'io.github.n7ghtm4r3:Equinox:1.0.4'
+       
+        // implement the backend utilities
+        implementation 'io.github.n7ghtm4r3:equinox-backend:1.0.5'
+        
+        // implement the core utilities
+        implementation 'io.github.n7ghtm4r3:equinox-core:1.0.5'
     }
     ```
 
@@ -46,31 +66,27 @@ Add the JitPack repository to your build file
 
     ```gradle
     dependencies {
-        implementation("io.github.n7ghtm4r3:Equinox:1.0.4")
+        
+        // implement the backend utilities
+        implementation("io.github.n7ghtm4r3:equinox-backend:1.0.5")
+        
+        // implement the core utilities
+        implementation("io.github.n7ghtm4r3:equinox-core:1.0.5")
     }
     ```
 
-### Maven
+  #### Gradle (version catalog)
 
-- Add it in your root build.gradle at the end of repositories
-
-```xml
-<repositories>
-    <repository>
-        <id>jitpack.io</id>
-        <url>https://jitpack.io</url>
-    </repository>
-</repositories>
-```
-- Add the dependency
-
-```xml
-<dependency>
-    <groupId>io.github.n7ghtm4r3</groupId>
-    <artifactId>Equinox</artifactId>
-    <version>1.0.4</version>
-</dependency>
-```
+    ```gradle
+    dependencies {
+    
+        // implement the backend utilities
+        implementation(libs.equinox.backend)
+    
+        // implement the core utilities
+        implementation(libs.equinox.core)
+    }
+    ```
 
 ## 🛠 Skills
 - Java
@@ -129,10 +145,11 @@ Thank you for your help!
 
 If you want support project and developer
 
-| Crypto                                                                                              | Address                                        | Network  |
-|-----------------------------------------------------------------------------------------------------|------------------------------------------------|----------|
-| ![](https://img.shields.io/badge/Bitcoin-000000?style=for-the-badge&logo=bitcoin&logoColor=white)   | **3H3jyCzcRmnxroHthuXh22GXXSmizin2yp**         | Bitcoin  |
-| ![](https://img.shields.io/badge/Ethereum-3C3C3D?style=for-the-badge&logo=Ethereum&logoColor=white) | **0x1b45bc41efeb3ed655b078f95086f25fc83345c4** | Ethereum |
+| Crypto                                                                                              | Address                                          | Network  |
+|-----------------------------------------------------------------------------------------------------|--------------------------------------------------|----------|
+| ![](https://img.shields.io/badge/Bitcoin-000000?style=for-the-badge&logo=bitcoin&logoColor=white)   | **3H3jyCzcRmnxroHthuXh22GXXSmizin2yp**           | Bitcoin  |
+| ![](https://img.shields.io/badge/Ethereum-3C3C3D?style=for-the-badge&logo=Ethereum&logoColor=white) | **0x1b45bc41efeb3ed655b078f95086f25fc83345c4**   | Ethereum |
+| ![](https://img.shields.io/badge/Solana-000?style=for-the-badge&logo=Solana&logoColor=9945FF)       | **AtPjUnxYFHw3a6Si9HinQtyPTqsdbfdKX3dJ1xiDjbrL** | Solana   |
 
 If you want support project and developer
 with <a href="https://www.paypal.com/donate/?hosted_button_id=5QMN5UQH7LDT4">PayPal</a>
