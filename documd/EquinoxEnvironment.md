@@ -264,7 +264,6 @@ import org.springframework.stereotype.Service;
 import static com.tecknobit.equinoxbackend.environment.models.EquinoxItem.IDENTIFIER_KEY;
 import static com.tecknobit.equinoxbackend.environment.models.EquinoxUser.USERS_KEY;
 
-@Service
 @Repository
 @Primary // this is REQUIRED to use correctly this repository instead the EquinoxUsersRepository
 public interface CustomUsersRepository extends EquinoxUsersRepository<CustomUser> {
