@@ -4,7 +4,7 @@ import com.tecknobit.apimanager.apis.ServerProtector;
 import com.tecknobit.apimanager.apis.sockets.SocketManager.StandardResponseCode;
 import com.tecknobit.apimanager.formatters.JsonHelper;
 import com.tecknobit.equinoxbackend.configurationsutils.ConfigsGenerator;
-import com.tecknobit.equinoxbackend.environment.models.EquinoxUser;
+import com.tecknobit.equinoxbackend.environment.services.users.entity.EquinoxUser;
 import com.tecknobit.equinoxbackend.environment.services.users.repository.EquinoxUsersRepository;
 import com.tecknobit.equinoxbackend.environment.services.users.service.EquinoxUsersHelper;
 import com.tecknobit.equinoxbackend.resourcesutils.ResourcesProvider;
@@ -23,10 +23,10 @@ import static com.tecknobit.apimanager.apis.sockets.SocketManager.StandardRespon
 import static com.tecknobit.apimanager.apis.sockets.SocketManager.StandardResponseCode.SUCCESSFUL;
 import static com.tecknobit.equinoxbackend.Requester.RESPONSE_DATA_KEY;
 import static com.tecknobit.equinoxbackend.Requester.RESPONSE_STATUS_KEY;
-import static com.tecknobit.equinoxbackend.environment.helpers.EquinoxBaseEndpointsSet.BASE_EQUINOX_ENDPOINT;
 import static com.tecknobit.equinoxbackend.resourcesutils.ResourcesManager.PROFILES_DIRECTORY;
 import static com.tecknobit.equinoxbackend.resourcesutils.ResourcesManager.RESOURCES_KEY;
 import static com.tecknobit.equinoxcore.helpers.InputsValidator.DEFAULT_LANGUAGE;
+import static com.tecknobit.equinoxcore.network.EquinoxBaseEndpointsSet.BASE_EQUINOX_ENDPOINT;
 
 /**
  * The {@code EquinoxController} class is useful to give the base behavior of the <b>Equinox's controllers</b>
@@ -117,9 +117,7 @@ abstract public class EquinoxController<T extends EquinoxUser, R extends Equinox
 
     /**
      * Method to check if the status of the environment has been set up correctly
-     * based on the use or not of the {@link #usersRepository} <br>
-     *
-     * No-any params required
+     * based on the use or not of the {@link #usersRepository}
      */
     @PostConstruct
     private void checkEnvironmentStatus() {

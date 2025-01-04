@@ -7,7 +7,6 @@ import org.jetbrains.dokka.gradle.DokkaTaskPartial
 plugins {
     kotlin("jvm")
     id("org.jetbrains.dokka") version "1.9.20"
-    id("com.vanniktech.maven.publish") version "0.30.0"
     id("com.android.library") version "8.2.2" apply false
 }
 
@@ -34,6 +33,6 @@ repositories {
 tasks.withType<DokkaMultiModuleTask> {
     outputDirectory.set(layout.projectDirectory.dir("docs"))
     pluginConfiguration<DokkaBase, DokkaBaseConfiguration> {
-        footerMessage = "(c) 2024 Tecknobit"
+        footerMessage = "(c) 2025 Tecknobit"
     }
 }

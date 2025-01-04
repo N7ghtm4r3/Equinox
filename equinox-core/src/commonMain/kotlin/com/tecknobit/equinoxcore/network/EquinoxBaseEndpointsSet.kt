@@ -1,55 +1,51 @@
-package com.tecknobit.equinoxbackend.environment.helpers;
+package com.tecknobit.equinoxcore.network
 
 /**
- * The {@code EquinoxBaseEndpointsSet} class is a container with all the Equinox's system base endpoints
+ * The `EquinoxBaseEndpointsSet` class is a container with all the Equinox's system base endpoints
  *
  * @author N7ghtm4r3 - Tecknobit
  *
- * @since 1.0.1
+ * @since 1.0.6
  */
-public class EquinoxBaseEndpointsSet {
+open class EquinoxBaseEndpointsSet {
 
-    /**
-     * {@code BASE_ENDPOINT} the base endpoint for the backend service
-     */
-    public static final String BASE_EQUINOX_ENDPOINT = "/api/v1/";
+    companion object {
 
-    /**
-     * {@code SIGN_UP_ENDPOINT} the endpoint to execute the sign-up auth action
-     */
-    public static final String SIGN_UP_ENDPOINT = "users/signUp";
+        /**
+         * `BASE_ENDPOINT` the base endpoint for the backend service
+         */
+        const val BASE_EQUINOX_ENDPOINT: String = "/api/v1/"
 
-    /**
-     * {@code SIGN_IN_ENDPOINT} the endpoint to execute the sign-in auth action
-     */
-    public static final String SIGN_IN_ENDPOINT = "users/signIn";
+        /**
+         * `SIGN_UP_ENDPOINT` the endpoint to execute the sign-up auth action
+         */
+        const val SIGN_UP_ENDPOINT: String = "users/signUp"
 
-    /**
-     * {@code CHANGE_PROFILE_PIC_ENDPOINT} the endpoint to execute the change of the user profile pic
-     */
-    public static final String CHANGE_PROFILE_PIC_ENDPOINT = "/changeProfilePic";
+        /**
+         * `SIGN_IN_ENDPOINT` the endpoint to execute the sign-in auth action
+         */
+        const val SIGN_IN_ENDPOINT: String = "users/signIn"
 
-    /**
-     * {@code CHANGE_EMAIL_ENDPOINT} the endpoint to execute the change of the user email
-     */
-    public static final String CHANGE_EMAIL_ENDPOINT = "/changeEmail";
+        /**
+         * `CHANGE_PROFILE_PIC_ENDPOINT` the endpoint to execute the change of the user profile pic
+         */
+        const val CHANGE_PROFILE_PIC_ENDPOINT: String = "/changeProfilePic"
 
-    /**
-     * {@code CHANGE_PASSWORD_ENDPOINT} the endpoint to execute the change of the user password
-     */
-    public static final String CHANGE_PASSWORD_ENDPOINT = "/changePassword";
+        /**
+         * `CHANGE_EMAIL_ENDPOINT` the endpoint to execute the change of the user email
+         */
+        const val CHANGE_EMAIL_ENDPOINT: String = "/changeEmail"
 
-    /**
-     * {@code CHANGE_LANGUAGE_ENDPOINT} the endpoint to execute the change of the user language
-     */
-    public static final String CHANGE_LANGUAGE_ENDPOINT = "/changeLanguage";
+        /**
+         * `CHANGE_PASSWORD_ENDPOINT` the endpoint to execute the change of the user password
+         */
+        const val CHANGE_PASSWORD_ENDPOINT: String = "/changePassword"
 
-    /**
-     * Constructor to init the {@link EquinoxBaseEndpointsSet} class <br>
-     * <p>
-     * No-any params required
-     */
-    protected EquinoxBaseEndpointsSet() {
+        /**
+         * `CHANGE_LANGUAGE_ENDPOINT` the endpoint to execute the change of the user language
+         */
+        const val CHANGE_LANGUAGE_ENDPOINT: String = "/changeLanguage"
+
     }
 
 }

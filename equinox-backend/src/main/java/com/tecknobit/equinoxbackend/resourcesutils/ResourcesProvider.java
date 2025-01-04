@@ -82,9 +82,7 @@ public class ResourcesProvider {
     }
 
     /**
-     * Method to create the {@link #containerDirectory} <br>
-     *
-     * No-any params required
+     * Method to create the {@link #containerDirectory}
      */
     @Wrapper
     public void createContainerDirectory() {
@@ -123,9 +121,7 @@ public class ResourcesProvider {
     }
 
     /**
-     * Method to create the list of the {@link #subDirectories} for the {@link #containerDirectory} <br>
-     *
-     * No-any params required
+     * Method to create the list of the {@link #subDirectories} for the {@link #containerDirectory}
      */
     @Wrapper
     public void createSubDirectories() {

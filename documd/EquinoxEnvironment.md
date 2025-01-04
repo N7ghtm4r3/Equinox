@@ -199,7 +199,7 @@ package other.packages
 
 ...
 
-import com.tecknobit.equinoxbackend.environment.models.EquinoxUser;
+import com.tecknobit.equinoxbackend.environment.services.users.entity.EquinoxUser;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import org.json.JSONObject;
@@ -261,8 +261,8 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
-import static com.tecknobit.equinoxbackend.environment.models.EquinoxItem.IDENTIFIER_KEY;
-import static com.tecknobit.equinoxbackend.environment.models.EquinoxUser.USERS_KEY;
+import static com.tecknobit.equinoxbackend.environment.services.builtin.entity.EquinoxItem.IDENTIFIER_KEY;
+import static com.tecknobit.equinoxbackend.environment.services.users.entity.EquinoxUser.USERS_KEY;
 
 @Repository
 @Primary // this is REQUIRED to use correctly this repository instead the EquinoxUsersRepository

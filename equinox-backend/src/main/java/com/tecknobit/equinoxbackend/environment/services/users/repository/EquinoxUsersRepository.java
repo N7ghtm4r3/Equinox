@@ -1,6 +1,6 @@
 package com.tecknobit.equinoxbackend.environment.services.users.repository;
 
-import com.tecknobit.equinoxbackend.environment.models.EquinoxUser;
+import com.tecknobit.equinoxbackend.environment.services.users.entity.EquinoxUser;
 import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -9,7 +9,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
-import static com.tecknobit.equinoxbackend.environment.models.EquinoxUser.*;
+import static com.tecknobit.equinoxbackend.environment.services.users.entity.EquinoxUser.*;
 
 /**
  * The {@code UsersRepository} interface is useful to manage the queries for the users operations

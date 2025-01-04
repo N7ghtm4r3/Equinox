@@ -13,8 +13,8 @@ plugins {
     kotlin("plugin.serialization") version "2.0.20"
 }
 
-group = "com.tecknobit.equinox"
-version = "1.0.5"
+group = "com.tecknobit.equinoxcore"
+version = "1.0.6"
 
 repositories {
     google()
@@ -81,12 +81,12 @@ mavenPublishing {
     coordinates(
         groupId = "io.github.n7ghtm4r3",
         artifactId = "equinox-core",
-        version = "1.0.5"
+        version = "1.0.6"
     )
     pom {
         name.set("Equinox")
         description.set("Utilities for backend services based on Springboot framework. Is a support library to implement some utilities both for backend and for client also who comunicate with that Springboot backend")
-        inceptionYear.set("2024")
+        inceptionYear.set("2025")
         url.set("https://github.com/N7ghtm4r3/Equinox")
 
         licenses {

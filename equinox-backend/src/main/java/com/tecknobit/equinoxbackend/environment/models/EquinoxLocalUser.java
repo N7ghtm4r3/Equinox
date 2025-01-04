@@ -1,13 +1,14 @@
 package com.tecknobit.equinoxbackend.environment.models;
 
 import com.tecknobit.apimanager.formatters.JsonHelper;
+import com.tecknobit.equinoxbackend.environment.services.users.entity.EquinoxUser;
 import com.tecknobit.equinoxcore.annotations.RequiresSuperCall;
 import com.tecknobit.equinoxcore.annotations.Structure;
 import kotlin.Deprecated;
 
-import static com.tecknobit.equinoxbackend.environment.models.EquinoxItem.IDENTIFIER_KEY;
-import static com.tecknobit.equinoxbackend.environment.models.EquinoxUser.*;
-import static com.tecknobit.equinoxbackend.environment.models.EquinoxUser.ApplicationTheme.Auto;
+import static com.tecknobit.equinoxbackend.environment.services.builtin.entity.EquinoxItem.IDENTIFIER_KEY;
+import static com.tecknobit.equinoxbackend.environment.services.users.entity.EquinoxUser.*;
+import static com.tecknobit.equinoxbackend.environment.services.users.entity.EquinoxUser.ApplicationTheme.Auto;
 import static com.tecknobit.equinoxcore.helpers.InputsValidator.HOST_ADDRESS_KEY;
 
 /**
@@ -73,9 +74,7 @@ public abstract class EquinoxLocalUser {
     protected ApplicationTheme theme;
 
     /**
-     * Method to init the local user session <br>
-     *
-     * No-any params required
+     * Method to init the local user session 
      */
     @RequiresSuperCall
     protected void initLocalUser() {

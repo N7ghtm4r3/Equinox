@@ -4,11 +4,17 @@ import com.tecknobit.apimanager.apis.APIRequest.DEFAULT_REQUEST_TIMEOUT
 import com.tecknobit.apimanager.apis.APIRequest.Params
 import com.tecknobit.apimanager.apis.ServerProtector.SERVER_SECRET_KEY
 import com.tecknobit.equinoxbackend.Requester
-import com.tecknobit.equinoxbackend.environment.helpers.EquinoxBaseEndpointsSet.*
-import com.tecknobit.equinoxbackend.environment.models.EquinoxUser.*
+import com.tecknobit.equinoxbackend.environment.services.users.entity.EquinoxUser.*
 import com.tecknobit.equinoxcore.annotations.RequestPath
 import com.tecknobit.equinoxcore.helpers.InputsValidator.Companion.DEFAULT_LANGUAGE
 import com.tecknobit.equinoxcore.helpers.InputsValidator.Companion.isLanguageValid
+import com.tecknobit.equinoxcore.network.EquinoxBaseEndpointsSet.Companion.BASE_EQUINOX_ENDPOINT
+import com.tecknobit.equinoxcore.network.EquinoxBaseEndpointsSet.Companion.CHANGE_EMAIL_ENDPOINT
+import com.tecknobit.equinoxcore.network.EquinoxBaseEndpointsSet.Companion.CHANGE_LANGUAGE_ENDPOINT
+import com.tecknobit.equinoxcore.network.EquinoxBaseEndpointsSet.Companion.CHANGE_PASSWORD_ENDPOINT
+import com.tecknobit.equinoxcore.network.EquinoxBaseEndpointsSet.Companion.CHANGE_PROFILE_PIC_ENDPOINT
+import com.tecknobit.equinoxcore.network.EquinoxBaseEndpointsSet.Companion.SIGN_IN_ENDPOINT
+import com.tecknobit.equinoxcore.network.EquinoxBaseEndpointsSet.Companion.SIGN_UP_ENDPOINT
 import com.tecknobit.equinoxcore.network.RequestMethod.*
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MultipartBody
@@ -18,7 +24,7 @@ import java.io.File
 
 /**
  * The **EquinoxRequester** class is useful to communicate with backend based on the **SpringBoot** framework with the
- * [EquinoxUser] requests pre-implemented
+ * [com.tecknobit.equinoxbackend.environment.services.users.entity.EquinoxUser] requests pre-implemented
  *
  * @param host The host address where is running the backend
  * @param userId The user identifier

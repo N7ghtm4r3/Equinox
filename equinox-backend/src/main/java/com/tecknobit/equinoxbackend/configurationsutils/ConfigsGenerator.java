@@ -260,8 +260,6 @@ public class ConfigsGenerator {
 
     /**
      * Method to get whether the caller class is a <b>Kotlin</b> class <br>
-     * <p>
-     * No-any params required
      *
      * @return whether the caller class is a <b>Kotlin</b> class as boolean
      */
@@ -299,8 +297,6 @@ public class ConfigsGenerator {
 
     /**
      * Method to create the <b>CORSAdvice</b> to correctly set the CORS origin policy for the backend <br>
-     * <p>
-     * No-any params required
      *
      * @throws IOException when an error during the creation or fetching the path is occurred
      * @apiNote this class will be created in the same package where this method has been invoked
