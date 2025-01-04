@@ -1,18 +1,16 @@
 import org.jetbrains.dokka.DokkaConfiguration.Visibility.*
-import org.jetbrains.dokka.base.DokkaBase
-import org.jetbrains.dokka.base.DokkaBaseConfiguration
-import org.jetbrains.dokka.gradle.DokkaMultiModuleTask
 import org.jetbrains.dokka.gradle.DokkaTaskPartial
 
 plugins {
-    kotlin("jvm")
-    id("org.jetbrains.dokka") version "1.9.20"
-    id("com.android.library") version "8.2.2" apply false
+    alias(libs.plugins.androidLibrary) apply false
+    alias(libs.plugins.kotlinMultiplatform) apply false
+    alias(libs.plugins.vanniktech.mavenPublish) apply false
+    alias(libs.plugins.dokka) apply false
 }
 
 buildscript {
     dependencies {
-        classpath("org.jetbrains.dokka:dokka-base:1.9.20")
+        classpath(libs.dokka.base)
     }
 }
 
@@ -23,16 +21,5 @@ subprojects {
             includeNonPublic.set(true)
             documentedVisibilities.set(setOf(PUBLIC, PROTECTED, PRIVATE))
         }
-    }
-}
-
-repositories {
-    mavenCentral()
-}
-
-tasks.withType<DokkaMultiModuleTask> {
-    outputDirectory.set(layout.projectDirectory.dir("docs"))
-    pluginConfiguration<DokkaBase, DokkaBaseConfiguration> {
-        footerMessage = "(c) 2025 Tecknobit"
     }
 }

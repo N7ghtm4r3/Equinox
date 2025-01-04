@@ -1,31 +1,13 @@
-package com.tecknobit.equinoxbackend
+package com.tecknobit.equinoxcore.network
 
-import com.tecknobit.apimanager.annotations.Wrapper
-import com.tecknobit.apimanager.apis.APIRequest
-import com.tecknobit.apimanager.apis.APIRequest.*
-import com.tecknobit.apimanager.apis.sockets.SocketManager.StandardResponseCode
-import com.tecknobit.apimanager.apis.sockets.SocketManager.StandardResponseCode.*
-import com.tecknobit.apimanager.formatters.JsonHelper
-import com.tecknobit.apimanager.formatters.TimeFormatter
+import com.tecknobit.equinoxcore.annotations.Wrapper
 import com.tecknobit.equinoxcore.pagination.PaginatedResponse
 import com.tecknobit.equinoxcore.pagination.PaginatedResponse.Companion.DATA_KEY
 import com.tecknobit.equinoxcore.pagination.PaginatedResponse.Companion.IS_LAST_PAGE_KEY
 import com.tecknobit.equinoxcore.pagination.PaginatedResponse.Companion.PAGE_KEY
 import com.tecknobit.equinoxcore.pagination.PaginatedResponse.Companion.PAGE_SIZE_KEY
-import kotlinx.coroutines.async
-import kotlinx.coroutines.runBlocking
-import okhttp3.Headers.Companion.toHeaders
-import okhttp3.MultipartBody
-import okhttp3.OkHttpClient
-import okhttp3.Request
-import org.json.JSONObject
-import java.io.IOException
-import java.security.SecureRandom
-import java.security.cert.X509Certificate
-import javax.net.ssl.SSLContext
-import javax.net.ssl.SSLSession
-import javax.net.ssl.TrustManager
-import javax.net.ssl.X509TrustManager
+import kotlinx.serialization.KSerializer
+import kotlinx.serialization.json.*
 
 /**
  * The **Requester** class is useful to communicate with backend based on the **SpringBoot** framework
@@ -33,7 +15,7 @@ import javax.net.ssl.X509TrustManager
  * @param host The host address where is running the backend
  * @param userId The user identifier
  * @param userToken The user token
- * @param debugMode: whether the requester is still in development and who is developing needs the log of the requester's
+ * @param debugMode Whether the requester is still in development and who is developing needs the log of the requester's
  * workflow, if it is enabled all the details of the requests sent and the errors occurred will be printed in the console
  * @param connectionTimeout Time to keep alive request then throw the connection refused error
  * @param connectionErrorMessage The error to send when a connection error occurred
@@ -42,18 +24,14 @@ import javax.net.ssl.X509TrustManager
  *
  * @author N7ghtm4r3 - Tecknobit
  */
-@Deprecated(
-    message = "This class will be moved in the equinox-core module in the next version",
-    level = DeprecationLevel.WARNING
-)
-abstract class Requester (
+abstract class Requester(
     protected var host: String,
     protected var userId: String? = null,
     protected var userToken: String? = null,
     protected var debugMode: Boolean = false,
-    protected val connectionTimeout: Long = DEFAULT_REQUEST_TIMEOUT.toLong(),
+    protected val connectionTimeout: Long = DEFAULT_REQUEST_TIMEOUT,
     protected val connectionErrorMessage: String,
-    protected val enableCertificatesValidation: Boolean = false
+    protected val enableCertificatesValidation: Boolean = false,
 ) {
 
     companion object {
@@ -79,11 +57,15 @@ abstract class Requester (
         const val RESPONSE_DATA_KEY: String = "response"
 
         /**
+         * **DEFAULT_REQUEST_TIMEOUT** the timeout values in millis used in the requests
+         */
+        const val DEFAULT_REQUEST_TIMEOUT = 5000L
+
+        /**
          * **DEFAULT_CONNECTION_ERROR_MESSAGE** the message to send when an error during the communication with the
          * backend occurred
          */
         const val DEFAULT_CONNECTION_ERROR_MESSAGE = "connection_error_message_key"
-
 
         /**
          * Method to execute and manage the response of a request
@@ -92,11 +74,10 @@ abstract class Requester (
          * @param onResponse The action to execute when a response is returned from the backend
          * @param onConnectionError The action to execute if the request has been failed for a connection error
          */
-        @Wrapper
         fun <R : Requester> R.sendRequest(
-            request: R.() -> JSONObject,
-            onResponse: (JsonHelper) -> Unit,
-            onConnectionError: ((JsonHelper) -> Unit)? = null,
+            request: R.() -> JsonObject,
+            onResponse: (JsonObject) -> Unit,
+            onConnectionError: ((JsonObject) -> Unit)? = null,
         ) {
             return sendRequest(
                 request = request,
@@ -115,23 +96,22 @@ abstract class Requester (
          * @param onConnectionError The action to execute if the request has been failed for a connection error
          */
         fun <R : Requester> R.sendRequest(
-            request: R.() -> JSONObject,
-            onSuccess: (JsonHelper) -> Unit,
-            onFailure: (JsonHelper) -> Unit,
-            onConnectionError: ((JsonHelper) -> Unit)? = null,
+            request: R.() -> JsonObject,
+            onSuccess: (JsonObject) -> Unit,
+            onFailure: (JsonObject) -> Unit,
+            onConnectionError: ((JsonObject) -> Unit)? = null,
         ) {
             val response = request.invoke(this)
-            val hResponse = JsonHelper(response)
             when (isSuccessfulResponse(response)) {
-                SUCCESSFUL -> onSuccess.invoke(hResponse)
+                SUCCESSFUL -> onSuccess.invoke(response)
                 GENERIC_RESPONSE -> {
                     if (onConnectionError != null)
-                        onConnectionError.invoke(hResponse)
+                        onConnectionError.invoke(response)
                     else
-                        onFailure.invoke(hResponse)
+                        onFailure.invoke(response)
                 }
 
-                else -> onFailure.invoke(hResponse)
+                else -> onFailure.invoke(response)
             }
         }
 
@@ -139,38 +119,31 @@ abstract class Requester (
          * Method to execute and manage the paginated response of a request
          *
          * @param request The request to execute
-         * @param supplier The supplier Method to instantiate a [T] item
          * @param onSuccess The action to execute if the request has been successful
          * @param onFailure The action to execute if the request has been failed
          * @param onConnectionError The action to execute if the request has been failed for a connection error
-         *
-         * @param T generic type of the items in the page response
          */
-        fun <R : Requester, T> R.sendPaginatedRequest(
-            request: R.() -> JSONObject,
-            supplier: (JSONObject) -> T,
+        fun <R : Requester, T> R.sendPaginatedWRequest(
+            request: R.() -> JsonObject,
+            serializer: KSerializer<T>,
             onSuccess: (PaginatedResponse<T>) -> Unit,
-            onFailure: (JsonHelper) -> Unit,
-            onConnectionError: ((JsonHelper) -> Unit)? = null,
+            onFailure: (JsonObject) -> Unit,
+            onConnectionError: ((JsonObject) -> Unit)? = null,
         ) {
             sendRequest(
-                request = request,
-                onSuccess = { hPage ->
-                    // TODO: WHEN MIGRATED TO EQUINOX-CORE USE DIRECTLY THE CORRECT PaginatedResponse CONSTRUCTOR TO INIT IT
-                    val jData: ArrayList<JSONObject> = hPage.fetchList(DATA_KEY, arrayListOf<JSONObject>())
-                    val data = arrayListOf<T>()
-                    jData.forEach { item ->
-                        val instantiatedItem = supplier.invoke(item)
-                        data.add(instantiatedItem)
-                    }
-                    onSuccess.invoke(
-                        PaginatedResponse(
-                            data = data,
-                            page = hPage.getInt(PAGE_KEY),
-                            pageSize = hPage.getInt(PAGE_SIZE_KEY),
-                            isLastPage = hPage.getBoolean(IS_LAST_PAGE_KEY)
-                        )
+                request = { request.invoke(this) },
+                onSuccess = { jPage ->
+                    // TODO: USING DIRECTLY THE SERIALIZATION
+                    val data = jPage[RESPONSE_DATA_KEY]!!.jsonObject
+                    val page = PaginatedResponse(
+                        data = data[DATA_KEY]!!.jsonArray.map {
+                            Json.decodeFromJsonElement(serializer, it)
+                        },
+                        page = data[PAGE_KEY]!!.jsonPrimitive.int,
+                        pageSize = data[PAGE_SIZE_KEY]!!.jsonPrimitive.int,
+                        isLastPage = data[IS_LAST_PAGE_KEY]!!.jsonPrimitive.boolean
                     )
+                    onSuccess.invoke(page)
                 },
                 onFailure = onFailure,
                 onConnectionError = onConnectionError
@@ -185,11 +158,11 @@ abstract class Requester (
          * @return whether the request has been successful or not as [StandardResponseCode]
          */
         private fun isSuccessfulResponse(
-            response: JSONObject?,
+            response: JsonObject?,
         ): StandardResponseCode {
-            if (response == null || !response.has(RESPONSE_STATUS_KEY))
+            if (response == null || !response.containsKey(RESPONSE_STATUS_KEY))
                 return FAILED
-            return when (response.getString(RESPONSE_STATUS_KEY)) {
+            return when (response.jsonObject[RESPONSE_STATUS_KEY]!!.jsonPrimitive.content) {
                 SUCCESSFUL.name -> SUCCESSFUL
                 GENERIC_RESPONSE.name -> GENERIC_RESPONSE
                 else -> FAILED
@@ -230,7 +203,7 @@ abstract class Requester (
          */
         @Suppress("UNCHECKED_CAST")
         fun <T> JsonHelper.responseData(): T {
-            return this.get(RESPONSE_DATA_KEY) as T
+            return this.get(RESPONSE_DATA_KEY)
         }
 
     }
@@ -238,17 +211,8 @@ abstract class Requester (
     /**
      * `timeFormatter` the formatter used to format the timestamp values
      */
+    // TODO: TO REPLACE WITH THE REAL ONE
     protected val timeFormatter: TimeFormatter = TimeFormatter.getInstance()
-
-    /**
-     * **apiRequest** -> the instance to communicate and make the requests to the backend
-     */
-    protected val apiRequest = APIRequest(connectionTimeout)
-
-    /**
-     * **headers** the headers used in the request
-     */
-    protected val headers = Headers()
 
     /**
      * **mustValidateCertificates** flag whether the requests must validate the **SSL** certificates, this for example
@@ -282,13 +246,13 @@ abstract class Requester (
      * @param endpoint The endpoint path of the request url
      * @param query The query parameters of the request
      *
-     * @return the result of the request as [JSONObject]
+     * @return the result of the request as [JsonObject]
      */
     @Wrapper
     protected fun execGet(
         endpoint: String,
-        query: Params? = null
-    ) : JSONObject {
+        query: Params? = null,
+    ): JsonObject {
         return execRequest(
             method = RequestMethod.GET,
             endpoint = endpoint,
@@ -303,14 +267,14 @@ abstract class Requester (
      * @param query The query parameters of the request
      * @param payload The payload of the request
      *
-     * @return the result of the request as [JSONObject]
+     * @return the result of the request as [JsonObject]
      */
     @Wrapper
     protected fun execPost(
         endpoint: String,
         query: Params? = null,
-        payload: Params = Params()
-    ) : JSONObject {
+        payload: Params = Params(),
+    ): JsonObject {
         return execRequest(
             method = RequestMethod.POST,
             endpoint = endpoint,
@@ -326,14 +290,14 @@ abstract class Requester (
      * @param query The query parameters of the request
      * @param payload The payload of the request
      *
-     * @return the result of the request as [JSONObject]
+     * @return the result of the request as [JsonObject]
      */
     @Wrapper
     protected fun execPut(
         endpoint: String,
         query: Params? = null,
-        payload: Params = Params()
-    ) : JSONObject {
+        payload: Params = Params(),
+    ): JsonObject {
         return execRequest(
             method = RequestMethod.PUT,
             endpoint = endpoint,
@@ -349,14 +313,14 @@ abstract class Requester (
      * @param query The query parameters of the request
      * @param payload The payload of the request
      *
-     * @return the result of the request as [JSONObject]
+     * @return the result of the request as [JsonObject]
      */
     @Wrapper
     protected fun execPatch(
         endpoint: String,
         query: Params? = null,
-        payload: Params = Params()
-    ) : JSONObject {
+        payload: Params = Params(),
+    ): JsonObject {
         return execRequest(
             method = RequestMethod.PATCH,
             endpoint = endpoint,
@@ -372,14 +336,14 @@ abstract class Requester (
      * @param query The query parameters of the request
      * @param payload The payload of the request
      *
-     * @return the result of the request as [JSONObject]
+     * @return the result of the request as [JsonObject]
      */
     @Wrapper
     protected fun execDelete(
         endpoint: String,
         query: Params? = null,
-        payload: Params? = null
-    ) : JSONObject {
+        payload: Params? = null,
+    ): JsonObject {
         return execRequest(
             method = RequestMethod.DELETE,
             endpoint = endpoint,
@@ -414,16 +378,16 @@ abstract class Requester (
      * @param query The query parameters of the request
      * @param payload The payload of the request
      *
-     * @return the result of the request as [JSONObject]
+     * @return the result of the request as [JsonObject]
      */
     private fun execRequest(
         method: RequestMethod,
         endpoint: String,
         query: Params? = null,
-        payload: Params? = null
-    ) : JSONObject {
+        payload: Params? = null,
+    ): JsonObject {
         var response: String? = null
-        var jResponse: JSONObject
+        var jResponse: JsonObject
         if(mustValidateCertificates)
             apiRequest.validateSelfSignedCertificate()
         var requestUrl = host + endpoint
@@ -459,7 +423,7 @@ abstract class Requester (
                         response = connectionErrorMessage().toString()
                     }
                 }.await()
-                jResponse = JSONObject(response)
+                jResponse = JsonObject(response)
             } catch (e: Exception) {
                 logError(
                     exception = e
@@ -486,13 +450,13 @@ abstract class Requester (
      * @param endpoint The endpoint path of the url
      * @param body The body payload of the request
      *
-     * @return the result of the request as [JSONObject]
+     * @return the result of the request as [JsonObject]
      */
     protected fun execMultipartRequest(
         endpoint: String,
         query: Params? = null,
-        body: MultipartBody
-    ): JSONObject {
+        body: MultipartBody,
+    ): JsonObject {
         val mHeaders = mutableMapOf<String, String>()
         headers.headersKeys.forEach { headerKey ->
             mHeaders[headerKey] = headers.getHeader(headerKey)
@@ -507,17 +471,17 @@ abstract class Requester (
             .post(body)
             .build()
         val client = validateSelfSignedCertificate(OkHttpClient())
-        var response: JSONObject? = null
+        var response: JsonObject? = null
         runBlocking {
             try {
                 async {
                     response = try {
-                        client.newCall(request).execute().body?.string()?.let { JSONObject(it) }
+                        client.newCall(request).execute().body?.string()?.let { JsonObject(it) }
                     } catch (e: IOException) {
                         logError(
                             exception = e
                         )
-                        JSONObject(connectionErrorMessage())
+                        JsonObject(connectionErrorMessage())
                     }
                     interceptRequest()
                 }.await()
@@ -525,7 +489,7 @@ abstract class Requester (
                 logError(
                     exception = e
                 )
-                response = JSONObject(connectionErrorMessage())
+                response = JsonObject(connectionErrorMessage())
             }
         }
         logRequestInfo(
@@ -603,7 +567,7 @@ abstract class Requester (
     private fun logRequestInfo(
         requestUrl: String,
         requestPayloadInfo: () -> Unit,
-        response: JSONObject?
+        response: JsonObject?,
     ) {
         if (debugMode) {
             synchronized(this) {
@@ -612,7 +576,7 @@ abstract class Requester (
                 println("-URL\n$requestUrl")
                 requestPayloadInfo.invoke()
                 if (response != null)
-                    println("\n-RESPONSE\n${response.toString(4)}")
+                    println("\n-RESPONSE\n$response")
                 println("---------------------------------------------------")
             }
         }
@@ -627,7 +591,7 @@ abstract class Requester (
         val headerKeys = headers.headersKeys
         if (headerKeys.isNotEmpty()) {
             println("\n-HEADERS")
-            val headers = JSONObject()
+            val headers = JsonObject()
             headerKeys.forEach { key ->
                 headers.put(key, this.headers.getHeader(key))
             }
@@ -652,10 +616,10 @@ abstract class Requester (
      *
      * No-any params required
      *
-     * @return the error message as [JSONObject]
+     * @return the error message as [JsonObject]
      */
-    protected fun connectionErrorMessage(): JSONObject {
-        return JSONObject()
+    protected fun connectionErrorMessage(): JsonObject {
+        return JsonObject()
             .put(RESPONSE_STATUS_KEY, GENERIC_RESPONSE.name)
             .put(RESPONSE_DATA_KEY, connectionErrorMessage)
     }
