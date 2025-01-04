@@ -1,7 +1,7 @@
 package com.tecknobit.equinoxbackend.environment.services.builtin.service;
 
-import com.tecknobit.apimanager.annotations.Wrapper;
 import com.tecknobit.equinoxbackend.environment.services.builtin.entity.EquinoxItem;
+import com.tecknobit.equinoxcore.annotations.Wrapper;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.Query;
@@ -230,9 +230,22 @@ public abstract class EquinoxItemsHelper {
     }
 
     /**
+     * Method to execute a batch delete of a single list of data simultaneously
+     *
+     * @param table   The table where execute the batch insert
+     * @param values  The values to simultaneously delete
+     * @param columns The columns where execute the in comparison to delete the row correctly
+     * @apiNote the query form: DELETE FROM table WHERE (col1, col2, ...) IN ((dataCol1, dataCol2), (dataCol1a, dataCol2a), ...)
+     */
+    @Wrapper
+    protected void batchDeleteOnSingleSet(String table, List<?> values, String... columns) {
+        batchDelete(table, List.of(values), columns);
+    }
+
+    /**
      * Method to execute a batch delete of a list of data simultaneously
      *
-     * @param table:   the table where execute the batch insert
+     * @param table The table where execute the batch insert
      * @param values The values to simultaneously delete
      * @param columns The columns where execute the in comparison to delete the row correctly
      * @apiNote the query form: DELETE FROM table WHERE (col1, col2, ...) IN ((dataCol1, dataCol2), (dataCol1a, dataCol2a), ...)
@@ -242,7 +255,7 @@ public abstract class EquinoxItemsHelper {
         if (columnsNumber == 0)
             return;
         List<?> mergedValues = mergeAlternativelyInColumnsValues(values);
-        if (mergedValues.isEmpty())
+        if (mergedValues.isEmpty() || mergedValues.size() % columnsNumber != 0)
             return;
         String columnsFormated = formatValuesForQuery(OPENED_ROUND_BRACKET, Arrays.stream(columns).toList(),
                 null, true);
@@ -265,6 +278,8 @@ public abstract class EquinoxItemsHelper {
         for (int j = 0; j < maxSize; j++) {
             for (List<?> values : inValues) {
                 int valuesSize = values.size();
+                if (valuesSize == 0)
+                    break;
                 if (j < valuesSize)
                     mergedValues.add(values.get(j));
                 else
@@ -305,14 +320,16 @@ public abstract class EquinoxItemsHelper {
         int lastValue = totalValues - 1;
         int lastColumn = columns - 1;
         for (int j = 0; j < totalValues; ) {
-            inClause.append(OPENED_ROUND_BRACKET);
+            if (columns > 1)
+                inClause.append(OPENED_ROUND_BRACKET);
             for (int i = 0; i < columns; i++, j++) {
                 inClause.append(SINGLE_QUOTE).append(inValues.get(j)).append(SINGLE_QUOTE);
                 if (i < lastColumn)
                     inClause.append(COMMA);
             }
-            inClause.append(CLOSED_ROUND_BRACKET);
-            if (j < lastValue)
+            if (columns > 1)
+                inClause.append(CLOSED_ROUND_BRACKET);
+            if (j < lastValue || (j == lastValue && lastColumn == 0))
                 inClause.append(COMMA);
         }
         inClause.append(CLOSED_ROUND_BRACKET);
