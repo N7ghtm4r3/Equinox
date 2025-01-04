@@ -71,22 +71,25 @@ public abstract class EquinoxItemsHelper {
     public interface SyncBatchContainer {
 
         /**
-         * Method to get the current list of data <br>
-         *
-         * No-any params required
+         * Method to get the current list of data
          *
          * @return the current list of identifiers as {@link ArrayList} of {@link V}
          */
         <V> ArrayList<V> getCurrentData();
 
         /**
-         * Method to get the columns affected by the synchronization <br>
-         * <p>
-         * No-any params required
+         * Method to get the columns affected by the synchronization
          *
          * @return columns affected by the synchronization as array of {@link String}
          */
         String[] getColumns();
+
+        /**
+         * Invoked after the synchronization executed, and it is useful to execute certain actions with the data synchronized
+         * such logging, notifications, etc...
+         */
+        default void afterSync() {
+        }
 
     }
 
@@ -221,6 +224,7 @@ public abstract class EquinoxItemsHelper {
         batchInsert(INSERT_IGNORE_INTO, table, batchQuery, columns);
         currentData.removeAll(updatedData);
         batchDelete(table, List.of(List.of(targetId), currentData), columns);
+        container.afterSync();
     }
 
     /**
