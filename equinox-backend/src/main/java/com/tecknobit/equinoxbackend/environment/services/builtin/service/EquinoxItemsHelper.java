@@ -62,7 +62,7 @@ public abstract class EquinoxItemsHelper {
     }
 
     /**
-     * The {@code SyncBatchContainer} interface is useful to execute the {@link #syncBatch(SyncBatchContainer, String, String, List, BatchQuery)}
+     * The {@code SyncBatchContainer} interface is useful to execute the {@link #syncBatch(SyncBatchContainer, String, String, BatchQuery)}
      * method to synchronize the data. This interface is the container about the information to use during the synchronization
      * process
      *
@@ -93,6 +93,8 @@ public abstract class EquinoxItemsHelper {
     /**
      * The {@code BatchQuery} interface is useful to manage the batch queries to insert or delete values in batch
      *
+     * @param <V> The type of the item used in the query
+     *
      * @author N7ghtm4r3 - Tecknobit
      *
      * @apiNote example usage for a join table of user and his/her cars:
@@ -113,10 +115,16 @@ public abstract class EquinoxItemsHelper {
      * <pre>
      * {@code
      *     ArrayList<String> carsIds = fetchCarsIdentifiers();
-     *     BatchQuery batchQuery = new BatchQuery() {
+     *     BatchQuery batchQuery = new BatchQuery<String>() {
+     *
      *          @Override
-     *          public void prepareQuery(Query query, int index) {
-     *              for (String carId : carsIds) {
+     *          public void getUpdatedData() {
+     *              return updatedCars; // your updated data list
+     *         }
+     *
+     *          @Override
+     *          public void prepareQuery(Query query, int index, List<String> updatedItems) {
+     *              for (String carId : updatedItems) {
      *                  // the order of the parameters setting is the same of the table
      *                  query.setParameter(index++, userId);
      *                  query.setParameter(index++, carId);
@@ -126,15 +134,23 @@ public abstract class EquinoxItemsHelper {
      * }
      * </pre>
      */
-    public interface BatchQuery {
+    public interface BatchQuery<V> {
+
+        /**
+         * Method to get the updated data to use in the batch query
+         *
+         * @return the updated data as {@link List} of {@link V}
+         */
+        List<V> getUpdatedData();
 
         /**
          * Method to prepare the batch query such fill the parameters programmatically
          *
          * @param query Query instance used to execute the SQL command
          * @param index The pre-increment index to format the values in the query, its initial value is 1
+         * @param updatedItems The updated items to use in the batch query
          */
-        void prepareQuery(Query query, int index);
+        void prepareQuery(Query query, int index, List<V> updatedItems);
 
     }
 
@@ -192,18 +208,17 @@ public abstract class EquinoxItemsHelper {
     /**
      * Method to execute a batch synchronization of a list of data simultaneously
      *
-     * @param container Cntains the data about the synchronization such the columns affected and the current list of the data
+     * @param container Contains the data about the synchronization such the columns affected and the current list of the data
      * @param table The table where execute the synchronization of the data
      * @param targetId The target identifier of the entity where the synchronization must be executed, such a user and
      *                     his/her notes
-     * @param updatedData The list of the updated data to synchronize
      * @param batchQuery The manager of the batch query to execute
      */
-    protected <V> void syncBatch(SyncBatchContainer container, String table, String targetId, List<V> updatedData,
-                                 BatchQuery batchQuery) {
+    protected <V> void syncBatch(SyncBatchContainer container, String table, String targetId, BatchQuery<V> batchQuery) {
         String[] columns = container.getColumns();
         ArrayList<V> currentData = container.getCurrentData();
-        batchInsert(INSERT_IGNORE_INTO, table, updatedData, batchQuery, columns);
+        List<V> updatedData = batchQuery.getUpdatedData();
+        batchInsert(INSERT_IGNORE_INTO, table, batchQuery, columns);
         currentData.removeAll(updatedData);
         batchDelete(table, List.of(List.of(targetId), currentData), columns);
     }
@@ -213,19 +228,18 @@ public abstract class EquinoxItemsHelper {
      *
      * @param command The insertion command to execute
      * @param table The table where execute the batch insert
-     * @param values The values to simultaneously insert
      * @param batchQuery The manager of the batch query to execute
      * @param columns The columns affected by the insertion
      */
-    protected void batchInsert(InsertCommand command, String table, List<?> values, BatchQuery batchQuery,
-                               String... columns) {
+    protected <V> void batchInsert(InsertCommand command, String table, BatchQuery<V> batchQuery, String... columns) {
+        List<V> values = batchQuery.getUpdatedData();
         if (values.isEmpty())
             return;
         String insertQuery = command.sql + table + " " + formatColumns(columns) + _VALUES_;
         String placeHolder = formatPlaceholder(columns);
         String insertQueryComplete = formatValuesForQuery(insertQuery, values, placeHolder, false);
         Query query = entityManager.createNativeQuery(insertQueryComplete);
-        batchQuery.prepareQuery(query, 1);
+        batchQuery.prepareQuery(query, 1, values);
         query.executeUpdate();
     }
 
