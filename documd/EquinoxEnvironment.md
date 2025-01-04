@@ -67,9 +67,12 @@ public class Launcher {
 
   public static void main(String[] args) {
 
+    // used without init the server protector as needed  
+    EquinoxController.initEquinoxEnvironment(
+            Launcher.class,
+            customSubDirectoryOne, customSubDirectoryTwo, ...)
+
     // used to init the server protector to manage the server accesses
-    // if it is not done will be thrown a RuntimeException
-    // required if you need to use EquinoxUser or your own customization of that class
     EquinoxController.initEquinoxEnvironment(
             "the path where storage the server secret",
             "the message to print when the server secret has been generated",

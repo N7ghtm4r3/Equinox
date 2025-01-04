@@ -1,6 +1,7 @@
 package com.tecknobit.equinoxbackend.environment.services.users.controller;
 
 import com.tecknobit.apimanager.annotations.RequestPath;
+import com.tecknobit.equinoxbackend.configuration.EquinoxBackendConfiguration;
 import com.tecknobit.equinoxbackend.environment.services.builtin.controller.EquinoxController;
 import com.tecknobit.equinoxbackend.environment.services.users.entity.EquinoxUser;
 import com.tecknobit.equinoxbackend.environment.services.users.repository.EquinoxUsersRepository;
@@ -42,6 +43,20 @@ public class EquinoxUsersController<T extends EquinoxUser, R extends EquinoxUser
     protected H usersHelper;
 
     /**
+     * {@code configuration} the current configuration of the Equinox's backend instance
+     */
+    protected final EquinoxBackendConfiguration configuration;
+
+    /**
+     * Constructor to instantiate the {@link EquinoxController}
+     *
+     * @apiNote will be instantiated also the {@link #configuration}
+     */
+    public EquinoxUsersController() {
+        configuration = EquinoxBackendConfiguration.getInstance();
+    }
+
+    /**
      * Method to sign up in the <b>Equinox's system</b>
      *
      * @param payload Payload of the request
@@ -63,7 +78,7 @@ public class EquinoxUsersController<T extends EquinoxUser, R extends EquinoxUser
     public String signUp(@RequestBody Map<String, String> payload) {
         loadJsonHelper(payload);
         mantis.changeCurrentLocale(jsonHelper.getString(LANGUAGE_KEY, DEFAULT_LANGUAGE));
-        if (!serverProtector.serverSecretMatches(jsonHelper.getString(SERVER_SECRET_KEY)))
+        if (configuration.isServerProtectorEnabled() && !serverProtector.serverSecretMatches(jsonHelper.getString(SERVER_SECRET_KEY)))
             return failedResponse(NOT_AUTHORIZED_OR_WRONG_DETAILS_MESSAGE);
         String name = jsonHelper.getString(NAME_KEY);
         String surname = jsonHelper.getString(SURNAME_KEY);

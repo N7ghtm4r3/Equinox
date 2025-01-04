@@ -3,13 +3,13 @@ package com.tecknobit.equinoxbackend.environment.services.builtin.controller;
 import com.tecknobit.apimanager.apis.ServerProtector;
 import com.tecknobit.apimanager.apis.sockets.SocketManager.StandardResponseCode;
 import com.tecknobit.apimanager.formatters.JsonHelper;
-import com.tecknobit.equinoxbackend.configurationsutils.ConfigsGenerator;
+import com.tecknobit.equinoxbackend.configuration.ConfigsGenerator;
+import com.tecknobit.equinoxbackend.configuration.EquinoxBackendConfiguration;
 import com.tecknobit.equinoxbackend.environment.services.users.entity.EquinoxUser;
 import com.tecknobit.equinoxbackend.environment.services.users.repository.EquinoxUsersRepository;
 import com.tecknobit.equinoxbackend.environment.services.users.service.EquinoxUsersHelper;
 import com.tecknobit.equinoxbackend.resourcesutils.ResourcesProvider;
 import com.tecknobit.mantis.Mantis;
-import jakarta.annotation.PostConstruct;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
@@ -114,21 +114,6 @@ abstract public class EquinoxController<T extends EquinoxUser, R extends Equinox
      * {@code me} user representing the user who made a request on the server
      */
     protected T me;
-
-    /**
-     * Method to check if the status of the environment has been set up correctly
-     * based on the use or not of the {@link #usersRepository}
-     */
-    @PostConstruct
-    private void checkEnvironmentStatus() {
-        if (usersRepository != null && serverProtector == null) {
-            try {
-                throw new Exception("The server protector must be initialized first");
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
-        }
-    }
 
     /**
      * Method to load the {@link #jsonHelper}
@@ -287,13 +272,29 @@ abstract public class EquinoxController<T extends EquinoxUser, R extends Equinox
     public static void initEquinoxEnvironment(String storagePath, String saveMessage, Class<?> context, String[] args,
                                               String... customSubDirectories) {
         try {
-            if (serverProtector == null) {
-                serverProtector = new ServerProtector(storagePath, saveMessage);
-                serverProtector.launch(args);
-                setBasicResourcesConfiguration(context, customSubDirectories);
-            } else
+            if (serverProtector != null)
                 throw new IllegalAccessException("The protector has been already instantiated");
+            serverProtector = new ServerProtector(storagePath, saveMessage);
+            serverProtector.launch(args);
+            EquinoxBackendConfiguration.getInstance().setServerProtectorEnabled(true);
+            setBasicResourcesConfiguration(context, customSubDirectories);
         } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     * Method to create resources directories correctly
+     *
+     * @param context              The launcher {@link Class} where this method has been invoked
+     * @param customSubDirectories The custom subdirectories of the user
+     * @apiNote the {@link #serverProtector} will not be instantiated
+     */
+    public static void initEquinoxEnvironment(Class<?> context, String... customSubDirectories) {
+        try {
+            EquinoxBackendConfiguration.getInstance().setServerProtectorEnabled(false);
+            setBasicResourcesConfiguration(context, customSubDirectories);
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }

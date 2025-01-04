@@ -1,4 +1,4 @@
-package com.tecknobit.equinoxbackend.configurationsutils;
+package com.tecknobit.equinoxbackend.configuration;
 
 import kotlin.Metadata;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
