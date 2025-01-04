@@ -59,9 +59,41 @@ kotlin {
 
     sourceSets {
 
+        val androidMain by getting {
+            dependencies {
+                implementation(libs.ktor.client.okhttp)
+            }
+        }
+
         val commonMain by getting {
             dependencies {
                 implementation(libs.kotlinx.serialization.json)
+                implementation(libs.ktor.client.core)
+            }
+        }
+
+        val jvmMain by getting {
+            dependencies {
+                implementation(libs.ktor.client.okhttp)
+            }
+        }
+
+        val iosX64Main by getting
+        val iosArm64Main by getting
+        val iosSimulatorArm64Main by getting
+        val iosMain by creating {
+            dependsOn(commonMain)
+            iosX64Main.dependsOn(this)
+            iosArm64Main.dependsOn(this)
+            iosSimulatorArm64Main.dependsOn(this)
+            dependencies {
+                implementation(libs.ktor.client.darwin)
+            }
+        }
+
+        val wasmJsMain by getting {
+            dependencies {
+                implementation(libs.ktor.client.js)
             }
         }
 

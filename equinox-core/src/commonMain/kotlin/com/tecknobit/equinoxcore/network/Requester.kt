@@ -1,13 +1,21 @@
 package com.tecknobit.equinoxcore.network
 
 import com.tecknobit.equinoxcore.annotations.Wrapper
+import com.tecknobit.equinoxcore.network.ResponseStatus.*
 import com.tecknobit.equinoxcore.pagination.PaginatedResponse
 import com.tecknobit.equinoxcore.pagination.PaginatedResponse.Companion.DATA_KEY
 import com.tecknobit.equinoxcore.pagination.PaginatedResponse.Companion.IS_LAST_PAGE_KEY
 import com.tecknobit.equinoxcore.pagination.PaginatedResponse.Companion.PAGE_KEY
 import com.tecknobit.equinoxcore.pagination.PaginatedResponse.Companion.PAGE_SIZE_KEY
+import io.ktor.client.*
+import io.ktor.client.request.*
+import io.ktor.client.statement.*
+import io.ktor.http.*
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.launch
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.json.*
+import kotlin.js.JsName
 
 /**
  * The **Requester** class is useful to communicate with backend based on the **SpringBoot** framework
@@ -30,6 +38,7 @@ abstract class Requester(
     protected var userToken: String? = null,
     protected var debugMode: Boolean = false,
     protected val connectionTimeout: Long = DEFAULT_REQUEST_TIMEOUT,
+    @JsName("connection_error_message")
     protected val connectionErrorMessage: String,
     protected val enableCertificatesValidation: Boolean = false,
 ) {
@@ -75,7 +84,7 @@ abstract class Requester(
          * @param onConnectionError The action to execute if the request has been failed for a connection error
          */
         fun <R : Requester> R.sendRequest(
-            request: R.() -> JsonObject,
+            request: suspend R.() -> JsonObject,
             onResponse: (JsonObject) -> Unit,
             onConnectionError: ((JsonObject) -> Unit)? = null,
         ) {
@@ -96,22 +105,24 @@ abstract class Requester(
          * @param onConnectionError The action to execute if the request has been failed for a connection error
          */
         fun <R : Requester> R.sendRequest(
-            request: R.() -> JsonObject,
+            request: suspend R.() -> JsonObject,
             onSuccess: (JsonObject) -> Unit,
             onFailure: (JsonObject) -> Unit,
             onConnectionError: ((JsonObject) -> Unit)? = null,
         ) {
-            val response = request.invoke(this)
-            when (isSuccessfulResponse(response)) {
-                SUCCESSFUL -> onSuccess.invoke(response)
-                GENERIC_RESPONSE -> {
-                    if (onConnectionError != null)
-                        onConnectionError.invoke(response)
-                    else
-                        onFailure.invoke(response)
-                }
+            MainScope().launch {
+                val response = request.invoke(this@sendRequest)
+                when (isSuccessfulResponse(response)) {
+                    SUCCESSFUL -> onSuccess.invoke(response)
+                    GENERIC_RESPONSE -> {
+                        if (onConnectionError != null)
+                            onConnectionError.invoke(response)
+                        else
+                            onFailure.invoke(response)
+                    }
 
-                else -> onFailure.invoke(response)
+                    else -> onFailure.invoke(response)
+                }
             }
         }
 
@@ -124,7 +135,7 @@ abstract class Requester(
          * @param onConnectionError The action to execute if the request has been failed for a connection error
          */
         fun <R : Requester, T> R.sendPaginatedWRequest(
-            request: R.() -> JsonObject,
+            request: suspend R.() -> JsonObject,
             serializer: KSerializer<T>,
             onSuccess: (PaginatedResponse<T>) -> Unit,
             onFailure: (JsonObject) -> Unit,
@@ -155,11 +166,11 @@ abstract class Requester(
          *
          * @param response The response of the request
          *
-         * @return whether the request has been successful or not as [StandardResponseCode]
+         * @return whether the request has been successful or not as [ResponseStatus]
          */
         private fun isSuccessfulResponse(
             response: JsonObject?,
-        ): StandardResponseCode {
+        ): ResponseStatus {
             if (response == null || !response.containsKey(RESPONSE_STATUS_KEY))
                 return FAILED
             return when (response.jsonObject[RESPONSE_STATUS_KEY]!!.jsonPrimitive.content) {
@@ -201,9 +212,28 @@ abstract class Requester(
          * ```
          *
          */
-        @Suppress("UNCHECKED_CAST")
-        fun <T> JsonHelper.responseData(): T {
-            return this.get(RESPONSE_DATA_KEY)
+        // TODO: TO DOCU
+        fun JsonObject.toNullResponseData(): JsonObject? {
+            val response = this[RESPONSE_DATA_KEY]
+            return if (response is JsonNull)
+                return null
+            else
+                response?.jsonObject
+        }
+
+        // TODO: TO DOCU
+        fun JsonObject.toResponseData(): JsonObject {
+            return this[RESPONSE_DATA_KEY]!!.jsonObject
+        }
+
+        // TODO: TO DOCU
+        fun JsonObject.toResponseArrayData(): JsonArray {
+            return this[RESPONSE_DATA_KEY]!!.jsonArray
+        }
+
+        // TODO: TO DOCU
+        fun JsonObject.toResponseContent(): String {
+            return this[RESPONSE_DATA_KEY]!!.jsonPrimitive.content
         }
 
     }
@@ -225,6 +255,11 @@ abstract class Requester(
      * **null** by default and no interceptions will be executed
      */
     protected var interceptorAction: (() -> Unit)? = null
+
+    /**
+     * **ktorClient** -> the HTTP client used to send the stats and the performance data
+     */
+    protected val ktorClient = HttpClient()
 
     /**
      * **initHost** Method to init correctly the [host] value
@@ -249,13 +284,15 @@ abstract class Requester(
      * @return the result of the request as [JsonObject]
      */
     @Wrapper
-    protected fun execGet(
+    protected suspend fun execGet(
         endpoint: String,
-        query: Params? = null,
+        headers: Map<String, Any> = emptyMap(),
+        query: JsonObject? = null,
     ): JsonObject {
         return execRequest(
             method = RequestMethod.GET,
             endpoint = endpoint,
+            headers = headers,
             query = query
         )
     }
@@ -270,16 +307,18 @@ abstract class Requester(
      * @return the result of the request as [JsonObject]
      */
     @Wrapper
-    protected fun execPost(
+    protected suspend fun execPost(
         endpoint: String,
-        query: Params? = null,
-        payload: Params = Params(),
+        headers: Map<String, Any> = emptyMap(),
+        query: JsonObject? = null,
+        payload: JsonObject = JsonObject(emptyMap()),
     ): JsonObject {
         return execRequest(
             method = RequestMethod.POST,
             endpoint = endpoint,
-            payload = payload,
-            query = query
+            headers = headers,
+            query = query,
+            payload = payload
         )
     }
 
@@ -293,16 +332,18 @@ abstract class Requester(
      * @return the result of the request as [JsonObject]
      */
     @Wrapper
-    protected fun execPut(
+    protected suspend fun execPut(
         endpoint: String,
-        query: Params? = null,
-        payload: Params = Params(),
+        headers: Map<String, Any> = emptyMap(),
+        query: JsonObject? = null,
+        payload: JsonObject = JsonObject(emptyMap()),
     ): JsonObject {
         return execRequest(
             method = RequestMethod.PUT,
             endpoint = endpoint,
-            payload = payload,
-            query = query
+            headers = headers,
+            query = query,
+            payload = payload
         )
     }
 
@@ -316,16 +357,18 @@ abstract class Requester(
      * @return the result of the request as [JsonObject]
      */
     @Wrapper
-    protected fun execPatch(
+    protected suspend fun execPatch(
         endpoint: String,
-        query: Params? = null,
-        payload: Params = Params(),
+        headers: Map<String, Any> = emptyMap(),
+        query: JsonObject? = null,
+        payload: JsonObject = JsonObject(emptyMap()),
     ): JsonObject {
         return execRequest(
             method = RequestMethod.PATCH,
             endpoint = endpoint,
-            payload = payload,
-            query = query
+            headers = headers,
+            query = query,
+            payload = payload
         )
     }
 
@@ -339,16 +382,18 @@ abstract class Requester(
      * @return the result of the request as [JsonObject]
      */
     @Wrapper
-    protected fun execDelete(
+    protected suspend fun execDelete(
         endpoint: String,
-        query: Params? = null,
-        payload: Params? = null,
+        headers: Map<String, Any> = emptyMap(),
+        query: JsonObject? = null,
+        payload: JsonObject? = null,
     ): JsonObject {
         return execRequest(
             method = RequestMethod.DELETE,
             endpoint = endpoint,
-            payload = payload,
-            query = query
+            headers = headers,
+            query = query,
+            payload = payload
         )
     }
 
@@ -358,16 +403,16 @@ abstract class Requester(
      * @param page The number of the page to request to the backend
      * @param pageSize The size of the result for the page
      *
-     * @return the paginated query as [Params]
+     * @return the paginated query as [JsonObject]
      */
     protected fun createPaginationQuery(
         page: Int,
         pageSize: Int,
-    ): Params {
-        val query = Params()
-        query.addParam(PAGE_KEY, page.toString())
-        query.addParam(PAGE_SIZE_KEY, pageSize.toString())
-        return query
+    ): JsonObject {
+        return buildJsonObject {
+            put(PAGE_KEY, page)
+            put(PAGE_SIZE_KEY, pageSize)
+        }
     }
 
     /**
@@ -375,25 +420,64 @@ abstract class Requester(
      *
      * @param method The method of the request
      * @param endpoint The endpoint path of the request url
+     * @param headers Custom headers of the request
      * @param query The query parameters of the request
      * @param payload The payload of the request
      *
      * @return the result of the request as [JsonObject]
      */
-    private fun execRequest(
+    private suspend fun execRequest(
         method: RequestMethod,
         endpoint: String,
-        query: Params? = null,
-        payload: Params? = null,
+        headers: Map<String, Any>,
+        query: JsonObject? = null,
+        payload: JsonObject? = null,
     ): JsonObject {
-        var response: String? = null
+        val requestUrl = host + endpoint
+        val response = ktorClient.request(
+            urlString = host + endpoint
+        ) {
+            this.method = HttpMethod(method.name)
+            url {
+                parameters {
+                    query?.entries?.forEach { parameter ->
+                        parameter(parameter.key, parameter.value)
+                    }
+                }
+                headers {
+                    userToken?.let { token ->
+                        append(USER_TOKEN_KEY, token)
+                    }
+                    headers.forEach { header ->
+                        append(header.key, header.value.toString())
+                    }
+                }
+                payload?.let { payload ->
+                    setBody(payload.toString())
+                }
+            }
+        }
+        val jResponse = Json.encodeToJsonElement(response.bodyAsText()).jsonObject
+        logRequestInfo(
+            requestUrl = requestUrl,
+            requestPayloadInfo = {
+                payload?.let {
+                    println("\n-PAYLOAD")
+                    println(payload)
+                }
+            },
+            response = jResponse
+        )
+        return jResponse
+
+
+        /*var response: String? = null
         var jResponse: JsonObject
         if(mustValidateCertificates)
             apiRequest.validateSelfSignedCertificate()
-        var requestUrl = host + endpoint
-        query?.let {
-            requestUrl += query.createQueryString()
-        }
+        execRequest(
+            response = response
+        )
         runBlocking {
             try {
                 async {
@@ -441,7 +525,7 @@ abstract class Requester(
             },
             response = jResponse
         )
-        return jResponse
+        return jResponse*/
     }
 
     /**
@@ -454,7 +538,7 @@ abstract class Requester(
      */
     protected fun execMultipartRequest(
         endpoint: String,
-        query: Params? = null,
+        query: JsonObject? = null,
         body: MultipartBody,
     ): JsonObject {
         val mHeaders = mutableMapOf<String, String>()
@@ -509,52 +593,6 @@ abstract class Requester(
             response = response
         )
         return response!!
-    }
-
-    /**
-     * Method to validate a self-signed SLL certificate and bypass the checks of its validity<br></br>
-     * No-any params required
-     *
-     * @apiNote this method disable all checks on the SLL certificate validity, so is recommended to use for test only or
-     * in a private distribution on own infrastructure
-     */
-    private fun validateSelfSignedCertificate(
-        okHttpClient: OkHttpClient
-    ): OkHttpClient {
-        if (mustValidateCertificates) {
-            val trustAllCerts = arrayOf<TrustManager>(
-                object : X509TrustManager {
-                    override fun getAcceptedIssuers(): Array<X509Certificate> {
-                        return arrayOf()
-                    }
-
-
-                    override fun checkClientTrusted(
-                        certs: Array<X509Certificate>,
-                        authType: String
-                    ) {
-                    }
-
-                    override fun checkServerTrusted(
-                        certs: Array<X509Certificate>,
-                        authType: String
-                    ) {
-                    }
-                })
-            val builder = okHttpClient.newBuilder()
-            try {
-                val sslContext = SSLContext.getInstance("TLS")
-                sslContext.init(null, trustAllCerts, SecureRandom())
-                builder.sslSocketFactory(
-                    sslContext.socketFactory,
-                    trustAllCerts[0] as X509TrustManager
-                )
-                builder.hostnameVerifier { _: String?, _: SSLSession? -> true }
-                return builder.build()
-            } catch (ignored: java.lang.Exception) {
-            }
-        }
-        return OkHttpClient()
     }
 
     /**
@@ -619,9 +657,10 @@ abstract class Requester(
      * @return the error message as [JsonObject]
      */
     protected fun connectionErrorMessage(): JsonObject {
-        return JsonObject()
-            .put(RESPONSE_STATUS_KEY, GENERIC_RESPONSE.name)
-            .put(RESPONSE_DATA_KEY, connectionErrorMessage)
+        return buildJsonObject {
+            put(RESPONSE_STATUS_KEY, GENERIC_RESPONSE.name)
+            put(RESPONSE_DATA_KEY, connectionErrorMessage)
+        }
     }
 
     /**
