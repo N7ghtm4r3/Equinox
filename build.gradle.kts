@@ -1,11 +1,15 @@
+
 import org.jetbrains.dokka.DokkaConfiguration.Visibility.*
+import org.jetbrains.dokka.base.DokkaBase
+import org.jetbrains.dokka.base.DokkaBaseConfiguration
+import org.jetbrains.dokka.gradle.DokkaMultiModuleTask
 import org.jetbrains.dokka.gradle.DokkaTaskPartial
 
 plugins {
     alias(libs.plugins.androidLibrary) apply false
     alias(libs.plugins.kotlinMultiplatform) apply false
     alias(libs.plugins.vanniktech.mavenPublish) apply false
-    alias(libs.plugins.dokka) apply false
+    alias(libs.plugins.dokka)
 }
 
 buildscript {
@@ -21,5 +25,12 @@ subprojects {
             includeNonPublic.set(true)
             documentedVisibilities.set(setOf(PUBLIC, PROTECTED, PRIVATE))
         }
+    }
+}
+
+tasks.withType<DokkaMultiModuleTask> {
+    outputDirectory.set(layout.projectDirectory.dir("docs"))
+    pluginConfiguration<DokkaBase, DokkaBaseConfiguration> {
+        footerMessage = "(c) 2025 Tecknobit"
     }
 }

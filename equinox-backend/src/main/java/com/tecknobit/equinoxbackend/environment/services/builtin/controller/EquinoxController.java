@@ -1,7 +1,6 @@
 package com.tecknobit.equinoxbackend.environment.services.builtin.controller;
 
 import com.tecknobit.apimanager.apis.ServerProtector;
-import com.tecknobit.apimanager.apis.sockets.SocketManager.StandardResponseCode;
 import com.tecknobit.apimanager.formatters.JsonHelper;
 import com.tecknobit.equinoxbackend.configuration.ConfigsGenerator;
 import com.tecknobit.equinoxbackend.configuration.EquinoxBackendConfiguration;
@@ -9,6 +8,7 @@ import com.tecknobit.equinoxbackend.environment.services.users.entity.EquinoxUse
 import com.tecknobit.equinoxbackend.environment.services.users.repository.EquinoxUsersRepository;
 import com.tecknobit.equinoxbackend.environment.services.users.service.EquinoxUsersHelper;
 import com.tecknobit.equinoxbackend.resourcesutils.ResourcesProvider;
+import com.tecknobit.equinoxcore.network.ResponseStatus;
 import com.tecknobit.mantis.Mantis;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,14 +19,14 @@ import org.springframework.web.bind.annotation.RestController;
 import java.io.IOException;
 import java.util.*;
 
-import static com.tecknobit.apimanager.apis.sockets.SocketManager.StandardResponseCode.FAILED;
-import static com.tecknobit.apimanager.apis.sockets.SocketManager.StandardResponseCode.SUCCESSFUL;
-import static com.tecknobit.equinoxbackend.Requester.RESPONSE_DATA_KEY;
-import static com.tecknobit.equinoxbackend.Requester.RESPONSE_STATUS_KEY;
 import static com.tecknobit.equinoxbackend.resourcesutils.ResourcesManager.PROFILES_DIRECTORY;
 import static com.tecknobit.equinoxbackend.resourcesutils.ResourcesManager.RESOURCES_KEY;
 import static com.tecknobit.equinoxcore.helpers.InputsValidator.DEFAULT_LANGUAGE;
 import static com.tecknobit.equinoxcore.network.EquinoxBaseEndpointsSet.BASE_EQUINOX_ENDPOINT;
+import static com.tecknobit.equinoxcore.network.Requester.RESPONSE_DATA_KEY;
+import static com.tecknobit.equinoxcore.network.Requester.RESPONSE_STATUS_KEY;
+import static com.tecknobit.equinoxcore.network.ResponseStatus.FAILED;
+import static com.tecknobit.equinoxcore.network.ResponseStatus.SUCCESSFUL;
 
 /**
  * The {@code EquinoxController} class is useful to give the base behavior of the <b>Equinox's controllers</b>
@@ -171,6 +171,7 @@ abstract public class EquinoxController<T extends EquinoxUser, R extends Equinox
      * @param <V>    generic type for the values in the payload
      * @return the payload for a successful response as {@link HashMap} of {@link V}
      */
+    @SuppressWarnings("unchecked")
     protected <V> HashMap<String, V> successResponse(V value) {
         HashMap<String, V> response = new HashMap<>();
         response.put(RESPONSE_DATA_KEY, value);
@@ -213,13 +214,13 @@ abstract public class EquinoxController<T extends EquinoxUser, R extends Equinox
     /**
      * Method to assemble the payload for a response
      *
-     * @param responseCode The response code value
+     * @param status  The response code value
      * @param message The message to send as response
      * @return the payload for a response as {@link String}
      */
-    private String plainResponse(StandardResponseCode responseCode, String message) {
+    private String plainResponse(ResponseStatus status, String message) {
         return new JSONObject()
-                .put(RESPONSE_STATUS_KEY, responseCode)
+                .put(RESPONSE_STATUS_KEY, status)
                 .put(RESPONSE_DATA_KEY, message).toString();
     }
 

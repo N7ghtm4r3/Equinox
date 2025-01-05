@@ -1,3 +1,5 @@
+@file:OptIn(InternalCoroutinesApi::class)
+
 package com.tecknobit.equinoxcore.network
 
 import com.tecknobit.equinoxcore.annotations.Wrapper
@@ -7,12 +9,16 @@ import com.tecknobit.equinoxcore.pagination.PaginatedResponse.Companion.DATA_KEY
 import com.tecknobit.equinoxcore.pagination.PaginatedResponse.Companion.IS_LAST_PAGE_KEY
 import com.tecknobit.equinoxcore.pagination.PaginatedResponse.Companion.PAGE_KEY
 import com.tecknobit.equinoxcore.pagination.PaginatedResponse.Companion.PAGE_SIZE_KEY
-import io.ktor.client.*
 import io.ktor.client.request.*
+import io.ktor.client.request.forms.*
 import io.ktor.client.statement.*
 import io.ktor.http.*
+import io.ktor.http.content.*
+import kotlinx.coroutines.InternalCoroutinesApi
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.json.*
 import kotlin.js.JsName
@@ -134,7 +140,7 @@ abstract class Requester(
          * @param onFailure The action to execute if the request has been failed
          * @param onConnectionError The action to execute if the request has been failed for a connection error
          */
-        fun <R : Requester, T> R.sendPaginatedWRequest(
+        fun <R : Requester, T> R.sendPaginatedRequest(
             request: suspend R.() -> JsonObject,
             serializer: KSerializer<T>,
             onSuccess: (PaginatedResponse<T>) -> Unit,
@@ -181,9 +187,118 @@ abstract class Requester(
         }
 
         /**
-         * Extension Method to get directly the response data from the request response
+         * Method to get directly the response data from the request response
          *
-         * No-any params required
+         * @return the [RESPONSE_DATA_KEY] value as nullable [JsonObject]
+         *
+         * ### Example
+         * - The complete response
+         *
+         * ```json
+         * {
+         *   "response": null, 
+         *   "status": "SUCCESSFUL"
+         * }
+         * ```
+         *
+         * - Use the [toNullableResponseData] Method:
+         *
+         * ```kotlin
+         * requester.sendRequest(
+         *     request = {
+         *         // make a request
+         *     },
+         *     onResponse = { response ->
+         *        val data: JsonObject? = response.toNullableResponseData()
+         *        println(data) // will be printed null
+         *    }
+         * )
+         * ```
+         *
+         */
+        fun JsonObject.toNullableResponseData(): JsonObject? {
+            val response = this[RESPONSE_DATA_KEY]
+            return if (response is JsonNull)
+                return null
+            else
+                response?.jsonObject
+        }
+
+        /**
+         * Method to get directly the response data from the request response
+         *
+         * @return the [RESPONSE_DATA_KEY] value as [JsonObject]
+         *
+         * ### Example
+         * - The complete response
+         *
+         * ```json
+         * {
+         *   "response": {
+         *      "data" : "value"
+         *   },
+         *   "status": "SUCCESSFUL"
+         * }
+         * ```
+         *
+         * - Use the [toResponseData] Method:
+         *
+         * ```kotlin
+         * requester.sendRequest(
+         *     request = {
+         *         // make a request
+         *     },
+         *     onResponse = { response ->
+         *        val data: JsonObject = response.toResponseData()
+         *        println(data) // will be printed { "data" : "value" }
+         *    }
+         * )
+         * ```
+         *
+         */
+        fun JsonObject.toResponseData(): JsonObject {
+            return this[RESPONSE_DATA_KEY]!!.jsonObject
+        }
+
+        /**
+         * Method to get directly the response data from the request response and format as [JsonArray]
+         *
+         * @return the [RESPONSE_DATA_KEY] value as [JsonArray]
+         *
+         * ### Example
+         * - The complete response
+         *
+         * ```json
+         * {
+         *   "response": [
+         *      "#1",
+         *      "#2",
+         *   ]
+         *   "status": "SUCCESSFUL"
+         * }
+         * ```
+         *
+         * - Use the [toResponseArrayData] Method:
+         *
+         * ```kotlin
+         * requester.sendRequest(
+         *     request = {
+         *         // make a request
+         *     },
+         *     onResponse = { response ->
+         *        val data: JsonArray = response.toResponseArrayData()
+         *        println(data) // will be printed ["#1", "#2"]
+         *    }
+         * )
+         * ```
+         *
+         */
+        fun JsonObject.toResponseArrayData(): JsonArray {
+            return this[RESPONSE_DATA_KEY]!!.jsonArray
+        }
+
+        /**
+         * Method to get directly the response data from the request response and format as [String]
          *
          * @return the [RESPONSE_DATA_KEY] value as [String]
          *
@@ -192,12 +307,12 @@ abstract class Requester(
          *
          * ```json
          * {
-         *   "response": "Response data", // in the example is String, but with any types is the same workflow
+         *   "response": "Hello World!"
          *   "status": "SUCCESSFUL"
          * }
          * ```
          *
-         * - Use the [responseData] Method:
+         * - Use the [toResponseContent] Method:
          *
          * ```kotlin
          * requester.sendRequest(
@@ -205,33 +320,13 @@ abstract class Requester(
          *         // make a request
          *     },
          *     onResponse = { response ->
-         *        val data: Any = response.responseData()
-         *        println(data) // will be printed Response data
+         *        val data: JsonArray = response.toResponseContent()
+         *        println(data) // will be printed Hello World!
          *    }
          * )
          * ```
          *
          */
-        // TODO: TO DOCU
-        fun JsonObject.toNullResponseData(): JsonObject? {
-            val response = this[RESPONSE_DATA_KEY]
-            return if (response is JsonNull)
-                return null
-            else
-                response?.jsonObject
-        }
-
-        // TODO: TO DOCU
-        fun JsonObject.toResponseData(): JsonObject {
-            return this[RESPONSE_DATA_KEY]!!.jsonObject
-        }
-
-        // TODO: TO DOCU
-        fun JsonObject.toResponseArrayData(): JsonArray {
-            return this[RESPONSE_DATA_KEY]!!.jsonArray
-        }
-
-        // TODO: TO DOCU
         fun JsonObject.toResponseContent(): String {
             return this[RESPONSE_DATA_KEY]!!.jsonPrimitive.content
         }
@@ -242,7 +337,7 @@ abstract class Requester(
      * `timeFormatter` the formatter used to format the timestamp values
      */
     // TODO: TO REPLACE WITH THE REAL ONE
-    protected val timeFormatter: TimeFormatter = TimeFormatter.getInstance()
+    //protected val timeFormatter: TimeFormatter = TimeFormatter.getInstance()
 
     /**
      * **mustValidateCertificates** flag whether the requests must validate the **SSL** certificates, this for example
@@ -259,7 +354,17 @@ abstract class Requester(
     /**
      * **ktorClient** -> the HTTP client used to send the stats and the performance data
      */
-    protected val ktorClient = HttpClient()
+    protected val ktorClient = obtainHttpEngine(
+        connectionTimeout = connectionTimeout,
+        enableCertificatesValidation = enableCertificatesValidation
+    )
+
+    /**
+     * **loggerMutex** -> the mutex used to log atomically the log messages if [debugMode] is `true`
+     */
+    private val loggerMutex = Mutex(
+        locked = false
+    )
 
     /**
      * **initHost** Method to init correctly the [host] value
@@ -434,165 +539,135 @@ abstract class Requester(
         payload: JsonObject? = null,
     ): JsonObject {
         val requestUrl = host + endpoint
-        val response = ktorClient.request(
-            urlString = host + endpoint
-        ) {
-            this.method = HttpMethod(method.name)
-            url {
-                parameters {
-                    query?.entries?.forEach { parameter ->
-                        parameter(parameter.key, parameter.value)
-                    }
-                }
-                headers {
-                    userToken?.let { token ->
-                        append(USER_TOKEN_KEY, token)
-                    }
-                    headers.forEach { header ->
-                        append(header.key, header.value.toString())
-                    }
-                }
-                payload?.let { payload ->
-                    setBody(payload.toString())
-                }
-            }
-        }
-        val jResponse = Json.encodeToJsonElement(response.bodyAsText()).jsonObject
-        logRequestInfo(
-            requestUrl = requestUrl,
-            requestPayloadInfo = {
-                payload?.let {
-                    println("\n-PAYLOAD")
-                    println(payload)
-                }
-            },
-            response = jResponse
-        )
-        return jResponse
-
-
-        /*var response: String? = null
-        var jResponse: JsonObject
-        if(mustValidateCertificates)
-            apiRequest.validateSelfSignedCertificate()
-        execRequest(
-            response = response
-        )
-        runBlocking {
-            try {
-                async {
-                    try {
-                        if(payload != null) {
-                            apiRequest.sendJSONPayloadedAPIRequest(
-                                requestUrl,
-                                method,
-                                headers,
-                                payload
-                            )
-                        } else {
-                            apiRequest.sendAPIRequest(
-                                requestUrl,
-                                method,
-                                headers
-                            )
+        val jResponse: JsonObject = try {
+            val response = ktorClient.request(
+                urlString = host + endpoint
+            ) {
+                this.method = HttpMethod(method.name)
+                prepareRequest(
+                    headers = headers,
+                    query = query,
+                    payload = if (payload != null) {
+                        {
+                            setBody(payload.toString())
                         }
-                        response = apiRequest.response
-                        if (response == null)
-                            response = apiRequest.errorResponse
-                        interceptRequest()
-                    } catch (e: IOException) {
-                        logError(
-                            exception = e
-                        )
-                        response = connectionErrorMessage().toString()
-                    }
-                }.await()
-                jResponse = JsonObject(response)
-            } catch (e: Exception) {
-                logError(
-                    exception = e
+                    } else
+                        null
                 )
-                jResponse = connectionErrorMessage()
             }
+            interceptRequest()
+            Json.decodeFromString<JsonObject>(response.bodyAsText())
+        } catch (exception: Exception) {
+            if (debugMode) {
+                logError(
+                    exception = exception
+                )
+            }
+            connectionErrorMessage()
         }
-        logRequestInfo(
-            requestUrl = requestUrl,
-            requestPayloadInfo = {
-                if (payload != null) {
-                    println("\n-PAYLOAD")
-                    println(payload.createJSONPayload().toString(4))
-                }
-            },
-            response = jResponse
-        )
-        return jResponse*/
+        if (debugMode) {
+            logRequestInfo(
+                requestUrl = requestUrl,
+                headers = headers,
+                requestPayloadInfo = {
+                    payload?.let {
+                        println("\n-PAYLOAD")
+                        println(payload)
+                    }
+                },
+                response = jResponse
+            )
+        }
+        return jResponse
     }
 
     /**
-     * Method to exec a multipart body  request
+     * Method to execute a multipart request to the backend
      *
-     * @param endpoint The endpoint path of the url
-     * @param body The body payload of the request
+     * @param endpoint The endpoint path of the request url
+     * @param headers Custom headers of the request
+     * @param query The query parameters of the request
+     * @param payload The payload of the request
      *
      * @return the result of the request as [JsonObject]
      */
-    protected fun execMultipartRequest(
+    protected suspend fun execMultipartRequest(
         endpoint: String,
+        headers: Map<String, Any>,
         query: JsonObject? = null,
-        body: MultipartBody,
+        payload: List<PartData>,
     ): JsonObject {
-        val mHeaders = mutableMapOf<String, String>()
-        headers.headersKeys.forEach { headerKey ->
-            mHeaders[headerKey] = headers.getHeader(headerKey)
-        }
-        var requestUrl = "$host$endpoint"
-        query?.let {
-            requestUrl += query.createQueryString()
-        }
-        val request: Request = Request.Builder()
-            .headers(mHeaders.toHeaders())
-            .url(requestUrl)
-            .post(body)
-            .build()
-        val client = validateSelfSignedCertificate(OkHttpClient())
-        var response: JsonObject? = null
-        runBlocking {
-            try {
-                async {
-                    response = try {
-                        client.newCall(request).execute().body?.string()?.let { JsonObject(it) }
-                    } catch (e: IOException) {
-                        logError(
-                            exception = e
-                        )
-                        JsonObject(connectionErrorMessage())
-                    }
-                    interceptRequest()
-                }.await()
-            } catch (e: Exception) {
+        val requestUrl = host + endpoint
+        val jResponse = try {
+            val response: HttpResponse = ktorClient.submitFormWithBinaryData(
+                url = requestUrl,
+                formData = payload
+            ) {
+                prepareRequest(
+                    headers = headers,
+                    query = query
+                )
+            }
+            interceptRequest()
+            Json.decodeFromString<JsonObject>(response.bodyAsText())
+        } catch (e: Exception) {
+            if (debugMode) {
                 logError(
                     exception = e
                 )
-                response = JsonObject(connectionErrorMessage())
             }
+            connectionErrorMessage()
         }
-        logRequestInfo(
-            requestUrl = requestUrl,
-            requestPayloadInfo = {
-                println("\n-PAYLOAD")
-                body.parts.forEachIndexed { index, part ->
-                    println("---------------------- $index ----------------------------")
-                    val bodyPart = part.body
-                    print("| " + part.headers)
-                    println("| Content-Type: ${bodyPart.contentType()}")
-                    println("| Content-Length: ${bodyPart.contentLength()}")
-                    if (index == (body.size - 1))
-                        println("-----------------------------------------------------")
+        if (debugMode) {
+            logRequestInfo(
+                requestUrl = requestUrl,
+                headers = headers,
+                requestPayloadInfo = {
+                    println("\n-PAYLOAD")
+                    payload.forEachIndexed { index, part ->
+                        println("---------------------- $index ----------------------------")
+                        print("| " + part.headers)
+                        println("| Content-Type: ${part.contentType}")
+                        println("| Name: ${part.name}")
+                        if (index == payload.lastIndex)
+                            println("-----------------------------------------------------")
+                    }
+                },
+                response = jResponse
+            )
+        }
+        return jResponse
+    }
+
+    /**
+     * Method to prepare the details of the request to execute
+     *
+     * @param headers Custom headers of the request
+     * @param query The query parameters of the request
+     * @param payload The payload of the request
+     *
+     */
+    private fun HttpRequestBuilder.prepareRequest(
+        headers: Map<String, Any>,
+        query: JsonObject? = null,
+        payload: (() -> Unit)? = null,
+    ) {
+        url {
+            headers {
+                userToken?.let { token ->
+                    append(USER_TOKEN_KEY, token)
                 }
-            },
-            response = response
-        )
-        return response!!
+                headers.forEach { header ->
+                    append(header.key, header.value.toString())
+                }
+            }
+            parameters {
+                query?.entries?.forEach { parameter ->
+                    parameter(parameter.key, parameter.value)
+                }
+            }
+            payload?.invoke()
+        }
     }
 
     /**
@@ -602,38 +677,40 @@ abstract class Requester(
      * @param requestPayloadInfo The payload of the request if sent with the request
      * @param response The response of the request sent
      */
-    private fun logRequestInfo(
+    private suspend fun logRequestInfo(
         requestUrl: String,
+        headers: Map<String, Any>,
         requestPayloadInfo: () -> Unit,
         response: JsonObject?,
     ) {
-        if (debugMode) {
-            synchronized(this) {
-                println("----------- REQUEST ${timeFormatter.formatNowAsString()} -----------")
-                logHeaders()
-                println("-URL\n$requestUrl")
-                requestPayloadInfo.invoke()
-                if (response != null)
-                    println("\n-RESPONSE\n$response")
-                println("---------------------------------------------------")
-            }
+        loggerMutex.withLock {
+            // TODO: TO PRINT 
+            //println("----------- REQUEST ${timeFormatter.formatNowAsString()} -----------")
+            logHeaders(
+                headers = headers
+            )
+            println("-URL\n$requestUrl")
+            requestPayloadInfo.invoke()
+            if (response != null)
+                println("\n-RESPONSE\n$response")
+            println("---------------------------------------------------")
         }
     }
 
     /**
      * Method to log the current headers used in the requests
-     *
-     * No-any params required
      */
-    private fun logHeaders() {
-        val headerKeys = headers.headersKeys
-        if (headerKeys.isNotEmpty()) {
+    private fun logHeaders(
+        headers: Map<String, Any>,
+    ) {
+        if (headers.isNotEmpty()) {
             println("\n-HEADERS")
-            val headers = JsonObject()
-            headerKeys.forEach { key ->
-                headers.put(key, this.headers.getHeader(key))
+            userToken?.let {
+                println("$USER_TOKEN_KEY: $userToken")
             }
-            println(headers.toString(4) + "\n")
+            headers.forEach { header ->
+                println(header.key + ": " + header.value)
+            }
         }
     }
 
@@ -645,8 +722,7 @@ abstract class Requester(
     private fun logError(
         exception: Exception
     ) {
-        if (debugMode)
-            exception.printStackTrace()
+        exception.printStackTrace()
     }
 
     /**
@@ -675,8 +751,6 @@ abstract class Requester(
     ) {
         this.userId = userId
         this.userToken = userToken
-        if (userToken != null)
-            headers.addHeader(USER_TOKEN_KEY, userToken)
     }
 
     /**
@@ -691,17 +765,6 @@ abstract class Requester(
         this.host = host
         if (enableCertificatesValidation)
             mustValidateCertificates = host.startsWith("https")
-    }
-
-    /**
-     * Method to set programmatically timeout for the requests
-     *
-     * @param connectionTimeout Timeout for the requests
-     */
-    fun setConnectionTimeout(
-        connectionTimeout: Long
-    ) {
-        apiRequest.setConnectionTimeout(connectionTimeout)
     }
 
     /**
