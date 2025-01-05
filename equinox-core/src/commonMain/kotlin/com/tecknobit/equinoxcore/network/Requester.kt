@@ -5,8 +5,6 @@ package com.tecknobit.equinoxcore.network
 import com.tecknobit.equinoxcore.annotations.Wrapper
 import com.tecknobit.equinoxcore.network.ResponseStatus.*
 import com.tecknobit.equinoxcore.pagination.PaginatedResponse
-import com.tecknobit.equinoxcore.pagination.PaginatedResponse.Companion.DATA_KEY
-import com.tecknobit.equinoxcore.pagination.PaginatedResponse.Companion.IS_LAST_PAGE_KEY
 import com.tecknobit.equinoxcore.pagination.PaginatedResponse.Companion.PAGE_KEY
 import com.tecknobit.equinoxcore.pagination.PaginatedResponse.Companion.PAGE_SIZE_KEY
 import io.ktor.client.request.*
@@ -136,6 +134,7 @@ abstract class Requester(
          * Method to execute and manage the paginated response of a request
          *
          * @param request The request to execute
+         * @param serializer The serializer of the item in the page
          * @param onSuccess The action to execute if the request has been successful
          * @param onFailure The action to execute if the request has been failed
          * @param onConnectionError The action to execute if the request has been failed for a connection error
@@ -150,15 +149,13 @@ abstract class Requester(
             sendRequest(
                 request = { request.invoke(this) },
                 onSuccess = { jPage ->
-                    // TODO: USING DIRECTLY THE SERIALIZATION
-                    val data = jPage[RESPONSE_DATA_KEY]!!.jsonObject
-                    val page = PaginatedResponse(
-                        data = data[DATA_KEY]!!.jsonArray.map {
-                            Json.decodeFromJsonElement(serializer, it)
-                        },
-                        page = data[PAGE_KEY]!!.jsonPrimitive.int,
-                        pageSize = data[PAGE_SIZE_KEY]!!.jsonPrimitive.int,
-                        isLastPage = data[IS_LAST_PAGE_KEY]!!.jsonPrimitive.boolean
+                    val pageSerializer = PaginatedResponse.serializer(serializer)
+                    val json = Json {
+                        ignoreUnknownKeys = true
+                    }
+                    val page = json.decodeFromJsonElement(
+                        deserializer = pageSerializer,
+                        element = jPage.toResponseData()
                     )
                     onSuccess.invoke(page)
                 },
