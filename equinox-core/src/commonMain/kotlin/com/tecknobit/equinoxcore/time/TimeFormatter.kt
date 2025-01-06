@@ -1,4 +1,4 @@
-package com.tecknobit.equinoxcore.helpers
+package com.tecknobit.equinoxcore.time
 
 import com.tecknobit.equinoxcore.annotations.Wrapper
 import kotlinx.datetime.*
@@ -11,42 +11,41 @@ object TimeFormatter {
 
     private const val SEXAGESIMAL_CONVERSION_RATE = 60
 
-    const val COMPLETE_DATE_PATTERN = "dd/MM/yyyy HH:mm:ss"
+    private const val TIME_PATTERN_REGEX = "(hh?|HH?|mm?|ss?|SSS?)"
 
-    const val DATE_PATTERN = "dd/MM/yyyy"
+    private val timePattern = Regex(TIME_PATTERN_REGEX)
+
+    const val COMPLETE_EUROPEAN_DATE_PATTERN = "dd/MM/yyyy HH:mm:ss"
+
+    const val EUROPEAN_DATE_PATTERN = "dd/MM/yyyy"
+
+    const val COMPLETE_ISO_8601_DATE_PATTERN = "yyyy/MM/dd HH:mm:ss"
+
+    const val ISO_8601_DATE_PATTERN = "yyyy/MM/dd"
+
+    const val COMPLETE_AMERICAN_DATE_PATTERN = "MM/dd/yyyy HH:mm:ss"
+
+    const val AMERICAN_DATE_PATTERN = "MM/dd/yyyy HH:mm:ss"
+
+    const val COMPLETE_TIME_PATTERN = "HH:mm:ss.SSS"
+
+    const val H12_HOURS_MINUTES_SECONDS_PATTERN = "hh:mm:ss"
+
+    const val H12_HOURS_MINUTES_PATTERN = "hh:mm"
+
+    const val H24_HOURS_MINUTES_SECONDS_PATTERN = "HH:mm:ss"
 
     const val H24_HOURS_MINUTES_PATTERN = "HH:mm"
 
-    private var defaultPattern: String = COMPLETE_DATE_PATTERN
 
-    private var defaultDatePattern: String = DATE_PATTERN
+    var defaultPattern: String = COMPLETE_EUROPEAN_DATE_PATTERN
 
     var invalidTimeGuard: Long = -1
 
-    @Wrapper
-    fun Long.formatAsDateString(
-        invalidTimeDefValue: String? = null,
-    ): String {
-        return formatAsTimeString(
-            invalidTimeDefValue = invalidTimeDefValue,
-            pattern = defaultDatePattern
-        )
-    }
-
-    @Wrapper
-    fun Long.formatAsTimeString(
-        invalidTimeDefValue: String? = null,
-    ): String {
-        return formatAsTimeString(
-            invalidTimeDefValue = invalidTimeDefValue,
-            pattern = defaultPattern
-        )
-    }
-
     @OptIn(FormatStringsInDatetimeFormats::class)
-    fun Long.formatAsTimeString(
+    fun Long.formatAsString(
         invalidTimeDefValue: String? = null,
-        pattern: String,
+        pattern: String = defaultPattern,
     ): String {
         invalidTimeDefValue?.let { defValue ->
             if (this == invalidTimeGuard)
@@ -57,6 +56,66 @@ object TimeFormatter {
         return LocalDateTime.Format {
             byUnicodePattern(pattern)
         }.format(localDateTime)
+    }
+
+    fun String.formatAsTimestamp(
+        invalidTimeDefValue: Long? = null,
+        pattern: String = defaultPattern,
+    ): Long {
+        return if (timePattern.containsMatchIn(pattern)) {
+            this.dateAndTimeParsing(
+                invalidTimeDefValue = invalidTimeDefValue,
+                pattern = pattern
+            )
+        } else {
+            this.dateParsing(
+                invalidTimeDefValue = invalidTimeDefValue,
+                pattern = pattern
+            )
+        }
+    }
+
+    @OptIn(FormatStringsInDatetimeFormats::class)
+    private fun String.dateAndTimeParsing(
+        invalidTimeDefValue: Long? = null,
+        pattern: String,
+    ): Long {
+        val parser = LocalDateTime.Format {
+            byUnicodePattern(pattern)
+        }
+        return try {
+            parser.parse(this).toInstant(TimeZone.currentSystemDefault()).toEpochMilliseconds()
+        } catch (e: Exception) {
+            if (invalidTimeDefValue != null)
+                invalidTimeDefValue
+            else
+                invalidTimeGuard
+        }
+    }
+
+    @OptIn(FormatStringsInDatetimeFormats::class)
+    private fun String.dateParsing(
+        invalidTimeDefValue: Long? = null,
+        pattern: String,
+    ): Long {
+        val parser = LocalDate.Format {
+            byUnicodePattern(pattern)
+        }
+        try {
+            val localDate = parser.parse(this)
+            return LocalDateTime(
+                year = localDate.year,
+                month = localDate.month,
+                dayOfMonth = localDate.dayOfMonth,
+                hour = 0,
+                minute = 0
+            ).toInstant(TimeZone.currentSystemDefault()).toEpochMilliseconds()
+        } catch (e: Exception) {
+            return if (invalidTimeDefValue != null)
+                invalidTimeDefValue
+            else
+                invalidTimeGuard
+        }
     }
 
     @Wrapper
@@ -189,7 +248,7 @@ object TimeFormatter {
 
     @Wrapper
     fun Long.quartersUntilNow(): Int {
-        return monthsUntil(
+        return quartersUntil(
             untilDate = Clock.System.now().toEpochMilliseconds()
         )
     }
