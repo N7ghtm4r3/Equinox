@@ -1,94 +1,83 @@
-## FetcherManager
+## Requester
 
 ### Usage/Examples
 
-#### Use directly the FetcherManager
+#### Create your Requester
 
 ```kotlin
-class ExampleClass {
+class YourRequester(
+    host: String,
+    userId: String? = null,
+    userToken: String? = null,
+    connectionErrorMessage: String,
+    enableCertificatesValidation: Boolean = false
+): Requester( // extends the Requester to inherit the base methods
+    host = host,
+    userId = userId,
+    userToken = userToken,
+    connectionErrorMessage = connectionErrorMessage,
+    enableCertificatesValidation = enableCertificatesValidation
+) {
 
-  private val refreshRoutine = CoroutineScope(Dispatchers.Default)
-
-  private val fetcherManager = FetcherManager(refreshRoutine)
-
-  fun example() { 
-      fetcherManager.execute(
-         currentContext = this::class.java,
-         routine = {
-           // your routine
-         },
-         repeatRoutine = repeatRoutine,
-         refreshDelay = delay
-      )
-  }
-
-  fun example1() { 
-      fetcherManager.suspend()
-  }
-
-}
-```
-
-#### Use the wrapper interface 
-
-```kotlin
-// the super class from which the other classes will be inherited
-abstract class AbstractClass : FetcherManagerWrapper {
-
-    protected val refreshRoutine = CoroutineScope(Dispatchers.Default)
-
-    private val fetcherManager = FetcherManager(refreshRoutine)
-
-    override fun canRefresherStart(): Boolean {
-        return fetcherManager.canStart()
-    }
-
-    override fun suspendRefresher() {
-        fetcherManager.suspend()
-    }
-
-    override fun restartRefresher() {
-        fetcherManager.restart()
-    }
-
-    override fun continueToFetch(currentContext: Class<>): Boolean {
-        return fetcherManager.continueToFetch(currentContext)
-    }
-
-    override fun execRefreshingRoutine(
-        currentContext: Class<*>,
-        routine: () -> Unit,
-        repeatRoutine: Boolean,
-        refreshDelay: Long
-    ) {
-        fetcherManager.execute(
-            currentContext = currentContext,
-            routine = routine,
-            repeatRoutine = repeatRoutine,
-            refreshDelay = delay
-        ) 
-    }
-}
-
-// an inherit class example
-class ExampleClass : AbstractClass() {
-
-    fun example() {
-        execRefreshingRoutine(
-            currentContext = this::class.java,
-            routine = {
-                // your routine
-            }
+    // exec a GET request, this works also for other request methods available
+    suspend fun sendYourRequest(): JSONObject {
+        return execGet(
+            endpoint = "yourEndpoint"
         )
     }
 
-    fun example1() {
-        suspendRefresher()
-    }
-
 }
 ```
 
+#### Manage the responses
+
+```kotlin
+fun main() {
+    val requester = YourRequester(
+        host = "host",
+        userId = "userId",
+        userToken = "userToken",
+        connectionErrorMessage = "connectionErrorMessage",
+        enableCertificatesValidation = true / false
+    )
+
+    // send the request and manage the response scenarios
+    requester.sendRequest(
+        request = {
+            sendYourRequest()
+        },
+        onSuccess = {
+            // manage a successful request
+        },
+        onFailure = {
+            // manage a failed request
+        },
+        onConnectionError = {
+            // manage a connection error
+        }
+    )
+
+    // send a request with a paginated formatted response
+
+    requester.sendPaginatedRequest(
+        request = {
+            sendYourRequest()
+        },
+        serialiazr = Home.serializer(),
+        onSuccess = { page ->
+            // use the page formatted from the response
+            println(page.data) // list of homes instantiated with the supplier lambda function
+        },
+        onFailure = {
+            // manage a failed request
+        },
+        onConnectionError = {
+            // manage a connection error
+        }
+    )
+
+}
+```
 
 The other apis will be gradually released
 
@@ -130,4 +119,4 @@ If you want support project and developer
 If you want support project and developer
 with <a href="https://www.paypal.com/donate/?hosted_button_id=5QMN5UQH7LDT4">PayPal</a>
 
-Copyright © 2024 Tecknobit
+Copyright © 2025 Tecknobit

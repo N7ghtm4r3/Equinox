@@ -1,4 +1,4 @@
-## ResourcesProvider
+## ConfigsGenerator
 
 ### Usage/Examples
 
@@ -6,29 +6,27 @@
 public class Main {
 
     public static void main(String[] args) {
-      
-        // initialize the provider
-        ResourcesProvider resourcesProvider = new ResourcesProvider(
-                "containerFolder_1",
-                List.of("subfolder_1", "subfolder_2")
-        );
 
-        // create the main container directory -> "containerFolder_1"
-        resourcesProvider.createContainerDirectory();
+        ConfigsGenerator configsGenerator = new ConfigsGenerator(Main.class);
 
-        // create the subdirectories of the main container directory:
-        // "subfolder_1", "subfolder_2"
-        resourcesProvider.createSubDirectories();
-        
         // create the configuration file to serve the static resources
         try {
-            resourcesProvider.createResourcesConfigFile(Main.class);
+            configsGenerator.createResourcesConfigFile(
+                    //list of the containers folder, you can take them from ResourcesProvider#getContainers()
+            );
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        
+
+        // create the CORS file to set the CORS origin policy for the backend
+        try {
+            configsGenerator.crateCorsAdviceFile();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
     }
-    
+
 }
 ```
 
@@ -72,4 +70,4 @@ If you want support project and developer
 If you want support project and developer
 with <a href="https://www.paypal.com/donate/?hosted_button_id=5QMN5UQH7LDT4">PayPal</a>
 
-Copyright © 2024 Tecknobit
+Copyright © 2025 Tecknobit

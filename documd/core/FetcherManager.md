@@ -1,34 +1,94 @@
-## ConfigsGenerator
+## FetcherManager
 
 ### Usage/Examples
 
-```java
-public class Main {
+#### Use directly the FetcherManager
 
-    public static void main(String[] args) {
+```kotlin
+class ExampleClass {
 
-        ConfigsGenerator configsGenerator = new ConfigsGenerator(Main.class);
+  private val refreshRoutine = CoroutineScope(Dispatchers.Default)
 
-        // create the configuration file to serve the static resources
-        try {
-            configsGenerator.createResourcesConfigFile(
-                    //list of the containers folder, you can take them from ResourcesProvider#getContainers()
-            );
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+  private val fetcherManager = FetcherManager(refreshRoutine)
 
-        // create the CORS file to set the CORS origin policy for the backend
-        try {
-            configsGenerator.crateCorsAdviceFile();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+  fun example() { 
+      fetcherManager.execute(
+         currentContext = this::class.java,
+         routine = {
+           // your routine
+         },
+         repeatRoutine = repeatRoutine,
+         refreshDelay = delay
+      )
+  }
 
+  fun example1() { 
+      fetcherManager.suspend()
+  }
+
+}
+```
+
+#### Use the wrapper interface 
+
+```kotlin
+// the super class from which the other classes will be inherited
+abstract class AbstractClass : FetcherManagerWrapper {
+
+    protected val refreshRoutine = CoroutineScope(Dispatchers.Default)
+
+    private val fetcherManager = FetcherManager(refreshRoutine)
+
+    override fun canRefresherStart(): Boolean {
+        return fetcherManager.canStart()
+    }
+
+    override fun suspendRefresher() {
+        fetcherManager.suspend()
+    }
+
+    override fun restartRefresher() {
+        fetcherManager.restart()
+    }
+
+    override fun continueToFetch(currentContext: Class<>): Boolean {
+        return fetcherManager.continueToFetch(currentContext)
+    }
+
+    override fun execRefreshingRoutine(
+        currentContext: Class<*>,
+        routine: () -> Unit,
+        repeatRoutine: Boolean,
+        refreshDelay: Long
+    ) {
+        fetcherManager.execute(
+            currentContext = currentContext,
+            routine = routine,
+            repeatRoutine = repeatRoutine,
+            refreshDelay = delay
+        ) 
+    }
+}
+
+// an inherit class example
+class ExampleClass : AbstractClass() {
+
+    fun example() {
+        execRefreshingRoutine(
+            currentContext = this::class.java,
+            routine = {
+                // your routine
+            }
+        )
+    }
+
+    fun example1() {
+        suspendRefresher()
     }
 
 }
 ```
+
 
 The other apis will be gradually released
 
@@ -70,4 +130,4 @@ If you want support project and developer
 If you want support project and developer
 with <a href="https://www.paypal.com/donate/?hosted_button_id=5QMN5UQH7LDT4">PayPal</a>
 
-Copyright © 2024 Tecknobit
+Copyright © 2025 Tecknobit

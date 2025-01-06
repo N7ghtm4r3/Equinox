@@ -1,89 +1,34 @@
-## Requester
+## ResourcesProvider
 
 ### Usage/Examples
 
-#### Create your Requester
+```java
+public class Main {
 
-```kotlin
-class YourRequester(
-    host: String,
-    userId: String? = null,
-    userToken: String? = null,
-    connectionErrorMessage: String,
-    enableCertificatesValidation: Boolean = false
-): Requester( // extends the Requester to inherit the base methods
-    host = host,
-    userId = userId,
-    userToken = userToken,
-    connectionErrorMessage = connectionErrorMessage,
-    enableCertificatesValidation = enableCertificatesValidation
-) {
+    public static void main(String[] args) {
+      
+        // initialize the provider
+        ResourcesProvider resourcesProvider = new ResourcesProvider(
+                "containerFolder_1",
+                List.of("subfolder_1", "subfolder_2")
+        );
 
-    // exec a GET request, this works also for other request methods available
-    fun sendYourRequest(): JSONObject {
-        return execGet(
-            endpoint = "yourEndpoint"
-        )
+        // create the main container directory -> "containerFolder_1"
+        resourcesProvider.createContainerDirectory();
+
+        // create the subdirectories of the main container directory:
+        // "subfolder_1", "subfolder_2"
+        resourcesProvider.createSubDirectories();
+        
+        // create the configuration file to serve the static resources
+        try {
+            resourcesProvider.createResourcesConfigFile(Main.class);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        
     }
-
-}
-```
-
-#### Manage the responses
-
-```kotlin
-fun main() {
-    val requester = YourRequester(
-        host = "host",
-        userId = "userId",
-        userToken = "userToken",
-        connectionErrorMessage = "connectionErrorMessage",
-        enableCertificatesValidation = true / false
-    )
-
-    // send the request and manage the response scenarios
-    requester.sendRequest(
-        request = {
-            sendYourRequest()
-        },
-        onSuccess = {
-            // manage a successful request
-        },
-        onFailure = {
-            // manage a failed request
-        },
-        onConnectionError = {
-            // manage a connection error
-        }
-    )
-
-    // send a request with a paginated formatted response
-
-    requester.sendPaginatedRequest(
-        request = {
-            sendYourRequest()
-        },
-        supplier = { json ->
-            // must be filled with the initialization procedure to instantiate an object e.g. 
-            Home(
-                id = json.getString("id"),
-                height = json.getInt("height"),
-                flor = json.getInt("flor"),
-                address json it.getString("address")
-            )
-        },
-        onSuccess = { page ->
-            // use the page formatted from the response
-            println(page.data) // list of homes instantiated with the supplier lambda function
-        },
-        onFailure = {
-            // manage a failed request
-        },
-        onConnectionError = {
-            // manage a connection error
-        }
-    )
-
+    
 }
 ```
 
@@ -127,4 +72,4 @@ If you want support project and developer
 If you want support project and developer
 with <a href="https://www.paypal.com/donate/?hosted_button_id=5QMN5UQH7LDT4">PayPal</a>
 
-Copyright © 2024 Tecknobit
+Copyright © 2025 Tecknobit
