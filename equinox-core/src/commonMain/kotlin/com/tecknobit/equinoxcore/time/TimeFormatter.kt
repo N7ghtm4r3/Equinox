@@ -117,7 +117,7 @@ object TimeFormatter {
         pattern: String = defaultPattern,
     ): String {
         val now = Clock.System.now().toEpochMilliseconds()
-        return now.formatAsString(
+        return now.formatAsDateString(
             pattern = pattern
         )
     }
@@ -131,7 +131,7 @@ object TimeFormatter {
      * @return the formatted long value as [String]
      */
     @OptIn(FormatStringsInDatetimeFormats::class)
-    fun Long.formatAsString(
+    fun Long.formatAsDateString(
         invalidTimeDefValue: String? = null,
         pattern: String = defaultPattern,
     ): String {
