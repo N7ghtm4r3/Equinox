@@ -1,0 +1,9 @@
+<resources>
+    <string name="an_error_occurred">Kļūda</string>
+    <string name="retry">Atkārtot</string>
+    <string name="confirm">Apstipriniet</string>
+    <string name="dismiss">Atbrīvot</string>
+    <string name="server_currently_offline">Serveris pašlaik ir bezsaistē</string>
+    <string name="no_internet_connection">Nav interneta savienojuma</string>
+    <string name="loading_data">Datu ielādēšana...</string>
+</resources>

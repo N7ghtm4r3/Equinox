@@ -1,0 +1,9 @@
+<resources>
+    <string name="an_error_occurred">Der opstod en fejl</string>
+    <string name="retry">Prøv igen</string>
+    <string name="confirm">Bekræft</string>
+    <string name="dismiss">Afslå</string>
+    <string name="server_currently_offline">Serveren er i øjeblikket offline</string>
+    <string name="no_internet_connection">Ingen internetforbindelse</string>
+    <string name="loading_data">Indlæser data...</string>
+</resources>

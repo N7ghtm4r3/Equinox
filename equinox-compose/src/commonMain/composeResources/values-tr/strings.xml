@@ -1,0 +1,9 @@
+<resources>
+    <string name="an_error_occurred">Bir hata oluştu</string>
+    <string name="retry">Yeniden Dene</string>
+    <string name="confirm">Onaylayın</string>
+    <string name="dismiss">Dağılın</string>
+    <string name="server_currently_offline">Sunucu şu anda çevrimdışı</string>
+    <string name="no_internet_connection">İnternet bağlantısı yok</string>
+    <string name="loading_data">Veri yükleniyor...</string>
+</resources>

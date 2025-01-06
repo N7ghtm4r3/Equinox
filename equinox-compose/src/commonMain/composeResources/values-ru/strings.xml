@@ -1,0 +1,9 @@
+<resources>
+    <string name="an_error_occurred">Произошла ошибка</string>
+    <string name="retry">Повторная попытка</string>
+    <string name="confirm">Подтвердите</string>
+    <string name="dismiss">Увольте</string>
+    <string name="server_currently_offline">Сервер в настоящее время находится в автономном режиме</string>
+    <string name="no_internet_connection">Нет подключения к Интернету</string>
+    <string name="loading_data">Загрузка данных...</string>
+</resources>

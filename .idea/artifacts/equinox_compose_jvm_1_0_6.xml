@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="equinox-compose-jvm-1.0.6">
+    <output-path>$PROJECT_DIR$/equinox-compose/build/libs</output-path>
+    <root id="archive" name="equinox-compose-jvm-1.0.6.jar">
+      <element id="module-output" name="Equinox.equinox-compose.jvmMain" />
+    </root>
+  </artifact>
+</component>

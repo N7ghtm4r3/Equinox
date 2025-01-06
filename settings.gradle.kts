@@ -15,4 +15,5 @@ dependencyResolutionManagement {
 
 rootProject.name = "Equinox"
 include("equinox-core")
+include("equinox-compose")
 include("equinox-backend")

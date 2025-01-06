@@ -1,0 +1,9 @@
+<resources>
+    <string name="an_error_occurred">Hiba történt</string>
+    <string name="retry">Retry</string>
+    <string name="confirm">Megerősítés</string>
+    <string name="dismiss">Elutasíthatod</string>
+    <string name="server_currently_offline">A kiszolgáló jelenleg offline</string>
+    <string name="no_internet_connection">Nincs internetkapcsolat</string>
+    <string name="loading_data">Adatok betöltése...</string>
+</resources>

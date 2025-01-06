@@ -1,0 +1,9 @@
+<resources>
+    <string name="an_error_occurred">Terjadi kesalahan</string>
+    <string name="retry">Coba lagi.</string>
+    <string name="confirm">Konfirmasi</string>
+    <string name="dismiss">Bubarkan.</string>
+    <string name="server_currently_offline">Server saat ini sedang offline</string>
+    <string name="no_internet_connection">Tidak ada koneksi internet</string>
+    <string name="loading_data">Memuat data...</string>
+</resources>

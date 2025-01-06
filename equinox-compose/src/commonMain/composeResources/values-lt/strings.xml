@@ -1,0 +1,9 @@
+<resources>
+    <string name="an_error_occurred">Įvyko klaida</string>
+    <string name="retry">Pakartoti</string>
+    <string name="confirm">Patvirtinkite</string>
+    <string name="dismiss">Atmesti</string>
+    <string name="server_currently_offline">Serveris šiuo metu neprisijungęs</string>
+    <string name="no_internet_connection">Nėra interneto ryšio</string>
+    <string name="loading_data">Duomenų įkėlimas...</string>
+</resources>
