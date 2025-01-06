@@ -11,12 +11,12 @@ val currentTimestamp = Timeformatter.formatNowAsString(
 )
 
 // format a long value (date value) as String
-val january6 = 1736198062000.formatAsDateString(
+val january6 = 1736198062000.toDateString(
     pattern = defaultPattern // custom pattern if needed
 ) // will be 06/01/2025 21:14:22
 
 // format a string value (date value) as Long
-val january6 = "06/01/2025 21:14:22".formatAsTimestamp(
+val january6 = "06/01/2025 21:14:22".toTimestamp(
     pattern = defaultPattern // custom pattern if needed
 ) // will be 06/01/2025 21:14:22
 ```

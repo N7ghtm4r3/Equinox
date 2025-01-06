@@ -25,7 +25,7 @@ object TimeFormatter {
     private const val SEXAGESIMAL_CONVERSION_RATE = 60
 
     /**
-     * `TIME_PATTERN_REGEX` regex pattern used from the [formatAsTimestamp] method to distinguish what proper method
+     * `TIME_PATTERN_REGEX` regex pattern used from the [toTimestamp] method to distinguish what proper method
      * use (one from [dateAndTimeParsing] or [dateParsing]) to correctly format the pattern parameter passed as argument
      */
     private const val TIME_PATTERN_REGEX = "(hh?|HH?|mm?|ss?|SSS?)"
@@ -117,7 +117,7 @@ object TimeFormatter {
         pattern: String = defaultPattern,
     ): String {
         val now = Clock.System.now().toEpochMilliseconds()
-        return now.formatAsDateString(
+        return now.toDateString(
             pattern = pattern
         )
     }
@@ -131,7 +131,7 @@ object TimeFormatter {
      * @return the formatted long value as [String]
      */
     @OptIn(FormatStringsInDatetimeFormats::class)
-    fun Long.formatAsDateString(
+    fun Long.toDateString(
         invalidTimeDefValue: String? = null,
         pattern: String = defaultPattern,
     ): String {
@@ -154,7 +154,7 @@ object TimeFormatter {
      *
      * @return the formatted string value as [Long]
      */
-    fun String.formatAsTimestamp(
+    fun String.toTimestamp(
         invalidTimeDefValue: Long? = null,
         pattern: String = defaultPattern,
     ): Long {
