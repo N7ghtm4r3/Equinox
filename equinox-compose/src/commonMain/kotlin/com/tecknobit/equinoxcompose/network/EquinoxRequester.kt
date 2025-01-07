@@ -73,7 +73,7 @@ abstract class EquinoxRequester(
      * @param email The email of the user
      * @param password The password of the user
      * @param language The language of the user
-     * @param custom The custom parameters added in a customization of the [EquinoxUser] to execute a customized sign-up
+     * @param custom The custom parameters added in a customization of the equinox user to execute a customized sign-up
      *
      * @return the result of the request as [JsonObject]
      *
@@ -131,7 +131,7 @@ abstract class EquinoxRequester(
      * @param email The email of the user
      * @param password The password of the user
      * @param language The language of the user
-     * @param custom The custom parameters added in a customization of the [EquinoxUser] to execute a customized sign-up
+     * @param custom The custom parameters added in a customization of the equinox user to execute a customized sign-up
      *
      * @return the payload for the request as [JsonObject]
      *
@@ -166,7 +166,7 @@ abstract class EquinoxRequester(
      *
      * @param email The email of the user
      * @param password The password of the user
-     * @param custom The custom parameters added in a customization of the [EquinoxUser] to execute a customized sign-in
+     * @param custom The custom parameters added in a customization of the equinox user to execute a customized sign-in
      *
      * @return the result of the request as [JsonObject]
      *
@@ -204,7 +204,7 @@ abstract class EquinoxRequester(
      *
      * @param email The email of the user
      * @param password The password of the user
-     * @param custom The custom parameters added in a customization of the [EquinoxUser] to execute a customized sign-in
+     * @param custom The custom parameters added in a customization of the equinox user to execute a customized sign-in
      *
      * @return the payload for the request as [JsonObject]
      *
@@ -228,6 +228,7 @@ abstract class EquinoxRequester(
      *
      * @return the result of the request as [JsonObject]
      */
+    // TODO: CHANGE BYTE ARRAY TO REAL FILE FROM LIBRARY 
     @RequestPath(path = "/api/v1/users/{id}/changeProfilePic", method = POST)
     open suspend fun changeProfilePic(
         profilePic: ByteArray,

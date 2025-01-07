@@ -1,5 +1,6 @@
 [versions]
 agp = "8.5.2"
+kmprefs = "1.0.0"
 kotlin = "2.1.0"
 android-minSdk = "24"
 android-compileSdk = "34"
@@ -20,6 +21,7 @@ apimanager = "2.2.4"
 
 [libraries]
 dokka-base = { module = "org.jetbrains.dokka:dokka-base", version.ref = "dokka" }
+kmprefs = { module = "io.github.n7ghtm4r3:KMPrefs", version.ref = "kmprefs" }
 kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlinxDatetime" }
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinxSerializationJson" }
 ktor-client-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }

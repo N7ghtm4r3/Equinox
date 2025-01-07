@@ -323,7 +323,7 @@ abstract class EquinoxAuthViewModel(
      * @param name The name of the user
      * @param surname The surname of the user
      * @param language The language of the user
-     * @param custom The custom parameters added in a customization of the [EquinoxUser]
+     * @param custom The custom parameters added in a customization of the equinox user
      */
     @RequiresSuperCall
     protected open fun launchApp(

@@ -1,4 +1,4 @@
-package com.tecknobit.equinoxcompose.helpers.session
+package com.tecknobit.equinoxcompose.session
 
 import dev.jordond.connectivity.Connectivity
 
@@ -12,6 +12,5 @@ import dev.jordond.connectivity.Connectivity
 actual fun createConnectivity(): Connectivity {
     return Connectivity {
         autoStart = true
-        pollingIntervalMs = 2.seconds
     }
 }

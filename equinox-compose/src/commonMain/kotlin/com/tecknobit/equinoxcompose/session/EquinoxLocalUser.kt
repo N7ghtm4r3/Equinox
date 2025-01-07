@@ -6,6 +6,7 @@ import com.tecknobit.equinoxcore.helpers.*
 import com.tecknobit.equinoxcore.helpers.InputsValidator.Companion.HOST_ADDRESS_KEY
 import com.tecknobit.equinoxcore.network.Requester.Companion.USER_IDENTIFIER_KEY
 import com.tecknobit.equinoxcore.network.Requester.Companion.USER_TOKEN_KEY
+import com.tecknobit.kmprefs.KMPrefs
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.jsonPrimitive
 
@@ -16,7 +17,9 @@ import kotlinx.serialization.json.jsonPrimitive
  * @since 1.0.6
  */
 @Structure
-abstract class EquinoxLocalUser {
+abstract class EquinoxLocalUser(
+    localStoragePath: String,
+) {
 
     /**
      * `ApplicationTheme` list of the available theming for the client applications
@@ -56,54 +59,123 @@ abstract class EquinoxLocalUser {
     }
 
     /**
+     * `preferencesManager` the local preferences manager
+     */
+    protected val preferencesManager = KMPrefs(
+        path = localStoragePath
+    )
+
+    /**
      * `hostAddress` the host address which the user communicate
      */
     protected var hostAddress: String? = null
+        set(value) {
+            setPreference(
+                key = HOST_ADDRESS_KEY,
+                value = value
+            )
+        }
 
     /**
      * `userId` the identifier of the user
      */
     protected var userId: String? = null
+        set(value) {
+            setPreference(
+                key = USER_IDENTIFIER_KEY,
+                value = value
+            )
+        }
 
     /**
      * `userToken` the token of the user
      */
     protected var userToken: String? = null
+        set(value) {
+            setPreference(
+                key = USER_TOKEN_KEY,
+                value = value
+            )
+        }
 
     /**
      * `profilePic` the profile pick of the user
      */
     protected var profilePic: String? = null
+        set(value) = {
+            if (value == null || this != value) {
+                profilePicLocal = "$hostAddress/$profilePicLocal"
+                setPreference(PROFILE_PIC_KEY, profilePicLocal)
+                this.profilePic = profilePicLocal
+            }
+        }
 
     /**
      * `name` the name of the user
      */
     protected var name: String? = null
+        set(value) {
+            setPreference(
+                key = NAME_KEY,
+                value = value
+            )
+        }
 
     /**
      * `surname` the surname of the user
      */
     protected var surname: String? = null
+        set(value) {
+            setPreference(
+                key = SURNAME_KEY,
+                value = value
+            )
+        }
 
     /**
      * `email` the email of the user
      */
     protected var email: String? = null
+        set(value) {
+            setPreference(
+                key = EMAIL_KEY,
+                value = value
+            )
+        }
 
     /**
      * `password` the password of the user
      */
     protected var password: String? = null
+        set(value) {
+            setPreference(
+                key = PASSWORD_KEY,
+                value = value
+            )
+        }
 
     /**
      * `language` the language of the user
      */
     protected var language: String? = null
+        set(value) {
+            setPreference(
+                key = LANGUAGE_KEY,
+                value = value
+            )
+        }
 
     /**
      * `theme` the theme of the user
      */
     protected var theme: ApplicationTheme? = null
+        set(value) {
+            setPreference(
+                key = THEME_KEY,
+                value = value?.name
+            )
+            field = value
+        }
 
     val isAuthenticated: Boolean
         /**
@@ -113,12 +185,17 @@ abstract class EquinoxLocalUser {
          */
         get() = userId != null
 
-    /**
-     * Method to init the local user session
-     */
-    @RequiresSuperCall
-    protected fun initLocalUser() {
-        hostAddress = getHostAddress()
+    val completeName: String
+        /**
+         * Method to get the complete name of the user <br></br>
+         * No-any params required
+         *
+         * @return the complete name of the user as [String]
+         */
+        get() = "$name $surname"
+
+    init {
+        hostAddress = getPreference(HOST_ADDRESS_KEY)
         userId = getPreference(USER_IDENTIFIER_KEY)
         userToken = getPreference(USER_TOKEN_KEY)
         profilePic = getPreference(PROFILE_PIC_KEY)
@@ -177,7 +254,7 @@ abstract class EquinoxLocalUser {
      * ```
      */
     @RequiresSuperCall
-    fun insertNewUser(
+    open fun insertNewUser(
         hostAddress: String?,
         name: String?,
         surname: String?,
@@ -187,84 +264,16 @@ abstract class EquinoxLocalUser {
         response: JsonObject,
         vararg custom: Any?,
     ) {
-        setHostAddress(hostAddress)
-        setUserId(response[USER_IDENTIFIER_KEY]!!.jsonPrimitive.content)
-        setUserToken(response[USER_TOKEN_KEY]!!.jsonPrimitive.content)
-        setProfilePic(response[PROFILE_PIC_KEY]!!.jsonPrimitive.content)
-        setName(name)
-        setSurname(surname)
-        setEmail(email)
-        setPassword(password)
-        setLanguage(language)
-        setTheme(ApplicationTheme.Auto)
-        initLocalUser()
-    }
-
-    /**
-     * Method to set the [hostAddress] instance <br></br>
-     *
-     * @param hostAddress: the host address which the user communicate
-     */
-    fun setHostAddress(
-        hostAddress: String?,
-    ) {
-        setPreference(HOST_ADDRESS_KEY, hostAddress)
         this.hostAddress = hostAddress
-    }
-
-    /**
-     * Method to get [hostAddress] instance <br></br>
-     * No-any params required
-     *
-     * @return [hostAddress] instance as [String]
-     */
-    fun getHostAddress(): String {
-        val hostAddress = getPreference(HOST_ADDRESS_KEY)
-        return hostAddress
-    }
-
-    /**
-     * Method to set the [userId] instance <br></br>
-     *
-     * @param userId: the identifier of the user
-     */
-    fun setUserId(
-        userId: String?,
-    ) {
-        setPreference(USER_IDENTIFIER_KEY, userId)
-        this.userId = userId
-    }
-
-    /**
-     * Method to get [userId] instance <br></br>
-     * No-any params required
-     *
-     * @return [userId] instance as [String]
-     */
-    fun getUserId(): String? {
-        return userId
-    }
-
-    /**
-     * Method to set the [userToken] instance <br></br>
-     *
-     * @param userToken: the token of the user
-     */
-    fun setUserToken(
-        userToken: String?,
-    ) {
-        setPreference(USER_TOKEN_KEY, userToken)
-        this.userToken = userToken
-    }
-
-    /**
-     * Method to get [userToken] instance <br></br>
-     * No-any params required
-     *
-     * @return [userToken] instance as [String]
-     */
-    fun getUserToken(): String? {
-        return userToken
+        userId = response[USER_IDENTIFIER_KEY]!!.jsonPrimitive.content
+        userToken = response[USER_TOKEN_KEY]!!.jsonPrimitive.content
+        profilePic = response[PROFILE_PIC_KEY]!!.jsonPrimitive.content
+        this.name = name
+        this.surname = surname
+        this.email = email
+        this.password = password
+        this.language = language
+        this.theme = ApplicationTheme.Auto
     }
 
     /**
@@ -284,175 +293,40 @@ abstract class EquinoxLocalUser {
     }
 
     /**
-     * Method to get [profilePic] instance <br></br>
-     * No-any params required
-     *
-     * @return [profilePic] instance as [String]
-     */
-    fun getProfilePic(): String? {
-        return profilePic
-    }
-
-    /**
-     * Method to set the [name] instance <br></br>
-     *
-     * @param name: the name of the user
-     */
-    fun setName(
-        name: String?,
-    ) {
-        setPreference(NAME_KEY, name)
-        this.name = name
-    }
-
-    /**
-     * Method to get [name] instance <br></br>
-     * No-any params required
-     *
-     * @return [name] instance as [String]
-     */
-    fun getName(): String? {
-        return name
-    }
-
-    /**
-     * Method to set the [surname] instance <br></br>
-     *
-     * @param surname: the surname of the user
-     */
-    fun setSurname(
-        surname: String?,
-    ) {
-        setPreference(SURNAME_KEY, surname)
-        this.surname = surname
-    }
-
-    /**
-     * Method to get [surname] instance <br></br>
-     * No-any params required
-     *
-     * @return [surname] instance as [String]
-     */
-    fun getSurname(): String? {
-        return surname
-    }
-
-    val completeName: String
-        /**
-         * Method to get the complete name of the user <br></br>
-         * No-any params required
-         *
-         * @return the complete name of the user as [String]
-         */
-        get() = "$name $surname"
-
-    /**
-     * Method to set the [email] instance <br></br>
-     *
-     * @param email: the email of the user
-     */
-    fun setEmail(
-        email: String?,
-    ) {
-        setPreference(EMAIL_KEY, email)
-        this.email = email
-    }
-
-    /**
-     * Method to get [email] instance <br></br>
-     * No-any params required
-     *
-     * @return [email] instance as [String]
-     */
-    fun getEmail(): String? {
-        return email
-    }
-
-    /**
-     * Method to set the [password] instance <br></br>
-     *
-     * @param password: the password of the user
-     */
-    fun setPassword(
-        password: String?,
-    ) {
-        setPreference(PASSWORD_KEY, password)
-        this.password = password
-    }
-
-    /**
-     * Method to get [password] instance <br></br>
-     * No-any params required
-     *
-     * @return [password] instance as [String]
-     */
-    fun getPassword(): String? {
-        return password
-    }
-
-    /**
-     * Method to set the [language] instance <br></br>
-     *
-     * @param language: the language of the user
-     */
-    fun setLanguage(
-        language: String?,
-    ) {
-        setPreference(LANGUAGE_KEY, language)
-        this.language = language
-    }
-
-    /**
-     * Method to get [language] instance <br></br>
-     * No-any params required
-     *
-     * @return [language] instance as [String]
-     */
-    fun getLanguage(): String? {
-        return language
-    }
-
-    /**
-     * Method to set the [theme] instance <br></br>
-     *
-     * @param theme: the theme of the user
-     */
-    fun setTheme(
-        theme: ApplicationTheme,
-    ) {
-        setPreference(THEME_KEY, theme.name)
-        this.theme = theme
-    }
-
-    /**
-     * Method to get [theme] instance <br></br>
-     * No-any params required
-     *
-     * @return [theme] instance as [ApplicationTheme]
-     */
-    fun getTheme(): ApplicationTheme? {
-        return theme
-    }
-
-    /**
      * Method to store and set a preference
      *
      * @param key:   the key of the preference
      * @param value: the value of the preference
      */
-    protected abstract fun setPreference(key: String?, value: String?)
+    protected fun setPreference(
+        key: String,
+        value: String?,
+    ) {
+        preferencesManager.storeString(
+            key = key,
+            value = value
+        )
+    }
 
     /**
      * Method to get a stored preference
      *
      * @param key: the key of the preference to get
-     * @return the preference stored as [String]
+     * @return the preference stored as nullable [String]
      */
-    protected abstract fun getPreference(key: String?): String
+    protected fun getPreference(
+        key: String,
+    ): String? {
+        return preferencesManager.retrieveString(
+            key = key
+        )
+    }
 
     /**
-     * Method to clear the current local user session <br></br>
-     * No-any params required
+     * Method to clear the current local user session
      */
-    abstract fun clear()
+    fun clear() {
+        preferencesManager.clearAll()
+    }
+
 }

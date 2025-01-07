@@ -1,4 +1,4 @@
-package com.tecknobit.equinoxcompose.helpers.session
+package com.tecknobit.equinoxcompose.session
 
 import dev.jordond.connectivity.Connectivity
 

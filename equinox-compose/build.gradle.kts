@@ -83,6 +83,7 @@ kotlin {
                 implementation(libs.connectivity.compose)
                 implementation(libs.kotlinx.serialization.json)
                 implementation(libs.ktor.client.core)
+                implementation(libs.kmprefs)
                 implementation(project(":equinox-core"))
             }
         }

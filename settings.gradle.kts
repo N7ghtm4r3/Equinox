@@ -10,6 +10,10 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
+        // TODO: REMOVE IN THE NEXT VERSION
+        maven("https://jitpack.io")
+        // TODO: REMOVE IN THE NEXT VERSION
+        maven("https://repo.clojars.org")
     }
 }
 

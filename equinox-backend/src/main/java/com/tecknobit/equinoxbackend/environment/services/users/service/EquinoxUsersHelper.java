@@ -18,7 +18,8 @@ import java.util.List;
 
 import static com.tecknobit.apimanager.apis.APIRequest.SHA256_ALGORITHM;
 import static com.tecknobit.equinoxbackend.environment.services.builtin.entity.EquinoxItem.IDENTIFIER_KEY;
-import static com.tecknobit.equinoxbackend.environment.services.users.entity.EquinoxUser.*;
+import static com.tecknobit.equinoxbackend.environment.services.users.entity.EquinoxUser.DISCRIMINATOR_VALUE_KEY;
+import static com.tecknobit.equinoxcore.helpers.CommonKeysKt.*;
 import static java.lang.System.currentTimeMillis;
 
 /**

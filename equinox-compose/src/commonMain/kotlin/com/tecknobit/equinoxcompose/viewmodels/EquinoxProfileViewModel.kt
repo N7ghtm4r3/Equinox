@@ -4,11 +4,10 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.MutableState
 import com.tecknobit.equinoxcompose.network.EquinoxRequester
 import com.tecknobit.equinoxcompose.session.EquinoxLocalUser
+import com.tecknobit.equinoxcompose.session.EquinoxLocalUser.ApplicationTheme
 import com.tecknobit.equinoxcore.helpers.InputsValidator.Companion.isEmailValid
 import com.tecknobit.equinoxcore.helpers.InputsValidator.Companion.isPasswordValid
 import com.tecknobit.equinoxcore.network.Requester.Companion.sendRequest
-import com.tecknobit.equinoxcore.network.Requester.Companion.toResponseData
-import kotlinx.serialization.json.jsonPrimitive
 
 /**
  * The **EquinoxProfileViewModel** class is the support class used to change the user account settings or preferences
@@ -60,7 +59,8 @@ open class EquinoxProfileViewModel(
         imagePath: String,
         profilePic: MutableState<String>,
     ) {
-        requester.sendRequest(
+        // TODO: TO SET 
+        /*requester.sendRequest(
             request = {
                 changeProfilePic(
                     profilePic = File(imagePath)
@@ -68,10 +68,12 @@ open class EquinoxProfileViewModel(
             },
             onSuccess = { response ->
                 profilePic.value = imagePath
-                localUser.profilePic = response.toResponseData().jsonPrimitive.content
+                localUser.setProfilePic(
+                    profilePic = response.toResponseData().jsonPrimitive.content
+                )
             },
             onFailure = { showSnackbarMessage(it) }
-        )
+        )*/
     }
 
     /**
@@ -90,7 +92,9 @@ open class EquinoxProfileViewModel(
                     )
                 },
                 onSuccess = {
-                    localUser.email = newEmail.value
+                    localUser.setEmail(
+                        email = newEmail.value
+                    )
                     onSuccess.invoke()
                 },
                 onFailure = { showSnackbarMessage(it) }
@@ -138,7 +142,9 @@ open class EquinoxProfileViewModel(
                 )
             },
             onSuccess = {
-                localUser.language = newLanguage
+                localUser.setLanguage(
+                    language = newLanguage
+                )
                 onSuccess.invoke()
             },
             onFailure = { showSnackbarMessage(it) }
@@ -155,7 +161,9 @@ open class EquinoxProfileViewModel(
         newTheme: ApplicationTheme,
         onChange: () -> Unit,
     ) {
-        localUser.theme = newTheme
+        localUser.setTheme(
+            theme = newTheme
+        )
         onChange.invoke()
     }
 
