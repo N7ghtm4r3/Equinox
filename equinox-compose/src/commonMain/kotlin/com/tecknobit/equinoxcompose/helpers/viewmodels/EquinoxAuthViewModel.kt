@@ -23,7 +23,7 @@
 // * @author N7ghtm4r3 - Tecknobit
 // * @see EquinoxViewModel
 // * @see ViewModel
-// * @see FetcherManagerWrapper
+// * @see RetrieverWrapper
 // */
 //@Structure
 //abstract class EquinoxAuthViewModel(

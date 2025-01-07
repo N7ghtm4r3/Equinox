@@ -10,6 +10,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import com.tecknobit.equinoxcompose.components.ErrorUI
 import com.tecknobit.equinoxcompose.components.LoadingItemUI
 import com.tecknobit.equinoxcompose.helpers.session.SessionStatus.*
+import com.tecknobit.equinoxcompose.helpers.viewmodels.EquinoxViewModel
 import com.tecknobit.equinoxcompose.resources.Res
 import com.tecknobit.equinoxcompose.resources.no_internet
 import com.tecknobit.equinoxcompose.resources.no_internet_connection
@@ -176,7 +177,7 @@ fun setHasBeenDisconnectedValue(
 @Composable
 fun ManagedContent(
     content: @Composable () -> Unit,
-    // viewModel: EquinoxViewModel, TODO: TO RESET
+    viewModel: EquinoxViewModel,
     loadingRoutine: (() -> Boolean)? = null,
     serverOfflineRetryText: String? = null,
     serverOfflineRetryAction: @Composable (() -> Unit)? = null,
@@ -202,7 +203,7 @@ fun ManagedContent(
     ) {
         sessionStatus.value = NO_INTERNET_CONNECTION
         NoInternetConnectionUi(
-            // viewModel = viewModel, TODO: TO RESET
+            viewModel = viewModel,
             retryText = noInternetConnectionRetryText,
             retryAction = noInternetConnectionRetryAction
         )
@@ -217,7 +218,7 @@ fun ManagedContent(
             hasBeenDisconnectedAction()
         } else {
             sessionStatus.value = OPERATIONAL
-            // viewModel.restartRefresher() TODO: TO RESET
+            viewModel.restartRetriever()
             if (loadingRoutine != null) {
                 LoadingItemUI(
                     loadingRoutine = loadingRoutine,
@@ -286,11 +287,11 @@ private fun ServerOfflineUi(
 @Composable
 @NonRestartableComposable
 private fun NoInternetConnectionUi(
-    // viewModel: EquinoxViewModel, TODO: TO RESET
+    viewModel: EquinoxViewModel,
     retryText: String?,
     retryAction: @Composable (() -> Unit)?,
 ) {
-    // viewModel.suspendRefresher() TODO: TO RESET
+    viewModel.suspendRetriever()
     ErrorUI(
         errorIcon = try {
             sessionSetup.noInternetConnectionIcon

@@ -7,6 +7,7 @@ import com.tecknobit.equinoxcore.network.ResponseStatus.*
 import com.tecknobit.equinoxcore.pagination.PaginatedResponse
 import com.tecknobit.equinoxcore.pagination.PaginatedResponse.Companion.PAGE_KEY
 import com.tecknobit.equinoxcore.pagination.PaginatedResponse.Companion.PAGE_SIZE_KEY
+import com.tecknobit.equinoxcore.time.TimeFormatter
 import io.ktor.client.request.*
 import io.ktor.client.request.forms.*
 import io.ktor.client.statement.*
@@ -329,12 +330,6 @@ abstract class Requester(
         }
 
     }
-
-    /**
-     * `timeFormatter` the formatter used to format the timestamp values
-     */
-    // TODO: TO REPLACE WITH THE REAL ONE
-    //protected val timeFormatter: TimeFormatter = TimeFormatter.getInstance()
 
     /**
      * **mustValidateCertificates** flag whether the requests must validate the **SSL** certificates, this for example
@@ -681,8 +676,7 @@ abstract class Requester(
         response: JsonObject?,
     ) {
         loggerMutex.withLock {
-            // TODO: TO PRINT 
-            //println("----------- REQUEST ${timeFormatter.formatNowAsString()} -----------")
+            println("----------- REQUEST ${TimeFormatter.formatNowAsString()} -----------")
             logHeaders(
                 headers = headers
             )

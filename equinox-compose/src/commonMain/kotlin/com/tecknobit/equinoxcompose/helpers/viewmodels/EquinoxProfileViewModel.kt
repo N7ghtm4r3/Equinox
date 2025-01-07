@@ -22,7 +22,7 @@
 // * @author N7ghtm4r3 - Tecknobit
 // * @see EquinoxViewModel
 // * @see ViewModel
-// * @see FetcherManagerWrapper
+// * @see RetrieverWrapper
 // */
 //open class EquinoxProfileViewModel(
 //    snackbarHostState: SnackbarHostState,
