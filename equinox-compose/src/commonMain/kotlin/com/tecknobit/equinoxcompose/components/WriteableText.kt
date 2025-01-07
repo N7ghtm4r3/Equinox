@@ -267,7 +267,7 @@ fun Modifier.disableWritingModeOnFocusGain() = this
     }
 
 /**
- * Function to enable the [currentActiveWritingMode]
+ * Method to enable the [currentActiveWritingMode]
  *
  * No-any params required
  */
@@ -277,7 +277,7 @@ fun enableWritingMode() {
 }
 
 /**
- * Function to disable the [currentActiveWritingMode]
+ * Method to disable the [currentActiveWritingMode]
  *
  * No-any params required
  */

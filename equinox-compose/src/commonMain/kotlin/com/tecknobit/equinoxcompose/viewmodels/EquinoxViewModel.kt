@@ -1,11 +1,15 @@
-package com.tecknobit.equinoxcompose.helpers.viewmodels
+package com.tecknobit.equinoxcompose.viewmodels
 
 import androidx.compose.material3.SnackbarHostState
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.tecknobit.equinoxcompose.helpers.Retriever
+import com.tecknobit.equinoxcompose.session.Retriever
 import com.tecknobit.equinoxcore.annotations.Structure
+import com.tecknobit.equinoxcore.network.Requester.Companion.toResponseContent
 import kotlinx.coroutines.launch
+import kotlinx.serialization.json.JsonObject
+import org.jetbrains.compose.resources.StringResource
+import org.jetbrains.compose.resources.getString
 import kotlin.reflect.KClass
 
 /**
@@ -32,7 +36,7 @@ abstract class EquinoxViewModel(
     private val retriever = Retriever(viewModelScope)
 
     /**
-     * Function to get whether the [viewModelScope] can start, so if there aren't other jobs that
+     * Method to get whether the [viewModelScope] can start, so if there aren't other jobs that
      * routine is already executing
      *
      * No-any params required
@@ -44,7 +48,7 @@ abstract class EquinoxViewModel(
     }
 
     /**
-     * Function to suspend the current [viewModelScope] to execute other requests to the backend,
+     * Method to suspend the current [viewModelScope] to execute other requests to the backend,
      * the [isRefreshing] instance will be set as **false** to allow the restart of the routine after executing
      * the other requests
      *
@@ -57,7 +61,7 @@ abstract class EquinoxViewModel(
     }
 
     /**
-     * Function to execute the refresh routine designed
+     * Method to execute the refresh routine designed
      *
      * @param currentContext The current context where the [viewModelScope] is executing
      * @param routine The refresh routine to execute
@@ -79,7 +83,7 @@ abstract class EquinoxViewModel(
     }
 
     /**
-     * Function to restart the current [viewModelScope] after other requests has been executed,
+     * Method to restart the current [viewModelScope] after other requests has been executed,
      * the [isRefreshing] instance will be set as **true** to deny the restart of the routine after executing
      * the other requests
      *
@@ -90,7 +94,7 @@ abstract class EquinoxViewModel(
     }
 
     /**
-     * Function to suspend the current [viewModelScope] to execute other requests to the backend,
+     * Method to suspend the current [viewModelScope] to execute other requests to the backend,
      * the [isRefreshing] instance will be set as **false** to allow the restart of the routine after executing
      * the other requests
      *
@@ -101,7 +105,37 @@ abstract class EquinoxViewModel(
     }
 
     /**
-     * Function to display a response message with a snackbar
+     * Method to display a response message with a snackbar
+     *
+     * @param response The response from retrieve the message to display
+     */
+    fun showSnackbarMessage(
+        response: JsonObject,
+    ) {
+        showSnackbarMessage(
+            message = response.toResponseContent()
+        )
+    }
+
+    /**
+     * Method to display a response message with a snackbar
+     *
+     * @param message The resource identifier of the message to display
+     */
+    fun showSnackbarMessage(
+        message: StringResource,
+    ) {
+        viewModelScope.launch {
+            showSnackbarMessage(
+                message = getString(
+                    resource = message
+                )
+            )
+        }
+    }
+
+    /**
+     * Method to display a response message with a snackbar
      *
      * @param message The message to display
      */

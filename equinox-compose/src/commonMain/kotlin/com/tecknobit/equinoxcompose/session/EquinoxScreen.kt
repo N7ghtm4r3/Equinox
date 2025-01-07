@@ -1,16 +1,15 @@
-package com.tecknobit.equinoxcompose.helpers.session
+package com.tecknobit.equinoxcompose.session
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
-import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.lifecycle.Lifecycle.Event
 import androidx.lifecycle.Lifecycle.Event.*
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.LifecycleOwner
 import co.touchlab.kermit.Logger
-import com.tecknobit.equinoxcompose.helpers.session.EquinoxScreen.EquinoxScreenEvent.ON_DISPOSE
-import com.tecknobit.equinoxcompose.helpers.session.EquinoxScreen.EquinoxScreenEvent.ON_INIT
-import com.tecknobit.equinoxcompose.helpers.viewmodels.EquinoxViewModel
+import com.tecknobit.equinoxcompose.session.EquinoxScreen.EquinoxScreenEvent.ON_DISPOSE
+import com.tecknobit.equinoxcompose.session.EquinoxScreen.EquinoxScreenEvent.ON_INIT
+import com.tecknobit.equinoxcompose.viewmodels.EquinoxViewModel
 import com.tecknobit.equinoxcore.annotations.Structure
 
 /**
@@ -76,7 +75,7 @@ abstract class EquinoxScreen<V : EquinoxViewModel>(
      */
     @Composable
     private fun LifecycleManager(
-        lifecycleOwner: LifecycleOwner = LocalLifecycleOwner.current,
+        lifecycleOwner: LifecycleOwner = androidx.lifecycle.compose.LocalLifecycleOwner.current,
     ) {
         DisposableEffect(lifecycleOwner) {
             val lifecycle = lifecycleOwner.lifecycle

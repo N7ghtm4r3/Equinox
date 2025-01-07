@@ -13,20 +13,20 @@ import javax.net.ssl.X509TrustManager
  * Method to obtain a platform-based http client engine to execute the HTTP requests
  *
  * @param connectionTimeout Time to keep alive request then throw the connection refused error
- * @param enableCertificatesValidation: whether enable the **SSL** certificates validation, this for example
- * when the certificate is a self-signed certificate to by-pass
+ * @param byPassSSLValidation Whether bypass the **SSL** certificates validation, this for example
+ * when is a self-signed the certificate USE WITH CAUTION
  *
  * @return a customized platform-based http client engine as [HttpClient]
  */
 internal actual fun obtainHttpEngine(
     connectionTimeout: Long,
-    enableCertificatesValidation: Boolean,
+    byPassSSLValidation: Boolean,
 ): HttpClient {
     return HttpClient(OkHttp) {
         engine {
             config {
                 connectTimeout(connectionTimeout, TimeUnit.MILLISECONDS)
-                if (enableCertificatesValidation) {
+                if (byPassSSLValidation) {
                     val sslContext = SSLContext.getInstance("TLS")
                     val certificates = validateSelfSignedCertificate()
                     sslContext.init(null, certificates, SecureRandom())

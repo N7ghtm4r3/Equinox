@@ -12,7 +12,7 @@ import com.tecknobit.equinoxcompose.utilities.BorderToColor.*
 import kotlin.random.Random
 
 /**
- * Function to generate a random color for a collection
+ * Method to generate a random color for a collection
  *
  * No-any params required
  *
@@ -28,7 +28,7 @@ fun generateRandomColor(): Color {
 }
 
 /**
- * Function to get the color from its hex code
+ * Method to get the color from its hex code
  *
  * @return color as [Color]
  */
@@ -37,7 +37,7 @@ fun String.toColor(): Color {
 }
 
 /**
- * Function to transform a [Color] value in the corresponding hex code
+ * Method to transform a [Color] value in the corresponding hex code
  *
  * No-any params required
  *
@@ -81,7 +81,7 @@ enum class BorderToColor {
 }
 
 /**
- * Function to draw just one side of a component.
+ * Method to draw just one side of a component.
  *
  * Take a look [here](https://stackoverflow.com/questions/76762186/how-to-add-border-on-one-side-of-the-card-using-jetpack-compose)
  * for the source of this snippet

@@ -1,5 +1,3 @@
-@file:OptIn(InternalCoroutinesApi::class)
-
 package com.tecknobit.equinoxcore.network
 
 import com.tecknobit.equinoxcore.annotations.Wrapper
@@ -13,7 +11,6 @@ import io.ktor.client.request.forms.*
 import io.ktor.client.statement.*
 import io.ktor.http.*
 import io.ktor.http.content.*
-import kotlinx.coroutines.InternalCoroutinesApi
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.Mutex
@@ -32,8 +29,8 @@ import kotlin.js.JsName
  * workflow, if it is enabled all the details of the requests sent and the errors occurred will be printed in the console
  * @param connectionTimeout Time to keep alive request then throw the connection refused error
  * @param connectionErrorMessage The error to send when a connection error occurred
- * @param enableCertificatesValidation: whether enable the **SSL** certificates validation, this for example
- * when the certificate is a self-signed certificate to by-pass
+ * @param byPassSSLValidation Whether bypass the **SSL** certificates validation, this for example
+ * when is a self-signed the certificate USE WITH CAUTION
  *
  * @author N7ghtm4r3 - Tecknobit
  */
@@ -45,7 +42,7 @@ abstract class Requester(
     protected val connectionTimeout: Long = DEFAULT_REQUEST_TIMEOUT,
     @JsName("connection_error_message")
     protected val connectionErrorMessage: String,
-    protected val enableCertificatesValidation: Boolean = false,
+    protected val byPassSSLValidation: Boolean = false,
 ) {
 
     companion object {
@@ -348,7 +345,7 @@ abstract class Requester(
      */
     protected val ktorClient = obtainHttpEngine(
         connectionTimeout = connectionTimeout,
-        enableCertificatesValidation = enableCertificatesValidation
+        byPassSSLValidation = byPassSSLValidation
     )
 
     /**
@@ -585,7 +582,31 @@ abstract class Requester(
      */
     protected suspend fun execMultipartRequest(
         endpoint: String,
-        headers: Map<String, Any>,
+        headers: Map<String, Any> = emptyMap(),
+        query: JsonObject? = null,
+        payload: PartData,
+    ): JsonObject {
+        return execMultipartRequest(
+            endpoint = endpoint,
+            headers = headers,
+            query = query,
+            payload = listOf(payload)
+        )
+    }
+
+    /**
+     * Method to execute a multipart request to the backend
+     *
+     * @param endpoint The endpoint path of the request url
+     * @param headers Custom headers of the request
+     * @param query The query parameters of the request
+     * @param payload The payload of the request
+     *
+     * @return the result of the request as [JsonObject]
+     */
+    protected suspend fun execMultipartRequest(
+        endpoint: String,
+        headers: Map<String, Any> = emptyMap(),
         query: JsonObject? = null,
         payload: List<PartData>,
     ): JsonObject {
@@ -754,7 +775,7 @@ abstract class Requester(
         host: String
     ) {
         this.host = host
-        if (enableCertificatesValidation)
+        if (byPassSSLValidation)
             mustValidateCertificates = host.startsWith("https")
     }
 

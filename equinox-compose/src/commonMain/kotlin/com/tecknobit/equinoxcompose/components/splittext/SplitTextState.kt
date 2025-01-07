@@ -46,7 +46,7 @@ class SplitTextState internal constructor(
     val textSlices = arrayListOf<MutableState<String>>()
 
     /**
-     * Function to allocate each slice of the [textSlices] with their values
+     * Method to allocate each slice of the [textSlices] with their values
      *
      * No-any params required
      */
@@ -64,7 +64,7 @@ class SplitTextState internal constructor(
     }
 
     /**
-     * Function to get the complete text of the [SplitText] component
+     * Method to get the complete text of the [SplitText] component
      *
      * No-any params required
      * @return each part of the [textSlices] as unique [String]

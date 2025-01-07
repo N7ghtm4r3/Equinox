@@ -48,7 +48,7 @@ private val defaultOnValueChange: (
 }
 
 /**
- * Function to display a custom [TextField]
+ * Method to display a custom [TextField]
  *
  * @param modifier: the modifier of the text field
  * @param textFieldStyle: the style to apply to the [TextField]
@@ -130,7 +130,7 @@ fun EquinoxTextField(
 }
 
 /**
- * Function to display a custom [TextField]
+ * Method to display a custom [TextField]
  *
  * @param modifier: the modifier of the text field
  * @param textFieldStyle: the style to apply to the [TextField]
@@ -222,7 +222,7 @@ fun EquinoxTextField(
 }
 
 /**
- * Function to display a custom [OutlinedTextField]
+ * Method to display a custom [OutlinedTextField]
  *
  * @param modifier: the modifier of the text field
  * @param outlinedTextFieldStyle: the style to apply to the [OutlinedTextField]
@@ -319,7 +319,7 @@ fun EquinoxOutlinedTextField(
 }
 
 /**
- * Function to display a custom [OutlinedTextField]
+ * Method to display a custom [OutlinedTextField]
  *
  * @param modifier: the modifier of the text field
  * @param outlinedTextFieldStyle: the style to apply to the [OutlinedTextField]

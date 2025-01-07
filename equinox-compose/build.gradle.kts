@@ -1,9 +1,7 @@
-@file:OptIn(ExperimentalKotlinGradlePluginApi::class)
 
 import com.vanniktech.maven.publish.JavadocJar
 import com.vanniktech.maven.publish.KotlinMultiplatform
 import com.vanniktech.maven.publish.SonatypeHost
-import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
@@ -13,6 +11,7 @@ plugins {
     alias(libs.plugins.androidLibrary)
     alias(libs.plugins.vanniktech.mavenPublish)
     alias(libs.plugins.compose.compiler)
+    kotlin("plugin.serialization") version "2.1.0"
 }
 
 group = "com.tecknobit.equinoxcompose"
@@ -82,6 +81,8 @@ kotlin {
                 //implementation(libs.kmpalette.core)
                 implementation(libs.connectivity.core)
                 implementation(libs.connectivity.compose)
+                implementation(libs.kotlinx.serialization.json)
+                implementation(libs.ktor.client.core)
                 implementation(project(":equinox-core"))
             }
         }
@@ -90,6 +91,7 @@ kotlin {
             dependencies {
                 implementation(libs.connectivity.http)
                 implementation(libs.connectivity.compose.http)
+                implementation(libs.ktor.client.okhttp)
             }
         }
 
@@ -98,6 +100,7 @@ kotlin {
                 implementation(libs.startup.runtime)
                 implementation(libs.connectivity.device)
                 implementation(libs.connectivity.compose.device)
+                implementation(libs.ktor.client.okhttp)
             }
         }
 
@@ -112,6 +115,7 @@ kotlin {
             dependencies {
                 implementation(libs.connectivity.device)
                 implementation(libs.connectivity.compose.device)
+                implementation(libs.ktor.client.darwin)
             }
         }
 
@@ -119,6 +123,7 @@ kotlin {
             dependencies {
                 implementation(libs.connectivity.http)
                 implementation(libs.connectivity.compose.http)
+                implementation(libs.ktor.client.js)
             }
         }
 

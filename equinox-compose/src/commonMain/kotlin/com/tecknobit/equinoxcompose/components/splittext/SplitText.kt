@@ -223,7 +223,7 @@ private fun SplitBox(
 }
 
 /**
- * Function to automatically all the [SplitBox] when the user copy the text to insert in the [SplitText]
+ * Method to automatically all the [SplitBox] when the user copy the text to insert in the [SplitText]
  *
  * @param splits The number of splits used to create the [SplitText] component
  * @param currentTextSlices The array container of the parts of the split text

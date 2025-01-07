@@ -1,4 +1,4 @@
-package com.tecknobit.equinoxcompose.helpers
+package com.tecknobit.equinoxcompose.session
 
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.cancelChildren

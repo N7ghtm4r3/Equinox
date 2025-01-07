@@ -4,11 +4,13 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.tecknobit.apimanager.annotations.Returner;
 import com.tecknobit.equinoxbackend.environment.services.builtin.entity.EquinoxItem;
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.DiscriminatorColumn;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
 import org.json.JSONObject;
 
-import static com.tecknobit.equinoxbackend.environment.services.users.entity.EquinoxUser.ApplicationTheme.Auto;
-import static com.tecknobit.equinoxbackend.environment.services.users.entity.EquinoxUser.USERS_KEY;
+import static com.tecknobit.equinoxcore.helpers.CommonKeysKt.*;
 
 /**
  * The {@code EquinoxUser} class is useful to represent a base Equinox's system user
@@ -22,94 +24,6 @@ import static com.tecknobit.equinoxbackend.environment.services.users.entity.Equ
 @Table(name = USERS_KEY)
 @DiscriminatorColumn
 public class EquinoxUser extends EquinoxItem {
-
-    /**
-     * {@code USERS_KEY} the key for the <b>"users"</b> field
-     */
-    public static final String USERS_KEY = "users";
-
-    /**
-     * {@code TOKEN_KEY} the key for the <b>"token"</b> field
-     */
-    public static final String TOKEN_KEY = "token";
-
-    /**
-     * {@code NAME_KEY} the key for the <b>"name"</b> field
-     */
-    public static final String NAME_KEY = "name";
-
-    /**
-     * {@code SURNAME_KEY} the key for the <b>"surname"</b> field
-     */
-    public static final String SURNAME_KEY = "surname";
-
-    /**
-     * {@code EMAIL_KEY} the key for the <b>"email"</b> field
-     */
-    public static final String EMAIL_KEY = "email";
-
-    /**
-     * {@code PASSWORD_KEY} the key for the <b>"password"</b> field
-     */
-    public static final String PASSWORD_KEY = "password";
-
-    /**
-     * {@code PROFILE_PIC_KEY} the key for the <b>"profile_pic"</b> field
-     */
-    public static final String PROFILE_PIC_KEY = "profile_pic";
-
-    /**
-     * {@code DEFAULT_PROFILE_PIC} the default profile pic path when the user has not set own image
-     */
-    public static final String DEFAULT_PROFILE_PIC = "profiles/defProfilePic.png";
-
-    /**
-     * {@code LANGUAGE_KEY} the key for the <b>"language"</b> field
-     */
-    public static final String LANGUAGE_KEY = "language";
-
-    /**
-     * {@code THEME_KEY} the key for the <b>"theme"</b> field
-     */
-    public static final String THEME_KEY = "theme";
-
-    /**
-     * {@code ApplicationTheme} list of the available theming for the client applications
-     */
-    public enum ApplicationTheme {
-
-        /**
-         * {@code Dark} the dark theme to use as theme
-         */
-        Dark,
-
-        /**
-         * {@code Light} the light theme to use as theme
-         */
-        Light,
-
-        /**
-         * {@code Auto} the theme to use based on the user current theme set
-         */
-        Auto;
-
-        /**
-         * Method to get an instance of the {@link ApplicationTheme}
-         *
-         * @param theme: the name of the theme to get
-         * @return the theme instance as {@link ApplicationTheme}
-         */
-        public static ApplicationTheme getInstance(String theme) {
-            if (theme == null)
-                return Auto;
-            return switch (theme) {
-                case "Dark" -> Dark;
-                case "Light" -> Light;
-                default -> Auto;
-            };
-        }
-
-    }
 
     /**
      * {@code token} the token which the user is allowed to operate on server
@@ -179,12 +93,6 @@ public class EquinoxUser extends EquinoxItem {
     protected final String language;
 
     /**
-     * {@code theme} the theme of the user
-     */
-    @Transient
-    protected final ApplicationTheme theme;
-
-    /**
      * Constructor to init the {@link EquinoxUser} class <br>
      *
      * @apiNote empty constructor required
@@ -196,33 +104,32 @@ public class EquinoxUser extends EquinoxItem {
     /**
      * Constructor to init the {@link EquinoxUser} class
      *
-     * @param id:       identifier of the user
-     * @param token:    the token which the user is allowed to operate on server
-     * @param name:     the name of the user
-     * @param surname:  the surname of the user
-     * @param email:    the email of the user
-     * @param password: the password of the user
-     * @param language: the language of the user
+     * @param id Identifier of the user
+     * @param token The token which the user is allowed to operate on server
+     * @param name The name of the user
+     * @param surname The surname of the user
+     * @param email The email of the user
+     * @param password The password of the user
+     * @param language The language of the user
      */
     public EquinoxUser(String id, String token, String name, String surname, String email, String password, String language) {
-        this(id, token, name, surname, email, password, DEFAULT_PROFILE_PIC, language, Auto);
+        this(id, token, name, surname, email, password, DEFAULT_PROFILE_PIC, language);
     }
 
     /**
      * Constructor to init the {@link EquinoxUser} class
      *
-     * @param id:         identifier of the user
-     * @param token:      the token which the user is allowed to operate on server
-     * @param name:       the password of the user
-     * @param surname:    the surname of the user
-     * @param email:      the password of the user
-     * @param password:   the password of the user
-     * @param profilePic: the profile pic of the user
-     * @param language:   the password of the user
-     * @param theme:      the theme of the user
+     * @param id Identifier of the user
+     * @param token The token which the user is allowed to operate on server
+     * @param name The password of the user
+     * @param surname The surname of the user
+     * @param email The password of the user
+     * @param password The password of the user
+     * @param profilePic The profile pic of the user
+     * @param language The password of the user
      */
     public EquinoxUser(String id, String token, String name, String surname, String email, String password, String profilePic,
-                       String language, ApplicationTheme theme) {
+                       String language) {
         super(id);
         this.token = token;
         this.name = name;
@@ -231,7 +138,6 @@ public class EquinoxUser extends EquinoxItem {
         this.password = password;
         this.profilePic = profilePic;
         this.language = language;
-        this.theme = theme;
     }
 
     /**
@@ -248,7 +154,6 @@ public class EquinoxUser extends EquinoxItem {
         password = hItem.getString(PASSWORD_KEY);
         profilePic = hItem.getString(PROFILE_PIC_KEY);
         language = hItem.getString(LANGUAGE_KEY);
-        theme = Auto;
     }
 
     /**
@@ -331,17 +236,6 @@ public class EquinoxUser extends EquinoxItem {
      */
     public String getLanguage() {
         return language;
-    }
-
-    /**
-     * Method to get {@link #name} instance <br>
-     * No-any params required
-     *
-     * @return {@link #name} instance as {@link ApplicationTheme}
-     */
-    @JsonIgnore
-    public ApplicationTheme getTheme() {
-        return theme;
     }
 
     /**

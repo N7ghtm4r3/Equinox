@@ -13,16 +13,16 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
-import com.tecknobit.equinoxcompose.helpers.viewmodels.EquinoxViewModel
 import com.tecknobit.equinoxcompose.resources.Res
 import com.tecknobit.equinoxcompose.resources.confirm
 import com.tecknobit.equinoxcompose.resources.dismiss
+import com.tecknobit.equinoxcompose.viewmodels.EquinoxViewModel
 import com.tecknobit.equinoxcore.annotations.Wrapper
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
 
 /**
- * Function to display a custom [AlertDialog]
+ * Method to display a custom [AlertDialog]
  *
  * @param modifier The modifier to apply to the [AlertDialog]
  * @param titleModifier The modifier to apply to the title of the [AlertDialog]
@@ -82,7 +82,7 @@ fun EquinoxAlertDialog(
 }
 
 /**
- * Function to display a custom [AlertDialog]
+ * Method to display a custom [AlertDialog]
  *
  * @param modifier The modifier to apply to the [AlertDialog]
  * @param titleModifier The modifier to apply to the title of the [AlertDialog]
@@ -142,7 +142,7 @@ fun EquinoxAlertDialog(
 }
 
 /**
- * Function to display a custom [AlertDialog]
+ * Method to display a custom [AlertDialog]
  *
  * @param modifier The modifier to apply to the [AlertDialog]
  * @param titleModifier The modifier to apply to the title of the [AlertDialog]
@@ -200,7 +200,7 @@ fun EquinoxAlertDialog(
 }
 
 /**
- * Function to display a custom [AlertDialog]
+ * Method to display a custom [AlertDialog]
  *
  * @param modifier The modifier to apply to the [AlertDialog]
  * @param titleModifier The modifier to apply to the title of the [AlertDialog]

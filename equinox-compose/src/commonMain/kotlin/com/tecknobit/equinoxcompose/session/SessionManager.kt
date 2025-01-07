@@ -1,4 +1,4 @@
-package com.tecknobit.equinoxcompose.helpers.session
+package com.tecknobit.equinoxcompose.session
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
@@ -9,12 +9,12 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.graphics.vector.ImageVector
 import com.tecknobit.equinoxcompose.components.ErrorUI
 import com.tecknobit.equinoxcompose.components.LoadingItemUI
-import com.tecknobit.equinoxcompose.helpers.session.SessionStatus.*
-import com.tecknobit.equinoxcompose.helpers.viewmodels.EquinoxViewModel
 import com.tecknobit.equinoxcompose.resources.Res
 import com.tecknobit.equinoxcompose.resources.no_internet
 import com.tecknobit.equinoxcompose.resources.no_internet_connection
 import com.tecknobit.equinoxcompose.resources.server_currently_offline
+import com.tecknobit.equinoxcompose.session.SessionStatus.*
+import com.tecknobit.equinoxcompose.viewmodels.EquinoxViewModel
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.stringResource
