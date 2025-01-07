@@ -22,6 +22,7 @@ repositories {
 }
 
 kotlin {
+
     jvm {
         compilations.all {
             @OptIn(ExperimentalKotlinGradlePluginApi::class)
@@ -30,6 +31,7 @@ kotlin {
             }
         }
     }
+
     androidTarget {
         publishLibraryVariants("release")
         @OptIn(ExperimentalKotlinGradlePluginApi::class)
@@ -37,6 +39,7 @@ kotlin {
             jvmTarget.set(JvmTarget.JVM_18)
         }
     }
+
     listOf(
         iosX64(),
         iosArm64(),

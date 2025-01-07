@@ -9,7 +9,7 @@ import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.unit.Dp
 import com.tecknobit.equinoxcompose.utilities.BorderToColor.*
-import java.util.*
+import kotlin.random.Random
 
 /**
  * Function to generate a random color for a collection
@@ -19,11 +19,10 @@ import java.util.*
  * @return random color as [Color]
  */
 fun generateRandomColor(): Color {
-    val random = Random()
     return Color(
-        red = random.nextFloat(),
-        green = random.nextFloat(),
-        blue = random.nextFloat(),
+        red = Random.nextFloat(),
+        green = Random.nextFloat(),
+        blue = Random.nextFloat(),
         alpha = 1f
     )
 }
@@ -48,7 +47,10 @@ fun Color.toHex(): String {
     val red = (this.red * 255).toInt()
     val green = (this.green * 255).toInt()
     val blue = (this.blue * 255).toInt()
-    return String.format("#%02X%02X%02X", red, green, blue)
+    val redHex = red.toString(16).uppercase().padStart(2, '0')
+    val greenHex = green.toString(16).uppercase().padStart(2, '0')
+    val blueHex = blue.toString(16).uppercase().padStart(2, '0')
+    return "#$redHex$greenHex$blueHex"
 }
 
 /**

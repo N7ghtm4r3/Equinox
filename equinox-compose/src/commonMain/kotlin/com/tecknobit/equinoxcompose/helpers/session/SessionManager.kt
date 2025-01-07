@@ -10,7 +10,6 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import com.tecknobit.equinoxcompose.components.ErrorUI
 import com.tecknobit.equinoxcompose.components.LoadingItemUI
 import com.tecknobit.equinoxcompose.helpers.session.SessionStatus.*
-import com.tecknobit.equinoxcompose.helpers.viewmodels.EquinoxViewModel
 import com.tecknobit.equinoxcompose.resources.Res
 import com.tecknobit.equinoxcompose.resources.no_internet
 import com.tecknobit.equinoxcompose.resources.no_internet_connection
@@ -177,7 +176,7 @@ fun setHasBeenDisconnectedValue(
 @Composable
 fun ManagedContent(
     content: @Composable () -> Unit,
-    viewModel: EquinoxViewModel,
+    // viewModel: EquinoxViewModel, TODO: TO RESET
     loadingRoutine: (() -> Boolean)? = null,
     serverOfflineRetryText: String? = null,
     serverOfflineRetryAction: @Composable (() -> Unit)? = null,
@@ -203,7 +202,7 @@ fun ManagedContent(
     ) {
         sessionStatus.value = NO_INTERNET_CONNECTION
         NoInternetConnectionUi(
-            viewModel = viewModel,
+            // viewModel = viewModel, TODO: TO RESET
             retryText = noInternetConnectionRetryText,
             retryAction = noInternetConnectionRetryAction
         )
@@ -218,7 +217,7 @@ fun ManagedContent(
             hasBeenDisconnectedAction()
         } else {
             sessionStatus.value = OPERATIONAL
-            viewModel.restartRefresher()
+            // viewModel.restartRefresher() TODO: TO RESET
             if (loadingRoutine != null) {
                 LoadingItemUI(
                     loadingRoutine = loadingRoutine,
@@ -239,9 +238,12 @@ private fun InstantiateSessionInstances() {
     noInternetConnection = remember { mutableStateOf(false) }
     hasBeenDisconnected = remember { mutableStateOf(false) }
     sessionStatus = remember { mutableStateOf(OPERATIONAL) }
-    checkInternetConnection(
-        noInternetConnectionState = noInternetConnection
-    )
+    val state = createConnectivity()
+    MainScope().launch {
+        state.statusUpdates.collect { status ->
+            noInternetConnection.value = status.isDisconnected
+        }
+    }
 }
 
 /**
@@ -259,12 +261,12 @@ private fun ServerOfflineUi(
     ErrorUI(
         errorIcon = try {
             sessionSetup.serverOfflineIcon
-        } catch (e: UninitializedPropertyAccessException) {
+        } catch (e: Exception) {
             throw Exception("You must setup the session before, this using the setUpSession() method")
         },
         errorMessage = try {
             sessionSetup.serverOfflineMessage
-        } catch (e: UninitializedPropertyAccessException) {
+        } catch (e: Exception) {
             throw Exception("You must setup the session before, this using the setUpSession() method")
         },
         retryText = retryText,
@@ -284,20 +286,20 @@ private fun ServerOfflineUi(
 @Composable
 @NonRestartableComposable
 private fun NoInternetConnectionUi(
-    viewModel: EquinoxViewModel,
+    // viewModel: EquinoxViewModel, TODO: TO RESET
     retryText: String?,
     retryAction: @Composable (() -> Unit)?,
 ) {
-    viewModel.suspendRefresher()
+    // viewModel.suspendRefresher() TODO: TO RESET
     ErrorUI(
         errorIcon = try {
             sessionSetup.noInternetConnectionIcon
-        } catch (e: UninitializedPropertyAccessException) {
+        } catch (e: Exception) {
             throw Exception("You must setup the session before, this using the setUpSession() method")
         },
         errorMessage = try {
             sessionSetup.noInternetConnectionMessage
-        } catch (e: UninitializedPropertyAccessException) {
+        } catch (e: Exception) {
             throw Exception("You must setup the session before, this using the setUpSession() method")
         },
         retryText = retryText,
@@ -311,7 +313,7 @@ private fun NoInternetConnectionUi(
 private fun hasBeenDisconnectedAction() {
     try {
         sessionSetup.hasBeenDisconnectedAction.invoke()
-    } catch (e: UninitializedPropertyAccessException) {
+    } catch (e: Exception) {
         throw Exception("You must setup the session before, this using the setUpSession() method")
     }
 }

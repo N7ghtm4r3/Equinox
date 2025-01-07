@@ -4,6 +4,7 @@ import com.vanniktech.maven.publish.JavadocJar
 import com.vanniktech.maven.publish.KotlinMultiplatform
 import com.vanniktech.maven.publish.SonatypeHost
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
+import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
@@ -23,6 +24,7 @@ repositories {
 }
 
 kotlin {
+
     jvm {
         compilations.all {
             this@jvm.compilerOptions {
@@ -30,10 +32,33 @@ kotlin {
             }
         }
     }
+
     androidTarget {
         publishLibraryVariants("release", "debug")
         compilerOptions {
             jvmTarget.set(JvmTarget.JVM_18)
+        }
+    }
+
+    listOf(
+        iosX64(),
+        iosArm64(),
+        iosSimulatorArm64()
+    ).forEach { iosTarget ->
+        iosTarget.binaries.framework {
+            baseName = "Equinox-Compose"
+            isStatic = true
+        }
+    }
+
+    @OptIn(ExperimentalWasmDsl::class)
+    wasmJs {
+        binaries.executable()
+        browser {
+            webpackTask {
+                dependencies {
+                }
+            }
         }
     }
 
@@ -43,6 +68,7 @@ kotlin {
                 optIn("org.jetbrains.compose.resources.ExperimentalResourceApi")
             }
         }
+
         val commonMain by getting {
             dependencies {
                 implementation(compose.components.resources)
@@ -50,24 +76,52 @@ kotlin {
                 implementation(compose.material3)
                 implementation(compose.materialIconsExtended)
                 implementation(libs.lifecycle.viewmodel.compose)
+                implementation(kotlin("stdlib"))
                 // implementation(libs.apimanager) TODO: CHECK TO REMOVE
                 implementation(libs.kermit)
-                implementation(libs.kmpalette.core)
+                //implementation(libs.kmpalette.core)
+                implementation(libs.connectivity.core)
+                implementation(libs.connectivity.compose)
                 implementation(project(":equinox-core"))
             }
         }
+
         val jvmMain by getting {
             dependencies {
+                implementation(libs.connectivity.http)
+                implementation(libs.connectivity.compose.http)
             }
         }
+
         val androidMain by getting {
             dependencies {
-                implementation(libs.connectivity.core)
-                implementation(libs.connectivity.android)
-                implementation(libs.connectivity.compose.device)
                 implementation(libs.startup.runtime)
+                implementation(libs.connectivity.device)
+                implementation(libs.connectivity.compose.device)
             }
         }
+
+        val iosX64Main by getting
+        val iosArm64Main by getting
+        val iosSimulatorArm64Main by getting
+        val iosMain by creating {
+            dependsOn(commonMain)
+            iosX64Main.dependsOn(this)
+            iosArm64Main.dependsOn(this)
+            iosSimulatorArm64Main.dependsOn(this)
+            dependencies {
+                implementation(libs.connectivity.device)
+                implementation(libs.connectivity.compose.device)
+            }
+        }
+
+        val wasmJsMain by getting {
+            dependencies {
+                implementation(libs.connectivity.http)
+                implementation(libs.connectivity.compose.http)
+            }
+        }
+
     }
 }
 
@@ -93,7 +147,7 @@ mavenPublishing {
     )
     coordinates(
         groupId = "io.github.n7ghtm4r3",
-        artifactId = "Equinox-Compose",
+        artifactId = "equinox-compose",
         version = "1.0.6"
     )
     pom {
