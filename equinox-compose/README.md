@@ -1,6 +1,19 @@
-# Equinox-Compose
+# Equinox Compose
 
-![Maven Central](https://img.shields.io/maven-central/v/io.github.n7ghtm4r3/Equinox-Compose.svg?label=Maven/0Central)
+## Temporarily workaround
+
+Because conflicting dependencies due the `Equinox-Compose` migration as module, at the moment, to use correctly this
+library instead the old one you need to exclude it from you configuration if you're targeting `android`'s target, add
+this
+in your `build.gradle.kts` file:
+
+```kotlin
+configurations.all {
+    exclude("io.github.n7ghtm4r3", "Equinox-Compose-android")
+}
+```
+
+![Maven Central](https://img.shields.io/maven-central/v/io.github.n7ghtm4r3/Equinox-Compose.svg?label=Maven%20Central)
 
 ## This library will be integrated as module in the [Equinox](https://github.com/N7ghtm4r3/Equinox) library in the next version
 
@@ -160,7 +173,7 @@ The others components will be gradually released
 If you need help using the library or encounter any problems or bugs, please contact us via the following links:
 
 - Support via <a href="mailto:infotecknobitcompany@gmail.com">email</a>
-- Support via <a href="https://github.com/N7ghtm4r3/Equinox-Compose/issues/new">GitHub</a>
+- Support via <a href="https://github.com/N7ghtm4r3/Equinox/issues/new">GitHub</a>
 
 Thank you for your help!
 

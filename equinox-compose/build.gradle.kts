@@ -76,7 +76,7 @@ kotlin {
                 implementation(compose.materialIconsExtended)
                 implementation(libs.lifecycle.viewmodel.compose)
                 implementation(libs.kermit)
-                implementation(libs.kmpalette.core)
+                //implementation(libs.kmpalette.core)
                 implementation(libs.connectivity.core)
                 implementation(libs.connectivity.compose)
                 implementation(libs.kotlinx.serialization.json)

@@ -50,6 +50,13 @@ import java.lang.ref.WeakReference
  *
  * @author N7ghtm4r3 - Tecknobit
  */
+@Deprecated(
+    message = "Will be removed in the future releases",
+    replaceWith = ReplaceWith(
+        expression = "com.tecknobit.equinoxcompose.utilities.context.ContextActivityProvider"
+    ),
+    level = DeprecationLevel.WARNING
+)
 object ContextActivityProvider {
 
     /**
