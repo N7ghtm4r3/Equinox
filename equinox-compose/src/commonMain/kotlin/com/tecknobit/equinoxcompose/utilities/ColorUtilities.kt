@@ -106,15 +106,15 @@ fun Modifier.colorOneSideBorder(
             color = color,
             start = when (borderToColor) {
                 START -> Offset(halfWidthPx, 0f)
-                TOP -> Offset(0f, halfWidthPx)
+                TOP -> Offset(0f, 0f)
                 END -> Offset(size.width - halfWidthPx, 0f)
-                else -> Offset(size.height, size.height - halfWidthPx)
+                else -> Offset(0f, size.height - halfWidthPx)
             },
             end = when (borderToColor) {
                 START -> Offset(halfWidthPx, size.height)
-                TOP -> Offset(size.height, halfWidthPx)
+                TOP -> Offset(size.width, 0f)
                 END -> Offset(size.width - halfWidthPx, size.height)
-                else -> Offset(0f, size.height - halfWidthPx)
+                else -> Offset(size.width, size.height - halfWidthPx)
             },
             strokeWidth = widthPx
         )
