@@ -40,6 +40,7 @@ import androidx.startup.Initializer
  *
  * @see Initializer
  */
+// TODO: exclude("io.github.n7ghtm4r3", "Equinox-Compose-android") WARN ABOUT THIS
 class AppContextInitializer : Initializer<Context> {
 
     /**

@@ -56,13 +56,11 @@ open class EquinoxProfileViewModel(
      * Method to execute the profile pic change, look how to integrate
      *
      * @param profilePicName The name of the image to set
-     * @param profilePicPath The path of the image to set
      * @param profilePicBytes The bytes of the image selected
      * @param profilePic The state used to display the current profile pic
      */
     fun changeProfilePic(
         profilePicName: String,
-        profilePicPath: String,
         profilePicBytes: ByteArray,
         profilePic: MutableState<String>,
     ) {
@@ -74,8 +72,8 @@ open class EquinoxProfileViewModel(
                 )
             },
             onSuccess = { response ->
-                profilePic.value = profilePicPath
                 localUser.profilePic = response.toResponseData()[PROFILE_PIC_KEY]!!.jsonPrimitive.content
+                profilePic.value = localUser.profilePic!!
             },
             onFailure = { showSnackbarMessage(it) }
         )
