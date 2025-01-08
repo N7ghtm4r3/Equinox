@@ -111,9 +111,15 @@ open class EquinoxLocalUser(
      */
     var profilePic: String? = null
         set(value) {
-            if (field == null || field != value) {
-                val profilePicLocal = "$hostAddress/$value"
-                setPreference(PROFILE_PIC_KEY, profilePicLocal)
+            if (field != value) {
+                val profilePicLocal = if (value == null || value.startsWith(hostAddress!!))
+                    value
+                else
+                    "$hostAddress/$value"
+                setPreference(
+                    key = PROFILE_PIC_KEY,
+                    value = profilePicLocal
+                )
                 field = profilePicLocal
             }
         }

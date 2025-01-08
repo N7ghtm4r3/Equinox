@@ -7,7 +7,10 @@ import com.tecknobit.equinoxcompose.session.EquinoxLocalUser
 import com.tecknobit.equinoxcompose.session.EquinoxLocalUser.ApplicationTheme
 import com.tecknobit.equinoxcore.helpers.InputsValidator.Companion.isEmailValid
 import com.tecknobit.equinoxcore.helpers.InputsValidator.Companion.isPasswordValid
+import com.tecknobit.equinoxcore.helpers.PROFILE_PIC_KEY
 import com.tecknobit.equinoxcore.network.Requester.Companion.sendRequest
+import com.tecknobit.equinoxcore.network.Requester.Companion.toResponseData
+import kotlinx.serialization.json.jsonPrimitive
 
 /**
  * The **EquinoxProfileViewModel** class is the support class used to change the user account settings or preferences
@@ -50,30 +53,32 @@ open class EquinoxProfileViewModel(
     lateinit var newPasswordError: MutableState<Boolean>
 
     /**
-     * Method to execute the profile pic change
+     * Method to execute the profile pic change, look how to integrate
      *
-     * @param imagePath The path of the image to set
+     * @param profilePicName The name of the image to set
+     * @param profilePicPath The path of the image to set
+     * @param profilePicBytes The bytes of the image selected
      * @param profilePic The state used to display the current profile pic
      */
     fun changeProfilePic(
-        imagePath: String,
+        profilePicName: String,
+        profilePicPath: String,
+        profilePicBytes: ByteArray,
         profilePic: MutableState<String>,
     ) {
-        // TODO: TO SET 
-        /*requester.sendRequest(
+        requester.sendRequest(
             request = {
                 changeProfilePic(
-                    profilePic = File(imagePath)
+                    profilePicName = profilePicName,
+                    profilePicBytes = profilePicBytes
                 )
             },
             onSuccess = { response ->
-                profilePic.value = imagePath
-                localUser.setProfilePic(
-                    profilePic = response.toResponseData().jsonPrimitive.content
-                )
+                profilePic.value = profilePicPath
+                localUser.profilePic = response.toResponseData()[PROFILE_PIC_KEY]!!.jsonPrimitive.content
             },
             onFailure = { showSnackbarMessage(it) }
-        )*/
+        )
     }
 
     /**

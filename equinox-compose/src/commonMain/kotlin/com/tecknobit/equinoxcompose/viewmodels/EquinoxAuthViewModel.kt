@@ -1,4 +1,3 @@
-// FIXME: ADAPT TO KMP 
 package com.tecknobit.equinoxcompose.viewmodels
 
 import androidx.compose.material3.SnackbarHostState
@@ -153,7 +152,7 @@ abstract class EquinoxAuthViewModel(
                         name = name.value,
                         surname = surname.value,
                         language = language,
-                        response = response,
+                        response = response.toResponseData(),
                         custom = getSignUpCustomParameters()
                     )
                 },

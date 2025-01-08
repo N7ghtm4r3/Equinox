@@ -535,6 +535,7 @@ abstract class Requester(
                 this.method = HttpMethod(method.name)
                 prepareRequest(
                     headers = headers,
+                    contentType = ContentType.parse("application/json"),
                     query = query,
                     payload = if (payload != null) {
                         {
@@ -656,12 +657,14 @@ abstract class Requester(
      * Method to prepare the details of the request to execute
      *
      * @param headers Custom headers of the request
+     * @param contentType The content type of the request
      * @param query The query parameters of the request
      * @param payload The payload of the request
      *
      */
     private fun HttpRequestBuilder.prepareRequest(
         headers: Map<String, Any>,
+        contentType: ContentType? = null,
         query: JsonObject? = null,
         payload: (() -> Unit)? = null,
     ) {
@@ -672,6 +675,9 @@ abstract class Requester(
                 }
                 headers.forEach { header ->
                     append(header.key, header.value.toString())
+                }
+                contentType?.let {
+                    contentType(contentType)
                 }
             }
             parameters {

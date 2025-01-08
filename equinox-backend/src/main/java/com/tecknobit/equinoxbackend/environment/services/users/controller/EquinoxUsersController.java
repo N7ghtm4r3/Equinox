@@ -332,10 +332,10 @@ public class EquinoxUsersController<T extends EquinoxUser, R extends EquinoxUser
         try {
             String profilePicUrl = usersHelper.changeProfilePic(profilePic, id);
             response.put(PROFILE_PIC_KEY, profilePicUrl);
+            return successResponse(response);
         } catch (Exception e) {
-            response.put(PROFILE_PIC_KEY, DEFAULT_PROFILE_PIC);
+            return failedResponse(WRONG_PROCEDURE_MESSAGE);
         }
-        return successResponse(response);
     }
 
     /**

@@ -1,3 +1,4 @@
+// FIXME: ADAPT TO KMP 
 //package com.tecknobit.equinoxcompose.components
 //
 //import androidx.compose.material3.LocalTextStyle

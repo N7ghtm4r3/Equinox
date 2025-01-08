@@ -2,7 +2,6 @@
 import com.vanniktech.maven.publish.JavadocJar
 import com.vanniktech.maven.publish.KotlinMultiplatform
 import com.vanniktech.maven.publish.SonatypeHost
-import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
@@ -25,7 +24,6 @@ kotlin {
 
     jvm {
         compilations.all {
-            @OptIn(ExperimentalKotlinGradlePluginApi::class)
             this@jvm.compilerOptions {
                 jvmTarget.set(JvmTarget.JVM_18)
             }
@@ -34,7 +32,6 @@ kotlin {
 
     androidTarget {
         publishLibraryVariants("release")
-        @OptIn(ExperimentalKotlinGradlePluginApi::class)
         compilerOptions {
             jvmTarget.set(JvmTarget.JVM_18)
         }
@@ -46,7 +43,7 @@ kotlin {
         iosSimulatorArm64()
     ).forEach { iosTarget ->
         iosTarget.binaries.framework {
-            baseName = "Equinox-Core"
+            baseName = "equinox-core"
             isStatic = true
         }
     }
@@ -120,7 +117,7 @@ mavenPublishing {
         version = "1.0.6"
     )
     pom {
-        name.set("Equinox")
+        name.set("Equinox Core")
         description.set("Utilities for backend services based on Springboot framework. Is a support library to implement some utilities both for backend and for client also who comunicate with that Springboot backend")
         inceptionYear.set("2025")
         url.set("https://github.com/N7ghtm4r3/Equinox")
@@ -149,8 +146,12 @@ mavenPublishing {
 
 android {
     namespace = "com.tecknobit.equinoxcore"
-    compileSdk = 34
+    compileSdk = libs.versions.android.compileSdk.get().toInt()
     defaultConfig {
-        minSdk = 24
+        minSdk = libs.versions.android.minSdk.get().toInt()
+    }
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_18
+        targetCompatibility = JavaVersion.VERSION_18
     }
 }

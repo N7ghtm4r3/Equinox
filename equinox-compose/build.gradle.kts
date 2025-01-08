@@ -45,7 +45,7 @@ kotlin {
         iosSimulatorArm64()
     ).forEach { iosTarget ->
         iosTarget.binaries.framework {
-            baseName = "Equinox-Compose"
+            baseName = "equinox-compose"
             isStatic = true
         }
     }
@@ -131,18 +131,6 @@ kotlin {
     }
 }
 
-android {
-    namespace = "io.github.n7ghtm4r3"
-    compileSdk = libs.versions.android.compileSdk.get().toInt()
-    defaultConfig {
-        minSdk = libs.versions.android.minSdk.get().toInt()
-    }
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_18
-        targetCompatibility = JavaVersion.VERSION_18
-    }
-}
-
 mavenPublishing {
     configure(
         KotlinMultiplatform(
@@ -157,8 +145,8 @@ mavenPublishing {
         version = "1.0.6"
     )
     pom {
-        name.set("Equinox-Compose")
-        description.set("Utilities for clients with an architecture based on SpringBoot and Kotlin Multiplatform frameworks. Is a support library to implement some utilities for the clients and some default composable such OutlinedTextField, AlertDialogs and different others")
+        name.set("Equinox Compose")
+        description.set("Utilities for clients with an architecture based on SpringBoot and Kotlin Multiplatform frameworks. Is a support library to implement some utilities for the clients and some default components such OutlinedTextField, AlertDialogs and different others")
         inceptionYear.set("2025")
         url.set("https://github.com/N7ghtm4r3/Equinox")
 
@@ -188,4 +176,16 @@ compose.resources {
     publicResClass = true
     packageOfResClass = "com.tecknobit.equinoxcompose.resources"
     generateResClass = always
+}
+
+android {
+    namespace = "com.tecknobit.equinoxcompose"
+    compileSdk = libs.versions.android.compileSdk.get().toInt()
+    defaultConfig {
+        minSdk = libs.versions.android.minSdk.get().toInt()
+    }
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_18
+        targetCompatibility = JavaVersion.VERSION_18
+    }
 }

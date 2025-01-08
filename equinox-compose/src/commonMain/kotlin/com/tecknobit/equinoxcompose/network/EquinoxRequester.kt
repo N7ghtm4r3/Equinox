@@ -14,6 +14,7 @@ import com.tecknobit.equinoxcore.network.EquinoxBaseEndpointsSet.Companion.SIGN_
 import com.tecknobit.equinoxcore.network.RequestMethod.*
 import com.tecknobit.equinoxcore.network.Requester
 import io.ktor.client.request.forms.*
+import io.ktor.http.*
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.buildJsonObject
 import kotlinx.serialization.json.put
@@ -29,8 +30,8 @@ import kotlinx.serialization.json.put
  * workflow, if it is enabled all the details of the requests sent and the errors occurred will be printed in the console
  * @param connectionTimeout Time to keep alive request then throw the connection refused error
  * @param connectionErrorMessage The error to send when a connection error occurred
- * @param enableCertificatesValidation Whether enable the **SSL** certificates validation, this for example
- * when the certificate is a self-signed certificate to by-pass
+ * @param byPassSSLValidation Whether bypass the **SSL** certificates validation, this for example
+ * when is a self-signed the certificate USE WITH CAUTION
  *
  * @author N7ghtm4r3 - Tecknobit
  *
@@ -43,7 +44,7 @@ abstract class EquinoxRequester(
     debugMode: Boolean = false,
     connectionTimeout: Long = DEFAULT_REQUEST_TIMEOUT,
     connectionErrorMessage: String,
-    enableCertificatesValidation: Boolean = false,
+    byPassSSLValidation: Boolean = false,
 ) : Requester(
     host = host,
     userId = userId,
@@ -51,7 +52,7 @@ abstract class EquinoxRequester(
     debugMode = debugMode,
     connectionTimeout = connectionTimeout,
     connectionErrorMessage = connectionErrorMessage,
-    byPassSSLValidation = enableCertificatesValidation
+    byPassSSLValidation = byPassSSLValidation
 ) {
 
     /**
@@ -111,18 +112,18 @@ abstract class EquinoxRequester(
      * ```
      * @CustomParametersOrder(order = ["currency"]) // optional
      * override fun getSignUpPayload(
-     *      serverSecret: String,
-     *      name: String,
-     *      surname: String,
-     *      email: String,
-     *      password: String,
-     *      language: String,
-     *      vararg custom: Any
-     * ): JsonObject {
-     *      val payload = super.getSignUpPayload(serverSecret, name, surname, email, password, language)
-     *      payload.addParam("currency", custom[0])
-     *      return payload
-     * }
+     *         serverSecret: String,
+     *         name: String,
+     *         surname: String,
+     *         email: String,
+     *         password: String,
+     *         language: String,
+     *         vararg custom: Any?
+     *     ): JsonObject {
+     *         val payload = super.getSignUpPayload(serverSecret, name, surname, email, password, language, *custom).toMutableMap()
+     *         payload["currency"] = Json.encodeToJsonElement(custom[0]!!.toString())
+     *         return Json.encodeToJsonElement(payload).jsonObject
+     *     }
      * ```
      *
      * @param serverSecret The secret of the personal Equinox's backend
@@ -195,10 +196,14 @@ abstract class EquinoxRequester(
      *
      * ```
      * @CustomParametersOrder(order = ["currency"])
-     * override fun getSignInPayload(email: String, password: String, vararg custom: Any?): JsonObject {
-     *   val payload = super.getSignInPayload(email, password)
-     *   payload.addParam("currency", custom[0])
-     *   return payload
+     * override fun getSignInPayload(
+     *      email: String,
+     *      password: String,
+     *      vararg custom: Any?
+     * ): JsonObject {
+     *    val payload = super.getSignInPayload(email, password, custom).toMutableMap()
+     *    payload["currency"] = Json.encodeToJsonElement(custom[0]!!.toString())
+     *    return Json.encodeToJsonElement(payload).jsonObject
      * }
      * ```
      *
@@ -224,17 +229,21 @@ abstract class EquinoxRequester(
     /**
      * Method to execute the request to change the profile pic of the user
      *
-     * @param profilePic The profile pic chosen by the user to set as the new profile pic
+     * @param profilePicName The name of the profile pic
+     * @param profilePicBytes The profile pic chosen by the user to set as the new profile pic
      *
      * @return the result of the request as [JsonObject]
      */
-    // TODO: CHANGE BYTE ARRAY TO REAL FILE FROM LIBRARY 
     @RequestPath(path = "/api/v1/users/{id}/changeProfilePic", method = POST)
     open suspend fun changeProfilePic(
-        profilePic: ByteArray,
+        profilePicName: String,
+        profilePicBytes: ByteArray,
     ): JsonObject {
         val payload = formData {
-            append(PROFILE_PIC_KEY, profilePic)
+            append(PROFILE_PIC_KEY, profilePicBytes, Headers.build {
+                append(HttpHeaders.ContentType, "image/*")
+                append(HttpHeaders.ContentDisposition, "filename=\"$profilePicName\"")
+            })
         }
         return execMultipartRequest(
             endpoint = assembleUsersEndpointPath(CHANGE_PROFILE_PIC_ENDPOINT),
