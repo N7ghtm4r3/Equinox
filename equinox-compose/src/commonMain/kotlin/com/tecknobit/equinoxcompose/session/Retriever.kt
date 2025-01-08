@@ -126,11 +126,11 @@ class Retriever(
             retrieverScope.launch {
                 if(repeatRoutine) {
                     while (continueToRetrieve(currentContext)) {
-                        routine.invoke()
+                        routine()
                         delay(refreshDelay)
                     }
                 } else
-                    routine.invoke()
+                    routine()
             }
         }
     }

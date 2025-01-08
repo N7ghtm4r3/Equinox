@@ -3,9 +3,9 @@ package com.tecknobit.equinoxcompose.session
 import dev.jordond.connectivity.Connectivity
 import io.ktor.client.*
 import io.ktor.client.engine.js.*
+import io.ktor.client.fetch.*
 import io.ktor.http.*
 
-// FIXME: TO FIX CORS ISSUES
 /**
  * Method to create a monitor connectivity instance specific for each platform.
  * It is useful to monitor the connection status and adapt the content by the [com.tecknobit.equinoxcompose.helpers.session.ManagedContent]
@@ -16,12 +16,9 @@ import io.ktor.http.*
 actual fun createConnectivity(): Connectivity {
     return Connectivity(
         httpClient = HttpClient(Js) {
-            headers {
-                append("Access-Control-Allow-Origin", "*")
-            }
+            // FIXME: TO FIX CORS ISSUES
         }
     ) {
-        //urls("8.8.8.8")
         autoStart = true
         pollingIntervalMs = 2.seconds
     }

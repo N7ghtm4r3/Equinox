@@ -39,7 +39,7 @@ fun LoadingItemUI(
     containerModifier: Modifier = Modifier,
     animations: UIAnimations? = null,
     textStyle: TextStyle = TextStyle.Default,
-    loadingRoutine: () -> Boolean,
+    loadingRoutine: suspend () -> Boolean,
     contentLoaded: @Composable () -> Unit,
     themeColor: Color = MaterialTheme.colorScheme.primary,
     loadingIndicator: @Composable () -> Unit = {
@@ -99,24 +99,27 @@ fun LoadingItemUI(
 @Composable
 @NonRestartableComposable
 private fun LoadingItemUIContent(
-    loadingRoutine: () -> Boolean,
+    loadingRoutine: suspend () -> Boolean,
     loadingIndicator: @Composable () -> Unit,
     contentLoaded: @Composable () -> Unit,
 ) {
-    val isLoading = loadingRoutine.invoke()
-    AnimatedVisibility(
-        visible = isLoading,
-        enter = fadeIn(),
-        exit = fadeOut()
-    ) {
-        contentLoaded.invoke()
+    var isLoaded by remember { mutableStateOf(false) }
+    LaunchedEffect(Unit) {
+        isLoaded = loadingRoutine()
     }
     AnimatedVisibility(
-        visible = !isLoading,
+        visible = isLoaded,
         enter = fadeIn(),
         exit = fadeOut()
     ) {
-        loadingIndicator.invoke()
+        contentLoaded()
+    }
+    AnimatedVisibility(
+        visible = !isLoaded,
+        enter = fadeIn(),
+        exit = fadeOut()
+    ) {
+        loadingIndicator()
     }
 }
 
@@ -269,7 +272,7 @@ fun ErrorUI(
     errorColor: Color = MaterialTheme.colorScheme.error,
     errorMessage: StringResource = Res.string.an_error_occurred,
     retryAction: @Composable (() -> Unit)? = null,
-    retryText: StringResource = Res.string.retry,
+    retryText: StringResource? = Res.string.retry,
 ) {
     ErrorUI(
         containerModifier = containerModifier,
@@ -280,7 +283,7 @@ fun ErrorUI(
         errorColor = errorColor,
         errorMessage = stringResource(errorMessage),
         retryAction = retryAction,
-        retryText = stringResource(retryText)
+        retryText = retryText?.let { stringResource(it) }
     )
 }
 
@@ -396,7 +399,7 @@ private fun ErrorUIContent(
                 )
             }
             if (retryActionStart) {
-                retryAction.invoke()
+                retryAction()
                 retryActionStart = false
             }
         }

@@ -17,7 +17,7 @@ import com.tecknobit.equinoxcompose.session.SessionStatus.*
 import com.tecknobit.equinoxcompose.viewmodels.EquinoxViewModel
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
-import org.jetbrains.compose.resources.stringResource
+import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.vectorResource
 
 /**
@@ -30,9 +30,9 @@ import org.jetbrains.compose.resources.vectorResource
  * @param hasBeenDisconnectedAction The action to execute when the user has been disconnected
  */
 data class SessionSetup(
-    val serverOfflineMessage: String,
+    val serverOfflineMessage: StringResource,
     val serverOfflineIcon: ImageVector,
-    val noInternetConnectionMessage: String,
+    val noInternetConnectionMessage: StringResource,
     val noInternetConnectionIcon: ImageVector,
     val hasBeenDisconnectedAction: () -> Unit,
 )
@@ -101,9 +101,9 @@ private lateinit var hasBeenDisconnected: MutableState<Boolean>
  */
 @Composable
 fun setUpSession(
-    serverOfflineMessage: String = stringResource(Res.string.server_currently_offline),
+    serverOfflineMessage: StringResource = Res.string.server_currently_offline,
     serverOfflineIcon: ImageVector = Icons.Default.Warning,
-    noInternetConnectionMessage: String = stringResource(Res.string.no_internet_connection),
+    noInternetConnectionMessage: StringResource = Res.string.no_internet_connection,
     noInternetConnectionIcon: ImageVector = vectorResource(Res.drawable.no_internet),
     hasBeenDisconnectedAction: () -> Unit,
 ) {
@@ -178,10 +178,10 @@ fun setHasBeenDisconnectedValue(
 fun ManagedContent(
     content: @Composable () -> Unit,
     viewModel: EquinoxViewModel,
-    loadingRoutine: (() -> Boolean)? = null,
-    serverOfflineRetryText: String? = null,
+    loadingRoutine: (suspend () -> Boolean)? = null,
+    serverOfflineRetryText: StringResource? = null,
     serverOfflineRetryAction: @Composable (() -> Unit)? = null,
-    noInternetConnectionRetryText: String? = null,
+    noInternetConnectionRetryText: StringResource? = null,
     noInternetConnectionRetryAction: @Composable (() -> Unit)? = null,
 ) {
     InstantiateSessionInstances()
@@ -225,7 +225,7 @@ fun ManagedContent(
                     contentLoaded = content
                 )
             } else
-                content.invoke()
+                content()
         }
     }
 }
@@ -256,7 +256,7 @@ private fun InstantiateSessionInstances() {
 @Composable
 @NonRestartableComposable
 private fun ServerOfflineUi(
-    retryText: String?,
+    retryText: StringResource?,
     retryAction: @Composable (() -> Unit)?,
 ) {
     ErrorUI(
@@ -288,7 +288,7 @@ private fun ServerOfflineUi(
 @NonRestartableComposable
 private fun NoInternetConnectionUi(
     viewModel: EquinoxViewModel,
-    retryText: String?,
+    retryText: StringResource?,
     retryAction: @Composable (() -> Unit)?,
 ) {
     viewModel.suspendRetriever()
@@ -313,7 +313,7 @@ private fun NoInternetConnectionUi(
  */
 private fun hasBeenDisconnectedAction() {
     try {
-        sessionSetup.hasBeenDisconnectedAction.invoke()
+        sessionSetup.hasBeenDisconnectedAction()
     } catch (e: Exception) {
         throw Exception("You must setup the session before, this using the setUpSession() method")
     }

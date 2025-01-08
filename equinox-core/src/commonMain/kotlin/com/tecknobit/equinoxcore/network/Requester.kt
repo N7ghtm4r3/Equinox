@@ -361,7 +361,7 @@ abstract class Requester(
     }
 
     init {
-        initHost.invoke()
+        initHost()
         setUserCredentials(userId, userToken)
     }
 
@@ -704,7 +704,7 @@ abstract class Requester(
                 headers = headers
             )
             println("-URL\n$requestUrl")
-            requestPayloadInfo.invoke()
+            requestPayloadInfo()
             if (response != null)
                 println("\n-RESPONSE\n$response")
             println("---------------------------------------------------")

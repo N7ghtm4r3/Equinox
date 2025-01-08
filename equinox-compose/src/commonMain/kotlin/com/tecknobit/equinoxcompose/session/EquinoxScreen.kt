@@ -2,6 +2,7 @@ package com.tecknobit.equinoxcompose.session
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.lifecycle.Lifecycle.Event
 import androidx.lifecycle.Lifecycle.Event.*
 import androidx.lifecycle.LifecycleEventObserver
@@ -75,7 +76,7 @@ abstract class EquinoxScreen<V : EquinoxViewModel>(
      */
     @Composable
     private fun LifecycleManager(
-        lifecycleOwner: LifecycleOwner = androidx.lifecycle.compose.LocalLifecycleOwner.current,
+        lifecycleOwner: LifecycleOwner = LocalLifecycleOwner.current,
     ) {
         DisposableEffect(lifecycleOwner) {
             val lifecycle = lifecycleOwner.lifecycle

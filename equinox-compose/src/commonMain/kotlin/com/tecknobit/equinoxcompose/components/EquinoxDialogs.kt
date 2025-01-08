@@ -273,7 +273,7 @@ fun EquinoxAlertDialog(
             confirmButton = {
                 TextButton(
                     onClick = {
-                        confirmAction.invoke()
+                        confirmAction()
                         viewModel?.restartRetriever()
                     }
                 ) {
