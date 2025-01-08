@@ -16,9 +16,6 @@ lifecycleViewmodelCompose = "2.8.2"
 startupRuntime = "1.2.0"
 kmpalette = "3.1.0"
 
-#TODO: CHECK TO REMOVE
-apimanager = "2.2.4"
-
 [libraries]
 dokka-base = { module = "org.jetbrains.dokka:dokka-base", version.ref = "dokka" }
 kmprefs = { module = "io.github.n7ghtm4r3:KMPrefs", version.ref = "kmprefs" }
@@ -39,10 +36,6 @@ kermit = { module = "co.touchlab:kermit", version.ref = "kermit" }
 lifecycle-viewmodel-compose = { module = "org.jetbrains.androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "lifecycleViewmodelCompose" }
 startup-runtime = { group = "androidx.startup", name = "startup-runtime", version.ref = "startupRuntime" }
 kmpalette-core = { module = "com.kmpalette:kmpalette-core", version.ref = "kmpalette" }
-
-#TODO: CHECK TO REMOVE
-apimanager = { module = "com.github.N7ghtm4r3:APIManager", version.ref = "apimanager" }
-
 
 [plugins]
 androidLibrary = { id = "com.android.library", version.ref = "agp" }

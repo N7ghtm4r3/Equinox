@@ -75,10 +75,8 @@ kotlin {
                 implementation(compose.material3)
                 implementation(compose.materialIconsExtended)
                 implementation(libs.lifecycle.viewmodel.compose)
-                implementation(kotlin("stdlib"))
-                // implementation(libs.apimanager) TODO: CHECK TO REMOVE
                 implementation(libs.kermit)
-                //implementation(libs.kmpalette.core)
+                implementation(libs.kmpalette.core)
                 implementation(libs.connectivity.core)
                 implementation(libs.connectivity.compose)
                 implementation(libs.kotlinx.serialization.json)
