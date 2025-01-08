@@ -11,8 +11,6 @@ import io.ktor.client.request.forms.*
 import io.ktor.client.statement.*
 import io.ktor.http.*
 import io.ktor.http.content.*
-import kotlinx.coroutines.MainScope
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import kotlinx.serialization.KSerializer
@@ -85,7 +83,7 @@ abstract class Requester(
          * @param onResponse The action to execute when a response is returned from the backend
          * @param onConnectionError The action to execute if the request has been failed for a connection error
          */
-        fun <R : Requester> R.sendRequest(
+        suspend fun <R : Requester> R.sendRequest(
             request: suspend R.() -> JsonObject,
             onResponse: (JsonObject) -> Unit,
             onConnectionError: ((JsonObject) -> Unit)? = null,
@@ -106,25 +104,23 @@ abstract class Requester(
          * @param onFailure The action to execute if the request has been failed
          * @param onConnectionError The action to execute if the request has been failed for a connection error
          */
-        fun <R : Requester> R.sendRequest(
+        suspend fun <R : Requester> R.sendRequest(
             request: suspend R.() -> JsonObject,
             onSuccess: (JsonObject) -> Unit,
             onFailure: (JsonObject) -> Unit,
             onConnectionError: ((JsonObject) -> Unit)? = null,
         ) {
-            MainScope().launch {
-                val response = request.invoke(this@sendRequest)
-                when (isSuccessfulResponse(response)) {
-                    SUCCESSFUL -> onSuccess.invoke(response)
-                    GENERIC_RESPONSE -> {
-                        if (onConnectionError != null)
-                            onConnectionError.invoke(response)
-                        else
-                            onFailure.invoke(response)
-                    }
-
-                    else -> onFailure.invoke(response)
+            val response = request.invoke(this@sendRequest)
+            when (isSuccessfulResponse(response)) {
+                SUCCESSFUL -> onSuccess.invoke(response)
+                GENERIC_RESPONSE -> {
+                    if (onConnectionError != null)
+                        onConnectionError.invoke(response)
+                    else
+                        onFailure.invoke(response)
                 }
+
+                else -> onFailure.invoke(response)
             }
         }
 
@@ -137,7 +133,7 @@ abstract class Requester(
          * @param onFailure The action to execute if the request has been failed
          * @param onConnectionError The action to execute if the request has been failed for a connection error
          */
-        fun <R : Requester, T> R.sendPaginatedRequest(
+        suspend fun <R : Requester, T> R.sendPaginatedRequest(
             request: suspend R.() -> JsonObject,
             serializer: KSerializer<T>,
             onSuccess: (PaginatedResponse<T>) -> Unit,

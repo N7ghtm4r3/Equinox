@@ -2,6 +2,7 @@ package com.tecknobit.equinoxcompose.viewmodels
 
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.MutableState
+import androidx.lifecycle.viewModelScope
 import com.tecknobit.equinoxcompose.network.EquinoxRequester
 import com.tecknobit.equinoxcompose.session.EquinoxLocalUser
 import com.tecknobit.equinoxcompose.utilities.getCurrentLocaleLanguage
@@ -22,6 +23,7 @@ import com.tecknobit.equinoxcore.network.Requester.Companion.USER_IDENTIFIER_KEY
 import com.tecknobit.equinoxcore.network.Requester.Companion.USER_TOKEN_KEY
 import com.tecknobit.equinoxcore.network.Requester.Companion.sendRequest
 import com.tecknobit.equinoxcore.network.Requester.Companion.toResponseData
+import kotlinx.coroutines.launch
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.jsonPrimitive
 
@@ -114,57 +116,61 @@ abstract class EquinoxAuthViewModel(
     /**
      * Wrapper function to execute the specific authentication request
      *
-     * No-any params required
      */
     fun auth() {
-        if (isSignUp.value)
+        if (isSignUp.value) {
             if (signUpFormIsValid())
                 signUp()
-            else
-                if (signInFormIsValid())
-                    signIn()
+        } else {
+            if (signInFormIsValid())
+                signIn()
+        }
     }
 
     /**
      * Method to execute the sign-up authentication request, if successful the [localUser] will
      * be initialized with the data received by the request
      *
-     * No-any params required
+     * @param onFailure The action to execute when the request failed
      */
-    private fun signUp() {
+    private fun signUp(
+        onFailure: (JsonObject) -> Unit = {
+            showSnackbarMessage(it)
+        },
+    ) {
         if (signUpFormIsValid()) {
-            val language = getUserLanguage()
-            requester.changeHost(host.value)
-            requester.sendRequest(
-                request = {
-                    signUp(
-                        serverSecret = serverSecret.value,
-                        name = name.value,
-                        surname = surname.value,
-                        email = email.value,
-                        password = password.value,
-                        language = language,
-                        custom = getSignUpCustomParameters()
-                    )
-                },
-                onSuccess = { response ->
-                    launchApp(
-                        name = name.value,
-                        surname = surname.value,
-                        language = language,
-                        response = response.toResponseData(),
-                        custom = getSignUpCustomParameters()
-                    )
-                },
-                onFailure = { showSnackbarMessage(it) }
-            )
+            viewModelScope.launch {
+                val language = getUserLanguage()
+                requester.changeHost(host.value)
+                requester.sendRequest(
+                    request = {
+                        signUp(
+                            serverSecret = serverSecret.value,
+                            name = name.value,
+                            surname = surname.value,
+                            email = email.value,
+                            password = password.value,
+                            language = language,
+                            custom = getSignUpCustomParameters()
+                        )
+                    },
+                    onSuccess = { response ->
+                        launchApp(
+                            name = name.value,
+                            surname = surname.value,
+                            language = language,
+                            response = response.toResponseData(),
+                            custom = getSignUpCustomParameters()
+                        )
+                    },
+                    onFailure = onFailure
+                )
+            }
         }
     }
 
     /**
      * Method to get the current user language
-     *
-     * No-any params required
      *
      * @return the user language as [String]
      */
@@ -196,7 +202,7 @@ abstract class EquinoxAuthViewModel(
      * [getQueryValuesKeys()](https://github.com/N7ghtm4r3/Equinox/blob/main/src/main/java/com/tecknobit/equinox/environment/helpers/services/EquinoxUsersHelper.java#L133)
      * method
      *
-     * No-any params required
+     * 
      */
     protected open fun getSignUpCustomParameters(): Array<out Any?> {
         return emptyArray()
@@ -204,8 +210,6 @@ abstract class EquinoxAuthViewModel(
 
     /**
      * Method to validate the inputs for the [signUp] request
-     *
-     * No-any params required
      *
      * @return whether the inputs are valid as [Boolean]
      */
@@ -247,31 +251,38 @@ abstract class EquinoxAuthViewModel(
      * Method to execute the sign in authentication request, if successful the [localUser] will
      * be initialized with the data received by the request
      *
-     * No-any params required
+     * @param onFailure The action to execute when the request failed
+     *
      */
-    private fun signIn() {
+    private fun signIn(
+        onFailure: (JsonObject) -> Unit = {
+            showSnackbarMessage(it)
+        },
+    ) {
         if (signInFormIsValid()) {
-            requester.changeHost(host.value)
-            requester.sendRequest(
-                request = {
-                    requester.signIn(
-                        email = email.value,
-                        password = password.value,
-                        custom = getSignInCustomParameters()
-                    )
-                },
-                onSuccess = { response ->
-                    val data = response.toResponseData()
-                    launchApp(
-                        name = data[NAME_KEY]!!.jsonPrimitive.content,
-                        surname = data[SURNAME_KEY]!!.jsonPrimitive.content,
-                        language = data[LANGUAGE_KEY]!!.jsonPrimitive.content,
-                        response = data,
-                        custom = getSignInCustomParameters()
-                    )
-                },
-                onFailure = { showSnackbarMessage(it) }
-            )
+            viewModelScope.launch {
+                requester.changeHost(host.value)
+                requester.sendRequest(
+                    request = {
+                        requester.signIn(
+                            email = email.value,
+                            password = password.value,
+                            custom = getSignInCustomParameters()
+                        )
+                    },
+                    onSuccess = { response ->
+                        val data = response.toResponseData()
+                        launchApp(
+                            name = data[NAME_KEY]!!.jsonPrimitive.content,
+                            surname = data[SURNAME_KEY]!!.jsonPrimitive.content,
+                            language = data[LANGUAGE_KEY]!!.jsonPrimitive.content,
+                            response = data,
+                            custom = getSignInCustomParameters()
+                        )
+                    },
+                    onFailure = onFailure
+                )
+            }
         }
     }
 
@@ -282,7 +293,6 @@ abstract class EquinoxAuthViewModel(
      * [getQueryValuesKeys()](https://github.com/N7ghtm4r3/Equinox/blob/main/src/main/java/com/tecknobit/equinox/environment/helpers/services/EquinoxUsersHelper.java#L133)
      * method
      *
-     * No-any params required
      **/
     protected open fun getSignInCustomParameters(): Array<out Any?> {
         return emptyArray()
@@ -290,8 +300,6 @@ abstract class EquinoxAuthViewModel(
 
     /**
      * Method to validate the inputs for the [signIn] request
-     *
-     * No-any params required
      *
      * @return whether the inputs are valid as [Boolean]
      */

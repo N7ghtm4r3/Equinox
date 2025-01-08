@@ -2,6 +2,7 @@ package com.tecknobit.equinoxcompose.viewmodels
 
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.MutableState
+import androidx.lifecycle.viewModelScope
 import com.tecknobit.equinoxcompose.network.EquinoxRequester
 import com.tecknobit.equinoxcompose.session.EquinoxLocalUser
 import com.tecknobit.equinoxcompose.session.EquinoxLocalUser.ApplicationTheme
@@ -10,6 +11,8 @@ import com.tecknobit.equinoxcore.helpers.InputsValidator.Companion.isPasswordVal
 import com.tecknobit.equinoxcore.helpers.PROFILE_PIC_KEY
 import com.tecknobit.equinoxcore.network.Requester.Companion.sendRequest
 import com.tecknobit.equinoxcore.network.Requester.Companion.toResponseData
+import kotlinx.coroutines.launch
+import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.jsonPrimitive
 
 /**
@@ -31,6 +34,31 @@ open class EquinoxProfileViewModel(
 ) : EquinoxViewModel(
     snackbarHostState = snackbarHostState
 ) {
+
+    /**
+     * **profilePic** -> the profile picture of the user
+     */
+    lateinit var profilePic: MutableState<String>
+
+    /**
+     * **email** -> the email of the user
+     */
+    lateinit var email: MutableState<String>
+
+    /**
+     * **password** -> the password of the user
+     */
+    lateinit var password: MutableState<String>
+
+    /**
+     * **language** -> the language of the user
+     */
+    lateinit var language: MutableState<String>
+
+    /**
+     * **theme** -> the theme of the user
+     */
+    lateinit var theme: MutableState<ApplicationTheme>
 
     /**
      * **newEmail** -> the value of the new email to set
@@ -57,37 +85,49 @@ open class EquinoxProfileViewModel(
      *
      * @param profilePicName The name of the image to set
      * @param profilePicBytes The bytes of the image selected
-     * @param profilePic The state used to display the current profile pic
+     * @param onFailure The action to execute when the request failed
      */
     fun changeProfilePic(
         profilePicName: String,
         profilePicBytes: ByteArray,
-        profilePic: MutableState<String>,
+        onFailure: (JsonObject) -> Unit = {
+            showSnackbarMessage(it)
+        },
     ) {
-        requester.sendRequest(
-            request = {
-                changeProfilePic(
-                    profilePicName = profilePicName,
-                    profilePicBytes = profilePicBytes
-                )
-            },
-            onSuccess = { response ->
-                localUser.profilePic = response.toResponseData()[PROFILE_PIC_KEY]!!.jsonPrimitive.content
-                profilePic.value = localUser.profilePic!!
-            },
-            onFailure = { showSnackbarMessage(it) }
-        )
+        viewModelScope.launch {
+            requester.sendRequest(
+                request = {
+                    changeProfilePic(
+                        profilePicName = profilePicName,
+                        profilePicBytes = profilePicBytes
+                    )
+                },
+                onSuccess = { response ->
+                    localUser.profilePic = response.toResponseData()[PROFILE_PIC_KEY]!!.jsonPrimitive.content
+                    profilePic.value = localUser.profilePic!!
+                },
+                onFailure = onFailure
+            )
+        }
     }
 
     /**
      * Method to execute the email change
      *
      * @param onSuccess The action to execute if the request has been successful
+     * @param onFailure The action to execute when the request failed
      */
     fun changeEmail(
-        onSuccess: () -> Unit,
+        onSuccess: (() -> Unit)? = null,
+        onFailure: (JsonObject) -> Unit = {
+            showSnackbarMessage(it)
+        },
     ) {
-        if (isEmailValid(newEmail.value)) {
+        if (!isEmailValid(newEmail.value)) {
+            newEmailError.value = true
+            return
+        }
+        viewModelScope.launch {
             requester.sendRequest(
                 request = {
                     changeEmail(
@@ -96,34 +136,45 @@ open class EquinoxProfileViewModel(
                 },
                 onSuccess = {
                     localUser.email = newEmail.value
-                    onSuccess.invoke()
+                    localUser.email = newEmail.value
+                    onSuccess?.invoke()
                 },
-                onFailure = { showSnackbarMessage(it) }
+                onFailure = onFailure
             )
-        } else
-            newEmailError.value = true
+        }
     }
 
     /**
      * Method to execute the password change
      *
      * @param onSuccess The action to execute if the request has been successful
+     * @param onFailure The action to execute when the request failed
      */
     fun changePassword(
-        onSuccess: () -> Unit,
+        onSuccess: (() -> Unit)? = null,
+        onFailure: (JsonObject) -> Unit = {
+            showSnackbarMessage(it)
+        },
     ) {
-        if (isPasswordValid(newPassword.value)) {
+        if (!isPasswordValid(newPassword.value)) {
+            newPasswordError.value = true
+            return
+        }
+        viewModelScope.launch {
             requester.sendRequest(
                 request = {
                     changePassword(
                         newPassword = newPassword.value
                     )
                 },
-                onSuccess = { onSuccess.invoke() },
-                onFailure = { showSnackbarMessage(it) }
+                onSuccess = {
+                    localUser.password = newPassword.value
+                    password.value = newPassword.value
+                    onSuccess?.invoke()
+                },
+                onFailure = onFailure
             )
-        } else
-            newPasswordError.value = true
+        }
     }
 
     /**
@@ -131,23 +182,30 @@ open class EquinoxProfileViewModel(
      *
      * @param newLanguage The new language of the user
      * @param onSuccess The action to execute if the request has been successful
+     * @param onFailure The action to execute when the request failed
      */
     fun changeLanguage(
         newLanguage: String,
-        onSuccess: () -> Unit,
+        onSuccess: (() -> Unit)? = null,
+        onFailure: (JsonObject) -> Unit = {
+            showSnackbarMessage(it)
+        },
     ) {
-        requester.sendRequest(
-            request = {
-                changeLanguage(
-                    newLanguage = newLanguage
-                )
-            },
-            onSuccess = {
-                localUser.language = newLanguage
-                onSuccess.invoke()
-            },
-            onFailure = { showSnackbarMessage(it) }
-        )
+        viewModelScope.launch {
+            requester.sendRequest(
+                request = {
+                    changeLanguage(
+                        newLanguage = newLanguage
+                    )
+                },
+                onSuccess = {
+                    localUser.language = newLanguage
+                    language.value = newLanguage
+                    onSuccess?.invoke()
+                },
+                onFailure = onFailure
+            )
+        }
     }
 
     /**
@@ -158,29 +216,36 @@ open class EquinoxProfileViewModel(
      */
     fun changeTheme(
         newTheme: ApplicationTheme,
-        onChange: () -> Unit,
+        onChange: (() -> Unit)? = null,
     ) {
         localUser.theme = newTheme
-        onChange.invoke()
+        theme.value = newTheme
+        onChange?.invoke()
     }
 
     /**
      * Method to execute the account deletion
      *
      * @param onDelete The action to execute when the account has been deleted
+     * @param onFailure The action to execute when the request failed
      */
     fun deleteAccount(
-        onDelete: () -> Unit,
+        onDelete: (() -> Unit)? = null,
+        onFailure: (JsonObject) -> Unit = {
+            showSnackbarMessage(it)
+        },
     ) {
-        requester.sendRequest(
-            request = { requester.deleteAccount() },
-            onSuccess = {
-                clearSession(
-                    onClear = onDelete
-                )
-            },
-            onFailure = { showSnackbarMessage(it) }
-        )
+        viewModelScope.launch {
+            requester.sendRequest(
+                request = { requester.deleteAccount() },
+                onSuccess = {
+                    clearSession(
+                        onClear = onDelete
+                    )
+                },
+                onFailure = onFailure
+            )
+        }
     }
 
     /**
@@ -189,14 +254,14 @@ open class EquinoxProfileViewModel(
      * @param onClear The action to execute when the session has been cleaned
      */
     fun clearSession(
-        onClear: () -> Unit,
+        onClear: (() -> Unit)? = null,
     ) {
         localUser.clear()
         requester.setUserCredentials(
             userId = null,
             userToken = null
         )
-        onClear.invoke()
+        onClear?.invoke()
     }
 
 }
