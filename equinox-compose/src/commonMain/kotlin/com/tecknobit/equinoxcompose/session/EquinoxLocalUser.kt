@@ -1,6 +1,5 @@
 package com.tecknobit.equinoxcompose.session
 
-import com.tecknobit.equinoxcore.annotations.RequiresSuperCall
 import com.tecknobit.equinoxcore.annotations.Structure
 import com.tecknobit.equinoxcore.helpers.*
 import com.tecknobit.equinoxcore.helpers.InputsValidator.Companion.HOST_ADDRESS_KEY
@@ -17,7 +16,7 @@ import kotlinx.serialization.json.jsonPrimitive
  * @since 1.0.6
  */
 @Structure
-abstract class EquinoxLocalUser(
+open class EquinoxLocalUser(
     localStoragePath: String,
 ) {
 
@@ -25,6 +24,7 @@ abstract class EquinoxLocalUser(
      * `ApplicationTheme` list of the available theming for the client applications
      */
     enum class ApplicationTheme {
+
         /**
          * `Dark` the dark theme to use as theme
          */
@@ -41,13 +41,16 @@ abstract class EquinoxLocalUser(
         Auto;
 
         companion object {
+
             /**
              * Method to get an instance of the [ApplicationTheme]
              *
              * @param theme The name of the theme to get
              * @return the theme instance as [ApplicationTheme]
              */
-            fun getInstance(theme: String?): ApplicationTheme {
+            fun getInstance(
+                theme: String?,
+            ): ApplicationTheme {
                 if (theme == null) return Auto
                 return when (theme) {
                     "Dark" -> Dark
@@ -55,7 +58,9 @@ abstract class EquinoxLocalUser(
                     else -> Auto
                 }
             }
+
         }
+
     }
 
     /**
@@ -68,107 +73,115 @@ abstract class EquinoxLocalUser(
     /**
      * `hostAddress` the host address which the user communicate
      */
-    protected var hostAddress: String? = null
+    var hostAddress: String? = null
         set(value) {
             setPreference(
                 key = HOST_ADDRESS_KEY,
                 value = value
             )
+            field = value
         }
 
     /**
      * `userId` the identifier of the user
      */
-    protected var userId: String? = null
+    var userId: String? = null
         set(value) {
             setPreference(
                 key = USER_IDENTIFIER_KEY,
                 value = value
             )
+            field = value
         }
 
     /**
      * `userToken` the token of the user
      */
-    protected var userToken: String? = null
+    var userToken: String? = null
         set(value) {
             setPreference(
                 key = USER_TOKEN_KEY,
                 value = value
             )
+            field = value
         }
 
     /**
      * `profilePic` the profile pick of the user
      */
-    protected var profilePic: String? = null
-        set(value) = {
-            if (value == null || this != value) {
-                profilePicLocal = "$hostAddress/$profilePicLocal"
+    var profilePic: String? = null
+        set(value) {
+            if (field == null || field != value) {
+                val profilePicLocal = "$hostAddress/$value"
                 setPreference(PROFILE_PIC_KEY, profilePicLocal)
-                this.profilePic = profilePicLocal
+                field = profilePicLocal
             }
         }
 
     /**
      * `name` the name of the user
      */
-    protected var name: String? = null
+    var name: String? = null
         set(value) {
             setPreference(
                 key = NAME_KEY,
                 value = value
             )
+            field = value
         }
 
     /**
      * `surname` the surname of the user
      */
-    protected var surname: String? = null
+    var surname: String? = null
         set(value) {
             setPreference(
                 key = SURNAME_KEY,
                 value = value
             )
+            field = value
         }
 
     /**
      * `email` the email of the user
      */
-    protected var email: String? = null
+    var email: String? = null
         set(value) {
             setPreference(
                 key = EMAIL_KEY,
                 value = value
             )
+            field = value
         }
 
     /**
      * `password` the password of the user
      */
-    protected var password: String? = null
+    var password: String? = null
         set(value) {
             setPreference(
                 key = PASSWORD_KEY,
                 value = value
             )
+            field = value
         }
 
     /**
      * `language` the language of the user
      */
-    protected var language: String? = null
+    var language: String? = null
         set(value) {
             setPreference(
                 key = LANGUAGE_KEY,
                 value = value
             )
+            field = value
         }
 
     /**
      * `theme` the theme of the user
      */
-    protected var theme: ApplicationTheme? = null
+    var theme: ApplicationTheme? = null
         set(value) {
             setPreference(
                 key = THEME_KEY,
@@ -225,6 +238,13 @@ abstract class EquinoxLocalUser(
      * class CustomLocalUser : EquinoxLocalUser() {
      *
      *     var currency: String? = null
+     *          set(value) {
+     *             setPreference(
+     *                 key = "currency",
+     *                 value = value
+     *             )
+     *             field = value
+     *         }
      *
      *     fun insertNewUser(
      *         hostAddress: String,
@@ -236,31 +256,20 @@ abstract class EquinoxLocalUser(
      *         response: JsonHelper,
      *         vararg custom: Any
      *     ) {
-     *         // First, set your custom parameters
-     *         setCurrency(custom[0].toString())
-     *         // Then, invoke the super method
      *         super.insertNewUser(hostAddress, name, surname, email, password, language, response)
+     *         currency = custom[0].toString()
      *     }
      *
-     *     private fun setCurrency(currency: String) {
-     *         this.setPreference("currency", currency)
-     *         this.currency = currency
-     *     }
-     *
-     *     fun getCurrency(): String? {
-     *         return this.currency
-     *     }
      * }
      * ```
      */
-    @RequiresSuperCall
     open fun insertNewUser(
-        hostAddress: String?,
-        name: String?,
-        surname: String?,
-        email: String?,
-        password: String?,
-        language: String?,
+        hostAddress: String,
+        name: String,
+        surname: String,
+        email: String,
+        password: String,
+        language: String,
         response: JsonObject,
         vararg custom: Any?,
     ) {
@@ -274,22 +283,6 @@ abstract class EquinoxLocalUser(
         this.password = password
         this.language = language
         this.theme = ApplicationTheme.Auto
-    }
-
-    /**
-     * Method to set the [profilePic] instance <br></br>
-     *
-     * @param profilePic: the profile pic of the user
-     */
-    fun setProfilePic(
-        profilePic: String,
-    ) {
-        var profilePicLocal = profilePic
-        if (this.profilePic == null || this.profilePic != profilePicLocal) {
-            profilePicLocal = "$hostAddress/$profilePicLocal"
-            setPreference(PROFILE_PIC_KEY, profilePicLocal)
-            this.profilePic = profilePicLocal
-        }
     }
 
     /**

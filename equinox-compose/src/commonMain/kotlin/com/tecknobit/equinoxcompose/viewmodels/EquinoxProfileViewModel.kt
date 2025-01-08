@@ -92,9 +92,7 @@ open class EquinoxProfileViewModel(
                     )
                 },
                 onSuccess = {
-                    localUser.setEmail(
-                        email = newEmail.value
-                    )
+                    localUser.email = newEmail.value
                     onSuccess.invoke()
                 },
                 onFailure = { showSnackbarMessage(it) }
@@ -142,9 +140,7 @@ open class EquinoxProfileViewModel(
                 )
             },
             onSuccess = {
-                localUser.setLanguage(
-                    language = newLanguage
-                )
+                localUser.language = newLanguage
                 onSuccess.invoke()
             },
             onFailure = { showSnackbarMessage(it) }
@@ -161,9 +157,7 @@ open class EquinoxProfileViewModel(
         newTheme: ApplicationTheme,
         onChange: () -> Unit,
     ) {
-        localUser.setTheme(
-            theme = newTheme
-        )
+        localUser.theme = newTheme
         onChange.invoke()
     }
 
