@@ -239,7 +239,7 @@ private fun InstantiateSessionInstances() {
     noInternetConnection = remember { mutableStateOf(false) }
     hasBeenDisconnected = remember { mutableStateOf(false) }
     sessionStatus = remember { mutableStateOf(OPERATIONAL) }
-    val state = createConnectivity()
+    val state by lazy { createConnectivity() }
     MainScope().launch {
         state.statusUpdates.collect { status ->
             noInternetConnection.value = status.isDisconnected

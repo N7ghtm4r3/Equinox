@@ -4,7 +4,13 @@ import dev.jordond.connectivity.Connectivity
 import io.ktor.client.*
 import io.ktor.client.engine.js.*
 import io.ktor.client.fetch.*
+import io.ktor.client.plugins.*
 import io.ktor.http.*
+
+/**
+ * `POLLING_URL` the url to use for the polling operations
+ */
+private const val POLLING_URL = "https://api.binance.com/api/v3/ping"
 
 /**
  * Method to create a monitor connectivity instance specific for each platform.
@@ -14,11 +20,8 @@ import io.ktor.http.*
  * @return the connectivity instance as [Connectivity]
  */
 actual fun createConnectivity(): Connectivity {
-    return Connectivity(
-        httpClient = HttpClient(Js) {
-            // FIXME: TO FIX CORS ISSUES
-        }
-    ) {
+    return Connectivity {
+        urls(POLLING_URL)
         autoStart = true
         pollingIntervalMs = 2.seconds
     }
