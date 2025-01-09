@@ -1,5 +1,6 @@
 package com.tecknobit.equinoxcompose.session
 
+import com.tecknobit.equinoxcore.annotations.RequiresSuperCall
 import com.tecknobit.equinoxcore.annotations.Structure
 import com.tecknobit.equinoxcore.helpers.*
 import com.tecknobit.equinoxcore.helpers.InputsValidator.Companion.HOST_ADDRESS_KEY
@@ -8,6 +9,7 @@ import com.tecknobit.equinoxcore.network.Requester.Companion.USER_TOKEN_KEY
 import com.tecknobit.kmprefs.KMPrefs
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.jsonPrimitive
+
 
 /**
  * The `EquinoxLocalUser` class is useful to represent a user in the client application
@@ -206,14 +208,22 @@ open class EquinoxLocalUser(
 
     val completeName: String
         /**
-         * Method to get the complete name of the user <br></br>
-         * No-any params required
+         * Method to get the complete name of the user
          *
          * @return the complete name of the user as [String]
          */
         get() = "$name $surname"
 
     init {
+        @Suppress("LeakingThis")
+        initLocalUser()
+    }
+
+    /**
+     * Method to init the local user session
+     */
+    @RequiresSuperCall
+    protected open fun initLocalUser() {
         hostAddress = getPreference(HOST_ADDRESS_KEY)
         userId = getPreference(USER_IDENTIFIER_KEY)
         userToken = getPreference(USER_TOKEN_KEY)
@@ -326,6 +336,7 @@ open class EquinoxLocalUser(
      */
     fun clear() {
         preferencesManager.clearAll()
+        initLocalUser()
     }
 
 }
