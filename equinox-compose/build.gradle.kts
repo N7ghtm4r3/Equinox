@@ -82,6 +82,7 @@ kotlin {
                 implementation(libs.kotlinx.serialization.json)
                 implementation(libs.ktor.client.core)
                 implementation(libs.kmprefs)
+                implementation(libs.material3.window.size)
                 implementation(project(":equinox-core"))
             }
         }
