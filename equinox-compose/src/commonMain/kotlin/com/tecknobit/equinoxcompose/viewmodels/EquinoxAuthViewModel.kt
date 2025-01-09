@@ -272,10 +272,14 @@ abstract class EquinoxAuthViewModel(
                     },
                     onSuccess = { response ->
                         val data = response.toResponseData()
+                        val jLanguage = data[LANGUAGE_KEY]
                         launchApp(
                             name = data[NAME_KEY]!!.jsonPrimitive.content,
                             surname = data[SURNAME_KEY]!!.jsonPrimitive.content,
-                            language = data[LANGUAGE_KEY]!!.jsonPrimitive.content,
+                            language = if (jLanguage != null)
+                                jLanguage.jsonPrimitive.content
+                            else
+                                DEFAULT_LANGUAGE,
                             response = data,
                             custom = getSignInCustomParameters()
                         )
