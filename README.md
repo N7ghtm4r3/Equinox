@@ -1,121 +1,14 @@
 # Equinox
 
-**v1.0.5**
+Optimal framework for integrating **Spring Boot** backend with **Kotlin Multiplatform** applications
 
-Utilities for backend services based on Spring Boot framework. Is a support library to implement some utilities both for
-backend and for client also who communicate with that Spring Boot backend
+## Architecture Overview
 
-### Architecture Overview
-
-|       Module        | Description                                                 | Technologies                | Purpose                                                                           | Version                                                                                                                |
-|:-------------------:|-------------------------------------------------------------|-----------------------------|-----------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------|
-| **equinox-backend** | Set of utilities for JVM-based backend                      | Java, Kotlin (JVM) & Spring | Backend services, API logic, database interaction                                 | ![Maven Central](https://img.shields.io/maven-central/v/io.github.n7ghtm4r3/equinox-backend.svg?label=Maven%20Central) |
-|  **equinox-core**   | Set of utilities **Kotlin Multiplatform Project** compliant | Kotlin & KMP                | Shared business logic, cross-platform functionality (Android, Desktop, iOS & Web) | ![Maven Central](https://img.shields.io/maven-central/v/io.github.n7ghtm4r3/equinox-core.svg?label=Maven%20Central)    |
-
-## Implementation
-
-### Version catalog
-
-```gradle
-[versions]
-equinox = "1.0.5"
-
-[libraries]
-equinox-backend = { module = "io.github.n7ghtm4r3:equinox-backend", version.ref = "equinox" }
-equinox-core = { module = "io.github.n7ghtm4r3:equinox-core", version.ref = "equinox" }
-```
-
-### Gradle
-
-Add the JitPack repository to your build file
-
-- Add it in your root build.gradle at the end of repositories
-
-    ```gradle
-    repositories {
-        ...
-        maven { url 'https://jitpack.io' }
-        maven { url 'https://repo.clojars.org' }
-    }
-    ```
-
-  #### Gradle (Kotlin)
-
-    ```gradle
-    repositories {
-        ...
-        maven("https://jitpack.io")
-        maven("https://repo.clojars.org")
-    }
-    ```
-
-- Add the dependency
-
-    ```gradle
-    dependencies {
-       
-        // implement the backend utilities
-        implementation 'io.github.n7ghtm4r3:equinox-backend:1.0.5'
-        
-        // implement the core utilities
-        implementation 'io.github.n7ghtm4r3:equinox-core:1.0.5'
-    }
-    ```
-
-  #### Gradle (Kotlin)
-
-    ```gradle
-    dependencies {
-        
-        // implement the backend utilities
-        implementation("io.github.n7ghtm4r3:equinox-backend:1.0.5")
-        
-        // implement the core utilities
-        implementation("io.github.n7ghtm4r3:equinox-core:1.0.5")
-    }
-    ```
-
-  #### Gradle (version catalog)
-
-    ```gradle
-    dependencies {
-    
-        // implement the backend utilities
-        implementation(libs.equinox.backend)
-    
-        // implement the core utilities
-        implementation(libs.equinox.core)
-    }
-    ```
-
-## 🛠 Skills
-- Java
-- Kotlin
-
-## APIs available
-
-- <a href="https://github.com/N7ghtm4r3/Equinox/blob/main/documd/ResourcesProvider.md">**ResourcesProvider**</a> allows you to manage the static resources to serve to the clients
-- <a href="https://github.com/N7ghtm4r3/Equinox/blob/main/documd/ConfigsGenerator.md">**ConfigsGenerator**</a> allows
-  you to create automatically the configuration file for your backend
-- <a href="https://github.com/N7ghtm4r3/Equinox/blob/main/documd/Requester.md">**Requester**</a> allows you to communicate with the backend from the clients
-- <a href="https://github.com/N7ghtm4r3/Equinox/blob/main/documd/FetcherManager.md">**FetcherManager**</a> allows you to execute the refresh requests the data to display in the UI
-  you to use the resources folder easily
-
-The other apis will be gradually released
-
-## Basic environment available
-
-Equinox gives a basic _out-of-the-box_ environment to directly create a **SpringApplication** following the Equinox
-implementation philosophy
-to automatically manage some recurring operations such the users related requests or the inputs validation.
-This environment will be constantly updated. You can take a
-look [here](https://github.com/N7ghtm4r3/Equinox/blob/main/documd/EquinoxEnvironment.md) to check how it works and how
-to implement
-it on your own backend
-
-## Jetpack Compose version
-
-There is library dedicated to Jetpack Compose clients, take a look [here](https://github.com/N7ghtm4r3/Equinox-Compose)!
+|                      Module                      | Description                                            | Purpose                                                                 | Version                                                                                                                |
+|:------------------------------------------------:|--------------------------------------------------------|-------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------|
+| **[equinox-backend](equinox-backend/README.md)** | Utilities for Spring-based backend                     | Backend services, API logic, database interaction                       | ![Maven Central](https://img.shields.io/maven-central/v/io.github.n7ghtm4r3/equinox-backend.svg?label=Maven%20Central) |
+|    **[equinox-core](equinox-core/README.md)**    | Core utilities for **KMP** and **Spring** technologies | Cross-platform functionality (Android, Desktop, iOS, Web and Spring)    | ![Maven Central](https://img.shields.io/maven-central/v/io.github.n7ghtm4r3/equinox-core.svg?label=Maven%20Central)    |
+| **[equinox-compose](equinox-compose/README.md)** | Utilities for **Kotlin Multiplatform Project**         | Components, utilities, apis for Android, Desktop, iOS and Web platforms | ![Maven Central](https://img.shields.io/maven-central/v/io.github.n7ghtm4r3/equinox-compose.svg?label=Maven%20Central) |
 
 ## Authors
 
@@ -133,7 +26,6 @@ Thank you for your help!
 ## Badges
 
 [![](https://img.shields.io/badge/Google_Play-414141?style=for-the-badge&logo=google-play&logoColor=white)](https://play.google.com/store/apps/developer?id=Tecknobit)
-[![Twitter](https://img.shields.io/badge/Twitter-1DA1F2?style=for-the-badge&logo=twitter&logoColor=white)](https://twitter.com/tecknobit)
 
 [![](https://img.shields.io/badge/Spring_Boot-F2F4F9?style=for-the-badge&logo=spring-boot)](https://spring.io/projects/spring-boot)
 [![](https://img.shields.io/badge/Jetpack%20Compose-4285F4.svg?style=for-the-badge&logo=Jetpack-Compose&logoColor=white)](https://www.jetbrains.com/lp/compose-multiplatform/)

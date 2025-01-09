@@ -121,7 +121,7 @@ public abstract class EquinoxItemsHelper {
      *     BatchQuery batchQuery = new BatchQuery<String>() {
      *
      *          @Override
-     *          public void getUpdatedData() {
+     *          public void getData() {
      *              return updatedCars; // your updated data list
      *         }
      *
@@ -140,20 +140,20 @@ public abstract class EquinoxItemsHelper {
     public interface BatchQuery<V> {
 
         /**
-         * Method to get the updated data to use in the batch query
+         * Method to get the data to use in the batch query
          *
          * @return the updated data as {@link List} of {@link V}
          */
-        List<V> getUpdatedData();
+        List<V> getData();
 
         /**
          * Method to prepare the batch query such fill the parameters programmatically
          *
          * @param query Query instance used to execute the SQL command
          * @param index The pre-increment index to format the values in the query, its initial value is 1
-         * @param updatedItems The updated items to use in the batch query
+         * @param items The updated items to use in the batch query
          */
-        void prepareQuery(Query query, int index, List<V> updatedItems);
+        void prepareQuery(Query query, int index, List<V> items);
 
     }
 
@@ -220,7 +220,7 @@ public abstract class EquinoxItemsHelper {
     protected <V> void syncBatch(SyncBatchContainer container, String table, String targetId, BatchQuery<V> batchQuery) {
         String[] columns = container.getColumns();
         ArrayList<V> currentData = container.getCurrentData();
-        List<V> updatedData = batchQuery.getUpdatedData();
+        List<V> updatedData = batchQuery.getData();
         batchInsert(INSERT_IGNORE_INTO, table, batchQuery, columns);
         currentData.removeAll(updatedData);
         batchDelete(table, List.of(List.of(targetId), currentData), columns);
@@ -236,7 +236,7 @@ public abstract class EquinoxItemsHelper {
      * @param columns The columns affected by the insertion
      */
     protected <V> void batchInsert(InsertCommand command, String table, BatchQuery<V> batchQuery, String... columns) {
-        List<V> values = batchQuery.getUpdatedData();
+        List<V> values = batchQuery.getData();
         if (values.isEmpty())
             return;
         String insertQuery = command.sql + table + " " + formatColumns(columns) + _VALUES_;

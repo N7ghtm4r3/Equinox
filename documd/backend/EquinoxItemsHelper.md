@@ -1,31 +1,54 @@
-## ConfigsGenerator
+## EquinoxItemsHelper
 
 ### Usage/Examples
 
 ```java
-public class Main {
+public class CarsService {
 
-    public static void main(String[] args) {
-
-        ConfigsGenerator configsGenerator = new ConfigsGenerator(Main.class);
-
-        // create the configuration file to serve the static resources
-        try {
-            configsGenerator.createResourcesConfigFile(
-                    //list of the containers folder, you can take them from ResourcesProvider#getContainers()
-            );
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-
-        // create the CORS file to set the CORS origin policy for the backend
-        try {
-            configsGenerator.crateCorsAdviceFile();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-
-    }
+    /**
+     * The {@code BatchQuery} interface is useful to manage the batch queries to insert or delete values in batch
+     *
+     * @param <V> The type of the item used in the query
+     *
+     * @author N7ghtm4r3 - Tecknobit
+     *
+     * @apiNote example usage for a join table of user and his/her cars:
+     * <table>
+     *     <thead>
+     *         <tr>
+     *             <th>user_id</th>
+     *             <th>car_id</th>
+     *         </tr>
+     *     </thead>
+     *     <tbody>
+     *         <tr>
+     *             <td>userId</td>
+     *             <td>carId</td>
+     *         </tr>
+     *     </tbody>
+     * </table>
+     * <pre>
+     * {@code
+     *     ArrayList<String> carsIds = fetchCarsIdentifiers();
+     *     BatchQuery batchQuery = new BatchQuery<String>() {
+     *
+     *          @Override
+     *          public void getUpdatedData() {
+     *              return updatedCars; // your updated data list
+     *         }
+     *
+     *          @Override
+     *          public void prepareQuery(Query query, int index, List<String> updatedItems) {
+     *              for (String carId : updatedItems) {
+     *                  // the order of the parameters setting is the same of the table
+     *                  query.setParameter(index++, userId);
+     *                  query.setParameter(index++, carId);
+     *             }
+     *         }
+     *     }
+     * }
+     * </pre>
+     */
 
 }
 ```
@@ -50,7 +73,6 @@ Thank you for your help!
 [![](https://img.shields.io/badge/Google_Play-414141?style=for-the-badge&logo=google-play&logoColor=white)](https://play.google.com/store/apps/developer?id=Tecknobit)
 
 [![](https://img.shields.io/badge/Spring_Boot-F2F4F9?style=for-the-badge&logo=spring-boot)](https://spring.io/projects/spring-boot) [![](https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=java&logoColor=white)](https://www.oracle.com/java/)
-
 
 ## Donations
 

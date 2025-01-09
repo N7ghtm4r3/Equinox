@@ -143,10 +143,10 @@ dependencies {
     implementation("commons-validator:commons-validator:1.7")
 
     // implement the backend utilities
-    implementation("io.github.n7ghtm4r3:equinox-backend:1.0.5")
+    implementation("io.github.n7ghtm4r3:equinox-backend:1.0.6")
     
     // implement the core utilities
-    implementation("io.github.n7ghtm4r3:equinox-core:1.0.5")
+    implementation("io.github.n7ghtm4r3:equinox-core:1.0.6")
 
     ...
 
@@ -605,14 +605,8 @@ Thank you for your help!
 ## Badges
 
 [![](https://img.shields.io/badge/Google_Play-414141?style=for-the-badge&logo=google-play&logoColor=white)](https://play.google.com/store/apps/developer?id=Tecknobit)
-[![Twitter](https://img.shields.io/badge/Twitter-1DA1F2?style=for-the-badge&logo=twitter&logoColor=white)](https://twitter.com/tecknobit)
 
-[![](https://img.shields.io/badge/Spring_Boot-F2F4F9?style=for-the-badge&logo=spring-boot)](https://spring.io/projects/spring-boot)
-[![](https://img.shields.io/badge/Jetpack%20Compose-4285F4.svg?style=for-the-badge&logo=Jetpack-Compose&logoColor=white)](https://www.jetbrains.com/lp/compose-multiplatform/)
-
-[![](https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=java&logoColor=white)](https://www.oracle.com/java/)
-[![](https://img.shields.io/badge/Kotlin-B125EA?style=for-the-badge&logo=kotlin&logoColor=white)](https://kotlinlang.org/)
-
+[![](https://img.shields.io/badge/Spring_Boot-F2F4F9?style=for-the-badge&logo=spring-boot)](https://spring.io/projects/spring-boot) [![](https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=java&logoColor=white)](https://www.oracle.com/java/)
 
 ## Donations
 
