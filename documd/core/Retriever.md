@@ -1,18 +1,22 @@
-## FetcherManager
+## Retriever
 
-### Usage/Examples
+Handles that repetitive retrieving routines and execute them in background
 
-#### Use directly the FetcherManager
+### Usage
+
+#### Use directly the Retriever
 
 ```kotlin
 class ExampleClass {
 
-  private val refreshRoutine = CoroutineScope(Dispatchers.Default)
+    private val retrieverScope = CoroutineScope(Dispatchers.Default)
 
-  private val fetcherManager = FetcherManager(refreshRoutine)
+    private val retriever = Retriever(
+        retrieverScope = retrieverScope
+    )
 
-  fun example() { 
-      fetcherManager.execute(
+  fun example() {
+      retriever.execute(
          currentContext = this::class.java,
          routine = {
            // your routine
@@ -22,8 +26,8 @@ class ExampleClass {
       )
   }
 
-  fun example1() { 
-      fetcherManager.suspend()
+  fun example1() {
+      retriever.suspend()
   }
 
 }
@@ -33,26 +37,30 @@ class ExampleClass {
 
 ```kotlin
 // the super class from which the other classes will be inherited
-abstract class AbstractClass : FetcherManagerWrapper {
+abstract class AbstractClass : RetrieverWrapper {
 
-    protected val refreshRoutine = CoroutineScope(Dispatchers.Default)
+    protected val retrieverScope = CoroutineScope(Dispatchers.Default)
 
-    private val fetcherManager = FetcherManager(refreshRoutine)
+    private val retriever = Retriever(
+        retrieverScope = retrieverScope
+    )
 
-    override fun canRefresherStart(): Boolean {
-        return fetcherManager.canStart()
+    override fun canRetrieverStart(): Boolean {
+        return retriever.canStart()
     }
 
-    override fun suspendRefresher() {
-        fetcherManager.suspend()
+    override fun suspendRetriever() {
+        retriever.suspend()
     }
 
-    override fun restartRefresher() {
-        fetcherManager.restart()
+    override fun restartRetriever() {
+        retriever.restart()
     }
 
-    override fun continueToFetch(currentContext: Class<>): Boolean {
-        return fetcherManager.continueToFetch(currentContext)
+    override fun continueToRetrieve(
+        currentContext: Class<*>
+    ): Boolean {
+        return retriever.continueToRetrieve(currentContext)
     }
 
     override fun execRefreshingRoutine(
@@ -61,7 +69,7 @@ abstract class AbstractClass : FetcherManagerWrapper {
         repeatRoutine: Boolean,
         refreshDelay: Long
     ) {
-        fetcherManager.execute(
+        retriever.execute(
             currentContext = currentContext,
             routine = routine,
             repeatRoutine = repeatRoutine,
@@ -74,8 +82,8 @@ abstract class AbstractClass : FetcherManagerWrapper {
 class ExampleClass : AbstractClass() {
 
     fun example() {
-        execRefreshingRoutine(
-            currentContext = this::class.java,
+        retrieve(
+            currentContext = this::class,
             routine = {
                 // your routine
             }
@@ -83,18 +91,11 @@ class ExampleClass : AbstractClass() {
     }
 
     fun example1() {
-        suspendRefresher()
+        suspendRetriever()
     }
 
 }
 ```
-
-
-The other apis will be gradually released
-
-## Authors
-
-- [@N7ghtm4r3](https://www.github.com/N7ghtm4r3)
 
 ## Support
 
@@ -110,12 +111,8 @@ Thank you for your help!
 [![](https://img.shields.io/badge/Google_Play-414141?style=for-the-badge&logo=google-play&logoColor=white)](https://play.google.com/store/apps/developer?id=Tecknobit)
 [![Twitter](https://img.shields.io/badge/Twitter-1DA1F2?style=for-the-badge&logo=twitter&logoColor=white)](https://twitter.com/tecknobit)
 
-[![](https://img.shields.io/badge/Spring_Boot-F2F4F9?style=for-the-badge&logo=spring-boot)](https://spring.io/projects/spring-boot)
 [![](https://img.shields.io/badge/Jetpack%20Compose-4285F4.svg?style=for-the-badge&logo=Jetpack-Compose&logoColor=white)](https://www.jetbrains.com/lp/compose-multiplatform/)
-
-[![](https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=java&logoColor=white)](https://www.oracle.com/java/)
 [![](https://img.shields.io/badge/Kotlin-B125EA?style=for-the-badge&logo=kotlin&logoColor=white)](https://kotlinlang.org/)
-
 
 ## Donations
 

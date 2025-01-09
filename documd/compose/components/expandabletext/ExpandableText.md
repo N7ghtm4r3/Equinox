@@ -39,9 +39,7 @@ class TestScreen : EquinoxScreen<EquinoxViewModel>() {
 
 [expandabletext-desktop](https://github.com/user-attachments/assets/38d55a37-3ee0-4610-ac76-bfb661fa1779)
 
-## Authors
 
-- [@N7ghtm4r3](https://www.github.com/N7ghtm4r3)
 
 ## Support
 
@@ -57,10 +55,7 @@ Thank you for your help!
 [![](https://img.shields.io/badge/Google_Play-414141?style=for-the-badge&logo=google-play&logoColor=white)](https://play.google.com/store/apps/developer?id=Tecknobit)
 [![Twitter](https://img.shields.io/badge/Twitter-1DA1F2?style=for-the-badge&logo=twitter&logoColor=white)](https://twitter.com/tecknobit)
 
-[![](https://img.shields.io/badge/Spring_Boot-F2F4F9?style=for-the-badge&logo=spring-boot)](https://spring.io/projects/spring-boot)
 [![](https://img.shields.io/badge/Jetpack%20Compose-4285F4.svg?style=for-the-badge&logo=Jetpack-Compose&logoColor=white)](https://www.jetbrains.com/lp/compose-multiplatform/)
-
-[![](https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=java&logoColor=white)](https://www.oracle.com/java/)
 [![](https://img.shields.io/badge/Kotlin-B125EA?style=for-the-badge&logo=kotlin&logoColor=white)](https://kotlinlang.org/)
 
 ## Donations

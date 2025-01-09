@@ -589,9 +589,7 @@ file in the resources folder, and **to copy** the set already given
 > The REQUIRED annotations are not more necessary because using the `@Primary` annotations the `com.tecknobit.` package
 > is not more useful to search the repositories, entities and components pre-implemented
 
-## Authors
 
-- [@N7ghtm4r3](https://www.github.com/N7ghtm4r3)
 
 ## Support
 

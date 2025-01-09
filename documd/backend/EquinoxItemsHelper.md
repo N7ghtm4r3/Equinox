@@ -1,63 +1,129 @@
 ## EquinoxItemsHelper
 
-### Usage/Examples
+Allows you to execute batch queries such insertion, deletion and synchronization dynamically
+
+### Usage
+
+### Create the service
 
 ```java
-public class CarsService {
+@Service
+public class CarsService extends EquinoxItemsHelper {
 
-    /**
-     * The {@code BatchQuery} interface is useful to manage the batch queries to insert or delete values in batch
-     *
-     * @param <V> The type of the item used in the query
-     *
-     * @author N7ghtm4r3 - Tecknobit
-     *
-     * @apiNote example usage for a join table of user and his/her cars:
-     * <table>
-     *     <thead>
-     *         <tr>
-     *             <th>user_id</th>
-     *             <th>car_id</th>
-     *         </tr>
-     *     </thead>
-     *     <tbody>
-     *         <tr>
-     *             <td>userId</td>
-     *             <td>carId</td>
-     *         </tr>
-     *     </tbody>
-     * </table>
-     * <pre>
-     * {@code
-     *     ArrayList<String> carsIds = fetchCarsIdentifiers();
-     *     BatchQuery batchQuery = new BatchQuery<String>() {
-     *
-     *          @Override
-     *          public void getUpdatedData() {
-     *              return updatedCars; // your updated data list
-     *         }
-     *
-     *          @Override
-     *          public void prepareQuery(Query query, int index, List<String> updatedItems) {
-     *              for (String carId : updatedItems) {
-     *                  // the order of the parameters setting is the same of the table
-     *                  query.setParameter(index++, userId);
-     *                  query.setParameter(index++, carId);
-     *             }
-     *         }
-     *     }
-     * }
-     * </pre>
-     */
+    private static final String CARS_TABLE = "cars";
+
+    private static final String OWNER_COLUMN = "owner";
+
+    private static final String MODEL_COLUMN = "model";
+
+    @Autowired
+    private CarsRepository repository;
 
 }
 ```
 
-The other apis will be gradually released
+### Insert in batch
 
-## Authors
+Use the `batchInsert` method to insert multiple cars in the same query
 
-- [@N7ghtm4r3](https://www.github.com/N7ghtm4r3)
+```java
+public void insertCars(String ownerId, ArrayList<String> cars) {
+    InsertCommand command = INSERT_INTO; // INSERT_IGNORE_INTO, REPLACE_INTO
+    batchInsert(
+            command,
+            CARS_TABLE,
+            new BatchQuery<String>() {
+                @Override
+                public List<String> getData() {
+                    // useful if you need to filter values to insert
+                    return cars;
+                }
+    
+                @Override
+                public void prepareQuery(Query query, int index, List<String> cars) {
+                    for (String car : cars) {
+                        // the order of the parameters setting is the same of the table
+                        query.setParameter(index++, ownerId);
+                        query.setParameter(index++, car);
+                    }
+                }
+            },
+            OWNER_COLUMN, MODEL_COLUMN // the order of the columns matches the one of the table
+    );
+}
+```
+
+### Synchronize data
+
+Use the `syncBatch` method to execute a batch synchronization of the cars data
+
+```java
+public void updateCars(String ownerId, ArrayList<String> cars) {
+    syncBatch(
+            new SyncBatchContainer() {
+                @Override
+                public ArrayList<String> getCurrentData() {
+                    // logic to fetch the current cars of the owner
+                    return currentData;
+                }
+    
+                @Override
+                public String[] getColumns() {
+                    // the order of the columns matches the one of the table
+                    return new String[]{OWNER_COLUMN, MODEL_COLUMN};
+                }
+
+                // not mandatory
+                @Override
+                public void afterSync() {
+                    // execute after the synchronization completed 
+                }
+                
+            },
+            CARS_TABLE,
+            ownerId,
+            new BatchQuery<String>() {
+                @Override
+                public List<String> getData() {
+                    // useful if you need to filter values to insert
+                    return cars;
+                }
+    
+                @Override
+                public void prepareQuery(Query query, int index, List<String> cars) {
+                    for (String car : cars) {
+                        // the order of the parameters setting is the same of the table
+                        query.setParameter(index++, ownerId);
+                        query.setParameter(index++, car);
+                    }
+                }
+            }
+    );
+} 
+```
+
+### Delete in batch
+
+Use the `batchDeleteOnSingleSet` method to delete in batch a single set of data
+
+```java
+public void deleteCars(List<String> carsToDelete) {
+    batchDeleteOnSingleSet(CARS_TABLE, carsToDelete, MODEL_COLUMN);
+}
+```
+
+Use the `batchDelete` method to delete in batch a multiple set of data
+
+```java
+public void deleteCars(String ownerId, List<String> carsToDelete) {
+    List<List<?>> values = new ArrayList<>();
+    values.add(List.of(ownerId));
+    values.add(carsToDelete);
+    batchDelete(CARS_TABLE, values, OWNER_COLUMN, MODEL_COLUMN);
+}
+```
+
+
 
 ## Support
 

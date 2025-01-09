@@ -145,7 +145,7 @@ mavenPublishing {
     )
     pom {
         name.set("Equinox Compose")
-        description.set("Utilities for clients with an architecture based on SpringBoot and Kotlin Multiplatform frameworks. Is a support library to implement some utilities for the clients and some default components such OutlinedTextField, AlertDialogs and different others")
+        description.set("Utilities for Kotlin Multiplatform applications such components, apis for Android, Desktop, iOS and Web platforms")
         inceptionYear.set("2025")
         url.set("https://github.com/N7ghtm4r3/Equinox")
 

@@ -118,7 +118,7 @@ mavenPublishing {
     )
     pom {
         name.set("Equinox Core")
-        description.set("Utilities for backend services based on Springboot framework. Is a support library to implement some utilities both for backend and for client also who comunicate with that Springboot backend")
+        description.set("Core utilities for KMP and Spring technologies")
         inceptionYear.set("2025")
         url.set("https://github.com/N7ghtm4r3/Equinox")
 

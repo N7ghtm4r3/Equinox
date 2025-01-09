@@ -34,9 +34,7 @@ public class Main {
 
 The other apis will be gradually released
 
-## Authors
 
-- [@N7ghtm4r3](https://www.github.com/N7ghtm4r3)
 
 ## Support
 

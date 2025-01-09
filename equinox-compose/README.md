@@ -1,5 +1,14 @@
 # Equinox Compose
 
+**v1.0.6**
+
+![Static Badge](https://img.shields.io/badge/android-4280511051?link=https%3A%2F%2Fplay.google.com%2Fstore%2Fapps%2Fdetails%3Fid%3Dcom.tecknobit.ametista)
+![Static Badge](https://img.shields.io/badge/ios-445E91?link=https%3A%2F%2Fimg.shields.io%2Fbadge%2Fandroid-4280511051)
+![Static Badge](https://img.shields.io/badge/desktop-006874?link=https%3A%2F%2Fimg.shields.io%2Fbadge%2Fandroid-4280511051)
+![Static Badge](https://img.shields.io/badge/wasmjs-834C74?link=https%3A%2F%2Fimg.shields.io%2Fbadge%2Fandroid-4280511051)
+
+Utilities for **Kotlin Multiplatform** applications such components, apis for all supported platforms
+
 ## Temporarily workaround
 
 Because conflicting dependencies due the `Equinox-Compose` migration as module, at the moment, to use correctly this
@@ -13,25 +22,24 @@ configurations.all {
 }
 ```
 
-![Maven Central](https://img.shields.io/maven-central/v/io.github.n7ghtm4r3/Equinox-Compose.svg?label=Maven%20Central)
-
-## This library will be integrated as module in the [Equinox](https://github.com/N7ghtm4r3/Equinox) library in the next version
-
-**v1.0.3**
-
-Utilities for clients with an architecture based on SpringBoot and Jetpack Compose frameworks. Is a support library
-to implement some utilities for the clients and some default composable such OutlinedTextField, AlertDialogs and
-different others. Based on the main library [Equinox](https://github.com/N7ghtm4r3/Equinox)
-
 ## Implementation
 
-Add the JitPack repository to your build file
+### Version catalog
+
+```gradle
+[versions]
+equinox = "1.0.6"
+
+[libraries]
+equinox-compose = { module = "io.github.n7ghtm4r3:equinox-compose", version.ref = "equinox" }
+equinox-core = { module = "io.github.n7ghtm4r3:equinox-core", version.ref = "equinox" }
+```
 
 ### Gradle
 
-- Add it in your root build.gradle at the end of repositories
+Add the JitPack repository to your build file
 
-  #### Gradle (Short)
+- Add it in your root build.gradle at the end of repositories
 
     ```gradle
     repositories {
@@ -53,21 +61,14 @@ Add the JitPack repository to your build file
 
 - Add the dependency
 
-  #### Gradle (Short)
-
     ```gradle
     dependencies {
-        implementation 'io.github.n7ghtm4r3:Equinox:1.0.4'
-        implementation 'com.github.N7ghtm4r3:APIManager:2.2.4'
-        implementation 'com.github.N7ghtm4r3:Equinox-Compose:1.0.3' {
-            // you need to exclude the Android library artifacts on a not-Android environment
-            exclude("io.github.n7ghtm4r3:Equinox-Compose", "library-android")
-
-            // or
-    
-            // you need to exclude the JVM library artifacts on an Android environment
-            exclude("io.github.n7ghtm4r3:Equinox-Compose", "library-jvm")
-        }
+       
+        // implement the compose utilities
+        implementation 'io.github.n7ghtm4r3:equinox-compose:1.0.6'
+        
+        // implement the core utilities
+        implementation 'io.github.n7ghtm4r3:equinox-core:1.0.6'
     }
     ```
 
@@ -75,74 +76,34 @@ Add the JitPack repository to your build file
 
     ```gradle
     dependencies {
-        implementation("io.github.n7ghtm4r3:Equinox:1.0.4")
-        implementation("com.github.N7ghtm4r3:APIManager:2.2.4")
-        implementation("io.github.n7ghtm4r3:Equinox-Compose:1.0.3") {
-            // you need to exclude the Android library artifacts on a not-Android environment
-            exclude("io.github.n7ghtm4r3:Equinox-Compose", "library-android")
-
-            // or
-    
-            // you need to exclude the JVM library artifacts on an Android environment
-            exclude("io.github.n7ghtm4r3:Equinox-Compose", "library-jvm")
-        }
+        
+        // implement the compose utilities
+        implementation("io.github.n7ghtm4r3:equinox-compose:1.0.6")
+        
+        // implement the core utilities
+        implementation("io.github.n7ghtm4r3:equinox-core:1.0.6")
     }
     ```
 
-### Maven
+  #### Gradle (version catalog)
 
-- Add it in your root build.gradle at the end of repositories
-
-```xml
-
-<repositories>
-    <repository>
-        <id>jitpack.io</id>
-        <url>https://jitpack.io</url>
-    </repository>
-</repositories>
-```
-
-- Add the dependencies
-
-```xml
-
-<dependency>
-    <groupId>io.github.n7ghtm4r3</groupId>
-    <artifactId>Equinox</artifactId>
-    <version>1.0.4</version>
-</dependency>
-```
-
-```xml
-
-<dependency>
-    <groupId>com.github.N7ghtm4r3</groupId>
-    <artifactId>APIManager</artifactId>
-    <version>2.2.3</version>
-</dependency>
-```
-
-```xml
-
-<dependency>
-    <groupId>io.github.n7ghtm4r3</groupId>
-    <artifactId>Equinox-Compose</artifactId>
-    <version>1.0.3</version>
-</dependency>
-```
-
-## 🛠 Skills
-
-- Java
-- Kotlin
+    ```gradle
+    dependencies {
+    
+        // implement the compose utilities
+        implementation(libs.equinox.compose)
+    
+        // implement the core utilities
+        implementation(libs.equinox.core)
+    }
+    ```
 
 ## APIs available
 
 - [EquinoxViewModel](../documd/compose/apis/EquinoxViewModel.md)
-    - [EquinoxAuthViewModel](library/src/commonMain/kotlin/com/tecknobit/equinoxcompose/helpers/viewmodels/EquinoxAuthViewModel.kt) ->
+    - [EquinoxAuthViewModel](src/commonMain/kotlin/com/tecknobit/equinoxcompose/helpers/viewmodels/EquinoxAuthViewModel.kt) ->
       prebuilt viewmodel to authenticate the user in the system
-    - [EquinoxProfileViewModel](library/src/commonMain/kotlin/com/tecknobit/equinoxcompose/helpers/viewmodels/EquinoxProfileViewModel.kt) ->
+    - [EquinoxProfileViewModel](src/commonMain/kotlin/com/tecknobit/equinoxcompose/helpers/viewmodels/EquinoxProfileViewModel.kt) ->
       prebuilt viewmodel to manage the user account settings and preferences
 - [SessionManager](../documd/compose/apis/SessionManager.md)
 - [EquinoxScreen](../documd/compose/apis/EquinoxScreen.md)
@@ -151,9 +112,9 @@ The other apis will be gradually released
 
 ## Components available
 
-- [EquinoxDialogs](library/src/commonMain/kotlin/com/tecknobit/equinoxcompose/components/EquinoxDialogs.kt)
-- [EquinoxInputs](library/src/commonMain/kotlin/com/tecknobit/equinoxcompose/components/EquinoxInputs.kt)
-- [EquinoxUIs](library/src/commonMain/kotlin/com/tecknobit/equinoxcompose/components/EquinoxUIs.kt)
+- [EquinoxDialogs](src/commonMain/kotlin/com/tecknobit/equinoxcompose/components/EquinoxDialogs.kt)
+- [EquinoxInputs](src/commonMain/kotlin/com/tecknobit/equinoxcompose/components/EquinoxInputs.kt)
+- [EquinoxUIs](src/commonMain/kotlin/com/tecknobit/equinoxcompose/components/EquinoxUIs.kt)
 - [TextDivider](../documd/compose/components/textdivider/TextDivider.md)
 - [WriteableText](../documd/compose/components/writeabletext/WriteableText.md)
 - [Tile](../documd/compose/components/tile/Tile.md)
@@ -164,9 +125,7 @@ The other apis will be gradually released
 
 The others components will be gradually released
 
-## Authors
 
-- [@N7ghtm4r3](https://www.github.com/N7ghtm4r3)
 
 ## Support
 
@@ -182,10 +141,7 @@ Thank you for your help!
 [![](https://img.shields.io/badge/Google_Play-414141?style=for-the-badge&logo=google-play&logoColor=white)](https://play.google.com/store/apps/developer?id=Tecknobit)
 [![Twitter](https://img.shields.io/badge/Twitter-1DA1F2?style=for-the-badge&logo=twitter&logoColor=white)](https://twitter.com/tecknobit)
 
-[![](https://img.shields.io/badge/Spring_Boot-F2F4F9?style=for-the-badge&logo=spring-boot)](https://spring.io/projects/spring-boot)
-[![](https://img.shields.io/badge/Jetpack/0Compose-4285F4.svg?style=for-the-badge&logo=Jetpack-Compose&logoColor=white)](https://www.jetbrains.com/lp/compose-multiplatform/)
-
-[![](https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=java&logoColor=white)](https://www.oracle.com/java/)
+[![](https://img.shields.io/badge/Jetpack%20Compose-4285F4.svg?style=for-the-badge&logo=Jetpack-Compose&logoColor=white)](https://www.jetbrains.com/lp/compose-multiplatform/)
 [![](https://img.shields.io/badge/Kotlin-B125EA?style=for-the-badge&logo=kotlin&logoColor=white)](https://kotlinlang.org/)
 
 ## Donations

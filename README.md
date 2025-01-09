@@ -10,9 +10,6 @@ Optimal framework for integrating **Spring Boot** backend with **Kotlin Multipla
 |    **[equinox-core](equinox-core/README.md)**    | Core utilities for **KMP** and **Spring** technologies | Cross-platform functionality (Android, Desktop, iOS, Web and Spring)    | ![Maven Central](https://img.shields.io/maven-central/v/io.github.n7ghtm4r3/equinox-core.svg?label=Maven%20Central)    |
 | **[equinox-compose](equinox-compose/README.md)** | Utilities for **Kotlin Multiplatform Project**         | Components, utilities, apis for Android, Desktop, iOS and Web platforms | ![Maven Central](https://img.shields.io/maven-central/v/io.github.n7ghtm4r3/equinox-compose.svg?label=Maven%20Central) |
 
-## Authors
-
-- [@N7ghtm4r3](https://www.github.com/N7ghtm4r3)
 
 ## Support
 
@@ -28,7 +25,7 @@ Thank you for your help!
 [![](https://img.shields.io/badge/Google_Play-414141?style=for-the-badge&logo=google-play&logoColor=white)](https://play.google.com/store/apps/developer?id=Tecknobit)
 
 [![](https://img.shields.io/badge/Spring_Boot-F2F4F9?style=for-the-badge&logo=spring-boot)](https://spring.io/projects/spring-boot)
-[![](https://img.shields.io/badge/Jetpack%20Compose-4285F4.svg?style=for-the-badge&logo=Jetpack-Compose&logoColor=white)](https://www.jetbrains.com/lp/compose-multiplatform/)
+[![](https://img.shields.io/badge/Jetpack%2Compose-4285F4.svg?style=for-the-badge&logo=Jetpack-Compose&logoColor=white)](https://www.jetbrains.com/lp/compose-multiplatform/)
 
 [![](https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=java&logoColor=white)](https://www.oracle.com/java/)
 [![](https://img.shields.io/badge/Kotlin-B125EA?style=for-the-badge&logo=kotlin&logoColor=white)](https://kotlinlang.org/)
