@@ -27,11 +27,11 @@ class TestScreen : EquinoxScreen<EquinoxViewModel>() {
 
 ## Appearance
 
-### Android
+### Mobile
 
 <img src="textdivider-android.png" width="350" height="700" alt="textdivider-android"/>
 
-### Desktop
+### Desktop & Web
 
 <img src="textdivider-desktop.png" alt="textdivider-desktop">
 

@@ -64,15 +64,13 @@ class TestScreen : EquinoxScreen<EquinoxViewModel>() {
 
 ## Appearance
 
-### Android
+### Mobile
 
 [tabselector-android](https://github.com/user-attachments/assets/7e0ec5fa-33c8-4eef-8804-e0476a959973)
 
-### Desktop
+### Desktop & Web
 
 [tabselector-desktop](https://github.com/user-attachments/assets/15530460-4e6d-47e9-85a2-76355154170b)
-
-
 
 ## Support
 

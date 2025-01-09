@@ -33,11 +33,11 @@ class TestScreen : EquinoxScreen<EquinoxViewModel>() {
 
 ## Appearance
 
-### Android
+### Mobile
 
 <img src="classic_tile-android.png" width="350" height="700" alt="classic-tile-android"/>
 
-### Desktop
+### Desktop & Web
 
 <img src="classic_tile-desktop.png" alt="classic_tile-desktop">
 
@@ -69,15 +69,13 @@ class TestScreen : EquinoxScreen<EquinoxViewModel>() {
 
 ## Appearance
 
-### Android
+### Mobile
 
 <img src="dashed_tile-android.png" width="350" height="700" alt="dashed-tile-android"/>
 
-### Desktop
+### Desktop & Web
 
 <img src="dashed_tile-desktop.png" alt="dashed-tile-desktop">
-
-
 
 ## Support
 

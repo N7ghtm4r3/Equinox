@@ -38,7 +38,7 @@ class TestViewModel : EquinoxViewModel() {
 
 ### Set up the session
 
-#### Android
+#### Mobile
 
 - In the `AndroidManifest` file you must declare the Internet permission:
 
@@ -124,7 +124,7 @@ class TestViewModel : EquinoxViewModel() {
     <img src="https://github.com/N7ghtm4r3/Equinox-Compose/blob/main/images/server_offline_mobile.png" alt="server_offline"/>
   </details>
 
-#### Desktop/Jvm
+#### Desktop & Web/Jvm
 
 - In the `build.gradle.kts` file you have to implement the `kotlinx-coroutines-swing` library:
 

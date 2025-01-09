@@ -58,13 +58,13 @@ class TestScreen : EquinoxScreen<EquinoxViewModel>() {
 The screenshots are taken using the `backgroundColor` param component, but the results are the same using others
 `ChameleonText` components
 
-### Android
+### Mobile
 
 | Dark background                                                                                       | Light background                                                                                        |
 |-------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------|
 | <img src="chameleontext-dark-android.png" width="350" height="700" alt="chameleontext-dark-android"/> | <img src="chameleontext-light-android.png" width="350" height="700" alt="chameleontext-light-android"/> |
 
-### Desktop
+### Desktop & Web
 
 #### Dark background
 
@@ -73,8 +73,6 @@ The screenshots are taken using the `backgroundColor` param component, but the r
 #### Light background
 
 <img src="chameleontext-light-desktop.png" alt="chameleontext-light-desktop">
-
-
 
 ## Support
 

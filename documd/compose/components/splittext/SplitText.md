@@ -40,15 +40,13 @@ class TestScreen : EquinoxScreen<EquinoxViewModel>() {
 
 ## Appearance
 
-### Android
+### Mobile
 
 [splittext-android](https://github.com/user-attachments/assets/455d3fe7-f024-4a2e-a086-18d3ae126ae8)
 
-### Desktop
+### Desktop & Web
 
 [splittext-desktop](https://github.com/user-attachments/assets/e7201169-94ef-4a46-873b-0baec43f5a78)
-
-
 
 ## Support
 
