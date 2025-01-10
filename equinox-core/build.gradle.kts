@@ -89,7 +89,7 @@ kotlin {
             iosArm64Main.dependsOn(this)
             iosSimulatorArm64Main.dependsOn(this)
             dependencies {
-                implementation(libs.ktor.client.darwin)
+                implementation(libs.ktor.client.cio)
             }
         }
 

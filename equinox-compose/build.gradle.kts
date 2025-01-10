@@ -115,7 +115,7 @@ kotlin {
             dependencies {
                 implementation(libs.connectivity.device)
                 implementation(libs.connectivity.compose.device)
-                implementation(libs.ktor.client.darwin)
+                implementation(libs.ktor.client.cio)
             }
         }
 

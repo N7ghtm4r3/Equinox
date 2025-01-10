@@ -1,9 +1,7 @@
 package com.tecknobit.equinoxcore.network
 
 import io.ktor.client.*
-import io.ktor.client.engine.darwin.*
-import platform.Foundation.NSURLCredential
-import platform.Foundation.NSURLSessionAuthChallengeUseCredential
+import io.ktor.client.engine.cio.*
 
 /**
  * Method to obtain a platform-based HTTP engine to execute HTTP requests.
@@ -18,17 +16,12 @@ internal actual fun obtainHttpEngine(
     connectionTimeout: Long,
     byPassSSLValidation: Boolean,
 ): HttpClient {
-    return HttpClient(Darwin) {
+    return HttpClient(CIO) {
         engine {
-            configureRequest {
-                setTimeoutInterval(connectionTimeout / 1000.0)
-            }
-            if (!byPassSSLValidation) {
-                handleChallenge { _, _, _, completionHandler ->
-                    completionHandler(
-                        NSURLSessionAuthChallengeUseCredential.toInt(),
-                        NSURLCredential()
-                    )
+            requestTimeout = connectionTimeout
+            if (byPassSSLValidation) {
+                https {
+                    serverName = null
                 }
             }
         }
