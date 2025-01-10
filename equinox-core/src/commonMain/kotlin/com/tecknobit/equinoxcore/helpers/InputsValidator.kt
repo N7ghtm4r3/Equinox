@@ -1,5 +1,7 @@
 package com.tecknobit.equinoxcore.helpers
 
+import kotlin.jvm.JvmStatic
+
 /**
  * The `InputsValidator` class is useful to validate the inputs
  *
@@ -66,26 +68,6 @@ open class InputsValidator {
         const val WRONG_LANGUAGE_MESSAGE: String = "wrong_language_key"
 
         /**
-         * `WRONG_CURRENCY_MESSAGE` error message used when the currency inserted is not valid
-         */
-        const val WRONG_CURRENCY_MESSAGE: String = "wrong_currency_key"
-
-        /**
-         * `REVENUE_TITLE_MAX_LENGTH` the max valid length for the revenue title
-         */
-        const val REVENUE_TITLE_MAX_LENGTH: Int = 30
-
-        /**
-         * `REVENUE_DESCRIPTION_MAX_LENGTH` the max valid length for the revenue description
-         */
-        const val REVENUE_DESCRIPTION_MAX_LENGTH: Int = 250
-
-        /**
-         * `MAX_REVENUE_LABELS_NUMBER_LENGTH` the max valid number of labels for revenue
-         */
-        const val MAX_REVENUE_LABELS_NUMBER: Int = 5
-
-        /**
          * `DEFAULT_LANGUAGE` default language used
          */
         const val DEFAULT_LANGUAGE: String = "en"
@@ -93,24 +75,28 @@ open class InputsValidator {
         /**
          * `EMAIL_REGEX` regular expression to validate the emails value
          */
-        private const val EMAIL_REGEX =
+        @JvmStatic
+        protected val EMAIL_REGEX =
             "^(?![.])(?!.*\\.\\.{2})[A-Za-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[A-Za-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[A-Za-z0-9-]+\\.)+[A-Za-z]{2,}$"
 
         /**
          * `URL_REGEX` regular expression to validate the urls value
          */
-        private const val URL_REGEX =
-            "^(https?|ftp|file|mailto|data|ws|wss)://(?:[A-Za-z0-9-]+\\.)+[A-Za-z]{2,}(?::\\d{2,5})?(?:/[A-Za-z0-9%&=?./_-]*)?(?:#[A-Za-z0-9_-]*)?$"
+        @JvmStatic
+        protected val URL_REGEX =
+            "^(https?|ftp|file|mailto|data|ws|wss)://(?:[A-Za-z0-9-]+\\.)*[A-Za-z0-9-]+(?::\\d{1,5})?(?:/[A-Za-z0-9%&=?./_-]*)?(?:#[A-Za-z0-9_-]*)?\$"
 
         /**
          * `emailValidator` helper to validate the emails values
          */
-        private val emailValidator = Regex(EMAIL_REGEX)
+        @JvmStatic
+        protected val emailValidator = Regex(EMAIL_REGEX)
 
         /**
          * `urlValidator` helper to validate the urls values
          */
-        private val urlValidator = Regex(URL_REGEX)
+        @JvmStatic
+        protected val urlValidator = Regex(URL_REGEX)
 
         /**
          * `LANGUAGES_SUPPORTED` list of the supported languages
@@ -218,7 +204,10 @@ open class InputsValidator {
          * @param field: field value to check the validity
          * @return whether the field is valid or not as `boolean`
          */
-        private fun isInputValid(field: String?): Boolean {
+        @JvmStatic
+        protected fun isInputValid(
+            field: String?,
+        ): Boolean {
             return !field.isNullOrEmpty()
         }
 

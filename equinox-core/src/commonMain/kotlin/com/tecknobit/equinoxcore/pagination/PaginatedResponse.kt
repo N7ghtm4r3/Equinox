@@ -1,5 +1,6 @@
 package com.tecknobit.equinoxcore.pagination
 
+import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 /**
@@ -94,6 +95,7 @@ class PaginatedResponse<T> {
     /**
      * **isLastPage** -> whether the current [page] is the last one available
      */
+    @SerialName(IS_LAST_PAGE_KEY)
     val isLastPage: Boolean
 
     /**

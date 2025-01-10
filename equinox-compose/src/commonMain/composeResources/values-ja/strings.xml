@@ -1,0 +1,9 @@
+<resources>
+    <string name="an_error_occurred">エラーが発生しました</string>
+    <string name="retry">リトライ</string>
+    <string name="confirm">確認</string>
+    <string name="dismiss">解散</string>
+    <string name="server_currently_offline">サーバーは現在オフライン</string>
+    <string name="no_internet_connection">インターネット接続なし</string>
+    <string name="loading_data">データをロード中...</string>
+</resources>

@@ -1,0 +1,9 @@
+<resources>
+    <string name="an_error_occurred">Tapahtui virhe</string>
+    <string name="retry">Uudelleenyritys</string>
+    <string name="confirm">Vahvista</string>
+    <string name="dismiss">Dismiss</string>
+    <string name="server_currently_offline">Palvelin tällä hetkellä offline</string>
+    <string name="no_internet_connection">Ei internet-yhteyttä</string>
+    <string name="loading_data">Tietojen lataaminen...</string>
+</resources>

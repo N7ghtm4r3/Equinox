@@ -1,0 +1,9 @@
+<resources>
+    <string name="an_error_occurred">Došlo k chybě</string>
+    <string name="retry">Opakování</string>
+    <string name="confirm">Potvrďte</string>
+    <string name="dismiss">Odmítnout</string>
+    <string name="server_currently_offline">Server je momentálně offline</string>
+    <string name="no_internet_connection">Žádné připojení k internetu</string>
+    <string name="loading_data">Načítání dat...</string>
+</resources>

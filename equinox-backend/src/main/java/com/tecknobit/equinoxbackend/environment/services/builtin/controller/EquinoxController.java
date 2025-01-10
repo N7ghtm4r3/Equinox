@@ -1,15 +1,15 @@
 package com.tecknobit.equinoxbackend.environment.services.builtin.controller;
 
 import com.tecknobit.apimanager.apis.ServerProtector;
-import com.tecknobit.apimanager.apis.sockets.SocketManager.StandardResponseCode;
 import com.tecknobit.apimanager.formatters.JsonHelper;
-import com.tecknobit.equinoxbackend.configurationsutils.ConfigsGenerator;
-import com.tecknobit.equinoxbackend.environment.models.EquinoxUser;
+import com.tecknobit.equinoxbackend.configuration.ConfigsGenerator;
+import com.tecknobit.equinoxbackend.configuration.EquinoxBackendConfiguration;
+import com.tecknobit.equinoxbackend.environment.services.users.entity.EquinoxUser;
 import com.tecknobit.equinoxbackend.environment.services.users.repository.EquinoxUsersRepository;
 import com.tecknobit.equinoxbackend.environment.services.users.service.EquinoxUsersHelper;
 import com.tecknobit.equinoxbackend.resourcesutils.ResourcesProvider;
+import com.tecknobit.equinoxcore.network.ResponseStatus;
 import com.tecknobit.mantis.Mantis;
-import jakarta.annotation.PostConstruct;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
@@ -19,14 +19,14 @@ import org.springframework.web.bind.annotation.RestController;
 import java.io.IOException;
 import java.util.*;
 
-import static com.tecknobit.apimanager.apis.sockets.SocketManager.StandardResponseCode.FAILED;
-import static com.tecknobit.apimanager.apis.sockets.SocketManager.StandardResponseCode.SUCCESSFUL;
-import static com.tecknobit.equinoxbackend.Requester.RESPONSE_DATA_KEY;
-import static com.tecknobit.equinoxbackend.Requester.RESPONSE_STATUS_KEY;
-import static com.tecknobit.equinoxbackend.environment.helpers.EquinoxBaseEndpointsSet.BASE_EQUINOX_ENDPOINT;
 import static com.tecknobit.equinoxbackend.resourcesutils.ResourcesManager.PROFILES_DIRECTORY;
 import static com.tecknobit.equinoxbackend.resourcesutils.ResourcesManager.RESOURCES_KEY;
 import static com.tecknobit.equinoxcore.helpers.InputsValidator.DEFAULT_LANGUAGE;
+import static com.tecknobit.equinoxcore.network.EquinoxBaseEndpointsSet.BASE_EQUINOX_ENDPOINT;
+import static com.tecknobit.equinoxcore.network.Requester.RESPONSE_DATA_KEY;
+import static com.tecknobit.equinoxcore.network.Requester.RESPONSE_STATUS_KEY;
+import static com.tecknobit.equinoxcore.network.ResponseStatus.FAILED;
+import static com.tecknobit.equinoxcore.network.ResponseStatus.SUCCESSFUL;
 
 /**
  * The {@code EquinoxController} class is useful to give the base behavior of the <b>Equinox's controllers</b>
@@ -116,23 +116,6 @@ abstract public class EquinoxController<T extends EquinoxUser, R extends Equinox
     protected T me;
 
     /**
-     * Method to check if the status of the environment has been set up correctly
-     * based on the use or not of the {@link #usersRepository} <br>
-     *
-     * No-any params required
-     */
-    @PostConstruct
-    private void checkEnvironmentStatus() {
-        if (usersRepository != null && serverProtector == null) {
-            try {
-                throw new Exception("The server protector must be initialized first");
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
-        }
-    }
-
-    /**
      * Method to load the {@link #jsonHelper}
      *
      * @param payload The payload received with the request
@@ -188,6 +171,7 @@ abstract public class EquinoxController<T extends EquinoxUser, R extends Equinox
      * @param <V>    generic type for the values in the payload
      * @return the payload for a successful response as {@link HashMap} of {@link V}
      */
+    @SuppressWarnings("unchecked")
     protected <V> HashMap<String, V> successResponse(V value) {
         HashMap<String, V> response = new HashMap<>();
         response.put(RESPONSE_DATA_KEY, value);
@@ -230,13 +214,13 @@ abstract public class EquinoxController<T extends EquinoxUser, R extends Equinox
     /**
      * Method to assemble the payload for a response
      *
-     * @param responseCode The response code value
+     * @param status  The response code value
      * @param message The message to send as response
      * @return the payload for a response as {@link String}
      */
-    private String plainResponse(StandardResponseCode responseCode, String message) {
+    private String plainResponse(ResponseStatus status, String message) {
         return new JSONObject()
-                .put(RESPONSE_STATUS_KEY, responseCode)
+                .put(RESPONSE_STATUS_KEY, status)
                 .put(RESPONSE_DATA_KEY, message).toString();
     }
 
@@ -289,13 +273,29 @@ abstract public class EquinoxController<T extends EquinoxUser, R extends Equinox
     public static void initEquinoxEnvironment(String storagePath, String saveMessage, Class<?> context, String[] args,
                                               String... customSubDirectories) {
         try {
-            if (serverProtector == null) {
-                serverProtector = new ServerProtector(storagePath, saveMessage);
-                serverProtector.launch(args);
-                setBasicResourcesConfiguration(context, customSubDirectories);
-            } else
+            if (serverProtector != null)
                 throw new IllegalAccessException("The protector has been already instantiated");
+            serverProtector = new ServerProtector(storagePath, saveMessage);
+            serverProtector.launch(args);
+            EquinoxBackendConfiguration.getInstance().setServerProtectorEnabled(true);
+            setBasicResourcesConfiguration(context, customSubDirectories);
         } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     * Method to create resources directories correctly
+     *
+     * @param context              The launcher {@link Class} where this method has been invoked
+     * @param customSubDirectories The custom subdirectories of the user
+     * @apiNote the {@link #serverProtector} will not be instantiated
+     */
+    public static void initEquinoxEnvironment(Class<?> context, String... customSubDirectories) {
+        try {
+            EquinoxBackendConfiguration.getInstance().setServerProtectorEnabled(false);
+            setBasicResourcesConfiguration(context, customSubDirectories);
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }

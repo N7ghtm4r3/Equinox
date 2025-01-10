@@ -1,0 +1,9 @@
+<resources>
+    <string name="an_error_occurred">Er is een fout opgetreden</string>
+    <string name="retry">Opnieuw proberen</string>
+    <string name="confirm">Bevestig</string>
+    <string name="dismiss">Ontsla</string>
+    <string name="server_currently_offline">Server momenteel offline</string>
+    <string name="no_internet_connection">Geen internetverbinding</string>
+    <string name="loading_data">Gegevens laden...</string>
+</resources>

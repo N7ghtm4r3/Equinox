@@ -26,44 +26,80 @@
     <link href="../../../../styles/prism.css" rel="Stylesheet">
     <link href="../../../../styles/logo-styles.css" rel="Stylesheet">
     <link href="../../../../styles/font-jb-sans-auto.css" rel="Stylesheet">
+    <link href="../../../../ui-kit/ui-kit.min.css" rel="Stylesheet">
     <script type="text/javascript" src="../../../../scripts/clipboard.js" async></script>
     <script type="text/javascript" src="../../../../scripts/navigation-loader.js" async></script>
     <script type="text/javascript" src="../../../../scripts/platform-content-handler.js" async></script>
     <script type="text/javascript" src="../../../../scripts/main.js" defer></script>
     <script type="text/javascript" src="../../../../scripts/prism.js" async></script>
+    <script type="text/javascript" src="../../../../ui-kit/ui-kit.min.js" defer></script>
     <script type="text/javascript" src="../../../../scripts/symbol-parameters-wrapper_deferred.js" defer></script>
 </head>
 <body>
 <div class="root">
-    <nav class="navigation" id="navigation-wrapper">
-        <div class="navigation--inner">
-            <div class="navigation-title">
-                <button class="menu-toggle" id="menu-toggle" type="button">toggle menu</button>
-                <div class="library-name">
-                    <a class="library-name--link" href="../../../../index.html">
-                        Equinox
-                    </a></div>
-                <div class="library-version">
-                </div>
-            </div>
-            <div class="filter-section" id="filter-section">
+    <nav class="navigation theme-dark" id="navigation-wrapper">
+        <a class="library-name--link" href="../../../../index.html">
+            Equinox
+        </a>
+        <button class="navigation-controls--btn navigation-controls--btn_toc ui-kit_mobile-only" id="toc-toggle"
+                type="button">Toggle table of contents
+        </button>
+        <div class="navigation-controls--break ui-kit_mobile-only"></div>
+        <div class="library-version" id="library-version">1.0.6
+        </div>
+        <div class="navigation-controls">
+            <div class="filter-section filter-section_loading" id="filter-section">
                 <button class="platform-tag platform-selector common-like" data-active=""
                         data-filter=":equinox-core:dokkaHtmlPartial/commonMain">common
                 </button>
+                <div class="dropdown filter-section--dropdown" data-role="dropdown" id="filter-section-dropdown">
+                    <button class="button button_dropdown filter-section--dropdown-toggle" role="combobox"
+                            data-role="dropdown-toggle" aria-controls="platform-tags-listbox" aria-haspopup="listbox"
+                            aria-expanded="false" aria-label="Toggle source sets"></button>
+                    <ul role="listbox" id="platform-tags-listbox" class="dropdown--list" data-role="dropdown-listbox">
+                        <div class="dropdown--header"><span>Platform filter</span>
+                            <button class="button" data-role="dropdown-toggle" aria-label="Close platform filter">
+                                <i class="ui-kit-icon ui-kit-icon_cross"></i>
+                            </button>
+                        </div>
+                        <li role="option" class="dropdown--option platform-selector-option common-like" tabindex="0">
+                            <label class="checkbox">
+                                <input type="checkbox" class="checkbox--input"
+                                       id=":equinox-core:dokkaHtmlPartial/commonMain"
+                                       data-filter=":equinox-core:dokkaHtmlPartial/commonMain">
+                                <span class="checkbox--icon"></span>
+                                common
+                            </label>
+                        </li>
+                    </ul>
+                    <div class="dropdown--overlay"></div>
+                </div>
             </div>
-        </div>
-        <div class="navigation-controls">
-            <button class="navigation-controls--btn navigation-controls--theme" id="theme-toggle-button" type="button">
-                switch theme
+            <button class="navigation-controls--btn navigation-controls--btn_theme" id="theme-toggle-button"
+                    type="button">Switch theme
             </button>
-            <div class="navigation-controls--btn navigation-controls--search" id="searchBar" role="button">search in
+            <div class="navigation-controls--btn navigation-controls--btn_search" id="searchBar" role="button">Search in
                 API
             </div>
         </div>
     </nav>
     <div id="container">
         <div class="sidebar" id="leftColumn">
-            <div class="sidebar--inner" id="sideMenu"></div>
+            <div class="dropdown theme-dark_mobile" data-role="dropdown" id="toc-dropdown">
+                <ul role="listbox" id="toc-listbox" class="dropdown--list dropdown--list_toc-list"
+                    data-role="dropdown-listbox">
+                    <div class="dropdown--header">
+                            <span>
+                                    Equinox
+                            </span>
+                        <button class="button" data-role="dropdown-toggle" aria-label="Close table of contents">
+                            <i class="ui-kit-icon ui-kit-icon_cross"></i>
+                        </button>
+                    </div>
+                    <div class="sidebar--inner" id="sideMenu"></div>
+                </ul>
+                <div class="dropdown--overlay"></div>
+            </div>
         </div>
         <div id="main">
             <div class="main-content" data-page-type="classlike" id="content"
@@ -100,7 +136,7 @@
                                      data-filterable-set=":equinox-core:dokkaHtmlPartial/commonMain">
                                     <div class="main-subrow keyValue ">
                                         <div class=""><span class="inline-flex">
-                  <div><a href="-d-e-f-a-u-l-t_-l-a-n-g-u-a-g-e.html"><span><span>DEFAULT_LANGUAGE</span></span></a></div>
+                  <div><a href="-d-e-f-a-u-l-t_-l-a-n-g-u-a-g-e.html"><span>DEFAULT_</span><wbr><span>LANGUAGE</span></a></div>
 <span class="anchor-wrapper"><span class="anchor-icon" pointing-to="884864021%2FProperties%2F-2082165282"></span>
                     <div class="copy-popup-wrapper "><span
                             class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
@@ -116,7 +152,7 @@
                                                                 class="token keyword">val </span><a
                                                                 href="-d-e-f-a-u-l-t_-l-a-n-g-u-a-g-e.html">DEFAULT_LANGUAGE</a><span
                                                                 class="token operator">: </span><a
-                                                                href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a>
+                                                                href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a>
                                                         </div>
                                                         <div class="brief "><p class="paragraph"><code
                                                                 class="lang-kotlin">DEFAULT_LANGUAGE</code> default
@@ -135,7 +171,7 @@
                                      data-filterable-set=":equinox-core:dokkaHtmlPartial/commonMain">
                                     <div class="main-subrow keyValue ">
                                         <div class=""><span class="inline-flex">
-                  <div><a href="-e-m-a-i-l_-m-a-x_-l-e-n-g-t-h.html"><span><span>EMAIL_MAX_LENGTH</span></span></a></div>
+                  <div><a href="-e-m-a-i-l_-m-a-x_-l-e-n-g-t-h.html"><span>EMAIL_</span><wbr><span>MAX_</span><wbr><span>LENGTH</span></a></div>
 <span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1325637465%2FProperties%2F-2082165282"></span>
                     <div class="copy-popup-wrapper "><span
                             class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
@@ -151,7 +187,7 @@
                                                                 class="token keyword">val </span><a
                                                                 href="-e-m-a-i-l_-m-a-x_-l-e-n-g-t-h.html">EMAIL_MAX_LENGTH</a><span
                                                                 class="token operator">: </span><a
-                                                                href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span
+                                                                href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a><span
                                                                 class="token operator"> = </span><span
                                                                 class="token constant">75</span></div>
                                                         <div class="brief "><p class="paragraph"><code
@@ -171,7 +207,7 @@
                                      data-filterable-set=":equinox-core:dokkaHtmlPartial/commonMain">
                                     <div class="main-subrow keyValue ">
                                         <div class=""><span class="inline-flex">
-                  <div><a href="-e-m-a-i-l_-r-e-g-e-x.html"><span><span>EMAIL_REGEX</span></span></a></div>
+                  <div><a href="-e-m-a-i-l_-r-e-g-e-x.html"><span>EMAIL_</span><wbr><span>REGEX</span></a></div>
 <span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-2143122805%2FProperties%2F-2082165282"></span>
                     <div class="copy-popup-wrapper "><span
                             class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
@@ -182,12 +218,19 @@
                                                      data-platform-hinted="data-platform-hinted">
                                                     <div class="content sourceset-dependent-content" data-active=""
                                                          data-togglable=":equinox-core:dokkaHtmlPartial/commonMain">
-                                                        <div class="symbol monospace"><span class="token keyword">private </span><span
-                                                                class="token keyword">const </span><span
+                                                        <div class="symbol monospace">
+                                                            <div class="block">
+                                                                <div class="block"><span
+                                                                        class="token annotation builtin">@</span><a
+                                                                        href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.jvm/-jvm-static/index.html"><span
+                                                                        class="token annotation builtin">JvmStatic</span></a>
+                                                                </div>
+                                                            </div>
+                                                            <span class="token keyword">protected </span><span
                                                                 class="token keyword">val </span><a
                                                                 href="-e-m-a-i-l_-r-e-g-e-x.html">EMAIL_REGEX</a><span
                                                                 class="token operator">: </span><a
-                                                                href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a>
+                                                                href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a>
                                                         </div>
                                                         <div class="brief "><p class="paragraph"><code
                                                                 class="lang-kotlin">EMAIL_REGEX</code> regular
@@ -217,11 +260,19 @@
                                                      data-platform-hinted="data-platform-hinted">
                                                     <div class="content sourceset-dependent-content" data-active=""
                                                          data-togglable=":equinox-core:dokkaHtmlPartial/commonMain">
-                                                        <div class="symbol monospace"><span class="token keyword">private </span><span
+                                                        <div class="symbol monospace">
+                                                            <div class="block">
+                                                                <div class="block"><span
+                                                                        class="token annotation builtin">@</span><a
+                                                                        href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.jvm/-jvm-static/index.html"><span
+                                                                        class="token annotation builtin">JvmStatic</span></a>
+                                                                </div>
+                                                            </div>
+                                                            <span class="token keyword">protected </span><span
                                                                 class="token keyword">val </span><a
                                                                 href="email-validator.html">emailValidator</a><span
                                                                 class="token operator">: </span><a
-                                                                href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.text/-regex/index.html">Regex</a>
+                                                                href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.text/-regex/index.html">Regex</a>
                                                         </div>
                                                         <div class="brief "><p class="paragraph"><code
                                                                 class="lang-kotlin">emailValidator</code> helper to
@@ -240,7 +291,7 @@
                                      data-filterable-set=":equinox-core:dokkaHtmlPartial/commonMain">
                                     <div class="main-subrow keyValue ">
                                         <div class=""><span class="inline-flex">
-                  <div><a href="-h-o-s-t_-a-d-d-r-e-s-s_-k-e-y.html"><span><span>HOST_ADDRESS_KEY</span></span></a></div>
+                  <div><a href="-h-o-s-t_-a-d-d-r-e-s-s_-k-e-y.html"><span>HOST_</span><wbr><span>ADDRESS_</span><wbr><span>KEY</span></a></div>
 <span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1587434094%2FProperties%2F-2082165282"></span>
                     <div class="copy-popup-wrapper "><span
                             class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
@@ -256,7 +307,7 @@
                                                                 class="token keyword">val </span><a
                                                                 href="-h-o-s-t_-a-d-d-r-e-s-s_-k-e-y.html">HOST_ADDRESS_KEY</a><span
                                                                 class="token operator">: </span><a
-                                                                href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a>
+                                                                href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a>
                                                         </div>
                                                         <div class="brief "><p class="paragraph"><code
                                                                 class="lang-kotlin">HOST_ADDRESS_KEY</code> the key for
@@ -275,7 +326,7 @@
                                      data-filterable-set=":equinox-core:dokkaHtmlPartial/commonMain">
                                     <div class="main-subrow keyValue ">
                                         <div class=""><span class="inline-flex">
-                  <div><a href="-l-a-n-g-u-a-g-e-s_-s-u-p-p-o-r-t-e-d.html"><span><span>LANGUAGES_SUPPORTED</span></span></a></div>
+                  <div><a href="-l-a-n-g-u-a-g-e-s_-s-u-p-p-o-r-t-e-d.html"><span>LANGUAGES_</span><wbr><span>SUPPORTED</span></a></div>
 <span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1788090277%2FProperties%2F-2082165282"></span>
                     <div class="copy-popup-wrapper "><span
                             class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
@@ -290,51 +341,15 @@
                                                                 class="token keyword">val </span><a
                                                                 href="-l-a-n-g-u-a-g-e-s_-s-u-p-p-o-r-t-e-d.html">LANGUAGES_SUPPORTED</a><span
                                                                 class="token operator">: </span><a
-                                                                href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-hash-map/index.html">HashMap</a><span
+                                                                href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/-hash-map/index.html">HashMap</a><span
                                                                 class="token operator">&lt;</span><a
-                                                                href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span
+                                                                href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span
                                                                 class="token punctuation">, </span><a
-                                                                href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span
+                                                                href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span
                                                                 class="token operator">&gt;</span></div>
                                                         <div class="brief "><p class="paragraph"><code
                                                                 class="lang-kotlin">LANGUAGES_SUPPORTED</code> list of
                                                             the supported languages</p></div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <a data-name="1311875780%2FProperties%2F-2082165282"
-                                   anchor-label="MAX_REVENUE_LABELS_NUMBER" id="1311875780%2FProperties%2F-2082165282"
-                                   data-filterable-set=":equinox-core:dokkaHtmlPartial/commonMain"></a>
-                                <div class="table-row"
-                                     data-filterable-current=":equinox-core:dokkaHtmlPartial/commonMain"
-                                     data-filterable-set=":equinox-core:dokkaHtmlPartial/commonMain">
-                                    <div class="main-subrow keyValue ">
-                                        <div class=""><span class="inline-flex">
-                  <div><a href="-m-a-x_-r-e-v-e-n-u-e_-l-a-b-e-l-s_-n-u-m-b-e-r.html"><span><span>MAX_REVENUE_LABELS_NUMBER</span></span></a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1311875780%2FProperties%2F-2082165282"></span>
-                    <div class="copy-popup-wrapper "><span
-                            class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                  </span></span></div>
-                                        <div>
-                                            <div class="title">
-                                                <div class="platform-hinted "
-                                                     data-platform-hinted="data-platform-hinted">
-                                                    <div class="content sourceset-dependent-content" data-active=""
-                                                         data-togglable=":equinox-core:dokkaHtmlPartial/commonMain">
-                                                        <div class="symbol monospace"><span
-                                                                class="token keyword">const </span><span
-                                                                class="token keyword">val </span><a
-                                                                href="-m-a-x_-r-e-v-e-n-u-e_-l-a-b-e-l-s_-n-u-m-b-e-r.html">MAX_REVENUE_LABELS_NUMBER</a><span
-                                                                class="token operator">: </span><a
-                                                                href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span
-                                                                class="token operator"> = </span><span
-                                                                class="token constant">5</span></div>
-                                                        <div class="brief "><p class="paragraph"><code
-                                                                class="lang-kotlin">MAX_REVENUE_LABELS_NUMBER_LENGTH</code>
-                                                            the max valid number of labels for revenue</p></div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -349,7 +364,7 @@
                                      data-filterable-set=":equinox-core:dokkaHtmlPartial/commonMain">
                                     <div class="main-subrow keyValue ">
                                         <div class=""><span class="inline-flex">
-                  <div><a href="-n-a-m-e_-m-a-x_-l-e-n-g-t-h.html"><span><span>NAME_MAX_LENGTH</span></span></a></div>
+                  <div><a href="-n-a-m-e_-m-a-x_-l-e-n-g-t-h.html"><span>NAME_</span><wbr><span>MAX_</span><wbr><span>LENGTH</span></a></div>
 <span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-2140191782%2FProperties%2F-2082165282"></span>
                     <div class="copy-popup-wrapper "><span
                             class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
@@ -365,7 +380,7 @@
                                                                 class="token keyword">val </span><a
                                                                 href="-n-a-m-e_-m-a-x_-l-e-n-g-t-h.html">NAME_MAX_LENGTH</a><span
                                                                 class="token operator">: </span><a
-                                                                href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span
+                                                                href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a><span
                                                                 class="token operator"> = </span><span
                                                                 class="token constant">20</span></div>
                                                         <div class="brief "><p class="paragraph"><code
@@ -385,7 +400,7 @@
                                      data-filterable-set=":equinox-core:dokkaHtmlPartial/commonMain">
                                     <div class="main-subrow keyValue ">
                                         <div class=""><span class="inline-flex">
-                  <div><a href="-p-a-s-s-w-o-r-d_-m-a-x_-l-e-n-g-t-h.html"><span><span>PASSWORD_MAX_LENGTH</span></span></a></div>
+                  <div><a href="-p-a-s-s-w-o-r-d_-m-a-x_-l-e-n-g-t-h.html"><span>PASSWORD_</span><wbr><span>MAX_</span><wbr><span>LENGTH</span></a></div>
 <span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-2102465814%2FProperties%2F-2082165282"></span>
                     <div class="copy-popup-wrapper "><span
                             class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
@@ -401,7 +416,7 @@
                                                                 class="token keyword">val </span><a
                                                                 href="-p-a-s-s-w-o-r-d_-m-a-x_-l-e-n-g-t-h.html">PASSWORD_MAX_LENGTH</a><span
                                                                 class="token operator">: </span><a
-                                                                href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span
+                                                                href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a><span
                                                                 class="token operator"> = </span><span
                                                                 class="token constant">32</span></div>
                                                         <div class="brief "><p class="paragraph"><code
@@ -421,7 +436,7 @@
                                      data-filterable-set=":equinox-core:dokkaHtmlPartial/commonMain">
                                     <div class="main-subrow keyValue ">
                                         <div class=""><span class="inline-flex">
-                  <div><a href="-p-a-s-s-w-o-r-d_-m-i-n_-l-e-n-g-t-h.html"><span><span>PASSWORD_MIN_LENGTH</span></span></a></div>
+                  <div><a href="-p-a-s-s-w-o-r-d_-m-i-n_-l-e-n-g-t-h.html"><span>PASSWORD_</span><wbr><span>MIN_</span><wbr><span>LENGTH</span></a></div>
 <span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-2126531624%2FProperties%2F-2082165282"></span>
                     <div class="copy-popup-wrapper "><span
                             class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
@@ -437,85 +452,12 @@
                                                                 class="token keyword">val </span><a
                                                                 href="-p-a-s-s-w-o-r-d_-m-i-n_-l-e-n-g-t-h.html">PASSWORD_MIN_LENGTH</a><span
                                                                 class="token operator">: </span><a
-                                                                href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span
+                                                                href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a><span
                                                                 class="token operator"> = </span><span
                                                                 class="token constant">8</span></div>
                                                         <div class="brief "><p class="paragraph"><code
                                                                 class="lang-kotlin">PASSWORD_MIN_LENGTH</code> the min
                                                             valid length for the password</p></div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <a data-name="-1220014524%2FProperties%2F-2082165282"
-                                   anchor-label="REVENUE_DESCRIPTION_MAX_LENGTH"
-                                   id="-1220014524%2FProperties%2F-2082165282"
-                                   data-filterable-set=":equinox-core:dokkaHtmlPartial/commonMain"></a>
-                                <div class="table-row"
-                                     data-filterable-current=":equinox-core:dokkaHtmlPartial/commonMain"
-                                     data-filterable-set=":equinox-core:dokkaHtmlPartial/commonMain">
-                                    <div class="main-subrow keyValue ">
-                                        <div class=""><span class="inline-flex">
-                  <div><a href="-r-e-v-e-n-u-e_-d-e-s-c-r-i-p-t-i-o-n_-m-a-x_-l-e-n-g-t-h.html"><span><span>REVENUE_DESCRIPTION_MAX_LENGTH</span></span></a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1220014524%2FProperties%2F-2082165282"></span>
-                    <div class="copy-popup-wrapper "><span
-                            class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                  </span></span></div>
-                                        <div>
-                                            <div class="title">
-                                                <div class="platform-hinted "
-                                                     data-platform-hinted="data-platform-hinted">
-                                                    <div class="content sourceset-dependent-content" data-active=""
-                                                         data-togglable=":equinox-core:dokkaHtmlPartial/commonMain">
-                                                        <div class="symbol monospace"><span
-                                                                class="token keyword">const </span><span
-                                                                class="token keyword">val </span><a
-                                                                href="-r-e-v-e-n-u-e_-d-e-s-c-r-i-p-t-i-o-n_-m-a-x_-l-e-n-g-t-h.html">REVENUE_DESCRIPTION_MAX_LENGTH</a><span
-                                                                class="token operator">: </span><a
-                                                                href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span
-                                                                class="token operator"> = </span><span
-                                                                class="token constant">250</span></div>
-                                                        <div class="brief "><p class="paragraph"><code
-                                                                class="lang-kotlin">REVENUE_DESCRIPTION_MAX_LENGTH</code>
-                                                            the max valid length for the revenue description</p></div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <a data-name="686040800%2FProperties%2F-2082165282"
-                                   anchor-label="REVENUE_TITLE_MAX_LENGTH" id="686040800%2FProperties%2F-2082165282"
-                                   data-filterable-set=":equinox-core:dokkaHtmlPartial/commonMain"></a>
-                                <div class="table-row"
-                                     data-filterable-current=":equinox-core:dokkaHtmlPartial/commonMain"
-                                     data-filterable-set=":equinox-core:dokkaHtmlPartial/commonMain">
-                                    <div class="main-subrow keyValue ">
-                                        <div class=""><span class="inline-flex">
-                  <div><a href="-r-e-v-e-n-u-e_-t-i-t-l-e_-m-a-x_-l-e-n-g-t-h.html"><span><span>REVENUE_TITLE_MAX_LENGTH</span></span></a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="686040800%2FProperties%2F-2082165282"></span>
-                    <div class="copy-popup-wrapper "><span
-                            class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                  </span></span></div>
-                                        <div>
-                                            <div class="title">
-                                                <div class="platform-hinted "
-                                                     data-platform-hinted="data-platform-hinted">
-                                                    <div class="content sourceset-dependent-content" data-active=""
-                                                         data-togglable=":equinox-core:dokkaHtmlPartial/commonMain">
-                                                        <div class="symbol monospace"><span
-                                                                class="token keyword">const </span><span
-                                                                class="token keyword">val </span><a
-                                                                href="-r-e-v-e-n-u-e_-t-i-t-l-e_-m-a-x_-l-e-n-g-t-h.html">REVENUE_TITLE_MAX_LENGTH</a><span
-                                                                class="token operator">: </span><a
-                                                                href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span
-                                                                class="token operator"> = </span><span
-                                                                class="token constant">30</span></div>
-                                                        <div class="brief "><p class="paragraph"><code
-                                                                class="lang-kotlin">REVENUE_TITLE_MAX_LENGTH</code> the
-                                                            max valid length for the revenue title</p></div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -530,7 +472,7 @@
                                      data-filterable-set=":equinox-core:dokkaHtmlPartial/commonMain">
                                     <div class="main-subrow keyValue ">
                                         <div class=""><span class="inline-flex">
-                  <div><a href="-s-u-r-n-a-m-e_-m-a-x_-l-e-n-g-t-h.html"><span><span>SURNAME_MAX_LENGTH</span></span></a></div>
+                  <div><a href="-s-u-r-n-a-m-e_-m-a-x_-l-e-n-g-t-h.html"><span>SURNAME_</span><wbr><span>MAX_</span><wbr><span>LENGTH</span></a></div>
 <span class="anchor-wrapper"><span class="anchor-icon" pointing-to="920591078%2FProperties%2F-2082165282"></span>
                     <div class="copy-popup-wrapper "><span
                             class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
@@ -546,7 +488,7 @@
                                                                 class="token keyword">val </span><a
                                                                 href="-s-u-r-n-a-m-e_-m-a-x_-l-e-n-g-t-h.html">SURNAME_MAX_LENGTH</a><span
                                                                 class="token operator">: </span><a
-                                                                href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span
+                                                                href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a><span
                                                                 class="token operator"> = </span><span
                                                                 class="token constant">30</span></div>
                                                         <div class="brief "><p class="paragraph"><code
@@ -566,7 +508,7 @@
                                      data-filterable-set=":equinox-core:dokkaHtmlPartial/commonMain">
                                     <div class="main-subrow keyValue ">
                                         <div class=""><span class="inline-flex">
-                  <div><a href="-u-r-l_-r-e-g-e-x.html"><span><span>URL_REGEX</span></span></a></div>
+                  <div><a href="-u-r-l_-r-e-g-e-x.html"><span>URL_</span><wbr><span>REGEX</span></a></div>
 <span class="anchor-wrapper"><span class="anchor-icon" pointing-to="2011492056%2FProperties%2F-2082165282"></span>
                     <div class="copy-popup-wrapper "><span
                             class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
@@ -577,12 +519,19 @@
                                                      data-platform-hinted="data-platform-hinted">
                                                     <div class="content sourceset-dependent-content" data-active=""
                                                          data-togglable=":equinox-core:dokkaHtmlPartial/commonMain">
-                                                        <div class="symbol monospace"><span class="token keyword">private </span><span
-                                                                class="token keyword">const </span><span
+                                                        <div class="symbol monospace">
+                                                            <div class="block">
+                                                                <div class="block"><span
+                                                                        class="token annotation builtin">@</span><a
+                                                                        href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.jvm/-jvm-static/index.html"><span
+                                                                        class="token annotation builtin">JvmStatic</span></a>
+                                                                </div>
+                                                            </div>
+                                                            <span class="token keyword">protected </span><span
                                                                 class="token keyword">val </span><a
                                                                 href="-u-r-l_-r-e-g-e-x.html">URL_REGEX</a><span
                                                                 class="token operator">: </span><a
-                                                                href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a>
+                                                                href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a>
                                                         </div>
                                                         <div class="brief "><p class="paragraph"><code
                                                                 class="lang-kotlin">URL_REGEX</code> regular expression
@@ -612,51 +561,23 @@
                                                      data-platform-hinted="data-platform-hinted">
                                                     <div class="content sourceset-dependent-content" data-active=""
                                                          data-togglable=":equinox-core:dokkaHtmlPartial/commonMain">
-                                                        <div class="symbol monospace"><span class="token keyword">private </span><span
+                                                        <div class="symbol monospace">
+                                                            <div class="block">
+                                                                <div class="block"><span
+                                                                        class="token annotation builtin">@</span><a
+                                                                        href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.jvm/-jvm-static/index.html"><span
+                                                                        class="token annotation builtin">JvmStatic</span></a>
+                                                                </div>
+                                                            </div>
+                                                            <span class="token keyword">protected </span><span
                                                                 class="token keyword">val </span><a
                                                                 href="url-validator.html">urlValidator</a><span
                                                                 class="token operator">: </span><a
-                                                                href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.text/-regex/index.html">Regex</a>
+                                                                href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.text/-regex/index.html">Regex</a>
                                                         </div>
                                                         <div class="brief "><p class="paragraph"><code
                                                                 class="lang-kotlin">urlValidator</code> helper to
                                                             validate the urls values</p></div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <a data-name="-798778176%2FProperties%2F-2082165282"
-                                   anchor-label="WRONG_CURRENCY_MESSAGE" id="-798778176%2FProperties%2F-2082165282"
-                                   data-filterable-set=":equinox-core:dokkaHtmlPartial/commonMain"></a>
-                                <div class="table-row"
-                                     data-filterable-current=":equinox-core:dokkaHtmlPartial/commonMain"
-                                     data-filterable-set=":equinox-core:dokkaHtmlPartial/commonMain">
-                                    <div class="main-subrow keyValue ">
-                                        <div class=""><span class="inline-flex">
-                  <div><a href="-w-r-o-n-g_-c-u-r-r-e-n-c-y_-m-e-s-s-a-g-e.html"><span><span>WRONG_CURRENCY_MESSAGE</span></span></a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-798778176%2FProperties%2F-2082165282"></span>
-                    <div class="copy-popup-wrapper "><span
-                            class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                  </span></span></div>
-                                        <div>
-                                            <div class="title">
-                                                <div class="platform-hinted "
-                                                     data-platform-hinted="data-platform-hinted">
-                                                    <div class="content sourceset-dependent-content" data-active=""
-                                                         data-togglable=":equinox-core:dokkaHtmlPartial/commonMain">
-                                                        <div class="symbol monospace"><span
-                                                                class="token keyword">const </span><span
-                                                                class="token keyword">val </span><a
-                                                                href="-w-r-o-n-g_-c-u-r-r-e-n-c-y_-m-e-s-s-a-g-e.html">WRONG_CURRENCY_MESSAGE</a><span
-                                                                class="token operator">: </span><a
-                                                                href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a>
-                                                        </div>
-                                                        <div class="brief "><p class="paragraph"><code
-                                                                class="lang-kotlin">WRONG_CURRENCY_MESSAGE</code> error
-                                                            message used when the currency inserted is not valid</p>
-                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -671,7 +592,7 @@
                                      data-filterable-set=":equinox-core:dokkaHtmlPartial/commonMain">
                                     <div class="main-subrow keyValue ">
                                         <div class=""><span class="inline-flex">
-                  <div><a href="-w-r-o-n-g_-e-m-a-i-l_-m-e-s-s-a-g-e.html"><span><span>WRONG_EMAIL_MESSAGE</span></span></a></div>
+                  <div><a href="-w-r-o-n-g_-e-m-a-i-l_-m-e-s-s-a-g-e.html"><span>WRONG_</span><wbr><span>EMAIL_</span><wbr><span>MESSAGE</span></a></div>
 <span class="anchor-wrapper"><span class="anchor-icon" pointing-to="114571005%2FProperties%2F-2082165282"></span>
                     <div class="copy-popup-wrapper "><span
                             class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
@@ -687,7 +608,7 @@
                                                                 class="token keyword">val </span><a
                                                                 href="-w-r-o-n-g_-e-m-a-i-l_-m-e-s-s-a-g-e.html">WRONG_EMAIL_MESSAGE</a><span
                                                                 class="token operator">: </span><a
-                                                                href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a>
+                                                                href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a>
                                                         </div>
                                                         <div class="brief "><p class="paragraph"><code
                                                                 class="lang-kotlin">WRONG_EMAIL_MESSAGE</code> error
@@ -706,7 +627,7 @@
                                      data-filterable-set=":equinox-core:dokkaHtmlPartial/commonMain">
                                     <div class="main-subrow keyValue ">
                                         <div class=""><span class="inline-flex">
-                  <div><a href="-w-r-o-n-g_-l-a-n-g-u-a-g-e_-m-e-s-s-a-g-e.html"><span><span>WRONG_LANGUAGE_MESSAGE</span></span></a></div>
+                  <div><a href="-w-r-o-n-g_-l-a-n-g-u-a-g-e_-m-e-s-s-a-g-e.html"><span>WRONG_</span><wbr><span>LANGUAGE_</span><wbr><span>MESSAGE</span></a></div>
 <span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-917717415%2FProperties%2F-2082165282"></span>
                     <div class="copy-popup-wrapper "><span
                             class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
@@ -722,7 +643,7 @@
                                                                 class="token keyword">val </span><a
                                                                 href="-w-r-o-n-g_-l-a-n-g-u-a-g-e_-m-e-s-s-a-g-e.html">WRONG_LANGUAGE_MESSAGE</a><span
                                                                 class="token operator">: </span><a
-                                                                href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a>
+                                                                href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a>
                                                         </div>
                                                         <div class="brief "><p class="paragraph"><code
                                                                 class="lang-kotlin">WRONG_LANGUAGE_MESSAGE</code> error
@@ -742,7 +663,7 @@
                                      data-filterable-set=":equinox-core:dokkaHtmlPartial/commonMain">
                                     <div class="main-subrow keyValue ">
                                         <div class=""><span class="inline-flex">
-                  <div><a href="-w-r-o-n-g_-n-a-m-e_-m-e-s-s-a-g-e.html"><span><span>WRONG_NAME_MESSAGE</span></span></a></div>
+                  <div><a href="-w-r-o-n-g_-n-a-m-e_-m-e-s-s-a-g-e.html"><span>WRONG_</span><wbr><span>NAME_</span><wbr><span>MESSAGE</span></a></div>
 <span class="anchor-wrapper"><span class="anchor-icon" pointing-to="859533190%2FProperties%2F-2082165282"></span>
                     <div class="copy-popup-wrapper "><span
                             class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
@@ -758,7 +679,7 @@
                                                                 class="token keyword">val </span><a
                                                                 href="-w-r-o-n-g_-n-a-m-e_-m-e-s-s-a-g-e.html">WRONG_NAME_MESSAGE</a><span
                                                                 class="token operator">: </span><a
-                                                                href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a>
+                                                                href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a>
                                                         </div>
                                                         <div class="brief "><p class="paragraph"><code
                                                                 class="lang-kotlin">WRONG_NAME_MESSAGE</code> error
@@ -777,7 +698,7 @@
                                      data-filterable-set=":equinox-core:dokkaHtmlPartial/commonMain">
                                     <div class="main-subrow keyValue ">
                                         <div class=""><span class="inline-flex">
-                  <div><a href="-w-r-o-n-g_-p-a-s-s-w-o-r-d_-m-e-s-s-a-g-e.html"><span><span>WRONG_PASSWORD_MESSAGE</span></span></a></div>
+                  <div><a href="-w-r-o-n-g_-p-a-s-s-w-o-r-d_-m-e-s-s-a-g-e.html"><span>WRONG_</span><wbr><span>PASSWORD_</span><wbr><span>MESSAGE</span></a></div>
 <span class="anchor-wrapper"><span class="anchor-icon" pointing-to="698796918%2FProperties%2F-2082165282"></span>
                     <div class="copy-popup-wrapper "><span
                             class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
@@ -793,7 +714,7 @@
                                                                 class="token keyword">val </span><a
                                                                 href="-w-r-o-n-g_-p-a-s-s-w-o-r-d_-m-e-s-s-a-g-e.html">WRONG_PASSWORD_MESSAGE</a><span
                                                                 class="token operator">: </span><a
-                                                                href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a>
+                                                                href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a>
                                                         </div>
                                                         <div class="brief "><p class="paragraph"><code
                                                                 class="lang-kotlin">WRONG_PASSWORD_MESSAGE</code> error
@@ -813,7 +734,7 @@
                                      data-filterable-set=":equinox-core:dokkaHtmlPartial/commonMain">
                                     <div class="main-subrow keyValue ">
                                         <div class=""><span class="inline-flex">
-                  <div><a href="-w-r-o-n-g_-s-u-r-n-a-m-e_-m-e-s-s-a-g-e.html"><span><span>WRONG_SURNAME_MESSAGE</span></span></a></div>
+                  <div><a href="-w-r-o-n-g_-s-u-r-n-a-m-e_-m-e-s-s-a-g-e.html"><span>WRONG_</span><wbr><span>SURNAME_</span><wbr><span>MESSAGE</span></a></div>
 <span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1959647074%2FProperties%2F-2082165282"></span>
                     <div class="copy-popup-wrapper "><span
                             class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
@@ -829,7 +750,7 @@
                                                                 class="token keyword">val </span><a
                                                                 href="-w-r-o-n-g_-s-u-r-n-a-m-e_-m-e-s-s-a-g-e.html">WRONG_SURNAME_MESSAGE</a><span
                                                                 class="token operator">: </span><a
-                                                                href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a>
+                                                                href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a>
                                                         </div>
                                                         <div class="brief "><p class="paragraph"><code
                                                                 class="lang-kotlin">WRONG_SURNAME_MESSAGE</code> error
@@ -870,11 +791,11 @@
                                                                 class="token punctuation">(</span><span
                                                                 class="parameters "><span class="parameter ">email<span
                                                                 class="token operator">: </span><a
-                                                                href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span
+                                                                href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span
                                                                 class="token operator">?</span></span></span><span
                                                                 class="token punctuation">)</span><span
                                                                 class="token operator">: </span><a
-                                                                href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html">Boolean</a>
+                                                                href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a>
                                                         </div>
                                                         <div class="brief "><p class="paragraph">Method to validate an
                                                             email</p></div>
@@ -909,11 +830,11 @@
                                                                 class="token punctuation">(</span><span
                                                                 class="parameters "><span class="parameter ">host<span
                                                                 class="token operator">: </span><a
-                                                                href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span
+                                                                href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span
                                                                 class="token operator">?</span></span></span><span
                                                                 class="token punctuation">)</span><span
                                                                 class="token operator">: </span><a
-                                                                href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html">Boolean</a>
+                                                                href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a>
                                                         </div>
                                                         <div class="brief "><p class="paragraph">Method to validate a
                                                             host</p></div>
@@ -942,17 +863,25 @@
                                                      data-platform-hinted="data-platform-hinted">
                                                     <div class="content sourceset-dependent-content" data-active=""
                                                          data-togglable=":equinox-core:dokkaHtmlPartial/commonMain">
-                                                        <div class="symbol monospace"><span class="token keyword">private </span><span
+                                                        <div class="symbol monospace">
+                                                            <div class="block">
+                                                                <div class="block"><span
+                                                                        class="token annotation builtin">@</span><a
+                                                                        href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.jvm/-jvm-static/index.html"><span
+                                                                        class="token annotation builtin">JvmStatic</span></a>
+                                                                </div>
+                                                            </div>
+                                                            <span class="token keyword">protected </span><span
                                                                 class="token keyword">fun </span><a
                                                                 href="is-input-valid.html"><span class="token function">isInputValid</span></a><span
                                                                 class="token punctuation">(</span><span
                                                                 class="parameters "><span class="parameter ">field<span
                                                                 class="token operator">: </span><a
-                                                                href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span
+                                                                href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span
                                                                 class="token operator">?</span></span></span><span
                                                                 class="token punctuation">)</span><span
                                                                 class="token operator">: </span><a
-                                                                href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html">Boolean</a>
+                                                                href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a>
                                                         </div>
                                                         <div class="brief "><p class="paragraph">Method to validate an
                                                             input</p></div>
@@ -988,11 +917,11 @@
                                                                 class="token punctuation">(</span><span
                                                                 class="parameters "><span
                                                                 class="parameter ">language<span class="token operator">: </span><a
-                                                                href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span
+                                                                href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span
                                                                 class="token operator">?</span></span></span><span
                                                                 class="token punctuation">)</span><span
                                                                 class="token operator">: </span><a
-                                                                href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html">Boolean</a>
+                                                                href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a>
                                                         </div>
                                                         <div class="brief "><p class="paragraph">Method to validate a
                                                             language</p></div>
@@ -1027,11 +956,11 @@
                                                                 class="token punctuation">(</span><span
                                                                 class="parameters "><span class="parameter ">name<span
                                                                 class="token operator">: </span><a
-                                                                href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span
+                                                                href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span
                                                                 class="token operator">?</span></span></span><span
                                                                 class="token punctuation">)</span><span
                                                                 class="token operator">: </span><a
-                                                                href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html">Boolean</a>
+                                                                href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a>
                                                         </div>
                                                         <div class="brief "><p class="paragraph">Method to validate a
                                                             name</p></div>
@@ -1067,11 +996,11 @@
                                                                 class="token punctuation">(</span><span
                                                                 class="parameters "><span
                                                                 class="parameter ">password<span class="token operator">: </span><a
-                                                                href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span
+                                                                href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span
                                                                 class="token operator">?</span></span></span><span
                                                                 class="token punctuation">)</span><span
                                                                 class="token operator">: </span><a
-                                                                href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html">Boolean</a>
+                                                                href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a>
                                                         </div>
                                                         <div class="brief "><p class="paragraph">Method to validate a
                                                             password</p></div>
@@ -1107,11 +1036,11 @@
                                                                 class="token punctuation">(</span><span
                                                                 class="parameters "><span class="parameter ">serverSecret<span
                                                                 class="token operator">: </span><a
-                                                                href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span
+                                                                href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span
                                                                 class="token operator">?</span></span></span><span
                                                                 class="token punctuation">)</span><span
                                                                 class="token operator">: </span><a
-                                                                href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html">Boolean</a>
+                                                                href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a>
                                                         </div>
                                                         <div class="brief "><p class="paragraph">Method to validate a
                                                             server secret</p></div>
@@ -1148,11 +1077,11 @@
                                                                 class="parameters "><span
                                                                 class="parameter ">surname<span
                                                                 class="token operator">: </span><a
-                                                                href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span
+                                                                href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span
                                                                 class="token operator">?</span></span></span><span
                                                                 class="token punctuation">)</span><span
                                                                 class="token operator">: </span><a
-                                                                href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html">Boolean</a>
+                                                                href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a>
                                                         </div>
                                                         <div class="brief "><p class="paragraph">Method to validate a
                                                             surname</p></div>
@@ -1168,15 +1097,17 @@
                 </div>
             </div>
             <div class="footer">
-                <span class="go-to-top-icon"><a href="#content"
-                                                id="go-to-top-link"></a></span><span>© 2024 Copyright</span><span
-                    class="pull-right"><span>Generated by </span><a
-                    href="https://github.com/Kotlin/dokka"><span>dokka</span><span
-                    class="padded-icon"></span></a></span>
+                <a href="#content" id="go-to-top-link" class="footer--button footer--button_go-to-top"></a>
+                <span>© 2025 Copyright</span>
+                <span class="pull-right">
+            <span>Generated by </span>
+            <a class="footer--link footer--link_external" href="https://github.com/Kotlin/dokka">
+                <span>dokka</span>
+            </a>
+        </span>
             </div>
         </div>
     </div>
 </div>
 </body>
 </html>
-

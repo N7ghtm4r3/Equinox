@@ -1,8 +1,7 @@
 package com.tecknobit.equinoxbackend.environment.services.builtin.service;
 
-import com.tecknobit.apimanager.annotations.Wrapper;
-import com.tecknobit.equinoxbackend.environment.models.EquinoxItem;
-import com.tecknobit.equinoxcore.annotations.RequiresSuperCall;
+import com.tecknobit.equinoxbackend.environment.services.builtin.entity.EquinoxItem;
+import com.tecknobit.equinoxcore.annotations.Wrapper;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.Query;
@@ -20,7 +19,7 @@ import static com.tecknobit.equinoxbackend.environment.services.builtin.service.
  * @author N7ghtm4r3 - Tecknobit
  */
 @Transactional
-public abstract class EquinoxItemsHelper<T extends EquinoxItem> {
+public abstract class EquinoxItemsHelper {
 
     /**
      * {@code InsertCommand} list of supported commands to insert records in the batch queries
@@ -54,7 +53,7 @@ public abstract class EquinoxItemsHelper<T extends EquinoxItem> {
         /**
          * Constructor to instantiate an {@link InsertCommand}
          *
-         * @param sql: the sql command value to use in the queries
+         * @param sql The sql command value to use in the queries
          */
         InsertCommand(String sql) {
             this.sql = sql + " ";
@@ -63,7 +62,7 @@ public abstract class EquinoxItemsHelper<T extends EquinoxItem> {
     }
 
     /**
-     * The {@code SyncBatchContainer} interface is useful to execute the {@link #syncBatch(SyncBatchContainer, String, String, List, BatchQuery)}
+     * The {@code SyncBatchContainer} interface is useful to execute the {@link #syncBatch(SyncBatchContainer, String, String, BatchQuery)}
      * method to synchronize the data. This interface is the container about the information to use during the synchronization
      * process
      *
@@ -72,27 +71,32 @@ public abstract class EquinoxItemsHelper<T extends EquinoxItem> {
     public interface SyncBatchContainer {
 
         /**
-         * Method to get the current list of data <br>
-         *
-         * No-any params required
+         * Method to get the current list of data
          *
          * @return the current list of identifiers as {@link ArrayList} of {@link V}
          */
         <V> ArrayList<V> getCurrentData();
 
         /**
-         * Method to get the columns affected by the synchronization <br>
-         * <p>
-         * No-any params required
+         * Method to get the columns affected by the synchronization
          *
          * @return columns affected by the synchronization as array of {@link String}
          */
         String[] getColumns();
 
+        /**
+         * Invoked after the synchronization executed, and it is useful to execute certain actions with the data synchronized
+         * such logging, notifications, etc...
+         */
+        default void afterSync() {
+        }
+
     }
 
     /**
      * The {@code BatchQuery} interface is useful to manage the batch queries to insert or delete values in batch
+     *
+     * @param <V> The type of the item used in the query
      *
      * @author N7ghtm4r3 - Tecknobit
      *
@@ -114,11 +118,16 @@ public abstract class EquinoxItemsHelper<T extends EquinoxItem> {
      * <pre>
      * {@code
      *     ArrayList<String> carsIds = fetchCarsIdentifiers();
-     *     BatchQuery batchQuery = new BatchQuery() {
+     *     BatchQuery batchQuery = new BatchQuery<String>() {
+     *
      *          @Override
-     *          public void prepareQuery(Query query) {
-     *              int index = 1; // mandatory starts from one due the SQL starts from one
-     *              for (String carId : carsIds) {
+     *          public void getData() {
+     *              return updatedCars; // your updated data list
+     *         }
+     *
+     *          @Override
+     *          public void prepareQuery(Query query, int index, List<String> updatedItems) {
+     *              for (String carId : updatedItems) {
      *                  // the order of the parameters setting is the same of the table
      *                  query.setParameter(index++, userId);
      *                  query.setParameter(index++, carId);
@@ -128,14 +137,23 @@ public abstract class EquinoxItemsHelper<T extends EquinoxItem> {
      * }
      * </pre>
      */
-    public interface BatchQuery {
+    public interface BatchQuery<V> {
+
+        /**
+         * Method to get the data to use in the batch query
+         *
+         * @return the updated data as {@link List} of {@link V}
+         */
+        List<V> getData();
 
         /**
          * Method to prepare the batch query such fill the parameters programmatically
          *
-         * @param query: query instance used to execute the SQL command
+         * @param query Query instance used to execute the SQL command
+         * @param index The pre-increment index to format the values in the query, its initial value is 1
+         * @param items The updated items to use in the batch query
          */
-        void prepareQuery(Query query);
+        void prepareQuery(Query query, int index, List<V> items);
 
     }
 
@@ -193,50 +211,61 @@ public abstract class EquinoxItemsHelper<T extends EquinoxItem> {
     /**
      * Method to execute a batch synchronization of a list of data simultaneously
      *
-     * @param container:   contains the data about the synchronization such the columns affected and the current list of the data
-     * @param table:       the table where execute the synchronization of the data
-     * @param targetId:    the target identifier of the entity where the synchronization must be executed, such a user and
+     * @param container Contains the data about the synchronization such the columns affected and the current list of the data
+     * @param table The table where execute the synchronization of the data
+     * @param targetId The target identifier of the entity where the synchronization must be executed, such a user and
      *                     his/her notes
-     * @param updatedData: the list of the updated data to synchronize
-     * @param batchQuery:  the manager of the batch query to execute
+     * @param batchQuery The manager of the batch query to execute
      */
-    @RequiresSuperCall
-    protected <V> void syncBatch(SyncBatchContainer container, String table, String targetId, List<V> updatedData,
-                                 BatchQuery batchQuery) {
+    protected <V> void syncBatch(SyncBatchContainer container, String table, String targetId, BatchQuery<V> batchQuery) {
         String[] columns = container.getColumns();
         ArrayList<V> currentData = container.getCurrentData();
-        batchInsert(INSERT_IGNORE_INTO, table, updatedData, batchQuery, columns);
+        List<V> updatedData = batchQuery.getData();
+        batchInsert(INSERT_IGNORE_INTO, table, batchQuery, columns);
         currentData.removeAll(updatedData);
         batchDelete(table, List.of(List.of(targetId), currentData), columns);
+        container.afterSync();
     }
 
     /**
      * Method to execute a batch insert of a list of data simultaneously
      *
-     * @param command:    the insertion command to execute
-     * @param table:      the table where execute the batch insert
-     * @param values:     the values to simultaneously insert
-     * @param batchQuery: the manager of the batch query to execute
-     * @param columns:    the columns affected by the insertion
+     * @param command The insertion command to execute
+     * @param table The table where execute the batch insert
+     * @param batchQuery The manager of the batch query to execute
+     * @param columns The columns affected by the insertion
      */
-    protected void batchInsert(InsertCommand command, String table, List<?> values, BatchQuery batchQuery,
-                               String... columns) {
+    protected <V> void batchInsert(InsertCommand command, String table, BatchQuery<V> batchQuery, String... columns) {
+        List<V> values = batchQuery.getData();
         if (values.isEmpty())
             return;
         String insertQuery = command.sql + table + " " + formatColumns(columns) + _VALUES_;
         String placeHolder = formatPlaceholder(columns);
         String insertQueryComplete = formatValuesForQuery(insertQuery, values, placeHolder, false);
         Query query = entityManager.createNativeQuery(insertQueryComplete);
-        batchQuery.prepareQuery(query);
+        batchQuery.prepareQuery(query, 1, values);
         query.executeUpdate();
+    }
+
+    /**
+     * Method to execute a batch delete of a single list of data simultaneously
+     *
+     * @param table   The table where execute the batch insert
+     * @param values  The values to simultaneously delete
+     * @param columns The columns where execute the in comparison to delete the row correctly
+     * @apiNote the query form: DELETE FROM table WHERE (col1, col2, ...) IN ((dataCol1, dataCol2), (dataCol1a, dataCol2a), ...)
+     */
+    @Wrapper
+    protected void batchDeleteOnSingleSet(String table, List<?> values, String... columns) {
+        batchDelete(table, List.of(values), columns);
     }
 
     /**
      * Method to execute a batch delete of a list of data simultaneously
      *
-     * @param table:   the table where execute the batch insert
-     * @param values:  the values to simultaneously delete
-     * @param columns: the columns where execute the in comparison to delete the row correctly
+     * @param table The table where execute the batch insert
+     * @param values The values to simultaneously delete
+     * @param columns The columns where execute the in comparison to delete the row correctly
      * @apiNote the query form: DELETE FROM table WHERE (col1, col2, ...) IN ((dataCol1, dataCol2), (dataCol1a, dataCol2a), ...)
      */
     protected void batchDelete(String table, List<List<?>> values, String... columns) {
@@ -244,7 +273,7 @@ public abstract class EquinoxItemsHelper<T extends EquinoxItem> {
         if (columnsNumber == 0)
             return;
         List<?> mergedValues = mergeAlternativelyInColumnsValues(values);
-        if (mergedValues.isEmpty())
+        if (mergedValues.isEmpty() || mergedValues.size() % columnsNumber != 0)
             return;
         String columnsFormated = formatValuesForQuery(OPENED_ROUND_BRACKET, Arrays.stream(columns).toList(),
                 null, true);
@@ -257,7 +286,7 @@ public abstract class EquinoxItemsHelper<T extends EquinoxItem> {
     /**
      * Method to merge alternatively different lists
      *
-     * @param inValues: the values used in the in clause to alternate
+     * @param inValues The values used in the in clause to alternate
      * @return a single list alternatively merged as {@link List} of {@link ?}
      * @apiNote if a list is smaller than another it will be filled with the own last value available
      */
@@ -267,6 +296,8 @@ public abstract class EquinoxItemsHelper<T extends EquinoxItem> {
         for (int j = 0; j < maxSize; j++) {
             for (List<?> values : inValues) {
                 int valuesSize = values.size();
+                if (valuesSize == 0)
+                    break;
                 if (j < valuesSize)
                     mergedValues.add(values.get(j));
                 else
@@ -279,7 +310,7 @@ public abstract class EquinoxItemsHelper<T extends EquinoxItem> {
     /**
      * Method to find the max size of a list
      *
-     * @param inValues: the values used in the in clause to alternate
+     * @param inValues The values used in the in clause to alternate
      * @return the max size of a list as int
      * @apiNote the return value is used to create a list with the all data available
      */
@@ -296,8 +327,8 @@ public abstract class EquinoxItemsHelper<T extends EquinoxItem> {
     /**
      * Method to format the in clause for the query
      *
-     * @param columns:  the columns number
-     * @param inValues: the values used in the in clause to format
+     * @param columns The columns number
+     * @param inValues The values used in the in clause to format
      * @return the in clause formatted as {@link String}
      * @apiNote clause formatted: ((col1, col2), (col1a, col2a), ...)
      */
@@ -307,14 +338,16 @@ public abstract class EquinoxItemsHelper<T extends EquinoxItem> {
         int lastValue = totalValues - 1;
         int lastColumn = columns - 1;
         for (int j = 0; j < totalValues; ) {
-            inClause.append(OPENED_ROUND_BRACKET);
+            if (columns > 1)
+                inClause.append(OPENED_ROUND_BRACKET);
             for (int i = 0; i < columns; i++, j++) {
                 inClause.append(SINGLE_QUOTE).append(inValues.get(j)).append(SINGLE_QUOTE);
                 if (i < lastColumn)
                     inClause.append(COMMA);
             }
-            inClause.append(CLOSED_ROUND_BRACKET);
-            if (j < lastValue)
+            if (columns > 1)
+                inClause.append(CLOSED_ROUND_BRACKET);
+            if (j < lastValue || (j == lastValue && lastColumn == 0))
                 inClause.append(COMMA);
         }
         inClause.append(CLOSED_ROUND_BRACKET);
@@ -324,7 +357,7 @@ public abstract class EquinoxItemsHelper<T extends EquinoxItem> {
     /**
      * Method to format the columns value for the query
      *
-     * @param columns: the columns used in the query
+     * @param columns The columns used in the query
      *
      * @return the columns formatted as {@link String}
      *
@@ -338,7 +371,7 @@ public abstract class EquinoxItemsHelper<T extends EquinoxItem> {
     /**
      * Method to format the placeholder value for the query
      *
-     * @param columns: the columns used in the query
+     * @param columns The columns used in the query
      *
      * @return the placeholder formatted as {@link String}
      *
@@ -352,10 +385,10 @@ public abstract class EquinoxItemsHelper<T extends EquinoxItem> {
     /**
      * Method to format a list of values for the query
      *
-     * @param start: the starter character
-     * @param values: the values to format
-     * @param formatter: the character to use as formatter, if <b>null</b> will be used the values of the list as formatter
-     * @param isToClose: whether the part formatted is to close with the {@link #CLOSED_ROUND_BRACKET} character
+     * @param start The starter character
+     * @param values The values to format
+     * @param formatter The character to use as formatter, if <b>null</b> will be used the values of the list as formatter
+     * @param isToClose Whether the part formatted is to close with the {@link #CLOSED_ROUND_BRACKET} character
      *
      * @return the list of values formatted as {@link String}
      */

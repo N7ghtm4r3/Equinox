@@ -1,0 +1,622 @@
+## EquinoxEnvironment
+
+This is a group of classes to create a SpringBoot's environment based on the Equinox system.
+
+The base environment gives a base set of classes:
+
+- [EquinoxBaseEndpointsSet](https://github.com/N7ghtm4r3/Equinox/blob/main/equinox-backend/src/main/java/com/tecknobit/equinoxbackend/environment/helpers/EquinoxBaseEndpointsSet.java) ->
+  set of endpoints already created for the **EquinoxUsersController** methods
+- [EquinoxController](https://github.com/N7ghtm4r3/Equinox/blob/main/equinox-backend/src/main/java/com/tecknobit/equinoxbackend/environment/services/builtin/controller/EquinoxController.java) ->
+  to manage the other **RestController** of the backend
+- [DefaultEquinoxController](https://github.com/N7ghtm4r3/Equinox/blob/main/equinox-backend/src/main/java/com/tecknobit/equinoxbackend/environment/services/DefaultEquinoxController.java) ->
+  to manage the other **RestController** of the backend with the default usage of
+  the [EquinoxUser](https://github.com/N7ghtm4r3/Equinox/blob/main/src/main/java/com/tecknobit/equinox/environment/models/EquinoxUser.java)
+- [EquinoxItem](https://github.com/N7ghtm4r3/Equinox/blob/main/src/main/java/com/tecknobit/equinox/environment/models/EquinoxItem.java) ->
+  base class for the items used by an Equinox backend based
+- User utilities set
+  - [EquinoxUser](https://github.com/N7ghtm4r3/Equinox/blob/main/equinox-backend/src/main/java/com/tecknobit/equinoxbackend/environment/models/EquinoxUser.java) ->
+  standard Equinox's user
+  - [EquinoxLocalUser](https://github.com/N7ghtm4r3/Equinox/blob/main/equinox-backend/src/main/java/com/tecknobit/equinoxbackend/environment/models/EquinoxLocalUser.java) ->
+  local user helper, useful to manage the local session of a user in the clients applications
+  - [EquinoxUsersController](https://github.com/N7ghtm4r3/Equinox/blob/main/equinox-backend/src/main/java/com/tecknobit/equinoxbackend/environment/services/users/controller/EquinoxUsersController.java) ->
+  controller to manage the operations on the **EquinoxUser**
+  - [EquinoxUsersHelper](https://github.com/N7ghtm4r3/Equinox/blob/main/equinox-backend/src/main/java/com/tecknobit/equinoxbackend/environment/services/users/service/EquinoxUsersHelper.java) ->
+  helper used by the **EquinoxUsersController** to interact with the database
+  - [EquinoxUsersRepository](https://github.com/N7ghtm4r3/Equinox/blob/main/equinox-backend/src/main/java/com/tecknobit/equinoxbackend/environment/services/users/repository/EquinoxUsersRepository.java) ->
+  the **JpaRepository** to make the related queries to the database
+- [EquinoxRequester](https://github.com/N7ghtm4r3/Equinox/blob/main/equinox-backend/src/main/kotlin/com/tecknobit/equinoxbackend/environment/helpers/EquinoxRequester.kt) ->
+  the requester helper with the **EquinoxUser** requests pre-implemented to execute the operations on the user
+- [InputsValidator](https://github.com/N7ghtm4r3/Equinox/blob/main/equinox-core/src/commonMain/kotlin/com/tecknobit/equinoxcore/helpers/InputsValidator.kt) ->
+  utility class to validate the inputs, gives a set of the method to validate the **EquinoxUser** details
+- [EquinoxItemsHelper](https://github.com/N7ghtm4r3/Equinox/blob/main/equinox-backend/src/main/java/com/tecknobit/equinoxbackend/environment/services/builtin/service/EquinoxItemsHelper.java) ->
+  helper for manage the database operations of
+  the [EquinoxItem](https://github.com/N7ghtm4r3/Equinox/blob/main/equinox-backend/src/main/java/com/tecknobit/equinoxbackend/environment/models/EquinoxItem.java)
+  such batch queries execution
+
+### Usage/Examples
+
+To correctly launch the base environment _out-of-the-box_ you can simply follow the following snippet of code
+representing the main of a  **SpringApplication**:
+
+```java
+package other.packages
+
+...
+
+import com.tecknobit.equinoxbackend.environment.services.builtin.controller.EquinoxController;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.annotation.PropertySources;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+
+@EnableAutoConfiguration
+@EnableJpaRepositories(
+        value = {"com.tecknobit.*" /* REQUIRED */, "other.packages..."}
+)
+@EntityScan(
+        value = {"com.tecknobit.*" /* REQUIRED */, "other.packages..."}
+)
+@ComponentScan(
+        value = {"com.tecknobit.*" /* REQUIRED */, "other.packages..."}
+)
+@SpringBootApplication
+public class Launcher {
+
+  public static void main(String[] args) {
+
+    // used without init the server protector as needed  
+    EquinoxController.initEquinoxEnvironment(
+            Launcher.class,
+            customSubDirectoryOne, customSubDirectoryTwo, ...)
+
+    // used to init the server protector to manage the server accesses
+    EquinoxController.initEquinoxEnvironment(
+            "the path where storage the server secret",
+            "the message to print when the server secret has been generated",
+            Launcher.class,
+            args,
+            customSubDirectoryOne, customSubDirectoryTwo, ...)
+
+    // ... your code ...
+
+    // normally launch your SpringBoot's application
+    SpringApplication.run(Launcher.class, args);
+
+  }
+
+  // to check the current mapped endpoints you can use this method
+  // this also to check if any inherited controllers from EquinoxController you have created are mapped correctly
+  @EventListener
+  public void handleContextRefresh(ContextRefreshedEvent event) {
+    ApplicationContext applicationContext = event.getApplicationContext();
+    RequestMappingHandlerMapping requestMappingHandlerMapping = applicationContext
+            .getBean("requestMappingHandlerMapping", RequestMappingHandlerMapping.class);
+    Map<RequestMappingInfo, HandlerMethod> map = requestMappingHandlerMapping.getHandlerMethods();
+    System.out.println("----------- CURRENT ENDPOINTS MAPPED -----------");
+    map.forEach((key, value) -> System.out.println("| " + key + value));
+    System.out.println("--------------------------------------------");
+  }
+
+}
+```
+
+> [!NOTE]  
+> The REQUIRED annotations are necessary to correctly launch automatically the **EquinoxUsersController** and its
+> related
+> workflow, so if you don't want to use that controller you can simply remove them, and it will not automatically start
+
+## Gradle configuration
+
+You need to use this gradle configuration to correctly use this environment
+
+```gradle
+plugins {
+    id("java")
+    id("org.springframework.boot") version "3.2.3"
+}
+
+apply(plugin = "io.spring.dependency-management")
+
+...
+
+repositories {
+    mavenCentral()
+    maven("https://jitpack.io")
+    maven("https://repo.clojars.org")
+}
+
+dependencies {
+
+    ...
+
+    testImplementation("org.springframework.boot:spring-boot-starter-test:3.2.3")
+    implementation("org.springframework.boot:spring-boot-starter-web:3.2.3")
+    implementation("org.springframework.boot:spring-boot-maven-plugin:3.2.0")
+    implementation("org.springframework.boot:spring-boot-starter-data-jpa:3.2.3")
+    implementation("mysql:mysql-connector-java:8.0.33")
+    implementation("com.github.N7ghtm4r3:APIManager:2.2.4")
+    implementation("com.github.N7ghtm4r3:Mantis:1.0.0")
+    implementation("org.json:json:20240303")
+    implementation("commons-validator:commons-validator:1.7")
+
+    // implement the backend utilities
+    implementation("io.github.n7ghtm4r3:equinox-backend:1.0.6")
+    
+    // implement the core utilities
+    implementation("io.github.n7ghtm4r3:equinox-core:1.0.6")
+
+    ...
+
+}
+
+...
+    
+```
+
+## Customization and inheritance
+
+If you need to customize any classes of the base environment you need to follow this guide to make it works correctly
+after your own customization, in this example you need to add the **currency** field to your user and add also the
+related
+change request.
+
+### Backend with no database needed
+
+If your architecture does not include a database usage you exclude it as following:
+
+```java
+package other.packages
+
+...
+
+import com.tecknobit.equinoxbackend.environment.services.builtin.controller.EquinoxController;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.annotation.PropertySources;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+
+@EnableAutoConfiguration(
+        exclude = {DataSourceAutoConfiguration.class, HibernateJpaAutoConfiguration.class}
+)
+// others basic  SpringBoot's annotations
+public class Launcher {
+
+  // Rest of the Launcher class ...
+
+}
+```
+
+### Customize the **EquinoxUser**
+
+To add the custom field you need to extend your custom users from the base **EquinoxUser**, the class will be as
+the following:
+
+```java
+package other.packages
+
+...
+
+import com.tecknobit.equinoxbackend.environment.services.users.entity.EquinoxUser;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import org.json.JSONObject;
+
+@Entity
+public class CustomUser extends EquinoxUser {
+
+  @Column
+  private final String currency;
+
+  public CustomUser(String currency) {
+    this.currency = currency;
+  }
+
+  public CustomUser(String id, String token, String name, String surname, String email, String password, String language,
+                    String currency) {
+    super(id, token, name, surname, email, password, language);
+    this.currency = currency;
+  }
+
+  public CustomUser(String id, String token, String name, String surname, String email, String password, String profilePic,
+                    String language, ApplicationTheme theme, String currency) {
+    super(id, token, name, surname, email, password, profilePic, language, theme);
+    this.currency = currency;
+  }
+
+  public CustomUser(JSONObject jUser, String currency) {
+    super(jUser);
+    this.currency = currency;
+  }
+
+  public String getCurrency() {
+    return currency;
+  }
+
+}
+```
+
+Will be created a single `users` table in the database with the `dtype` field to use as discriminator value to
+distinguish
+each classes, but it does not affect to the previous queries implemented for the **EquinoxUser** class
+
+### Create the dedicated JpaRepository
+
+You need to create the dedicated repository to work with your custom user, so, you can extend the **EquinoxUsersRepository**
+interface and add the custom additional queries. The interface will be as the following:
+
+```java
+package other.packages
+
+...
+
+import com.tecknobit.equinoxbackend.environment.services.users.repository.EquinoxUsersRepository;
+import jakarta.transaction.Transactional;
+import org.springframework.context.annotation.Primary;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
+
+import static com.tecknobit.equinoxbackend.environment.services.builtin.entity.EquinoxItem.IDENTIFIER_KEY;
+import static com.tecknobit.equinoxbackend.environment.services.users.entity.EquinoxUser.USERS_KEY;
+
+@Repository
+@Primary // this is REQUIRED to use correctly this repository instead the EquinoxUsersRepository
+public interface CustomUsersRepository extends EquinoxUsersRepository<CustomUser> {
+
+  @Modifying(clearAutomatically = true)
+  @Transactional
+  @Query(
+          value = "UPDATE " + USERS_KEY + " SET " + "currency" + "=:" + "currency" + " WHERE "
+                  + IDENTIFIER_KEY + "=:" + IDENTIFIER_KEY,
+          nativeQuery = true
+  )
+  void changeCurrency(
+          @Param("currency") String newCurrency,
+          @Param(IDENTIFIER_KEY) String id
+  );
+
+}
+```
+
+### Create the dedicated helper
+
+You need to create the dedicated helper to execute the dedicated operations for your custom user, so, you can extend the
+**EquinoxUsersHelper** class and add the custom additional methods. The helper will be as the following:
+
+```java
+package other.packages
+
+...
+
+import com.tecknobit.equinoxbackend.environment.services.users.service.EquinoxUsersHelper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Primary;
+import org.springframework.stereotype.Service;
+
+@Service
+@Primary // this is REQUIRED to use correctly this helper instead the EquinoxUsersHelper
+public class CustomUsersHelper extends EquinoxUsersHelper<CustomUser, CustomUsersRepository> {
+
+    public void changeCurrency(String newCurrency, String userId) {
+        usersRepository.changeCurrency(newCurrency, userId);
+    }
+
+}
+```
+
+### Create the dedicated controller
+
+You need to create the dedicated controller to execute the dedicated requests for your custom user, so, you can extend
+the
+**EquinoxUsersController** class and add the custom additional methods. The controller will be as the following:
+
+```java
+package other.packages
+
+...
+
+import com.tecknobit.equinoxbackend.environment.services.users.controller.EquinoxUsersController;
+import org.json.JSONObject;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
+
+@RestController
+public class CustomUsersController extends EquinoxUsersController<CustomUser, CustomUsersRepository, CustomUsersHelper> {
+
+    // you can override an implemented method to customize the response as you necessities
+    @Override
+    public String changeEmail(
+            String id,
+            String token,
+            Map<String, String> payload
+    ) {
+        String response = super.changeEmail(id, token, payload);
+        JSONObject customResponse = new JSONObject(response);
+        customResponse.put("currency", "currency_value");
+        return customResponse.toString();
+    }
+
+    @PatchMapping(
+            path = {"users/{id}/changeCurrency"},
+            headers = {TOKEN_KEY}
+    )
+    public String changeCurrency(
+            @PathVariable("id") String id,
+            @RequestHeader("token") String token,
+            @RequestBody Map<String, String> payload
+    ) {
+        if (isMe(id, token)) {
+            usersHelper.changeCurrency(payload.get("currency"), id);
+            return successResponse();
+        } else
+            return failedResponse(NOT_AUTHORIZED_OR_WRONG_DETAILS_MESSAGE);
+    }
+
+}
+```
+
+You can also create your own default controller
+as [DefaultEquinoxController](https://github.com/N7ghtm4r3/Equinox/blob/main/src/main/java/com/tecknobit/equinox/environment/controllers/DefaultEquinoxController.java)
+with your own CustomUser instead:
+
+```java
+public abstract class DefaultMyOwnController extends EquinoxController<CustomUser, CustomUsersRepository, CustomUsersHelper> {
+}
+```
+
+### Custom sign-up
+
+To execute a custom sign-up operation you must follow these steps to perform it correctly
+
+#### Override getQueryValuesKeys() method
+
+To create the correct insertion query with your custom parameters of the [CustomUser](#customize-the-equinoxuser) you
+have to override the below method, and you have to add the keys of the custom properties you want to insert with the
+sign-up
+operation
+
+```java
+package other.packages
+
+...
+
+import com.tecknobit.equinoxbackend.environment.services.users.service.EquinoxUsersHelper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Primary;
+import org.springframework.stereotype.Service;
+
+@Service
+@Primary
+public class CustomUsersHelper extends EquinoxUsersHelper<CustomUser, CustomUsersRepository> {
+
+    @Override
+    protected List<String> getQueryValuesKeys() {
+        ArrayList<String> custom = new ArrayList<>(super.getQueryValuesKeys());
+        custom.add("currency");
+        return custom;
+    }
+
+}
+```
+
+#### Get from the payload the custom parameters
+
+Now you need to get your custom parameters from the sign-up request, to do it you must override the below method from
+the
+[CustomUsersController](#create-the-dedicated-controller):
+
+```java
+package other.packages
+
+...
+
+import com.tecknobit.equinoxbackend.environment.services.users.controller.EquinoxUsersController;
+import org.json.JSONObject;
+import org.springframework.web.bind.annotation.*;
+
+@RestController
+public class CustomUsersController extends EquinoxUsersController<CustomUser, CustomUsersRepository, CustomUsersHelper> {
+
+    @Override
+    @CustomParametersOrder(order = {"currency"}) // optional
+    protected Object[] getSignUpCustomParams() {
+        return new Object[]{jsonHelper.getString("currency", null), /* other parameters */};
+    }
+
+}
+```
+
+#### Custom parameters validation
+
+You can also validate your custom parameters if needed:
+
+```java
+package other.packages
+
+...
+
+import com.tecknobit.equinoxbackend.environment.services.users.controller.EquinoxUsersController;
+import org.json.JSONObject;
+import org.springframework.web.bind.annotation.*;
+
+@RestController
+public class CustomUsersController extends EquinoxUsersController<CustomUser, CustomUsersRepository, CustomUsersHelper> {
+
+    @Override
+    @CustomParametersOrder(order = {"currency"}) // optional
+    protected String validateSignUp(String name, String surname, String email, String password, String language, Object... custom) {
+        String validation = super.validateSignUp(name, surname, email, password, language, custom);
+        if (validation != null)
+            return validation;
+        if (custom[0] == null)
+            return "wrong_currency_key";
+        return null;
+    }
+
+}
+```
+
+### Custom sign-in
+
+To execute a custom sign-in operation you must follow these steps to perform it correctly
+
+#### Override validateSignIn() method
+
+To execute the sign-in validation with your custom parameters of the [CustomUser](#customize-the-equinoxuser) you
+have to override the below method, and perform the custom checks to validate the sign-in operation
+
+```java
+package other.packages
+
+...
+
+import com.tecknobit.equinoxbackend.environment.services.users.service.EquinoxUsersHelper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Primary;
+import org.springframework.stereotype.Service;
+
+@Service
+@Primary
+public class CustomUsersHelper extends EquinoxUsersHelper<CustomUser, CustomUsersRepository> {
+
+    @Override
+    @CustomParametersOrder(order = {"currency"}) // optional
+    protected boolean validateSignIn(CustomUser user, String password, Object... custom) throws NoSuchAlgorithmException {
+        return super.validateSignIn(user, password, custom) && user.getCurrency().equals(custom[0]);
+    }
+
+}
+```
+
+#### Get from the payload the custom parameters
+
+Now you need to get your custom parameters from the sign-in request, to do it you must override the below method from
+the
+[CustomUsersController](#create-the-dedicated-controller):
+
+```java
+package other.packages
+
+...
+
+import com.tecknobit.equinoxbackend.environment.services.users.controller.EquinoxUsersController;
+import org.json.JSONObject;
+import org.springframework.web.bind.annotation.*;
+
+@RestController
+public class CustomUsersController extends EquinoxUsersController<CustomUser, CustomUsersRepository, CustomUsersHelper> {
+
+    @Override
+    @CustomParametersOrder(order = {"currency"}) // optional
+    protected Object[] getSignInCustomParams() {
+        return new Object[]{jsonHelper.getString("currency", null)};
+    }
+
+}
+```
+
+#### Custom parameters validation
+
+You can also validate your custom parameters if needed:
+
+```java
+package other.packages
+
+...
+
+import com.tecknobit.equinoxbackend.environment.services.users.controller.EquinoxUsersController;
+import org.json.JSONObject;
+import org.springframework.web.bind.annotation.*;
+
+@RestController
+public class CustomUsersController extends EquinoxUsersController<CustomUser, CustomUsersRepository, CustomUsersHelper> {
+
+    @Override
+    @CustomParametersOrder(order = {"currency"}) // optional
+    protected String validateSignIn(String email, String password, String language, Object... custom) {
+        String validation = super.validateSignIn(email, password, language, custom);
+        if (validation != null)
+            return validation;
+        if (custom[0] == null)
+            return "wrong_currency_key";
+        return null;
+    }
+
+}
+```
+
+#### Customize the sign-in response
+
+If you need to add your custom parameters to the sign-in response you can do that overriding the below method:
+
+```java
+package other.packages
+
+...
+
+import com.tecknobit.equinoxbackend.environment.services.users.controller.EquinoxUsersController;
+import org.json.JSONObject;
+import org.springframework.web.bind.annotation.*;
+
+@RestController
+public class CustomUsersController extends EquinoxUsersController<CustomUser, CustomUsersRepository, CustomUsersHelper> {
+
+    @Override
+    protected JSONObject assembleSignInSuccessResponse(CustomUser user) {
+        JSONObject response = super.assembleSignInSuccessResponse(user);
+        response.put("currency", user.getCurrency());
+        return response;
+    }
+
+}
+```
+
+### Mantis resources set
+
+You can create your own resources set for internationalizate your backend, but to do it you need to create a [resources.mantis](https://github.com/N7ghtm4r3/Equinox/blob/main/src/main/resources/resources.mantis)
+file in the resources folder, and **to copy** the set already given
+
+> [!NOTE]  
+> The REQUIRED annotations are not more necessary because using the `@Primary` annotations the `com.tecknobit.` package
+> is not more useful to search the repositories, entities and components pre-implemented
+
+
+
+## Support
+
+If you need help using the library or encounter any problems or bugs, please contact us via the following links:
+
+- Support via <a href="mailto:infotecknobitcompany@gmail.com">email</a>
+- Support via <a href="https://github.com/N7ghtm4r3/Equinox/issues/new">GitHub</a>
+
+Thank you for your help!
+
+## Badges
+
+[![](https://img.shields.io/badge/Google_Play-414141?style=for-the-badge&logo=google-play&logoColor=white)](https://play.google.com/store/apps/developer?id=Tecknobit)
+
+[![](https://img.shields.io/badge/Spring_Boot-F2F4F9?style=for-the-badge&logo=spring-boot)](https://spring.io/projects/spring-boot) [![](https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=java&logoColor=white)](https://www.oracle.com/java/)
+
+## Donations
+
+If you want support project and developer
+
+| Crypto                                                                                              | Address                                          | Network  |
+|-----------------------------------------------------------------------------------------------------|--------------------------------------------------|----------|
+| ![](https://img.shields.io/badge/Bitcoin-000000?style=for-the-badge&logo=bitcoin&logoColor=white)   | **3H3jyCzcRmnxroHthuXh22GXXSmizin2yp**           | Bitcoin  |
+| ![](https://img.shields.io/badge/Ethereum-3C3C3D?style=for-the-badge&logo=Ethereum&logoColor=white) | **0x1b45bc41efeb3ed655b078f95086f25fc83345c4**   | Ethereum |
+| ![](https://img.shields.io/badge/Solana-000?style=for-the-badge&logo=Solana&logoColor=9945FF)       | **AtPjUnxYFHw3a6Si9HinQtyPTqsdbfdKX3dJ1xiDjbrL** | Solana   |
+
+If you want support project and developer
+with <a href="https://www.paypal.com/donate/?hosted_button_id=5QMN5UQH7LDT4">PayPal</a>
+
+Copyright © 2025 Tecknobit

@@ -26,44 +26,80 @@
     <link href="../styles/prism.css" rel="Stylesheet">
     <link href="../styles/logo-styles.css" rel="Stylesheet">
     <link href="../styles/font-jb-sans-auto.css" rel="Stylesheet">
+    <link href="../ui-kit/ui-kit.min.css" rel="Stylesheet">
     <script type="text/javascript" src="../scripts/clipboard.js" async></script>
     <script type="text/javascript" src="../scripts/navigation-loader.js" async></script>
     <script type="text/javascript" src="../scripts/platform-content-handler.js" async></script>
     <script type="text/javascript" src="../scripts/main.js" defer></script>
     <script type="text/javascript" src="../scripts/prism.js" async></script>
+    <script type="text/javascript" src="../ui-kit/ui-kit.min.js" defer></script>
     <script type="text/javascript" src="../scripts/symbol-parameters-wrapper_deferred.js" defer></script>
 </head>
 <body>
 <div class="root">
-    <nav class="navigation" id="navigation-wrapper">
-        <div class="navigation--inner">
-            <div class="navigation-title">
-                <button class="menu-toggle" id="menu-toggle" type="button">toggle menu</button>
-                <div class="library-name">
-                    <a class="library-name--link" href="../index.html">
-                        Equinox
-                    </a></div>
-                <div class="library-version">
-                </div>
-            </div>
-            <div class="filter-section" id="filter-section">
+    <nav class="navigation theme-dark" id="navigation-wrapper">
+        <a class="library-name--link" href="../index.html">
+            Equinox
+        </a>
+        <button class="navigation-controls--btn navigation-controls--btn_toc ui-kit_mobile-only" id="toc-toggle"
+                type="button">Toggle table of contents
+        </button>
+        <div class="navigation-controls--break ui-kit_mobile-only"></div>
+        <div class="library-version" id="library-version">1.0.6
+        </div>
+        <div class="navigation-controls">
+            <div class="filter-section filter-section_loading" id="filter-section">
                 <button class="platform-tag platform-selector jvm-like" data-active=""
                         data-filter=":equinox-backend:dokkaHtmlPartial/main">jvm
                 </button>
+                <div class="dropdown filter-section--dropdown" data-role="dropdown" id="filter-section-dropdown">
+                    <button class="button button_dropdown filter-section--dropdown-toggle" role="combobox"
+                            data-role="dropdown-toggle" aria-controls="platform-tags-listbox" aria-haspopup="listbox"
+                            aria-expanded="false" aria-label="Toggle source sets"></button>
+                    <ul role="listbox" id="platform-tags-listbox" class="dropdown--list" data-role="dropdown-listbox">
+                        <div class="dropdown--header"><span>Platform filter</span>
+                            <button class="button" data-role="dropdown-toggle" aria-label="Close platform filter">
+                                <i class="ui-kit-icon ui-kit-icon_cross"></i>
+                            </button>
+                        </div>
+                        <li role="option" class="dropdown--option platform-selector-option jvm-like" tabindex="0">
+                            <label class="checkbox">
+                                <input type="checkbox" class="checkbox--input"
+                                       id=":equinox-backend:dokkaHtmlPartial/main"
+                                       data-filter=":equinox-backend:dokkaHtmlPartial/main">
+                                <span class="checkbox--icon"></span>
+                                jvm
+                            </label>
+                        </li>
+                    </ul>
+                    <div class="dropdown--overlay"></div>
+                </div>
             </div>
-        </div>
-        <div class="navigation-controls">
-            <button class="navigation-controls--btn navigation-controls--theme" id="theme-toggle-button" type="button">
-                switch theme
+            <button class="navigation-controls--btn navigation-controls--btn_theme" id="theme-toggle-button"
+                    type="button">Switch theme
             </button>
-            <div class="navigation-controls--btn navigation-controls--search" id="searchBar" role="button">search in
+            <div class="navigation-controls--btn navigation-controls--btn_search" id="searchBar" role="button">Search in
                 API
             </div>
         </div>
     </nav>
     <div id="container">
         <div class="sidebar" id="leftColumn">
-            <div class="sidebar--inner" id="sideMenu"></div>
+            <div class="dropdown theme-dark_mobile" data-role="dropdown" id="toc-dropdown">
+                <ul role="listbox" id="toc-listbox" class="dropdown--list dropdown--list_toc-list"
+                    data-role="dropdown-listbox">
+                    <div class="dropdown--header">
+                            <span>
+                                    Equinox
+                            </span>
+                        <button class="button" data-role="dropdown-toggle" aria-label="Close table of contents">
+                            <i class="ui-kit-icon ui-kit-icon_cross"></i>
+                        </button>
+                    </div>
+                    <div class="sidebar--inner" id="sideMenu"></div>
+                </ul>
+                <div class="dropdown--overlay"></div>
+            </div>
         </div>
         <div id="main">
             <div class="main-content" id="content" pageids="equinox-backend::////PointingToDeclaration//-1152277508">
@@ -72,40 +108,17 @@
                     <h1 class="cover"><span><span>equinox-backend</span></span></h1>
                 </div>
                 <h2 class="">Packages</h2>
-                <div class="table"><a data-name="1907227431%2FPackages%2F-1152277508"
-                                      anchor-label="com.tecknobit.equinoxbackend"
-                                      id="1907227431%2FPackages%2F-1152277508"
+                <div class="table"><a data-name="-502270993%2FPackages%2F-1152277508"
+                                      anchor-label="com.tecknobit.equinoxbackend.configuration"
+                                      id="-502270993%2FPackages%2F-1152277508"
                                       data-filterable-set=":equinox-backend:dokkaHtmlPartial/main"></a>
                     <div class="table-row" data-filterable-current=":equinox-backend:dokkaHtmlPartial/main"
                          data-filterable-set=":equinox-backend:dokkaHtmlPartial/main">
                         <div>
                             <div class="main-subrow ">
                                 <div class=""><span class="inline-flex">
-              <div><a href="com.tecknobit.equinoxbackend/index.html">com.tecknobit.equinoxbackend</a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1907227431%2FPackages%2F-1152277508"></span>
-                <div class="copy-popup-wrapper "><span
-                        class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-              </span></span></div>
-                                <div class="pull-right">
-                                    <div class="platform-tags no-gutters">
-                                        <div class="platform-tag jvm-like">jvm</div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div></div>
-                        </div>
-                    </div>
-                    <a data-name="-1858270003%2FPackages%2F-1152277508"
-                       anchor-label="com.tecknobit.equinoxbackend.configurationsutils"
-                       id="-1858270003%2FPackages%2F-1152277508"
-                       data-filterable-set=":equinox-backend:dokkaHtmlPartial/main"></a>
-                    <div class="table-row" data-filterable-current=":equinox-backend:dokkaHtmlPartial/main"
-                         data-filterable-set=":equinox-backend:dokkaHtmlPartial/main">
-                        <div>
-                            <div class="main-subrow ">
-                                <div class=""><span class="inline-flex">
-              <div><a href="com.tecknobit.equinoxbackend.configurationsutils/index.html">com.tecknobit.equinoxbackend.configurationsutils</a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1858270003%2FPackages%2F-1152277508"></span>
+              <div><a href="com.tecknobit.equinoxbackend.configuration/index.html">com.tecknobit.equinoxbackend.configuration</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-502270993%2FPackages%2F-1152277508"></span>
                 <div class="copy-popup-wrapper "><span
                         class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
               </span></span></div>
@@ -129,29 +142,6 @@
                                 <div class=""><span class="inline-flex">
               <div><a href="com.tecknobit.equinoxbackend.environment.helpers/index.html">com.tecknobit.equinoxbackend.environment.helpers</a></div>
 <span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-550445469%2FPackages%2F-1152277508"></span>
-                <div class="copy-popup-wrapper "><span
-                        class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-              </span></span></div>
-                                <div class="pull-right">
-                                    <div class="platform-tags no-gutters">
-                                        <div class="platform-tag jvm-like">jvm</div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div></div>
-                        </div>
-                    </div>
-                    <a data-name="-786567152%2FPackages%2F-1152277508"
-                       anchor-label="com.tecknobit.equinoxbackend.environment.models"
-                       id="-786567152%2FPackages%2F-1152277508"
-                       data-filterable-set=":equinox-backend:dokkaHtmlPartial/main"></a>
-                    <div class="table-row" data-filterable-current=":equinox-backend:dokkaHtmlPartial/main"
-                         data-filterable-set=":equinox-backend:dokkaHtmlPartial/main">
-                        <div>
-                            <div class="main-subrow ">
-                                <div class=""><span class="inline-flex">
-              <div><a href="com.tecknobit.equinoxbackend.environment.models/index.html">com.tecknobit.equinoxbackend.environment.models</a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-786567152%2FPackages%2F-1152277508"></span>
                 <div class="copy-popup-wrapper "><span
                         class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
               </span></span></div>
@@ -210,6 +200,29 @@
                             <div></div>
                         </div>
                     </div>
+                    <a data-name="70115900%2FPackages%2F-1152277508"
+                       anchor-label="com.tecknobit.equinoxbackend.environment.services.builtin.entity"
+                       id="70115900%2FPackages%2F-1152277508"
+                       data-filterable-set=":equinox-backend:dokkaHtmlPartial/main"></a>
+                    <div class="table-row" data-filterable-current=":equinox-backend:dokkaHtmlPartial/main"
+                         data-filterable-set=":equinox-backend:dokkaHtmlPartial/main">
+                        <div>
+                            <div class="main-subrow ">
+                                <div class=""><span class="inline-flex">
+              <div><a href="com.tecknobit.equinoxbackend.environment.services.builtin.entity/index.html">com.tecknobit.equinoxbackend.environment.services.builtin.entity</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="70115900%2FPackages%2F-1152277508"></span>
+                <div class="copy-popup-wrapper "><span
+                        class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+              </span></span></div>
+                                <div class="pull-right">
+                                    <div class="platform-tags no-gutters">
+                                        <div class="platform-tag jvm-like">jvm</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div></div>
+                        </div>
+                    </div>
                     <a data-name="-1799367936%2FPackages%2F-1152277508"
                        anchor-label="com.tecknobit.equinoxbackend.environment.services.builtin.service"
                        id="-1799367936%2FPackages%2F-1152277508"
@@ -244,6 +257,29 @@
                                 <div class=""><span class="inline-flex">
               <div><a href="com.tecknobit.equinoxbackend.environment.services.users.controller/index.html">com.tecknobit.equinoxbackend.environment.services.users.controller</a></div>
 <span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1803524752%2FPackages%2F-1152277508"></span>
+                <div class="copy-popup-wrapper "><span
+                        class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+              </span></span></div>
+                                <div class="pull-right">
+                                    <div class="platform-tags no-gutters">
+                                        <div class="platform-tag jvm-like">jvm</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div></div>
+                        </div>
+                    </div>
+                    <a data-name="-844672009%2FPackages%2F-1152277508"
+                       anchor-label="com.tecknobit.equinoxbackend.environment.services.users.entity"
+                       id="-844672009%2FPackages%2F-1152277508"
+                       data-filterable-set=":equinox-backend:dokkaHtmlPartial/main"></a>
+                    <div class="table-row" data-filterable-current=":equinox-backend:dokkaHtmlPartial/main"
+                         data-filterable-set=":equinox-backend:dokkaHtmlPartial/main">
+                        <div>
+                            <div class="main-subrow ">
+                                <div class=""><span class="inline-flex">
+              <div><a href="com.tecknobit.equinoxbackend.environment.services.users.entity/index.html">com.tecknobit.equinoxbackend.environment.services.users.entity</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-844672009%2FPackages%2F-1152277508"></span>
                 <div class="copy-popup-wrapper "><span
                         class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
               </span></span></div>
@@ -328,15 +364,17 @@
                 </div>
             </div>
             <div class="footer">
-                <span class="go-to-top-icon"><a href="#content"
-                                                id="go-to-top-link"></a></span><span>© 2024 Copyright</span><span
-                    class="pull-right"><span>Generated by </span><a
-                    href="https://github.com/Kotlin/dokka"><span>dokka</span><span
-                    class="padded-icon"></span></a></span>
+                <a href="#content" id="go-to-top-link" class="footer--button footer--button_go-to-top"></a>
+                <span>© 2025 Copyright</span>
+                <span class="pull-right">
+            <span>Generated by </span>
+            <a class="footer--link footer--link_external" href="https://github.com/Kotlin/dokka">
+                <span>dokka</span>
+            </a>
+        </span>
             </div>
         </div>
     </div>
 </div>
 </body>
 </html>
-

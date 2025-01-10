@@ -26,44 +26,80 @@
     <link href="../../../styles/prism.css" rel="Stylesheet">
     <link href="../../../styles/logo-styles.css" rel="Stylesheet">
     <link href="../../../styles/font-jb-sans-auto.css" rel="Stylesheet">
+    <link href="../../../ui-kit/ui-kit.min.css" rel="Stylesheet">
     <script type="text/javascript" src="../../../scripts/clipboard.js" async></script>
     <script type="text/javascript" src="../../../scripts/navigation-loader.js" async></script>
     <script type="text/javascript" src="../../../scripts/platform-content-handler.js" async></script>
     <script type="text/javascript" src="../../../scripts/main.js" defer></script>
     <script type="text/javascript" src="../../../scripts/prism.js" async></script>
+    <script type="text/javascript" src="../../../ui-kit/ui-kit.min.js" defer></script>
     <script type="text/javascript" src="../../../scripts/symbol-parameters-wrapper_deferred.js" defer></script>
 </head>
 <body>
 <div class="root">
-    <nav class="navigation" id="navigation-wrapper">
-        <div class="navigation--inner">
-            <div class="navigation-title">
-                <button class="menu-toggle" id="menu-toggle" type="button">toggle menu</button>
-                <div class="library-name">
-                    <a class="library-name--link" href="../../../index.html">
-                        Equinox
-                    </a></div>
-                <div class="library-version">
-                </div>
-            </div>
-            <div class="filter-section" id="filter-section">
+    <nav class="navigation theme-dark" id="navigation-wrapper">
+        <a class="library-name--link" href="../../../index.html">
+            Equinox
+        </a>
+        <button class="navigation-controls--btn navigation-controls--btn_toc ui-kit_mobile-only" id="toc-toggle"
+                type="button">Toggle table of contents
+        </button>
+        <div class="navigation-controls--break ui-kit_mobile-only"></div>
+        <div class="library-version" id="library-version">1.0.6
+        </div>
+        <div class="navigation-controls">
+            <div class="filter-section filter-section_loading" id="filter-section">
                 <button class="platform-tag platform-selector jvm-like" data-active=""
                         data-filter=":equinox-backend:dokkaHtmlPartial/main">jvm
                 </button>
+                <div class="dropdown filter-section--dropdown" data-role="dropdown" id="filter-section-dropdown">
+                    <button class="button button_dropdown filter-section--dropdown-toggle" role="combobox"
+                            data-role="dropdown-toggle" aria-controls="platform-tags-listbox" aria-haspopup="listbox"
+                            aria-expanded="false" aria-label="Toggle source sets"></button>
+                    <ul role="listbox" id="platform-tags-listbox" class="dropdown--list" data-role="dropdown-listbox">
+                        <div class="dropdown--header"><span>Platform filter</span>
+                            <button class="button" data-role="dropdown-toggle" aria-label="Close platform filter">
+                                <i class="ui-kit-icon ui-kit-icon_cross"></i>
+                            </button>
+                        </div>
+                        <li role="option" class="dropdown--option platform-selector-option jvm-like" tabindex="0">
+                            <label class="checkbox">
+                                <input type="checkbox" class="checkbox--input"
+                                       id=":equinox-backend:dokkaHtmlPartial/main"
+                                       data-filter=":equinox-backend:dokkaHtmlPartial/main">
+                                <span class="checkbox--icon"></span>
+                                jvm
+                            </label>
+                        </li>
+                    </ul>
+                    <div class="dropdown--overlay"></div>
+                </div>
             </div>
-        </div>
-        <div class="navigation-controls">
-            <button class="navigation-controls--btn navigation-controls--theme" id="theme-toggle-button" type="button">
-                switch theme
+            <button class="navigation-controls--btn navigation-controls--btn_theme" id="theme-toggle-button"
+                    type="button">Switch theme
             </button>
-            <div class="navigation-controls--btn navigation-controls--search" id="searchBar" role="button">search in
+            <div class="navigation-controls--btn navigation-controls--btn_search" id="searchBar" role="button">Search in
                 API
             </div>
         </div>
     </nav>
     <div id="container">
         <div class="sidebar" id="leftColumn">
-            <div class="sidebar--inner" id="sideMenu"></div>
+            <div class="dropdown theme-dark_mobile" data-role="dropdown" id="toc-dropdown">
+                <ul role="listbox" id="toc-listbox" class="dropdown--list dropdown--list_toc-list"
+                    data-role="dropdown-listbox">
+                    <div class="dropdown--header">
+                            <span>
+                                    Equinox
+                            </span>
+                        <button class="button" data-role="dropdown-toggle" aria-label="Close table of contents">
+                            <i class="ui-kit-icon ui-kit-icon_cross"></i>
+                        </button>
+                    </div>
+                    <div class="sidebar--inner" id="sideMenu"></div>
+                </ul>
+                <div class="dropdown--overlay"></div>
+            </div>
         </div>
         <div id="main">
             <div class="main-content" data-page-type="classlike" id="content"
@@ -89,18 +125,15 @@
                                 <span class="token keyword">open </span><span class="token keyword">class </span><a
                                     href="index.html">EquinoxUsersHelper</a><span class="token operator">&lt;</span><a
                                     href="index.html">T</a><span class="token operator"> : </span><a
-                                    href="../../com.tecknobit.equinoxbackend.environment.models/-equinox-user/index.html">EquinoxUser</a><span
+                                    href="../../com.tecknobit.equinoxbackend.environment.services.users.entity/-equinox-user/index.html">EquinoxUser</a><span
                                     class="token operator">?</span><span class="token punctuation">, </span><a
                                     href="index.html">R</a><span class="token operator"> : </span><a
                                     href="../../com.tecknobit.equinoxbackend.environment.services.users.repository/-equinox-users-repository/index.html">EquinoxUsersRepository</a><span
                                     class="token operator">&lt;</span><a href="index.html">T</a><span
                                     class="token operator">&gt;</span><span class="token operator">?</span><span
                                     class="token operator">&gt;</span> : <a
-                                    href="../../com.tecknobit.equinoxbackend.environment.services.builtin.service/-equinox-items-helper/index.html">EquinoxItemsHelper</a><span
-                                    class="token operator">&lt;</span><a
-                                    href="../../com.tecknobit.equinoxbackend.environment.services.builtin.service/-equinox-items-helper/index.html">T</a><span
-                                    class="token operator">&gt; </span>, <a
-                                    href="../../com.tecknobit.equinoxbackend.resourcesutils/-resources-manager/index.html">ResourcesManager</a>
+                                    href="../../com.tecknobit.equinoxbackend.environment.services.builtin.service/-equinox-items-helper/index.html">EquinoxItemsHelper</a>,
+                                <a href="../../com.tecknobit.equinoxbackend.resourcesutils/-resources-manager/index.html">ResourcesManager</a>
                             </div>
                             <p class="paragraph">The <code class="lang-kotlin">EquinoxUsersHelper</code> class is useful
                                 to manage all the user database operations</p><span class="kdoc-tag"><h4
@@ -115,7 +148,7 @@
                                         </div>
                                         <div>
                                             <div class="title"><p class="paragraph">: the type of the <a
-                                                    href="../../com.tecknobit.equinoxbackend.environment.models/-equinox-user/index.html">EquinoxUser</a>
+                                                    href="../../com.tecknobit.equinoxbackend.environment.services.users.entity/-equinox-user/index.html">EquinoxUser</a>
                                                 used in the system, is generic to avoid manual casts if it has been
                                                 customized</p></div>
                                         </div>
@@ -184,7 +217,6 @@
                                                                 class="token punctuation">)</span></div>
                                                         <div class="brief ">Constructor to init the <a
                                                                 href="index.html">EquinoxUsersHelper</a> controller
-                                                            No-any params required
                                                         </div>
                                                     </div>
                                                 </div>
@@ -204,7 +236,7 @@
                                      data-filterable-set=":equinox-backend:dokkaHtmlPartial/main">
                                     <div class="main-subrow keyValue ">
                                         <div class=""><span class="inline-flex">
-                  <div><a href="_-d-r-o-p_-c-o-l-u-m-n_.html"><span><span>_DROP_COLUMN_</span></span></a></div>
+                  <div><a href="_-d-r-o-p_-c-o-l-u-m-n_.html"><span>_</span><wbr><span>DROP_</span><wbr><span>COLUMN_</span><wbr></a></div>
 <span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1404892169%2FProperties%2F-1152277508"></span>
                     <div class="copy-popup-wrapper "><span
                             class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
@@ -238,7 +270,7 @@
                                      data-filterable-set=":equinox-backend:dokkaHtmlPartial/main">
                                     <div class="main-subrow keyValue ">
                                         <div class=""><span class="inline-flex">
-                  <div><a href="../../com.tecknobit.equinoxbackend.environment.services.builtin.service/-equinox-items-helper/_-i-n_-c-l-a-u-s-e_.html"><span><span>_IN_CLAUSE_</span></span></a></div>
+                  <div><a href="../../com.tecknobit.equinoxbackend.environment.services.builtin.service/-equinox-items-helper/_-i-n_-c-l-a-u-s-e_.html"><span>_</span><wbr><span>IN_</span><wbr><span>CLAUSE_</span><wbr></a></div>
 <span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1104355087%2FProperties%2F-1152277508"></span>
                     <div class="copy-popup-wrapper "><span
                             class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
@@ -272,7 +304,7 @@
                                      data-filterable-set=":equinox-backend:dokkaHtmlPartial/main">
                                     <div class="main-subrow keyValue ">
                                         <div class=""><span class="inline-flex">
-                  <div><a href="../../com.tecknobit.equinoxbackend.environment.services.builtin.service/-equinox-items-helper/_-v-a-l-u-e-s_.html"><span><span>_VALUES_</span></span></a></div>
+                  <div><a href="../../com.tecknobit.equinoxbackend.environment.services.builtin.service/-equinox-items-helper/_-v-a-l-u-e-s_.html"><span>_</span><wbr><span>VALUES_</span><wbr></a></div>
 <span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1609531800%2FProperties%2F-1152277508"></span>
                     <div class="copy-popup-wrapper "><span
                             class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
@@ -306,7 +338,7 @@
                                      data-filterable-set=":equinox-backend:dokkaHtmlPartial/main">
                                     <div class="main-subrow keyValue ">
                                         <div class=""><span class="inline-flex">
-                  <div><a href="../../com.tecknobit.equinoxbackend.environment.services.builtin.service/-equinox-items-helper/_-w-h-e-r-e_.html"><span><span>_WHERE_</span></span></a></div>
+                  <div><a href="../../com.tecknobit.equinoxbackend.environment.services.builtin.service/-equinox-items-helper/_-w-h-e-r-e_.html"><span>_</span><wbr><span>WHERE_</span><wbr></a></div>
 <span class="anchor-wrapper"><span class="anchor-icon" pointing-to="754029709%2FProperties%2F-1152277508"></span>
                     <div class="copy-popup-wrapper "><span
                             class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
@@ -340,7 +372,7 @@
                                      data-filterable-set=":equinox-backend:dokkaHtmlPartial/main">
                                     <div class="main-subrow keyValue ">
                                         <div class=""><span class="inline-flex">
-                  <div><a href="-a-l-t-e-r_-t-a-b-l-e_.html"><span><span>ALTER_TABLE_</span></span></a></div>
+                  <div><a href="-a-l-t-e-r_-t-a-b-l-e_.html"><span>ALTER_</span><wbr><span>TABLE_</span><wbr></a></div>
 <span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1609005057%2FProperties%2F-1152277508"></span>
                     <div class="copy-popup-wrapper "><span
                             class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
@@ -374,7 +406,7 @@
                                      data-filterable-set=":equinox-backend:dokkaHtmlPartial/main">
                                     <div class="main-subrow keyValue ">
                                         <div class=""><span class="inline-flex">
-                  <div><a href="-b-a-s-e_-s-i-g-n_-u-p_-q-u-e-r-y.html"><span><span>BASE_SIGN_UP_QUERY</span></span></a></div>
+                  <div><a href="-b-a-s-e_-s-i-g-n_-u-p_-q-u-e-r-y.html"><span>BASE_</span><wbr><span>SIGN_</span><wbr><span>UP_</span><wbr><span>QUERY</span></a></div>
 <span class="anchor-wrapper"><span class="anchor-icon" pointing-to="92767809%2FProperties%2F-1152277508"></span>
                     <div class="copy-popup-wrapper "><span
                             class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
@@ -409,7 +441,7 @@
                                      data-filterable-set=":equinox-backend:dokkaHtmlPartial/main">
                                     <div class="main-subrow keyValue ">
                                         <div class=""><span class="inline-flex">
-                  <div><a href="../../com.tecknobit.equinoxbackend.environment.services.builtin.service/-equinox-items-helper/-c-l-o-s-e-d_-r-o-u-n-d_-b-r-a-c-k-e-t.html"><span><span>CLOSED_ROUND_BRACKET</span></span></a></div>
+                  <div><a href="../../com.tecknobit.equinoxbackend.environment.services.builtin.service/-equinox-items-helper/-c-l-o-s-e-d_-r-o-u-n-d_-b-r-a-c-k-e-t.html"><span>CLOSED_</span><wbr><span>ROUND_</span><wbr><span>BRACKET</span></a></div>
 <span class="anchor-wrapper"><span class="anchor-icon" pointing-to="31123442%2FProperties%2F-1152277508"></span>
                     <div class="copy-popup-wrapper "><span
                             class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
@@ -477,7 +509,7 @@
                                      data-filterable-set=":equinox-backend:dokkaHtmlPartial/main">
                                     <div class="main-subrow keyValue ">
                                         <div class=""><span class="inline-flex">
-                  <div><a href="-d-e-f-a-u-l-t_-u-s-e-r_-v-a-l-u-e-s_-k-e-y-s.html"><span><span>DEFAULT_USER_VALUES_KEYS</span></span></a></div>
+                  <div><a href="-d-e-f-a-u-l-t_-u-s-e-r_-v-a-l-u-e-s_-k-e-y-s.html"><span>DEFAULT_</span><wbr><span>USER_</span><wbr><span>VALUES_</span><wbr><span>KEYS</span></a></div>
 <span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1198789918%2FProperties%2F-1152277508"></span>
                     <div class="copy-popup-wrapper "><span
                             class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
@@ -513,7 +545,7 @@
                                      data-filterable-set=":equinox-backend:dokkaHtmlPartial/main">
                                     <div class="main-subrow keyValue ">
                                         <div class=""><span class="inline-flex">
-                  <div><a href="../../com.tecknobit.equinoxbackend.environment.services.builtin.service/-equinox-items-helper/-d-e-l-e-t-e_-f-r-o-m_.html"><span><span>DELETE_FROM_</span></span></a></div>
+                  <div><a href="../../com.tecknobit.equinoxbackend.environment.services.builtin.service/-equinox-items-helper/-d-e-l-e-t-e_-f-r-o-m_.html"><span>DELETE_</span><wbr><span>FROM_</span><wbr></a></div>
 <span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1935135147%2FProperties%2F-1152277508"></span>
                     <div class="copy-popup-wrapper "><span
                             class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
@@ -619,7 +651,7 @@
                                      data-filterable-set=":equinox-backend:dokkaHtmlPartial/main">
                                     <div class="main-subrow keyValue ">
                                         <div class=""><span class="inline-flex">
-                  <div><a href="../../com.tecknobit.equinoxbackend.environment.services.builtin.service/-equinox-items-helper/-o-p-e-n-e-d_-r-o-u-n-d_-b-r-a-c-k-e-t.html"><span><span>OPENED_ROUND_BRACKET</span></span></a></div>
+                  <div><a href="../../com.tecknobit.equinoxbackend.environment.services.builtin.service/-equinox-items-helper/-o-p-e-n-e-d_-r-o-u-n-d_-b-r-a-c-k-e-t.html"><span>OPENED_</span><wbr><span>ROUND_</span><wbr><span>BRACKET</span></a></div>
 <span class="anchor-wrapper"><span class="anchor-icon" pointing-to="864898645%2FProperties%2F-1152277508"></span>
                     <div class="copy-popup-wrapper "><span
                             class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
@@ -653,7 +685,7 @@
                                      data-filterable-set=":equinox-backend:dokkaHtmlPartial/main">
                                     <div class="main-subrow keyValue ">
                                         <div class=""><span class="inline-flex">
-                  <div><a href="../../com.tecknobit.equinoxbackend.resourcesutils/-resources-manager/-p-r-o-f-i-l-e-s_-d-i-r-e-c-t-o-r-y.html"><span><span>PROFILES_DIRECTORY</span></span></a></div>
+                  <div><a href="../../com.tecknobit.equinoxbackend.resourcesutils/-resources-manager/-p-r-o-f-i-l-e-s_-d-i-r-e-c-t-o-r-y.html"><span>PROFILES_</span><wbr><span>DIRECTORY</span></a></div>
 <span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-334678920%2FProperties%2F-1152277508"></span>
                     <div class="copy-popup-wrapper "><span
                             class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
@@ -688,7 +720,7 @@
                                      data-filterable-set=":equinox-backend:dokkaHtmlPartial/main">
                                     <div class="main-subrow keyValue ">
                                         <div class=""><span class="inline-flex">
-                  <div><a href="../../com.tecknobit.equinoxbackend.environment.services.builtin.service/-equinox-items-helper/-q-u-e-s-t-i-o-n_-m-a-r-k.html"><span><span>QUESTION_MARK</span></span></a></div>
+                  <div><a href="../../com.tecknobit.equinoxbackend.environment.services.builtin.service/-equinox-items-helper/-q-u-e-s-t-i-o-n_-m-a-r-k.html"><span>QUESTION_</span><wbr><span>MARK</span></a></div>
 <span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1483658302%2FProperties%2F-1152277508"></span>
                     <div class="copy-popup-wrapper "><span
                             class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
@@ -723,7 +755,7 @@
                                      data-filterable-set=":equinox-backend:dokkaHtmlPartial/main">
                                     <div class="main-subrow keyValue ">
                                         <div class=""><span class="inline-flex">
-                  <div><a href="../../com.tecknobit.equinoxbackend.resourcesutils/-resources-manager/-r-e-s-o-u-r-c-e-s_-k-e-y.html"><span><span>RESOURCES_KEY</span></span></a></div>
+                  <div><a href="../../com.tecknobit.equinoxbackend.resourcesutils/-resources-manager/-r-e-s-o-u-r-c-e-s_-k-e-y.html"><span>RESOURCES_</span><wbr><span>KEY</span></a></div>
 <span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1423562885%2FProperties%2F-1152277508"></span>
                     <div class="copy-popup-wrapper "><span
                             class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
@@ -759,7 +791,7 @@
                                      data-filterable-set=":equinox-backend:dokkaHtmlPartial/main">
                                     <div class="main-subrow keyValue ">
                                         <div class=""><span class="inline-flex">
-                  <div><a href="../../com.tecknobit.equinoxbackend.resourcesutils/-resources-manager/-r-e-s-o-u-r-c-e-s_-p-a-t-h.html"><span><span>RESOURCES_PATH</span></span></a></div>
+                  <div><a href="../../com.tecknobit.equinoxbackend.resourcesutils/-resources-manager/-r-e-s-o-u-r-c-e-s_-p-a-t-h.html"><span>RESOURCES_</span><wbr><span>PATH</span></a></div>
 <span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1089564145%2FProperties%2F-1152277508"></span>
                     <div class="copy-popup-wrapper "><span
                             class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
@@ -794,7 +826,7 @@
                                      data-filterable-set=":equinox-backend:dokkaHtmlPartial/main">
                                     <div class="main-subrow keyValue ">
                                         <div class=""><span class="inline-flex">
-                  <div><a href="../../com.tecknobit.equinoxbackend.environment.services.builtin.service/-equinox-items-helper/-s-i-n-g-l-e_-q-u-o-t-e.html"><span><span>SINGLE_QUOTE</span></span></a></div>
+                  <div><a href="../../com.tecknobit.equinoxbackend.environment.services.builtin.service/-equinox-items-helper/-s-i-n-g-l-e_-q-u-o-t-e.html"><span>SINGLE_</span><wbr><span>QUOTE</span></a></div>
 <span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1037193839%2FProperties%2F-1152277508"></span>
                     <div class="copy-popup-wrapper "><span
                             class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
@@ -871,7 +903,7 @@
                                      data-filterable-set=":equinox-backend:dokkaHtmlPartial/main">
                                     <div class="main-subrow keyValue ">
                                         <div class=""><span class="inline-flex">
-                  <div><a href="-v-a-l-u-e-s_-q-u-e-r-y_-p-a-r-t.html"><span><span>VALUES_QUERY_PART</span></span></a></div>
+                  <div><a href="-v-a-l-u-e-s_-q-u-e-r-y_-p-a-r-t.html"><span>VALUES_</span><wbr><span>QUERY_</span><wbr><span>PART</span></a></div>
 <span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1320985818%2FProperties%2F-1152277508"></span>
                     <div class="copy-popup-wrapper "><span
                             class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
@@ -942,7 +974,7 @@
                                                                 class="token punctuation">, </span></span><span
                                                                 class="parameter ">escape<span
                                                                 class="token operator">: </span><a
-                                                                href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html">Boolean</a></span></span><span
+                                                                href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a></span></span><span
                                                                 class="token punctuation">)</span></div>
                                                         <div class="brief ">Method to arrange the <a
                                                                 href="-b-a-s-e_-s-i-g-n_-u-p_-q-u-e-r-y.html">BASE_SIGN_UP_QUERY</a>
@@ -989,13 +1021,13 @@
                                                                 href="https://docs.oracle.com/javase/8/docs/api/java/util/List.html">List</a><span
                                                                 class="token operator">&lt;</span><span
                                                                 class="token keyword">out </span><a
-                                                                href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html">Any</a><span
+                                                                href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-any/index.html">Any</a><span
                                                                 class="token operator">&gt;</span><span
                                                                 class="token operator">&gt;</span><span
                                                                 class="token punctuation">, </span></span><span
                                                                 class="parameter ">columns<span
                                                                 class="token operator">: </span><a
-                                                                href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-array/index.html">Array</a><span
+                                                                href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-array/index.html">Array</a><span
                                                                 class="token operator">&lt;</span><a
                                                                 href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html">String</a><span
                                                                 class="token operator">&gt;</span></span></span><span
@@ -1009,15 +1041,15 @@
                                         </div>
                                     </div>
                                 </div>
-                                <a data-name="-1286813918%2FFunctions%2F-1152277508" anchor-label="batchInsert"
-                                   id="-1286813918%2FFunctions%2F-1152277508"
+                                <a data-name="-181069733%2FFunctions%2F-1152277508"
+                                   anchor-label="batchDeleteOnSingleSet" id="-181069733%2FFunctions%2F-1152277508"
                                    data-filterable-set=":equinox-backend:dokkaHtmlPartial/main"></a>
                                 <div class="table-row" data-filterable-current=":equinox-backend:dokkaHtmlPartial/main"
                                      data-filterable-set=":equinox-backend:dokkaHtmlPartial/main">
                                     <div class="main-subrow keyValue ">
                                         <div class=""><span class="inline-flex">
-                  <div><a href="../../com.tecknobit.equinoxbackend.environment.services.builtin.service/-equinox-items-helper/batch-insert.html"><span>batch</span><wbr><span><span>Insert</span></span></a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1286813918%2FFunctions%2F-1152277508"></span>
+                  <div><a href="../../com.tecknobit.equinoxbackend.environment.services.builtin.service/-equinox-items-helper/batch-delete-on-single-set.html"><span>batch</span><wbr><span>Delete</span><wbr><span>On</span><wbr><span>Single</span><wbr><span><span>Set</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-181069733%2FFunctions%2F-1152277508"></span>
                     <div class="copy-popup-wrapper "><span
                             class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
                   </span></span></div>
@@ -1030,6 +1062,61 @@
                                                         <div class="symbol monospace"><span class="token keyword">protected </span><span
                                                                 class="token keyword">open </span><span
                                                                 class="token keyword">fun </span><a
+                                                                href="../../com.tecknobit.equinoxbackend.environment.services.builtin.service/-equinox-items-helper/batch-delete-on-single-set.html"><span
+                                                                class="token function">batchDeleteOnSingleSet</span></a><span
+                                                                class="token punctuation">(</span><span
+                                                                class="parameters "><span class="parameter ">table<span
+                                                                class="token operator">: </span><a
+                                                                href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html">String</a><span
+                                                                class="token punctuation">, </span></span><span
+                                                                class="parameter ">values<span
+                                                                class="token operator">: </span><a
+                                                                href="https://docs.oracle.com/javase/8/docs/api/java/util/List.html">List</a><span
+                                                                class="token operator">&lt;</span><span
+                                                                class="token keyword">out </span><a
+                                                                href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-any/index.html">Any</a><span
+                                                                class="token operator">&gt;</span><span
+                                                                class="token punctuation">, </span></span><span
+                                                                class="parameter ">columns<span
+                                                                class="token operator">: </span><a
+                                                                href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-array/index.html">Array</a><span
+                                                                class="token operator">&lt;</span><a
+                                                                href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html">String</a><span
+                                                                class="token operator">&gt;</span></span></span><span
+                                                                class="token punctuation">)</span></div>
+                                                        <div class="brief ">Method to execute a batch delete of a single
+                                                            list of data simultaneously
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <a data-name="1972668022%2FFunctions%2F-1152277508" anchor-label="batchInsert"
+                                   id="1972668022%2FFunctions%2F-1152277508"
+                                   data-filterable-set=":equinox-backend:dokkaHtmlPartial/main"></a>
+                                <div class="table-row" data-filterable-current=":equinox-backend:dokkaHtmlPartial/main"
+                                     data-filterable-set=":equinox-backend:dokkaHtmlPartial/main">
+                                    <div class="main-subrow keyValue ">
+                                        <div class=""><span class="inline-flex">
+                  <div><a href="../../com.tecknobit.equinoxbackend.environment.services.builtin.service/-equinox-items-helper/batch-insert.html"><span>batch</span><wbr><span><span>Insert</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1972668022%2FFunctions%2F-1152277508"></span>
+                    <div class="copy-popup-wrapper "><span
+                            class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+                                        <div>
+                                            <div class="title">
+                                                <div class="platform-hinted "
+                                                     data-platform-hinted="data-platform-hinted">
+                                                    <div class="content sourceset-dependent-content" data-active=""
+                                                         data-togglable=":equinox-backend:dokkaHtmlPartial/main">
+                                                        <div class="symbol monospace"><span class="token keyword">protected </span><span
+                                                                class="token keyword">open </span><span
+                                                                class="token keyword">fun </span><span
+                                                                class="token operator">&lt;</span><a
+                                                                href="../../com.tecknobit.equinoxbackend.environment.services.builtin.service/-equinox-items-helper/batch-insert.html">V</a><span
+                                                                class="token operator">&gt; </span><a
                                                                 href="../../com.tecknobit.equinoxbackend.environment.services.builtin.service/-equinox-items-helper/batch-insert.html"><span
                                                                 class="token function">batchInsert</span></a><span
                                                                 class="token punctuation">(</span><span
@@ -1042,21 +1129,16 @@
                                                                 class="token operator">: </span><a
                                                                 href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html">String</a><span
                                                                 class="token punctuation">, </span></span><span
-                                                                class="parameter ">values<span
-                                                                class="token operator">: </span><a
-                                                                href="https://docs.oracle.com/javase/8/docs/api/java/util/List.html">List</a><span
-                                                                class="token operator">&lt;</span><span
-                                                                class="token keyword">out </span><a
-                                                                href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html">Any</a><span
-                                                                class="token operator">&gt;</span><span
-                                                                class="token punctuation">, </span></span><span
                                                                 class="parameter ">batchQuery<span
                                                                 class="token operator">: </span><a
                                                                 href="../../com.tecknobit.equinoxbackend.environment.services.builtin.service/-equinox-items-helper/-batch-query/index.html">EquinoxItemsHelper.BatchQuery</a><span
+                                                                class="token operator">&lt;</span><a
+                                                                href="../../com.tecknobit.equinoxbackend.environment.services.builtin.service/-equinox-items-helper/batch-insert.html">V</a><span
+                                                                class="token operator">&gt;</span><span
                                                                 class="token punctuation">, </span></span><span
                                                                 class="parameter ">columns<span
                                                                 class="token operator">: </span><a
-                                                                href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-array/index.html">Array</a><span
+                                                                href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-array/index.html">Array</a><span
                                                                 class="token operator">&lt;</span><a
                                                                 href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html">String</a><span
                                                                 class="token operator">&gt;</span></span></span><span
@@ -1102,7 +1184,7 @@
                                                                 href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html">String</a></span></span><span
                                                                 class="token punctuation">)</span></div>
                                                         <div class="brief ">Method to change the email of the <a
-                                                                href="../../com.tecknobit.equinoxbackend.environment.models/-equinox-user/index.html">EquinoxUser</a>
+                                                                href="../../com.tecknobit.equinoxbackend.environment.services.users.entity/-equinox-user/index.html">EquinoxUser</a>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -1143,7 +1225,7 @@
                                                                 href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html">String</a></span></span><span
                                                                 class="token punctuation">)</span></div>
                                                         <div class="brief ">Method to change the language of the <a
-                                                                href="../../com.tecknobit.equinoxbackend.environment.models/-equinox-user/index.html">EquinoxUser</a>
+                                                                href="../../com.tecknobit.equinoxbackend.environment.services.users.entity/-equinox-user/index.html">EquinoxUser</a>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -1184,7 +1266,7 @@
                                                                 href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html">String</a></span></span><span
                                                                 class="token punctuation">)</span></div>
                                                         <div class="brief ">Method to change the password of the <a
-                                                                href="../../com.tecknobit.equinoxbackend.environment.models/-equinox-user/index.html">EquinoxUser</a>
+                                                                href="../../com.tecknobit.equinoxbackend.environment.services.users.entity/-equinox-user/index.html">EquinoxUser</a>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -1229,7 +1311,7 @@
                                                                 href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html">String</a>
                                                         </div>
                                                         <div class="brief ">Method to change the profile pic of the <a
-                                                                href="../../com.tecknobit.equinoxbackend.environment.models/-equinox-user/index.html">EquinoxUser</a>
+                                                                href="../../com.tecknobit.equinoxbackend.environment.services.users.entity/-equinox-user/index.html">EquinoxUser</a>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -1358,7 +1440,7 @@
                                                                 href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html">String</a></span></span><span
                                                                 class="token punctuation">)</span><span
                                                                 class="token operator">: </span><a
-                                                                href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html">Boolean</a>
+                                                                href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a>
                                                         </div>
                                                         <div class="brief ">Method to delete a profile pic</div>
                                                     </div>
@@ -1400,7 +1482,7 @@
                                                                 href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html">String</a></span></span><span
                                                                 class="token punctuation">)</span><span
                                                                 class="token operator">: </span><a
-                                                                href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html">Boolean</a>
+                                                                href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a>
                                                         </div>
                                                         <div class="brief ">Method to delete a resource file</div>
                                                     </div>
@@ -1632,9 +1714,9 @@
                                                                 class="token punctuation">, </span></span><span
                                                                 class="parameter ">custom<span
                                                                 class="token operator">: </span><a
-                                                                href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-array/index.html">Array</a><span
+                                                                href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-array/index.html">Array</a><span
                                                                 class="token operator">&lt;</span><a
-                                                                href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html">Any</a><span
+                                                                href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-any/index.html">Any</a><span
                                                                 class="token operator">&gt;</span></span></span><span
                                                                 class="token punctuation">)</span><span
                                                                 class="token operator">: </span><a
@@ -1697,9 +1779,9 @@
                                                                 class="token punctuation">, </span></span><span
                                                                 class="parameter ">custom<span
                                                                 class="token operator">: </span><a
-                                                                href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-array/index.html">Array</a><span
+                                                                href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-array/index.html">Array</a><span
                                                                 class="token operator">&lt;</span><a
-                                                                href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html">Any</a><span
+                                                                href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-any/index.html">Any</a><span
                                                                 class="token operator">&gt;</span></span></span><span
                                                                 class="token punctuation">)</span></div>
                                                         <div class="brief ">Method to sign up a new user in the system
@@ -1710,15 +1792,15 @@
                                         </div>
                                     </div>
                                 </div>
-                                <a data-name="250839359%2FFunctions%2F-1152277508" anchor-label="syncBatch"
-                                   id="250839359%2FFunctions%2F-1152277508"
+                                <a data-name="1481278396%2FFunctions%2F-1152277508" anchor-label="syncBatch"
+                                   id="1481278396%2FFunctions%2F-1152277508"
                                    data-filterable-set=":equinox-backend:dokkaHtmlPartial/main"></a>
                                 <div class="table-row" data-filterable-current=":equinox-backend:dokkaHtmlPartial/main"
                                      data-filterable-set=":equinox-backend:dokkaHtmlPartial/main">
                                     <div class="main-subrow keyValue ">
                                         <div class=""><span class="inline-flex">
                   <div><a href="../../com.tecknobit.equinoxbackend.environment.services.builtin.service/-equinox-items-helper/sync-batch.html"><span>sync</span><wbr><span><span>Batch</span></span></a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="250839359%2FFunctions%2F-1152277508"></span>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1481278396%2FFunctions%2F-1152277508"></span>
                     <div class="copy-popup-wrapper "><span
                             class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
                   </span></span></div>
@@ -1749,16 +1831,12 @@
                                                                 class="parameter ">targetId<span class="token operator">: </span><a
                                                                 href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html">String</a><span
                                                                 class="token punctuation">, </span></span><span
-                                                                class="parameter ">updatedData<span
-                                                                class="token operator">: </span><a
-                                                                href="https://docs.oracle.com/javase/8/docs/api/java/util/List.html">List</a><span
-                                                                class="token operator">&lt;</span><a
-                                                                href="../../com.tecknobit.equinoxbackend.environment.services.builtin.service/-equinox-items-helper/sync-batch.html">V</a><span
-                                                                class="token operator">&gt;</span><span
-                                                                class="token punctuation">, </span></span><span
                                                                 class="parameter ">batchQuery<span
                                                                 class="token operator">: </span><a
-                                                                href="../../com.tecknobit.equinoxbackend.environment.services.builtin.service/-equinox-items-helper/-batch-query/index.html">EquinoxItemsHelper.BatchQuery</a></span></span><span
+                                                                href="../../com.tecknobit.equinoxbackend.environment.services.builtin.service/-equinox-items-helper/-batch-query/index.html">EquinoxItemsHelper.BatchQuery</a><span
+                                                                class="token operator">&lt;</span><a
+                                                                href="../../com.tecknobit.equinoxbackend.environment.services.builtin.service/-equinox-items-helper/sync-batch.html">V</a><span
+                                                                class="token operator">&gt;</span></span></span><span
                                                                 class="token punctuation">)</span></div>
                                                         <div class="brief ">Method to execute a batch synchronization of
                                                             a list of data simultaneously
@@ -1797,7 +1875,7 @@
                                                                 href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html">String</a></span></span><span
                                                                 class="token punctuation">)</span><span
                                                                 class="token operator">: </span><a
-                                                                href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html">Boolean</a>
+                                                                href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a>
                                                         </div>
                                                         <div class="brief ">Method to get whether the user is present in
                                                             the database
@@ -1841,13 +1919,13 @@
                                                                 class="token punctuation">, </span></span><span
                                                                 class="parameter ">custom<span
                                                                 class="token operator">: </span><a
-                                                                href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-array/index.html">Array</a><span
+                                                                href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-array/index.html">Array</a><span
                                                                 class="token operator">&lt;</span><a
-                                                                href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html">Any</a><span
+                                                                href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-any/index.html">Any</a><span
                                                                 class="token operator">&gt;</span></span></span><span
                                                                 class="token punctuation">)</span><span
                                                                 class="token operator">: </span><a
-                                                                href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html">Boolean</a>
+                                                                href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a>
                                                         </div>
                                                         <div class="brief ">Method to validate the sign in request</div>
                                                     </div>
@@ -1862,15 +1940,17 @@
                 </div>
             </div>
             <div class="footer">
-                <span class="go-to-top-icon"><a href="#content"
-                                                id="go-to-top-link"></a></span><span>© 2024 Copyright</span><span
-                    class="pull-right"><span>Generated by </span><a
-                    href="https://github.com/Kotlin/dokka"><span>dokka</span><span
-                    class="padded-icon"></span></a></span>
+                <a href="#content" id="go-to-top-link" class="footer--button footer--button_go-to-top"></a>
+                <span>© 2025 Copyright</span>
+                <span class="pull-right">
+            <span>Generated by </span>
+            <a class="footer--link footer--link_external" href="https://github.com/Kotlin/dokka">
+                <span>dokka</span>
+            </a>
+        </span>
             </div>
         </div>
     </div>
 </div>
 </body>
 </html>
-

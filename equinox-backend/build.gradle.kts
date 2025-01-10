@@ -6,13 +6,13 @@ plugins {
     id("java")
     kotlin("jvm")
     id("org.springframework.boot") version "3.2.3"
-    id("com.vanniktech.maven.publish") version "0.30.0"
+    alias(libs.plugins.vanniktech.mavenPublish)
 }
 
 apply(plugin = "io.spring.dependency-management")
 
-group = "com.tecknobit.equinox"
-version = "1.0.5"
+group = "com.tecknobit.equinoxbackend"
+version = "1.0.6"
 
 repositories {
     mavenCentral()
@@ -44,12 +44,12 @@ mavenPublishing {
     coordinates(
         groupId = "io.github.n7ghtm4r3",
         artifactId = "equinox-backend",
-        version = "1.0.5"
+        version = "1.0.6"
     )
     pom {
         name.set("Equinox")
         description.set("Utilities for backend services based on Springboot framework. Is a support library to implement some utilities both for backend and for client also who comunicate with that Springboot backend")
-        inceptionYear.set("2024")
+        inceptionYear.set("2025")
         url.set("https://github.com/N7ghtm4r3/Equinox")
 
         licenses {

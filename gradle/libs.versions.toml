@@ -1,0 +1,49 @@
+[versions]
+agp = "8.5.2"
+kmprefs = "1.0.0"
+kotlin = "2.1.0"
+android-minSdk = "24"
+android-compileSdk = "34"
+dokka = "2.0.0"
+kotlinxDatetime = "0.6.1"
+kotlinxSerializationJson = "1.7.3"
+ktor = "3.0.3"
+#equinox-compose
+compose = "1.7.3"
+connectivity = "1.2.0"
+kermit = "2.0.5"
+lifecycleViewmodelCompose = "2.8.2"
+material3WindowSizeClass = "1.7.3"
+startupRuntime = "1.2.0"
+kmpalette = "3.1.0"
+
+[libraries]
+dokka-base = { module = "org.jetbrains.dokka:dokka-base", version.ref = "dokka" }
+kmprefs = { module = "io.github.n7ghtm4r3:KMPrefs", version.ref = "kmprefs" }
+kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlinxDatetime" }
+kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinxSerializationJson" }
+ktor-client-cio = { module = "io.ktor:ktor-client-cio", version.ref = "ktor" }
+ktor-client-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }
+ktor-client-js = { module = "io.ktor:ktor-client-js", version.ref = "ktor" }
+ktor-client-okhttp = { module = "io.ktor:ktor-client-okhttp", version.ref = "ktor" }
+#equinox-compose
+connectivity-core = { module = "dev.jordond.connectivity:connectivity-core", version.ref = "connectivity" }
+connectivity-device = { module = "dev.jordond.connectivity:connectivity-device", version.ref = "connectivity" }
+connectivity-http = { module = "dev.jordond.connectivity:connectivity-http", version.ref = "connectivity" }
+connectivity-compose = { module = "dev.jordond.connectivity:connectivity-compose", version.ref = "connectivity" }
+connectivity-compose-device = { module = "dev.jordond.connectivity:connectivity-compose-device", version.ref = "connectivity" }
+connectivity-compose-http = { module = "dev.jordond.connectivity:connectivity-compose-http", version.ref = "connectivity" }
+kermit = { module = "co.touchlab:kermit", version.ref = "kermit" }
+lifecycle-viewmodel-compose = { module = "org.jetbrains.androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "lifecycleViewmodelCompose" }
+material3-window-size = { module = "org.jetbrains.compose.material3:material3-window-size-class", version.ref = "material3WindowSizeClass" }
+startup-runtime = { group = "androidx.startup", name = "startup-runtime", version.ref = "startupRuntime" }
+kmpalette-core = { module = "com.kmpalette:kmpalette-core", version.ref = "kmpalette" }
+
+[plugins]
+androidLibrary = { id = "com.android.library", version.ref = "agp" }
+kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
+vanniktech-mavenPublish = { id = "com.vanniktech.maven.publish", version = "0.30.0" }
+dokka = { id = "org.jetbrains.dokka", version.ref = "dokka" }
+#equinox-compose
+compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+jetbrainsCompose = { id = "org.jetbrains.compose", version.ref = "compose" }

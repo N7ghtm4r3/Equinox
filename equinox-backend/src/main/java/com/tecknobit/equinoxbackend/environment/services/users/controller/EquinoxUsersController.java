@@ -1,8 +1,9 @@
 package com.tecknobit.equinoxbackend.environment.services.users.controller;
 
 import com.tecknobit.apimanager.annotations.RequestPath;
-import com.tecknobit.equinoxbackend.environment.models.EquinoxUser;
+import com.tecknobit.equinoxbackend.configuration.EquinoxBackendConfiguration;
 import com.tecknobit.equinoxbackend.environment.services.builtin.controller.EquinoxController;
+import com.tecknobit.equinoxbackend.environment.services.users.entity.EquinoxUser;
 import com.tecknobit.equinoxbackend.environment.services.users.repository.EquinoxUsersRepository;
 import com.tecknobit.equinoxbackend.environment.services.users.service.EquinoxUsersHelper;
 import org.json.JSONObject;
@@ -14,9 +15,11 @@ import java.util.Map;
 
 import static com.tecknobit.apimanager.apis.APIRequest.RequestMethod.*;
 import static com.tecknobit.apimanager.apis.ServerProtector.SERVER_SECRET_KEY;
-import static com.tecknobit.equinoxbackend.environment.helpers.EquinoxBaseEndpointsSet.*;
-import static com.tecknobit.equinoxbackend.environment.models.EquinoxUser.*;
+import static com.tecknobit.equinoxbackend.environment.services.users.entity.EquinoxUser.IDENTIFIER_KEY;
+import static com.tecknobit.equinoxcore.helpers.CommonKeysKt.*;
+import static com.tecknobit.equinoxcore.helpers.InputsValidator.Companion;
 import static com.tecknobit.equinoxcore.helpers.InputsValidator.*;
+import static com.tecknobit.equinoxcore.network.EquinoxBaseEndpointsSet.*;
 
 /**
  * The {@code EquinoxUsersController} class is useful to manage all the user operations
@@ -24,9 +27,9 @@ import static com.tecknobit.equinoxcore.helpers.InputsValidator.*;
  * @author N7ghtm4r3 - Tecknobit
  * @see EquinoxController
  *
- * @param <T>: the type of the {@link EquinoxUser} used in the system, is generic to avoid manual casts if it has been customized
- * @param <R>: the type of the {@link EquinoxUsersRepository} used in the system, is generic to avoid manual casts if it has been customized
- * @param <H>: the type of the {@link EquinoxUsersHelper} used in the system, is generic to avoid manual casts if it has been customized
+ * @param <T> The type of the {@link EquinoxUser} used in the system, is generic to avoid manual casts if it has been customized
+ * @param <R> The type of the {@link EquinoxUsersRepository} used in the system, is generic to avoid manual casts if it has been customized
+ * @param <H> The type of the {@link EquinoxUsersHelper} used in the system, is generic to avoid manual casts if it has been customized
  *
  * @since 1.0.1
  */
@@ -41,9 +44,23 @@ public class EquinoxUsersController<T extends EquinoxUser, R extends EquinoxUser
     protected H usersHelper;
 
     /**
+     * {@code configuration} the current configuration of the Equinox's backend instance
+     */
+    protected final EquinoxBackendConfiguration configuration;
+
+    /**
+     * Constructor to instantiate the {@link EquinoxController}
+     *
+     * @apiNote will be instantiated also the {@link #configuration}
+     */
+    public EquinoxUsersController() {
+        configuration = EquinoxBackendConfiguration.getInstance();
+    }
+
+    /**
      * Method to sign up in the <b>Equinox's system</b>
      *
-     * @param payload: payload of the request
+     * @param payload Payload of the request
      *                 <pre>
      *                      {@code
      *                              {
@@ -62,49 +79,46 @@ public class EquinoxUsersController<T extends EquinoxUser, R extends EquinoxUser
     public String signUp(@RequestBody Map<String, String> payload) {
         loadJsonHelper(payload);
         mantis.changeCurrentLocale(jsonHelper.getString(LANGUAGE_KEY, DEFAULT_LANGUAGE));
-        if (serverProtector.serverSecretMatches(jsonHelper.getString(SERVER_SECRET_KEY))) {
-            String name = jsonHelper.getString(NAME_KEY);
-            String surname = jsonHelper.getString(SURNAME_KEY);
-            String email = jsonHelper.getString(EMAIL_KEY);
-            String password = jsonHelper.getString(PASSWORD_KEY);
-            String language = jsonHelper.getString(LANGUAGE_KEY, DEFAULT_LANGUAGE);
-            mantis.changeCurrentLocale(language);
-            Object[] custom = getSignUpCustomParams();
-            String signUpValidation = validateSignUp(name, surname, email, password, language, custom);
-            if (signUpValidation != null)
-                return failedResponse(signUpValidation);
-            try {
-                JSONObject response = new JSONObject();
-                String id = generateIdentifier();
-                String token = generateIdentifier();
-                usersHelper.signUpUser(
-                        id,
-                        token,
-                        name,
-                        surname,
-                        email.toLowerCase(),
-                        password,
-                        language,
-                        custom
-                );
-                mantis.changeCurrentLocale(DEFAULT_LANGUAGE);
-                return successResponse(response
-                        .put(IDENTIFIER_KEY, id)
-                        .put(TOKEN_KEY, token)
-                        .put(PROFILE_PIC_KEY, DEFAULT_PROFILE_PIC)
-                );
-            } catch (Exception e) {
-                return failedResponse(WRONG_PROCEDURE_MESSAGE);
-            }
-        } else
+        if (configuration.isServerProtectorEnabled() && !serverProtector.serverSecretMatches(jsonHelper.getString(SERVER_SECRET_KEY)))
             return failedResponse(NOT_AUTHORIZED_OR_WRONG_DETAILS_MESSAGE);
+        String name = jsonHelper.getString(NAME_KEY);
+        String surname = jsonHelper.getString(SURNAME_KEY);
+        String email = jsonHelper.getString(EMAIL_KEY);
+        String password = jsonHelper.getString(PASSWORD_KEY);
+        String language = jsonHelper.getString(LANGUAGE_KEY, DEFAULT_LANGUAGE);
+        mantis.changeCurrentLocale(language);
+        Object[] custom = getSignUpCustomParams();
+        String signUpValidation = validateSignUp(name, surname, email, password, language, custom);
+        if (signUpValidation != null)
+            return failedResponse(signUpValidation);
+        try {
+            JSONObject response = new JSONObject();
+            String id = generateIdentifier();
+            String token = generateIdentifier();
+            usersHelper.signUpUser(
+                    id,
+                    token,
+                    name,
+                    surname,
+                    email.toLowerCase(),
+                    password,
+                    language,
+                    custom
+            );
+            mantis.changeCurrentLocale(DEFAULT_LANGUAGE);
+            return successResponse(response
+                    .put(IDENTIFIER_KEY, id)
+                    .put(TOKEN_KEY, token)
+                    .put(PROFILE_PIC_KEY, DEFAULT_PROFILE_PIC)
+            );
+        } catch (Exception e) {
+            return failedResponse(WRONG_PROCEDURE_MESSAGE);
+        }
     }
 
     /**
      * Method to get the list of the custom parameters of a custom {@link EquinoxUser} from the payload of the {@link #signUp(Map)}
-     * method <br>
-     * <p>
-     * No-any params required
+     * method
      *
      * @return the custom parameters as array of {@link Object}
      * @apiNote to get the parameters from the payload you have to use the {@link #jsonHelper} instance previously loaded
@@ -125,12 +139,12 @@ public class EquinoxUsersController<T extends EquinoxUser, R extends EquinoxUser
     /**
      * Method to validate the inputs of the {@link #signUp(Map)} method to correctly execute a sign-up operation
      *
-     * @param name: the name of the user
-     * @param surname: the surname of the user
-     * @param email: the email of the user
-     * @param password: the password of the user
-     * @param language: the language of the user
-     * @param custom: the custom parameters added in a customization of the {@link EquinoxUser} to execute a customized
+     * @param name The name of the user
+     * @param surname The surname of the user
+     * @param email The email of the user
+     * @param password The password of the user
+     * @param language The language of the user
+     * @param custom The custom parameters added in a customization of the {@link EquinoxUser} to execute a customized
      *             sign up validation
      *
      * @return the key of the error if any inputs is wrong, null otherwise as {@link String}
@@ -168,7 +182,7 @@ public class EquinoxUsersController<T extends EquinoxUser, R extends EquinoxUser
     /**
      * Method to sign in the <b>Equinox's system</b>
      *
-     * @param payload: payload of the request
+     * @param payload The payload of the request
      *                 <pre>
      *                      {@code
      *                              {
@@ -193,11 +207,10 @@ public class EquinoxUsersController<T extends EquinoxUser, R extends EquinoxUser
             return failedResponse(signInValidation);
         try {
             T user = usersHelper.signInUser(email.toLowerCase(), password, custom);
-            if (user != null) {
-                mantis.changeCurrentLocale(DEFAULT_LANGUAGE);
-                return successResponse(assembleSignInSuccessResponse(user));
-            } else
+            if (user == null)
                 return failedResponse(NOT_AUTHORIZED_OR_WRONG_DETAILS_MESSAGE);
+            mantis.changeCurrentLocale(DEFAULT_LANGUAGE);
+            return successResponse(assembleSignInSuccessResponse(user));
         } catch (Exception e) {
             return failedResponse(WRONG_PROCEDURE_MESSAGE);
         }
@@ -205,9 +218,7 @@ public class EquinoxUsersController<T extends EquinoxUser, R extends EquinoxUser
 
     /**
      * Method to get the list of the custom parameters of a custom {@link EquinoxUser} from the payload of the {@link #signIn(Map)}
-     * method <br>
-     *
-     * No-any params required
+     * method 
      *
      * @return the custom parameters as array of {@link Object}
      *
@@ -230,10 +241,10 @@ public class EquinoxUsersController<T extends EquinoxUser, R extends EquinoxUser
     /**
      * Method to validate the inputs of the {@link #signIn(Map)} method to correctly execute a sign-in operation
      *
-     * @param email: the email of the user
-     * @param password: the password of the user
-     * @param language: the language of the user
-     * @param custom: the custom parameters added in a customization of the {@link EquinoxUser} to execute a customized
+     * @param email The email of the user
+     * @param password The password of the user
+     * @param language The language of the user
+     * @param custom The custom parameters added in a customization of the {@link EquinoxUser} to execute a customized
      *             sign-in validation
      *
      * @return the key of the error if any inputs is wrong, null otherwise as {@link String}
@@ -266,7 +277,7 @@ public class EquinoxUsersController<T extends EquinoxUser, R extends EquinoxUser
     /**
      * Method to assemble the sign-in response with the user details
      *
-     * @param user: the user authenticated in that operation
+     * @param user The user authenticated in that operation
      *
      * @return the response as {@link JSONObject}
      *
@@ -296,9 +307,9 @@ public class EquinoxUsersController<T extends EquinoxUser, R extends EquinoxUser
     /**
      * Method to change the profile pic of the user
      *
-     * @param id:         the identifier of the user
-     * @param token:      the token of the user
-     * @param profilePic: the profile pic chosen by the user to set as the new profile pic
+     * @param id The identifier of the user
+     * @param token The token of the user
+     * @param profilePic The profile pic chosen by the user to set as the new profile pic
      * @return the result of the request as {@link String}
      */
     @PostMapping(
@@ -313,28 +324,26 @@ public class EquinoxUsersController<T extends EquinoxUser, R extends EquinoxUser
             @RequestHeader(TOKEN_KEY) String token,
             @RequestParam(PROFILE_PIC_KEY) MultipartFile profilePic
     ) {
-        if (isMe(id, token)) {
-            if (!profilePic.isEmpty()) {
-                JSONObject response = new JSONObject();
-                try {
-                    String profilePicUrl = usersHelper.changeProfilePic(profilePic, id);
-                    response.put(PROFILE_PIC_KEY, profilePicUrl);
-                } catch (Exception e) {
-                    response.put(PROFILE_PIC_KEY, DEFAULT_PROFILE_PIC);
-                }
-                return successResponse(response);
-            } else
-                return failedResponse(WRONG_PROCEDURE_MESSAGE);
-        } else
+        if (!isMe(id, token))
             return failedResponse(NOT_AUTHORIZED_OR_WRONG_DETAILS_MESSAGE);
+        if (profilePic.isEmpty())
+            return failedResponse(WRONG_PROCEDURE_MESSAGE);
+        JSONObject response = new JSONObject();
+        try {
+            String profilePicUrl = usersHelper.changeProfilePic(profilePic, id);
+            response.put(PROFILE_PIC_KEY, profilePicUrl);
+            return successResponse(response);
+        } catch (Exception e) {
+            return failedResponse(WRONG_PROCEDURE_MESSAGE);
+        }
     }
 
     /**
      * Method to change the email of the user
      *
-     * @param id:      the identifier of the user
-     * @param token:   the token of the user
-     * @param payload: payload of the request
+     * @param id The identifier of the user
+     * @param token The token of the user
+     * @param payload Payload of the request
      *                 <pre>
      *                      {@code
      *                              {
@@ -356,28 +365,26 @@ public class EquinoxUsersController<T extends EquinoxUser, R extends EquinoxUser
             @RequestHeader(TOKEN_KEY) String token,
             @RequestBody Map<String, String> payload
     ) {
-        if (isMe(id, token)) {
-            loadJsonHelper(payload);
-            String email = jsonHelper.getString(EMAIL_KEY);
-            if (Companion.isEmailValid(email)) {
-                try {
-                    usersHelper.changeEmail(email, id);
-                    return successResponse();
-                } catch (Exception e) {
-                    return failedResponse(WRONG_PROCEDURE_MESSAGE);
-                }
-            } else
-                return failedResponse(WRONG_EMAIL_MESSAGE);
-        } else
+        if (!isMe(id, token))
             return failedResponse(NOT_AUTHORIZED_OR_WRONG_DETAILS_MESSAGE);
+        loadJsonHelper(payload);
+        String email = jsonHelper.getString(EMAIL_KEY);
+        if (!Companion.isEmailValid(email))
+            return failedResponse(WRONG_EMAIL_MESSAGE);
+        try {
+            usersHelper.changeEmail(email, id);
+            return successResponse();
+        } catch (Exception e) {
+            return failedResponse(WRONG_PROCEDURE_MESSAGE);
+        }
     }
 
     /**
      * Method to change the password of the user
      *
-     * @param id:      the identifier of the user
-     * @param token:   the token of the user
-     * @param payload: payload of the request
+     * @param id The identifier of the user
+     * @param token The token of the user
+     * @param payload Payload of the request
      *                 <pre>
      *                      {@code
      *                              {
@@ -399,28 +406,26 @@ public class EquinoxUsersController<T extends EquinoxUser, R extends EquinoxUser
             @RequestHeader(TOKEN_KEY) String token,
             @RequestBody Map<String, String> payload
     ) {
-        if (isMe(id, token)) {
-            loadJsonHelper(payload);
-            String password = jsonHelper.getString(PASSWORD_KEY);
-            if (Companion.isPasswordValid(password)) {
-                try {
-                    usersHelper.changePassword(password, id);
-                    return successResponse();
-                } catch (Exception e) {
-                    return failedResponse(WRONG_PROCEDURE_MESSAGE);
-                }
-            } else
-                return failedResponse(WRONG_PASSWORD_MESSAGE);
-        } else
+        if (!isMe(id, token))
             return failedResponse(NOT_AUTHORIZED_OR_WRONG_DETAILS_MESSAGE);
+        loadJsonHelper(payload);
+        String password = jsonHelper.getString(PASSWORD_KEY);
+        if (!Companion.isPasswordValid(password))
+            return failedResponse(WRONG_PASSWORD_MESSAGE);
+        try {
+            usersHelper.changePassword(password, id);
+            return successResponse();
+        } catch (Exception e) {
+            return failedResponse(WRONG_PROCEDURE_MESSAGE);
+        }
     }
 
     /**
      * Method to change the language of the user
      *
-     * @param id:      the identifier of the user
-     * @param token:   the token of the user
-     * @param payload: payload of the request
+     * @param id The identifier of the user
+     * @param token The token of the user
+     * @param payload Payload of the request
      *                 <pre>
      *                      {@code
      *                              {
@@ -442,27 +447,25 @@ public class EquinoxUsersController<T extends EquinoxUser, R extends EquinoxUser
             @RequestHeader(TOKEN_KEY) String token,
             @RequestBody Map<String, String> payload
     ) {
-        if (isMe(id, token)) {
-            loadJsonHelper(payload);
-            String language = jsonHelper.getString(LANGUAGE_KEY);
-            if (Companion.isLanguageValid(language)) {
-                try {
-                    usersHelper.changeLanguage(language, id);
-                    return successResponse();
-                } catch (Exception e) {
-                    return failedResponse(WRONG_PROCEDURE_MESSAGE);
-                }
-            } else
-                return failedResponse(WRONG_LANGUAGE_MESSAGE);
-        } else
+        if (!isMe(id, token))
             return failedResponse(NOT_AUTHORIZED_OR_WRONG_DETAILS_MESSAGE);
+        loadJsonHelper(payload);
+        String language = jsonHelper.getString(LANGUAGE_KEY);
+        if (!Companion.isLanguageValid(language))
+            return failedResponse(WRONG_LANGUAGE_MESSAGE);
+        try {
+            usersHelper.changeLanguage(language, id);
+            return successResponse();
+        } catch (Exception e) {
+            return failedResponse(WRONG_PROCEDURE_MESSAGE);
+        }
     }
 
     /**
      * Method to delete the account of the user
      *
-     * @param id:    the identifier of the user
-     * @param token: the token of the user
+     * @param id The identifier of the user
+     * @param token The token of the user
      * @return the result of the request as {@link String}
      */
     @DeleteMapping(
@@ -476,11 +479,10 @@ public class EquinoxUsersController<T extends EquinoxUser, R extends EquinoxUser
             @PathVariable(IDENTIFIER_KEY) String id,
             @RequestHeader(TOKEN_KEY) String token
     ) {
-        if (isMe(id, token)) {
-            usersHelper.deleteUser(id);
-            return successResponse();
-        } else
+        if (!isMe(id, token))
             return failedResponse(NOT_AUTHORIZED_OR_WRONG_DETAILS_MESSAGE);
+        usersHelper.deleteUser(id);
+        return successResponse();
     }
 
 }

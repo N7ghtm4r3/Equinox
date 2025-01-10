@@ -1,8 +1,8 @@
 package com.tecknobit.equinoxbackend.environment.services.users.service;
 
 import com.tecknobit.apimanager.apis.APIRequest;
-import com.tecknobit.equinoxbackend.environment.models.EquinoxUser;
 import com.tecknobit.equinoxbackend.environment.services.builtin.service.EquinoxItemsHelper;
+import com.tecknobit.equinoxbackend.environment.services.users.entity.EquinoxUser;
 import com.tecknobit.equinoxbackend.environment.services.users.repository.EquinoxUsersRepository;
 import com.tecknobit.equinoxbackend.resourcesutils.ResourcesManager;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,8 +17,9 @@ import java.util.Arrays;
 import java.util.List;
 
 import static com.tecknobit.apimanager.apis.APIRequest.SHA256_ALGORITHM;
-import static com.tecknobit.equinoxbackend.environment.models.EquinoxItem.IDENTIFIER_KEY;
-import static com.tecknobit.equinoxbackend.environment.models.EquinoxUser.*;
+import static com.tecknobit.equinoxbackend.environment.services.builtin.entity.EquinoxItem.IDENTIFIER_KEY;
+import static com.tecknobit.equinoxbackend.environment.services.users.entity.EquinoxUser.DISCRIMINATOR_VALUE_KEY;
+import static com.tecknobit.equinoxcore.helpers.CommonKeysKt.*;
 import static java.lang.System.currentTimeMillis;
 
 /**
@@ -33,8 +34,8 @@ import static java.lang.System.currentTimeMillis;
  * @since 1.0.1
  */
 @Service
-public class EquinoxUsersHelper<T extends EquinoxUser, R extends EquinoxUsersRepository<T>>
-        extends EquinoxItemsHelper<T> implements ResourcesManager {
+public class EquinoxUsersHelper<T extends EquinoxUser, R extends EquinoxUsersRepository<T>> extends EquinoxItemsHelper
+        implements ResourcesManager {
 
     /**
      * {@code ALTER_TABLE_} query command
@@ -75,8 +76,6 @@ public class EquinoxUsersHelper<T extends EquinoxUser, R extends EquinoxUsersRep
 
     /**
      * Constructor to init the {@link EquinoxUsersHelper} controller <br>
-     * <p>
-     * No-any params required
      */
     public EquinoxUsersHelper() {
         try {

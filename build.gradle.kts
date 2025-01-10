@@ -1,3 +1,4 @@
+
 import org.jetbrains.dokka.DokkaConfiguration.Visibility.*
 import org.jetbrains.dokka.base.DokkaBase
 import org.jetbrains.dokka.base.DokkaBaseConfiguration
@@ -5,15 +6,17 @@ import org.jetbrains.dokka.gradle.DokkaMultiModuleTask
 import org.jetbrains.dokka.gradle.DokkaTaskPartial
 
 plugins {
-    kotlin("jvm")
-    id("org.jetbrains.dokka") version "1.9.20"
-    id("com.vanniktech.maven.publish") version "0.30.0"
-    id("com.android.library") version "8.2.2" apply false
+    alias(libs.plugins.androidLibrary) apply false
+    alias(libs.plugins.kotlinMultiplatform) apply false
+    alias(libs.plugins.vanniktech.mavenPublish) apply false
+    alias(libs.plugins.jetbrainsCompose) apply false
+    alias(libs.plugins.compose.compiler) apply false
+    alias(libs.plugins.dokka)
 }
 
 buildscript {
     dependencies {
-        classpath("org.jetbrains.dokka:dokka-base:1.9.20")
+        classpath(libs.dokka.base)
     }
 }
 
@@ -27,13 +30,10 @@ subprojects {
     }
 }
 
-repositories {
-    mavenCentral()
-}
-
 tasks.withType<DokkaMultiModuleTask> {
     outputDirectory.set(layout.projectDirectory.dir("docs"))
     pluginConfiguration<DokkaBase, DokkaBaseConfiguration> {
-        footerMessage = "(c) 2024 Tecknobit"
+        version = "1.0.6"
+        footerMessage = "(c) 2025 Tecknobit"
     }
 }

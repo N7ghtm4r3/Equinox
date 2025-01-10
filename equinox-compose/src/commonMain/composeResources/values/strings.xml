@@ -1,0 +1,9 @@
+<resources>
+    <string name="an_error_occurred">An error occurred</string>
+    <string name="retry">Retry</string>
+    <string name="confirm">Confirm</string>
+    <string name="dismiss">Dismiss</string>
+    <string name="server_currently_offline">Server currently offline</string>
+    <string name="no_internet_connection">No internet connection</string>
+    <string name="loading_data">Loading data...</string>
+</resources>

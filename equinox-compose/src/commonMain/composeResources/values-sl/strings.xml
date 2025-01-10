@@ -1,0 +1,9 @@
+<resources>
+    <string name="an_error_occurred">Zgodila se je napaka</string>
+    <string name="retry">Ponovitev</string>
+    <string name="confirm">Potrdite</string>
+    <string name="dismiss">Zavrnite</string>
+    <string name="server_currently_offline">Strežnik je trenutno brez povezave</string>
+    <string name="no_internet_connection">Brez internetne povezave</string>
+    <string name="loading_data">Nalaganje podatkov...</string>
+</resources>

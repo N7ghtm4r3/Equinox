@@ -1,0 +1,9 @@
+<resources>
+    <string name="an_error_occurred">Tekkis viga</string>
+    <string name="retry">Uuesti proovida</string>
+    <string name="confirm">Kinnitage</string>
+    <string name="dismiss">Lase lahti</string>
+    <string name="server_currently_offline">Server on praegu võrguühenduseta</string>
+    <string name="no_internet_connection">Internetiühendus puudub</string>
+    <string name="loading_data">Andmete laadimine...</string>
+</resources>
