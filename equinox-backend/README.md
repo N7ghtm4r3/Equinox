@@ -89,8 +89,7 @@ Add the JitPack repository to your build file
   you to create automatically the configuration file for your backend
 - <a href="https://github.com/N7ghtm4r3/Equinox/blob/main/documd/backend/FilteredQuery.md">**FilteredQuery**</a> allows
   you to create dynamic queries with filters parameters
-- <a href="https://github.com/N7ghtm4r3/Equinox/blob/main/documd/backend/EquinoxItemsHelper.md">**EquinoxItemsHelper
-  **</a> allows you to execute batch queries such insertion, deletion and synchronization dynamically
+- <a href="https://github.com/N7ghtm4r3/Equinox/blob/main/documd/backend/EquinoxItemsHelper.md">**EquinoxItemsHelper**</a> allows you to execute batch queries such insertion, deletion and synchronization dynamically
 
 The other apis will be gradually released
 
