@@ -6,7 +6,7 @@ import com.tecknobit.equinoxbackend.configuration.ConfigsGenerator;
 import com.tecknobit.equinoxbackend.configuration.EquinoxBackendConfiguration;
 import com.tecknobit.equinoxbackend.environment.services.users.entity.EquinoxUser;
 import com.tecknobit.equinoxbackend.environment.services.users.repository.EquinoxUsersRepository;
-import com.tecknobit.equinoxbackend.environment.services.users.service.EquinoxUsersHelper;
+import com.tecknobit.equinoxbackend.environment.services.users.service.EquinoxUsersService;
 import com.tecknobit.equinoxbackend.resourcesutils.ResourcesProvider;
 import com.tecknobit.equinoxcore.network.ResponseStatus;
 import com.tecknobit.mantis.Mantis;
@@ -35,13 +35,13 @@ import static com.tecknobit.equinoxcore.network.ResponseStatus.SUCCESSFUL;
  *
  * @param <T> The type of the {@link EquinoxUser} used in the system, is generic to avoid manual casts if it has been customized
  * @param <R> The type of the {@link EquinoxUsersRepository} used in the system, is generic to avoid manual casts if it has been customized
- * @param <H> The type of the {@link EquinoxUsersHelper} used in the system, is generic to avoid manual casts if it has been customized
+ * @param <H> The type of the {@link EquinoxUsersService} used in the system, is generic to avoid manual casts if it has been customized
  * @since 1.0.1
  */
 @RestController
 @RequestMapping(BASE_EQUINOX_ENDPOINT)
 abstract public class EquinoxController<T extends EquinoxUser, R extends EquinoxUsersRepository<T>,
-        H extends EquinoxUsersHelper<T, R>> {
+        H extends EquinoxUsersService<T, R>> {
 
     /**
      * {@code protector} the instance to launch the server protector to manage the server accesses

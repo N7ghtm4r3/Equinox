@@ -131,22 +131,20 @@ repositories {
 dependencies {
 
     ...
-
-    testImplementation("org.springframework.boot:spring-boot-starter-test:3.2.3")
     implementation("org.springframework.boot:spring-boot-starter-web:3.2.3")
-    implementation("org.springframework.boot:spring-boot-maven-plugin:3.2.0")
     implementation("org.springframework.boot:spring-boot-starter-data-jpa:3.2.3")
+    implementation("org.springframework:spring-web:6.1.2")
+    implementation("com.fasterxml.jackson.core:jackson-databind:2.15.4")
     implementation("mysql:mysql-connector-java:8.0.33")
     implementation("com.github.N7ghtm4r3:APIManager:2.2.4")
     implementation("com.github.N7ghtm4r3:Mantis:1.0.0")
     implementation("org.json:json:20240303")
-    implementation("commons-validator:commons-validator:1.7")
 
     // implement the backend utilities
-    implementation("io.github.n7ghtm4r3:equinox-backend:1.0.6")
+    implementation("io.github.n7ghtm4r3:equinox-backend:1.0.7")
     
     // implement the core utilities
-    implementation("io.github.n7ghtm4r3:equinox-core:1.0.6")
+    implementation("io.github.n7ghtm4r3:equinox-core:1.0.7")
 
     ...
 
@@ -296,7 +294,7 @@ package other.packages
 
 ...
 
-import com.tecknobit.equinoxbackend.environment.services.users.service.EquinoxUsersHelper;
+import com.tecknobit.equinoxbackend.environment.services.users.service.EquinoxUsersService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
@@ -389,7 +387,7 @@ package other.packages
 
 ...
 
-import com.tecknobit.equinoxbackend.environment.services.users.service.EquinoxUsersHelper;
+import com.tecknobit.equinoxbackend.environment.services.users.service.EquinoxUsersService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
@@ -479,7 +477,7 @@ package other.packages
 
 ...
 
-import com.tecknobit.equinoxbackend.environment.services.users.service.EquinoxUsersHelper;
+import com.tecknobit.equinoxbackend.environment.services.users.service.EquinoxUsersService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;

@@ -15,7 +15,7 @@ plugins {
 }
 
 group = "com.tecknobit.equinoxcompose"
-version = "1.0.6"
+version = "1.0.7"
 
 repositories {
     google()
@@ -97,10 +97,11 @@ kotlin {
 
         val androidMain by getting {
             dependencies {
-                implementation(libs.startup.runtime)
                 implementation(libs.connectivity.device)
                 implementation(libs.connectivity.compose.device)
                 implementation(libs.ktor.client.okhttp)
+                // TODO: TO REMOVE IN THE 1.0.8
+                implementation(libs.startup.runtime)
             }
         }
 
@@ -141,7 +142,7 @@ mavenPublishing {
     coordinates(
         groupId = "io.github.n7ghtm4r3",
         artifactId = "equinox-compose",
-        version = "1.0.6"
+        version = "1.0.7"
     )
     pom {
         name.set("Equinox Compose")

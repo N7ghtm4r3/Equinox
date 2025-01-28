@@ -1,25 +1,58 @@
-package com.tecknobit.equinoxcompose.helpers.utils
+package com.tecknobit.equinoxcore.utilities
 
 import android.app.Activity
 import java.lang.ref.WeakReference
 
 /**
- * A singleton object that helps to maintain a weak reference to the current [Activity]
- * This is useful to avoid memory leaks by preventing strong references to an Activity
+ * A singleton object that helps to maintain a weak reference to the current [Activity].
+ * This is useful to avoid memory leaks by preventing strong references to an Activity.
  *
  * The weak reference ensures that the Activity can be garbage collected when no longer in use,
- * preventing holding onto the Activity object longer than necessary
+ * preventing holding onto the Activity object longer than necessary.
  *
+ * Related docu [here](https://github.com/N7ghtm4r3/Equinox/documd/core/android/ContextActivityProvider.md)
+ *
+ * # Sample
+ *
+ * Initialize it in your MainActivity.kt class
+ *
+ * ```kotlin
+ * class MainActivity : ComponentActivity() {
+ *
+ *     /**
+ *      * {@inheritDoc}
+ *      *
+ *      * If your ComponentActivity is annotated with [ContentView], this will
+ *      * call [setContentView] for you.
+ *      */
+ *     @CallSuper
+ *     override fun onCreate(savedInstanceState: Bundle?) {
+ *         super.onCreate(savedInstanceState)
+ *
+ *         ...
+ *
+ *         // attach the activity
+ *         ContextActivityProvider.setCurrentActivity(this)
+ *
+ *         ...
+ *
+ *     }
+ *
+ * ```
+ *
+ * Use it in composable methods
+ *
+ *  ```kotlin
+ *  @Composable
+ *  fun SomeComposable() {
+ *      val activity = ContextActivityProvider.getCurrentActivity()
+ *  }
+ *
+ * ```
  *
  * @author N7ghtm4r3 - Tecknobit
+ *
  */
-@Deprecated(
-    message = "Will be removed in the future releases",
-    replaceWith = ReplaceWith(
-        expression = "com.tecknobit.equinoxcore.utilities.context.ContextActivityProvider"
-    ),
-    level = DeprecationLevel.WARNING
-)
 object ContextActivityProvider {
 
     /**

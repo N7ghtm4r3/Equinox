@@ -1,6 +1,6 @@
 # Equinox Core
 
-**v1.0.6**
+**v1.0.7**
 
 ![Static Badge](https://img.shields.io/badge/android-4280511051?link=https%3A%2F%2Fplay.google.com%2Fstore%2Fapps%2Fdetails%3Fid%3Dcom.tecknobit.ametista)
 ![Static Badge](https://img.shields.io/badge/ios-445E91?link=https%3A%2F%2Fimg.shields.io%2Fbadge%2Fandroid-4280511051)
@@ -10,13 +10,26 @@
 
 Core utilities for **KMP** and **Spring** technologies
 
+## Temporarily workaround
+
+Because conflicting dependencies due the `Equinox-Compose` migration as module, at the moment, to use correctly this
+library instead the old one you need to exclude it from you configuration if you're targeting `android`'s target, add
+this
+in your `build.gradle.kts` file:
+
+```kotlin
+configurations.all {
+  exclude("io.github.n7ghtm4r3", "Equinox-Compose-android")
+}
+```
+
 ## Implementation
 
 ### Version catalog
 
 ```gradle
 [versions]
-equinox = "1.0.6"
+equinox = "1.0.7"
 
 [libraries]
 equinox-core = { module = "io.github.n7ghtm4r3:equinox-core", version.ref = "equinox" }
@@ -29,7 +42,7 @@ equinox-core = { module = "io.github.n7ghtm4r3:equinox-core", version.ref = "equ
     ```gradle
     dependencies {
         // implement the core utilities
-        implementation 'io.github.n7ghtm4r3:equinox-core:1.0.6'
+        implementation 'io.github.n7ghtm4r3:equinox-core:1.0.7'
     }
     ```
 
@@ -38,7 +51,7 @@ equinox-core = { module = "io.github.n7ghtm4r3:equinox-core", version.ref = "equ
     ```gradle
     dependencies {
         // implement the core utilities
-        implementation("io.github.n7ghtm4r3:equinox-core:1.0.6")
+        implementation("io.github.n7ghtm4r3:equinox-core:1.0.7")
     }
     ```
 

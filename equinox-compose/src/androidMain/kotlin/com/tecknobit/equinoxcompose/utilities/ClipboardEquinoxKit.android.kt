@@ -3,7 +3,7 @@ package com.tecknobit.equinoxcompose.utilities
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context.CLIPBOARD_SERVICE
-import com.tecknobit.equinoxcompose.helpers.utils.AppContext
+import com.tecknobit.equinoxcore.utilities.AppContext
 
 /**
  * Method to copy to the clipboard a content value
