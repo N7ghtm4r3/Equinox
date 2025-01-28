@@ -1,5 +1,6 @@
 package com.tecknobit.equinoxcompose.session
 
+import com.tecknobit.equinoxcompose.session.EquinoxLocalUser.ApplicationTheme.Auto
 import com.tecknobit.equinoxcore.annotations.RequiresSuperCall
 import com.tecknobit.equinoxcore.annotations.Structure
 import com.tecknobit.equinoxcore.helpers.*
@@ -75,13 +76,15 @@ open class EquinoxLocalUser(
     /**
      * `hostAddress` the host address which the user communicate
      */
-    var hostAddress: String? = null
+    var hostAddress: String = ""
         set(value) {
-            setPreference(
-                key = HOST_ADDRESS_KEY,
-                value = value
-            )
-            field = value
+            if (field != value) {
+                setPreference(
+                    key = HOST_ADDRESS_KEY,
+                    value = value
+                )
+                field = value
+            }
         }
 
     /**
@@ -89,11 +92,13 @@ open class EquinoxLocalUser(
      */
     var userId: String? = null
         set(value) {
-            setPreference(
-                key = USER_IDENTIFIER_KEY,
-                value = value
-            )
-            field = value
+            if (field != value) {
+                setPreference(
+                    key = USER_IDENTIFIER_KEY,
+                    value = value
+                )
+                field = value
+            }
         }
 
     /**
@@ -101,20 +106,22 @@ open class EquinoxLocalUser(
      */
     var userToken: String? = null
         set(value) {
-            setPreference(
-                key = USER_TOKEN_KEY,
-                value = value
-            )
-            field = value
+            if (field != value) {
+                setPreference(
+                    key = USER_TOKEN_KEY,
+                    value = value
+                )
+                field = value
+            }
         }
 
     /**
      * `profilePic` the profile pick of the user
      */
-    var profilePic: String? = null
+    var profilePic: String = ""
         set(value) {
             if (field != value) {
-                val profilePicLocal = if (value == null || value.startsWith(hostAddress!!))
+                val profilePicLocal = if (value.startsWith(hostAddress))
                     value
                 else
                     "$hostAddress/$value"
@@ -129,73 +136,85 @@ open class EquinoxLocalUser(
     /**
      * `name` the name of the user
      */
-    var name: String? = null
+    var name: String = ""
         set(value) {
-            setPreference(
-                key = NAME_KEY,
-                value = value
-            )
-            field = value
+            if (field != value) {
+                setPreference(
+                    key = NAME_KEY,
+                    value = value
+                )
+                field = value
+            }
         }
 
     /**
      * `surname` the surname of the user
      */
-    var surname: String? = null
+    var surname: String = ""
         set(value) {
-            setPreference(
-                key = SURNAME_KEY,
-                value = value
-            )
-            field = value
+            if (field != value) {
+                setPreference(
+                    key = SURNAME_KEY,
+                    value = value
+                )
+                field = value
+            }
         }
 
     /**
      * `email` the email of the user
      */
-    var email: String? = null
+    var email: String = ""
         set(value) {
-            setPreference(
-                key = EMAIL_KEY,
-                value = value
-            )
-            field = value
+            if (field != value) {
+                setPreference(
+                    key = EMAIL_KEY,
+                    value = value
+                )
+                field = value
+            }
         }
 
     /**
      * `password` the password of the user
      */
-    var password: String? = null
+    var password: String = ""
         set(value) {
-            setPreference(
-                key = PASSWORD_KEY,
-                value = value
-            )
-            field = value
+            if (field != value) {
+                setPreference(
+                    key = PASSWORD_KEY,
+                    value = value
+                )
+                field = value
+            }
         }
 
     /**
      * `language` the language of the user
      */
-    var language: String? = null
+    var language: String = ""
         set(value) {
-            setPreference(
-                key = LANGUAGE_KEY,
-                value = value
-            )
-            field = value
+            if (field != value) {
+                setPreference(
+                    key = LANGUAGE_KEY,
+                    value = value
+                )
+                field = value
+            }
         }
 
     /**
      * `theme` the theme of the user
      */
-    var theme: ApplicationTheme? = null
+    var theme: ApplicationTheme = Auto
         set(value) {
-            setPreference(
-                key = THEME_KEY,
-                value = value?.name
-            )
-            field = value
+            if (field != value) {
+                setPreference(
+                    key = THEME_KEY,
+                    value = value.name
+                )
+                field = value
+            }
         }
 
     val isAuthenticated: Boolean
@@ -215,7 +234,6 @@ open class EquinoxLocalUser(
         get() = "$name $surname"
 
     init {
-        @Suppress("LeakingThis")
         initLocalUser()
     }
 
@@ -279,6 +297,7 @@ open class EquinoxLocalUser(
      * }
      * ```
      */
+    @RequiresSuperCall
     open fun insertNewUser(
         hostAddress: String,
         name: String,
@@ -298,7 +317,7 @@ open class EquinoxLocalUser(
         this.email = email
         this.password = password
         this.language = language
-        this.theme = ApplicationTheme.Auto
+        this.theme = Auto
     }
 
     /**
@@ -311,10 +330,13 @@ open class EquinoxLocalUser(
         key: String,
         value: String?,
     ) {
-        preferencesManager.storeString(
-            key = key,
-            value = value
-        )
+        // TODO: USE THE BUILT-IN METHOD
+        if (preferencesManager.retrieveString(key) != value) {
+            preferencesManager.storeString(
+                key = key,
+                value = value
+            )
+        }
     }
 
     /**
@@ -325,10 +347,10 @@ open class EquinoxLocalUser(
      */
     protected fun getPreference(
         key: String,
-    ): String? {
+    ): String {
         return preferencesManager.retrieveString(
             key = key
-        )
+        ) ?: ""
     }
 
     /**
@@ -336,6 +358,23 @@ open class EquinoxLocalUser(
      */
     fun clear() {
         preferencesManager.clearAll()
+        initLocalUser()
+    }
+
+    /**
+     * Method to update the dynamic data of the local user
+     *
+     * @param dynamicData The dynamic data to use to update the current user ones
+     */
+    fun updateDynamicAccountData(
+        dynamicData: JsonObject,
+    ) {
+        dynamicData.entries.forEach { entry ->
+            setPreference(
+                entry.key,
+                entry.value.jsonPrimitive.content
+            ) // TODO: USE THE CORRECT BUILT-IN METHOD TO GET DIRECTLY THE STRING
+        }
         initLocalUser()
     }
 
