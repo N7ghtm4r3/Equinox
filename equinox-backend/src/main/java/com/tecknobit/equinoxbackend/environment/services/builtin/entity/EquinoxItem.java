@@ -10,6 +10,8 @@ import jakarta.persistence.MappedSuperclass;
 import jakarta.persistence.Transient;
 import org.json.JSONObject;
 
+import static com.tecknobit.equinoxcore.helpers.CommonKeysKt.IDENTIFIER_KEY;
+
 /**
  * The {@code EquinoxItem} class is useful to create an Equinox's item giving the basis structure to work correctly
  *
@@ -26,11 +28,6 @@ public abstract class EquinoxItem {
      * {@code DISCRIMINATOR_VALUE_KEY} the key for the <b>"dtype"</b> field
      */
     public static final String DISCRIMINATOR_VALUE_KEY = "dtype";
-
-    /**
-     * {@code IDENTIFIER_KEY} the key for the <b>"id"</b> field
-     */
-    public static final String IDENTIFIER_KEY = "id";
 
     /**
      * {@code timeFormatter} the formatter used to format the timestamp values

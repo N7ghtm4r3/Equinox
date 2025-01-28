@@ -107,6 +107,15 @@ object TimeFormatter {
     var invalidTimeStringDefValue: String? = null
 
     /**
+     * Method to get the current timestamp value in milliseconds
+     *
+     * @return current timestamp as [Long]
+     */
+    fun currentTimestamp(): Long {
+        return Clock.System.now().toEpochMilliseconds()
+    }
+
+    /**
      * Method to format the current timestamp as string
      *
      * @param pattern The pattern to use to format the millis value
@@ -612,10 +621,26 @@ object TimeFormatter {
      *
      * @return the local date value as [LocalDate]
      */
-    private fun Long.toLocalDate(): LocalDate {
+    fun Long.toLocalDate(): LocalDate {
+        return this.toLocalDateTime().date
+    }
+
+    fun Long.toLocalDateTime(): LocalDateTime {
         return Instant.fromEpochMilliseconds(this)
             .toLocalDateTime(TimeZone.currentSystemDefault())
-            .date
+    }
+
+    fun LocalDateTime.toNanos(): Long {
+        return this.toMillis() * MILLIS_GAP_CONVERSION_RATE
+    }
+
+    fun LocalDateTime.toSeconds(): Long {
+        return this.toMillis() / MILLIS_GAP_CONVERSION_RATE
+    }
+
+    fun LocalDateTime.toMillis(): Long {
+        return this.toInstant(TimeZone.currentSystemDefault())
+            .toEpochMilliseconds()
     }
 
 }

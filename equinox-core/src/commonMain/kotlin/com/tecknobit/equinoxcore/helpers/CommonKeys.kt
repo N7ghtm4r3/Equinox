@@ -6,6 +6,11 @@ package com.tecknobit.equinoxcore.helpers
 const val USERS_KEY = "users"
 
 /**
+ * `IDENTIFIER_KEY` the key for the **"id"** field
+ */
+const val IDENTIFIER_KEY = "id"
+
+/**
  * `TOKEN_KEY` the key for the **"token"** field
  */
 const val TOKEN_KEY = "token"
