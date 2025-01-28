@@ -82,8 +82,7 @@ public abstract class EquinoxItem {
     }
 
     /**
-     * Method to get {@link #id} instance <br>
-     * No-any params required
+     * Method to get {@link #id} instance 
      *
      * @return {@link #id} instance as {@link String}
      */

@@ -155,8 +155,7 @@ abstract public class EquinoxController<T extends EquinoxUser, R extends Equinox
     }
 
     /**
-     * Method to get the payload for a successful response <br>
-     * No-any params required
+     * Method to get the payload for a successful response 
      *
      * @return the payload for a successful response as {@link String}
      */
@@ -225,8 +224,7 @@ abstract public class EquinoxController<T extends EquinoxUser, R extends Equinox
     }
 
     /**
-     * Method to generate an identifier of an item <br>
-     * No-any params required
+     * Method to generate an identifier of an item 
      *
      * @return the identifier as {@link String}
      */

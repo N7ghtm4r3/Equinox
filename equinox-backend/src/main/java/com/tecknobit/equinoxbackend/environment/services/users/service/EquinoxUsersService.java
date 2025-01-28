@@ -5,6 +5,9 @@ import com.tecknobit.equinoxbackend.environment.services.builtin.service.Equinox
 import com.tecknobit.equinoxbackend.environment.services.users.entity.EquinoxUser;
 import com.tecknobit.equinoxbackend.environment.services.users.repository.EquinoxUsersRepository;
 import com.tecknobit.equinoxbackend.resourcesutils.ResourcesManager;
+import jakarta.persistence.Query;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -28,14 +31,24 @@ import static java.lang.System.currentTimeMillis;
  * @author N7ghtm4r3 - Tecknobit
  * @see ResourcesManager
  *
- * @param <T>: the type of the {@link EquinoxUser} used in the system, is generic to avoid manual casts if it has been customized
- * @param <R>: the type of the {@link EquinoxUsersRepository} used in the system, is generic to avoid manual casts if it has been customized
+ * @param <T> The type of the {@link EquinoxUser} used in the system, is generic to avoid manual casts if it has been customized
+ * @param <R> The type of the {@link EquinoxUsersRepository} used in the system, is generic to avoid manual casts if it has been customized
  *
  * @since 1.0.1
  */
 @Service
 public class EquinoxUsersService<T extends EquinoxUser, R extends EquinoxUsersRepository<T>> extends EquinoxItemsHelper
         implements ResourcesManager {
+
+    /**
+     * {@code SELECT_} query command
+     */
+    protected static final String SELECT_ = "SELECT ";
+
+    /**
+     * {@code _FROM_} query command
+     */
+    protected static final String _FROM_ = " FROM ";
 
     /**
      * {@code ALTER_TABLE_} query command
@@ -62,6 +75,12 @@ public class EquinoxUsersService<T extends EquinoxUser, R extends EquinoxUsersRe
      */
     protected static final List<String> DEFAULT_USER_VALUES_KEYS = List.of(DISCRIMINATOR_VALUE_KEY, IDENTIFIER_KEY,
             TOKEN_KEY, NAME_KEY, SURNAME_KEY, EMAIL_KEY, PASSWORD_KEY, LANGUAGE_KEY);
+
+    /**
+     * {@code DEFAULT_DYNAMIC_ACCOUNT_DATA_KEYS} the default keys of the values to retrieve with the
+     * {@link #getDynamicAccountData(String)} method
+     */
+    protected static final List<String> DEFAULT_DYNAMIC_ACCOUNT_DATA_KEYS = List.of(EMAIL_KEY, PROFILE_PIC_KEY);
 
     /**
      * {@code usersRepository} instance for the users repository
@@ -94,9 +113,9 @@ public class EquinoxUsersService<T extends EquinoxUser, R extends EquinoxUsersRe
      * @param name:     the name of the user
      * @param surname:  the surname of the user
      * @param email:    the email of the user
-     * @param password: the password of the user
-     * @param language: the language of the user
-     * @param custom: the custom parameters to add in the default query
+     * @param password The password of the user
+     * @param language The language of the user
+     * @param custom The custom parameters to add in the default query
      *
      * @apiNote the order of the custom parameters must be the same of that specified in the {@link #getQueryValuesKeys()}
      */
@@ -113,8 +132,7 @@ public class EquinoxUsersService<T extends EquinoxUser, R extends EquinoxUsersRe
     }
 
     /**
-     * Method to get the list of keys to use in the {@link #BASE_SIGN_UP_QUERY} <br>
-     * No-any params required
+     * Method to get the list of keys to use in the {@link #BASE_SIGN_UP_QUERY}
      *
      * @return a list of keys as {@link List} of {@link String}
      * @apiNote This method allows a customizable sign-up with custom parameters added in a customization of the {@link EquinoxUser}
@@ -126,11 +144,11 @@ public class EquinoxUsersService<T extends EquinoxUser, R extends EquinoxUsersRe
     /**
      * Method to arrange the {@link #BASE_SIGN_UP_QUERY} with dynamic list of values to use in that query
      *
-     * @param queryBuilder: the builder of the query to execute
-     * @param list: the list to arrange
+     * @param queryBuilder The builder of the query to execute
+     * @param list The list to arrange
      * @param escape: whether the values of the list must be escaped with the {@link #SINGLE_QUOTE} character
      *
-     * @param <E>: type of the element in the list
+     * @param <E> Type of the element in the list
      */
     private <E> void arrangeQuery(StringBuilder queryBuilder, List<E> list, boolean escape) {
         int listSize = list.size();
@@ -152,8 +170,8 @@ public class EquinoxUsersService<T extends EquinoxUser, R extends EquinoxUsersRe
      * Method to sign in an existing user
      *
      * @param email:    the email of the user
-     * @param password: the password of the user
-     * @param custom: the custom parameters added in a customization of the {@link EquinoxUser}
+     * @param password The password of the user
+     * @param custom The custom parameters added in a customization of the {@link EquinoxUser}
      *
      * @return the authenticated user as {@link EquinoxUser} if the credentials inserted were correct
      */
@@ -168,8 +186,8 @@ public class EquinoxUsersService<T extends EquinoxUser, R extends EquinoxUsersRe
      * Method to validate the sign in request
      *
      * @param user:    the user to validated
-     * @param password: the password of the user
-     * @param custom: the custom parameters added in a customization of the {@link EquinoxUser} to execute a customized
+     * @param password The password of the user
+     * @param custom The custom parameters added in a customization of the {@link EquinoxUser} to execute a customized
      *             sign in validation
      *
      * @return the authenticated user as {@link EquinoxUser} if the credentials inserted were correct null otherwise
@@ -189,9 +207,57 @@ public class EquinoxUsersService<T extends EquinoxUser, R extends EquinoxUsersRe
     }
 
     /**
+     * Method to get the dynamic data of the user to correctly update in all the devices where the user is connected
+     *
+     * @param userId The identifier of the user
+     * @return the dynamic data as {@link JSONObject}
+     */
+    public JSONObject getDynamicAccountData(String userId) {
+        StringBuilder queryBuilder = new StringBuilder(SELECT_);
+        List<String> dynamicAccountDataKeys = getDynamicAccountDataKeys();
+        arrangeDynamicDataQuery(queryBuilder, dynamicAccountDataKeys);
+        queryBuilder.append(_FROM_ + USERS_KEY);
+        queryBuilder.append(_WHERE_);
+        queryBuilder.append(IDENTIFIER_KEY + "=").append(SINGLE_QUOTE).append(userId).append(SINGLE_QUOTE);
+        Query query = entityManager.createNativeQuery(queryBuilder.toString());
+        JSONArray result = new JSONArray(query.getResultList().get(0));
+        JSONObject dynamicData = new JSONObject();
+        for (int j = 0; j < result.length(); j++)
+            dynamicData.put(dynamicAccountDataKeys.get(j), result.get(j));
+        return dynamicData;
+    }
+
+    /**
+     * Method to get the list of keys to use in the {@link #getDynamicAccountData(String)} method
+     *
+     * @return a list of keys as {@link List} of {@link String}
+     * @apiNote This method allows a customizable retrieving of custom parameters added in a customization of the {@link EquinoxUser}
+     */
+    protected List<String> getDynamicAccountDataKeys() {
+        return DEFAULT_DYNAMIC_ACCOUNT_DATA_KEYS;
+    }
+
+    /**
+     * Method to arrange the dynamic data query to execute by the {@link #getDynamicAccountData(String)} method
+     *
+     * @param queryBuilder The builder of the query to execute
+     * @param list         The list to arrange
+     * @param <E>          Type of the element in the list
+     */
+    private <E> void arrangeDynamicDataQuery(StringBuilder queryBuilder, List<E> list) {
+        int ListSize = list.size();
+        int lastIndex = ListSize - 1;
+        for (int j = 0; j < ListSize; j++) {
+            queryBuilder.append(list.get(j));
+            if (j < lastIndex)
+                queryBuilder.append(COMMA);
+        }
+    }
+
+    /**
      * Method to change the profile pic of the {@link EquinoxUser}
      *
-     * @param profilePic: the profile pic resource
+     * @param profilePic The profile pic resource
      * @param userId:     the identifier of the user
      */
     public String changeProfilePic(MultipartFile profilePic, String userId) throws IOException {
@@ -205,7 +271,7 @@ public class EquinoxUsersService<T extends EquinoxUser, R extends EquinoxUsersRe
     /**
      * Method to change the email of the {@link EquinoxUser}
      *
-     * @param newEmail: the new email of the user
+     * @param newEmail The new email of the user
      * @param userId:   the identifier of the user
      */
     public void changeEmail(String newEmail, String userId) {
@@ -215,7 +281,7 @@ public class EquinoxUsersService<T extends EquinoxUser, R extends EquinoxUsersRe
     /**
      * Method to change the password of the {@link EquinoxUser}
      *
-     * @param newPassword: the new password of the user
+     * @param newPassword The new password of the user
      * @param userId:      the identifier of the user
      */
     public void changePassword(String newPassword, String userId) throws NoSuchAlgorithmException {
@@ -225,7 +291,7 @@ public class EquinoxUsersService<T extends EquinoxUser, R extends EquinoxUsersRe
     /**
      * Method to change the language of the {@link EquinoxUser}
      *
-     * @param newLanguage: the new language of the user
+     * @param newLanguage The new language of the user
      * @param userId:      the identifier of the user
      */
     public void changeLanguage(String newLanguage, String userId) {
@@ -235,7 +301,7 @@ public class EquinoxUsersService<T extends EquinoxUser, R extends EquinoxUsersRe
     /**
      * Method to delete a user
      *
-     * @param id: the identifier of the user to delete
+     * @param id The identifier of the user to delete
      */
     public void deleteUser(String id) {
         usersRepository.deleteById(id);
@@ -245,7 +311,7 @@ public class EquinoxUsersService<T extends EquinoxUser, R extends EquinoxUsersRe
     /**
      * Method to hash a sensitive user data
      *
-     * @param secret: the user value to hash
+     * @param secret The user value to hash
      * @throws NoSuchAlgorithmException when the hash of the user value fails
      */
     protected String hash(String secret) throws NoSuchAlgorithmException {

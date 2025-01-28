@@ -38,10 +38,10 @@ public class EquinoxUsersController<T extends EquinoxUser, R extends EquinoxUser
         H extends EquinoxUsersService<T, R>> extends EquinoxController<T, R, H> {
 
     /**
-     * {@code usersHelper} helper to manage the users database operations
+     * {@code usersService} helper to manage the users database operations
      */
     @Autowired
-    protected H usersHelper;
+    protected H usersService;
 
     /**
      * {@code configuration} the current configuration of the Equinox's backend instance
@@ -95,7 +95,7 @@ public class EquinoxUsersController<T extends EquinoxUser, R extends EquinoxUser
             JSONObject response = new JSONObject();
             String id = generateIdentifier();
             String token = generateIdentifier();
-            usersHelper.signUpUser(
+            usersService.signUpUser(
                     id,
                     token,
                     name,
@@ -206,7 +206,7 @@ public class EquinoxUsersController<T extends EquinoxUser, R extends EquinoxUser
         if (signInValidation != null)
             return failedResponse(signInValidation);
         try {
-            T user = usersHelper.signInUser(email.toLowerCase(), password, custom);
+            T user = usersService.signInUser(email.toLowerCase(), password, custom);
             if (user == null)
                 return failedResponse(NOT_AUTHORIZED_OR_WRONG_DETAILS_MESSAGE);
             mantis.changeCurrentLocale(DEFAULT_LANGUAGE);
@@ -305,6 +305,29 @@ public class EquinoxUsersController<T extends EquinoxUser, R extends EquinoxUser
     }
 
     /**
+     * Method to get the dynamic data of the user to correctly update in all the devices where the user is connected
+     *
+     * @param id    The identifier of the user
+     * @param token The token of the user
+     * @return the result of the request as {@link String}
+     */
+    @GetMapping(
+            path = USERS_KEY + "/{" + IDENTIFIER_KEY + "}" + DYNAMIC_ACCOUNT_DATA_ENDPOINT,
+            headers = {
+                    TOKEN_KEY
+            }
+    )
+    @RequestPath(path = "/api/v1/users/{id}/dynamicAccountData", method = GET)
+    public String getDynamicAccountData(
+            @PathVariable(IDENTIFIER_KEY) String id,
+            @RequestHeader(TOKEN_KEY) String token
+    ) {
+        if (!isMe(id, token))
+            return failedResponse(NOT_AUTHORIZED_OR_WRONG_DETAILS_MESSAGE);
+        return successResponse(usersService.getDynamicAccountData(id));
+    }
+
+    /**
      * Method to change the profile pic of the user
      *
      * @param id The identifier of the user
@@ -330,7 +353,7 @@ public class EquinoxUsersController<T extends EquinoxUser, R extends EquinoxUser
             return failedResponse(WRONG_PROCEDURE_MESSAGE);
         JSONObject response = new JSONObject();
         try {
-            String profilePicUrl = usersHelper.changeProfilePic(profilePic, id);
+            String profilePicUrl = usersService.changeProfilePic(profilePic, id);
             response.put(PROFILE_PIC_KEY, profilePicUrl);
             return successResponse(response);
         } catch (Exception e) {
@@ -372,7 +395,7 @@ public class EquinoxUsersController<T extends EquinoxUser, R extends EquinoxUser
         if (!Companion.isEmailValid(email))
             return failedResponse(WRONG_EMAIL_MESSAGE);
         try {
-            usersHelper.changeEmail(email, id);
+            usersService.changeEmail(email, id);
             return successResponse();
         } catch (Exception e) {
             return failedResponse(WRONG_PROCEDURE_MESSAGE);
@@ -413,7 +436,7 @@ public class EquinoxUsersController<T extends EquinoxUser, R extends EquinoxUser
         if (!Companion.isPasswordValid(password))
             return failedResponse(WRONG_PASSWORD_MESSAGE);
         try {
-            usersHelper.changePassword(password, id);
+            usersService.changePassword(password, id);
             return successResponse();
         } catch (Exception e) {
             return failedResponse(WRONG_PROCEDURE_MESSAGE);
@@ -454,7 +477,7 @@ public class EquinoxUsersController<T extends EquinoxUser, R extends EquinoxUser
         if (!Companion.isLanguageValid(language))
             return failedResponse(WRONG_LANGUAGE_MESSAGE);
         try {
-            usersHelper.changeLanguage(language, id);
+            usersService.changeLanguage(language, id);
             return successResponse();
         } catch (Exception e) {
             return failedResponse(WRONG_PROCEDURE_MESSAGE);
@@ -481,7 +504,7 @@ public class EquinoxUsersController<T extends EquinoxUser, R extends EquinoxUser
     ) {
         if (!isMe(id, token))
             return failedResponse(NOT_AUTHORIZED_OR_WRONG_DETAILS_MESSAGE);
-        usersHelper.deleteUser(id);
+        usersService.deleteUser(id);
         return successResponse();
     }
 

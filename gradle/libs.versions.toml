@@ -11,7 +11,6 @@ ktor = "3.0.3"
 #equinox-backend
 jacksonDatabind = "2.15.4"
 springBoot = "3.2.3"
-springWeb = "6.1.12"
 kotlinxCoroutinesCore = "1.10.1"
 mantis = "1.0.0"
 apimanager = "2.2.4"
@@ -37,7 +36,6 @@ ktor-client-js = { module = "io.ktor:ktor-client-js", version.ref = "ktor" }
 ktor-client-okhttp = { module = "io.ktor:ktor-client-okhttp", version.ref = "ktor" }
 #equinox-backend
 spring-boot-starter-data-jpa = { module = "org.springframework.boot:spring-boot-starter-data-jpa", version.ref = "springBoot" }
-spring-web = { module = "org.springframework:spring-web", version.ref = "springWeb" }
 boot-spring-boot-starter-web = { module = "org.springframework.boot:spring-boot-starter-web", version.ref = "springBoot" }
 jackson-databind = { module = "com.fasterxml.jackson.core:jackson-databind", version.ref = "jacksonDatabind" }
 kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinxCoroutinesCore" }

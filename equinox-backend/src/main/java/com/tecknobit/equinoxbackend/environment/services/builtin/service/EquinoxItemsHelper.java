@@ -63,13 +63,12 @@ public abstract class EquinoxItemsHelper {
     }
 
     /**
-     * The {@code SyncBatchContainer} interface is useful to execute the {@link #syncBatch(SyncBatchContainer, String, String, BatchQuery)}
-     * method to synchronize the data. This interface is the container about the information to use during the synchronization
-     * process
+     * The {@code SyncBatchModel} interface is useful to execute the {@link #syncBatch(SyncBatchModel, String, String, BatchQuery)}
+     * method to synchronize the data. This interface is the model to use during the synchronization procedure
      *
      * @author N7ghtm4r3 - Tecknobit
      */
-    public interface SyncBatchContainer {
+    public interface SyncBatchModel {
 
         /**
          * Method to get the current list of data
@@ -212,20 +211,20 @@ public abstract class EquinoxItemsHelper {
     /**
      * Method to execute a batch synchronization of a list of data simultaneously
      *
-     * @param container Contains the data about the synchronization such the columns affected and the current list of the data
+     * @param model Contains the data about the synchronization such the columns affected and the current list of the data
      * @param table The table where execute the synchronization of the data
      * @param targetId The target identifier of the entity where the synchronization must be executed, such a user and
      *                     his/her notes
      * @param batchQuery The manager of the batch query to execute
      */
-    protected <V> void syncBatch(SyncBatchContainer container, String table, String targetId, BatchQuery<V> batchQuery) {
-        String[] columns = container.getColumns();
-        ArrayList<V> currentData = container.getCurrentData();
+    protected <V> void syncBatch(SyncBatchModel model, String table, String targetId, BatchQuery<V> batchQuery) {
+        String[] columns = model.getColumns();
+        ArrayList<V> currentData = model.getCurrentData();
         List<V> updatedData = batchQuery.getData();
         batchInsert(INSERT_IGNORE_INTO, table, batchQuery, columns);
         currentData.removeAll(updatedData);
         batchDelete(table, List.of(List.of(targetId), currentData), columns);
-        container.afterSync();
+        model.afterSync();
     }
 
     /**
