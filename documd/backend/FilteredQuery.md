@@ -42,6 +42,8 @@ protected void fillPredicates() {
 ### Add the custom filters
 
 ```java
+
+@FiltersAdder
 private void addModelNameFilters() {
     HashSet<String> names = getModelNameFilters(); // extract the specific filters from the rawFilters list
     if (names != null) {
@@ -50,7 +52,7 @@ private void addModelNameFilters() {
     }
 }
 
-@Wrapper
+@FiltersExtractor
 private HashSet<String> getModelNameFilters() {
     return extractFiltersByPattern(MODEL_PATTERN);
 }

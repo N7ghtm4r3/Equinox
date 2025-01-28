@@ -6,6 +6,7 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.Query;
 import jakarta.transaction.Transactional;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -256,7 +257,7 @@ public abstract class EquinoxItemsHelper {
      * @apiNote the query form: DELETE FROM table WHERE (col1, col2, ...) IN ((dataCol1, dataCol2), (dataCol1a, dataCol2a), ...)
      */
     @Wrapper
-    protected void batchDeleteOnSingleSet(String table, List<?> values, String... columns) {
+    protected void batchDeleteOnSingleSet(String table, List<?> values, @NotNull String... columns) {
         batchDelete(table, List.of(values), columns);
     }
 
@@ -268,7 +269,7 @@ public abstract class EquinoxItemsHelper {
      * @param columns The columns where execute the in comparison to delete the row correctly
      * @apiNote the query form: DELETE FROM table WHERE (col1, col2, ...) IN ((dataCol1, dataCol2), (dataCol1a, dataCol2a), ...)
      */
-    protected void batchDelete(String table, List<List<?>> values, String... columns) {
+    protected void batchDelete(String table, List<List<?>> values, @NotNull String... columns) {
         int columnsNumber = columns.length;
         if (columnsNumber == 0)
             return;
