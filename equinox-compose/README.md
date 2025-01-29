@@ -92,7 +92,7 @@ Add the JitPack repository to your build file
     - [EquinoxProfileViewModel](src/commonMain/kotlin/com/tecknobit/equinoxcompose/helpers/viewmodels/EquinoxProfileViewModel.kt) ->
       prebuilt viewmodel to manage the user account settings and preferences
 - [SessionManager](../documd/compose/apis/SessionManager.md)
-- [EquinoxScreen](../documd/compose/apis/EquinoxScreen.md)
+- [EquinoxScreens](../documd/compose/apis/EquinoxScreens.md)
 
 The other apis will be gradually released
 

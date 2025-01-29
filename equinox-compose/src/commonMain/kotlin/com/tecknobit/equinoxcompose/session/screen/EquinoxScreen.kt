@@ -7,7 +7,7 @@ import com.tecknobit.equinoxcore.annotations.Structure
  * The **EquinoxScreen** class is useful to create a screen with a lifecycle management similar to the Android's activities.
  * This screen supports to attach the related [androidx.lifecycle.ViewModel] and operate with it
  *
- * Related documentation: [EquinoxScreen.md](https://github.com/N7ghtm4r3/Equinox-Compose/blob/main/documd/EquinoxScreen.md.md)
+ * Related documentation: [EquinoxScreen.md](https://github.com/N7ghtm4r3/Equinox-Compose/blob/main/documd/EquinoxScreens.md)
  *
  * @property loggerEnabled Whether enabled the logging to log the events occurred in the [ShowContent] composable,
  * it is suggested to disable it in production
@@ -18,6 +18,7 @@ import com.tecknobit.equinoxcore.annotations.Structure
  *
  * @param V generic type used to allow the use of own viewmodel in custom screens
  *
+ * @see EquinoxNoModelScreen
  */
 @Structure
 abstract class EquinoxScreen<V : EquinoxViewModel>(

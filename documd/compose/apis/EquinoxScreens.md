@@ -1,14 +1,10 @@
-# EquinoxScreen
+# Equinox screens
 
-This API is useful to create a screen with a lifecycle management similar to the Android's activities
+These APIs are useful to create screens with a lifecycle management similar to the Android's activities
 
-## Usage
+## Integration
 
-To use the EquinoxScreen API you have to follow this guide for a correct implementation
-
-### Creation of concrete custom screen
-
-#### With related ViewModel
+### With related ViewModel
 
 Create a concrete custom screen with the custom specifications you need and pass as parameter its viewmodel.
 
@@ -32,7 +28,7 @@ class TestScreen : EquinoxScreen<TestViewModel>( // related viewmodel of TestScr
     @Composable
     override fun ArrangeScreenContent() {
         Scaffold(
-            snackbarHost = { SnackbarHost(viewModel!!.snackbarHostState!!) }
+            snackbarHost = { SnackbarHost(viewModel.snackbarHostState!!) }
         ) {
             Column(
                 modifier = Modifier
@@ -64,25 +60,24 @@ class TestScreen : EquinoxScreen<TestViewModel>( // related viewmodel of TestScr
         super.onStart()
 
         // this lifecycle event cannot be automatically managed because the refresh routine is custom
-        viewModel!!.refreshTime()
+        viewModel.refreshTime()
     }
 
     // where the states of the screen can be collected or instantiated
     @Composable
     override fun CollectStates() {
-        time = viewModel!!.time.collectAsState()
+        time = viewModel.time.collectAsState()
     }
 
 }
 ```
 
-#### With no related ViewModel
+### With no related ViewModel
 
-Create a concrete custom screen with the custom specifications you need without passing the viewmodel
+Create a concrete custom screen with the custom specifications you need without having a support viewmodel
 
 ```kotlin
-class TestScreen : EquinoxScreen<EquinoxViewModel>(
-    // this is required and cannot be omitted, but will not be used any viewmodel
+class TestScreen : EquinoxNoModelScreen(
     loggerEnabled = true, // whether the logger is enabled
 ) {
 
