@@ -1,4 +1,4 @@
-package com.tecknobit.equinoxcompose.session
+package com.tecknobit.equinoxcompose.session.screen
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
@@ -9,41 +9,30 @@ import androidx.lifecycle.Lifecycle.Event.*
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.LifecycleOwner
 import co.touchlab.kermit.Logger
-import com.tecknobit.equinoxcompose.session.EquinoxScreen.EquinoxScreenEvent.ON_DISPOSE
-import com.tecknobit.equinoxcompose.session.EquinoxScreen.EquinoxScreenEvent.ON_INIT
-import com.tecknobit.equinoxcompose.viewmodels.EquinoxViewModel
+import com.tecknobit.equinoxcompose.session.screen.EquinoxNoModelScreen.EquinoxScreenEvent.ON_DISPOSE
+import com.tecknobit.equinoxcompose.session.screen.EquinoxNoModelScreen.EquinoxScreenEvent.ON_INIT
 import com.tecknobit.equinoxcore.annotations.Structure
 
 /**
- * The **EquinoxScreen** class is useful to create a screen with a lifecycle management similar to the Android's activities
+ * The **EquinoxNoModelScreen** class is useful to create a screen with a lifecycle management similar to the Android's activities
  *
  * Related documentation: [EquinoxScreen.md](https://github.com/N7ghtm4r3/Equinox-Compose/blob/main/documd/EquinoxScreen.md.md)
  *
  * @property loggerEnabled Whether enabled the logging to log the events occurred in the [ShowContent] composable,
  * it is suggested to disable it in production
- * @property viewModel If the screen has got a related viewmodel that will be used to automatically manage the refresher suspension
- * or restarting with the lifecycle events of the screen
  *
  * @author N7ghtm4r3 - Tecknobit
  *
- * @param V generic type used to allow the use of own viewmodel in custom screens
+ * @since 1.0.7
  *
  */
 @Structure
-@Deprecated(
-    message = "This api has been moved to the com.tecknobit.equinoxcompose.session.screen package",
-    level = DeprecationLevel.WARNING,
-    replaceWith = ReplaceWith(
-        expression = "com.tecknobit.equinoxcompose.session.screen.EquinoxScreen"
-    )
-)
-abstract class EquinoxScreen<V : EquinoxViewModel>(
+abstract class EquinoxNoModelScreen(
     private val loggerEnabled: Boolean = true,
-    protected open val viewModel: V? = null,
 ) {
 
     /**
-     * *EquinoxScreenEvent* -> available [EquinoxScreen] custom statuses
+     * *EquinoxScreenEvent* -> available [EquinoxNoModelScreen] custom statuses
      */
     enum class EquinoxScreenEvent {
 
@@ -92,7 +81,7 @@ abstract class EquinoxScreen<V : EquinoxViewModel>(
      * @param lifecycleOwner The owner of the current lifecycle
      */
     @Composable
-    private fun LifecycleManager(
+    protected fun LifecycleManager(
         lifecycleOwner: LifecycleOwner = LocalLifecycleOwner.current,
     ) {
         DisposableEffect(lifecycleOwner) {
@@ -117,7 +106,7 @@ abstract class EquinoxScreen<V : EquinoxViewModel>(
     }
 
     /**
-     * Method invoked when the [EquinoxScreen] has been instantiated.
+     * Method invoked when the [EquinoxNoModelScreen] has been instantiated.
      *
      * To use this correctly in have to invoke this in your on `init` block of your custom screen, otherwise
      * will be never invoked
@@ -125,7 +114,7 @@ abstract class EquinoxScreen<V : EquinoxViewModel>(
      * ### Usage
      *
      * ```kotlin
-     * class CustomScreen : EquinoxScreen() {
+     * class CustomScreen : EquinoxNoModelScreen() {
      *
      * 	init {
      * 		onInit();
@@ -146,17 +135,12 @@ abstract class EquinoxScreen<V : EquinoxViewModel>(
     }
 
     /**
-     * Method invoked when the [ShowContent] composable has been created.
-     *
-     * If the [viewModel] of the screen is not `null` will be set the [com.tecknobit.equinox.Retriever.activeContext]
-     * as the current screen displayed
-     *
+     * Method invoked when the [ShowContent] composable has been created
      */
     protected open fun onCreate() {
         logScreenEvent(
             event = ON_CREATE
         )
-        viewModel?.setActiveContext(this::class)
     }
 
     /**
@@ -169,52 +153,40 @@ abstract class EquinoxScreen<V : EquinoxViewModel>(
     }
 
     /**
-     * Method invoked when the [ShowContent] composable has been resumed.
-     *
-     * If the [viewModel] of the screen is not `null` will be restarted the [com.tecknobit.equinoxcompose.helpers.Retriever.retrieverScope]
+     * Method invoked when the [ShowContent] composable has been resumed
      *
      */
     protected open fun onResume() {
         logScreenEvent(
             event = ON_RESUME
         )
-        viewModel?.restartRetriever()
     }
 
     /**
-     * Method invoked when the [ShowContent] composable has been paused.
-     *
-     * If the [viewModel] of the screen is not `null` will be suspended the [com.tecknobit.equinoxcompose.helpers.Retriever.retrieverScope]
+     * Method invoked when the [ShowContent] composable has been paused
      */
     protected open fun onPause() {
         logScreenEvent(
             event = ON_PAUSE
         )
-        viewModel?.suspendRetriever()
     }
 
     /**
-     * Method invoked when the [ShowContent] composable has been stopped.
-     *
-     * If the [viewModel] of the screen is not `null` will be suspended the [com.tecknobit.equinoxcompose.helpers.Retriever.retrieverScope]
+     * Method invoked when the [ShowContent] composable has been stopped
      */
     protected open fun onStop() {
         logScreenEvent(
             event = ON_STOP
         )
-        viewModel?.suspendRetriever()
     }
 
     /**
-     * Method invoked when the [ShowContent] composable has been destroyed.
-     *
-     * If the [viewModel] of the screen is not `null` will be suspended the [com.tecknobit.equinoxcompose.helpers.Retriever.retrieverScope]
+     * Method invoked when the [ShowContent] composable has been destroyed
      */
     protected open fun onDestroy() {
         logScreenEvent(
             event = ON_DESTROY
         )
-        viewModel?.suspendRetriever()
     }
 
     /**
@@ -227,15 +199,12 @@ abstract class EquinoxScreen<V : EquinoxViewModel>(
     }
 
     /**
-     * Method invoked when the [ShowContent] composable has been disposed.
-     *
-     * If the [viewModel] of the screen is not `null` will be suspended the [com.tecknobit.equinoxcompose.helpers.Retriever.retrieverScope]
+     * Method invoked when the [ShowContent] composable has been disposed
      */
     protected open fun onDispose() {
         logScreenEvent(
             event = ON_DISPOSE.name
         )
-        viewModel?.suspendRetriever()
     }
 
     /**
