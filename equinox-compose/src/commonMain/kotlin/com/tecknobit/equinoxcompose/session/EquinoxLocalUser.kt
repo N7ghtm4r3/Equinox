@@ -5,6 +5,7 @@ import com.tecknobit.equinoxcore.annotations.RequiresSuperCall
 import com.tecknobit.equinoxcore.annotations.Structure
 import com.tecknobit.equinoxcore.helpers.*
 import com.tecknobit.equinoxcore.helpers.InputsValidator.Companion.HOST_ADDRESS_KEY
+import com.tecknobit.equinoxcore.json.treatsAsString
 import com.tecknobit.equinoxcore.network.Requester.Companion.USER_IDENTIFIER_KEY
 import com.tecknobit.equinoxcore.network.Requester.Companion.USER_TOKEN_KEY
 import com.tecknobit.kmprefs.KMPrefs
@@ -372,8 +373,8 @@ open class EquinoxLocalUser(
         dynamicData.entries.forEach { entry ->
             setPreference(
                 entry.key,
-                entry.value.jsonPrimitive.content
-            ) // TODO: USE THE CORRECT BUILT-IN METHOD TO GET DIRECTLY THE STRING
+                entry.value.treatsAsString()
+            )
         }
         initLocalUser()
     }
