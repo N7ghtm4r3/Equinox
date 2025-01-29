@@ -557,10 +557,11 @@ abstract class Requester(
             logRequestInfo(
                 requestUrl = requestUrl,
                 headers = headers,
+                query = query,
                 requestPayloadInfo = {
                     payload?.let {
                         println("\n-PAYLOAD")
-                        println(payload)
+                        payload.prettyPrint()
                     }
                 },
                 response = jResponse
@@ -634,6 +635,7 @@ abstract class Requester(
             logRequestInfo(
                 requestUrl = requestUrl,
                 headers = headers,
+                query = query,
                 requestPayloadInfo = {
                     println("\n-PAYLOAD")
                     payload.forEachIndexed { index, part ->
@@ -691,12 +693,15 @@ abstract class Requester(
      * Method to print the details of the request sent if the [debugMode] is enabled
      *
      * @param requestUrl The url of the request
+     * @param headers Custom headers of the request
+     * @param query The query parameters of the request
      * @param requestPayloadInfo The payload of the request if sent with the request
      * @param response The response of the request sent
      */
     private suspend fun logRequestInfo(
         requestUrl: String,
         headers: Map<String, Any>,
+        query: JsonObject?,
         requestPayloadInfo: () -> Unit,
         response: JsonObject?,
     ) {
@@ -706,9 +711,14 @@ abstract class Requester(
                 headers = headers
             )
             println("-URL\n$requestUrl")
+            logQuery(
+                query = query
+            )
             requestPayloadInfo()
-            if (response != null)
-                println("\n-RESPONSE\n$response")
+            response?.let {
+                println("\n-RESPONSE")
+                response.prettyPrint()
+            }
             println("---------------------------------------------------")
         }
     }
@@ -728,6 +738,28 @@ abstract class Requester(
                 println(header.key + ": " + header.value)
             }
         }
+    }
+
+    /**
+     * Method to log the current query used in the request
+     */
+    private fun logQuery(
+        query: JsonObject?,
+    ) {
+        query?.let {
+            println("\n-QUERY")
+            query.prettyPrint()
+        }
+    }
+
+    /**
+     * Method to print a [JsonObject] request part in pretty format
+     */
+    private fun JsonObject.prettyPrint() {
+        val json = Json {
+            prettyPrint = true
+        }
+        println(json.encodeToString(JsonObject.serializer(), this))
     }
 
     /**
