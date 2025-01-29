@@ -36,8 +36,10 @@ import org.jetbrains.compose.resources.stringResource
  * @param text The text displayed in the alert dialog
  * @param dismissAction The action to execute when the user dismissed the action
  * @param dismissText The text of the dismiss [TextButton]
+ * @param dismissTextStyle The style to apply to the dismiss text
  * @param confirmAction The action to execute when the used confirmed the action
  * @param confirmText The text of the confirm [TextButton]
+ * @param confirmTextStyle The style to apply to the confirmation text
  */
 @Composable
 @NonRestartableComposable
@@ -56,8 +58,10 @@ fun EquinoxAlertDialog(
     text: StringResource,
     dismissAction: () -> Unit = onDismissAction,
     dismissText: StringResource? = Res.string.dismiss,
+    dismissTextStyle: TextStyle = TextStyle.Default,
     confirmAction: () -> Unit,
     confirmText: StringResource = Res.string.confirm,
+    confirmTextStyle: TextStyle = TextStyle.Default,
 ) {
     EquinoxAlertDialog(
         modifier = modifier,
@@ -76,8 +80,10 @@ fun EquinoxAlertDialog(
         },
         dismissAction = dismissAction,
         dismissText = dismissText,
+        dismissTextStyle = dismissTextStyle,
         confirmAction = confirmAction,
-        confirmText = confirmText
+        confirmText = confirmText,
+        confirmTextStyle = confirmTextStyle
     )
 }
 
@@ -96,8 +102,10 @@ fun EquinoxAlertDialog(
  * @param text The text displayed in the alert dialog
  * @param dismissAction The action to execute when the user dismissed the action
  * @param dismissText The text of the dismiss [TextButton]
+ * @param dismissTextStyle The style to apply to the dismiss text
  * @param confirmAction The action to execute when the used confirmed the action
  * @param confirmText The text of the confirm [TextButton]
+ * @param confirmTextStyle The style to apply to the confirmation text
  */
 @Composable
 @NonRestartableComposable
@@ -116,8 +124,10 @@ fun EquinoxAlertDialog(
     text: String,
     dismissAction: () -> Unit = onDismissAction,
     dismissText: String?,
+    dismissTextStyle: TextStyle = TextStyle.Default,
     confirmAction: () -> Unit,
     confirmText: String,
+    confirmTextStyle: TextStyle = TextStyle.Default,
 ) {
     EquinoxAlertDialog(
         modifier = modifier,
@@ -136,8 +146,10 @@ fun EquinoxAlertDialog(
         },
         dismissAction = dismissAction,
         dismissText = dismissText,
+        dismissTextStyle = dismissTextStyle,
         confirmAction = confirmAction,
-        confirmText = confirmText
+        confirmText = confirmText,
+        confirmTextStyle = confirmTextStyle
     )
 }
 
@@ -156,8 +168,10 @@ fun EquinoxAlertDialog(
  * @param text The text displayed in the alert dialog
  * @param dismissAction The action to execute when the user dismissed the action
  * @param dismissText The text of the dismiss [TextButton]
+ * @param dismissTextStyle The style to apply to the dismiss text
  * @param confirmAction The action to execute when the used confirmed the action
  * @param confirmText The text of the confirm [TextButton]
+ * @param confirmTextStyle The style to apply to the confirmation text
  */
 @Composable
 @NonRestartableComposable
@@ -176,8 +190,10 @@ fun EquinoxAlertDialog(
     text: @Composable () -> Unit,
     dismissAction: () -> Unit = onDismissAction,
     dismissText: StringResource? = Res.string.dismiss,
+    dismissTextStyle: TextStyle = TextStyle.Default,
     confirmAction: () -> Unit,
     confirmText: StringResource = Res.string.confirm,
+    confirmTextStyle: TextStyle = TextStyle.Default,
 ) {
     EquinoxAlertDialog(
         modifier = modifier,
@@ -194,8 +210,10 @@ fun EquinoxAlertDialog(
             stringResource(dismissText)
         else
             null,
+        dismissTextStyle = dismissTextStyle,
         confirmAction = confirmAction,
-        confirmText = stringResource(confirmText)
+        confirmText = stringResource(confirmText),
+        confirmTextStyle = confirmTextStyle
     )
 }
 
@@ -214,8 +232,10 @@ fun EquinoxAlertDialog(
  * @param text The text displayed in the alert dialog
  * @param dismissAction The action to execute when the user dismissed the action
  * @param dismissText The text of the dismiss [TextButton]
+ * @param dismissTextStyle The style to apply to the dismiss text
  * @param confirmAction The action to execute when the used confirmed the action
  * @param confirmText The text of the confirm [TextButton]
+ * @param confirmTextStyle The style to apply to the confirmation text
  */
 @Composable
 @NonRestartableComposable
@@ -234,8 +254,10 @@ fun EquinoxAlertDialog(
     text: @Composable () -> Unit,
     dismissAction: () -> Unit = onDismissAction,
     dismissText: String?,
+    dismissTextStyle: TextStyle = TextStyle.Default,
     confirmAction: () -> Unit,
     confirmText: String,
+    confirmTextStyle: TextStyle = TextStyle.Default,
 ) {
     if (show.value) {
         viewModel?.suspendRetriever()
@@ -264,7 +286,8 @@ fun EquinoxAlertDialog(
                         onClick = dismissAction
                     ) {
                         Text(
-                            text = dismissText
+                            text = dismissText,
+                            style = dismissTextStyle
                         )
                     }
                 }
@@ -278,7 +301,8 @@ fun EquinoxAlertDialog(
                     }
                 ) {
                     Text(
-                        text = confirmText
+                        text = confirmText,
+                        style = confirmTextStyle
                     )
                 }
             }

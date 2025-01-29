@@ -20,7 +20,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import static com.tecknobit.apimanager.apis.APIRequest.SHA256_ALGORITHM;
-import static com.tecknobit.equinoxbackend.environment.services.builtin.entity.EquinoxItem.IDENTIFIER_KEY;
 import static com.tecknobit.equinoxbackend.environment.services.users.entity.EquinoxUser.DISCRIMINATOR_VALUE_KEY;
 import static com.tecknobit.equinoxcore.helpers.CommonKeysKt.*;
 import static java.lang.System.currentTimeMillis;
@@ -80,7 +79,7 @@ public class EquinoxUsersService<T extends EquinoxUser, R extends EquinoxUsersRe
      * {@code DEFAULT_DYNAMIC_ACCOUNT_DATA_KEYS} the default keys of the values to retrieve with the
      * {@link #getDynamicAccountData(String)} method
      */
-    protected static final List<String> DEFAULT_DYNAMIC_ACCOUNT_DATA_KEYS = List.of(EMAIL_KEY, PROFILE_PIC_KEY);
+    protected static final List<String> DEFAULT_DYNAMIC_ACCOUNT_DATA_KEYS = List.of(EMAIL_KEY, PROFILE_PIC_KEY, LANGUAGE_KEY);
 
     /**
      * {@code usersRepository} instance for the users repository

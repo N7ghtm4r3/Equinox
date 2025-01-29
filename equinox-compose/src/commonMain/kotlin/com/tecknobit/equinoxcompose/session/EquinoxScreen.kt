@@ -3,6 +3,7 @@ package com.tecknobit.equinoxcompose.session
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.ui.platform.LocalLifecycleOwner
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.Lifecycle.Event
 import androidx.lifecycle.Lifecycle.Event.*
 import androidx.lifecycle.LifecycleEventObserver
@@ -48,6 +49,15 @@ abstract class EquinoxScreen<V : EquinoxViewModel>(
          * *ON_DISPOSE* -> occurs when the screen has been disposed
          */
         ON_DISPOSE
+
+    }
+
+    companion object {
+
+        /**
+         * `MAX_CONTAINER_WIDTH` constant value used to give a max dimension to container for the large screens
+         */
+        val MAX_CONTAINER_WIDTH = 1280.dp
 
     }
 

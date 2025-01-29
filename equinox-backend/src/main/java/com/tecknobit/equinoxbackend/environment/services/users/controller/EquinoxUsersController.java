@@ -15,7 +15,6 @@ import java.util.Map;
 
 import static com.tecknobit.apimanager.apis.APIRequest.RequestMethod.*;
 import static com.tecknobit.apimanager.apis.ServerProtector.SERVER_SECRET_KEY;
-import static com.tecknobit.equinoxbackend.environment.services.users.entity.EquinoxUser.IDENTIFIER_KEY;
 import static com.tecknobit.equinoxcore.helpers.CommonKeysKt.*;
 import static com.tecknobit.equinoxcore.helpers.InputsValidator.Companion;
 import static com.tecknobit.equinoxcore.helpers.InputsValidator.*;

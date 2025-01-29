@@ -104,7 +104,7 @@ open class EquinoxProfileViewModel(
                 },
                 onSuccess = { response ->
                     localUser.profilePic = response.toResponseData()[PROFILE_PIC_KEY]!!.jsonPrimitive.content
-                    profilePic.value = localUser.profilePic!!
+                    profilePic.value = localUser.profilePic
                 },
                 onFailure = onFailure
             )
@@ -136,7 +136,7 @@ open class EquinoxProfileViewModel(
                 },
                 onSuccess = {
                     localUser.email = newEmail.value
-                    localUser.email = newEmail.value
+                    email.value = newEmail.value
                     onSuccess?.invoke()
                 },
                 onFailure = onFailure
@@ -180,12 +180,10 @@ open class EquinoxProfileViewModel(
     /**
      * Method to execute the language change
      *
-     * @param newLanguage The new language of the user
      * @param onSuccess The action to execute if the request has been successful
      * @param onFailure The action to execute when the request failed
      */
     fun changeLanguage(
-        newLanguage: String,
         onSuccess: (() -> Unit)? = null,
         onFailure: (JsonObject) -> Unit = {
             showSnackbarMessage(it)
@@ -195,12 +193,11 @@ open class EquinoxProfileViewModel(
             requester.sendRequest(
                 request = {
                     changeLanguage(
-                        newLanguage = newLanguage
+                        newLanguage = language.value
                     )
                 },
                 onSuccess = {
-                    localUser.language = newLanguage
-                    language.value = newLanguage
+                    localUser.language = language.value
                     onSuccess?.invoke()
                 },
                 onFailure = onFailure
@@ -211,15 +208,12 @@ open class EquinoxProfileViewModel(
     /**
      * Method to execute the theme change
      *
-     * @param newTheme The new theme of the user
      * @param onChange The action to execute when the theme changed
      */
     fun changeTheme(
-        newTheme: ApplicationTheme,
         onChange: (() -> Unit)? = null,
     ) {
-        localUser.theme = newTheme
-        theme.value = newTheme
+        localUser.theme = theme.value
         onChange?.invoke()
     }
 
