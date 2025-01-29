@@ -1,5 +1,6 @@
 package com.tecknobit.equinoxcore.network
 
+import com.tecknobit.equinoxcore.annotations.Assembler
 import com.tecknobit.equinoxcore.annotations.Wrapper
 import com.tecknobit.equinoxcore.network.ResponseStatus.*
 import com.tecknobit.equinoxcore.pagination.PaginatedResponse
@@ -495,6 +496,7 @@ abstract class Requester(
      *
      * @return the paginated query as [JsonObject]
      */
+    @Assembler
     protected fun createPaginationQuery(
         page: Int,
         pageSize: Int,
@@ -742,10 +744,9 @@ abstract class Requester(
     /**
      * Method to set the [RESPONSE_STATUS_KEY] to send when an error during the connection occurred
      *
-     * No-any params required
-     *
      * @return the error message as [JsonObject]
      */
+    @Assembler
     protected fun connectionErrorMessage(): JsonObject {
         return buildJsonObject {
             put(RESPONSE_STATUS_KEY, GENERIC_RESPONSE.name)

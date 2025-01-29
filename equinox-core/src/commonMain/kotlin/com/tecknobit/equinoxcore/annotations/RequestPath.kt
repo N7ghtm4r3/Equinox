@@ -12,8 +12,8 @@ import com.tecknobit.equinoxcore.network.RequestMethod
  *
  * @author N7ghtm4r3 - Tecknobit
  */
-@Retention(AnnotationRetention.SOURCE)
 @Target(AnnotationTarget.FUNCTION)
+@Retention(AnnotationRetention.SOURCE)
 annotation class RequestPath(
 
     /**

@@ -625,19 +625,39 @@ object TimeFormatter {
         return this.toLocalDateTime().date
     }
 
+    /**
+     * Method to transform a [Long] value into the corresponding [LocalDateTime]
+     *
+     * @return the local date value as [LocalDateTime]
+     */
     fun Long.toLocalDateTime(): LocalDateTime {
         return Instant.fromEpochMilliseconds(this)
             .toLocalDateTime(TimeZone.currentSystemDefault())
     }
 
+    /**
+     * Method to transform a [LocalDateTime] value into the corresponding nanoseconds value
+     *
+     * @return the local date time value in nanoseconds as [Long]
+     */
     fun LocalDateTime.toNanos(): Long {
         return this.toMillis() * MILLIS_GAP_CONVERSION_RATE
     }
 
+    /**
+     * Method to transform a [LocalDateTime] value into the corresponding seconds value
+     *
+     * @return the local date time value in seconds as [Long]
+     */
     fun LocalDateTime.toSeconds(): Long {
         return this.toMillis() / MILLIS_GAP_CONVERSION_RATE
     }
 
+    /**
+     * Method to transform a [LocalDateTime] value into the corresponding milliseconds value
+     *
+     * @return the local date time value in milliseconds as [Long]
+     */
     fun LocalDateTime.toMillis(): Long {
         return this.toInstant(TimeZone.currentSystemDefault())
             .toEpochMilliseconds()

@@ -39,7 +39,6 @@ abstract class EquinoxViewModel(
      * Method to get whether the [viewModelScope] can start, so if there aren't other jobs that
      * routine is already executing
      *
-     * No-any params required
      *
      * @return whether the [viewModelScope] can start as [Boolean]
      */
@@ -52,7 +51,6 @@ abstract class EquinoxViewModel(
      * the [isRefreshing] instance will be set as **false** to allow the restart of the routine after executing
      * the other requests
      *
-     * No-any params required
      */
     override fun continueToRetrieve(
         currentContext: KClass<*>,
@@ -87,7 +85,6 @@ abstract class EquinoxViewModel(
      * the [isRefreshing] instance will be set as **true** to deny the restart of the routine after executing
      * the other requests
      *
-     * No-any params required
      */
     override fun restartRetriever() {
         retriever.restart()
@@ -98,7 +95,6 @@ abstract class EquinoxViewModel(
      * the [isRefreshing] instance will be set as **false** to allow the restart of the routine after executing
      * the other requests
      *
-     * No-any params required
      */
     override fun suspendRetriever() {
         retriever.suspend()

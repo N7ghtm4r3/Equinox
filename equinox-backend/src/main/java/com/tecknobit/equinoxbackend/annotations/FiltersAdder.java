@@ -1,5 +1,10 @@
 package com.tecknobit.equinoxbackend.annotations;
 
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+
 /**
  * The {@code FiltersAdder} annotation is useful to indicate those methods used to adding the extracted filters to the
  * filtered query. For example:
@@ -22,6 +27,8 @@ package com.tecknobit.equinoxbackend.annotations;
  * @author N7ghtm4r3 - Tecknobit
  * @since 1.0.7
  */
+@Target(ElementType.METHOD)
+@Retention(RetentionPolicy.SOURCE)
 public @interface FiltersAdder {
 
     /**

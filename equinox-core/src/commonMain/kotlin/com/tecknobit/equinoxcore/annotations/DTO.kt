@@ -7,6 +7,6 @@ package com.tecknobit.equinoxcore.annotations
  *
  * @since 1.0.5
  */
-@Retention(AnnotationRetention.SOURCE)
 @Target(AnnotationTarget.CLASS)
+@Retention(AnnotationRetention.SOURCE)
 annotation class DTO 

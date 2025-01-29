@@ -63,7 +63,6 @@ class Retriever(
      * Method to get whether the [retrieverScope] can start, so if there aren't other jobs that
      * routine is already executing
      *
-     * No-any params required
      *
      * @return whether the [retrieverScope] can start as [Boolean]
      */
@@ -76,7 +75,6 @@ class Retriever(
      * the [isRefreshing] instance will be set as **false** to allow the restart of the routine after executing
      * the other requests
      *
-     * No-any params required
      */
     fun suspend() {
         retrieverScope.coroutineContext.cancelChildren()
@@ -88,7 +86,6 @@ class Retriever(
      * the [isRefreshing] instance will be set as **true** to deny the restart of the routine after executing
      * the other requests
      *
-     * No-any params required
      */
     fun restart() {
         if (::lastRoutineExecuted.isInitialized) {

@@ -1,5 +1,6 @@
 package com.tecknobit.equinoxcompose.network
 
+import com.tecknobit.equinoxcore.annotations.Assembler
 import com.tecknobit.equinoxcore.annotations.RequestPath
 import com.tecknobit.equinoxcore.helpers.*
 import com.tecknobit.equinoxcore.helpers.InputsValidator.Companion.DEFAULT_LANGUAGE
@@ -215,6 +216,7 @@ abstract class EquinoxRequester(
      * @return the payload for the request as [JsonObject]
      *
      */
+    @Assembler
     protected open fun getSignInPayload(
         email: String,
         password: String,
@@ -327,7 +329,6 @@ abstract class EquinoxRequester(
     /**
      * Method to request the to delete the account of the user
      *
-     * No-any params required
      *
      * @return the result of the request as [JsonObject]
      */
@@ -346,6 +347,7 @@ abstract class EquinoxRequester(
      *
      * @return an endpoint to make the request as [String]
      */
+    @Assembler
     protected fun assembleCustomEndpointPath(
         customEndpoint: String,
         subEndpoint: String = "",
@@ -370,6 +372,7 @@ abstract class EquinoxRequester(
      *
      * @return an endpoint to make the request as [String]
      */
+    @Assembler
     protected fun assembleUsersEndpointPath(
         endpoint: String = "",
     ): String {

@@ -134,7 +134,6 @@ abstract class EquinoxScreen<V : EquinoxViewModel>(
      * If the [viewModel] of the screen is not `null` will be set the [com.tecknobit.equinox.Retriever.activeContext]
      * as the current screen displayed
      *
-     * No-any params required
      */
     protected open fun onCreate() {
         logScreenEvent(
