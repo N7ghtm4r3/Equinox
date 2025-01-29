@@ -169,6 +169,7 @@ fun setHasBeenDisconnectedValue(
  * @param viewModel The viewmodel used by the context where this method has been invoked, this is
  * used to stop the refreshing routine when the internet connection is not available by the [NoInternetConnectionUi]
  * @param loadingRoutine The routine used to load the data
+ * @param initialDelay An initial delay to apply to the [loadingRoutine] before to start
  * @param serverOfflineRetryText The informative text for the user
  * @param serverOfflineRetryAction The action to retry the connection to the server
  * @param noInternetConnectionRetryText The informative text for the user
@@ -179,6 +180,7 @@ fun ManagedContent(
     content: @Composable () -> Unit,
     viewModel: EquinoxViewModel,
     loadingRoutine: (suspend () -> Boolean)? = null,
+    initialDelay: Long? = null,
     serverOfflineRetryText: StringResource? = null,
     serverOfflineRetryAction: @Composable (() -> Unit)? = null,
     noInternetConnectionRetryText: StringResource? = null,
@@ -222,6 +224,7 @@ fun ManagedContent(
             if (loadingRoutine != null) {
                 LoadingItemUI(
                     loadingRoutine = loadingRoutine,
+                    initialDelay = initialDelay,
                     contentLoaded = content
                 )
             } else

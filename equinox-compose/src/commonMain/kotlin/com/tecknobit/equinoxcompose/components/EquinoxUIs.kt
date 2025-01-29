@@ -19,6 +19,7 @@ import com.tecknobit.equinoxcompose.resources.Res
 import com.tecknobit.equinoxcompose.resources.an_error_occurred
 import com.tecknobit.equinoxcompose.resources.loading_data
 import com.tecknobit.equinoxcompose.resources.retry
+import kotlinx.coroutines.delay
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
 
@@ -29,6 +30,7 @@ import org.jetbrains.compose.resources.stringResource
  * @param animations The set of the animations to use to animate the layout
  * @param textStyle The style to apply to the text
  * @param loadingRoutine The routine used to load the data
+ * @param initialDelay An initial delay to apply to the [loadingRoutine] before to start
  * @param loadingIndicator The loading indicator to display
  * @param contentLoaded The content to display when the data have been loaded
  * @param themeColor The color to use into the composable
@@ -40,6 +42,7 @@ fun LoadingItemUI(
     animations: UIAnimations? = null,
     textStyle: TextStyle = TextStyle.Default,
     loadingRoutine: suspend () -> Boolean,
+    initialDelay: Long? = null,
     contentLoaded: @Composable () -> Unit,
     themeColor: Color = MaterialTheme.colorScheme.primary,
     loadingIndicator: @Composable () -> Unit = {
@@ -76,6 +79,7 @@ fun LoadingItemUI(
         ) {
             LoadingItemUIContent(
                 loadingRoutine = loadingRoutine,
+                initialDelay = initialDelay,
                 loadingIndicator = loadingIndicator,
                 contentLoaded = contentLoaded
             )
@@ -83,6 +87,7 @@ fun LoadingItemUI(
     } else {
         LoadingItemUIContent(
             loadingRoutine = loadingRoutine,
+            initialDelay = initialDelay,
             loadingIndicator = loadingIndicator,
             contentLoaded = contentLoaded
         )
@@ -94,17 +99,22 @@ fun LoadingItemUI(
  *
  * @param loadingRoutine The routine used to load the data
  * @param loadingIndicator The loading indicator to display
+ * @param initialDelay An initial delay to apply to the [loadingRoutine] before to start
  * @param contentLoaded The content to display when the data have been loaded
  */
 @Composable
 @NonRestartableComposable
 private fun LoadingItemUIContent(
     loadingRoutine: suspend () -> Boolean,
+    initialDelay: Long?,
     loadingIndicator: @Composable () -> Unit,
     contentLoaded: @Composable () -> Unit,
 ) {
     var isLoaded by remember { mutableStateOf(false) }
     LaunchedEffect(Unit) {
+        initialDelay?.let {
+            delay(initialDelay)
+        }
         isLoaded = loadingRoutine()
     }
     AnimatedVisibility(
