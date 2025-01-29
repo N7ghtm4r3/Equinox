@@ -36,47 +36,47 @@ open class EquinoxProfileViewModel(
 ) {
 
     /**
-     * **profilePic** -> the profile picture of the user
+     * `profilePic` the profile picture of the user
      */
     lateinit var profilePic: MutableState<String>
 
     /**
-     * **email** -> the email of the user
+     * `email` the email of the user
      */
     lateinit var email: MutableState<String>
 
     /**
-     * **password** -> the password of the user
+     * `password` the password of the user
      */
     lateinit var password: MutableState<String>
 
     /**
-     * **language** -> the language of the user
+     * `language` the language of the user
      */
     lateinit var language: MutableState<String>
 
     /**
-     * **theme** -> the theme of the user
+     * `theme` the theme of the user
      */
     lateinit var theme: MutableState<ApplicationTheme>
 
     /**
-     * **newEmail** -> the value of the new email to set
+     * `newEmail` the value of the new email to set
      */
     lateinit var newEmail: MutableState<String>
 
     /**
-     * **newEmailError** -> whether the [newEmail] field is not valid
+     * `newEmailError` whether the [newEmail] field is not valid
      */
     lateinit var newEmailError: MutableState<Boolean>
 
     /**
-     * **newPassword** -> the value of the new password to set
+     * `newPassword` the value of the new password to set
      */
     lateinit var newPassword: MutableState<String>
 
     /**
-     * **newPasswordError** -> whether the [newPassword] field is not valid
+     * `newPasswordError` whether the [newPassword] field is not valid
      */
     lateinit var newPasswordError: MutableState<Boolean>
 

@@ -17,7 +17,7 @@ import com.tecknobit.equinoxcore.annotations.Structure
 /**
  * The **EquinoxScreen** class is useful to create a screen with a lifecycle management similar to the Android's activities
  *
- * Related documentation: [EquinoxScreen.md](https://github.com/N7ghtm4r3/Equinox-Compose/blob/main/documd/EquinoxScreens.md)
+ * Related documentation: [EquinoxScreens.md](https://github.com/N7ghtm4r3/Equinox-Compose/blob/main/documd/EquinoxScreens.md)
  *
  * @property loggerEnabled Whether enabled the logging to log the events occurred in the [ShowContent] composable,
  * it is suggested to disable it in production
@@ -43,17 +43,17 @@ abstract class EquinoxScreen<V : EquinoxViewModel>(
 ) {
 
     /**
-     * *EquinoxScreenEvent* -> available [EquinoxScreen] custom statuses
+     * `EquinoxScreenEvent` available [EquinoxScreen] custom statuses
      */
     enum class EquinoxScreenEvent {
 
         /**
-         * *ON_INIT* -> occurs when the screen has been initialized
+         * `ON_INIT` occurs when the screen has been initialized
          */
         ON_INIT,
 
         /**
-         * *ON_DISPOSE* -> occurs when the screen has been disposed
+         * `ON_DISPOSE` occurs when the screen has been disposed
          */
         ON_DISPOSE
 

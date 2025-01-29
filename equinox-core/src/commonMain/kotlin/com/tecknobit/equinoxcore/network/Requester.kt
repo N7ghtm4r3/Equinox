@@ -47,32 +47,32 @@ abstract class Requester(
     companion object {
 
         /**
-         * **USER_IDENTIFIER_KEY** the key for the user <b>"id"</b> field
+         * `USER_IDENTIFIER_KEY** the key for the user <b>"id"</b> field
          */
         const val USER_IDENTIFIER_KEY = "id"
 
         /**
-         * **USER_TOKEN_KEY** the key for the user <b>"token"</b> field
+         * `USER_TOKEN_KEY** the key for the user <b>"token"</b> field
          */
         const val USER_TOKEN_KEY = "token"
 
         /**
-         * **RESPONSE_STATUS_KEY** the key for the <b>"status"</b> field
+         * `RESPONSE_STATUS_KEY** the key for the <b>"status"</b> field
          */
         const val RESPONSE_STATUS_KEY: String = "status"
 
         /**
-         * **RESPONSE_DATA_KEY** the key for the <b>"response"</b> field
+         * `RESPONSE_DATA_KEY** the key for the <b>"response"</b> field
          */
         const val RESPONSE_DATA_KEY: String = "response"
 
         /**
-         * **DEFAULT_REQUEST_TIMEOUT** the timeout values in millis used in the requests
+         * `DEFAULT_REQUEST_TIMEOUT** the timeout values in millis used in the requests
          */
         const val DEFAULT_REQUEST_TIMEOUT = 5000L
 
         /**
-         * **DEFAULT_CONNECTION_ERROR_MESSAGE** the message to send when an error during the communication with the
+         * `DEFAULT_CONNECTION_ERROR_MESSAGE** the message to send when an error during the communication with the
          * backend occurred
          */
         const val DEFAULT_CONNECTION_ERROR_MESSAGE = "connection_error_message_key"
@@ -326,19 +326,19 @@ abstract class Requester(
     }
 
     /**
-     * **mustValidateCertificates** flag whether the requests must validate the **SSL** certificates, this for example
+     * `mustValidateCertificates** flag whether the requests must validate the **SSL** certificates, this for example
      * when the SSL is a self-signed certificate
      */
     protected var mustValidateCertificates: Boolean = false
 
     /**
-     * **interceptorAction** the action of the interceptor to execute when a request has been sent, if not specified is
-     * **null** by default and no interceptions will be executed
+     * `interceptorAction** the action of the interceptor to execute when a request has been sent, if not specified is
+     * `null** by default and no interceptions will be executed
      */
     protected var interceptorAction: (() -> Unit)? = null
 
     /**
-     * **ktorClient** -> the HTTP client used to send the stats and the performance data
+     * `ktorClient` the HTTP client used to send the stats and the performance data
      */
     protected val ktorClient = obtainHttpEngine(
         connectionTimeout = connectionTimeout,
@@ -346,14 +346,14 @@ abstract class Requester(
     )
 
     /**
-     * **loggerMutex** -> the mutex used to log atomically the log messages if [debugMode] is `true`
+     * `loggerMutex` the mutex used to log atomically the log messages if [debugMode] is `true`
      */
     private val loggerMutex = Mutex(
         locked = false
     )
 
     /**
-     * **initHost** Method to init correctly the [host] value
+     * `initHost** Method to init correctly the [host] value
      */
     private val initHost by lazy {
         {

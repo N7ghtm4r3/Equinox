@@ -23,7 +23,7 @@ import android.content.Context
 object AppContext {
 
     /**
-     * **application** -> instance for the app, initialized via `setUp()` method
+     * `application` instance for the app, initialized via `setUp()` method
      */
     private lateinit var application: Application
 

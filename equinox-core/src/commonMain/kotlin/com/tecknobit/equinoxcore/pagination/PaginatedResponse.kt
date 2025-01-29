@@ -19,87 +19,87 @@ class PaginatedResponse<T> {
     companion object {
 
         /**
-         * **DATA_KEY** -> the key of the "data" value
+         * `DATA_KEY` the key of the "data" value
          */
         const val DATA_KEY: String = "data"
 
         /**
-         * **PAGE_KEY** -> the key of the "page" value
+         * `PAGE_KEY` the key of the "page" value
          */
         const val PAGE_KEY: String = "page"
 
         /**
-         * **DATA_SIZE_KEY** -> the key of the "dataSize" value
+         * `DATA_SIZE_KEY` the key of the "dataSize" value
          */
         const val DATA_SIZE_KEY: String = "dataSize"
 
         /**
-         * **PAGE_SIZE_KEY** -> the key of the "pageSize" value
+         * `PAGE_SIZE_KEY` the key of the "pageSize" value
          */
         const val PAGE_SIZE_KEY: String = "pageSize"
 
         /**
-         * **IS_LAST_PAGE_KEY** -> the key of the "lastPage" value
+         * `IS_LAST_PAGE_KEY` the key of the "lastPage" value
          */
         const val IS_LAST_PAGE_KEY: String = "lastPage"
 
         /**
-         * **DEFAULT_PAGE** -> the default page value
+         * `DEFAULT_PAGE` the default page value
          */
         const val DEFAULT_PAGE: Int = 0
 
         /**
-         * **DEFAULT_PAGE_HEADER_VALUE** -> the default page value as header string
+         * `DEFAULT_PAGE_HEADER_VALUE` the default page value as header string
          */
         const val DEFAULT_PAGE_HEADER_VALUE: String = "0"
 
         /**
-         * **DEFAULT_PAGE_SIZE** -> the default size of the page
+         * `DEFAULT_PAGE_SIZE` the default size of the page
          */
         const val DEFAULT_PAGE_SIZE: Int = 10
 
         /**
-         * **DEFAULT_PAGE_SIZE_HEADER_VALUE** -> the default size of the page as header string
+         * `DEFAULT_PAGE_SIZE_HEADER_VALUE` the default size of the page as header string
          */
         const val DEFAULT_PAGE_SIZE_HEADER_VALUE: String = "10"
 
     }
 
     /**
-     * **data** -> the data retrieved by the request
+     * `data` the data retrieved by the request
      */
     val data: List<T>
 
     /**
-     * **page** -> the number of the page requested
+     * `page` the number of the page requested
      */
     val page: Int
 
     /**
-     * **pageSize** -> the size of the maximum items for page
+     * `pageSize` the size of the maximum items for page
      */
     val pageSize: Int
 
     /**
-     * **previousPage** -> the number of the previous page
+     * `previousPage` the number of the previous page
      */
     val previousPage: Int
         get() = page - 1
 
     /**
-     * **nextPage** -> the number of the next page
+     * `nextPage` the number of the next page
      */
     val nextPage: Int
         get() = page + 1
 
     /**
-     * **isLastPage** -> whether the current [page] is the last one available
+     * `isLastPage` whether the current [page] is the last one available
      */
     @SerialName(IS_LAST_PAGE_KEY)
     val isLastPage: Boolean
 
     /**
-     * **dataSize** -> the size of the [data] retrieved for the current [page]
+     * `dataSize` the size of the [data] retrieved for the current [page]
      */
     val dataSize: Int
         get() = data.size

@@ -43,49 +43,49 @@ data class SessionSetup(
 enum class SessionStatus {
 
     /**
-     * *OPERATIONAL* -> the normal status of the session
+     * `OPERATIONAL` the normal status of the session
      */
     OPERATIONAL,
 
     /**
-     * *SERVER_OFFLINE* -> the status of the session when the related server is offline
+     * `SERVER_OFFLINE` the status of the session when the related server is offline
      */
     SERVER_OFFLINE,
 
     /**
-     * *NO_INTERNET_CONNECTION* -> the status of the session when there is no internet connection
+     * `NO_INTERNET_CONNECTION` the status of the session when there is no internet connection
      */
     NO_INTERNET_CONNECTION,
 
     /**
-     * *USER_DISCONNECTED* -> the status of the session when the user has been disconnected
+     * `USER_DISCONNECTED` the status of the session when the user has been disconnected
      */
     USER_DISCONNECTED
 
 }
 
 /**
- * *sessionSetup* -> the setup for the session
+ * `sessionSetup` the setup for the session
  */
 private lateinit var sessionSetup: SessionSetup
 
 /**
- * *sessionStatus* -> the current session status
+ * `sessionStatus` the current session status
  */
 private lateinit var sessionStatus: MutableState<SessionStatus>
 
 /**
- * *isServerOffline* -> state to manage the server offline scenario
+ * `isServerOffline` state to manage the server offline scenario
  */
 private lateinit var isServerOffline: MutableState<Boolean>
 
 /**
- * *noInternetConnection* -> state to manage the no internet connection scenario
+ * `noInternetConnection` state to manage the no internet connection scenario
  */
 private lateinit var noInternetConnection: MutableState<Boolean>
 
 /**
- * *hasBeenDisconnectedAction* -> when the account has been deleted and the session needs to
+ * `hasBeenDisconnectedAction` when the account has been deleted and the session needs to
  * be detached from the device
  */
 private lateinit var hasBeenDisconnected: MutableState<Boolean>

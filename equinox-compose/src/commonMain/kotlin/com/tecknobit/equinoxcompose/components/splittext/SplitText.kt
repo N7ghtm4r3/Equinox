@@ -36,7 +36,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 /**
- * **focusManager** -> the focus manager
+ * `focusManager` the focus manager
  */
 private lateinit var focusManager: FocusManager
 

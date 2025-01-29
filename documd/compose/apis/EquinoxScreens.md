@@ -8,7 +8,7 @@ These APIs are useful to create screens with a lifecycle management similar to t
 
 Create a concrete custom screen with the custom specifications you need and pass as parameter its viewmodel.
 
-In the lifecycle methods will be automatically managed the `refreshinRoutine` of the `viewModel`, but you can override
+In the lifecycle methods will be automatically managed the `retrieving` of the `viewModel`, but you can override
 them and implement your logic to manage that routine
 
 ```kotlin

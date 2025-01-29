@@ -13,7 +13,7 @@ import org.jetbrains.compose.resources.getString
 import kotlin.reflect.KClass
 
 /**
- * The **EquinoxViewModel** class is the support class used by the related activities to communicate
+ * The `EquinoxViewModel` class is the support class used by the related activities to communicate
  * with the backend and to execute the refreshing routines to update the UI data
  *
  * Related documentation: [EquinoxViewModel](https://github.com/N7ghtm4r3/Equinox/blob/main/documd/compose/apis/EquinoxViewModel.md)
@@ -31,7 +31,7 @@ abstract class EquinoxViewModel(
 ) : ViewModel(), Retriever.RetrieverWrapper {
 
     /**
-     * **retriever** -> the manager used to fetch the data from the backend
+     * `retriever` the manager used to fetch the data from the backend
      */
     private val retriever = Retriever(viewModelScope)
 

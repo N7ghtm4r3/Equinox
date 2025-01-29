@@ -8,7 +8,7 @@ import kotlin.concurrent.Volatile
 import kotlin.reflect.KClass
 
 /**
- * The **Retriever** handles that repetitive retrieving routines and execute them in background by the [retrieverScope]
+ * The `Retriever` handles that repetitive retrieving routines and execute them in background by the [retrieverScope]
  *
  * @param retrieverScope The coroutine used to execute the retrieving routines
  *
@@ -21,7 +21,7 @@ class Retriever(
     companion object {
 
         /**
-         * **activeScreen** the current active context where a [retrieverScope] is executing its workflow
+         * `activeScreen** the current active context where a [retrieverScope] is executing its workflow
          */
         @Volatile
         private lateinit var activeScreen: KClass<*>
@@ -49,12 +49,12 @@ class Retriever(
     }
 
     /**
-     * **isRefreshing** -> whether the [retrieverScope] is already refreshing
+     * `isRefreshing` whether the [retrieverScope] is already refreshing
      */
     private var isRefreshing: Boolean = false
 
     /**
-     * **lastRoutineExecuted** -> the last routine executed by the [execute] method must re-launched after the [suspend]
+     * `lastRoutineExecuted` the last routine executed by the [execute] method must re-launched after the [suspend]
      * method has been invoked
      */
     private lateinit var lastRoutineExecuted: RetrievingRoutine

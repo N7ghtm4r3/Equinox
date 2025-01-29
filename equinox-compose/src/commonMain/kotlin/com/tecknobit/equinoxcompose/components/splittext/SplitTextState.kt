@@ -41,7 +41,7 @@ class SplitTextState internal constructor(
 ) {
 
     /**
-     * **textSlices** -> the array container of each parts of the split text
+     * `textSlices` the array container of each parts of the split text
      */
     val textSlices = arrayListOf<MutableState<String>>()
 
