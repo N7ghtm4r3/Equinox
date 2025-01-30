@@ -27,6 +27,7 @@ public class CarsService extends EquinoxItemsHelper {
 Use the `batchInsert` method to insert multiple cars in the same query
 
 ```java
+// TODO: 30/01/2025 FIX THE DOCU 
 public void insertCars(String ownerId, ArrayList<String> cars) {
     InsertCommand command = INSERT_INTO; // INSERT_IGNORE_INTO, REPLACE_INTO
     batchInsert(
@@ -58,6 +59,7 @@ public void insertCars(String ownerId, ArrayList<String> cars) {
 Use the `syncBatch` method to execute a batch synchronization of the cars data
 
 ```java
+// TODO: 30/01/2025 FIX THE DOCU
 public void updateCars(String ownerId, ArrayList<String> cars) {
     syncBatch(
             new SyncBatchContainer() {
