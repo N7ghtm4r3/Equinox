@@ -133,7 +133,12 @@ public abstract class EquinoxItemsHelper {
      *                  query.setParameter(index++, carId);
      *             }
      *         }
-     *         //TODO ADD THE GET COLUMNS METHOD AND CHANGE ALSO THE README
+     *
+     *         @Override
+     *         public String[] getColumns() {
+     *              return new String[] { "user_id", "car_id"};
+     *         }
+     *
      *     }
      * }
      * </pre>
@@ -165,9 +170,34 @@ public abstract class EquinoxItemsHelper {
 
     }
 
+    /**
+     * The {@code ComplexBatchItem} interface is useful to execute the {@link #syncBatch(SyncBatchModel, String, BatchQuery)}
+     * method with complex custom object with different values to synchronize. For example:
+     *
+     * <pre>
+     * {@code
+     *      public class Car {
+     *
+     *          private String model;
+     *
+     *          private String plate;
+     *
+     *          // constr, getter, setter ...
+     *
+     *      }
+     * }
+     * </pre>
+     *
+     * @author N7ghtm4r3 - Tecknobit
+     */
     public interface ComplexBatchItem {
 
-        List<?> inFieldValues();
+        /**
+         * Method used to customize the instances of the complex object are to use in the synchronization
+         *
+         * @return the custom instances of the complex object as {@link List} of "?"
+         */
+        List<?> mappedValues();
 
     }
 
@@ -227,7 +257,6 @@ public abstract class EquinoxItemsHelper {
      *
      * @param model Contains the data about the synchronization such the columns affected and the current list of the data
      * @param table The table where execute the synchronization of the data
-     *
      * @param batchQuery The manager of the batch query to execute
      */
     protected <V> void syncBatch(SyncBatchModel model, String table, BatchQuery<V> batchQuery) {
@@ -312,6 +341,14 @@ public abstract class EquinoxItemsHelper {
         return inClause.toString();
     }
 
+    /**
+     * Method to format the in clause for the query with {@link ComplexBatchItem} values
+     *
+     * @param columns  The columns number
+     * @param inValues The complex batch items used in the in clause to format
+     * @return the in clause formatted as {@link String}
+     * @apiNote clause formatted: ((col1, col2), (col1a, col2a), ...)
+     */
     private String formatComplexBatchItemInClause(int columns, List<?> inValues) {
         StringBuilder inClause = new StringBuilder(OPENED_ROUND_BRACKET);
         int totalValues = inValues.size();
@@ -320,7 +357,7 @@ public abstract class EquinoxItemsHelper {
         for (int j = 0; j < totalValues; j++) {
             if (columns > 1)
                 inClause.append(OPENED_ROUND_BRACKET);
-            List<?> inClauseParts = ((ComplexBatchItem) inValues.get(j)).inFieldValues();
+            List<?> inClauseParts = ((ComplexBatchItem) inValues.get(j)).mappedValues();
             int clauseParts = inClauseParts.size();
             int lastPart = clauseParts - 1;
             for (int i = 0; i < clauseParts; i++) {
