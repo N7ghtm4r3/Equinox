@@ -1,7 +1,8 @@
-package com.tecknobit.equinoxcompose.session.screen
+package com.tecknobit.equinoxcompose.session.screens
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.NonRestartableComposable
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.Lifecycle.Event
@@ -9,8 +10,8 @@ import androidx.lifecycle.Lifecycle.Event.*
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.LifecycleOwner
 import co.touchlab.kermit.Logger
-import com.tecknobit.equinoxcompose.session.screen.EquinoxNoModelScreen.EquinoxScreenEvent.ON_DISPOSE
-import com.tecknobit.equinoxcompose.session.screen.EquinoxNoModelScreen.EquinoxScreenEvent.ON_INIT
+import com.tecknobit.equinoxcompose.session.screens.EquinoxNoModelScreen.EquinoxScreenEvent.ON_DISPOSE
+import com.tecknobit.equinoxcompose.session.screens.EquinoxNoModelScreen.EquinoxScreenEvent.ON_INIT
 import com.tecknobit.equinoxcore.annotations.Structure
 
 /**
@@ -241,5 +242,36 @@ abstract class EquinoxNoModelScreen(
      */
     @Composable
     protected abstract fun CollectStates()
+
+    /**
+     * Method to collect or instantiate the states of the screen after a loading required to correctly assign an
+     * initial value to the states. For example in your custom screen:
+     * ```kotlin
+     * @Composable
+     * override fun ArrangeScreenContent() {
+     * LoadingItemUI(
+     *      loadingRoutine = {
+     *          // your loading routine
+     *      },
+     *      contentLoaded = {
+     *          // invoke this method
+     *          CollectStatesAfterLoading()
+     *          // rest of the content
+     *      }
+     *    )
+     * }
+     *
+     * // override and customize it with your logic
+     * @Composable
+     * @NonRestartableComposable
+     * override fun CollectStatesAfterLoading() {
+     *    // initialize your states depending of the loaded value
+     * }
+     * ```
+     */
+    @Composable
+    @NonRestartableComposable
+    protected open fun CollectStatesAfterLoading() {
+    }
 
 }

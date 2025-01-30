@@ -21,10 +21,10 @@ class Retriever(
     companion object {
 
         /**
-         * `activeScreen** the current active context where a [retrieverScope] is executing its workflow
+         * `currentContext` The current active context where a [retrieverScope] is executing its workflow
          */
         @Volatile
-        private lateinit var activeScreen: KClass<*>
+        private lateinit var currentContext: KClass<*>
 
         /**
          * Method to set the current active context where the [retrieverScope] is executing
@@ -34,7 +34,7 @@ class Retriever(
         fun setActiveContext(
             currentContext: KClass<*>,
         ) {
-            activeScreen = currentContext
+            this.currentContext = currentContext
         }
 
         /**
@@ -43,7 +43,7 @@ class Retriever(
          * @return the current active context as [KClass]
          */
         fun getActiveContext(): KClass<*> {
-            return activeScreen
+            return currentContext
         }
 
     }
@@ -144,7 +144,7 @@ class Retriever(
     fun continueToRetrieve(
         currentContext: KClass<*>,
     ) : Boolean {
-        return activeScreen == currentContext
+        return Companion.currentContext == currentContext
     }
 
     /**
