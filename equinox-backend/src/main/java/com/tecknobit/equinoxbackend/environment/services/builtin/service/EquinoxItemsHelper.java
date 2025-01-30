@@ -8,8 +8,8 @@ import jakarta.persistence.Query;
 import jakarta.transaction.Transactional;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 
 import static com.tecknobit.equinoxbackend.environment.services.builtin.service.EquinoxItemsHelper.InsertCommand.INSERT_IGNORE_INTO;
@@ -73,9 +73,9 @@ public abstract class EquinoxItemsHelper {
         /**
          * Method to get the current list of data
          *
-         * @return the current list of identifiers as {@link ArrayList} of {@link V}
+         * @return the current list of identifiers as {@link Collection} of {@link V}
          */
-        <V> ArrayList<V> getCurrentData();
+        <V> Collection<V> getCurrentData();
 
         /**
          * Method to get the columns where execute the deletion of the items to delete
@@ -121,12 +121,12 @@ public abstract class EquinoxItemsHelper {
      *     BatchQuery batchQuery = new BatchQuery<String>() {
      *
      *          @Override
-     *          public void getData() {
+     *          public Collection<V> getData() {
      *              return updatedCars; // your updated data list
      *         }
      *
      *          @Override
-     *          public void prepareQuery(Query query, int index, List<String> updatedItems) {
+     *          public void prepareQuery(Query query, int index, Collection<String> updatedItems) {
      *              for (String carId : updatedItems) {
      *                  // the order of the parameters setting is the same of the table
      *                  query.setParameter(index++, userId);
@@ -148,9 +148,9 @@ public abstract class EquinoxItemsHelper {
         /**
          * Method to get the data to use in the batch query
          *
-         * @return the updated data as {@link List} of {@link V}
+         * @return the updated data as {@link Collection} of {@link V}
          */
-        List<V> getData();
+        Collection<V> getData();
 
         /**
          * Method to prepare the batch query such fill the parameters programmatically
@@ -159,7 +159,7 @@ public abstract class EquinoxItemsHelper {
          * @param index The pre-increment index to format the values in the query, its initial value is 1
          * @param items The updated items to use in the batch query
          */
-        void prepareQuery(Query query, int index, List<V> items);
+        void prepareQuery(Query query, int index, Collection<V> items);
 
         /**
          * Method to get the columns used in the query
@@ -261,8 +261,8 @@ public abstract class EquinoxItemsHelper {
      * @param batchQuery The manager of the batch query to execute
      */
     protected <V> void syncBatch(SyncBatchModel model, String table, BatchQuery<V> batchQuery) {
-        List<V> updatedData = batchQuery.getData();
-        ArrayList<V> currentData = model.getCurrentData();
+        Collection<V> updatedData = batchQuery.getData();
+        Collection<V> currentData = model.getCurrentData();
         batchInsert(INSERT_IGNORE_INTO, table, batchQuery);
         currentData.removeAll(updatedData);
         batchDelete(table, currentData, model.getDeletingColumns());
@@ -277,7 +277,7 @@ public abstract class EquinoxItemsHelper {
      * @param batchQuery The manager of the batch query to execute
      */
     protected <V> void batchInsert(InsertCommand command, String table, BatchQuery<V> batchQuery) {
-        List<V> values = batchQuery.getData();
+        Collection<V> values = batchQuery.getData();
         if (values.isEmpty())
             return;
         String[] columns = batchQuery.getColumns();
@@ -298,7 +298,7 @@ public abstract class EquinoxItemsHelper {
      * @apiNote the query form: DELETE FROM table WHERE (col1, col2, ...) IN ((dataCol1, dataCol2), (dataCol1a, dataCol2a), ...)
      */
     @Wrapper
-    protected void batchDelete(String table, List<?> values, @NotNull String... columns) {
+    protected void batchDelete(String table, Collection<?> values, @NotNull String... columns) {
         int columnsNumber = columns.length;
         if (columnsNumber == 0 || values.isEmpty())
             return;
@@ -318,18 +318,19 @@ public abstract class EquinoxItemsHelper {
      * @return the in clause formatted as {@link String}
      * @apiNote clause formatted: ((col1, col2), (col1a, col2a), ...)
      */
-    private String formatInClause(int columns, List<?> inValues) {
-        if (inValues.get(0) instanceof ComplexBatchItem)
+    private String formatInClause(int columns, Collection<?> inValues) {
+        if (inValues.iterator().next() instanceof ComplexBatchItem)
             return formatComplexBatchItemInClause(columns, inValues);
         StringBuilder inClause = new StringBuilder(OPENED_ROUND_BRACKET);
         int totalValues = inValues.size();
         int lastValue = totalValues - 1;
         int lastColumn = columns - 1;
-        for (int j = 0; j < totalValues; ) {
+        int j = 0;
+        for (Object inValue : inValues) {
             if (columns > 1)
                 inClause.append(OPENED_ROUND_BRACKET);
             for (int i = 0; i < columns; i++, j++) {
-                inClause.append(SINGLE_QUOTE).append(inValues.get(j)).append(SINGLE_QUOTE);
+                inClause.append(SINGLE_QUOTE).append(inValue).append(SINGLE_QUOTE);
                 if (i < lastColumn)
                     inClause.append(COMMA);
             }
@@ -350,15 +351,16 @@ public abstract class EquinoxItemsHelper {
      * @return the in clause formatted as {@link String}
      * @apiNote clause formatted: ((col1, col2), (col1a, col2a), ...)
      */
-    private String formatComplexBatchItemInClause(int columns, List<?> inValues) {
+    private String formatComplexBatchItemInClause(int columns, Collection<?> inValues) {
         StringBuilder inClause = new StringBuilder(OPENED_ROUND_BRACKET);
         int totalValues = inValues.size();
         int lastValue = totalValues - 1;
         int lastColumn = columns - 1;
-        for (int j = 0; j < totalValues; j++) {
+        int j = 0;
+        for (Object inValue : inValues) {
             if (columns > 1)
                 inClause.append(OPENED_ROUND_BRACKET);
-            List<?> inClauseParts = ((ComplexBatchItem) inValues.get(j)).mappedValues();
+            List<?> inClauseParts = ((ComplexBatchItem) inValue).mappedValues();
             int clauseParts = inClauseParts.size();
             int lastPart = clauseParts - 1;
             for (int i = 0; i < clauseParts; i++) {
@@ -371,6 +373,7 @@ public abstract class EquinoxItemsHelper {
                 inClause.append(CLOSED_ROUND_BRACKET);
             if (j < lastValue)
                 inClause.append(COMMA);
+            j++;
         }
         inClause.append(CLOSED_ROUND_BRACKET);
         return inClause.toString();
@@ -414,17 +417,19 @@ public abstract class EquinoxItemsHelper {
      *
      * @return the list of values formatted as {@link String}
      */
-    private String formatValuesForQuery(String start, List<?> values, String formatter, boolean isToClose) {
+    private String formatValuesForQuery(String start, Collection<?> values, String formatter, boolean isToClose) {
         StringBuilder formattedColumns = new StringBuilder(start);
         int totalValues = values.size();
         int lastValueIndex = totalValues - 1;
-        for (int j = 0; j < totalValues; j++) {
+        int j = 0;
+        for (Object inValue : values) {
             if (formatter == null)
-                formattedColumns.append(values.get(j));
+                formattedColumns.append(inValue);
             else
                 formattedColumns.append(formatter);
             if (j < lastValueIndex)
                 formattedColumns.append(COMMA);
+            j++;
         }
         if (isToClose)
             formattedColumns.append(CLOSED_ROUND_BRACKET);
