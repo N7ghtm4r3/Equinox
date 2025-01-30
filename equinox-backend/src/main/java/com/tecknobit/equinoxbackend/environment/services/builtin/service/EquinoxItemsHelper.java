@@ -197,6 +197,7 @@ public abstract class EquinoxItemsHelper {
          *
          * @return the custom instances of the complex object as {@link List} of "?"
          */
+        @NotNull
         List<?> mappedValues();
 
     }
