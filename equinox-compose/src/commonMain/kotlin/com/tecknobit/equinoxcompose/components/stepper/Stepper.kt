@@ -21,11 +21,25 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
 import org.jetbrains.compose.resources.stringResource
 
-@ExperimentalComposeApi
+/**
+ * This component allows to create a dynamic interaction with the user dividing for example a long procedure such item
+ * creation, customization, etc... in different specific steps where the user can interact
+ *
+ * @param modifier The modifier to apply to the component
+ * @param headerSection A custom header of the stepper
+ * @param startStepShape The shape to apply to the first visible [Step]
+ * @param middleStepShape The shape to apply to those steps in the middle
+ * @param finalStepShape The shape to apply to the last visible [Step]
+ * @param stepBackgroundColor The color to use as background of the [Step] container
+ * @param errorColor The color used to indicate an error
+ * @param confirmColor The color used to confirm an action
+ * @param expandsStepIcon The icon used to expand each step
+ * @param steps The steps to display by the component, a little tip is wrap the creation of the array with the
+ * [remember] function to avoid to recreate the array during the recompositions
+ */
+@ExperimentalLayoutApi
 @Composable
 @NonRestartableComposable
-// TODO: WARN ABOUT TO USE THE REMEMBER TO WRAP THE steps ARRAY TO AVOID THE RECREATION DURING THE RECOMPOSITION
-@ExperimentalLayoutApi
 fun Stepper(
     modifier: Modifier = Modifier,
     headerSection: @Composable (() -> Unit)? = null,
@@ -98,6 +112,12 @@ fun Stepper(
     }
 }
 
+/**
+ * Method to map the special indexes of the steps lit of the [Stepper] component.
+ * The special indexes are those indexes near to [Step] which its enabling depends on a state
+ *
+ * @return the pair of the special indexes as [Pair] of [Int]
+ */
 private fun Array<out Step>.mapSpecialIndexes(): Pair<Int, Int> {
     val startIndex = this.findSpecialIndex(
         invalidSpecialIndex = -1,
@@ -117,6 +137,16 @@ private fun Array<out Step>.mapSpecialIndexes(): Pair<Int, Int> {
     )
 }
 
+/**
+ * Method to find the value of a special index
+ *
+ * @param invalidSpecialIndex The value of an index to consider as not valid
+ * @param elementToCheck The step used to check the special index
+ * @param defaultIndexValue The value to use as default special index when not found other
+ * @param onAssign The lambda to execute to assign the value to the index
+ *
+ * @return the special index as [Int]
+ */
 private fun Array<out Step>.findSpecialIndex(
     invalidSpecialIndex: Int = 0,
     elementToCheck: Step,
@@ -132,6 +162,11 @@ private fun Array<out Step>.findSpecialIndex(
     return defaultIndexValue
 }
 
+/**
+ * Scoped function used to check whether a [Step] depends on a special condition to be enabled
+ *
+ * @return whether a [Step] depends on a special condition to be enabled as [Boolean]
+ */
 private fun Step.isEnabled(): Boolean {
     return this.enabled?.value ?: true
 }
