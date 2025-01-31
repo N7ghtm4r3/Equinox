@@ -78,14 +78,14 @@ fun AnyComponent() {
     // steps created
     Stepper(
         headerSection =  // custom header section
-            startStepShape =  // custom start shape
-                middleStepShape = // custom middle shape
-                finalStepShape = // custom final shape
-                confirmColor = // custom confirmation color
-                errorColor = // custom error color
-                stepBackgroundColor = // custom step background color
-                expandsStepIcon = // custom icon used to expand the steps
-                steps = steps
+        startStepShape =  // custom start shape
+        middleStepShape = // custom middle shape
+        finalStepShape = // custom final shape
+        confirmColor = // custom confirmation color
+        errorColor = // custom error color
+        stepBackgroundColor = // custom step background color
+        expandsStepIcon = // custom icon used to expand the steps
+        steps = steps
     )
 }
 ```
