@@ -8,20 +8,7 @@
 ![Static Badge](https://img.shields.io/badge/wasmjs-834C74?link=https%3A%2F%2Fimg.shields.io%2Fbadge%2Fandroid-4280511051)
 ![Static Badge](https://img.shields.io/badge/backend-7d7d7d?link=https%3A%2F%2Fimg.shields.io%2Fbadge%2Fandroid-4280511051)
 
-Core utilities for **KMP** and **Spring** technologies
-
-## Temporarily workaround
-
-Because conflicting dependencies due the `Equinox-Compose` migration as module, at the moment, to use correctly this
-library instead the old one you need to exclude it from you configuration if you're targeting `android`'s target, add
-this
-in your `build.gradle.kts` file:
-
-```kotlin
-configurations.all {
-  exclude("io.github.n7ghtm4r3", "Equinox-Compose-android")
-}
-```
+Core utilities for **Compose Multiplatform** and **Spring** technologies
 
 ## Implementation
 
