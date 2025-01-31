@@ -23,7 +23,9 @@ import org.jetbrains.compose.resources.stringResource
 
 /**
  * This component allows to create a dynamic interaction with the user dividing for example a long procedure such item
- * creation, customization, etc... in different specific steps where the user can interact
+ * creation, customization, etc... in different specific steps where the user can interact.
+ *
+ * Related documentation [Stepper.md](Stepper.md)
  *
  * @param modifier The modifier to apply to the component
  * @param headerSection A custom header of the stepper
@@ -172,9 +174,14 @@ private fun Step.isEnabled(): Boolean {
 }
 
 /**
- * Section to execute a profile action
+ * Section dedicated to a single [Step]
  *
  * @param shape The shape for the container
+ * @param errorColor The color used to indicate an error
+ * @param confirmColor The color used to confirm an action
+ * @param stepBackgroundColor The color to use as background of the [Step] container
+ * @param expandsStepIcon The icon used to expand each step
+ * @param step The step to display
  * @param bottomDivider Whether create the bottom divider
  */
 @Composable
@@ -220,8 +227,8 @@ private fun StepAction(
                         ),
                     text = stringResource(step.title)
                 )
-                if (step.actionsControls != null)
-                    step.actionsControls.invoke()
+                if (step.actionControls != null)
+                    step.actionControls.invoke()
                 else {
                     ActionControls(
                         expandsStepIcon = expandsStepIcon,
@@ -254,11 +261,16 @@ private fun StepAction(
 }
 
 /**
- * The controls action section to manage the [StepAction]
+ * The action controls section to manage the [StepAction]
  *
+ * @param expandsStepIcon The icon used to expand each step
  * @param expanded Whether the section is visible
  * @param dismissAction The action to execute when the action dismissed
+ * @param dismissIcon The representative icon to indicate to dismiss the current action
+ * @param dismissButtonColor The color of the dismiss button
  * @param confirmAction The action to execute when the action confirmed
+ * @param confirmIcon The representative icon to indicate to confirm the current action
+ * @param confirmColor The color of the confirm button
  */
 @Composable
 @NonRestartableComposable
@@ -268,9 +280,9 @@ private fun ActionControls(
     dismissAction: (() -> Unit)?,
     dismissIcon: ImageVector,
     dismissButtonColor: Color,
+    confirmAction: (MutableState<Boolean>) -> Unit,
     confirmIcon: ImageVector,
     confirmColor: Color,
-    confirmAction: (MutableState<Boolean>) -> Unit,
 ) {
     Column(
         modifier = Modifier

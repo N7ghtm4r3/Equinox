@@ -121,6 +121,7 @@ The other apis will be gradually released
 - [ExpandableText](../documd/compose/components/expandabletext/ExpandableText.md)
 - [TabSelector](../documd/compose/components/tabselector/TabSelector.md)
 - [ChameleonText](../documd/compose/components/chameleontext/ChameleonText.md)
+- [Stepper](../documd/compose/components/stepper/Stepper.md)
 
 The others components will be gradually released
 
