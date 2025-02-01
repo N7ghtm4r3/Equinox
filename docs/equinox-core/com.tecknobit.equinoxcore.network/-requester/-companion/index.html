@@ -1,0 +1,766 @@
+<!doctype html>
+<html class="no-js">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
+    <title>Companion</title>
+    <link href="../../../../images/logo-icon.svg" rel="icon" type="image/svg">
+    <script>var pathToRoot = "../../../../";</script>
+    <script>document.documentElement.classList.replace("no-js","js");</script>
+    <script>const storage = localStorage.getItem("dokka-dark-mode")
+    if (storage == null) {
+        const osDarkSchemePreferred = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+        if (osDarkSchemePreferred === true) {
+            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+    } else {
+        const savedDarkMode = JSON.parse(storage)
+        if(savedDarkMode === true) {
+            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+    }
+    </script>
+    <script type="text/javascript" src="https://unpkg.com/kotlin-playground@1/dist/playground.min.js" async></script>
+    <script type="text/javascript" src="../../../../scripts/sourceset_dependencies.js" async></script>
+    <link href="../../../../styles/style.css" rel="Stylesheet">
+    <link href="../../../../styles/main.css" rel="Stylesheet">
+    <link href="../../../../styles/prism.css" rel="Stylesheet">
+    <link href="../../../../styles/logo-styles.css" rel="Stylesheet">
+    <link href="../../../../styles/font-jb-sans-auto.css" rel="Stylesheet">
+    <link href="../../../../ui-kit/ui-kit.min.css" rel="Stylesheet">
+    <script type="text/javascript" src="../../../../scripts/clipboard.js" async></script>
+    <script type="text/javascript" src="../../../../scripts/navigation-loader.js" async></script>
+    <script type="text/javascript" src="../../../../scripts/platform-content-handler.js" async></script>
+    <script type="text/javascript" src="../../../../scripts/main.js" defer></script>
+    <script type="text/javascript" src="../../../../scripts/prism.js" async></script>
+    <script type="text/javascript" src="../../../../ui-kit/ui-kit.min.js" defer></script>
+    <script type="text/javascript" src="../../../../scripts/symbol-parameters-wrapper_deferred.js" defer></script>
+</head>
+<body>
+<div class="root">
+    <nav class="navigation theme-dark" id="navigation-wrapper">
+        <a class="library-name--link" href="../../../../index.html">
+            Equinox
+        </a>
+        <button class="navigation-controls--btn navigation-controls--btn_toc ui-kit_mobile-only" id="toc-toggle"
+                type="button">Toggle table of contents
+        </button>
+        <div class="navigation-controls--break ui-kit_mobile-only"></div>
+        <div class="library-version" id="library-version">1.0.7
+        </div>
+        <div class="navigation-controls">
+            <div class="filter-section filter-section_loading" id="filter-section">
+                <button class="platform-tag platform-selector common-like" data-active=""
+                        data-filter=":equinox-core:dokkaHtmlPartial/commonMain">common
+                </button>
+                <div class="dropdown filter-section--dropdown" data-role="dropdown" id="filter-section-dropdown">
+                    <button class="button button_dropdown filter-section--dropdown-toggle" role="combobox"
+                            data-role="dropdown-toggle" aria-controls="platform-tags-listbox" aria-haspopup="listbox"
+                            aria-expanded="false" aria-label="Toggle source sets"></button>
+                    <ul role="listbox" id="platform-tags-listbox" class="dropdown--list" data-role="dropdown-listbox">
+                        <div class="dropdown--header"><span>Platform filter</span>
+                            <button class="button" data-role="dropdown-toggle" aria-label="Close platform filter">
+                                <i class="ui-kit-icon ui-kit-icon_cross"></i>
+                            </button>
+                        </div>
+                        <li role="option" class="dropdown--option platform-selector-option common-like" tabindex="0">
+                            <label class="checkbox">
+                                <input type="checkbox" class="checkbox--input"
+                                       id=":equinox-core:dokkaHtmlPartial/commonMain"
+                                       data-filter=":equinox-core:dokkaHtmlPartial/commonMain">
+                                <span class="checkbox--icon"></span>
+                                common
+                            </label>
+                        </li>
+                    </ul>
+                    <div class="dropdown--overlay"></div>
+                </div>
+            </div>
+            <button class="navigation-controls--btn navigation-controls--btn_theme" id="theme-toggle-button"
+                    type="button">Switch theme
+            </button>
+            <div class="navigation-controls--btn navigation-controls--btn_search" id="searchBar" role="button">Search in
+                API
+            </div>
+        </div>
+    </nav>
+    <div id="container">
+        <div class="sidebar" id="leftColumn">
+            <div class="dropdown theme-dark_mobile" data-role="dropdown" id="toc-dropdown">
+                <ul role="listbox" id="toc-listbox" class="dropdown--list dropdown--list_toc-list"
+                    data-role="dropdown-listbox">
+                    <div class="dropdown--header">
+                            <span>
+                                    Equinox
+                            </span>
+                        <button class="button" data-role="dropdown-toggle" aria-label="Close table of contents">
+                            <i class="ui-kit-icon ui-kit-icon_cross"></i>
+                        </button>
+                    </div>
+                    <div class="sidebar--inner" id="sideMenu"></div>
+                </ul>
+                <div class="dropdown--overlay"></div>
+            </div>
+        </div>
+        <div id="main">
+            <div class="main-content" data-page-type="classlike" id="content"
+                 pageids="equinox-core::com.tecknobit.equinoxcore.network/Requester.Companion///PointingToDeclaration//-2082165282">
+                <div class="breadcrumbs"><a href="../../../index.html">equinox-core</a><span
+                        class="delimiter">/</span><a href="../../index.html">com.tecknobit.equinoxcore.network</a><span
+                        class="delimiter">/</span><a href="../index.html">Requester</a><span
+                        class="delimiter">/</span><span class="current">Companion</span></div>
+                <div class="cover ">
+                    <h1 class="cover"><span><span>Companion</span></span></h1>
+                    <div class="platform-hinted " data-platform-hinted="data-platform-hinted">
+                        <div class="content sourceset-dependent-content" data-active=""
+                             data-togglable=":equinox-core:dokkaHtmlPartial/commonMain">
+                            <div class="symbol monospace"><span class="token keyword">object </span><a
+                                    href="index.html">Companion</a></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tabbedcontent">
+                    <div class="tabs-section" tabs-section="tabs-section">
+                        <button class="section-tab" data-active="" data-togglable="CONSTRUCTOR,TYPE,PROPERTY,FUNCTION">
+                            Members
+                        </button>
+                    </div>
+                    <div class="tabs-section-body">
+                        <div data-togglable="PROPERTY">
+                            <h2 class="">Properties</h2>
+                            <div class="table"><a data-name="-79156902%2FProperties%2F-2082165282"
+                                                  anchor-label="DEFAULT_CONNECTION_ERROR_MESSAGE"
+                                                  id="-79156902%2FProperties%2F-2082165282"
+                                                  data-filterable-set=":equinox-core:dokkaHtmlPartial/commonMain"></a>
+                                <div class="table-row"
+                                     data-filterable-current=":equinox-core:dokkaHtmlPartial/commonMain"
+                                     data-filterable-set=":equinox-core:dokkaHtmlPartial/commonMain">
+                                    <div class="main-subrow keyValue ">
+                                        <div class=""><span class="inline-flex">
+                  <div><a href="-d-e-f-a-u-l-t_-c-o-n-n-e-c-t-i-o-n_-e-r-r-o-r_-m-e-s-s-a-g-e.html"><span>DEFAULT_</span><wbr><span>CONNECTION_</span><wbr><span>ERROR_</span><wbr><span>MESSAGE</span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-79156902%2FProperties%2F-2082165282"></span>
+                    <div class="copy-popup-wrapper "><span
+                            class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+                                        <div>
+                                            <div class="title">
+                                                <div class="platform-hinted "
+                                                     data-platform-hinted="data-platform-hinted">
+                                                    <div class="content sourceset-dependent-content" data-active=""
+                                                         data-togglable=":equinox-core:dokkaHtmlPartial/commonMain">
+                                                        <div class="symbol monospace"><span
+                                                                class="token keyword">const </span><span
+                                                                class="token keyword">val </span><a
+                                                                href="-d-e-f-a-u-l-t_-c-o-n-n-e-c-t-i-o-n_-e-r-r-o-r_-m-e-s-s-a-g-e.html">DEFAULT_CONNECTION_ERROR_MESSAGE</a><span
+                                                                class="token operator">: </span><a
+                                                                href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a>
+                                                        </div>
+                                                        <div class="brief "><p class="paragraph"><code
+                                                                class="lang-kotlin">DEFAULT_CONNECTION_ERROR_MESSAGE</code>
+                                                            The message to send when an error during the communication
+                                                            with the backend occurred</p></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <a data-name="677221440%2FProperties%2F-2082165282"
+                                   anchor-label="DEFAULT_REQUEST_TIMEOUT" id="677221440%2FProperties%2F-2082165282"
+                                   data-filterable-set=":equinox-core:dokkaHtmlPartial/commonMain"></a>
+                                <div class="table-row"
+                                     data-filterable-current=":equinox-core:dokkaHtmlPartial/commonMain"
+                                     data-filterable-set=":equinox-core:dokkaHtmlPartial/commonMain">
+                                    <div class="main-subrow keyValue ">
+                                        <div class=""><span class="inline-flex">
+                  <div><a href="-d-e-f-a-u-l-t_-r-e-q-u-e-s-t_-t-i-m-e-o-u-t.html"><span>DEFAULT_</span><wbr><span>REQUEST_</span><wbr><span>TIMEOUT</span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="677221440%2FProperties%2F-2082165282"></span>
+                    <div class="copy-popup-wrapper "><span
+                            class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+                                        <div>
+                                            <div class="title">
+                                                <div class="platform-hinted "
+                                                     data-platform-hinted="data-platform-hinted">
+                                                    <div class="content sourceset-dependent-content" data-active=""
+                                                         data-togglable=":equinox-core:dokkaHtmlPartial/commonMain">
+                                                        <div class="symbol monospace"><span
+                                                                class="token keyword">const </span><span
+                                                                class="token keyword">val </span><a
+                                                                href="-d-e-f-a-u-l-t_-r-e-q-u-e-s-t_-t-i-m-e-o-u-t.html">DEFAULT_REQUEST_TIMEOUT</a><span
+                                                                class="token operator">: </span><a
+                                                                href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-long/index.html">Long</a><span
+                                                                class="token operator"> = </span><span
+                                                                class="token constant">5000</span></div>
+                                                        <div class="brief "><p class="paragraph"><code
+                                                                class="lang-kotlin">DEFAULT_REQUEST_TIMEOUT</code> The
+                                                            timeout values in millis used in the requests</p></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <a data-name="-759934645%2FProperties%2F-2082165282" anchor-label="RESPONSE_DATA_KEY"
+                                   id="-759934645%2FProperties%2F-2082165282"
+                                   data-filterable-set=":equinox-core:dokkaHtmlPartial/commonMain"></a>
+                                <div class="table-row"
+                                     data-filterable-current=":equinox-core:dokkaHtmlPartial/commonMain"
+                                     data-filterable-set=":equinox-core:dokkaHtmlPartial/commonMain">
+                                    <div class="main-subrow keyValue ">
+                                        <div class=""><span class="inline-flex">
+                  <div><a href="-r-e-s-p-o-n-s-e_-d-a-t-a_-k-e-y.html"><span>RESPONSE_</span><wbr><span>DATA_</span><wbr><span>KEY</span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-759934645%2FProperties%2F-2082165282"></span>
+                    <div class="copy-popup-wrapper "><span
+                            class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+                                        <div>
+                                            <div class="title">
+                                                <div class="platform-hinted "
+                                                     data-platform-hinted="data-platform-hinted">
+                                                    <div class="content sourceset-dependent-content" data-active=""
+                                                         data-togglable=":equinox-core:dokkaHtmlPartial/commonMain">
+                                                        <div class="symbol monospace"><span
+                                                                class="token keyword">const </span><span
+                                                                class="token keyword">val </span><a
+                                                                href="-r-e-s-p-o-n-s-e_-d-a-t-a_-k-e-y.html">RESPONSE_DATA_KEY</a><span
+                                                                class="token operator">: </span><a
+                                                                href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a>
+                                                        </div>
+                                                        <div class="brief "><p class="paragraph"><code
+                                                                class="lang-kotlin">RESPONSE_DATA_KEY</code> The key for
+                                                            the <b>"response"</b> field</p></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <a data-name="-1253868541%2FProperties%2F-2082165282" anchor-label="RESPONSE_STATUS_KEY"
+                                   id="-1253868541%2FProperties%2F-2082165282"
+                                   data-filterable-set=":equinox-core:dokkaHtmlPartial/commonMain"></a>
+                                <div class="table-row"
+                                     data-filterable-current=":equinox-core:dokkaHtmlPartial/commonMain"
+                                     data-filterable-set=":equinox-core:dokkaHtmlPartial/commonMain">
+                                    <div class="main-subrow keyValue ">
+                                        <div class=""><span class="inline-flex">
+                  <div><a href="-r-e-s-p-o-n-s-e_-s-t-a-t-u-s_-k-e-y.html"><span>RESPONSE_</span><wbr><span>STATUS_</span><wbr><span>KEY</span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1253868541%2FProperties%2F-2082165282"></span>
+                    <div class="copy-popup-wrapper "><span
+                            class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+                                        <div>
+                                            <div class="title">
+                                                <div class="platform-hinted "
+                                                     data-platform-hinted="data-platform-hinted">
+                                                    <div class="content sourceset-dependent-content" data-active=""
+                                                         data-togglable=":equinox-core:dokkaHtmlPartial/commonMain">
+                                                        <div class="symbol monospace"><span
+                                                                class="token keyword">const </span><span
+                                                                class="token keyword">val </span><a
+                                                                href="-r-e-s-p-o-n-s-e_-s-t-a-t-u-s_-k-e-y.html">RESPONSE_STATUS_KEY</a><span
+                                                                class="token operator">: </span><a
+                                                                href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a>
+                                                        </div>
+                                                        <div class="brief "><p class="paragraph"><code
+                                                                class="lang-kotlin">RESPONSE_STATUS_KEY</code> The key
+                                                            for the <b>"status"</b> field</p></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <a data-name="1686803254%2FProperties%2F-2082165282" anchor-label="USER_IDENTIFIER_KEY"
+                                   id="1686803254%2FProperties%2F-2082165282"
+                                   data-filterable-set=":equinox-core:dokkaHtmlPartial/commonMain"></a>
+                                <div class="table-row"
+                                     data-filterable-current=":equinox-core:dokkaHtmlPartial/commonMain"
+                                     data-filterable-set=":equinox-core:dokkaHtmlPartial/commonMain">
+                                    <div class="main-subrow keyValue ">
+                                        <div class=""><span class="inline-flex">
+                  <div><a href="-u-s-e-r_-i-d-e-n-t-i-f-i-e-r_-k-e-y.html"><span>USER_</span><wbr><span>IDENTIFIER_</span><wbr><span>KEY</span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1686803254%2FProperties%2F-2082165282"></span>
+                    <div class="copy-popup-wrapper "><span
+                            class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+                                        <div>
+                                            <div class="title">
+                                                <div class="platform-hinted "
+                                                     data-platform-hinted="data-platform-hinted">
+                                                    <div class="content sourceset-dependent-content" data-active=""
+                                                         data-togglable=":equinox-core:dokkaHtmlPartial/commonMain">
+                                                        <div class="symbol monospace"><span
+                                                                class="token keyword">const </span><span
+                                                                class="token keyword">val </span><a
+                                                                href="-u-s-e-r_-i-d-e-n-t-i-f-i-e-r_-k-e-y.html">USER_IDENTIFIER_KEY</a><span
+                                                                class="token operator">: </span><a
+                                                                href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a>
+                                                        </div>
+                                                        <div class="brief "><p class="paragraph"><code
+                                                                class="lang-kotlin">USER_IDENTIFIER_KEY</code> The key
+                                                            for the user <b>"id"</b> field</p></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <a data-name="-781327166%2FProperties%2F-2082165282" anchor-label="USER_TOKEN_KEY"
+                                   id="-781327166%2FProperties%2F-2082165282"
+                                   data-filterable-set=":equinox-core:dokkaHtmlPartial/commonMain"></a>
+                                <div class="table-row"
+                                     data-filterable-current=":equinox-core:dokkaHtmlPartial/commonMain"
+                                     data-filterable-set=":equinox-core:dokkaHtmlPartial/commonMain">
+                                    <div class="main-subrow keyValue ">
+                                        <div class=""><span class="inline-flex">
+                  <div><a href="-u-s-e-r_-t-o-k-e-n_-k-e-y.html"><span>USER_</span><wbr><span>TOKEN_</span><wbr><span>KEY</span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-781327166%2FProperties%2F-2082165282"></span>
+                    <div class="copy-popup-wrapper "><span
+                            class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+                                        <div>
+                                            <div class="title">
+                                                <div class="platform-hinted "
+                                                     data-platform-hinted="data-platform-hinted">
+                                                    <div class="content sourceset-dependent-content" data-active=""
+                                                         data-togglable=":equinox-core:dokkaHtmlPartial/commonMain">
+                                                        <div class="symbol monospace"><span
+                                                                class="token keyword">const </span><span
+                                                                class="token keyword">val </span><a
+                                                                href="-u-s-e-r_-t-o-k-e-n_-k-e-y.html">USER_TOKEN_KEY</a><span
+                                                                class="token operator">: </span><a
+                                                                href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a>
+                                                        </div>
+                                                        <div class="brief "><p class="paragraph"><code
+                                                                class="lang-kotlin">USER_TOKEN_KEY</code> The key for
+                                                            the user <b>"token"</b> field</p></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div data-togglable="FUNCTION">
+                            <h2 class="">Functions</h2>
+                            <div class="table"><a data-name="-1205522917%2FFunctions%2F-2082165282"
+                                                  anchor-label="isSuccessfulResponse"
+                                                  id="-1205522917%2FFunctions%2F-2082165282"
+                                                  data-filterable-set=":equinox-core:dokkaHtmlPartial/commonMain"></a>
+                                <div class="table-row"
+                                     data-filterable-current=":equinox-core:dokkaHtmlPartial/commonMain"
+                                     data-filterable-set=":equinox-core:dokkaHtmlPartial/commonMain">
+                                    <div class="main-subrow keyValue ">
+                                        <div class=""><span class="inline-flex">
+                  <div><a href="is-successful-response.html"><span>is</span><wbr><span>Successful</span><wbr><span><span>Response</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1205522917%2FFunctions%2F-2082165282"></span>
+                    <div class="copy-popup-wrapper "><span
+                            class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+                                        <div>
+                                            <div class="title">
+                                                <div class="platform-hinted "
+                                                     data-platform-hinted="data-platform-hinted">
+                                                    <div class="content sourceset-dependent-content" data-active=""
+                                                         data-togglable=":equinox-core:dokkaHtmlPartial/commonMain">
+                                                        <div class="symbol monospace"><span class="token keyword">private </span><span
+                                                                class="token keyword">fun </span><a
+                                                                href="is-successful-response.html"><span
+                                                                class="token function">isSuccessfulResponse</span></a><span
+                                                                class="token punctuation">(</span><span
+                                                                class="parameters "><span
+                                                                class="parameter ">response<span class="token operator">: </span><span
+                                                                data-unresolved-link="kotlinx.serialization.json/JsonObject///PointingToDeclaration/">JsonObject</span><span
+                                                                class="token operator">?</span></span></span><span
+                                                                class="token punctuation">)</span><span
+                                                                class="token operator">: </span><a
+                                                                href="../../-response-status/index.html">ResponseStatus</a>
+                                                        </div>
+                                                        <div class="brief "><p class="paragraph">Method to get whether
+                                                            the request has been successful or not</p></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <a data-name="-1287155796%2FFunctions%2F-2082165282" anchor-label="sendPaginatedRequest"
+                                   id="-1287155796%2FFunctions%2F-2082165282"
+                                   data-filterable-set=":equinox-core:dokkaHtmlPartial/commonMain"></a>
+                                <div class="table-row"
+                                     data-filterable-current=":equinox-core:dokkaHtmlPartial/commonMain"
+                                     data-filterable-set=":equinox-core:dokkaHtmlPartial/commonMain">
+                                    <div class="main-subrow keyValue ">
+                                        <div class=""><span class="inline-flex">
+                  <div><a href="send-paginated-request.html"><span>send</span><wbr><span>Paginated</span><wbr><span><span>Request</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1287155796%2FFunctions%2F-2082165282"></span>
+                    <div class="copy-popup-wrapper "><span
+                            class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+                                        <div>
+                                            <div class="title">
+                                                <div class="platform-hinted "
+                                                     data-platform-hinted="data-platform-hinted">
+                                                    <div class="content sourceset-dependent-content" data-active=""
+                                                         data-togglable=":equinox-core:dokkaHtmlPartial/commonMain">
+                                                        <div class="symbol monospace"><span class="token keyword">suspend </span><span
+                                                                class="token keyword">fun </span><span
+                                                                class="token operator">&lt;</span><a
+                                                                href="send-paginated-request.html">R</a><span
+                                                                class="token operator"> : </span><a
+                                                                href="../index.html">Requester</a><span
+                                                                class="token punctuation">, </span><a
+                                                                href="send-paginated-request.html">T</a><span
+                                                                class="token operator">&gt; </span><a
+                                                                href="send-paginated-request.html">R</a><span
+                                                                class="token punctuation">.</span><a
+                                                                href="send-paginated-request.html"><span
+                                                                class="token function">sendPaginatedRequest</span></a><span
+                                                                class="token punctuation">(</span><span
+                                                                class="parameters "><span
+                                                                class="parameter ">request<span
+                                                                class="token operator">: </span><span
+                                                                class="token keyword">suspend </span><a
+                                                                href="send-paginated-request.html">R</a><span
+                                                                class="token punctuation">.</span><span
+                                                                class="token punctuation">(</span><span
+                                                                class="token punctuation">)</span><span
+                                                                class="token operator"> -&gt; </span><span
+                                                                data-unresolved-link="kotlinx.serialization.json/JsonObject///PointingToDeclaration/">JsonObject</span><span
+                                                                class="token punctuation">, </span></span><span
+                                                                class="parameter ">serializer<span
+                                                                class="token operator">: </span><span
+                                                                data-unresolved-link="kotlinx.serialization/KSerializer///PointingToDeclaration/">KSerializer</span><span
+                                                                class="token operator">&lt;</span><a
+                                                                href="send-paginated-request.html">T</a><span
+                                                                class="token operator">&gt;</span><span
+                                                                class="token punctuation">, </span></span><span
+                                                                class="parameter ">onSuccess<span
+                                                                class="token operator">: </span><span
+                                                                class="token punctuation">(</span><a
+                                                                href="../../../com.tecknobit.equinoxcore.pagination/-paginated-response/index.html">PaginatedResponse</a><span
+                                                                class="token operator">&lt;</span><a
+                                                                href="send-paginated-request.html">T</a><span
+                                                                class="token operator">&gt;</span><span
+                                                                class="token punctuation">)</span><span
+                                                                class="token operator"> -&gt; </span><a
+                                                                href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-unit/index.html">Unit</a><span
+                                                                class="token punctuation">, </span></span><span
+                                                                class="parameter ">onFailure<span
+                                                                class="token operator">: </span><span
+                                                                class="token punctuation">(</span><span
+                                                                data-unresolved-link="kotlinx.serialization.json/JsonObject///PointingToDeclaration/">JsonObject</span><span
+                                                                class="token punctuation">)</span><span
+                                                                class="token operator"> -&gt; </span><a
+                                                                href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-unit/index.html">Unit</a><span
+                                                                class="token punctuation">, </span></span><span
+                                                                class="parameter ">onConnectionError<span
+                                                                class="token operator">: </span><span
+                                                                class="token punctuation">(</span><span
+                                                                data-unresolved-link="kotlinx.serialization.json/JsonObject///PointingToDeclaration/">JsonObject</span><span
+                                                                class="token punctuation">)</span><span
+                                                                class="token operator"> -&gt; </span><a
+                                                                href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-unit/index.html">Unit</a><span
+                                                                class="token operator">?</span><span
+                                                                class="token operator"> = </span>null</span></span><span
+                                                                class="token punctuation">)</span></div>
+                                                        <div class="brief "><p class="paragraph">Method to execute and
+                                                            manage the paginated response of a request</p></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <a data-name="934541344%2FFunctions%2F-2082165282" anchor-label="sendRequest"
+                                   id="934541344%2FFunctions%2F-2082165282"
+                                   data-filterable-set=":equinox-core:dokkaHtmlPartial/commonMain"></a>
+                                <div class="table-row"
+                                     data-filterable-current=":equinox-core:dokkaHtmlPartial/commonMain"
+                                     data-filterable-set=":equinox-core:dokkaHtmlPartial/commonMain">
+                                    <div class="main-subrow keyValue ">
+                                        <div class=""><span class="inline-flex">
+                  <div><a href="send-request.html"><span>send</span><wbr><span><span>Request</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="934541344%2FFunctions%2F-2082165282"></span>
+                    <div class="copy-popup-wrapper "><span
+                            class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+                                        <div>
+                                            <div class="title">
+                                                <div class="platform-hinted "
+                                                     data-platform-hinted="data-platform-hinted">
+                                                    <div class="content sourceset-dependent-content" data-active=""
+                                                         data-togglable=":equinox-core:dokkaHtmlPartial/commonMain">
+                                                        <div class="symbol monospace"><span class="token keyword">suspend </span><span
+                                                                class="token keyword">fun </span><span
+                                                                class="token operator">&lt;</span><a
+                                                                href="send-request.html">R</a><span
+                                                                class="token operator"> : </span><a
+                                                                href="../index.html">Requester</a><span
+                                                                class="token operator">&gt; </span><a
+                                                                href="send-request.html">R</a><span
+                                                                class="token punctuation">.</span><a
+                                                                href="send-request.html"><span class="token function">sendRequest</span></a><span
+                                                                class="token punctuation">(</span><span
+                                                                class="parameters "><span
+                                                                class="parameter ">request<span
+                                                                class="token operator">: </span><span
+                                                                class="token keyword">suspend </span><a
+                                                                href="send-request.html">R</a><span
+                                                                class="token punctuation">.</span><span
+                                                                class="token punctuation">(</span><span
+                                                                class="token punctuation">)</span><span
+                                                                class="token operator"> -&gt; </span><span
+                                                                data-unresolved-link="kotlinx.serialization.json/JsonObject///PointingToDeclaration/">JsonObject</span><span
+                                                                class="token punctuation">, </span></span><span
+                                                                class="parameter ">onResponse<span
+                                                                class="token operator">: </span><span
+                                                                class="token punctuation">(</span><span
+                                                                data-unresolved-link="kotlinx.serialization.json/JsonObject///PointingToDeclaration/">JsonObject</span><span
+                                                                class="token punctuation">)</span><span
+                                                                class="token operator"> -&gt; </span><a
+                                                                href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-unit/index.html">Unit</a><span
+                                                                class="token punctuation">, </span></span><span
+                                                                class="parameter ">onConnectionError<span
+                                                                class="token operator">: </span><span
+                                                                class="token punctuation">(</span><span
+                                                                data-unresolved-link="kotlinx.serialization.json/JsonObject///PointingToDeclaration/">JsonObject</span><span
+                                                                class="token punctuation">)</span><span
+                                                                class="token operator"> -&gt; </span><a
+                                                                href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-unit/index.html">Unit</a><span
+                                                                class="token operator">?</span><span
+                                                                class="token operator"> = </span>null</span></span><span
+                                                                class="token punctuation">)</span></div>
+                                                        <div class="symbol monospace"><span class="token keyword">suspend </span><span
+                                                                class="token keyword">fun </span><span
+                                                                class="token operator">&lt;</span><a
+                                                                href="send-request.html">R</a><span
+                                                                class="token operator"> : </span><a
+                                                                href="../index.html">Requester</a><span
+                                                                class="token operator">&gt; </span><a
+                                                                href="send-request.html">R</a><span
+                                                                class="token punctuation">.</span><a
+                                                                href="send-request.html"><span class="token function">sendRequest</span></a><span
+                                                                class="token punctuation">(</span><span
+                                                                class="parameters "><span
+                                                                class="parameter ">request<span
+                                                                class="token operator">: </span><span
+                                                                class="token keyword">suspend </span><a
+                                                                href="send-request.html">R</a><span
+                                                                class="token punctuation">.</span><span
+                                                                class="token punctuation">(</span><span
+                                                                class="token punctuation">)</span><span
+                                                                class="token operator"> -&gt; </span><span
+                                                                data-unresolved-link="kotlinx.serialization.json/JsonObject///PointingToDeclaration/">JsonObject</span><span
+                                                                class="token punctuation">, </span></span><span
+                                                                class="parameter ">onSuccess<span
+                                                                class="token operator">: </span><span
+                                                                class="token punctuation">(</span><span
+                                                                data-unresolved-link="kotlinx.serialization.json/JsonObject///PointingToDeclaration/">JsonObject</span><span
+                                                                class="token punctuation">)</span><span
+                                                                class="token operator"> -&gt; </span><a
+                                                                href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-unit/index.html">Unit</a><span
+                                                                class="token punctuation">, </span></span><span
+                                                                class="parameter ">onFailure<span
+                                                                class="token operator">: </span><span
+                                                                class="token punctuation">(</span><span
+                                                                data-unresolved-link="kotlinx.serialization.json/JsonObject///PointingToDeclaration/">JsonObject</span><span
+                                                                class="token punctuation">)</span><span
+                                                                class="token operator"> -&gt; </span><a
+                                                                href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-unit/index.html">Unit</a><span
+                                                                class="token punctuation">, </span></span><span
+                                                                class="parameter ">onConnectionError<span
+                                                                class="token operator">: </span><span
+                                                                class="token punctuation">(</span><span
+                                                                data-unresolved-link="kotlinx.serialization.json/JsonObject///PointingToDeclaration/">JsonObject</span><span
+                                                                class="token punctuation">)</span><span
+                                                                class="token operator"> -&gt; </span><a
+                                                                href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-unit/index.html">Unit</a><span
+                                                                class="token operator">?</span><span
+                                                                class="token operator"> = </span>null</span></span><span
+                                                                class="token punctuation">)</span></div>
+                                                        <div class="brief "><p class="paragraph">Method to execute and
+                                                            manage the response of a request</p></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <a data-name="-1222427212%2FFunctions%2F-2082165282"
+                                   anchor-label="toNullableResponseData" id="-1222427212%2FFunctions%2F-2082165282"
+                                   data-filterable-set=":equinox-core:dokkaHtmlPartial/commonMain"></a>
+                                <div class="table-row"
+                                     data-filterable-current=":equinox-core:dokkaHtmlPartial/commonMain"
+                                     data-filterable-set=":equinox-core:dokkaHtmlPartial/commonMain">
+                                    <div class="main-subrow keyValue ">
+                                        <div class=""><span class="inline-flex">
+                  <div><a href="to-nullable-response-data.html"><span>to</span><wbr><span>Nullable</span><wbr><span>Response</span><wbr><span><span>Data</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1222427212%2FFunctions%2F-2082165282"></span>
+                    <div class="copy-popup-wrapper "><span
+                            class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+                                        <div>
+                                            <div class="title">
+                                                <div class="platform-hinted "
+                                                     data-platform-hinted="data-platform-hinted">
+                                                    <div class="content sourceset-dependent-content" data-active=""
+                                                         data-togglable=":equinox-core:dokkaHtmlPartial/commonMain">
+                                                        <div class="symbol monospace"><span
+                                                                class="token keyword">fun </span><span
+                                                                data-unresolved-link="kotlinx.serialization.json/JsonObject///PointingToDeclaration/">JsonObject</span><span
+                                                                class="token punctuation">.</span><a
+                                                                href="to-nullable-response-data.html"><span
+                                                                class="token function">toNullableResponseData</span></a><span
+                                                                class="token punctuation">(</span><span
+                                                                class="token punctuation">)</span><span
+                                                                class="token operator">: </span><span
+                                                                data-unresolved-link="kotlinx.serialization.json/JsonObject///PointingToDeclaration/">JsonObject</span><span
+                                                                class="token operator">?</span></div>
+                                                        <div class="brief "><p class="paragraph">Method to get directly
+                                                            the response data from the request response</p></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <a data-name="1500942088%2FFunctions%2F-2082165282" anchor-label="toResponseArrayData"
+                                   id="1500942088%2FFunctions%2F-2082165282"
+                                   data-filterable-set=":equinox-core:dokkaHtmlPartial/commonMain"></a>
+                                <div class="table-row"
+                                     data-filterable-current=":equinox-core:dokkaHtmlPartial/commonMain"
+                                     data-filterable-set=":equinox-core:dokkaHtmlPartial/commonMain">
+                                    <div class="main-subrow keyValue ">
+                                        <div class=""><span class="inline-flex">
+                  <div><a href="to-response-array-data.html"><span>to</span><wbr><span>Response</span><wbr><span>Array</span><wbr><span><span>Data</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1500942088%2FFunctions%2F-2082165282"></span>
+                    <div class="copy-popup-wrapper "><span
+                            class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+                                        <div>
+                                            <div class="title">
+                                                <div class="platform-hinted "
+                                                     data-platform-hinted="data-platform-hinted">
+                                                    <div class="content sourceset-dependent-content" data-active=""
+                                                         data-togglable=":equinox-core:dokkaHtmlPartial/commonMain">
+                                                        <div class="symbol monospace"><span
+                                                                class="token keyword">fun </span><span
+                                                                data-unresolved-link="kotlinx.serialization.json/JsonObject///PointingToDeclaration/">JsonObject</span><span
+                                                                class="token punctuation">.</span><a
+                                                                href="to-response-array-data.html"><span
+                                                                class="token function">toResponseArrayData</span></a><span
+                                                                class="token punctuation">(</span><span
+                                                                class="token punctuation">)</span><span
+                                                                class="token operator">: </span><span
+                                                                data-unresolved-link="kotlinx.serialization.json/JsonArray///PointingToDeclaration/">JsonArray</span>
+                                                        </div>
+                                                        <div class="brief "><p class="paragraph">Method to get directly
+                                                            the response data from the request response and format as
+                                                            <span data-unresolved-link="kotlinx.serialization.json/JsonArray///PointingToDeclaration/">JsonArray</span>
+                                                        </p></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <a data-name="912173790%2FFunctions%2F-2082165282" anchor-label="toResponseContent"
+                                   id="912173790%2FFunctions%2F-2082165282"
+                                   data-filterable-set=":equinox-core:dokkaHtmlPartial/commonMain"></a>
+                                <div class="table-row"
+                                     data-filterable-current=":equinox-core:dokkaHtmlPartial/commonMain"
+                                     data-filterable-set=":equinox-core:dokkaHtmlPartial/commonMain">
+                                    <div class="main-subrow keyValue ">
+                                        <div class=""><span class="inline-flex">
+                  <div><a href="to-response-content.html"><span>to</span><wbr><span>Response</span><wbr><span><span>Content</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="912173790%2FFunctions%2F-2082165282"></span>
+                    <div class="copy-popup-wrapper "><span
+                            class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+                                        <div>
+                                            <div class="title">
+                                                <div class="platform-hinted "
+                                                     data-platform-hinted="data-platform-hinted">
+                                                    <div class="content sourceset-dependent-content" data-active=""
+                                                         data-togglable=":equinox-core:dokkaHtmlPartial/commonMain">
+                                                        <div class="symbol monospace"><span
+                                                                class="token keyword">fun </span><span
+                                                                data-unresolved-link="kotlinx.serialization.json/JsonObject///PointingToDeclaration/">JsonObject</span><span
+                                                                class="token punctuation">.</span><a
+                                                                href="to-response-content.html"><span
+                                                                class="token function">toResponseContent</span></a><span
+                                                                class="token punctuation">(</span><span
+                                                                class="token punctuation">)</span><span
+                                                                class="token operator">: </span><a
+                                                                href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a>
+                                                        </div>
+                                                        <div class="brief "><p class="paragraph">Method to get directly
+                                                            the response data from the request response and format as <a
+                                                                    href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a>
+                                                        </p></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <a data-name="1554813043%2FFunctions%2F-2082165282" anchor-label="toResponseData"
+                                   id="1554813043%2FFunctions%2F-2082165282"
+                                   data-filterable-set=":equinox-core:dokkaHtmlPartial/commonMain"></a>
+                                <div class="table-row"
+                                     data-filterable-current=":equinox-core:dokkaHtmlPartial/commonMain"
+                                     data-filterable-set=":equinox-core:dokkaHtmlPartial/commonMain">
+                                    <div class="main-subrow keyValue ">
+                                        <div class=""><span class="inline-flex">
+                  <div><a href="to-response-data.html"><span>to</span><wbr><span>Response</span><wbr><span><span>Data</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1554813043%2FFunctions%2F-2082165282"></span>
+                    <div class="copy-popup-wrapper "><span
+                            class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+                                        <div>
+                                            <div class="title">
+                                                <div class="platform-hinted "
+                                                     data-platform-hinted="data-platform-hinted">
+                                                    <div class="content sourceset-dependent-content" data-active=""
+                                                         data-togglable=":equinox-core:dokkaHtmlPartial/commonMain">
+                                                        <div class="symbol monospace"><span
+                                                                class="token keyword">fun </span><span
+                                                                data-unresolved-link="kotlinx.serialization.json/JsonObject///PointingToDeclaration/">JsonObject</span><span
+                                                                class="token punctuation">.</span><a
+                                                                href="to-response-data.html"><span
+                                                                class="token function">toResponseData</span></a><span
+                                                                class="token punctuation">(</span><span
+                                                                class="token punctuation">)</span><span
+                                                                class="token operator">: </span><span
+                                                                data-unresolved-link="kotlinx.serialization.json/JsonObject///PointingToDeclaration/">JsonObject</span>
+                                                        </div>
+                                                        <div class="brief "><p class="paragraph">Method to get directly
+                                                            the response data from the request response</p></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <a href="#content" id="go-to-top-link" class="footer--button footer--button_go-to-top"></a>
+                <span>© 2025 Copyright</span>
+                <span class="pull-right">
+            <span>Generated by </span>
+            <a class="footer--link footer--link_external" href="https://github.com/Kotlin/dokka">
+                <span>dokka</span>
+            </a>
+        </span>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

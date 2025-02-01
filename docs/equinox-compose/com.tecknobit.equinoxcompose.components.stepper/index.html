@@ -1,0 +1,742 @@
+<!doctype html>
+<html class="no-js">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
+    <title>com.tecknobit.equinoxcompose.components.stepper</title>
+    <link href="../../images/logo-icon.svg" rel="icon" type="image/svg">
+    <script>var pathToRoot = "../../";</script>
+    <script>document.documentElement.classList.replace("no-js","js");</script>
+    <script>const storage = localStorage.getItem("dokka-dark-mode")
+    if (storage == null) {
+        const osDarkSchemePreferred = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+        if (osDarkSchemePreferred === true) {
+            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+    } else {
+        const savedDarkMode = JSON.parse(storage)
+        if(savedDarkMode === true) {
+            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+    }
+    </script>
+    <script type="text/javascript" src="https://unpkg.com/kotlin-playground@1/dist/playground.min.js" async></script>
+    <script type="text/javascript" src="../../scripts/sourceset_dependencies.js" async></script>
+    <link href="../../styles/style.css" rel="Stylesheet">
+    <link href="../../styles/main.css" rel="Stylesheet">
+    <link href="../../styles/prism.css" rel="Stylesheet">
+    <link href="../../styles/logo-styles.css" rel="Stylesheet">
+    <link href="../../styles/font-jb-sans-auto.css" rel="Stylesheet">
+    <link href="../../ui-kit/ui-kit.min.css" rel="Stylesheet">
+    <script type="text/javascript" src="../../scripts/clipboard.js" async></script>
+    <script type="text/javascript" src="../../scripts/navigation-loader.js" async></script>
+    <script type="text/javascript" src="../../scripts/platform-content-handler.js" async></script>
+    <script type="text/javascript" src="../../scripts/main.js" defer></script>
+    <script type="text/javascript" src="../../scripts/prism.js" async></script>
+    <script type="text/javascript" src="../../ui-kit/ui-kit.min.js" defer></script>
+    <script type="text/javascript" src="../../scripts/symbol-parameters-wrapper_deferred.js" defer></script>
+</head>
+<body>
+<div class="root">
+    <nav class="navigation theme-dark" id="navigation-wrapper">
+        <a class="library-name--link" href="../../index.html">
+            Equinox
+        </a>
+        <button class="navigation-controls--btn navigation-controls--btn_toc ui-kit_mobile-only" id="toc-toggle"
+                type="button">Toggle table of contents
+        </button>
+        <div class="navigation-controls--break ui-kit_mobile-only"></div>
+        <div class="library-version" id="library-version">1.0.7
+        </div>
+        <div class="navigation-controls">
+            <div class="filter-section filter-section_loading" id="filter-section">
+                <button class="platform-tag platform-selector common-like" data-active=""
+                        data-filter=":equinox-compose:dokkaHtmlPartial/commonMain">common
+                </button>
+                <div class="dropdown filter-section--dropdown" data-role="dropdown" id="filter-section-dropdown">
+                    <button class="button button_dropdown filter-section--dropdown-toggle" role="combobox"
+                            data-role="dropdown-toggle" aria-controls="platform-tags-listbox" aria-haspopup="listbox"
+                            aria-expanded="false" aria-label="Toggle source sets"></button>
+                    <ul role="listbox" id="platform-tags-listbox" class="dropdown--list" data-role="dropdown-listbox">
+                        <div class="dropdown--header"><span>Platform filter</span>
+                            <button class="button" data-role="dropdown-toggle" aria-label="Close platform filter">
+                                <i class="ui-kit-icon ui-kit-icon_cross"></i>
+                            </button>
+                        </div>
+                        <li role="option" class="dropdown--option platform-selector-option common-like" tabindex="0">
+                            <label class="checkbox">
+                                <input type="checkbox" class="checkbox--input"
+                                       id=":equinox-compose:dokkaHtmlPartial/commonMain"
+                                       data-filter=":equinox-compose:dokkaHtmlPartial/commonMain">
+                                <span class="checkbox--icon"></span>
+                                common
+                            </label>
+                        </li>
+                    </ul>
+                    <div class="dropdown--overlay"></div>
+                </div>
+            </div>
+            <button class="navigation-controls--btn navigation-controls--btn_theme" id="theme-toggle-button"
+                    type="button">Switch theme
+            </button>
+            <div class="navigation-controls--btn navigation-controls--btn_search" id="searchBar" role="button">Search in
+                API
+            </div>
+        </div>
+    </nav>
+    <div id="container">
+        <div class="sidebar" id="leftColumn">
+            <div class="dropdown theme-dark_mobile" data-role="dropdown" id="toc-dropdown">
+                <ul role="listbox" id="toc-listbox" class="dropdown--list dropdown--list_toc-list"
+                    data-role="dropdown-listbox">
+                    <div class="dropdown--header">
+                            <span>
+                                    Equinox
+                            </span>
+                        <button class="button" data-role="dropdown-toggle" aria-label="Close table of contents">
+                            <i class="ui-kit-icon ui-kit-icon_cross"></i>
+                        </button>
+                    </div>
+                    <div class="sidebar--inner" id="sideMenu"></div>
+                </ul>
+                <div class="dropdown--overlay"></div>
+            </div>
+        </div>
+        <div id="main">
+            <div class="main-content" data-page-type="package" id="content"
+                 pageids="equinox-compose::com.tecknobit.equinoxcompose.components.stepper////PointingToDeclaration//-714918263">
+                <div class="breadcrumbs"><a href="../index.html">equinox-compose</a><span
+                        class="delimiter">/</span><span
+                        class="current">com.tecknobit.equinoxcompose.components.stepper</span></div>
+                <div class="cover ">
+                    <h1 class="cover"><span><span>Package-level</span></span> <span><span>declarations</span></span>
+                    </h1>
+                </div>
+                <div class="tabbedcontent">
+                    <div class="tabs-section" tabs-section="tabs-section">
+                        <button class="section-tab" data-active="" data-togglable="TYPE">Types</button>
+                        <button class="section-tab" data-togglable="FUNCTION,EXTENSION_FUNCTION">Functions</button>
+                    </div>
+                    <div class="tabs-section-body">
+                        <div data-togglable="TYPE">
+                            <h2 class="">Types</h2>
+                            <div class="table"><a data-name="-1411924422%2FClasslikes%2F-714918263" anchor-label="Step"
+                                                  id="-1411924422%2FClasslikes%2F-714918263"
+                                                  data-filterable-set=":equinox-compose:dokkaHtmlPartial/commonMain"></a>
+                                <div class="table-row"
+                                     data-filterable-current=":equinox-compose:dokkaHtmlPartial/commonMain"
+                                     data-filterable-set=":equinox-compose:dokkaHtmlPartial/commonMain">
+                                    <div class="main-subrow keyValue ">
+                                        <div class=""><span class="inline-flex">
+                  <div><a href="-step/index.html"><span><span>Step</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1411924422%2FClasslikes%2F-714918263"></span>
+                    <div class="copy-popup-wrapper "><span
+                            class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+                                        <div>
+                                            <div class="title">
+                                                <div class="platform-hinted "
+                                                     data-platform-hinted="data-platform-hinted">
+                                                    <div class="content sourceset-dependent-content" data-active=""
+                                                         data-togglable=":equinox-compose:dokkaHtmlPartial/commonMain">
+                                                        <div class="symbol monospace"><span
+                                                                class="token keyword">data </span><span
+                                                                class="token keyword">class </span><a
+                                                                href="-step/index.html">Step</a><span
+                                                                class="token punctuation">(</span><span
+                                                                class="parameters "><span class="parameter "><span
+                                                                class="token keyword">val </span>actionControls<span
+                                                                class="token operator">: </span><span><span
+                                                                class="token annotation builtin">@</span><a
+                                                                href="https://developer.android.com/reference/kotlin/androidx/compose/runtime/Composable.html"><span
+                                                                class="token annotation builtin">Composable</span></a>&nbsp;</span><span
+                                                                class="token punctuation">(</span><span
+                                                                class="token punctuation">)</span><span
+                                                                class="token operator"> -&gt; </span><a
+                                                                href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-unit/index.html">Unit</a><span
+                                                                class="token operator">?</span><span
+                                                                class="token operator"> = </span>null<span
+                                                                class="token punctuation">, </span></span><span
+                                                                class="parameter "><span
+                                                                class="token keyword">val </span>initiallyExpanded<span
+                                                                class="token operator">: </span><a
+                                                                href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a><span
+                                                                class="token operator"> = </span><span
+                                                                class="token boolean">false</span><span
+                                                                class="token punctuation">, </span></span><span
+                                                                class="parameter "><span
+                                                                class="token keyword">val </span>enabled<span
+                                                                class="token operator">: </span><a
+                                                                href="https://developer.android.com/reference/kotlin/androidx/compose/runtime/MutableState.html">MutableState</a><span
+                                                                class="token operator">&lt;</span><a
+                                                                href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a><span
+                                                                class="token operator">&gt;</span><span
+                                                                class="token operator">?</span><span
+                                                                class="token operator"> = </span>null<span
+                                                                class="token punctuation">, </span></span><span
+                                                                class="parameter "><span
+                                                                class="token keyword">val </span>stepIcon<span
+                                                                class="token operator">: </span><a
+                                                                href="https://developer.android.com/reference/kotlin/androidx/compose/ui/graphics/vector/ImageVector.html">ImageVector</a><span
+                                                                class="token punctuation">, </span></span><span
+                                                                class="parameter "><span
+                                                                class="token keyword">val </span>title<span
+                                                                class="token operator">: </span><span
+                                                                data-unresolved-link="org.jetbrains.compose.resources/StringResource///PointingToDeclaration/">StringResource</span><span
+                                                                class="token punctuation">, </span></span><span
+                                                                class="parameter "><span
+                                                                class="token keyword">val </span>content<span
+                                                                class="token operator">: </span><span><span
+                                                                class="token annotation builtin">@</span><a
+                                                                href="https://developer.android.com/reference/kotlin/androidx/compose/runtime/Composable.html"><span
+                                                                class="token annotation builtin">Composable</span></a>&nbsp;</span><a
+                                                                href="https://developer.android.com/reference/kotlin/androidx/compose/foundation/layout/ColumnScope.html">ColumnScope</a><span
+                                                                class="token punctuation">.</span><span
+                                                                class="token punctuation">(</span><span
+                                                                class="token punctuation">)</span><span
+                                                                class="token operator"> -&gt; </span><a
+                                                                href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-unit/index.html">Unit</a><span
+                                                                class="token punctuation">, </span></span><span
+                                                                class="parameter "><span
+                                                                class="token keyword">val </span>isError<span
+                                                                class="token operator">: </span><a
+                                                                href="https://developer.android.com/reference/kotlin/androidx/compose/runtime/MutableState.html">MutableState</a><span
+                                                                class="token operator">&lt;</span><a
+                                                                href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a><span
+                                                                class="token operator">&gt;</span><span
+                                                                class="token operator">?</span><span
+                                                                class="token operator"> = </span>null<span
+                                                                class="token punctuation">, </span></span><span
+                                                                class="parameter "><span
+                                                                class="token keyword">val </span>dismissAction<span
+                                                                class="token operator">: </span><span
+                                                                class="token punctuation">(</span><span
+                                                                class="token punctuation">)</span><span
+                                                                class="token operator"> -&gt; </span><a
+                                                                href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-unit/index.html">Unit</a><span
+                                                                class="token operator">?</span><span
+                                                                class="token operator"> = </span>null<span
+                                                                class="token punctuation">, </span></span><span
+                                                                class="parameter "><span
+                                                                class="token keyword">val </span>dismissIcon<span
+                                                                class="token operator">: </span><a
+                                                                href="https://developer.android.com/reference/kotlin/androidx/compose/ui/graphics/vector/ImageVector.html">ImageVector</a><span
+                                                                class="token operator"> = </span>Icons.Default.Cancel<span
+                                                                class="token punctuation">, </span></span><span
+                                                                class="parameter "><span
+                                                                class="token keyword">val </span>confirmAction<span
+                                                                class="token operator">: </span><span
+                                                                class="token punctuation">(</span><a
+                                                                href="https://developer.android.com/reference/kotlin/androidx/compose/runtime/MutableState.html">MutableState</a><span
+                                                                class="token operator">&lt;</span><a
+                                                                href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a><span
+                                                                class="token operator">&gt;</span><span
+                                                                class="token punctuation">)</span><span
+                                                                class="token operator"> -&gt; </span><a
+                                                                href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-unit/index.html">Unit</a><span
+                                                                class="token operator"> = </span>{ it.value = false }<span
+                                                                class="token punctuation">, </span></span><span
+                                                                class="parameter "><span
+                                                                class="token keyword">val </span>confirmIcon<span
+                                                                class="token operator">: </span><a
+                                                                href="https://developer.android.com/reference/kotlin/androidx/compose/ui/graphics/vector/ImageVector.html">ImageVector</a><span
+                                                                class="token operator"> = </span>Icons.Default.CheckCircle</span></span><span
+                                                                class="token punctuation">)</span></div>
+                                                        <div class="brief "><p class="paragraph">The information related
+                                                            to a single step to represent in the <a
+                                                                    href="-stepper.html">Stepper</a> component</p></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <a data-name="1983781839%2FClasslikes%2F-714918263" anchor-label="StepContent"
+                                   id="1983781839%2FClasslikes%2F-714918263"
+                                   data-filterable-set=":equinox-compose:dokkaHtmlPartial/commonMain"></a>
+                                <div class="table-row"
+                                     data-filterable-current=":equinox-compose:dokkaHtmlPartial/commonMain"
+                                     data-filterable-set=":equinox-compose:dokkaHtmlPartial/commonMain">
+                                    <div class="main-subrow keyValue ">
+                                        <div class=""><span class="inline-flex">
+                  <div><a href="-step-content/index.html"><span>Step</span><wbr><span><span>Content</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1983781839%2FClasslikes%2F-714918263"></span>
+                    <div class="copy-popup-wrapper "><span
+                            class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+                                        <div>
+                                            <div class="title">
+                                                <div class="platform-hinted "
+                                                     data-platform-hinted="data-platform-hinted">
+                                                    <div class="content sourceset-dependent-content" data-active=""
+                                                         data-togglable=":equinox-compose:dokkaHtmlPartial/commonMain">
+                                                        <div class="symbol monospace">
+                                                            <div class="block">
+                                                                <div class="block"><span
+                                                                        class="token annotation builtin">@</span><a
+                                                                        href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.annotation/-target/index.html"><span
+                                                                        class="token annotation builtin">Target</span></a><span
+                                                                        class="token punctuation">(</span><span>allowedTargets<span
+                                                                        class="token operator"> = </span><span
+                                                                        class="token punctuation">[</span><span><a
+                                                                        href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.annotation/-annotation-target/-f-u-n-c-t-i-o-n/index.html">AnnotationTarget.FUNCTION</a></span><wbr><span
+                                                                        class="token punctuation">]</span></span>
+                                                                    <wbr>
+                                                                    <span class="token punctuation">)</span></div>
+                                                            </div>
+                                                            <span class="token keyword">annotation class </span><a
+                                                                href="-step-content/index.html">StepContent</a><span
+                                                                class="token punctuation">(</span><span
+                                                                class="parameters "><span class="parameter "><span
+                                                                class="token keyword">val </span>number<span
+                                                                class="token operator">: </span><a
+                                                                href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a><span
+                                                                class="token punctuation">, </span></span><span
+                                                                class="parameter "><span
+                                                                class="token keyword">val </span>enabledWhen<span
+                                                                class="token operator">: </span><a
+                                                                href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span
+                                                                class="token operator"> = </span><span
+                                                                class="token string">""</span></span></span><span
+                                                                class="token punctuation">)</span></div>
+                                                        <div class="brief "><p class="paragraph">The <code
+                                                                class="lang-kotlin">StepContent</code> annotation is
+                                                            used to mark the methods which are the content of a step of
+                                                            the <a href="-stepper.html">Stepper</a> component. It
+                                                            indicates the number of step and whether the step is enabled
+                                                            in specific scenarios.</p></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div data-togglable="FUNCTION">
+                            <h2 class="">Functions</h2>
+                            <div class="table"><a data-name="912157253%2FFunctions%2F-714918263"
+                                                  anchor-label="ActionControls" id="912157253%2FFunctions%2F-714918263"
+                                                  data-filterable-set=":equinox-compose:dokkaHtmlPartial/commonMain"></a>
+                                <div class="table-row"
+                                     data-filterable-current=":equinox-compose:dokkaHtmlPartial/commonMain"
+                                     data-filterable-set=":equinox-compose:dokkaHtmlPartial/commonMain">
+                                    <div class="main-subrow keyValue ">
+                                        <div class=""><span class="inline-flex">
+                  <div><a href="-action-controls.html"><span>Action</span><wbr><span><span>Controls</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="912157253%2FFunctions%2F-714918263"></span>
+                    <div class="copy-popup-wrapper "><span
+                            class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+                                        <div>
+                                            <div class="title">
+                                                <div class="platform-hinted "
+                                                     data-platform-hinted="data-platform-hinted">
+                                                    <div class="content sourceset-dependent-content" data-active=""
+                                                         data-togglable=":equinox-compose:dokkaHtmlPartial/commonMain">
+                                                        <div class="symbol monospace">
+                                                            <div class="block">
+                                                                <div class="block"><span
+                                                                        class="token annotation builtin">@</span><a
+                                                                        href="https://developer.android.com/reference/kotlin/androidx/compose/runtime/Composable.html"><span
+                                                                        class="token annotation builtin">Composable</span></a>
+                                                                </div>
+                                                            </div>
+                                                            <span class="token keyword">private </span><span
+                                                                class="token keyword">fun </span><a
+                                                                href="-action-controls.html"><span
+                                                                class="token function">ActionControls</span></a><span
+                                                                class="token punctuation">(</span><span
+                                                                class="parameters "><span class="parameter ">expandsStepIcon<span
+                                                                class="token operator">: </span><a
+                                                                href="https://developer.android.com/reference/kotlin/androidx/compose/ui/graphics/vector/ImageVector.html">ImageVector</a><span
+                                                                class="token punctuation">, </span></span><span
+                                                                class="parameter ">expanded<span class="token operator">: </span><a
+                                                                href="https://developer.android.com/reference/kotlin/androidx/compose/runtime/MutableState.html">MutableState</a><span
+                                                                class="token operator">&lt;</span><a
+                                                                href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a><span
+                                                                class="token operator">&gt;</span><span
+                                                                class="token punctuation">, </span></span><span
+                                                                class="parameter ">dismissAction<span
+                                                                class="token operator">: </span><span
+                                                                class="token punctuation">(</span><span
+                                                                class="token punctuation">)</span><span
+                                                                class="token operator"> -&gt; </span><a
+                                                                href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-unit/index.html">Unit</a><span
+                                                                class="token operator">?</span><span
+                                                                class="token punctuation">, </span></span><span
+                                                                class="parameter ">dismissIcon<span
+                                                                class="token operator">: </span><a
+                                                                href="https://developer.android.com/reference/kotlin/androidx/compose/ui/graphics/vector/ImageVector.html">ImageVector</a><span
+                                                                class="token punctuation">, </span></span><span
+                                                                class="parameter ">dismissButtonColor<span
+                                                                class="token operator">: </span><a
+                                                                href="https://developer.android.com/reference/kotlin/androidx/compose/ui/graphics/Color.html">Color</a><span
+                                                                class="token punctuation">, </span></span><span
+                                                                class="parameter ">confirmAction<span
+                                                                class="token operator">: </span><span
+                                                                class="token punctuation">(</span><a
+                                                                href="https://developer.android.com/reference/kotlin/androidx/compose/runtime/MutableState.html">MutableState</a><span
+                                                                class="token operator">&lt;</span><a
+                                                                href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a><span
+                                                                class="token operator">&gt;</span><span
+                                                                class="token punctuation">)</span><span
+                                                                class="token operator"> -&gt; </span><a
+                                                                href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-unit/index.html">Unit</a><span
+                                                                class="token punctuation">, </span></span><span
+                                                                class="parameter ">confirmIcon<span
+                                                                class="token operator">: </span><a
+                                                                href="https://developer.android.com/reference/kotlin/androidx/compose/ui/graphics/vector/ImageVector.html">ImageVector</a><span
+                                                                class="token punctuation">, </span></span><span
+                                                                class="parameter ">confirmColor<span
+                                                                class="token operator">: </span><a
+                                                                href="https://developer.android.com/reference/kotlin/androidx/compose/ui/graphics/Color.html">Color</a></span></span><span
+                                                                class="token punctuation">)</span></div>
+                                                        <div class="brief "><p class="paragraph">The action controls
+                                                            section to manage the <a
+                                                                    href="-step-action.html">StepAction</a></p></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <a data-name="-32241260%2FFunctions%2F-714918263" anchor-label="findSpecialIndex"
+                                   id="-32241260%2FFunctions%2F-714918263"
+                                   data-filterable-set=":equinox-compose:dokkaHtmlPartial/commonMain"></a>
+                                <div class="table-row" data-togglable="EXTENSION_FUNCTION"
+                                     data-filterable-current=":equinox-compose:dokkaHtmlPartial/commonMain"
+                                     data-filterable-set=":equinox-compose:dokkaHtmlPartial/commonMain">
+                                    <div class="main-subrow keyValue ">
+                                        <div class=""><span class="inline-flex">
+                  <div><a href="find-special-index.html"><span>find</span><wbr><span>Special</span><wbr><span><span>Index</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-32241260%2FFunctions%2F-714918263"></span>
+                    <div class="copy-popup-wrapper "><span
+                            class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+                                        <div>
+                                            <div class="title">
+                                                <div class="platform-hinted "
+                                                     data-platform-hinted="data-platform-hinted">
+                                                    <div class="content sourceset-dependent-content" data-active=""
+                                                         data-togglable=":equinox-compose:dokkaHtmlPartial/commonMain">
+                                                        <div class="symbol monospace"><span class="token keyword">private </span><span
+                                                                class="token keyword">fun </span><a
+                                                                href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-array/index.html">Array</a><span
+                                                                class="token operator">&lt;</span><span
+                                                                class="token keyword">out </span><a
+                                                                href="-step/index.html">Step</a><span
+                                                                class="token operator">&gt;</span><span
+                                                                class="token punctuation">.</span><a
+                                                                href="find-special-index.html"><span
+                                                                class="token function">findSpecialIndex</span></a><span
+                                                                class="token punctuation">(</span><span
+                                                                class="parameters "><span class="parameter ">invalidSpecialIndex<span
+                                                                class="token operator">: </span><a
+                                                                href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a><span
+                                                                class="token operator"> = </span><span
+                                                                class="token constant">0</span><span
+                                                                class="token punctuation">, </span></span><span
+                                                                class="parameter ">elementToCheck<span
+                                                                class="token operator">: </span><a
+                                                                href="-step/index.html">Step</a><span
+                                                                class="token punctuation">, </span></span><span
+                                                                class="parameter ">defaultIndexValue<span
+                                                                class="token operator">: </span><a
+                                                                href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a><span
+                                                                class="token punctuation">, </span></span><span
+                                                                class="parameter ">onAssign<span class="token operator">: </span><span
+                                                                class="token punctuation">(</span><a
+                                                                href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a><span
+                                                                class="token punctuation">)</span><span
+                                                                class="token operator"> -&gt; </span><a
+                                                                href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a><span
+                                                                class="token operator"> = </span>{ it }</span></span><span
+                                                                class="token punctuation">)</span><span
+                                                                class="token operator">: </span><a
+                                                                href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a>
+                                                        </div>
+                                                        <div class="brief "><p class="paragraph">Method to find the
+                                                            value of a special index</p></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <a data-name="-1638396064%2FFunctions%2F-714918263" anchor-label="isEnabled"
+                                   id="-1638396064%2FFunctions%2F-714918263"
+                                   data-filterable-set=":equinox-compose:dokkaHtmlPartial/commonMain"></a>
+                                <div class="table-row" data-togglable="EXTENSION_FUNCTION"
+                                     data-filterable-current=":equinox-compose:dokkaHtmlPartial/commonMain"
+                                     data-filterable-set=":equinox-compose:dokkaHtmlPartial/commonMain">
+                                    <div class="main-subrow keyValue ">
+                                        <div class=""><span class="inline-flex">
+                  <div><a href="is-enabled.html"><span>is</span><wbr><span><span>Enabled</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1638396064%2FFunctions%2F-714918263"></span>
+                    <div class="copy-popup-wrapper "><span
+                            class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+                                        <div>
+                                            <div class="title">
+                                                <div class="platform-hinted "
+                                                     data-platform-hinted="data-platform-hinted">
+                                                    <div class="content sourceset-dependent-content" data-active=""
+                                                         data-togglable=":equinox-compose:dokkaHtmlPartial/commonMain">
+                                                        <div class="symbol monospace"><span class="token keyword">private </span><span
+                                                                class="token keyword">fun </span><a
+                                                                href="-step/index.html">Step</a><span
+                                                                class="token punctuation">.</span><a
+                                                                href="is-enabled.html"><span class="token function">isEnabled</span></a><span
+                                                                class="token punctuation">(</span><span
+                                                                class="token punctuation">)</span><span
+                                                                class="token operator">: </span><a
+                                                                href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a>
+                                                        </div>
+                                                        <div class="brief "><p class="paragraph">Scoped function used to
+                                                            check whether a <a href="-step/index.html">Step</a> depends
+                                                            on a special condition to be enabled</p></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <a data-name="1167814678%2FFunctions%2F-714918263" anchor-label="mapSpecialIndexes"
+                                   id="1167814678%2FFunctions%2F-714918263"
+                                   data-filterable-set=":equinox-compose:dokkaHtmlPartial/commonMain"></a>
+                                <div class="table-row" data-togglable="EXTENSION_FUNCTION"
+                                     data-filterable-current=":equinox-compose:dokkaHtmlPartial/commonMain"
+                                     data-filterable-set=":equinox-compose:dokkaHtmlPartial/commonMain">
+                                    <div class="main-subrow keyValue ">
+                                        <div class=""><span class="inline-flex">
+                  <div><a href="map-special-indexes.html"><span>map</span><wbr><span>Special</span><wbr><span><span>Indexes</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1167814678%2FFunctions%2F-714918263"></span>
+                    <div class="copy-popup-wrapper "><span
+                            class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+                                        <div>
+                                            <div class="title">
+                                                <div class="platform-hinted "
+                                                     data-platform-hinted="data-platform-hinted">
+                                                    <div class="content sourceset-dependent-content" data-active=""
+                                                         data-togglable=":equinox-compose:dokkaHtmlPartial/commonMain">
+                                                        <div class="symbol monospace"><span class="token keyword">private </span><span
+                                                                class="token keyword">fun </span><a
+                                                                href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-array/index.html">Array</a><span
+                                                                class="token operator">&lt;</span><span
+                                                                class="token keyword">out </span><a
+                                                                href="-step/index.html">Step</a><span
+                                                                class="token operator">&gt;</span><span
+                                                                class="token punctuation">.</span><a
+                                                                href="map-special-indexes.html"><span
+                                                                class="token function">mapSpecialIndexes</span></a><span
+                                                                class="token punctuation">(</span><span
+                                                                class="token punctuation">)</span><span
+                                                                class="token operator">: </span><a
+                                                                href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-pair/index.html">Pair</a><span
+                                                                class="token operator">&lt;</span><a
+                                                                href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a><span
+                                                                class="token punctuation">, </span><a
+                                                                href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a><span
+                                                                class="token operator">&gt;</span></div>
+                                                        <div class="brief "><p class="paragraph">Method to map the
+                                                            special indexes of the steps lit of the <a
+                                                                    href="-stepper.html">Stepper</a> component. The
+                                                            special indexes are those indexes near to <a
+                                                                    href="-step/index.html">Step</a> which its enabling
+                                                            depends on a state</p></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <a data-name="1937481671%2FFunctions%2F-714918263" anchor-label="StepAction"
+                                   id="1937481671%2FFunctions%2F-714918263"
+                                   data-filterable-set=":equinox-compose:dokkaHtmlPartial/commonMain"></a>
+                                <div class="table-row"
+                                     data-filterable-current=":equinox-compose:dokkaHtmlPartial/commonMain"
+                                     data-filterable-set=":equinox-compose:dokkaHtmlPartial/commonMain">
+                                    <div class="main-subrow keyValue ">
+                                        <div class=""><span class="inline-flex">
+                  <div><a href="-step-action.html"><span>Step</span><wbr><span><span>Action</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1937481671%2FFunctions%2F-714918263"></span>
+                    <div class="copy-popup-wrapper "><span
+                            class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+                                        <div>
+                                            <div class="title">
+                                                <div class="platform-hinted "
+                                                     data-platform-hinted="data-platform-hinted">
+                                                    <div class="content sourceset-dependent-content" data-active=""
+                                                         data-togglable=":equinox-compose:dokkaHtmlPartial/commonMain">
+                                                        <div class="symbol monospace">
+                                                            <div class="block">
+                                                                <div class="block"><span
+                                                                        class="token annotation builtin">@</span><a
+                                                                        href="https://developer.android.com/reference/kotlin/androidx/compose/runtime/Composable.html"><span
+                                                                        class="token annotation builtin">Composable</span></a>
+                                                                </div>
+                                                            </div>
+                                                            <span class="token keyword">private </span><span
+                                                                class="token keyword">fun </span><a
+                                                                href="-step-action.html"><span class="token function">StepAction</span></a><span
+                                                                class="token punctuation">(</span><span
+                                                                class="parameters "><span class="parameter ">shape<span
+                                                                class="token operator">: </span><a
+                                                                href="https://developer.android.com/reference/kotlin/androidx/compose/ui/graphics/Shape.html">Shape</a><span
+                                                                class="token punctuation">, </span></span><span
+                                                                class="parameter ">errorColor<span
+                                                                class="token operator">: </span><a
+                                                                href="https://developer.android.com/reference/kotlin/androidx/compose/ui/graphics/Color.html">Color</a><span
+                                                                class="token punctuation">, </span></span><span
+                                                                class="parameter ">confirmColor<span
+                                                                class="token operator">: </span><a
+                                                                href="https://developer.android.com/reference/kotlin/androidx/compose/ui/graphics/Color.html">Color</a><span
+                                                                class="token punctuation">, </span></span><span
+                                                                class="parameter ">stepBackgroundColor<span
+                                                                class="token operator">: </span><a
+                                                                href="https://developer.android.com/reference/kotlin/androidx/compose/ui/graphics/Color.html">Color</a><span
+                                                                class="token punctuation">, </span></span><span
+                                                                class="parameter ">expandsStepIcon<span
+                                                                class="token operator">: </span><a
+                                                                href="https://developer.android.com/reference/kotlin/androidx/compose/ui/graphics/vector/ImageVector.html">ImageVector</a><span
+                                                                class="token punctuation">, </span></span><span
+                                                                class="parameter ">step<span
+                                                                class="token operator">: </span><a
+                                                                href="-step/index.html">Step</a><span
+                                                                class="token punctuation">, </span></span><span
+                                                                class="parameter ">bottomDivider<span
+                                                                class="token operator">: </span><a
+                                                                href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a><span
+                                                                class="token operator"> = </span><span
+                                                                class="token boolean">true</span></span></span><span
+                                                                class="token punctuation">)</span></div>
+                                                        <div class="brief "><p class="paragraph">Section dedicated to a
+                                                            single <a href="-step/index.html">Step</a></p></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <a data-name="1838258119%2FFunctions%2F-714918263" anchor-label="Stepper"
+                                   id="1838258119%2FFunctions%2F-714918263"
+                                   data-filterable-set=":equinox-compose:dokkaHtmlPartial/commonMain"></a>
+                                <div class="table-row"
+                                     data-filterable-current=":equinox-compose:dokkaHtmlPartial/commonMain"
+                                     data-filterable-set=":equinox-compose:dokkaHtmlPartial/commonMain">
+                                    <div class="main-subrow keyValue ">
+                                        <div class=""><span class="inline-flex">
+                  <div><a href="-stepper.html"><span><span>Stepper</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1838258119%2FFunctions%2F-714918263"></span>
+                    <div class="copy-popup-wrapper "><span
+                            class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+                                        <div>
+                                            <div class="title">
+                                                <div class="platform-hinted "
+                                                     data-platform-hinted="data-platform-hinted">
+                                                    <div class="content sourceset-dependent-content" data-active=""
+                                                         data-togglable=":equinox-compose:dokkaHtmlPartial/commonMain">
+                                                        <div class="symbol monospace">
+                                                            <div class="block">
+                                                                <div class="block"><span
+                                                                        class="token annotation builtin">@</span><a
+                                                                        href="https://developer.android.com/reference/kotlin/androidx/compose/runtime/Composable.html"><span
+                                                                        class="token annotation builtin">Composable</span></a>
+                                                                </div>
+                                                            </div>
+                                                            <span class="token keyword">fun </span><a
+                                                                href="-stepper.html"><span class="token function">Stepper</span></a><span
+                                                                class="token punctuation">(</span><span
+                                                                class="parameters "><span
+                                                                class="parameter ">modifier<span class="token operator">: </span><a
+                                                                href="https://developer.android.com/reference/kotlin/androidx/compose/ui/Modifier.html">Modifier</a><span
+                                                                class="token operator"> = </span>Modifier<span
+                                                                class="token punctuation">, </span></span><span
+                                                                class="parameter ">headerSection<span
+                                                                class="token operator">: </span><span><span
+                                                                class="token annotation builtin">@</span><a
+                                                                href="https://developer.android.com/reference/kotlin/androidx/compose/runtime/Composable.html"><span
+                                                                class="token annotation builtin">Composable</span></a>&nbsp;</span><span
+                                                                class="token punctuation">(</span><span
+                                                                class="token punctuation">)</span><span
+                                                                class="token operator"> -&gt; </span><a
+                                                                href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-unit/index.html">Unit</a><span
+                                                                class="token operator">?</span><span
+                                                                class="token operator"> = </span>null<span
+                                                                class="token punctuation">, </span></span><span
+                                                                class="parameter ">startStepShape<span
+                                                                class="token operator">: </span><a
+                                                                href="https://developer.android.com/reference/kotlin/androidx/compose/ui/graphics/Shape.html">Shape</a><span
+                                                                class="token operator"> = </span>RoundedCornerShape(
+        topStart = 12.dp,
+        topEnd = 12.dp
+    )<span class="token punctuation">, </span></span><span class="parameter ">middleStepShape<span
+                                                                class="token operator">: </span><a
+                                                                href="https://developer.android.com/reference/kotlin/androidx/compose/ui/graphics/Shape.html">Shape</a><span
+                                                                class="token operator"> = </span>RectangleShape<span
+                                                                class="token punctuation">, </span></span><span
+                                                                class="parameter ">finalStepShape<span
+                                                                class="token operator">: </span><a
+                                                                href="https://developer.android.com/reference/kotlin/androidx/compose/ui/graphics/Shape.html">Shape</a><span
+                                                                class="token operator"> = </span>RoundedCornerShape(
+        bottomStart = 12.dp,
+        bottomEnd = 12.dp
+    )<span class="token punctuation">, </span></span><span class="parameter ">stepBackgroundColor<span
+                                                                class="token operator">: </span><a
+                                                                href="https://developer.android.com/reference/kotlin/androidx/compose/ui/graphics/Color.html">Color</a><span
+                                                                class="token operator"> = </span>MaterialTheme.colorScheme.surfaceContainerHighest<span
+                                                                class="token punctuation">, </span></span><span
+                                                                class="parameter ">errorColor<span
+                                                                class="token operator">: </span><a
+                                                                href="https://developer.android.com/reference/kotlin/androidx/compose/ui/graphics/Color.html">Color</a><span
+                                                                class="token operator"> = </span>MaterialTheme.colorScheme.error<span
+                                                                class="token punctuation">, </span></span><span
+                                                                class="parameter ">confirmColor<span
+                                                                class="token operator">: </span><a
+                                                                href="https://developer.android.com/reference/kotlin/androidx/compose/ui/graphics/Color.html">Color</a><span
+                                                                class="token operator"> = </span>MaterialTheme.colorScheme.primary<span
+                                                                class="token punctuation">, </span></span><span
+                                                                class="parameter ">expandsStepIcon<span
+                                                                class="token operator">: </span><a
+                                                                href="https://developer.android.com/reference/kotlin/androidx/compose/ui/graphics/vector/ImageVector.html">ImageVector</a><span
+                                                                class="token operator"> = </span>Icons.AutoMirrored.Filled.KeyboardArrowRight<span
+                                                                class="token punctuation">, </span></span><span
+                                                                class="parameter "><span
+                                                                class="token keyword">vararg </span>steps<span
+                                                                class="token operator">: </span><a
+                                                                href="-step/index.html">Step</a></span></span><span
+                                                                class="token punctuation">)</span></div>
+                                                        <div class="brief "><p class="paragraph">This component allows
+                                                            to create a dynamic interaction with the user dividing for
+                                                            example a long procedure such item creation, customization,
+                                                            etc... in different specific steps where the user can
+                                                            interact.</p></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <a href="#content" id="go-to-top-link" class="footer--button footer--button_go-to-top"></a>
+                <span>© 2025 Copyright</span>
+                <span class="pull-right">
+            <span>Generated by </span>
+            <a class="footer--link footer--link_external" href="https://github.com/Kotlin/dokka">
+                <span>dokka</span>
+            </a>
+        </span>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

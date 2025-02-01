@@ -1,0 +1,562 @@
+<!doctype html>
+<html class="no-js">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
+    <title>com.tecknobit.equinoxcore.annotations</title>
+    <link href="../../images/logo-icon.svg" rel="icon" type="image/svg">
+    <script>var pathToRoot = "../../";</script>
+    <script>document.documentElement.classList.replace("no-js","js");</script>
+    <script>const storage = localStorage.getItem("dokka-dark-mode")
+    if (storage == null) {
+        const osDarkSchemePreferred = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+        if (osDarkSchemePreferred === true) {
+            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+    } else {
+        const savedDarkMode = JSON.parse(storage)
+        if(savedDarkMode === true) {
+            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+    }
+    </script>
+    <script type="text/javascript" src="https://unpkg.com/kotlin-playground@1/dist/playground.min.js" async></script>
+    <script type="text/javascript" src="../../scripts/sourceset_dependencies.js" async></script>
+    <link href="../../styles/style.css" rel="Stylesheet">
+    <link href="../../styles/main.css" rel="Stylesheet">
+    <link href="../../styles/prism.css" rel="Stylesheet">
+    <link href="../../styles/logo-styles.css" rel="Stylesheet">
+    <link href="../../styles/font-jb-sans-auto.css" rel="Stylesheet">
+    <link href="../../ui-kit/ui-kit.min.css" rel="Stylesheet">
+    <script type="text/javascript" src="../../scripts/clipboard.js" async></script>
+    <script type="text/javascript" src="../../scripts/navigation-loader.js" async></script>
+    <script type="text/javascript" src="../../scripts/platform-content-handler.js" async></script>
+    <script type="text/javascript" src="../../scripts/main.js" defer></script>
+    <script type="text/javascript" src="../../scripts/prism.js" async></script>
+    <script type="text/javascript" src="../../ui-kit/ui-kit.min.js" defer></script>
+    <script type="text/javascript" src="../../scripts/symbol-parameters-wrapper_deferred.js" defer></script>
+</head>
+<body>
+<div class="root">
+    <nav class="navigation theme-dark" id="navigation-wrapper">
+        <a class="library-name--link" href="../../index.html">
+            Equinox
+        </a>
+        <button class="navigation-controls--btn navigation-controls--btn_toc ui-kit_mobile-only" id="toc-toggle"
+                type="button">Toggle table of contents
+        </button>
+        <div class="navigation-controls--break ui-kit_mobile-only"></div>
+        <div class="library-version" id="library-version">1.0.7
+        </div>
+        <div class="navigation-controls">
+            <div class="filter-section filter-section_loading" id="filter-section">
+                <button class="platform-tag platform-selector common-like" data-active=""
+                        data-filter=":equinox-core:dokkaHtmlPartial/commonMain">common
+                </button>
+                <div class="dropdown filter-section--dropdown" data-role="dropdown" id="filter-section-dropdown">
+                    <button class="button button_dropdown filter-section--dropdown-toggle" role="combobox"
+                            data-role="dropdown-toggle" aria-controls="platform-tags-listbox" aria-haspopup="listbox"
+                            aria-expanded="false" aria-label="Toggle source sets"></button>
+                    <ul role="listbox" id="platform-tags-listbox" class="dropdown--list" data-role="dropdown-listbox">
+                        <div class="dropdown--header"><span>Platform filter</span>
+                            <button class="button" data-role="dropdown-toggle" aria-label="Close platform filter">
+                                <i class="ui-kit-icon ui-kit-icon_cross"></i>
+                            </button>
+                        </div>
+                        <li role="option" class="dropdown--option platform-selector-option common-like" tabindex="0">
+                            <label class="checkbox">
+                                <input type="checkbox" class="checkbox--input"
+                                       id=":equinox-core:dokkaHtmlPartial/commonMain"
+                                       data-filter=":equinox-core:dokkaHtmlPartial/commonMain">
+                                <span class="checkbox--icon"></span>
+                                common
+                            </label>
+                        </li>
+                    </ul>
+                    <div class="dropdown--overlay"></div>
+                </div>
+            </div>
+            <button class="navigation-controls--btn navigation-controls--btn_theme" id="theme-toggle-button"
+                    type="button">Switch theme
+            </button>
+            <div class="navigation-controls--btn navigation-controls--btn_search" id="searchBar" role="button">Search in
+                API
+            </div>
+        </div>
+    </nav>
+    <div id="container">
+        <div class="sidebar" id="leftColumn">
+            <div class="dropdown theme-dark_mobile" data-role="dropdown" id="toc-dropdown">
+                <ul role="listbox" id="toc-listbox" class="dropdown--list dropdown--list_toc-list"
+                    data-role="dropdown-listbox">
+                    <div class="dropdown--header">
+                            <span>
+                                    Equinox
+                            </span>
+                        <button class="button" data-role="dropdown-toggle" aria-label="Close table of contents">
+                            <i class="ui-kit-icon ui-kit-icon_cross"></i>
+                        </button>
+                    </div>
+                    <div class="sidebar--inner" id="sideMenu"></div>
+                </ul>
+                <div class="dropdown--overlay"></div>
+            </div>
+        </div>
+        <div id="main">
+            <div class="main-content" data-page-type="package" id="content"
+                 pageids="equinox-core::com.tecknobit.equinoxcore.annotations////PointingToDeclaration//-2082165282">
+                <div class="breadcrumbs"><a href="../index.html">equinox-core</a><span class="delimiter">/</span><span
+                        class="current">com.tecknobit.equinoxcore.annotations</span></div>
+                <div class="cover ">
+                    <h1 class="cover"><span><span>Package-level</span></span> <span><span>declarations</span></span>
+                    </h1>
+                </div>
+                <div class="tabbedcontent">
+                    <div class="tabs-section" tabs-section="tabs-section">
+                        <button class="section-tab" data-active="" data-togglable="TYPE">Types</button>
+                    </div>
+                    <div class="tabs-section-body">
+                        <div data-togglable="TYPE">
+                            <h2 class="">Types</h2>
+                            <div class="table"><a data-name="-1290079012%2FClasslikes%2F-2082165282"
+                                                  anchor-label="Assembler" id="-1290079012%2FClasslikes%2F-2082165282"
+                                                  data-filterable-set=":equinox-core:dokkaHtmlPartial/commonMain"></a>
+                                <div class="table-row"
+                                     data-filterable-current=":equinox-core:dokkaHtmlPartial/commonMain"
+                                     data-filterable-set=":equinox-core:dokkaHtmlPartial/commonMain">
+                                    <div class="main-subrow keyValue ">
+                                        <div class=""><span class="inline-flex">
+                  <div><a href="-assembler/index.html"><span><span>Assembler</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1290079012%2FClasslikes%2F-2082165282"></span>
+                    <div class="copy-popup-wrapper "><span
+                            class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+                                        <div>
+                                            <div class="title">
+                                                <div class="platform-hinted "
+                                                     data-platform-hinted="data-platform-hinted">
+                                                    <div class="content sourceset-dependent-content" data-active=""
+                                                         data-togglable=":equinox-core:dokkaHtmlPartial/commonMain">
+                                                        <div class="symbol monospace">
+                                                            <div class="block">
+                                                                <div class="block"><span
+                                                                        class="token annotation builtin">@</span><a
+                                                                        href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.annotation/-target/index.html"><span
+                                                                        class="token annotation builtin">Target</span></a><span
+                                                                        class="token punctuation">(</span><span>allowedTargets<span
+                                                                        class="token operator"> = </span><span
+                                                                        class="token punctuation">[</span><span><a
+                                                                        href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.annotation/-annotation-target/-f-u-n-c-t-i-o-n/index.html">AnnotationTarget.FUNCTION</a></span><wbr><span
+                                                                        class="token punctuation">]</span></span>
+                                                                    <wbr>
+                                                                    <span class="token punctuation">)</span></div>
+                                                            </div>
+                                                            <span class="token keyword">annotation class </span><a
+                                                                href="-assembler/index.html">Assembler</a><span
+                                                                class="token punctuation">(</span><span
+                                                                class="parameters "><span class="parameter "><span
+                                                                class="token keyword">val </span>structure<span
+                                                                class="token operator">: </span><a
+                                                                href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span
+                                                                class="token operator"> = </span><span
+                                                                class="token string">""</span></span></span><span
+                                                                class="token punctuation">)</span></div>
+                                                        <div class="brief "><p class="paragraph">The <code
+                                                                class="lang-kotlin">Assembler</code> annotation is
+                                                            useful to indicate those methods used to assemble anything
+                                                            such payloads of the requests, queries of the requests, etc.
+                                                            For example</p></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <a data-name="602401993%2FClasslikes%2F-2082165282" anchor-label="CustomParametersOrder"
+                                   id="602401993%2FClasslikes%2F-2082165282"
+                                   data-filterable-set=":equinox-core:dokkaHtmlPartial/commonMain"></a>
+                                <div class="table-row"
+                                     data-filterable-current=":equinox-core:dokkaHtmlPartial/commonMain"
+                                     data-filterable-set=":equinox-core:dokkaHtmlPartial/commonMain">
+                                    <div class="main-subrow keyValue ">
+                                        <div class=""><span class="inline-flex">
+                  <div><a href="-custom-parameters-order/index.html"><span>Custom</span><wbr><span>Parameters</span><wbr><span><span>Order</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="602401993%2FClasslikes%2F-2082165282"></span>
+                    <div class="copy-popup-wrapper "><span
+                            class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+                                        <div>
+                                            <div class="title">
+                                                <div class="platform-hinted "
+                                                     data-platform-hinted="data-platform-hinted">
+                                                    <div class="content sourceset-dependent-content" data-active=""
+                                                         data-togglable=":equinox-core:dokkaHtmlPartial/commonMain">
+                                                        <div class="symbol monospace"><span class="token keyword">annotation class </span><a
+                                                                href="-custom-parameters-order/index.html">CustomParametersOrder</a><span
+                                                                class="token punctuation">(</span><span
+                                                                class="parameters "><span class="parameter "><span
+                                                                class="token keyword">val </span>order<span
+                                                                class="token operator">: </span><a
+                                                                href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a></span></span><span
+                                                                class="token punctuation">)</span></div>
+                                                        <div class="brief "><p class="paragraph">The <code
+                                                                class="lang-kotlin">CustomParametersOrder</code>
+                                                            annotation is useful to manage the custom parameters order
+                                                            for a better readability of the code and to work with that
+                                                            parameters correctly</p></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <a data-name="1988002045%2FClasslikes%2F-2082165282" anchor-label="DTO"
+                                   id="1988002045%2FClasslikes%2F-2082165282"
+                                   data-filterable-set=":equinox-core:dokkaHtmlPartial/commonMain"></a>
+                                <div class="table-row"
+                                     data-filterable-current=":equinox-core:dokkaHtmlPartial/commonMain"
+                                     data-filterable-set=":equinox-core:dokkaHtmlPartial/commonMain">
+                                    <div class="main-subrow keyValue ">
+                                        <div class=""><span class="inline-flex">
+                  <div><a href="-d-t-o/index.html"><span><span>DTO</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1988002045%2FClasslikes%2F-2082165282"></span>
+                    <div class="copy-popup-wrapper "><span
+                            class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+                                        <div>
+                                            <div class="title">
+                                                <div class="platform-hinted "
+                                                     data-platform-hinted="data-platform-hinted">
+                                                    <div class="content sourceset-dependent-content" data-active=""
+                                                         data-togglable=":equinox-core:dokkaHtmlPartial/commonMain">
+                                                        <div class="symbol monospace">
+                                                            <div class="block">
+                                                                <div class="block"><span
+                                                                        class="token annotation builtin">@</span><a
+                                                                        href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.annotation/-target/index.html"><span
+                                                                        class="token annotation builtin">Target</span></a><span
+                                                                        class="token punctuation">(</span><span>allowedTargets<span
+                                                                        class="token operator"> = </span><span
+                                                                        class="token punctuation">[</span><span><a
+                                                                        href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.annotation/-annotation-target/-c-l-a-s-s/index.html">AnnotationTarget.CLASS</a></span><wbr><span
+                                                                        class="token punctuation">]</span></span>
+                                                                    <wbr>
+                                                                    <span class="token punctuation">)</span></div>
+                                                            </div>
+                                                            <span class="token keyword">annotation class </span><a
+                                                                href="-d-t-o/index.html">DTO</a></div>
+                                                        <div class="brief "><p class="paragraph">The <code
+                                                                class="lang-kotlin">DTO</code> annotation is useful to
+                                                            indicate whether a class is used as Data Transfer Object</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <a data-name="603011624%2FClasslikes%2F-2082165282" anchor-label="RequestPath"
+                                   id="603011624%2FClasslikes%2F-2082165282"
+                                   data-filterable-set=":equinox-core:dokkaHtmlPartial/commonMain"></a>
+                                <div class="table-row"
+                                     data-filterable-current=":equinox-core:dokkaHtmlPartial/commonMain"
+                                     data-filterable-set=":equinox-core:dokkaHtmlPartial/commonMain">
+                                    <div class="main-subrow keyValue ">
+                                        <div class=""><span class="inline-flex">
+                  <div><a href="-request-path/index.html"><span>Request</span><wbr><span><span>Path</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="603011624%2FClasslikes%2F-2082165282"></span>
+                    <div class="copy-popup-wrapper "><span
+                            class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+                                        <div>
+                                            <div class="title">
+                                                <div class="platform-hinted "
+                                                     data-platform-hinted="data-platform-hinted">
+                                                    <div class="content sourceset-dependent-content" data-active=""
+                                                         data-togglable=":equinox-core:dokkaHtmlPartial/commonMain">
+                                                        <div class="symbol monospace">
+                                                            <div class="block">
+                                                                <div class="block"><span
+                                                                        class="token annotation builtin">@</span><a
+                                                                        href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.annotation/-target/index.html"><span
+                                                                        class="token annotation builtin">Target</span></a><span
+                                                                        class="token punctuation">(</span><span>allowedTargets<span
+                                                                        class="token operator"> = </span><span
+                                                                        class="token punctuation">[</span><span><a
+                                                                        href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.annotation/-annotation-target/-f-u-n-c-t-i-o-n/index.html">AnnotationTarget.FUNCTION</a></span><wbr><span
+                                                                        class="token punctuation">]</span></span>
+                                                                    <wbr>
+                                                                    <span class="token punctuation">)</span></div>
+                                                            </div>
+                                                            <span class="token keyword">annotation class </span><a
+                                                                href="-request-path/index.html">RequestPath</a><span
+                                                                class="token punctuation">(</span><span
+                                                                class="parameters "><span class="parameter "><span
+                                                                class="token keyword">val </span>method<span
+                                                                class="token operator">: </span><a
+                                                                href="../com.tecknobit.equinoxcore.network/-request-method/index.html">RequestMethod</a><span
+                                                                class="token punctuation">, </span></span><span
+                                                                class="parameter "><span
+                                                                class="token keyword">val </span>path<span
+                                                                class="token operator">: </span><a
+                                                                href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span
+                                                                class="token operator"> = </span><span
+                                                                class="token string">""</span><span
+                                                                class="token punctuation">, </span></span><span
+                                                                class="parameter "><span
+                                                                class="token keyword">val </span>pathParameters<span
+                                                                class="token operator">: </span><a
+                                                                href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span
+                                                                class="token operator"> = </span><span
+                                                                class="token string">""</span><span
+                                                                class="token punctuation">, </span></span><span
+                                                                class="parameter "><span
+                                                                class="token keyword">val </span>queryParameters<span
+                                                                class="token operator">: </span><a
+                                                                href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span
+                                                                class="token operator"> = </span><span
+                                                                class="token string">""</span><span
+                                                                class="token punctuation">, </span></span><span
+                                                                class="parameter "><span
+                                                                class="token keyword">val </span>bodyParameters<span
+                                                                class="token operator">: </span><a
+                                                                href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span
+                                                                class="token operator"> = </span><span
+                                                                class="token string">""</span></span></span><span
+                                                                class="token punctuation">)</span></div>
+                                                        <div class="brief "><p class="paragraph">Annotation that defines
+                                                            the request path and its parameters for API requests.</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <a data-name="-486156111%2FClasslikes%2F-2082165282" anchor-label="RequiresSuperCall"
+                                   id="-486156111%2FClasslikes%2F-2082165282"
+                                   data-filterable-set=":equinox-core:dokkaHtmlPartial/commonMain"></a>
+                                <div class="table-row"
+                                     data-filterable-current=":equinox-core:dokkaHtmlPartial/commonMain"
+                                     data-filterable-set=":equinox-core:dokkaHtmlPartial/commonMain">
+                                    <div class="main-subrow keyValue ">
+                                        <div class=""><span class="inline-flex">
+                  <div><a href="-requires-super-call/index.html"><span>Requires</span><wbr><span>Super</span><wbr><span><span>Call</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-486156111%2FClasslikes%2F-2082165282"></span>
+                    <div class="copy-popup-wrapper "><span
+                            class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+                                        <div>
+                                            <div class="title">
+                                                <div class="platform-hinted "
+                                                     data-platform-hinted="data-platform-hinted">
+                                                    <div class="content sourceset-dependent-content" data-active=""
+                                                         data-togglable=":equinox-core:dokkaHtmlPartial/commonMain">
+                                                        <div class="symbol monospace">
+                                                            <div class="block">
+                                                                <div class="block"><span
+                                                                        class="token annotation builtin">@</span><a
+                                                                        href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.annotation/-target/index.html"><span
+                                                                        class="token annotation builtin">Target</span></a><span
+                                                                        class="token punctuation">(</span><span>allowedTargets<span
+                                                                        class="token operator"> = </span><span
+                                                                        class="token punctuation">[</span><span><a
+                                                                        href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.annotation/-annotation-target/-c-o-n-s-t-r-u-c-t-o-r/index.html">AnnotationTarget.CONSTRUCTOR</a><span
+                                                                        class="token punctuation">, </span></span><wbr><span><a
+                                                                        href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.annotation/-annotation-target/-f-u-n-c-t-i-o-n/index.html">AnnotationTarget.FUNCTION</a><span
+                                                                        class="token punctuation">, </span></span><wbr><span><a
+                                                                        href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.annotation/-annotation-target/-p-r-o-p-e-r-t-y_-g-e-t-t-e-r/index.html">AnnotationTarget.PROPERTY_GETTER</a><span
+                                                                        class="token punctuation">, </span></span><wbr><span><a
+                                                                        href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.annotation/-annotation-target/-p-r-o-p-e-r-t-y_-s-e-t-t-e-r/index.html">AnnotationTarget.PROPERTY_SETTER</a></span><wbr><span
+                                                                        class="token punctuation">]</span></span>
+                                                                    <wbr>
+                                                                    <span class="token punctuation">)</span></div>
+                                                            </div>
+                                                            <span class="token keyword">annotation class </span><a
+                                                                href="-requires-super-call/index.html">RequiresSuperCall</a>
+                                                        </div>
+                                                        <div class="brief "><p class="paragraph">The <code
+                                                                class="lang-kotlin">RequiresSuperCall</code> annotation
+                                                            is useful to indicate that an inherited or an overridden
+                                                            method to works correctly and completely requires that also
+                                                            the original method is invoked like the <a
+                                                                    href="https://developer.android.com/reference/androidx/annotation/CallSuper">@CallSuper</a>
+                                                            annotation.</p></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <a data-name="1110736393%2FClasslikes%2F-2082165282" anchor-label="Returner"
+                                   id="1110736393%2FClasslikes%2F-2082165282"
+                                   data-filterable-set=":equinox-core:dokkaHtmlPartial/commonMain"></a>
+                                <div class="table-row"
+                                     data-filterable-current=":equinox-core:dokkaHtmlPartial/commonMain"
+                                     data-filterable-set=":equinox-core:dokkaHtmlPartial/commonMain">
+                                    <div class="main-subrow keyValue ">
+                                        <div class=""><span class="inline-flex">
+                  <div><a href="-returner/index.html"><span><span>Returner</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1110736393%2FClasslikes%2F-2082165282"></span>
+                    <div class="copy-popup-wrapper "><span
+                            class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+                                        <div>
+                                            <div class="title">
+                                                <div class="platform-hinted "
+                                                     data-platform-hinted="data-platform-hinted">
+                                                    <div class="content sourceset-dependent-content" data-active=""
+                                                         data-togglable=":equinox-core:dokkaHtmlPartial/commonMain">
+                                                        <div class="symbol monospace">
+                                                            <div class="block">
+                                                                <div class="block"><span
+                                                                        class="token annotation builtin">@</span><a
+                                                                        href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.annotation/-target/index.html"><span
+                                                                        class="token annotation builtin">Target</span></a><span
+                                                                        class="token punctuation">(</span><span>allowedTargets<span
+                                                                        class="token operator"> = </span><span
+                                                                        class="token punctuation">[</span><span><a
+                                                                        href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.annotation/-annotation-target/-f-u-n-c-t-i-o-n/index.html">AnnotationTarget.FUNCTION</a></span><wbr><span
+                                                                        class="token punctuation">]</span></span>
+                                                                    <wbr>
+                                                                    <span class="token punctuation">)</span></div>
+                                                            </div>
+                                                            <span class="token keyword">annotation class </span><a
+                                                                href="-returner/index.html">Returner</a></div>
+                                                        <div class="brief "><p class="paragraph">The <code
+                                                                class="lang-kotlin">Returner</code> annotation is used
+                                                            to mark methods that are responsible for formatting and
+                                                            returning data in a specified format</p></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <a data-name="1826095017%2FClasslikes%2F-2082165282" anchor-label="Structure"
+                                   id="1826095017%2FClasslikes%2F-2082165282"
+                                   data-filterable-set=":equinox-core:dokkaHtmlPartial/commonMain"></a>
+                                <div class="table-row"
+                                     data-filterable-current=":equinox-core:dokkaHtmlPartial/commonMain"
+                                     data-filterable-set=":equinox-core:dokkaHtmlPartial/commonMain">
+                                    <div class="main-subrow keyValue ">
+                                        <div class=""><span class="inline-flex">
+                  <div><a href="-structure/index.html"><span><span>Structure</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1826095017%2FClasslikes%2F-2082165282"></span>
+                    <div class="copy-popup-wrapper "><span
+                            class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+                                        <div>
+                                            <div class="title">
+                                                <div class="platform-hinted "
+                                                     data-platform-hinted="data-platform-hinted">
+                                                    <div class="content sourceset-dependent-content" data-active=""
+                                                         data-togglable=":equinox-core:dokkaHtmlPartial/commonMain">
+                                                        <div class="symbol monospace">
+                                                            <div class="block">
+                                                                <div class="block"><span
+                                                                        class="token annotation builtin">@</span><a
+                                                                        href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.annotation/-target/index.html"><span
+                                                                        class="token annotation builtin">Target</span></a><span
+                                                                        class="token punctuation">(</span><span>allowedTargets<span
+                                                                        class="token operator"> = </span><span
+                                                                        class="token punctuation">[</span><span><a
+                                                                        href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.annotation/-annotation-target/-c-l-a-s-s/index.html">AnnotationTarget.CLASS</a></span><wbr><span
+                                                                        class="token punctuation">]</span></span>
+                                                                    <wbr>
+                                                                    <span class="token punctuation">)</span></div>
+                                                            </div>
+                                                            <span class="token keyword">annotation class </span><a
+                                                                href="-structure/index.html">Structure</a></div>
+                                                        <div class="brief "><p class="paragraph">The <code
+                                                                class="lang-kotlin">@Structure</code> annotation is
+                                                            applied to classes that define a general structure and
+                                                            behavior for a potential hierarchy, along with its
+                                                            subclasses. It marks classes that provide a common template
+                                                            or foundation, often used for sharing general properties and
+                                                            functionality across a set of related classes.</p></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <a data-name="-524397751%2FClasslikes%2F-2082165282" anchor-label="Wrapper"
+                                   id="-524397751%2FClasslikes%2F-2082165282"
+                                   data-filterable-set=":equinox-core:dokkaHtmlPartial/commonMain"></a>
+                                <div class="table-row"
+                                     data-filterable-current=":equinox-core:dokkaHtmlPartial/commonMain"
+                                     data-filterable-set=":equinox-core:dokkaHtmlPartial/commonMain">
+                                    <div class="main-subrow keyValue ">
+                                        <div class=""><span class="inline-flex">
+                  <div><a href="-wrapper/index.html"><span><span>Wrapper</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-524397751%2FClasslikes%2F-2082165282"></span>
+                    <div class="copy-popup-wrapper "><span
+                            class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+                                        <div>
+                                            <div class="title">
+                                                <div class="platform-hinted "
+                                                     data-platform-hinted="data-platform-hinted">
+                                                    <div class="content sourceset-dependent-content" data-active=""
+                                                         data-togglable=":equinox-core:dokkaHtmlPartial/commonMain">
+                                                        <div class="symbol monospace">
+                                                            <div class="block">
+                                                                <div class="block"><span
+                                                                        class="token annotation builtin">@</span><a
+                                                                        href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.annotation/-target/index.html"><span
+                                                                        class="token annotation builtin">Target</span></a><span
+                                                                        class="token punctuation">(</span><span>allowedTargets<span
+                                                                        class="token operator"> = </span><span
+                                                                        class="token punctuation">[</span><span><a
+                                                                        href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.annotation/-annotation-target/-c-o-n-s-t-r-u-c-t-o-r/index.html">AnnotationTarget.CONSTRUCTOR</a><span
+                                                                        class="token punctuation">, </span></span><wbr><span><a
+                                                                        href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.annotation/-annotation-target/-f-u-n-c-t-i-o-n/index.html">AnnotationTarget.FUNCTION</a><span
+                                                                        class="token punctuation">, </span></span><wbr><span><a
+                                                                        href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.annotation/-annotation-target/-p-r-o-p-e-r-t-y_-g-e-t-t-e-r/index.html">AnnotationTarget.PROPERTY_GETTER</a><span
+                                                                        class="token punctuation">, </span></span><wbr><span><a
+                                                                        href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.annotation/-annotation-target/-p-r-o-p-e-r-t-y_-s-e-t-t-e-r/index.html">AnnotationTarget.PROPERTY_SETTER</a></span><wbr><span
+                                                                        class="token punctuation">]</span></span>
+                                                                    <wbr>
+                                                                    <span class="token punctuation">)</span></div>
+                                                            </div>
+                                                            <span class="token keyword">annotation class </span><a
+                                                                href="-wrapper/index.html">Wrapper</a><span
+                                                                class="token punctuation">(</span><span
+                                                                class="parameters "><span class="parameter "><span
+                                                                class="token keyword">val </span>wrapperOf<span
+                                                                class="token operator">: </span><a
+                                                                href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span
+                                                                class="token operator"> = </span><span
+                                                                class="token string">""</span></span></span><span
+                                                                class="token punctuation">)</span></div>
+                                                        <div class="brief "><p class="paragraph">The <code
+                                                                class="lang-kotlin">@Wrapper</code> annotation is
+                                                            applied to those wrapper methods that wrap the main method,
+                                                            facilitating access to the latter by avoiding the need to
+                                                            pass some unnecessary arguments.</p></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <a href="#content" id="go-to-top-link" class="footer--button footer--button_go-to-top"></a>
+                <span>© 2025 Copyright</span>
+                <span class="pull-right">
+            <span>Generated by </span>
+            <a class="footer--link footer--link_external" href="https://github.com/Kotlin/dokka">
+                <span>dokka</span>
+            </a>
+        </span>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

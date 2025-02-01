@@ -1,0 +1,1835 @@
+<!doctype html>
+<html class="no-js">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
+    <title>EquinoxAuthViewModel</title>
+    <link href="../../../images/logo-icon.svg" rel="icon" type="image/svg">
+    <script>var pathToRoot = "../../../";</script>
+    <script>document.documentElement.classList.replace("no-js","js");</script>
+    <script>const storage = localStorage.getItem("dokka-dark-mode")
+    if (storage == null) {
+        const osDarkSchemePreferred = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+        if (osDarkSchemePreferred === true) {
+            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+    } else {
+        const savedDarkMode = JSON.parse(storage)
+        if(savedDarkMode === true) {
+            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+    }
+    </script>
+    <script type="text/javascript" src="https://unpkg.com/kotlin-playground@1/dist/playground.min.js" async></script>
+    <script type="text/javascript" src="../../../scripts/sourceset_dependencies.js" async></script>
+    <link href="../../../styles/style.css" rel="Stylesheet">
+    <link href="../../../styles/main.css" rel="Stylesheet">
+    <link href="../../../styles/prism.css" rel="Stylesheet">
+    <link href="../../../styles/logo-styles.css" rel="Stylesheet">
+    <link href="../../../styles/font-jb-sans-auto.css" rel="Stylesheet">
+    <link href="../../../ui-kit/ui-kit.min.css" rel="Stylesheet">
+    <script type="text/javascript" src="../../../scripts/clipboard.js" async></script>
+    <script type="text/javascript" src="../../../scripts/navigation-loader.js" async></script>
+    <script type="text/javascript" src="../../../scripts/platform-content-handler.js" async></script>
+    <script type="text/javascript" src="../../../scripts/main.js" defer></script>
+    <script type="text/javascript" src="../../../scripts/prism.js" async></script>
+    <script type="text/javascript" src="../../../ui-kit/ui-kit.min.js" defer></script>
+    <script type="text/javascript" src="../../../scripts/symbol-parameters-wrapper_deferred.js" defer></script>
+</head>
+<body>
+<div class="root">
+    <nav class="navigation theme-dark" id="navigation-wrapper">
+        <a class="library-name--link" href="../../../index.html">
+            Equinox
+        </a>
+        <button class="navigation-controls--btn navigation-controls--btn_toc ui-kit_mobile-only" id="toc-toggle"
+                type="button">Toggle table of contents
+        </button>
+        <div class="navigation-controls--break ui-kit_mobile-only"></div>
+        <div class="library-version" id="library-version">1.0.7
+        </div>
+        <div class="navigation-controls">
+            <div class="filter-section filter-section_loading" id="filter-section">
+                <button class="platform-tag platform-selector common-like" data-active=""
+                        data-filter=":equinox-compose:dokkaHtmlPartial/commonMain">common
+                </button>
+                <div class="dropdown filter-section--dropdown" data-role="dropdown" id="filter-section-dropdown">
+                    <button class="button button_dropdown filter-section--dropdown-toggle" role="combobox"
+                            data-role="dropdown-toggle" aria-controls="platform-tags-listbox" aria-haspopup="listbox"
+                            aria-expanded="false" aria-label="Toggle source sets"></button>
+                    <ul role="listbox" id="platform-tags-listbox" class="dropdown--list" data-role="dropdown-listbox">
+                        <div class="dropdown--header"><span>Platform filter</span>
+                            <button class="button" data-role="dropdown-toggle" aria-label="Close platform filter">
+                                <i class="ui-kit-icon ui-kit-icon_cross"></i>
+                            </button>
+                        </div>
+                        <li role="option" class="dropdown--option platform-selector-option common-like" tabindex="0">
+                            <label class="checkbox">
+                                <input type="checkbox" class="checkbox--input"
+                                       id=":equinox-compose:dokkaHtmlPartial/commonMain"
+                                       data-filter=":equinox-compose:dokkaHtmlPartial/commonMain">
+                                <span class="checkbox--icon"></span>
+                                common
+                            </label>
+                        </li>
+                    </ul>
+                    <div class="dropdown--overlay"></div>
+                </div>
+            </div>
+            <button class="navigation-controls--btn navigation-controls--btn_theme" id="theme-toggle-button"
+                    type="button">Switch theme
+            </button>
+            <div class="navigation-controls--btn navigation-controls--btn_search" id="searchBar" role="button">Search in
+                API
+            </div>
+        </div>
+    </nav>
+    <div id="container">
+        <div class="sidebar" id="leftColumn">
+            <div class="dropdown theme-dark_mobile" data-role="dropdown" id="toc-dropdown">
+                <ul role="listbox" id="toc-listbox" class="dropdown--list dropdown--list_toc-list"
+                    data-role="dropdown-listbox">
+                    <div class="dropdown--header">
+                            <span>
+                                    Equinox
+                            </span>
+                        <button class="button" data-role="dropdown-toggle" aria-label="Close table of contents">
+                            <i class="ui-kit-icon ui-kit-icon_cross"></i>
+                        </button>
+                    </div>
+                    <div class="sidebar--inner" id="sideMenu"></div>
+                </ul>
+                <div class="dropdown--overlay"></div>
+            </div>
+        </div>
+        <div id="main">
+            <div class="main-content" data-page-type="classlike" id="content"
+                 pageids="equinox-compose::com.tecknobit.equinoxcompose.viewmodels/EquinoxAuthViewModel///PointingToDeclaration//-714918263">
+                <div class="breadcrumbs"><a href="../../index.html">equinox-compose</a><span
+                        class="delimiter">/</span><a
+                        href="../index.html">com.tecknobit.equinoxcompose.viewmodels</a><span class="delimiter">/</span><span
+                        class="current">EquinoxAuthViewModel</span></div>
+                <div class="cover ">
+                    <h1 class="cover"><span>Equinox</span>
+                        <wbr>
+                        <span>Auth</span>
+                        <wbr>
+                        <span>View</span>
+                        <wbr>
+                        <span><span>Model</span></span></h1>
+                    <div class="platform-hinted " data-platform-hinted="data-platform-hinted">
+                        <div class="content sourceset-dependent-content" data-active=""
+                             data-togglable=":equinox-compose:dokkaHtmlPartial/commonMain">
+                            <div class="symbol monospace"><span class="token keyword">abstract </span><span
+                                    class="token keyword">class </span><a
+                                    href="index.html">EquinoxAuthViewModel</a><span
+                                    class="token punctuation">(</span><span class="parameters "><span
+                                    class="parameter "><span class="token keyword">val </span>snackbarHostState<span
+                                    class="token operator">: </span><a
+                                    href="https://developer.android.com/reference/kotlin/androidx/compose/material3/SnackbarHostState.html">SnackbarHostState</a><span
+                                    class="token punctuation">, </span></span><span class="parameter "><span
+                                    class="token keyword">val </span>requester<span class="token operator">: </span><a
+                                    href="../../com.tecknobit.equinoxcompose.network/-equinox-requester/index.html">EquinoxRequester</a><span
+                                    class="token punctuation">, </span></span><span class="parameter "><span
+                                    class="token keyword">val </span>localUser<span class="token operator">: </span><a
+                                    href="../../com.tecknobit.equinoxcompose.session/-equinox-local-user/index.html">EquinoxLocalUser</a></span></span><span
+                                    class="token punctuation">)</span> : <a href="../-equinox-view-model/index.html">EquinoxViewModel</a>
+                            </div>
+                            <p class="paragraph">The <strong>EquinoxAuthViewModel</strong> class is the support class
+                                used to execute the authentication requests to the backend</p><span class="kdoc-tag"><h4
+                                class="">Author</h4><p class="paragraph">N7ghtm4r3 - Tecknobit</p></span><h4 class="">
+                            Parameters</h4>
+                            <div class="table">
+                                <div class="table-row"
+                                     data-filterable-current=":equinox-compose:dokkaHtmlPartial/commonMain"
+                                     data-filterable-set=":equinox-compose:dokkaHtmlPartial/commonMain">
+                                    <div class="main-subrow keyValue ">
+                                        <div class=""><span class="inline-flex"><div><u><span>snackbar</span><wbr><span>Host</span><wbr><span><span>State</span></span></u></div></span>
+                                        </div>
+                                        <div>
+                                            <div class="title"><p class="paragraph">The host to launch the snackbar
+                                                messages</p></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="table-row"
+                                     data-filterable-current=":equinox-compose:dokkaHtmlPartial/commonMain"
+                                     data-filterable-set=":equinox-compose:dokkaHtmlPartial/commonMain">
+                                    <div class="main-subrow keyValue ">
+                                        <div class=""><span class="inline-flex"><div><u><span><span>requester</span></span></u></div></span>
+                                        </div>
+                                        <div>
+                                            <div class="title"><p class="paragraph">The instance to manage the requests
+                                                with the backend</p></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="table-row"
+                                     data-filterable-current=":equinox-compose:dokkaHtmlPartial/commonMain"
+                                     data-filterable-set=":equinox-compose:dokkaHtmlPartial/commonMain">
+                                    <div class="main-subrow keyValue ">
+                                        <div class=""><span class="inline-flex"><div><u><span>local</span><wbr><span><span>User</span></span></u></div></span>
+                                        </div>
+                                        <div>
+                                            <div class="title"><p class="paragraph">The user of the current logged-in
+                                                session, used to make the requests to the backend</p></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <h4 class="">See also</h4>
+                            <div class="table">
+                                <div class="table-row"
+                                     data-filterable-current=":equinox-compose:dokkaHtmlPartial/commonMain"
+                                     data-filterable-set=":equinox-compose:dokkaHtmlPartial/commonMain">
+                                    <div class="main-subrow keyValue ">
+                                        <div class=""><span class="inline-flex"><div><a
+                                                href="https://developer.android.com/reference/kotlin/androidx/lifecycle/ViewModel.html"><span>View</span><wbr><span><span>Model</span></span></a></div></span>
+                                        </div>
+                                        <div></div>
+                                    </div>
+                                </div>
+                                <div class="table-row"
+                                     data-filterable-current=":equinox-compose:dokkaHtmlPartial/commonMain"
+                                     data-filterable-set=":equinox-compose:dokkaHtmlPartial/commonMain">
+                                    <div class="main-subrow keyValue ">
+                                        <div class=""><span class="inline-flex"><div><a
+                                                href="../../com.tecknobit.equinoxcompose.session/-retriever/-retriever-wrapper/index.html"><span>Retriever.</span><wbr><span>Retriever</span><wbr><span><span>Wrapper</span></span></a></div></span>
+                                        </div>
+                                        <div></div>
+                                    </div>
+                                </div>
+                                <div class="table-row"
+                                     data-filterable-current=":equinox-compose:dokkaHtmlPartial/commonMain"
+                                     data-filterable-set=":equinox-compose:dokkaHtmlPartial/commonMain">
+                                    <div class="main-subrow keyValue ">
+                                        <div class=""><span class="inline-flex"><div><a
+                                                href="../-equinox-view-model/index.html"><span>Equinox</span><wbr><span>View</span><wbr><span><span>Model</span></span></a></div></span>
+                                        </div>
+                                        <div></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tabbedcontent">
+                    <div class="tabs-section" tabs-section="tabs-section">
+                        <button class="section-tab" data-active="" data-togglable="CONSTRUCTOR,TYPE,PROPERTY,FUNCTION">
+                            Members
+                        </button>
+                    </div>
+                    <div class="tabs-section-body">
+                        <div data-togglable="CONSTRUCTOR">
+                            <h2 class="">Constructors</h2>
+                            <div class="table"><a data-name="1689458358%2FConstructors%2F-714918263"
+                                                  anchor-label="EquinoxAuthViewModel"
+                                                  id="1689458358%2FConstructors%2F-714918263"
+                                                  data-filterable-set=":equinox-compose:dokkaHtmlPartial/commonMain"></a>
+                                <div class="table-row" data-togglable="CONSTRUCTOR"
+                                     data-filterable-current=":equinox-compose:dokkaHtmlPartial/commonMain"
+                                     data-filterable-set=":equinox-compose:dokkaHtmlPartial/commonMain">
+                                    <div class="main-subrow keyValue ">
+                                        <div class=""><span class="inline-flex">
+                  <div><a href="-equinox-auth-view-model.html"><span>Equinox</span><wbr><span>Auth</span><wbr><span>View</span><wbr><span><span>Model</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1689458358%2FConstructors%2F-714918263"></span>
+                    <div class="copy-popup-wrapper "><span
+                            class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+                                        <div>
+                                            <div class="title">
+                                                <div class="platform-hinted "
+                                                     data-platform-hinted="data-platform-hinted">
+                                                    <div class="content sourceset-dependent-content" data-active=""
+                                                         data-togglable=":equinox-compose:dokkaHtmlPartial/commonMain">
+                                                        <div class="symbol monospace"><span class="token keyword">constructor</span><span
+                                                                class="token punctuation">(</span><span
+                                                                class="parameters "><span class="parameter ">snackbarHostState<span
+                                                                class="token operator">: </span><a
+                                                                href="https://developer.android.com/reference/kotlin/androidx/compose/material3/SnackbarHostState.html">SnackbarHostState</a><span
+                                                                class="token punctuation">, </span></span><span
+                                                                class="parameter ">requester<span
+                                                                class="token operator">: </span><a
+                                                                href="../../com.tecknobit.equinoxcompose.network/-equinox-requester/index.html">EquinoxRequester</a><span
+                                                                class="token punctuation">, </span></span><span
+                                                                class="parameter ">localUser<span
+                                                                class="token operator">: </span><a
+                                                                href="../../com.tecknobit.equinoxcompose.session/-equinox-local-user/index.html">EquinoxLocalUser</a></span></span><span
+                                                                class="token punctuation">)</span></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div data-togglable="PROPERTY">
+                            <h2 class="">Properties</h2>
+                            <div class="table"><a data-name="-1312657802%2FProperties%2F-714918263" anchor-label="email"
+                                                  id="-1312657802%2FProperties%2F-714918263"
+                                                  data-filterable-set=":equinox-compose:dokkaHtmlPartial/commonMain"></a>
+                                <div class="table-row"
+                                     data-filterable-current=":equinox-compose:dokkaHtmlPartial/commonMain"
+                                     data-filterable-set=":equinox-compose:dokkaHtmlPartial/commonMain">
+                                    <div class="main-subrow keyValue ">
+                                        <div class=""><span class="inline-flex">
+                  <div><a href="email.html"><span><span>email</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1312657802%2FProperties%2F-714918263"></span>
+                    <div class="copy-popup-wrapper "><span
+                            class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+                                        <div>
+                                            <div class="title">
+                                                <div class="platform-hinted "
+                                                     data-platform-hinted="data-platform-hinted">
+                                                    <div class="content sourceset-dependent-content" data-active=""
+                                                         data-togglable=":equinox-compose:dokkaHtmlPartial/commonMain">
+                                                        <div class="symbol monospace"><span class="token keyword">lateinit </span><span
+                                                                class="token keyword">var </span><a href="email.html">email</a><span
+                                                                class="token operator">: </span><a
+                                                                href="https://developer.android.com/reference/kotlin/androidx/compose/runtime/MutableState.html">MutableState</a><span
+                                                                class="token operator">&lt;</span><a
+                                                                href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span
+                                                                class="token operator">&gt;</span></div>
+                                                        <div class="brief "><p class="paragraph"><code
+                                                                class="lang-kotlin">email</code> the email of the user
+                                                        </p></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <a data-name="-521390148%2FProperties%2F-714918263" anchor-label="emailError"
+                                   id="-521390148%2FProperties%2F-714918263"
+                                   data-filterable-set=":equinox-compose:dokkaHtmlPartial/commonMain"></a>
+                                <div class="table-row"
+                                     data-filterable-current=":equinox-compose:dokkaHtmlPartial/commonMain"
+                                     data-filterable-set=":equinox-compose:dokkaHtmlPartial/commonMain">
+                                    <div class="main-subrow keyValue ">
+                                        <div class=""><span class="inline-flex">
+                  <div><a href="email-error.html"><span>email</span><wbr><span><span>Error</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-521390148%2FProperties%2F-714918263"></span>
+                    <div class="copy-popup-wrapper "><span
+                            class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+                                        <div>
+                                            <div class="title">
+                                                <div class="platform-hinted "
+                                                     data-platform-hinted="data-platform-hinted">
+                                                    <div class="content sourceset-dependent-content" data-active=""
+                                                         data-togglable=":equinox-compose:dokkaHtmlPartial/commonMain">
+                                                        <div class="symbol monospace"><span class="token keyword">lateinit </span><span
+                                                                class="token keyword">var </span><a
+                                                                href="email-error.html">emailError</a><span
+                                                                class="token operator">: </span><a
+                                                                href="https://developer.android.com/reference/kotlin/androidx/compose/runtime/MutableState.html">MutableState</a><span
+                                                                class="token operator">&lt;</span><a
+                                                                href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a><span
+                                                                class="token operator">&gt;</span></div>
+                                                        <div class="brief "><p class="paragraph"><code
+                                                                class="lang-kotlin">emailError</code> whether the <a
+                                                                href="email.html">email</a> field is not valid</p></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <a data-name="1538727328%2FProperties%2F-714918263" anchor-label="host"
+                                   id="1538727328%2FProperties%2F-714918263"
+                                   data-filterable-set=":equinox-compose:dokkaHtmlPartial/commonMain"></a>
+                                <div class="table-row"
+                                     data-filterable-current=":equinox-compose:dokkaHtmlPartial/commonMain"
+                                     data-filterable-set=":equinox-compose:dokkaHtmlPartial/commonMain">
+                                    <div class="main-subrow keyValue ">
+                                        <div class=""><span class="inline-flex">
+                  <div><a href="host.html"><span><span>host</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1538727328%2FProperties%2F-714918263"></span>
+                    <div class="copy-popup-wrapper "><span
+                            class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+                                        <div>
+                                            <div class="title">
+                                                <div class="platform-hinted "
+                                                     data-platform-hinted="data-platform-hinted">
+                                                    <div class="content sourceset-dependent-content" data-active=""
+                                                         data-togglable=":equinox-compose:dokkaHtmlPartial/commonMain">
+                                                        <div class="symbol monospace"><span class="token keyword">lateinit </span><span
+                                                                class="token keyword">var </span><a href="host.html">host</a><span
+                                                                class="token operator">: </span><a
+                                                                href="https://developer.android.com/reference/kotlin/androidx/compose/runtime/MutableState.html">MutableState</a><span
+                                                                class="token operator">&lt;</span><a
+                                                                href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span
+                                                                class="token operator">&gt;</span></div>
+                                                        <div class="brief "><p class="paragraph"><code
+                                                                class="lang-kotlin">host</code> the value of the host to
+                                                            reach</p></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <a data-name="926446290%2FProperties%2F-714918263" anchor-label="hostError"
+                                   id="926446290%2FProperties%2F-714918263"
+                                   data-filterable-set=":equinox-compose:dokkaHtmlPartial/commonMain"></a>
+                                <div class="table-row"
+                                     data-filterable-current=":equinox-compose:dokkaHtmlPartial/commonMain"
+                                     data-filterable-set=":equinox-compose:dokkaHtmlPartial/commonMain">
+                                    <div class="main-subrow keyValue ">
+                                        <div class=""><span class="inline-flex">
+                  <div><a href="host-error.html"><span>host</span><wbr><span><span>Error</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="926446290%2FProperties%2F-714918263"></span>
+                    <div class="copy-popup-wrapper "><span
+                            class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+                                        <div>
+                                            <div class="title">
+                                                <div class="platform-hinted "
+                                                     data-platform-hinted="data-platform-hinted">
+                                                    <div class="content sourceset-dependent-content" data-active=""
+                                                         data-togglable=":equinox-compose:dokkaHtmlPartial/commonMain">
+                                                        <div class="symbol monospace"><span class="token keyword">lateinit </span><span
+                                                                class="token keyword">var </span><a
+                                                                href="host-error.html">hostError</a><span
+                                                                class="token operator">: </span><a
+                                                                href="https://developer.android.com/reference/kotlin/androidx/compose/runtime/MutableState.html">MutableState</a><span
+                                                                class="token operator">&lt;</span><a
+                                                                href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a><span
+                                                                class="token operator">&gt;</span></div>
+                                                        <div class="brief "><p class="paragraph"><code
+                                                                class="lang-kotlin">hostError</code> whether the <a
+                                                                href="host.html">host</a> field is not valid</p></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <a data-name="-203763706%2FProperties%2F-714918263" anchor-label="isSignUp"
+                                   id="-203763706%2FProperties%2F-714918263"
+                                   data-filterable-set=":equinox-compose:dokkaHtmlPartial/commonMain"></a>
+                                <div class="table-row"
+                                     data-filterable-current=":equinox-compose:dokkaHtmlPartial/commonMain"
+                                     data-filterable-set=":equinox-compose:dokkaHtmlPartial/commonMain">
+                                    <div class="main-subrow keyValue ">
+                                        <div class=""><span class="inline-flex">
+                  <div><a href="is-sign-up.html"><span>is</span><wbr><span>Sign</span><wbr><span><span>Up</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-203763706%2FProperties%2F-714918263"></span>
+                    <div class="copy-popup-wrapper "><span
+                            class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+                                        <div>
+                                            <div class="title">
+                                                <div class="platform-hinted "
+                                                     data-platform-hinted="data-platform-hinted">
+                                                    <div class="content sourceset-dependent-content" data-active=""
+                                                         data-togglable=":equinox-compose:dokkaHtmlPartial/commonMain">
+                                                        <div class="symbol monospace"><span class="token keyword">lateinit </span><span
+                                                                class="token keyword">var </span><a
+                                                                href="is-sign-up.html">isSignUp</a><span
+                                                                class="token operator">: </span><a
+                                                                href="https://developer.android.com/reference/kotlin/androidx/compose/runtime/MutableState.html">MutableState</a><span
+                                                                class="token operator">&lt;</span><a
+                                                                href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a><span
+                                                                class="token operator">&gt;</span></div>
+                                                        <div class="brief "><p class="paragraph"><code
+                                                                class="lang-kotlin">isSignUp</code> whether the auth
+                                                            request to execute is sign up or sign in</p></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <a data-name="995379964%2FProperties%2F-714918263" anchor-label="localUser"
+                                   id="995379964%2FProperties%2F-714918263"
+                                   data-filterable-set=":equinox-compose:dokkaHtmlPartial/commonMain"></a>
+                                <div class="table-row"
+                                     data-filterable-current=":equinox-compose:dokkaHtmlPartial/commonMain"
+                                     data-filterable-set=":equinox-compose:dokkaHtmlPartial/commonMain">
+                                    <div class="main-subrow keyValue ">
+                                        <div class=""><span class="inline-flex">
+                  <div><a href="local-user.html"><span>local</span><wbr><span><span>User</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="995379964%2FProperties%2F-714918263"></span>
+                    <div class="copy-popup-wrapper "><span
+                            class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+                                        <div>
+                                            <div class="title">
+                                                <div class="platform-hinted "
+                                                     data-platform-hinted="data-platform-hinted">
+                                                    <div class="content sourceset-dependent-content" data-active=""
+                                                         data-togglable=":equinox-compose:dokkaHtmlPartial/commonMain">
+                                                        <div class="symbol monospace"><span class="token keyword">private </span><span
+                                                                class="token keyword">val </span><a
+                                                                href="local-user.html">localUser</a><span
+                                                                class="token operator">: </span><a
+                                                                href="../../com.tecknobit.equinoxcompose.session/-equinox-local-user/index.html">EquinoxLocalUser</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <a data-name="-1266299363%2FProperties%2F-714918263" anchor-label="name"
+                                   id="-1266299363%2FProperties%2F-714918263"
+                                   data-filterable-set=":equinox-compose:dokkaHtmlPartial/commonMain"></a>
+                                <div class="table-row"
+                                     data-filterable-current=":equinox-compose:dokkaHtmlPartial/commonMain"
+                                     data-filterable-set=":equinox-compose:dokkaHtmlPartial/commonMain">
+                                    <div class="main-subrow keyValue ">
+                                        <div class=""><span class="inline-flex">
+                  <div><a href="name.html"><span><span>name</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1266299363%2FProperties%2F-714918263"></span>
+                    <div class="copy-popup-wrapper "><span
+                            class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+                                        <div>
+                                            <div class="title">
+                                                <div class="platform-hinted "
+                                                     data-platform-hinted="data-platform-hinted">
+                                                    <div class="content sourceset-dependent-content" data-active=""
+                                                         data-togglable=":equinox-compose:dokkaHtmlPartial/commonMain">
+                                                        <div class="symbol monospace"><span class="token keyword">lateinit </span><span
+                                                                class="token keyword">var </span><a href="name.html">name</a><span
+                                                                class="token operator">: </span><a
+                                                                href="https://developer.android.com/reference/kotlin/androidx/compose/runtime/MutableState.html">MutableState</a><span
+                                                                class="token operator">&lt;</span><a
+                                                                href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span
+                                                                class="token operator">&gt;</span></div>
+                                                        <div class="brief "><p class="paragraph"><code
+                                                                class="lang-kotlin">name</code> the name of the user</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <a data-name="1499826293%2FProperties%2F-714918263" anchor-label="nameError"
+                                   id="1499826293%2FProperties%2F-714918263"
+                                   data-filterable-set=":equinox-compose:dokkaHtmlPartial/commonMain"></a>
+                                <div class="table-row"
+                                     data-filterable-current=":equinox-compose:dokkaHtmlPartial/commonMain"
+                                     data-filterable-set=":equinox-compose:dokkaHtmlPartial/commonMain">
+                                    <div class="main-subrow keyValue ">
+                                        <div class=""><span class="inline-flex">
+                  <div><a href="name-error.html"><span>name</span><wbr><span><span>Error</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1499826293%2FProperties%2F-714918263"></span>
+                    <div class="copy-popup-wrapper "><span
+                            class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+                                        <div>
+                                            <div class="title">
+                                                <div class="platform-hinted "
+                                                     data-platform-hinted="data-platform-hinted">
+                                                    <div class="content sourceset-dependent-content" data-active=""
+                                                         data-togglable=":equinox-compose:dokkaHtmlPartial/commonMain">
+                                                        <div class="symbol monospace"><span class="token keyword">lateinit </span><span
+                                                                class="token keyword">var </span><a
+                                                                href="name-error.html">nameError</a><span
+                                                                class="token operator">: </span><a
+                                                                href="https://developer.android.com/reference/kotlin/androidx/compose/runtime/MutableState.html">MutableState</a><span
+                                                                class="token operator">&lt;</span><a
+                                                                href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a><span
+                                                                class="token operator">&gt;</span></div>
+                                                        <div class="brief "><p class="paragraph"><code
+                                                                class="lang-kotlin">nameError</code> whether the <a
+                                                                href="name.html">name</a> field is not valid</p></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <a data-name="1661108877%2FProperties%2F-714918263" anchor-label="password"
+                                   id="1661108877%2FProperties%2F-714918263"
+                                   data-filterable-set=":equinox-compose:dokkaHtmlPartial/commonMain"></a>
+                                <div class="table-row"
+                                     data-filterable-current=":equinox-compose:dokkaHtmlPartial/commonMain"
+                                     data-filterable-set=":equinox-compose:dokkaHtmlPartial/commonMain">
+                                    <div class="main-subrow keyValue ">
+                                        <div class=""><span class="inline-flex">
+                  <div><a href="password.html"><span><span>password</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1661108877%2FProperties%2F-714918263"></span>
+                    <div class="copy-popup-wrapper "><span
+                            class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+                                        <div>
+                                            <div class="title">
+                                                <div class="platform-hinted "
+                                                     data-platform-hinted="data-platform-hinted">
+                                                    <div class="content sourceset-dependent-content" data-active=""
+                                                         data-togglable=":equinox-compose:dokkaHtmlPartial/commonMain">
+                                                        <div class="symbol monospace"><span class="token keyword">lateinit </span><span
+                                                                class="token keyword">var </span><a
+                                                                href="password.html">password</a><span
+                                                                class="token operator">: </span><a
+                                                                href="https://developer.android.com/reference/kotlin/androidx/compose/runtime/MutableState.html">MutableState</a><span
+                                                                class="token operator">&lt;</span><a
+                                                                href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span
+                                                                class="token operator">&gt;</span></div>
+                                                        <div class="brief "><p class="paragraph"><code
+                                                                class="lang-kotlin">password</code> the password of the
+                                                            user</p></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <a data-name="1071127045%2FProperties%2F-714918263" anchor-label="passwordError"
+                                   id="1071127045%2FProperties%2F-714918263"
+                                   data-filterable-set=":equinox-compose:dokkaHtmlPartial/commonMain"></a>
+                                <div class="table-row"
+                                     data-filterable-current=":equinox-compose:dokkaHtmlPartial/commonMain"
+                                     data-filterable-set=":equinox-compose:dokkaHtmlPartial/commonMain">
+                                    <div class="main-subrow keyValue ">
+                                        <div class=""><span class="inline-flex">
+                  <div><a href="password-error.html"><span>password</span><wbr><span><span>Error</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1071127045%2FProperties%2F-714918263"></span>
+                    <div class="copy-popup-wrapper "><span
+                            class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+                                        <div>
+                                            <div class="title">
+                                                <div class="platform-hinted "
+                                                     data-platform-hinted="data-platform-hinted">
+                                                    <div class="content sourceset-dependent-content" data-active=""
+                                                         data-togglable=":equinox-compose:dokkaHtmlPartial/commonMain">
+                                                        <div class="symbol monospace"><span class="token keyword">lateinit </span><span
+                                                                class="token keyword">var </span><a
+                                                                href="password-error.html">passwordError</a><span
+                                                                class="token operator">: </span><a
+                                                                href="https://developer.android.com/reference/kotlin/androidx/compose/runtime/MutableState.html">MutableState</a><span
+                                                                class="token operator">&lt;</span><a
+                                                                href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a><span
+                                                                class="token operator">&gt;</span></div>
+                                                        <div class="brief "><p class="paragraph"><code
+                                                                class="lang-kotlin">passwordError</code> whether the <a
+                                                                href="password.html">password</a> field is not valid</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <a data-name="-1746023402%2FProperties%2F-714918263" anchor-label="requester"
+                                   id="-1746023402%2FProperties%2F-714918263"
+                                   data-filterable-set=":equinox-compose:dokkaHtmlPartial/commonMain"></a>
+                                <div class="table-row"
+                                     data-filterable-current=":equinox-compose:dokkaHtmlPartial/commonMain"
+                                     data-filterable-set=":equinox-compose:dokkaHtmlPartial/commonMain">
+                                    <div class="main-subrow keyValue ">
+                                        <div class=""><span class="inline-flex">
+                  <div><a href="requester.html"><span><span>requester</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1746023402%2FProperties%2F-714918263"></span>
+                    <div class="copy-popup-wrapper "><span
+                            class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+                                        <div>
+                                            <div class="title">
+                                                <div class="platform-hinted "
+                                                     data-platform-hinted="data-platform-hinted">
+                                                    <div class="content sourceset-dependent-content" data-active=""
+                                                         data-togglable=":equinox-compose:dokkaHtmlPartial/commonMain">
+                                                        <div class="symbol monospace"><span class="token keyword">private </span><span
+                                                                class="token keyword">val </span><a
+                                                                href="requester.html">requester</a><span
+                                                                class="token operator">: </span><a
+                                                                href="../../com.tecknobit.equinoxcompose.network/-equinox-requester/index.html">EquinoxRequester</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <a data-name="-1338835884%2FProperties%2F-714918263" anchor-label="retriever"
+                                   id="-1338835884%2FProperties%2F-714918263"
+                                   data-filterable-set=":equinox-compose:dokkaHtmlPartial/commonMain"></a>
+                                <div class="table-row"
+                                     data-filterable-current=":equinox-compose:dokkaHtmlPartial/commonMain"
+                                     data-filterable-set=":equinox-compose:dokkaHtmlPartial/commonMain">
+                                    <div class="main-subrow keyValue ">
+                                        <div class=""><span class="inline-flex">
+                  <div><a href="../-equinox-view-model/retriever.html"><span><span>retriever</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1338835884%2FProperties%2F-714918263"></span>
+                    <div class="copy-popup-wrapper "><span
+                            class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+                                        <div>
+                                            <div class="title">
+                                                <div class="platform-hinted "
+                                                     data-platform-hinted="data-platform-hinted">
+                                                    <div class="content sourceset-dependent-content" data-active=""
+                                                         data-togglable=":equinox-compose:dokkaHtmlPartial/commonMain">
+                                                        <div class="symbol monospace"><span class="token keyword">private </span><span
+                                                                class="token keyword">val </span><a
+                                                                href="../-equinox-view-model/retriever.html">retriever</a><span
+                                                                class="token operator">: </span><a
+                                                                href="../../com.tecknobit.equinoxcompose.session/-retriever/index.html">Retriever</a>
+                                                        </div>
+                                                        <div class="brief "><p class="paragraph"><code
+                                                                class="lang-kotlin">retriever</code> the manager used to
+                                                            fetch the data from the backend</p></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <a data-name="1084449493%2FProperties%2F-714918263" anchor-label="serverSecret"
+                                   id="1084449493%2FProperties%2F-714918263"
+                                   data-filterable-set=":equinox-compose:dokkaHtmlPartial/commonMain"></a>
+                                <div class="table-row"
+                                     data-filterable-current=":equinox-compose:dokkaHtmlPartial/commonMain"
+                                     data-filterable-set=":equinox-compose:dokkaHtmlPartial/commonMain">
+                                    <div class="main-subrow keyValue ">
+                                        <div class=""><span class="inline-flex">
+                  <div><a href="server-secret.html"><span>server</span><wbr><span><span>Secret</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1084449493%2FProperties%2F-714918263"></span>
+                    <div class="copy-popup-wrapper "><span
+                            class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+                                        <div>
+                                            <div class="title">
+                                                <div class="platform-hinted "
+                                                     data-platform-hinted="data-platform-hinted">
+                                                    <div class="content sourceset-dependent-content" data-active=""
+                                                         data-togglable=":equinox-compose:dokkaHtmlPartial/commonMain">
+                                                        <div class="symbol monospace"><span class="token keyword">lateinit </span><span
+                                                                class="token keyword">var </span><a
+                                                                href="server-secret.html">serverSecret</a><span
+                                                                class="token operator">: </span><a
+                                                                href="https://developer.android.com/reference/kotlin/androidx/compose/runtime/MutableState.html">MutableState</a><span
+                                                                class="token operator">&lt;</span><a
+                                                                href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span
+                                                                class="token operator">&gt;</span></div>
+                                                        <div class="brief "><p class="paragraph"><code
+                                                                class="lang-kotlin">serverSecret</code> the value of the
+                                                            server secret</p></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <a data-name="-1633671491%2FProperties%2F-714918263" anchor-label="serverSecretError"
+                                   id="-1633671491%2FProperties%2F-714918263"
+                                   data-filterable-set=":equinox-compose:dokkaHtmlPartial/commonMain"></a>
+                                <div class="table-row"
+                                     data-filterable-current=":equinox-compose:dokkaHtmlPartial/commonMain"
+                                     data-filterable-set=":equinox-compose:dokkaHtmlPartial/commonMain">
+                                    <div class="main-subrow keyValue ">
+                                        <div class=""><span class="inline-flex">
+                  <div><a href="server-secret-error.html"><span>server</span><wbr><span>Secret</span><wbr><span><span>Error</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1633671491%2FProperties%2F-714918263"></span>
+                    <div class="copy-popup-wrapper "><span
+                            class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+                                        <div>
+                                            <div class="title">
+                                                <div class="platform-hinted "
+                                                     data-platform-hinted="data-platform-hinted">
+                                                    <div class="content sourceset-dependent-content" data-active=""
+                                                         data-togglable=":equinox-compose:dokkaHtmlPartial/commonMain">
+                                                        <div class="symbol monospace"><span class="token keyword">lateinit </span><span
+                                                                class="token keyword">var </span><a
+                                                                href="server-secret-error.html">serverSecretError</a><span
+                                                                class="token operator">: </span><a
+                                                                href="https://developer.android.com/reference/kotlin/androidx/compose/runtime/MutableState.html">MutableState</a><span
+                                                                class="token operator">&lt;</span><a
+                                                                href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a><span
+                                                                class="token operator">&gt;</span></div>
+                                                        <div class="brief "><p class="paragraph"><code
+                                                                class="lang-kotlin">serverSecretError</code> whether the
+                                                            <a href="server-secret.html">serverSecret</a> field is not
+                                                            valid</p></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <a data-name="625987206%2FProperties%2F-714918263" anchor-label="snackbarHostState"
+                                   id="625987206%2FProperties%2F-714918263"
+                                   data-filterable-set=":equinox-compose:dokkaHtmlPartial/commonMain"></a>
+                                <div class="table-row"
+                                     data-filterable-current=":equinox-compose:dokkaHtmlPartial/commonMain"
+                                     data-filterable-set=":equinox-compose:dokkaHtmlPartial/commonMain">
+                                    <div class="main-subrow keyValue ">
+                                        <div class=""><span class="inline-flex">
+                  <div><a href="../-equinox-view-model/snackbar-host-state.html"><span>snackbar</span><wbr><span>Host</span><wbr><span><span>State</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="625987206%2FProperties%2F-714918263"></span>
+                    <div class="copy-popup-wrapper "><span
+                            class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+                                        <div>
+                                            <div class="title">
+                                                <div class="platform-hinted "
+                                                     data-platform-hinted="data-platform-hinted">
+                                                    <div class="content sourceset-dependent-content" data-active=""
+                                                         data-togglable=":equinox-compose:dokkaHtmlPartial/commonMain">
+                                                        <div class="symbol monospace"><span
+                                                                class="token keyword">val </span><a
+                                                                href="../-equinox-view-model/snackbar-host-state.html">snackbarHostState</a><span
+                                                                class="token operator">: </span><a
+                                                                href="https://developer.android.com/reference/kotlin/androidx/compose/material3/SnackbarHostState.html">SnackbarHostState</a><span
+                                                                class="token operator">?</span><span
+                                                                class="token operator"> = </span>null
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <a data-name="527555799%2FProperties%2F-714918263" anchor-label="surname"
+                                   id="527555799%2FProperties%2F-714918263"
+                                   data-filterable-set=":equinox-compose:dokkaHtmlPartial/commonMain"></a>
+                                <div class="table-row"
+                                     data-filterable-current=":equinox-compose:dokkaHtmlPartial/commonMain"
+                                     data-filterable-set=":equinox-compose:dokkaHtmlPartial/commonMain">
+                                    <div class="main-subrow keyValue ">
+                                        <div class=""><span class="inline-flex">
+                  <div><a href="surname.html"><span><span>surname</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="527555799%2FProperties%2F-714918263"></span>
+                    <div class="copy-popup-wrapper "><span
+                            class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+                                        <div>
+                                            <div class="title">
+                                                <div class="platform-hinted "
+                                                     data-platform-hinted="data-platform-hinted">
+                                                    <div class="content sourceset-dependent-content" data-active=""
+                                                         data-togglable=":equinox-compose:dokkaHtmlPartial/commonMain">
+                                                        <div class="symbol monospace"><span class="token keyword">lateinit </span><span
+                                                                class="token keyword">var </span><a href="surname.html">surname</a><span
+                                                                class="token operator">: </span><a
+                                                                href="https://developer.android.com/reference/kotlin/androidx/compose/runtime/MutableState.html">MutableState</a><span
+                                                                class="token operator">&lt;</span><a
+                                                                href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span
+                                                                class="token operator">&gt;</span></div>
+                                                        <div class="brief "><p class="paragraph"><code
+                                                                class="lang-kotlin">surname</code> the surname of the
+                                                            user</p></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <a data-name="53976571%2FProperties%2F-714918263" anchor-label="surnameError"
+                                   id="53976571%2FProperties%2F-714918263"
+                                   data-filterable-set=":equinox-compose:dokkaHtmlPartial/commonMain"></a>
+                                <div class="table-row"
+                                     data-filterable-current=":equinox-compose:dokkaHtmlPartial/commonMain"
+                                     data-filterable-set=":equinox-compose:dokkaHtmlPartial/commonMain">
+                                    <div class="main-subrow keyValue ">
+                                        <div class=""><span class="inline-flex">
+                  <div><a href="surname-error.html"><span>surname</span><wbr><span><span>Error</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="53976571%2FProperties%2F-714918263"></span>
+                    <div class="copy-popup-wrapper "><span
+                            class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+                                        <div>
+                                            <div class="title">
+                                                <div class="platform-hinted "
+                                                     data-platform-hinted="data-platform-hinted">
+                                                    <div class="content sourceset-dependent-content" data-active=""
+                                                         data-togglable=":equinox-compose:dokkaHtmlPartial/commonMain">
+                                                        <div class="symbol monospace"><span class="token keyword">lateinit </span><span
+                                                                class="token keyword">var </span><a
+                                                                href="surname-error.html">surnameError</a><span
+                                                                class="token operator">: </span><a
+                                                                href="https://developer.android.com/reference/kotlin/androidx/compose/runtime/MutableState.html">MutableState</a><span
+                                                                class="token operator">&lt;</span><a
+                                                                href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a><span
+                                                                class="token operator">&gt;</span></div>
+                                                        <div class="brief "><p class="paragraph"><code
+                                                                class="lang-kotlin">surnameError</code> whether the <a
+                                                                href="surname.html">surname</a> field is not valid</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div data-togglable="FUNCTION">
+                            <h2 class="">Functions</h2>
+                            <div class="table"><a data-name="-462089743%2FFunctions%2F-714918263"
+                                                  anchor-label="addCloseable" id="-462089743%2FFunctions%2F-714918263"
+                                                  data-filterable-set=":equinox-compose:dokkaHtmlPartial/commonMain"></a>
+                                <div class="table-row"
+                                     data-filterable-current=":equinox-compose:dokkaHtmlPartial/commonMain"
+                                     data-filterable-set=":equinox-compose:dokkaHtmlPartial/commonMain">
+                                    <div class="main-subrow keyValue ">
+                                        <div class=""><span class="inline-flex">
+                  <div><a href="../-equinox-view-model/index.html#2068605057%2FFunctions%2F-714918263"><span>add</span><wbr><span><span>Closeable</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-462089743%2FFunctions%2F-714918263"></span>
+                    <div class="copy-popup-wrapper "><span
+                            class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+                                        <div>
+                                            <div class="title">
+                                                <div class="platform-hinted "
+                                                     data-platform-hinted="data-platform-hinted">
+                                                    <div class="content sourceset-dependent-content" data-active=""
+                                                         data-togglable=":equinox-compose:dokkaHtmlPartial/commonMain">
+                                                        <div class="symbol monospace"><span
+                                                                class="token keyword">expect </span><span
+                                                                class="token keyword">open </span><span
+                                                                class="token keyword">fun </span><a
+                                                                href="../-equinox-view-model/index.html#2068605057%2FFunctions%2F-714918263"><span
+                                                                class="token function">addCloseable</span></a><span
+                                                                class="token punctuation">(</span><span
+                                                                class="parameters "><span
+                                                                class="parameter ">closeable<span
+                                                                class="token operator">: </span><a
+                                                                href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-auto-closeable/index.html">AutoCloseable</a></span></span><span
+                                                                class="token punctuation">)</span></div>
+                                                        <div class="symbol monospace"><span
+                                                                class="token keyword">expect </span><span
+                                                                class="token keyword">fun </span><a
+                                                                href="../-equinox-view-model/index.html#2093014716%2FFunctions%2F-714918263"><span
+                                                                class="token function">addCloseable</span></a><span
+                                                                class="token punctuation">(</span><span
+                                                                class="parameters "><span class="parameter ">key<span
+                                                                class="token operator">: </span><a
+                                                                href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span
+                                                                class="token punctuation">, </span></span><span
+                                                                class="parameter ">closeable<span
+                                                                class="token operator">: </span><a
+                                                                href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-auto-closeable/index.html">AutoCloseable</a></span></span><span
+                                                                class="token punctuation">)</span></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <a data-name="42939808%2FFunctions%2F-714918263" anchor-label="auth"
+                                   id="42939808%2FFunctions%2F-714918263"
+                                   data-filterable-set=":equinox-compose:dokkaHtmlPartial/commonMain"></a>
+                                <div class="table-row"
+                                     data-filterable-current=":equinox-compose:dokkaHtmlPartial/commonMain"
+                                     data-filterable-set=":equinox-compose:dokkaHtmlPartial/commonMain">
+                                    <div class="main-subrow keyValue ">
+                                        <div class=""><span class="inline-flex">
+                  <div><a href="auth.html"><span><span>auth</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="42939808%2FFunctions%2F-714918263"></span>
+                    <div class="copy-popup-wrapper "><span
+                            class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+                                        <div>
+                                            <div class="title">
+                                                <div class="platform-hinted "
+                                                     data-platform-hinted="data-platform-hinted">
+                                                    <div class="content sourceset-dependent-content" data-active=""
+                                                         data-togglable=":equinox-compose:dokkaHtmlPartial/commonMain">
+                                                        <div class="symbol monospace"><span
+                                                                class="token keyword">fun </span><a
+                                                                href="auth.html"><span
+                                                                class="token function">auth</span></a><span
+                                                                class="token punctuation">(</span><span
+                                                                class="token punctuation">)</span></div>
+                                                        <div class="brief "><p class="paragraph">Wrapper function to
+                                                            execute the specific authentication request</p></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <a data-name="1021598606%2FFunctions%2F-714918263" anchor-label="canRetrieverStart"
+                                   id="1021598606%2FFunctions%2F-714918263"
+                                   data-filterable-set=":equinox-compose:dokkaHtmlPartial/commonMain"></a>
+                                <div class="table-row"
+                                     data-filterable-current=":equinox-compose:dokkaHtmlPartial/commonMain"
+                                     data-filterable-set=":equinox-compose:dokkaHtmlPartial/commonMain">
+                                    <div class="main-subrow keyValue ">
+                                        <div class=""><span class="inline-flex">
+                  <div><a href="../-equinox-view-model/can-retriever-start.html"><span>can</span><wbr><span>Retriever</span><wbr><span><span>Start</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1021598606%2FFunctions%2F-714918263"></span>
+                    <div class="copy-popup-wrapper "><span
+                            class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+                                        <div>
+                                            <div class="title">
+                                                <div class="platform-hinted "
+                                                     data-platform-hinted="data-platform-hinted">
+                                                    <div class="content sourceset-dependent-content" data-active=""
+                                                         data-togglable=":equinox-compose:dokkaHtmlPartial/commonMain">
+                                                        <div class="symbol monospace"><span
+                                                                class="token keyword">open </span><span
+                                                                class="token keyword">override </span><span
+                                                                class="token keyword">fun </span><a
+                                                                href="../-equinox-view-model/can-retriever-start.html"><span
+                                                                class="token function">canRetrieverStart</span></a><span
+                                                                class="token punctuation">(</span><span
+                                                                class="token punctuation">)</span><span
+                                                                class="token operator">: </span><a
+                                                                href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a>
+                                                        </div>
+                                                        <div class="brief "><p class="paragraph">Method to get whether
+                                                            the
+                                                            <a href="https://developer.android.com/reference/kotlin/androidx/lifecycle/package-summary.html">viewModelScope</a>
+                                                            can start, so if there aren't other jobs that routine is
+                                                            already executing</p></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <a data-name="-1845797905%2FFunctions%2F-714918263" anchor-label="continueToRetrieve"
+                                   id="-1845797905%2FFunctions%2F-714918263"
+                                   data-filterable-set=":equinox-compose:dokkaHtmlPartial/commonMain"></a>
+                                <div class="table-row"
+                                     data-filterable-current=":equinox-compose:dokkaHtmlPartial/commonMain"
+                                     data-filterable-set=":equinox-compose:dokkaHtmlPartial/commonMain">
+                                    <div class="main-subrow keyValue ">
+                                        <div class=""><span class="inline-flex">
+                  <div><a href="../-equinox-view-model/continue-to-retrieve.html"><span>continue</span><wbr><span>To</span><wbr><span><span>Retrieve</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1845797905%2FFunctions%2F-714918263"></span>
+                    <div class="copy-popup-wrapper "><span
+                            class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+                                        <div>
+                                            <div class="title">
+                                                <div class="platform-hinted "
+                                                     data-platform-hinted="data-platform-hinted">
+                                                    <div class="content sourceset-dependent-content" data-active=""
+                                                         data-togglable=":equinox-compose:dokkaHtmlPartial/commonMain">
+                                                        <div class="symbol monospace"><span
+                                                                class="token keyword">open </span><span
+                                                                class="token keyword">override </span><span
+                                                                class="token keyword">fun </span><a
+                                                                href="../-equinox-view-model/continue-to-retrieve.html"><span
+                                                                class="token function">continueToRetrieve</span></a><span
+                                                                class="token punctuation">(</span><span
+                                                                class="parameters "><span class="parameter ">currentContext<span
+                                                                class="token operator">: </span><a
+                                                                href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.reflect/-k-class/index.html">KClass</a><span
+                                                                class="token operator">&lt;</span><span
+                                                                class="token operator">*</span><span
+                                                                class="token operator">&gt;</span></span></span><span
+                                                                class="token punctuation">)</span><span
+                                                                class="token operator">: </span><a
+                                                                href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a>
+                                                        </div>
+                                                        <div class="brief "><p class="paragraph">Method to suspend the
+                                                            current <a
+                                                                    href="https://developer.android.com/reference/kotlin/androidx/lifecycle/package-summary.html">viewModelScope</a>
+                                                            to execute other requests to the backend, the isRefreshing
+                                                            instance will be set as <strong>false</strong> to allow the
+                                                            restart of the routine after executing the other requests
+                                                        </p></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <a data-name="1102255800%2FFunctions%2F-714918263" anchor-label="getCloseable"
+                                   id="1102255800%2FFunctions%2F-714918263"
+                                   data-filterable-set=":equinox-compose:dokkaHtmlPartial/commonMain"></a>
+                                <div class="table-row"
+                                     data-filterable-current=":equinox-compose:dokkaHtmlPartial/commonMain"
+                                     data-filterable-set=":equinox-compose:dokkaHtmlPartial/commonMain">
+                                    <div class="main-subrow keyValue ">
+                                        <div class=""><span class="inline-flex">
+                  <div><a href="../-equinox-view-model/index.html#1102255800%2FFunctions%2F-714918263"><span>get</span><wbr><span><span>Closeable</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1102255800%2FFunctions%2F-714918263"></span>
+                    <div class="copy-popup-wrapper "><span
+                            class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+                                        <div>
+                                            <div class="title">
+                                                <div class="platform-hinted "
+                                                     data-platform-hinted="data-platform-hinted">
+                                                    <div class="content sourceset-dependent-content" data-active=""
+                                                         data-togglable=":equinox-compose:dokkaHtmlPartial/commonMain">
+                                                        <div class="symbol monospace"><span
+                                                                class="token keyword">expect </span><span
+                                                                class="token keyword">fun </span><span
+                                                                class="token operator">&lt;</span><a
+                                                                href="../-equinox-view-model/index.html#1102255800%2FFunctions%2F-714918263">T</a><span
+                                                                class="token operator"> : </span><a
+                                                                href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-auto-closeable/index.html">AutoCloseable</a><span
+                                                                class="token operator">&gt; </span><a
+                                                                href="../-equinox-view-model/index.html#1102255800%2FFunctions%2F-714918263"><span
+                                                                class="token function">getCloseable</span></a><span
+                                                                class="token punctuation">(</span><span
+                                                                class="parameters "><span class="parameter ">key<span
+                                                                class="token operator">: </span><a
+                                                                href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a></span></span><span
+                                                                class="token punctuation">)</span><span
+                                                                class="token operator">: </span><a
+                                                                href="../-equinox-view-model/index.html#1102255800%2FFunctions%2F-714918263">T</a><span
+                                                                class="token operator">?</span></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <a data-name="276811359%2FFunctions%2F-714918263"
+                                   anchor-label="getSignInCustomParameters" id="276811359%2FFunctions%2F-714918263"
+                                   data-filterable-set=":equinox-compose:dokkaHtmlPartial/commonMain"></a>
+                                <div class="table-row"
+                                     data-filterable-current=":equinox-compose:dokkaHtmlPartial/commonMain"
+                                     data-filterable-set=":equinox-compose:dokkaHtmlPartial/commonMain">
+                                    <div class="main-subrow keyValue ">
+                                        <div class=""><span class="inline-flex">
+                  <div><a href="get-sign-in-custom-parameters.html"><span>get</span><wbr><span>Sign</span><wbr><span>In</span><wbr><span>Custom</span><wbr><span><span>Parameters</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="276811359%2FFunctions%2F-714918263"></span>
+                    <div class="copy-popup-wrapper "><span
+                            class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+                                        <div>
+                                            <div class="title">
+                                                <div class="platform-hinted "
+                                                     data-platform-hinted="data-platform-hinted">
+                                                    <div class="content sourceset-dependent-content" data-active=""
+                                                         data-togglable=":equinox-compose:dokkaHtmlPartial/commonMain">
+                                                        <div class="symbol monospace"><span class="token keyword">protected </span><span
+                                                                class="token keyword">open </span><span
+                                                                class="token keyword">fun </span><a
+                                                                href="get-sign-in-custom-parameters.html"><span
+                                                                class="token function">getSignInCustomParameters</span></a><span
+                                                                class="token punctuation">(</span><span
+                                                                class="token punctuation">)</span><span
+                                                                class="token operator">: </span><a
+                                                                href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-array/index.html">Array</a><span
+                                                                class="token operator">&lt;</span><span
+                                                                class="token keyword">out </span><a
+                                                                href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-any/index.html">Any</a><span
+                                                                class="token operator">?</span><span
+                                                                class="token operator">&gt;</span></div>
+                                                        <div class="brief "><p class="paragraph">Method to get the list
+                                                            of the custom parameters to use in the <a
+                                                                    href="sign-in.html">signIn</a> request.</p></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <a data-name="-564434519%2FFunctions%2F-714918263"
+                                   anchor-label="getSignUpCustomParameters" id="-564434519%2FFunctions%2F-714918263"
+                                   data-filterable-set=":equinox-compose:dokkaHtmlPartial/commonMain"></a>
+                                <div class="table-row"
+                                     data-filterable-current=":equinox-compose:dokkaHtmlPartial/commonMain"
+                                     data-filterable-set=":equinox-compose:dokkaHtmlPartial/commonMain">
+                                    <div class="main-subrow keyValue ">
+                                        <div class=""><span class="inline-flex">
+                  <div><a href="get-sign-up-custom-parameters.html"><span>get</span><wbr><span>Sign</span><wbr><span>Up</span><wbr><span>Custom</span><wbr><span><span>Parameters</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-564434519%2FFunctions%2F-714918263"></span>
+                    <div class="copy-popup-wrapper "><span
+                            class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+                                        <div>
+                                            <div class="title">
+                                                <div class="platform-hinted "
+                                                     data-platform-hinted="data-platform-hinted">
+                                                    <div class="content sourceset-dependent-content" data-active=""
+                                                         data-togglable=":equinox-compose:dokkaHtmlPartial/commonMain">
+                                                        <div class="symbol monospace"><span class="token keyword">protected </span><span
+                                                                class="token keyword">open </span><span
+                                                                class="token keyword">fun </span><a
+                                                                href="get-sign-up-custom-parameters.html"><span
+                                                                class="token function">getSignUpCustomParameters</span></a><span
+                                                                class="token punctuation">(</span><span
+                                                                class="token punctuation">)</span><span
+                                                                class="token operator">: </span><a
+                                                                href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-array/index.html">Array</a><span
+                                                                class="token operator">&lt;</span><span
+                                                                class="token keyword">out </span><a
+                                                                href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-any/index.html">Any</a><span
+                                                                class="token operator">?</span><span
+                                                                class="token operator">&gt;</span></div>
+                                                        <div class="brief "><p class="paragraph">Method to get the list
+                                                            of the custom parameters to use in the <a
+                                                                    href="sign-up.html">signUp</a> request</p></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <a data-name="-1776958535%2FFunctions%2F-714918263" anchor-label="getUserLanguage"
+                                   id="-1776958535%2FFunctions%2F-714918263"
+                                   data-filterable-set=":equinox-compose:dokkaHtmlPartial/commonMain"></a>
+                                <div class="table-row"
+                                     data-filterable-current=":equinox-compose:dokkaHtmlPartial/commonMain"
+                                     data-filterable-set=":equinox-compose:dokkaHtmlPartial/commonMain">
+                                    <div class="main-subrow keyValue ">
+                                        <div class=""><span class="inline-flex">
+                  <div><a href="get-user-language.html"><span>get</span><wbr><span>User</span><wbr><span><span>Language</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1776958535%2FFunctions%2F-714918263"></span>
+                    <div class="copy-popup-wrapper "><span
+                            class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+                                        <div>
+                                            <div class="title">
+                                                <div class="platform-hinted "
+                                                     data-platform-hinted="data-platform-hinted">
+                                                    <div class="content sourceset-dependent-content" data-active=""
+                                                         data-togglable=":equinox-compose:dokkaHtmlPartial/commonMain">
+                                                        <div class="symbol monospace"><span class="token keyword">protected </span><span
+                                                                class="token keyword">fun </span><a
+                                                                href="get-user-language.html"><span
+                                                                class="token function">getUserLanguage</span></a><span
+                                                                class="token punctuation">(</span><span
+                                                                class="token punctuation">)</span><span
+                                                                class="token operator">: </span><a
+                                                                href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a>
+                                                        </div>
+                                                        <div class="brief "><p class="paragraph">Method to get the
+                                                            current user language</p></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <a data-name="-1971833153%2FFunctions%2F-714918263" anchor-label="getValidUserLanguage"
+                                   id="-1971833153%2FFunctions%2F-714918263"
+                                   data-filterable-set=":equinox-compose:dokkaHtmlPartial/commonMain"></a>
+                                <div class="table-row"
+                                     data-filterable-current=":equinox-compose:dokkaHtmlPartial/commonMain"
+                                     data-filterable-set=":equinox-compose:dokkaHtmlPartial/commonMain">
+                                    <div class="main-subrow keyValue ">
+                                        <div class=""><span class="inline-flex">
+                  <div><a href="get-valid-user-language.html"><span>get</span><wbr><span>Valid</span><wbr><span>User</span><wbr><span><span>Language</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1971833153%2FFunctions%2F-714918263"></span>
+                    <div class="copy-popup-wrapper "><span
+                            class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+                                        <div>
+                                            <div class="title">
+                                                <div class="platform-hinted "
+                                                     data-platform-hinted="data-platform-hinted">
+                                                    <div class="content sourceset-dependent-content" data-active=""
+                                                         data-togglable=":equinox-compose:dokkaHtmlPartial/commonMain">
+                                                        <div class="symbol monospace"><span class="token keyword">private </span><span
+                                                                class="token keyword">fun </span><a
+                                                                href="get-valid-user-language.html"><span
+                                                                class="token function">getValidUserLanguage</span></a><span
+                                                                class="token punctuation">(</span><span
+                                                                class="token punctuation">)</span><span
+                                                                class="token operator">: </span><a
+                                                                href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a>
+                                                        </div>
+                                                        <div class="brief "><p class="paragraph">Method to get a
+                                                            supported language for the user</p></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <a data-name="-512551380%2FFunctions%2F-714918263" anchor-label="launchApp"
+                                   id="-512551380%2FFunctions%2F-714918263"
+                                   data-filterable-set=":equinox-compose:dokkaHtmlPartial/commonMain"></a>
+                                <div class="table-row"
+                                     data-filterable-current=":equinox-compose:dokkaHtmlPartial/commonMain"
+                                     data-filterable-set=":equinox-compose:dokkaHtmlPartial/commonMain">
+                                    <div class="main-subrow keyValue ">
+                                        <div class=""><span class="inline-flex">
+                  <div><a href="launch-app.html"><span>launch</span><wbr><span><span>App</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-512551380%2FFunctions%2F-714918263"></span>
+                    <div class="copy-popup-wrapper "><span
+                            class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+                                        <div>
+                                            <div class="title">
+                                                <div class="platform-hinted "
+                                                     data-platform-hinted="data-platform-hinted">
+                                                    <div class="content sourceset-dependent-content" data-active=""
+                                                         data-togglable=":equinox-compose:dokkaHtmlPartial/commonMain">
+                                                        <div class="symbol monospace"><span class="token keyword">protected </span><span
+                                                                class="token keyword">open </span><span
+                                                                class="token keyword">fun </span><a
+                                                                href="launch-app.html"><span class="token function">launchApp</span></a><span
+                                                                class="token punctuation">(</span><span
+                                                                class="parameters "><span
+                                                                class="parameter ">response<span class="token operator">: </span><span
+                                                                data-unresolved-link="kotlinx.serialization.json/JsonObject///PointingToDeclaration/">JsonObject</span><span
+                                                                class="token punctuation">, </span></span><span
+                                                                class="parameter ">name<span
+                                                                class="token operator">: </span><a
+                                                                href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span
+                                                                class="token punctuation">, </span></span><span
+                                                                class="parameter ">surname<span
+                                                                class="token operator">: </span><a
+                                                                href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span
+                                                                class="token punctuation">, </span></span><span
+                                                                class="parameter ">language<span class="token operator">: </span><a
+                                                                href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span
+                                                                class="token punctuation">, </span></span><span
+                                                                class="parameter "><span
+                                                                class="token keyword">vararg </span>custom<span
+                                                                class="token operator">: </span><a
+                                                                href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-any/index.html">Any</a><span
+                                                                class="token operator">?</span></span></span><span
+                                                                class="token punctuation">)</span></div>
+                                                        <div class="brief "><p class="paragraph">Method to launch the
+                                                            application after the authentication request, will be
+                                                            instantiated with the user details both the <a
+                                                                    href="requester.html">requester</a> and the <a
+                                                                    href="local-user.html">localUser</a></p></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <a data-name="-1930136507%2FFunctions%2F-714918263" anchor-label="onCleared"
+                                   id="-1930136507%2FFunctions%2F-714918263"
+                                   data-filterable-set=":equinox-compose:dokkaHtmlPartial/commonMain"></a>
+                                <div class="table-row"
+                                     data-filterable-current=":equinox-compose:dokkaHtmlPartial/commonMain"
+                                     data-filterable-set=":equinox-compose:dokkaHtmlPartial/commonMain">
+                                    <div class="main-subrow keyValue ">
+                                        <div class=""><span class="inline-flex">
+                  <div><a href="../-equinox-view-model/index.html#-1930136507%2FFunctions%2F-714918263"><span>on</span><wbr><span><span>Cleared</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1930136507%2FFunctions%2F-714918263"></span>
+                    <div class="copy-popup-wrapper "><span
+                            class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+                                        <div>
+                                            <div class="title">
+                                                <div class="platform-hinted "
+                                                     data-platform-hinted="data-platform-hinted">
+                                                    <div class="content sourceset-dependent-content" data-active=""
+                                                         data-togglable=":equinox-compose:dokkaHtmlPartial/commonMain">
+                                                        <div class="symbol monospace"><span class="token keyword">protected </span><span
+                                                                class="token keyword">expect </span><span
+                                                                class="token keyword">open </span><span
+                                                                class="token keyword">fun </span><a
+                                                                href="../-equinox-view-model/index.html#-1930136507%2FFunctions%2F-714918263"><span
+                                                                class="token function">onCleared</span></a><span
+                                                                class="token punctuation">(</span><span
+                                                                class="token punctuation">)</span></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <a data-name="-2047976695%2FFunctions%2F-714918263" anchor-label="restartRetriever"
+                                   id="-2047976695%2FFunctions%2F-714918263"
+                                   data-filterable-set=":equinox-compose:dokkaHtmlPartial/commonMain"></a>
+                                <div class="table-row"
+                                     data-filterable-current=":equinox-compose:dokkaHtmlPartial/commonMain"
+                                     data-filterable-set=":equinox-compose:dokkaHtmlPartial/commonMain">
+                                    <div class="main-subrow keyValue ">
+                                        <div class=""><span class="inline-flex">
+                  <div><a href="../-equinox-view-model/restart-retriever.html"><span>restart</span><wbr><span><span>Retriever</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-2047976695%2FFunctions%2F-714918263"></span>
+                    <div class="copy-popup-wrapper "><span
+                            class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+                                        <div>
+                                            <div class="title">
+                                                <div class="platform-hinted "
+                                                     data-platform-hinted="data-platform-hinted">
+                                                    <div class="content sourceset-dependent-content" data-active=""
+                                                         data-togglable=":equinox-compose:dokkaHtmlPartial/commonMain">
+                                                        <div class="symbol monospace"><span
+                                                                class="token keyword">open </span><span
+                                                                class="token keyword">override </span><span
+                                                                class="token keyword">fun </span><a
+                                                                href="../-equinox-view-model/restart-retriever.html"><span
+                                                                class="token function">restartRetriever</span></a><span
+                                                                class="token punctuation">(</span><span
+                                                                class="token punctuation">)</span></div>
+                                                        <div class="brief "><p class="paragraph">Method to restart the
+                                                            current <a
+                                                                    href="https://developer.android.com/reference/kotlin/androidx/lifecycle/package-summary.html">viewModelScope</a>
+                                                            after other requests has been executed, the isRefreshing
+                                                            instance will be set as <strong>true</strong> to deny the
+                                                            restart of the routine after executing the other requests
+                                                        </p></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <a data-name="216722984%2FFunctions%2F-714918263" anchor-label="restartRetrieverIf"
+                                   id="216722984%2FFunctions%2F-714918263"
+                                   data-filterable-set=":equinox-compose:dokkaHtmlPartial/commonMain"></a>
+                                <div class="table-row"
+                                     data-filterable-current=":equinox-compose:dokkaHtmlPartial/commonMain"
+                                     data-filterable-set=":equinox-compose:dokkaHtmlPartial/commonMain">
+                                    <div class="main-subrow keyValue ">
+                                        <div class=""><span class="inline-flex">
+                  <div><a href="../../com.tecknobit.equinoxcompose.session/-retriever/-retriever-wrapper/restart-retriever-if.html"><span>restart</span><wbr><span>Retriever</span><wbr><span><span>If</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="216722984%2FFunctions%2F-714918263"></span>
+                    <div class="copy-popup-wrapper "><span
+                            class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+                                        <div>
+                                            <div class="title">
+                                                <div class="platform-hinted "
+                                                     data-platform-hinted="data-platform-hinted">
+                                                    <div class="content sourceset-dependent-content" data-active=""
+                                                         data-togglable=":equinox-compose:dokkaHtmlPartial/commonMain">
+                                                        <div class="symbol monospace"><span
+                                                                class="token keyword">open </span><span
+                                                                class="token keyword">fun </span><a
+                                                                href="../../com.tecknobit.equinoxcompose.session/-retriever/-retriever-wrapper/restart-retriever-if.html"><span
+                                                                class="token function">restartRetrieverIf</span></a><span
+                                                                class="token punctuation">(</span><span
+                                                                class="parameters "><span
+                                                                class="parameter ">condition<span
+                                                                class="token operator">: </span><a
+                                                                href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a></span></span><span
+                                                                class="token punctuation">)</span></div>
+                                                        <div class="brief "><p class="paragraph">Method to conditionally
+                                                            restart the current <a
+                                                                    href="../../com.tecknobit.equinoxcompose.session/-retriever/retriever-scope.html">retrieverScope</a>
+                                                            after other requests has been executed, the <a
+                                                                    href="../../com.tecknobit.equinoxcompose.session/-retriever/is-refreshing.html">isRefreshing</a>
+                                                            instance will be set as <strong>true</strong> to deny the
+                                                            restart of the routine after executing the other requests
+                                                        </p></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <a data-name="394123494%2FFunctions%2F-714918263" anchor-label="retrieve"
+                                   id="394123494%2FFunctions%2F-714918263"
+                                   data-filterable-set=":equinox-compose:dokkaHtmlPartial/commonMain"></a>
+                                <div class="table-row"
+                                     data-filterable-current=":equinox-compose:dokkaHtmlPartial/commonMain"
+                                     data-filterable-set=":equinox-compose:dokkaHtmlPartial/commonMain">
+                                    <div class="main-subrow keyValue ">
+                                        <div class=""><span class="inline-flex">
+                  <div><a href="../-equinox-view-model/retrieve.html"><span><span>retrieve</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="394123494%2FFunctions%2F-714918263"></span>
+                    <div class="copy-popup-wrapper "><span
+                            class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+                                        <div>
+                                            <div class="title">
+                                                <div class="platform-hinted "
+                                                     data-platform-hinted="data-platform-hinted">
+                                                    <div class="content sourceset-dependent-content" data-active=""
+                                                         data-togglable=":equinox-compose:dokkaHtmlPartial/commonMain">
+                                                        <div class="symbol monospace"><span
+                                                                class="token keyword">open </span><span
+                                                                class="token keyword">override </span><span
+                                                                class="token keyword">fun </span><a
+                                                                href="../-equinox-view-model/retrieve.html"><span
+                                                                class="token function">retrieve</span></a><span
+                                                                class="token punctuation">(</span><span
+                                                                class="parameters "><span class="parameter ">currentContext<span
+                                                                class="token operator">: </span><a
+                                                                href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.reflect/-k-class/index.html">KClass</a><span
+                                                                class="token operator">&lt;</span><span
+                                                                class="token operator">*</span><span
+                                                                class="token operator">&gt;</span><span
+                                                                class="token punctuation">, </span></span><span
+                                                                class="parameter ">routine<span
+                                                                class="token operator">: </span><span
+                                                                class="token punctuation">(</span><span
+                                                                class="token punctuation">)</span><span
+                                                                class="token operator"> -&gt; </span><a
+                                                                href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-unit/index.html">Unit</a><span
+                                                                class="token punctuation">, </span></span><span
+                                                                class="parameter ">repeatRoutine<span
+                                                                class="token operator">: </span><a
+                                                                href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a><span
+                                                                class="token punctuation">, </span></span><span
+                                                                class="parameter ">refreshDelay<span
+                                                                class="token operator">: </span><a
+                                                                href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-long/index.html">Long</a></span></span><span
+                                                                class="token punctuation">)</span></div>
+                                                        <div class="brief "><p class="paragraph">Method to execute the
+                                                            refresh routine designed</p></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <a data-name="-1180848995%2FFunctions%2F-714918263" anchor-label="setActiveContext"
+                                   id="-1180848995%2FFunctions%2F-714918263"
+                                   data-filterable-set=":equinox-compose:dokkaHtmlPartial/commonMain"></a>
+                                <div class="table-row"
+                                     data-filterable-current=":equinox-compose:dokkaHtmlPartial/commonMain"
+                                     data-filterable-set=":equinox-compose:dokkaHtmlPartial/commonMain">
+                                    <div class="main-subrow keyValue ">
+                                        <div class=""><span class="inline-flex">
+                  <div><a href="../../com.tecknobit.equinoxcompose.session/-retriever/-retriever-wrapper/set-active-context.html"><span>set</span><wbr><span>Active</span><wbr><span><span>Context</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1180848995%2FFunctions%2F-714918263"></span>
+                    <div class="copy-popup-wrapper "><span
+                            class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+                                        <div>
+                                            <div class="title">
+                                                <div class="platform-hinted "
+                                                     data-platform-hinted="data-platform-hinted">
+                                                    <div class="content sourceset-dependent-content" data-active=""
+                                                         data-togglable=":equinox-compose:dokkaHtmlPartial/commonMain">
+                                                        <div class="symbol monospace"><span
+                                                                class="token keyword">open </span><span
+                                                                class="token keyword">fun </span><a
+                                                                href="../../com.tecknobit.equinoxcompose.session/-retriever/-retriever-wrapper/set-active-context.html"><span
+                                                                class="token function">setActiveContext</span></a><span
+                                                                class="token punctuation">(</span><span
+                                                                class="parameters "><span class="parameter ">currentContext<span
+                                                                class="token operator">: </span><a
+                                                                href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.reflect/-k-class/index.html">KClass</a><span
+                                                                class="token operator">&lt;</span><span
+                                                                class="token operator">*</span><span
+                                                                class="token operator">&gt;</span></span></span><span
+                                                                class="token punctuation">)</span></div>
+                                                        <div class="brief "><p class="paragraph">Method to set the
+                                                            current active context where the <a
+                                                                    href="../../com.tecknobit.equinoxcompose.session/-retriever/retriever-scope.html">retrieverScope</a>
+                                                            is executing</p></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <a data-name="-1429099309%2FFunctions%2F-714918263" anchor-label="showSnackbarMessage"
+                                   id="-1429099309%2FFunctions%2F-714918263"
+                                   data-filterable-set=":equinox-compose:dokkaHtmlPartial/commonMain"></a>
+                                <div class="table-row"
+                                     data-filterable-current=":equinox-compose:dokkaHtmlPartial/commonMain"
+                                     data-filterable-set=":equinox-compose:dokkaHtmlPartial/commonMain">
+                                    <div class="main-subrow keyValue ">
+                                        <div class=""><span class="inline-flex">
+                  <div><a href="../-equinox-view-model/show-snackbar-message.html"><span>show</span><wbr><span>Snackbar</span><wbr><span><span>Message</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1429099309%2FFunctions%2F-714918263"></span>
+                    <div class="copy-popup-wrapper "><span
+                            class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+                                        <div>
+                                            <div class="title">
+                                                <div class="platform-hinted "
+                                                     data-platform-hinted="data-platform-hinted">
+                                                    <div class="content sourceset-dependent-content" data-active=""
+                                                         data-togglable=":equinox-compose:dokkaHtmlPartial/commonMain">
+                                                        <div class="symbol monospace"><span
+                                                                class="token keyword">fun </span><a
+                                                                href="../-equinox-view-model/show-snackbar-message.html"><span
+                                                                class="token function">showSnackbarMessage</span></a><span
+                                                                class="token punctuation">(</span><span
+                                                                class="parameters "><span
+                                                                class="parameter ">message<span
+                                                                class="token operator">: </span><a
+                                                                href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a></span></span><span
+                                                                class="token punctuation">)</span></div>
+                                                        <div class="symbol monospace"><span
+                                                                class="token keyword">fun </span><a
+                                                                href="../-equinox-view-model/show-snackbar-message.html"><span
+                                                                class="token function">showSnackbarMessage</span></a><span
+                                                                class="token punctuation">(</span><span
+                                                                class="parameters "><span
+                                                                class="parameter ">response<span class="token operator">: </span><span
+                                                                data-unresolved-link="kotlinx.serialization.json/JsonObject///PointingToDeclaration/">JsonObject</span></span></span><span
+                                                                class="token punctuation">)</span></div>
+                                                        <div class="symbol monospace"><span
+                                                                class="token keyword">fun </span><a
+                                                                href="../-equinox-view-model/show-snackbar-message.html"><span
+                                                                class="token function">showSnackbarMessage</span></a><span
+                                                                class="token punctuation">(</span><span
+                                                                class="parameters "><span
+                                                                class="parameter ">message<span
+                                                                class="token operator">: </span><span
+                                                                data-unresolved-link="org.jetbrains.compose.resources/StringResource///PointingToDeclaration/">StringResource</span></span></span><span
+                                                                class="token punctuation">)</span></div>
+                                                        <div class="brief "><p class="paragraph">Method to display a
+                                                            response message with a snackbar</p></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <a data-name="2038233965%2FFunctions%2F-714918263" anchor-label="signIn"
+                                   id="2038233965%2FFunctions%2F-714918263"
+                                   data-filterable-set=":equinox-compose:dokkaHtmlPartial/commonMain"></a>
+                                <div class="table-row"
+                                     data-filterable-current=":equinox-compose:dokkaHtmlPartial/commonMain"
+                                     data-filterable-set=":equinox-compose:dokkaHtmlPartial/commonMain">
+                                    <div class="main-subrow keyValue ">
+                                        <div class=""><span class="inline-flex">
+                  <div><a href="sign-in.html"><span>sign</span><wbr><span><span>In</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="2038233965%2FFunctions%2F-714918263"></span>
+                    <div class="copy-popup-wrapper "><span
+                            class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+                                        <div>
+                                            <div class="title">
+                                                <div class="platform-hinted "
+                                                     data-platform-hinted="data-platform-hinted">
+                                                    <div class="content sourceset-dependent-content" data-active=""
+                                                         data-togglable=":equinox-compose:dokkaHtmlPartial/commonMain">
+                                                        <div class="symbol monospace"><span class="token keyword">private </span><span
+                                                                class="token keyword">fun </span><a href="sign-in.html"><span
+                                                                class="token function">signIn</span></a><span
+                                                                class="token punctuation">(</span><span
+                                                                class="parameters "><span
+                                                                class="parameter ">onFailure<span
+                                                                class="token operator">: </span><span
+                                                                class="token punctuation">(</span><span
+                                                                data-unresolved-link="kotlinx.serialization.json/JsonObject///PointingToDeclaration/">JsonObject</span><span
+                                                                class="token punctuation">)</span><span
+                                                                class="token operator"> -&gt; </span><a
+                                                                href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-unit/index.html">Unit</a><span
+                                                                class="token operator"> = </span>{
+            showSnackbarMessage(it)
+        }</span></span><span class="token punctuation">)</span></div>
+                                                        <div class="brief "><p class="paragraph">Method to execute the
+                                                            sign in authentication request, if successful the <a
+                                                                    href="local-user.html">localUser</a> will be
+                                                            initialized with the data received by the request</p></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <a data-name="1348016678%2FFunctions%2F-714918263" anchor-label="signInFormIsValid"
+                                   id="1348016678%2FFunctions%2F-714918263"
+                                   data-filterable-set=":equinox-compose:dokkaHtmlPartial/commonMain"></a>
+                                <div class="table-row"
+                                     data-filterable-current=":equinox-compose:dokkaHtmlPartial/commonMain"
+                                     data-filterable-set=":equinox-compose:dokkaHtmlPartial/commonMain">
+                                    <div class="main-subrow keyValue ">
+                                        <div class=""><span class="inline-flex">
+                  <div><a href="sign-in-form-is-valid.html"><span>sign</span><wbr><span>In</span><wbr><span>Form</span><wbr><span>Is</span><wbr><span><span>Valid</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1348016678%2FFunctions%2F-714918263"></span>
+                    <div class="copy-popup-wrapper "><span
+                            class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+                                        <div>
+                                            <div class="title">
+                                                <div class="platform-hinted "
+                                                     data-platform-hinted="data-platform-hinted">
+                                                    <div class="content sourceset-dependent-content" data-active=""
+                                                         data-togglable=":equinox-compose:dokkaHtmlPartial/commonMain">
+                                                        <div class="symbol monospace"><span class="token keyword">protected </span><span
+                                                                class="token keyword">open </span><span
+                                                                class="token keyword">fun </span><a
+                                                                href="sign-in-form-is-valid.html"><span
+                                                                class="token function">signInFormIsValid</span></a><span
+                                                                class="token punctuation">(</span><span
+                                                                class="token punctuation">)</span><span
+                                                                class="token operator">: </span><a
+                                                                href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a>
+                                                        </div>
+                                                        <div class="brief "><p class="paragraph">Method to validate the
+                                                            inputs for the <a href="sign-in.html">signIn</a> request</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <a data-name="30810083%2FFunctions%2F-714918263" anchor-label="signUp"
+                                   id="30810083%2FFunctions%2F-714918263"
+                                   data-filterable-set=":equinox-compose:dokkaHtmlPartial/commonMain"></a>
+                                <div class="table-row"
+                                     data-filterable-current=":equinox-compose:dokkaHtmlPartial/commonMain"
+                                     data-filterable-set=":equinox-compose:dokkaHtmlPartial/commonMain">
+                                    <div class="main-subrow keyValue ">
+                                        <div class=""><span class="inline-flex">
+                  <div><a href="sign-up.html"><span>sign</span><wbr><span><span>Up</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="30810083%2FFunctions%2F-714918263"></span>
+                    <div class="copy-popup-wrapper "><span
+                            class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+                                        <div>
+                                            <div class="title">
+                                                <div class="platform-hinted "
+                                                     data-platform-hinted="data-platform-hinted">
+                                                    <div class="content sourceset-dependent-content" data-active=""
+                                                         data-togglable=":equinox-compose:dokkaHtmlPartial/commonMain">
+                                                        <div class="symbol monospace"><span class="token keyword">private </span><span
+                                                                class="token keyword">fun </span><a href="sign-up.html"><span
+                                                                class="token function">signUp</span></a><span
+                                                                class="token punctuation">(</span><span
+                                                                class="parameters "><span
+                                                                class="parameter ">onFailure<span
+                                                                class="token operator">: </span><span
+                                                                class="token punctuation">(</span><span
+                                                                data-unresolved-link="kotlinx.serialization.json/JsonObject///PointingToDeclaration/">JsonObject</span><span
+                                                                class="token punctuation">)</span><span
+                                                                class="token operator"> -&gt; </span><a
+                                                                href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-unit/index.html">Unit</a><span
+                                                                class="token operator"> = </span>{
+            showSnackbarMessage(it)
+        }</span></span><span class="token punctuation">)</span></div>
+                                                        <div class="brief "><p class="paragraph">Method to execute the
+                                                            sign-up authentication request, if successful the <a
+                                                                    href="local-user.html">localUser</a> will be
+                                                            initialized with the data received by the request</p></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <a data-name="126359708%2FFunctions%2F-714918263" anchor-label="signUpFormIsValid"
+                                   id="126359708%2FFunctions%2F-714918263"
+                                   data-filterable-set=":equinox-compose:dokkaHtmlPartial/commonMain"></a>
+                                <div class="table-row"
+                                     data-filterable-current=":equinox-compose:dokkaHtmlPartial/commonMain"
+                                     data-filterable-set=":equinox-compose:dokkaHtmlPartial/commonMain">
+                                    <div class="main-subrow keyValue ">
+                                        <div class=""><span class="inline-flex">
+                  <div><a href="sign-up-form-is-valid.html"><span>sign</span><wbr><span>Up</span><wbr><span>Form</span><wbr><span>Is</span><wbr><span><span>Valid</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="126359708%2FFunctions%2F-714918263"></span>
+                    <div class="copy-popup-wrapper "><span
+                            class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+                                        <div>
+                                            <div class="title">
+                                                <div class="platform-hinted "
+                                                     data-platform-hinted="data-platform-hinted">
+                                                    <div class="content sourceset-dependent-content" data-active=""
+                                                         data-togglable=":equinox-compose:dokkaHtmlPartial/commonMain">
+                                                        <div class="symbol monospace"><span class="token keyword">protected </span><span
+                                                                class="token keyword">open </span><span
+                                                                class="token keyword">fun </span><a
+                                                                href="sign-up-form-is-valid.html"><span
+                                                                class="token function">signUpFormIsValid</span></a><span
+                                                                class="token punctuation">(</span><span
+                                                                class="token punctuation">)</span><span
+                                                                class="token operator">: </span><a
+                                                                href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a>
+                                                        </div>
+                                                        <div class="brief "><p class="paragraph">Method to validate the
+                                                            inputs for the <a href="sign-up.html">signUp</a> request</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <a data-name="255431158%2FFunctions%2F-714918263" anchor-label="suspendRetriever"
+                                   id="255431158%2FFunctions%2F-714918263"
+                                   data-filterable-set=":equinox-compose:dokkaHtmlPartial/commonMain"></a>
+                                <div class="table-row"
+                                     data-filterable-current=":equinox-compose:dokkaHtmlPartial/commonMain"
+                                     data-filterable-set=":equinox-compose:dokkaHtmlPartial/commonMain">
+                                    <div class="main-subrow keyValue ">
+                                        <div class=""><span class="inline-flex">
+                  <div><a href="../-equinox-view-model/suspend-retriever.html"><span>suspend</span><wbr><span><span>Retriever</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="255431158%2FFunctions%2F-714918263"></span>
+                    <div class="copy-popup-wrapper "><span
+                            class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+                                        <div>
+                                            <div class="title">
+                                                <div class="platform-hinted "
+                                                     data-platform-hinted="data-platform-hinted">
+                                                    <div class="content sourceset-dependent-content" data-active=""
+                                                         data-togglable=":equinox-compose:dokkaHtmlPartial/commonMain">
+                                                        <div class="symbol monospace"><span
+                                                                class="token keyword">open </span><span
+                                                                class="token keyword">override </span><span
+                                                                class="token keyword">fun </span><a
+                                                                href="../-equinox-view-model/suspend-retriever.html"><span
+                                                                class="token function">suspendRetriever</span></a><span
+                                                                class="token punctuation">(</span><span
+                                                                class="token punctuation">)</span></div>
+                                                        <div class="brief "><p class="paragraph">Method to suspend the
+                                                            current <a
+                                                                    href="https://developer.android.com/reference/kotlin/androidx/lifecycle/package-summary.html">viewModelScope</a>
+                                                            to execute other requests to the backend, the isRefreshing
+                                                            instance will be set as <strong>false</strong> to allow the
+                                                            restart of the routine after executing the other requests
+                                                        </p></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <a data-name="575449877%2FFunctions%2F-714918263" anchor-label="suspendRetrieverIf"
+                                   id="575449877%2FFunctions%2F-714918263"
+                                   data-filterable-set=":equinox-compose:dokkaHtmlPartial/commonMain"></a>
+                                <div class="table-row"
+                                     data-filterable-current=":equinox-compose:dokkaHtmlPartial/commonMain"
+                                     data-filterable-set=":equinox-compose:dokkaHtmlPartial/commonMain">
+                                    <div class="main-subrow keyValue ">
+                                        <div class=""><span class="inline-flex">
+                  <div><a href="../../com.tecknobit.equinoxcompose.session/-retriever/-retriever-wrapper/suspend-retriever-if.html"><span>suspend</span><wbr><span>Retriever</span><wbr><span><span>If</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="575449877%2FFunctions%2F-714918263"></span>
+                    <div class="copy-popup-wrapper "><span
+                            class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+                                        <div>
+                                            <div class="title">
+                                                <div class="platform-hinted "
+                                                     data-platform-hinted="data-platform-hinted">
+                                                    <div class="content sourceset-dependent-content" data-active=""
+                                                         data-togglable=":equinox-compose:dokkaHtmlPartial/commonMain">
+                                                        <div class="symbol monospace"><span
+                                                                class="token keyword">open </span><span
+                                                                class="token keyword">fun </span><a
+                                                                href="../../com.tecknobit.equinoxcompose.session/-retriever/-retriever-wrapper/suspend-retriever-if.html"><span
+                                                                class="token function">suspendRetrieverIf</span></a><span
+                                                                class="token punctuation">(</span><span
+                                                                class="parameters "><span
+                                                                class="parameter ">condition<span
+                                                                class="token operator">: </span><a
+                                                                href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a></span></span><span
+                                                                class="token punctuation">)</span></div>
+                                                        <div class="brief "><p class="paragraph">Method to conditionally
+                                                            suspend the current <a
+                                                                    href="../../com.tecknobit.equinoxcompose.session/-retriever/retriever-scope.html">retrieverScope</a>
+                                                            to execute other requests to the backend, the <a
+                                                                    href="../../com.tecknobit.equinoxcompose.session/-retriever/is-refreshing.html">isRefreshing</a>
+                                                            instance will be set as <strong>false</strong> to allow the
+                                                            restart of the routine after executing the other requests
+                                                        </p></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <a href="#content" id="go-to-top-link" class="footer--button footer--button_go-to-top"></a>
+                <span>© 2025 Copyright</span>
+                <span class="pull-right">
+            <span>Generated by </span>
+            <a class="footer--link footer--link_external" href="https://github.com/Kotlin/dokka">
+                <span>dokka</span>
+            </a>
+        </span>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
