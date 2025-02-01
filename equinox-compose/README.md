@@ -26,6 +26,8 @@ configurations.all {
 
 ### Version catalog
 
+- `libs.version.toml`
+
 ```gradle
 [versions]
 equinox = "1.0.7"
@@ -35,68 +37,44 @@ equinox-compose = { module = "io.github.n7ghtm4r3:equinox-compose", version.ref 
 equinox-core = { module = "io.github.n7ghtm4r3:equinox-core", version.ref = "equinox" }
 ```
 
-### Gradle
+- `build.gradle.kts`
 
-Add the JitPack repository to your build file
+```gradle
+dependencies {
 
-- Add it in your root build.gradle at the end of repositories
+    // implement the compose utilities
+    implementation(libs.equinox.compose)
 
-    ```gradle
-    repositories {
-        ...
-        maven { url 'https://jitpack.io' }
-        maven { url 'https://repo.clojars.org' }
-    }
-    ```
+    // implement the core utilities
+    implementation(libs.equinox.core)
+}
+```
 
-  #### Gradle (Kotlin)
+### Gradle (Kotlin)
 
-    ```gradle
-    repositories {
-        ...
-        maven("https://jitpack.io")
-        maven("https://repo.clojars.org")
-    }
-    ```
-
-- Add the dependency
-
-    ```gradle
-    dependencies {
-       
-        // implement the compose utilities
-        implementation 'io.github.n7ghtm4r3:equinox-compose:1.0.7'
-        
-        // implement the core utilities
-        implementation 'io.github.n7ghtm4r3:equinox-core:1.0.7'
-    }
-    ```
-
-  #### Gradle (Kotlin)
-
-    ```gradle
-    dependencies {
-        
-        // implement the compose utilities
-        implementation("io.github.n7ghtm4r3:equinox-compose:1.0.7")
-        
-        // implement the core utilities
-        implementation("io.github.n7ghtm4r3:equinox-core:1.0.7")
-    }
-    ```
-
-  #### Gradle (version catalog)
-
-    ```gradle
-    dependencies {
+```gradle
+dependencies {
     
-        // implement the compose utilities
-        implementation(libs.equinox.compose)
+    // implement the compose utilities
+    implementation("io.github.n7ghtm4r3:equinox-compose:1.0.7")
     
-        // implement the core utilities
-        implementation(libs.equinox.core)
-    }
-    ```
+    // implement the core utilities
+    implementation("io.github.n7ghtm4r3:equinox-core:1.0.7")
+}
+```
+
+### Gradle Groovy
+
+```gradle
+dependencies {
+   
+    // implement the compose utilities
+    implementation 'io.github.n7ghtm4r3:equinox-compose:1.0.7'
+    
+    // implement the core utilities
+    implementation 'io.github.n7ghtm4r3:equinox-core:1.0.7'
+}
+```
 
 ## APIs available
 - [EquinoxViewModel](../documd/compose/apis/EquinoxViewModel.md)
