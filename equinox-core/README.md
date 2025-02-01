@@ -14,6 +14,8 @@ Core utilities for **Compose Multiplatform** and **Spring** technologies
 
 ### Version catalog
 
+- `libs.version.toml`
+
 ```gradle
 [versions]
 equinox = "1.0.7"
@@ -22,34 +24,29 @@ equinox = "1.0.7"
 equinox-core = { module = "io.github.n7ghtm4r3:equinox-core", version.ref = "equinox" }
 ```
 
-### Gradle
+- `build.gradle.kts`
 
-- Add the dependency
+ ```gradle
+dependencies {
+    implementation(libs.equinox.core)
+}
+```
 
-    ```gradle
-    dependencies {
-        // implement the core utilities
-        implementation 'io.github.n7ghtm4r3:equinox-core:1.0.7'
-    }
-    ```
+### Gradle (Kotlin)
 
-  #### Gradle (Kotlin)
+```gradle
+dependencies {
+    implementation("io.github.n7ghtm4r3:equinox-core:1.0.7")
+}
+```
 
-    ```gradle
-    dependencies {
-        // implement the core utilities
-        implementation("io.github.n7ghtm4r3:equinox-core:1.0.7")
-    }
-    ```
+### Gradle Groovy
 
-  #### Gradle (version catalog)
-
-    ```gradle
-    dependencies {
-        // implement the core utilities
-        implementation(libs.equinox.core)
-    }
-    ```
+```gradle
+dependencies {
+    implementation 'io.github.n7ghtm4r3:equinox-core:1.0.7'
+}
+```
 
 ## APIs available
 
