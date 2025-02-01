@@ -10,40 +10,13 @@ import androidx.startup.Initializer
  * in the app's lifecycle. It is designed to work with AndroidX's `App Startup` library, which allows you to
  * initialize components as soon as the app starts, without having to modify the `Application` class.
  *
- * ## Usage:
- * - This class is automatically detected and executed by the `App Startup` library if properly declared in the
- *   app's manifest file or through metadata in the `AndroidManifest.xml`.
- * - It calls `AppContext.setUp()` to initialize the `AppContext` with the application `Context`.
- * - The `create()` method returns the global application `Context`, which can be used for further initialization
- *   or passed to other components that require the `Context`.
- * - Add the related provider in the **AndroidManifest.xml** file:
- * ```xml
- * <application>
- *
- *      ...
- *          <provider
- *                 android:name="androidx.startup.InitializationProvider"
- *                 android:authorities="${applicationId}.androidx-startup"
- *                 android:exported="false"
- *                 tools:node="merge">
- *             <meta-data
- *                     android:name="com.tecknobit.equinoxcompose.utils.AppContextInitializer"
- *                     android:value="androidx.startup"/>
- *         </provider>
- *
- * </application>
- * ```
- * - Implement also the native library (build.gradle.kts):
- * ```kotlin
- * implementation("androidx.startup:startup-runtime:$version")
- * ```
- *
+ * @see [docu](https://github.com/N7ghtm4r3/Equinox/tree/main/documd/compose/android/AppContextInitializer.md)
  * @see Initializer
  */
 @Deprecated(
     message = "Will be removed in the future releases",
     replaceWith = ReplaceWith(
-        expression = "com.tecknobit.equinoxcompose.utilities.context.AppContextInitializer"
+        expression = "com.tecknobit.equinoxcore.utilities.context.AppContextInitializer"
     ),
     level = DeprecationLevel.WARNING
 )

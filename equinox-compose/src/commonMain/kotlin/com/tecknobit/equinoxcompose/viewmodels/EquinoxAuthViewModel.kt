@@ -49,67 +49,67 @@ abstract class EquinoxAuthViewModel(
 ) {
 
     /**
-     * **isSignUp** -> whether the auth request to execute is sign up or sign in
+     * `isSignUp` whether the auth request to execute is sign up or sign in
      */
     lateinit var isSignUp: MutableState<Boolean>
 
     /**
-     * **host** -> the value of the host to reach
+     * `host` the value of the host to reach
      */
     lateinit var host: MutableState<String>
 
     /**
-     * **hostError** -> whether the [host] field is not valid
+     * `hostError` whether the [host] field is not valid
      */
     lateinit var hostError: MutableState<Boolean>
 
     /**
-     * **serverSecret** -> the value of the server secret
+     * `serverSecret` the value of the server secret
      */
     lateinit var serverSecret: MutableState<String>
 
     /**
-     * **serverSecretError** -> whether the [serverSecret] field is not valid
+     * `serverSecretError` whether the [serverSecret] field is not valid
      */
     lateinit var serverSecretError: MutableState<Boolean>
 
     /**
-     * **name** -> the name of the user
+     * `name` the name of the user
      */
     lateinit var name: MutableState<String>
 
     /**
-     * **nameError** -> whether the [name] field is not valid
+     * `nameError` whether the [name] field is not valid
      */
     lateinit var nameError: MutableState<Boolean>
 
     /**
-     * **surname** -> the surname of the user
+     * `surname` the surname of the user
      */
     lateinit var surname: MutableState<String>
 
     /**
-     * **surnameError** -> whether the [surname] field is not valid
+     * `surnameError` whether the [surname] field is not valid
      */
     lateinit var surnameError: MutableState<Boolean>
 
     /**
-     * **email** -> the email of the user
+     * `email` the email of the user
      */
     lateinit var email: MutableState<String>
 
     /**
-     * **emailError** -> whether the [email] field is not valid
+     * `emailError` whether the [email] field is not valid
      */
     lateinit var emailError: MutableState<Boolean>
 
     /**
-     * **password** -> the password of the user
+     * `password` the password of the user
      */
     lateinit var password: MutableState<String>
 
     /**
-     * **passwordError** -> whether the [password] field is not valid
+     * `passwordError` whether the [password] field is not valid
      */
     lateinit var passwordError: MutableState<Boolean>
 

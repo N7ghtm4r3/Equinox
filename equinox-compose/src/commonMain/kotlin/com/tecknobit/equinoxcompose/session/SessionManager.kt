@@ -43,49 +43,49 @@ data class SessionSetup(
 enum class SessionStatus {
 
     /**
-     * *OPERATIONAL* -> the normal status of the session
+     * `OPERATIONAL` the normal status of the session
      */
     OPERATIONAL,
 
     /**
-     * *SERVER_OFFLINE* -> the status of the session when the related server is offline
+     * `SERVER_OFFLINE` the status of the session when the related server is offline
      */
     SERVER_OFFLINE,
 
     /**
-     * *NO_INTERNET_CONNECTION* -> the status of the session when there is no internet connection
+     * `NO_INTERNET_CONNECTION` the status of the session when there is no internet connection
      */
     NO_INTERNET_CONNECTION,
 
     /**
-     * *USER_DISCONNECTED* -> the status of the session when the user has been disconnected
+     * `USER_DISCONNECTED` the status of the session when the user has been disconnected
      */
     USER_DISCONNECTED
 
 }
 
 /**
- * *sessionSetup* -> the setup for the session
+ * `sessionSetup` the setup for the session
  */
 private lateinit var sessionSetup: SessionSetup
 
 /**
- * *sessionStatus* -> the current session status
+ * `sessionStatus` the current session status
  */
 private lateinit var sessionStatus: MutableState<SessionStatus>
 
 /**
- * *isServerOffline* -> state to manage the server offline scenario
+ * `isServerOffline` state to manage the server offline scenario
  */
 private lateinit var isServerOffline: MutableState<Boolean>
 
 /**
- * *noInternetConnection* -> state to manage the no internet connection scenario
+ * `noInternetConnection` state to manage the no internet connection scenario
  */
 private lateinit var noInternetConnection: MutableState<Boolean>
 
 /**
- * *hasBeenDisconnectedAction* -> when the account has been deleted and the session needs to
+ * `hasBeenDisconnectedAction` when the account has been deleted and the session needs to
  * be detached from the device
  */
 private lateinit var hasBeenDisconnected: MutableState<Boolean>
@@ -169,6 +169,7 @@ fun setHasBeenDisconnectedValue(
  * @param viewModel The viewmodel used by the context where this method has been invoked, this is
  * used to stop the refreshing routine when the internet connection is not available by the [NoInternetConnectionUi]
  * @param loadingRoutine The routine used to load the data
+ * @param initialDelay An initial delay to apply to the [loadingRoutine] before to start
  * @param serverOfflineRetryText The informative text for the user
  * @param serverOfflineRetryAction The action to retry the connection to the server
  * @param noInternetConnectionRetryText The informative text for the user
@@ -179,6 +180,7 @@ fun ManagedContent(
     content: @Composable () -> Unit,
     viewModel: EquinoxViewModel,
     loadingRoutine: (suspend () -> Boolean)? = null,
+    initialDelay: Long? = null,
     serverOfflineRetryText: StringResource? = null,
     serverOfflineRetryAction: @Composable (() -> Unit)? = null,
     noInternetConnectionRetryText: StringResource? = null,
@@ -222,6 +224,7 @@ fun ManagedContent(
             if (loadingRoutine != null) {
                 LoadingItemUI(
                     loadingRoutine = loadingRoutine,
+                    initialDelay = initialDelay,
                     contentLoaded = content
                 )
             } else

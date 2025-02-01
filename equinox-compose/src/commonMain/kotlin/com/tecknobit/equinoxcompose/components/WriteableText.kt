@@ -21,7 +21,7 @@ import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
 
 /**
- * **currentActiveWritingMode** -> the current active writing mode state in use, it allows to manage in automatically
+ * `currentActiveWritingMode` the current active writing mode state in use, it allows to manage in automatically
  * the [disableWritingMode] and the [enableWritingMode] mechanisms by the [disableWritingModeOnTap] or
  * the [disableWritingModeOnFocusGain] methods
  */

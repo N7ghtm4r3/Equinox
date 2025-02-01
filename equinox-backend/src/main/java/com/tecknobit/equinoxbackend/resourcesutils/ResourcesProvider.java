@@ -175,8 +175,7 @@ public class ResourcesProvider {
     }
 
     /**
-     * Method to get {@link #containers} instance <br>
-     * No-any params required
+     * Method to get {@link #containers} instance 
      *
      * @return {@link #containers} instance as {@link HashSet} of {@link String}
      */

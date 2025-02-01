@@ -37,6 +37,6 @@ import kotlin.annotation.AnnotationTarget.CLASS
  * ```
  * @author N7ghtm4r3 - Tecknobit
  */
-@Retention(SOURCE)
 @Target(CLASS)
+@Retention(SOURCE)
 annotation class Structure 

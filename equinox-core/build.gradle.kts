@@ -13,7 +13,7 @@ plugins {
 }
 
 group = "com.tecknobit.equinoxcore"
-version = "1.0.6"
+version = "1.0.7"
 
 repositories {
     google()
@@ -63,6 +63,7 @@ kotlin {
         val androidMain by getting {
             dependencies {
                 implementation(libs.ktor.client.okhttp)
+                implementation(libs.startup.runtime)
             }
         }
 
@@ -114,7 +115,7 @@ mavenPublishing {
     coordinates(
         groupId = "io.github.n7ghtm4r3",
         artifactId = "equinox-core",
-        version = "1.0.6"
+        version = "1.0.7"
     )
     pom {
         name.set("Equinox Core")

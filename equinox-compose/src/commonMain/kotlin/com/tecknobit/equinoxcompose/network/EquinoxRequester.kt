@@ -1,5 +1,6 @@
 package com.tecknobit.equinoxcompose.network
 
+import com.tecknobit.equinoxcore.annotations.Assembler
 import com.tecknobit.equinoxcore.annotations.RequestPath
 import com.tecknobit.equinoxcore.helpers.*
 import com.tecknobit.equinoxcore.helpers.InputsValidator.Companion.DEFAULT_LANGUAGE
@@ -9,6 +10,7 @@ import com.tecknobit.equinoxcore.network.EquinoxBaseEndpointsSet.Companion.CHANG
 import com.tecknobit.equinoxcore.network.EquinoxBaseEndpointsSet.Companion.CHANGE_LANGUAGE_ENDPOINT
 import com.tecknobit.equinoxcore.network.EquinoxBaseEndpointsSet.Companion.CHANGE_PASSWORD_ENDPOINT
 import com.tecknobit.equinoxcore.network.EquinoxBaseEndpointsSet.Companion.CHANGE_PROFILE_PIC_ENDPOINT
+import com.tecknobit.equinoxcore.network.EquinoxBaseEndpointsSet.Companion.DYNAMIC_ACCOUNT_DATA_ENDPOINT
 import com.tecknobit.equinoxcore.network.EquinoxBaseEndpointsSet.Companion.SIGN_IN_ENDPOINT
 import com.tecknobit.equinoxcore.network.EquinoxBaseEndpointsSet.Companion.SIGN_UP_ENDPOINT
 import com.tecknobit.equinoxcore.network.RequestMethod.*
@@ -66,7 +68,7 @@ abstract class EquinoxRequester(
     }
 
     /**
-     * Method to execute the request to sign up in the Equinox's system
+     * Method to request the to sign up in the Equinox's system
      *
      * @param serverSecret The secret of the personal Equinox's backend
      * @param name The name of the user
@@ -163,7 +165,7 @@ abstract class EquinoxRequester(
     }
 
     /**
-     * Method to execute the request to sign in the Equinox's system
+     * Method to request the to sign in the Equinox's system
      *
      * @param email The email of the user
      * @param password The password of the user
@@ -214,6 +216,7 @@ abstract class EquinoxRequester(
      * @return the payload for the request as [JsonObject]
      *
      */
+    @Assembler
     protected open fun getSignInPayload(
         email: String,
         password: String,
@@ -227,7 +230,19 @@ abstract class EquinoxRequester(
     }
 
     /**
-     * Method to execute the request to change the profile pic of the user
+     * Method to request the dynamic data of the user
+     *
+     * @return the result of the request as [JsonObject]
+     */
+    @RequestPath(path = "/api/v1/users/{id}/dynamicAccountData", method = GET)
+    suspend fun getDynamicAccountData(): JsonObject {
+        return execGet(
+            endpoint = assembleUsersEndpointPath(DYNAMIC_ACCOUNT_DATA_ENDPOINT)
+        )
+    }
+
+    /**
+     * Method to request the to change the profile pic of the user
      *
      * @param profilePicName The name of the profile pic
      * @param profilePicBytes The profile pic chosen by the user to set as the new profile pic
@@ -252,7 +267,7 @@ abstract class EquinoxRequester(
     }
 
     /**
-     * Method to execute the request to change the email of the user
+     * Method to request the to change the email of the user
      *
      * @param newEmail The new email of the user
      *
@@ -272,7 +287,7 @@ abstract class EquinoxRequester(
     }
 
     /**
-     * Method to execute the request to change the password of the user
+     * Method to request the to change the password of the user
      *
      * @param newPassword The new password of the user
      *
@@ -292,7 +307,7 @@ abstract class EquinoxRequester(
     }
 
     /**
-     * Method to execute the request to change the language of the user
+     * Method to request the to change the language of the user
      *
      * @param newLanguage The new language of the user
      *
@@ -312,9 +327,8 @@ abstract class EquinoxRequester(
     }
 
     /**
-     * Method to execute the request to delete the account of the user
+     * Method to request the to delete the account of the user
      *
-     * No-any params required
      *
      * @return the result of the request as [JsonObject]
      */
@@ -333,6 +347,7 @@ abstract class EquinoxRequester(
      *
      * @return an endpoint to make the request as [String]
      */
+    @Assembler
     protected fun assembleCustomEndpointPath(
         customEndpoint: String,
         subEndpoint: String = "",
@@ -357,6 +372,7 @@ abstract class EquinoxRequester(
      *
      * @return an endpoint to make the request as [String]
      */
+    @Assembler
     protected fun assembleUsersEndpointPath(
         endpoint: String = "",
     ): String {

@@ -3,7 +3,7 @@ package com.tecknobit.equinoxbackend.environment.services;
 import com.tecknobit.equinoxbackend.environment.services.builtin.controller.EquinoxController;
 import com.tecknobit.equinoxbackend.environment.services.users.entity.EquinoxUser;
 import com.tecknobit.equinoxbackend.environment.services.users.repository.EquinoxUsersRepository;
-import com.tecknobit.equinoxbackend.environment.services.users.service.EquinoxUsersHelper;
+import com.tecknobit.equinoxbackend.environment.services.users.service.EquinoxUsersService;
 
 /**
  * The {@code DefaultEquinoxController} class is useful to give the base behavior of the <b>Equinox's controllers</b>
@@ -40,5 +40,5 @@ import com.tecknobit.equinoxbackend.environment.services.users.service.EquinoxUs
  * @since 1.0.2
  */
 public abstract class DefaultEquinoxController extends EquinoxController<EquinoxUser, EquinoxUsersRepository<EquinoxUser>,
-        EquinoxUsersHelper<EquinoxUser, EquinoxUsersRepository<EquinoxUser>>> {
+        EquinoxUsersService<EquinoxUser, EquinoxUsersRepository<EquinoxUser>>> {
 }

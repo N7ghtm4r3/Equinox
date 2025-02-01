@@ -12,7 +12,7 @@ plugins {
 apply(plugin = "io.spring.dependency-management")
 
 group = "com.tecknobit.equinoxbackend"
-version = "1.0.6"
+version = "1.0.7"
 
 repositories {
     mavenCentral()
@@ -21,16 +21,13 @@ repositories {
 }
 
 dependencies {
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.9.0")
-    implementation("org.springframework.boot:spring-boot-starter-data-jpa:3.2.3")
-    implementation("org.springframework.boot:spring-boot-starter-web:3.2.3")
-    implementation("org.springframework:spring-web:6.1.12")
-    implementation("com.fasterxml.jackson.core:jackson-databind:2.15.4")
-    implementation("com.squareup.okhttp3:okhttp:4.12.0")
-    implementation("com.github.N7ghtm4r3:APIManager:2.2.4")
-    implementation("org.json:json:20240303")
-    implementation("com.github.N7ghtm4r3:Mantis:1.0.0")
-    implementation("commons-validator:commons-validator:1.7")
+    implementation(libs.kotlinx.coroutines.core)
+    implementation(libs.spring.boot.starter.data.jpa)
+    implementation(libs.boot.spring.boot.starter.web)
+    implementation(libs.jackson.databind)
+    implementation(libs.apimanager)
+    implementation(libs.json)
+    implementation(libs.mantis)
     implementation(project(":equinox-core"))
 }
 
@@ -44,7 +41,7 @@ mavenPublishing {
     coordinates(
         groupId = "io.github.n7ghtm4r3",
         artifactId = "equinox-backend",
-        version = "1.0.6"
+        version = "1.0.7"
     )
     pom {
         name.set("Equinox")

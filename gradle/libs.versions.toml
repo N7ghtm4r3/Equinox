@@ -8,13 +8,21 @@ dokka = "2.0.0"
 kotlinxDatetime = "0.6.1"
 kotlinxSerializationJson = "1.7.3"
 ktor = "3.0.3"
+#equinox-backend
+jacksonDatabind = "2.15.4"
+springBoot = "3.2.3"
+kotlinxCoroutinesCore = "1.10.1"
+mantis = "1.0.0"
+apimanager = "2.2.4"
+json = "20240303"
+#equinox-core
+startupRuntime = "1.2.0"
 #equinox-compose
 compose = "1.7.3"
 connectivity = "1.2.0"
 kermit = "2.0.5"
 lifecycleViewmodelCompose = "2.8.2"
 material3WindowSizeClass = "1.7.3"
-startupRuntime = "1.2.0"
 kmpalette = "3.1.0"
 
 [libraries]
@@ -26,6 +34,16 @@ ktor-client-cio = { module = "io.ktor:ktor-client-cio", version.ref = "ktor" }
 ktor-client-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }
 ktor-client-js = { module = "io.ktor:ktor-client-js", version.ref = "ktor" }
 ktor-client-okhttp = { module = "io.ktor:ktor-client-okhttp", version.ref = "ktor" }
+#equinox-backend
+spring-boot-starter-data-jpa = { module = "org.springframework.boot:spring-boot-starter-data-jpa", version.ref = "springBoot" }
+boot-spring-boot-starter-web = { module = "org.springframework.boot:spring-boot-starter-web", version.ref = "springBoot" }
+jackson-databind = { module = "com.fasterxml.jackson.core:jackson-databind", version.ref = "jacksonDatabind" }
+kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinxCoroutinesCore" }
+mantis = { module = "com.github.N7ghtm4r3:Mantis", version.ref = "mantis" }
+json = { module = "org.json:json", version.ref = "json" }
+apimanager = { module = "com.github.N7ghtm4r3:APIManager", version.ref = "apimanager" }
+#equinox-core
+startup-runtime = { group = "androidx.startup", name = "startup-runtime", version.ref = "startupRuntime" }
 #equinox-compose
 connectivity-core = { module = "dev.jordond.connectivity:connectivity-core", version.ref = "connectivity" }
 connectivity-device = { module = "dev.jordond.connectivity:connectivity-device", version.ref = "connectivity" }
@@ -36,7 +54,6 @@ connectivity-compose-http = { module = "dev.jordond.connectivity:connectivity-co
 kermit = { module = "co.touchlab:kermit", version.ref = "kermit" }
 lifecycle-viewmodel-compose = { module = "org.jetbrains.androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "lifecycleViewmodelCompose" }
 material3-window-size = { module = "org.jetbrains.compose.material3:material3-window-size-class", version.ref = "material3WindowSizeClass" }
-startup-runtime = { group = "androidx.startup", name = "startup-runtime", version.ref = "startupRuntime" }
 kmpalette-core = { module = "com.kmpalette:kmpalette-core", version.ref = "kmpalette" }
 
 [plugins]

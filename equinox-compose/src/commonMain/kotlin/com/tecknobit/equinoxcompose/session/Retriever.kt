@@ -8,7 +8,7 @@ import kotlin.concurrent.Volatile
 import kotlin.reflect.KClass
 
 /**
- * The **Retriever** handles that repetitive retrieving routines and execute them in background by the [retrieverScope]
+ * The `Retriever` handles that repetitive retrieving routines and execute them in background by the [retrieverScope]
  *
  * @param retrieverScope The coroutine used to execute the retrieving routines
  *
@@ -21,10 +21,10 @@ class Retriever(
     companion object {
 
         /**
-         * **activeScreen** the current active context where a [retrieverScope] is executing its workflow
+         * `currentContext` The current active context where a [retrieverScope] is executing its workflow
          */
         @Volatile
-        private lateinit var activeScreen: KClass<*>
+        private lateinit var currentContext: KClass<*>
 
         /**
          * Method to set the current active context where the [retrieverScope] is executing
@@ -34,7 +34,7 @@ class Retriever(
         fun setActiveContext(
             currentContext: KClass<*>,
         ) {
-            activeScreen = currentContext
+            this.currentContext = currentContext
         }
 
         /**
@@ -43,18 +43,18 @@ class Retriever(
          * @return the current active context as [KClass]
          */
         fun getActiveContext(): KClass<*> {
-            return activeScreen
+            return currentContext
         }
 
     }
 
     /**
-     * **isRefreshing** -> whether the [retrieverScope] is already refreshing
+     * `isRefreshing` whether the [retrieverScope] is already refreshing
      */
     private var isRefreshing: Boolean = false
 
     /**
-     * **lastRoutineExecuted** -> the last routine executed by the [execute] method must re-launched after the [suspend]
+     * `lastRoutineExecuted` the last routine executed by the [execute] method must re-launched after the [suspend]
      * method has been invoked
      */
     private lateinit var lastRoutineExecuted: RetrievingRoutine
@@ -63,7 +63,6 @@ class Retriever(
      * Method to get whether the [retrieverScope] can start, so if there aren't other jobs that
      * routine is already executing
      *
-     * No-any params required
      *
      * @return whether the [retrieverScope] can start as [Boolean]
      */
@@ -76,7 +75,6 @@ class Retriever(
      * the [isRefreshing] instance will be set as **false** to allow the restart of the routine after executing
      * the other requests
      *
-     * No-any params required
      */
     fun suspend() {
         retrieverScope.coroutineContext.cancelChildren()
@@ -88,7 +86,6 @@ class Retriever(
      * the [isRefreshing] instance will be set as **true** to deny the restart of the routine after executing
      * the other requests
      *
-     * No-any params required
      */
     fun restart() {
         if (::lastRoutineExecuted.isInitialized) {
@@ -147,7 +144,7 @@ class Retriever(
     fun continueToRetrieve(
         currentContext: KClass<*>,
     ) : Boolean {
-        return activeScreen == currentContext
+        return Companion.currentContext == currentContext
     }
 
     /**

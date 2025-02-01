@@ -27,6 +27,12 @@ open class EquinoxBaseEndpointsSet {
         const val SIGN_IN_ENDPOINT: String = "users/signIn"
 
         /**
+         * `DYNAMIC_ACCOUNT_DATA_ENDPOINT` the endpoint where the user can retrieve the dynamic data of his/her account,
+         * such email, profile picture, etc...
+         */
+        const val DYNAMIC_ACCOUNT_DATA_ENDPOINT: String = "/dynamicAccountData"
+
+        /**
          * `CHANGE_PROFILE_PIC_ENDPOINT` the endpoint to execute the change of the user profile pic
          */
         const val CHANGE_PROFILE_PIC_ENDPOINT: String = "/changeProfilePic"

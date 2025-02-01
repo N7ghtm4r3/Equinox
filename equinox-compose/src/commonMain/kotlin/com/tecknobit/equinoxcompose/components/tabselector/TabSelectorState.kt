@@ -12,7 +12,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.graphics.vector.ImageVector
 
 /**
- * **MAX_TABS_ALLOWED** -> the max number of allowed tabs for the [TabSelector]
+ * `MAX_TABS_ALLOWED` the max number of allowed tabs for the [TabSelector]
  */
 const val MAX_TABS_ALLOWED = 5
 
@@ -52,7 +52,7 @@ class TabSelectorState internal constructor(
 ) {
 
     /**
-     * **selectedTab** -> the currently selected tab
+     * `selectedTab` the currently selected tab
      */
     private lateinit var selectedTab: MutableState<Int>
 

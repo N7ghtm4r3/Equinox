@@ -21,17 +21,17 @@ import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
 
 /**
- * *RED_PERCEPTION* -> the ratio of the red perception from the color spectrum
+ * `RED_PERCEPTION` the ratio of the red perception from the color spectrum
  */
 private const val RED_PERCEPTION = 0.299
 
 /**
- * *GREEN_PERCEPTION* -> the ratio of the green perception from the color spectrum
+ * `GREEN_PERCEPTION` the ratio of the green perception from the color spectrum
  */
 private const val GREEN_PERCEPTION = 0.587
 
 /**
- * *BLUE_PERCEPTION* -> the ratio of the blue perception from the color spectrum
+ * `BLUE_PERCEPTION` the ratio of the blue perception from the color spectrum
  */
 private const val BLUE_PERCEPTION = 0.114
 

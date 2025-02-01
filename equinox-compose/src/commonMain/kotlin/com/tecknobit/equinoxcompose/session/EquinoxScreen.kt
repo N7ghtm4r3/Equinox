@@ -3,6 +3,7 @@ package com.tecknobit.equinoxcompose.session
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.ui.platform.LocalLifecycleOwner
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.Lifecycle.Event
 import androidx.lifecycle.Lifecycle.Event.*
 import androidx.lifecycle.LifecycleEventObserver
@@ -16,7 +17,7 @@ import com.tecknobit.equinoxcore.annotations.Structure
 /**
  * The **EquinoxScreen** class is useful to create a screen with a lifecycle management similar to the Android's activities
  *
- * Related documentation: [EquinoxScreen.md](https://github.com/N7ghtm4r3/Equinox-Compose/blob/main/documd/EquinoxScreen.md.md)
+ * Related documentation: [EquinoxScreens.md](https://github.com/N7ghtm4r3/Equinox-Compose/blob/main/documd/EquinoxScreens.md)
  *
  * @property loggerEnabled Whether enabled the logging to log the events occurred in the [ShowContent] composable,
  * it is suggested to disable it in production
@@ -29,25 +30,41 @@ import com.tecknobit.equinoxcore.annotations.Structure
  *
  */
 @Structure
+@Deprecated(
+    message = "This api has been moved to the com.tecknobit.equinoxcompose.session.screen package",
+    level = DeprecationLevel.WARNING,
+    replaceWith = ReplaceWith(
+        expression = "com.tecknobit.equinoxcompose.session.screen.EquinoxScreen"
+    )
+)
 abstract class EquinoxScreen<V : EquinoxViewModel>(
     private val loggerEnabled: Boolean = true,
     protected open val viewModel: V? = null,
 ) {
 
     /**
-     * *EquinoxScreenEvent* -> available [EquinoxScreen] custom statuses
+     * `EquinoxScreenEvent` available [EquinoxScreen] custom statuses
      */
     enum class EquinoxScreenEvent {
 
         /**
-         * *ON_INIT* -> occurs when the screen has been initialized
+         * `ON_INIT` occurs when the screen has been initialized
          */
         ON_INIT,
 
         /**
-         * *ON_DISPOSE* -> occurs when the screen has been disposed
+         * `ON_DISPOSE` occurs when the screen has been disposed
          */
         ON_DISPOSE
+
+    }
+
+    companion object {
+
+        /**
+         * `MAX_CONTAINER_WIDTH` constant value used to give a max dimension to container for the large screens
+         */
+        val MAX_CONTAINER_WIDTH = 1280.dp
 
     }
 
@@ -134,7 +151,6 @@ abstract class EquinoxScreen<V : EquinoxViewModel>(
      * If the [viewModel] of the screen is not `null` will be set the [com.tecknobit.equinox.Retriever.activeContext]
      * as the current screen displayed
      *
-     * No-any params required
      */
     protected open fun onCreate() {
         logScreenEvent(

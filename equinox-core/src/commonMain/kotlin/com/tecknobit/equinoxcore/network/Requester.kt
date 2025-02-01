@@ -1,5 +1,6 @@
 package com.tecknobit.equinoxcore.network
 
+import com.tecknobit.equinoxcore.annotations.Assembler
 import com.tecknobit.equinoxcore.annotations.Wrapper
 import com.tecknobit.equinoxcore.network.ResponseStatus.*
 import com.tecknobit.equinoxcore.pagination.PaginatedResponse
@@ -46,32 +47,32 @@ abstract class Requester(
     companion object {
 
         /**
-         * **USER_IDENTIFIER_KEY** the key for the user <b>"id"</b> field
+         * `USER_IDENTIFIER_KEY` The key for the user <b>"id"</b> field
          */
         const val USER_IDENTIFIER_KEY = "id"
 
         /**
-         * **USER_TOKEN_KEY** the key for the user <b>"token"</b> field
+         * `USER_TOKEN_KEY` The key for the user <b>"token"</b> field
          */
         const val USER_TOKEN_KEY = "token"
 
         /**
-         * **RESPONSE_STATUS_KEY** the key for the <b>"status"</b> field
+         * `RESPONSE_STATUS_KEY` The key for the <b>"status"</b> field
          */
         const val RESPONSE_STATUS_KEY: String = "status"
 
         /**
-         * **RESPONSE_DATA_KEY** the key for the <b>"response"</b> field
+         * `RESPONSE_DATA_KEY` The key for the <b>"response"</b> field
          */
         const val RESPONSE_DATA_KEY: String = "response"
 
         /**
-         * **DEFAULT_REQUEST_TIMEOUT** the timeout values in millis used in the requests
+         * `DEFAULT_REQUEST_TIMEOUT` The timeout values in millis used in the requests
          */
         const val DEFAULT_REQUEST_TIMEOUT = 5000L
 
         /**
-         * **DEFAULT_CONNECTION_ERROR_MESSAGE** the message to send when an error during the communication with the
+         * `DEFAULT_CONNECTION_ERROR_MESSAGE` The message to send when an error during the communication with the
          * backend occurred
          */
         const val DEFAULT_CONNECTION_ERROR_MESSAGE = "connection_error_message_key"
@@ -325,19 +326,19 @@ abstract class Requester(
     }
 
     /**
-     * **mustValidateCertificates** flag whether the requests must validate the **SSL** certificates, this for example
+     * `mustValidateCertificates** flag whether the requests must validate the **SSL** certificates, this for example
      * when the SSL is a self-signed certificate
      */
     protected var mustValidateCertificates: Boolean = false
 
     /**
-     * **interceptorAction** the action of the interceptor to execute when a request has been sent, if not specified is
-     * **null** by default and no interceptions will be executed
+     * `interceptorAction` The action of the interceptor to execute when a request has been sent, if not specified is
+     * `null** by default and no interceptions will be executed
      */
     protected var interceptorAction: (() -> Unit)? = null
 
     /**
-     * **ktorClient** -> the HTTP client used to send the stats and the performance data
+     * `ktorClient` the HTTP client used to send the stats and the performance data
      */
     protected val ktorClient = obtainHttpEngine(
         connectionTimeout = connectionTimeout,
@@ -345,14 +346,14 @@ abstract class Requester(
     )
 
     /**
-     * **loggerMutex** -> the mutex used to log atomically the log messages if [debugMode] is `true`
+     * `loggerMutex` the mutex used to log atomically the log messages if [debugMode] is `true`
      */
     private val loggerMutex = Mutex(
         locked = false
     )
 
     /**
-     * **initHost** Method to init correctly the [host] value
+     * `initHost** Method to init correctly the [host] value
      */
     private val initHost by lazy {
         {
@@ -495,6 +496,7 @@ abstract class Requester(
      *
      * @return the paginated query as [JsonObject]
      */
+    @Assembler
     protected fun createPaginationQuery(
         page: Int,
         pageSize: Int,
@@ -555,10 +557,11 @@ abstract class Requester(
             logRequestInfo(
                 requestUrl = requestUrl,
                 headers = headers,
+                query = query,
                 requestPayloadInfo = {
                     payload?.let {
                         println("\n-PAYLOAD")
-                        println(payload)
+                        payload.prettyPrint()
                     }
                 },
                 response = jResponse
@@ -632,6 +635,7 @@ abstract class Requester(
             logRequestInfo(
                 requestUrl = requestUrl,
                 headers = headers,
+                query = query,
                 requestPayloadInfo = {
                     println("\n-PAYLOAD")
                     payload.forEachIndexed { index, part ->
@@ -689,12 +693,15 @@ abstract class Requester(
      * Method to print the details of the request sent if the [debugMode] is enabled
      *
      * @param requestUrl The url of the request
+     * @param headers Custom headers of the request
+     * @param query The query parameters of the request
      * @param requestPayloadInfo The payload of the request if sent with the request
      * @param response The response of the request sent
      */
     private suspend fun logRequestInfo(
         requestUrl: String,
         headers: Map<String, Any>,
+        query: JsonObject?,
         requestPayloadInfo: () -> Unit,
         response: JsonObject?,
     ) {
@@ -704,9 +711,14 @@ abstract class Requester(
                 headers = headers
             )
             println("-URL\n$requestUrl")
+            logQuery(
+                query = query
+            )
             requestPayloadInfo()
-            if (response != null)
-                println("\n-RESPONSE\n$response")
+            response?.let {
+                println("\n-RESPONSE")
+                response.prettyPrint()
+            }
             println("---------------------------------------------------")
         }
     }
@@ -729,6 +741,28 @@ abstract class Requester(
     }
 
     /**
+     * Method to log the current query used in the request
+     */
+    private fun logQuery(
+        query: JsonObject?,
+    ) {
+        query?.let {
+            println("\n-QUERY")
+            query.prettyPrint()
+        }
+    }
+
+    /**
+     * Method to print a [JsonObject] request part in pretty format
+     */
+    private fun JsonObject.prettyPrint() {
+        val json = Json {
+            prettyPrint = true
+        }
+        println(json.encodeToString(JsonObject.serializer(), this))
+    }
+
+    /**
      * Method to print a log of an exception occurred during a request sent if the [debugMode] is enabled
      *
      * @param exception The exception occurred
@@ -742,10 +776,9 @@ abstract class Requester(
     /**
      * Method to set the [RESPONSE_STATUS_KEY] to send when an error during the connection occurred
      *
-     * No-any params required
-     *
      * @return the error message as [JsonObject]
      */
+    @Assembler
     protected fun connectionErrorMessage(): JsonObject {
         return buildJsonObject {
             put(RESPONSE_STATUS_KEY, GENERIC_RESPONSE.name)

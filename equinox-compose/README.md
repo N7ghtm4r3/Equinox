@@ -1,13 +1,13 @@
 # Equinox Compose
 
-**v1.0.6**
+**v1.0.7**
 
 ![Static Badge](https://img.shields.io/badge/android-4280511051?link=https%3A%2F%2Fplay.google.com%2Fstore%2Fapps%2Fdetails%3Fid%3Dcom.tecknobit.ametista)
 ![Static Badge](https://img.shields.io/badge/ios-445E91?link=https%3A%2F%2Fimg.shields.io%2Fbadge%2Fandroid-4280511051)
 ![Static Badge](https://img.shields.io/badge/desktop-006874?link=https%3A%2F%2Fimg.shields.io%2Fbadge%2Fandroid-4280511051)
 ![Static Badge](https://img.shields.io/badge/wasmjs-834C74?link=https%3A%2F%2Fimg.shields.io%2Fbadge%2Fandroid-4280511051)
 
-Utilities for **Kotlin Multiplatform** applications such components, apis for all supported platforms
+Utilities for **Compose Multiplatform** applications such components, apis for all supported platforms
 
 ## Temporarily workaround
 
@@ -18,7 +18,7 @@ in your `build.gradle.kts` file:
 
 ```kotlin
 configurations.all {
-    exclude("io.github.n7ghtm4r3", "Equinox-Compose-android")
+  exclude("io.github.n7ghtm4r3", "Equinox-Compose-android")
 }
 ```
 
@@ -28,7 +28,7 @@ configurations.all {
 
 ```gradle
 [versions]
-equinox = "1.0.6"
+equinox = "1.0.7"
 
 [libraries]
 equinox-compose = { module = "io.github.n7ghtm4r3:equinox-compose", version.ref = "equinox" }
@@ -65,10 +65,10 @@ Add the JitPack repository to your build file
     dependencies {
        
         // implement the compose utilities
-        implementation 'io.github.n7ghtm4r3:equinox-compose:1.0.6'
+        implementation 'io.github.n7ghtm4r3:equinox-compose:1.0.7'
         
         // implement the core utilities
-        implementation 'io.github.n7ghtm4r3:equinox-core:1.0.6'
+        implementation 'io.github.n7ghtm4r3:equinox-core:1.0.7'
     }
     ```
 
@@ -78,10 +78,10 @@ Add the JitPack repository to your build file
     dependencies {
         
         // implement the compose utilities
-        implementation("io.github.n7ghtm4r3:equinox-compose:1.0.6")
+        implementation("io.github.n7ghtm4r3:equinox-compose:1.0.7")
         
         // implement the core utilities
-        implementation("io.github.n7ghtm4r3:equinox-core:1.0.6")
+        implementation("io.github.n7ghtm4r3:equinox-core:1.0.7")
     }
     ```
 
@@ -99,14 +99,13 @@ Add the JitPack repository to your build file
     ```
 
 ## APIs available
-
 - [EquinoxViewModel](../documd/compose/apis/EquinoxViewModel.md)
     - [EquinoxAuthViewModel](src/commonMain/kotlin/com/tecknobit/equinoxcompose/helpers/viewmodels/EquinoxAuthViewModel.kt) ->
       prebuilt viewmodel to authenticate the user in the system
     - [EquinoxProfileViewModel](src/commonMain/kotlin/com/tecknobit/equinoxcompose/helpers/viewmodels/EquinoxProfileViewModel.kt) ->
       prebuilt viewmodel to manage the user account settings and preferences
 - [SessionManager](../documd/compose/apis/SessionManager.md)
-- [EquinoxScreen](../documd/compose/apis/EquinoxScreen.md)
+- [EquinoxScreens](../documd/compose/apis/EquinoxScreens.md)
 
 The other apis will be gradually released
 
@@ -122,6 +121,7 @@ The other apis will be gradually released
 - [ExpandableText](../documd/compose/components/expandabletext/ExpandableText.md)
 - [TabSelector](../documd/compose/components/tabselector/TabSelector.md)
 - [ChameleonText](../documd/compose/components/chameleontext/ChameleonText.md)
+- [Stepper](../documd/compose/components/stepper/Stepper.md)
 
 The others components will be gradually released
 

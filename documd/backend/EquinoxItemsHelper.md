@@ -29,101 +29,279 @@ Use the `batchInsert` method to insert multiple cars in the same query
 ```java
 public void insertCars(String ownerId, ArrayList<String> cars) {
     InsertCommand command = INSERT_INTO; // INSERT_IGNORE_INTO, REPLACE_INTO
-    batchInsert(
-            command,
-            CARS_TABLE,
-            new BatchQuery<String>() {
-                @Override
-                public List<String> getData() {
-                    // useful if you need to filter values to insert
-                    return cars;
-                }
-    
-                @Override
-                public void prepareQuery(Query query, int index, List<String> cars) {
-                    for (String car : cars) {
-                        // the order of the parameters setting is the same of the table
-                        query.setParameter(index++, ownerId);
-                        query.setParameter(index++, car);
-                    }
-                }
-            },
-            OWNER_COLUMN, MODEL_COLUMN // the order of the columns matches the one of the table
-    );
+    batchInsert(command, CARS_TABLE, new BatchQuery<String>() {
+        @Override
+        public List<String> getData() {
+            // useful if you need to filter values to insert
+            return cars;
+        }
+
+        @Override
+        public void prepareQuery(Query query, int index, List<String> cars) {
+            for (String car : cars) {
+                // the order of the parameters setting is the same of the table
+                query.setParameter(index++, ownerId);
+                query.setParameter(index++, car);
+            }
+        }
+
+        @Override
+        public String[] getColumns() {
+            // the order of the columns matches the one of the table
+            return new String[]{OWNER_COLUMN, MODEL_COLUMN};
+        }
+    });
 }
 ```
 
 ### Synchronize data
 
-Use the `syncBatch` method to execute a batch synchronization of the cars data
+Use the `syncBatch` method to execute a batch synchronization of the data
+
+#### Simple objects
+
+With simple object such `String`, `int`, `double`, etc... you can use the method as following:
 
 ```java
 public void updateCars(String ownerId, ArrayList<String> cars) {
-    syncBatch(
-            new SyncBatchContainer() {
-                @Override
-                public ArrayList<String> getCurrentData() {
-                    // logic to fetch the current cars of the owner
-                    return currentData;
-                }
-    
-                @Override
-                public String[] getColumns() {
-                    // the order of the columns matches the one of the table
-                    return new String[]{OWNER_COLUMN, MODEL_COLUMN};
-                }
+    SyncBatchModel model = new SyncBatchModel() {
+        @Override
+        public ArrayList<String> getCurrentData() {
+            // logic to fetch the current cars of the owner
+            return currentData;
+        }
 
-                // not mandatory
-                @Override
-                public void afterSync() {
-                    // execute after the synchronization completed 
-                }
-                
-            },
-            CARS_TABLE,
-            ownerId,
-            new BatchQuery<String>() {
-                @Override
-                public List<String> getData() {
-                    // useful if you need to filter values to insert
-                    return cars;
-                }
-    
-                @Override
-                public void prepareQuery(Query query, int index, List<String> cars) {
-                    for (String car : cars) {
-                        // the order of the parameters setting is the same of the table
-                        query.setParameter(index++, ownerId);
-                        query.setParameter(index++, car);
-                    }
-                }
+        @Override
+        public String[] getDeletingColumns() {
+            // the order of the columns matches the one of the table
+            return new String[]{OWNER_COLUMN, MODEL_COLUMN};
+        }
+
+        // not mandatory
+        @Override
+        public void afterSync() {
+            // execute after the synchronization completed 
+        }
+    };
+
+    BatchQuery batchQuery = new BatchQuery<String>() {
+        @Override
+        public List<String> getData() {
+            // useful if you need to filter values to insert
+            return cars;
+        }
+
+        @Override
+        public void prepareQuery(Query query, int index, List<String> cars) {
+            for (String car : cars) {
+                // the order of the parameters setting is the same of the table
+                query.setParameter(index++, ownerId);
+                query.setParameter(index++, car);
             }
-    );
+        }
+
+        @Override
+        public String[] getColumns() {
+            // the order of the columns matches the one of the table
+            return new String[]{OWNER_COLUMN, MODEL_COLUMN};
+        }
+    };
+
+    syncBatch(model, CARS_TABLE, batchQuery);
 } 
 ```
 
+#### Complex objects
+
+With complex object such custom classes, etc... you can use the method as following:
+
+<h6>Custom object example</h6>
+
+```java
+
+public class Car {
+
+    private String model;
+
+    private String plate;
+
+    public Car(String model, String plate) {
+        this.model = model;
+        this.plate = plate;
+    }
+
+    public String getModel() {
+        return model;
+    }
+
+    public String getPlate() {
+        return plate;
+    }
+
+    // required the custom equals implementation to correctly synchronize complex objects
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Car car = (Car) o;
+        return Objects.equals(model, car.model) && Objects.equals(plate, car.plate);
+    }
+
+    // required the custom hashCode implementation to correctly synchronize complex objects
+    @Override
+    public int hashCode() {
+        int result = Objects.hashCode(model);
+        result = 31 * result + Objects.hashCode(plate);
+        return result;
+    }
+
+} 
+```
+
+<h6>Map the custom object with the data to use during the synchronization</h6>
+
+```java
+// implement this interface to do that mapping
+public class Car implements ComplexBatchItem {
+
+    private String model;
+
+    private String plate;
+
+    public Car(String model, String plate) {
+        this.model = model;
+        this.plate = plate;
+    }
+
+    public String getModel() {
+        return model;
+    }
+
+    public String getPlate() {
+        return plate;
+    }
+
+    // required the custom equals implementation to correctly synchronize complex objects
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Car car = (Car) o;
+        return Objects.equals(model, car.model) && Objects.equals(plate, car.plate);
+    }
+
+    // required the custom hashCode implementation to correctly synchronize complex objects
+    @Override
+    public int hashCode() {
+        int result = Objects.hashCode(model);
+        result = 31 * result + Objects.hashCode(plate);
+        return result;
+    }
+
+    // this will allow the automatically mapping of the custom value to use during the synchronization
+    @Override
+    public List<?> mappedValues() {
+        ArrayList<String> custom = new ArrayList<>();
+        custom.add(plate);
+        custom.add(model);
+        return custom;
+    }
+
+}
+```
+
+<h6>Execute the synchronization</h6>
+
+To execute the synchronization with the complex objects the procedure is the same for
+the [simple objects](#simple-objects)
+just you can use the logic of your custom complex object to create the `SyncBatchModel` model and the related
+`BatchQuery`
+
 ### Delete in batch
 
-Use the `batchDeleteOnSingleSet` method to delete in batch a single set of data
+Use the `batchDelete` method to delete in batch the data
+
+#### Simple objects
+
+With simple object such `String`, `int`, `double`, etc... you can use the method as following:
 
 ```java
 public void deleteCars(List<String> carsToDelete) {
-    batchDeleteOnSingleSet(CARS_TABLE, carsToDelete, MODEL_COLUMN);
+    batchDelete(CARS_TABLE, carsToDelete, MODEL_COLUMN, etc..);
 }
 ```
 
-Use the `batchDelete` method to delete in batch a multiple set of data
+#### Complex objects
+
+With complex object such custom classes, etc... you can use the method as following:
+
+<h6>Custom object example</h6>
 
 ```java
-public void deleteCars(String ownerId, List<String> carsToDelete) {
-    List<List<?>> values = new ArrayList<>();
-    values.add(List.of(ownerId));
-    values.add(carsToDelete);
-    batchDelete(CARS_TABLE, values, OWNER_COLUMN, MODEL_COLUMN);
+
+public class Car {
+
+    private String model;
+
+    private String plate;
+
+    public Car(String model, String plate) {
+        this.model = model;
+        this.plate = plate;
+    }
+
+    public String getModel() {
+        return model;
+    }
+
+    public String getPlate() {
+        return plate;
+    }
 }
 ```
 
+<h6>Map the custom object with the data to use during the deletion</h6>
 
+```java
+// implement this interface to do that mapping
+public class Car implements ComplexBatchItem {
+
+    private String model;
+
+    private String plate;
+
+    public Car(String model, String plate) {
+        this.model = model;
+        this.plate = plate;
+    }
+
+    public String getModel() {
+        return model;
+    }
+
+    public String getPlate() {
+        return plate;
+    }
+
+    // this will allow the automatically mapping of the custom value to use during the deletion
+    @Override
+    public List<?> mappedValues() {
+        ArrayList<String> custom = new ArrayList<>();
+        custom.add(plate);
+        custom.add(model);
+        return custom;
+    }
+
+}
+```
+
+<h6>Execute the batch delete</h6>
+
+```java
+public void deleteCars(List<Car> carsToDelete) {
+    batchDelete(CARS_TABLE, carsToDelete, PLATE_COLUMN, MODEL_COLUMN);
+}
+```
 
 ## Support
 

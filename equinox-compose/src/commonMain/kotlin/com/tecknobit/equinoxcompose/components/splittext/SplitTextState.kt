@@ -41,14 +41,13 @@ class SplitTextState internal constructor(
 ) {
 
     /**
-     * **textSlices** -> the array container of each parts of the split text
+     * `textSlices` the array container of each parts of the split text
      */
     val textSlices = arrayListOf<MutableState<String>>()
 
     /**
      * Method to allocate each slice of the [textSlices] with their values
      *
-     * No-any params required
      */
     @Composable
     @NonRestartableComposable
@@ -66,7 +65,6 @@ class SplitTextState internal constructor(
     /**
      * Method to get the complete text of the [SplitText] component
      *
-     * No-any params required
      * @return each part of the [textSlices] as unique [String]
      */
     fun getCompleteText(): String {

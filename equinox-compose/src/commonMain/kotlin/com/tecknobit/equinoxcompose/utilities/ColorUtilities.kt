@@ -54,27 +54,27 @@ fun Color.toHex(): String {
 }
 
 /**
- * **BorderToColor** -> list of positions for the border to color by the [colorOneSideBorder] method
+ * `BorderToColor` list of positions for the border to color by the [colorOneSideBorder] method
  */
 enum class BorderToColor {
 
     /**
-     * **START** -> to color the start border of the component
+     * `START` to color the start border of the component
      */
     START,
 
     /**
-     * **TOP** -> to color the top border of the component
+     * `TOP` to color the top border of the component
      */
     TOP,
 
     /**
-     * **END** -> to color the end border of the component
+     * `END` to color the end border of the component
      */
     END,
 
     /**
-     * **BOTTOM** -> to color the bottom border of the component
+     * `BOTTOM` to color the bottom border of the component
      */
     BOTTOM
 
