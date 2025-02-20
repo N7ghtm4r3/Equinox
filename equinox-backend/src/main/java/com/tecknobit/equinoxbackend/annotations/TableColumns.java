@@ -1,5 +1,11 @@
 package com.tecknobit.equinoxbackend.annotations;
 
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+
+import static java.lang.annotation.ElementType.METHOD;
+
 /**
  * The {@code TableColumns} annotation is useful to indicate the columns of a table and which order those columns have
  * in that table. It is particularly useful for those method which have to handling queries, for example the
@@ -35,6 +41,8 @@ package com.tecknobit.equinoxbackend.annotations;
  * @author N7ghtm4r3 - Tecknobit
  * @since 1.0.8
  */
+@Target(value = {METHOD})
+@Retention(RetentionPolicy.SOURCE)
 public @interface TableColumns {
 
     /**

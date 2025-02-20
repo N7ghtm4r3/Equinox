@@ -1,5 +1,12 @@
 package com.tecknobit.equinoxbackend.annotations;
 
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+
+import static java.lang.annotation.ElementType.RECORD_COMPONENT;
+import static java.lang.annotation.ElementType.TYPE;
+
 /**
  * The {@code BatchQueryItem} annotation is useful to indicate an object which its scope is the support to handle the
  * data and manipulate them during the batch operations
@@ -28,6 +35,8 @@ package com.tecknobit.equinoxbackend.annotations;
  * @author N7ghtm4r3 - Tecknobit
  * @since 1.0.8
  */
+@Target(value = {TYPE, RECORD_COMPONENT})
+@Retention(RetentionPolicy.SOURCE)
 public @interface BatchQueryItem {
 
     /**
