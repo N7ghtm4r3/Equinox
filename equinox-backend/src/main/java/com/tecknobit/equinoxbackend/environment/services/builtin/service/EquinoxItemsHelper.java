@@ -1,5 +1,6 @@
 package com.tecknobit.equinoxbackend.environment.services.builtin.service;
 
+import com.tecknobit.equinoxbackend.annotations.BatchQueryItem;
 import com.tecknobit.equinoxbackend.environment.services.builtin.entity.EquinoxItem;
 import com.tecknobit.equinoxcore.annotations.Wrapper;
 import jakarta.persistence.EntityManager;
@@ -190,6 +191,7 @@ public abstract class EquinoxItemsHelper {
      *
      * @author N7ghtm4r3 - Tecknobit
      */
+    @BatchQueryItem
     public interface ComplexBatchItem {
 
         /**
