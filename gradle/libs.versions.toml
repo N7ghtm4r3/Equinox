@@ -1,20 +1,20 @@
 [versions]
 agp = "8.5.2"
-kmprefs = "1.0.0"
+kmprefs = "1.0.1"
 kotlin = "2.1.0"
 android-minSdk = "24"
 android-compileSdk = "34"
 dokka = "2.0.0"
 kotlinxDatetime = "0.6.1"
-kotlinxSerializationJson = "1.7.3"
+kotlinxSerializationJson = "1.8.0"
 ktor = "3.0.3"
 #equinox-backend
-jacksonDatabind = "2.15.4"
+jacksonDatabind = "2.18.2"
 springBoot = "3.2.3"
 kotlinxCoroutinesCore = "1.10.1"
 mantis = "1.0.0"
 apimanager = "2.2.4"
-json = "20240303"
+json = "20250107"
 #equinox-core
 startupRuntime = "1.2.0"
 #equinox-compose

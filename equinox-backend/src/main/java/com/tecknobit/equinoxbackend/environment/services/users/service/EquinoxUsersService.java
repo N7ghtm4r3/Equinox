@@ -70,9 +70,9 @@ public class EquinoxUsersService<T extends EquinoxUser, R extends EquinoxUsersRe
     protected static final String BASE_SIGN_UP_QUERY = "INSERT INTO " + USERS_KEY + "(";
 
     /**
-     * {@code DEFAULT_USER_VALUES_KEYS} the default keys of the values to use in the {@link #BASE_SIGN_UP_QUERY}
+     * {@code DEFAULT_USER_SIGN_UP_KEYS} the default keys of the values to use in the {@link #BASE_SIGN_UP_QUERY}
      */
-    protected static final List<String> DEFAULT_USER_VALUES_KEYS = List.of(DISCRIMINATOR_VALUE_KEY, IDENTIFIER_KEY,
+    protected static final List<String> DEFAULT_USER_SIGN_UP_KEYS = List.of(DISCRIMINATOR_VALUE_KEY, IDENTIFIER_KEY,
             TOKEN_KEY, NAME_KEY, SURNAME_KEY, EMAIL_KEY, PASSWORD_KEY, LANGUAGE_KEY);
 
     /**
@@ -116,12 +116,12 @@ public class EquinoxUsersService<T extends EquinoxUser, R extends EquinoxUsersRe
      * @param language The language of the user
      * @param custom The custom parameters to add in the default query
      *
-     * @apiNote the order of the custom parameters must be the same of that specified in the {@link #getQueryValuesKeys()}
+     * @apiNote the order of the custom parameters must be the same of that specified in the {@link #getSignUpKeys()}
      */
     public void signUpUser(String id, String token, String name, String surname, String email, String password,
                            String language, Object... custom) throws NoSuchAlgorithmException {
         StringBuilder queryBuilder = new StringBuilder(BASE_SIGN_UP_QUERY);
-        arrangeQuery(queryBuilder, getQueryValuesKeys(), false);
+        arrangeQuery(queryBuilder, getSignUpKeys(), false);
         List<Object> values = new ArrayList<>(List.of(discriminatorValue, id, token, name, surname, email, hash(password),
                 language));
         values.addAll(Arrays.stream(custom).toList());
@@ -136,8 +136,19 @@ public class EquinoxUsersService<T extends EquinoxUser, R extends EquinoxUsersRe
      * @return a list of keys as {@link List} of {@link String}
      * @apiNote This method allows a customizable sign-up with custom parameters added in a customization of the {@link EquinoxUser}
      */
+    @Deprecated(since = "1.0.8", forRemoval = true)
     protected List<String> getQueryValuesKeys() {
-        return DEFAULT_USER_VALUES_KEYS;
+        return DEFAULT_USER_SIGN_UP_KEYS;
+    }
+
+    /**
+     * Method to get the list of keys to use in the {@link #BASE_SIGN_UP_QUERY}
+     *
+     * @return a list of keys as {@link List} of {@link String}
+     * @apiNote This method allows a customizable sign-up with custom parameters added in a customization of the {@link EquinoxUser}
+     */
+    protected List<String> getSignUpKeys() {
+        return DEFAULT_USER_SIGN_UP_KEYS;
     }
 
     /**
