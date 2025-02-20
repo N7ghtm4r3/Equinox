@@ -3,12 +3,12 @@ package com.tecknobit.equinoxcore.annotations
 import kotlin.annotation.AnnotationTarget.*
 
 /**
- * The `EquinoxFutureApi` annotation is useful to indicate an experimental api implemented in an external project outside
+ * The `FutureEquinoxApi` annotation is useful to indicate an experimental api implemented in an external project outside
  * `Equinox` that can be potentially implemented in the official library
  *
  * Usage Example:
  * ```kotlin
- * @EquinoxFutureApi(
+ * @FutureEquinoxApi(
  *     protoBehavior = """
  *         At the moment the proto api behaves etc...
  *     """ // text block suggested,
@@ -34,7 +34,7 @@ import kotlin.annotation.AnnotationTarget.*
         CONSTRUCTOR, FUNCTION, PROPERTY_GETTER, PROPERTY_SETTER, TYPE, EXPRESSION, FILE, TYPEALIAS]
 )
 @Retention(AnnotationRetention.SOURCE)
-annotation class EquinoxFutureApi(
+annotation class FutureEquinoxApi(
 
     /**
      * The prototypical behavior the api currently has before the official integration
