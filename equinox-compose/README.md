@@ -9,19 +9,6 @@
 
 Utilities for **Compose Multiplatform** applications such components, apis for all supported platforms
 
-## Temporarily workaround
-
-Because conflicting dependencies due the `Equinox-Compose` migration as module, at the moment, to use correctly this
-library instead the old one you need to exclude it from you configuration if you're targeting `android`'s target, add
-this
-in your `build.gradle.kts` file:
-
-```kotlin
-configurations.all {
-  exclude("io.github.n7ghtm4r3", "Equinox-Compose-android")
-}
-```
-
 ## Implementation
 
 ### Version catalog

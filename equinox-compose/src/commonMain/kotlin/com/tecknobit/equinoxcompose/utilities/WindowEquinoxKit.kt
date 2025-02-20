@@ -119,7 +119,6 @@ internal enum class ResponsiveClass {
  * @return the current window size class of the device as [WindowSizeClass]
  */
 @Composable
-@ExperimentalMultiplatform
 expect fun currentSizeClass(): WindowSizeClass
 
 /**
@@ -128,7 +127,6 @@ expect fun currentSizeClass(): WindowSizeClass
  * @return the current window width size class of the device as [WindowWidthSizeClass]
  */
 @Composable
-@ExperimentalMultiplatform
 fun currentWidthClass(): WindowWidthSizeClass {
     val currentSize = currentSizeClass()
     return currentSize.widthSizeClass
@@ -140,17 +138,13 @@ fun currentWidthClass(): WindowWidthSizeClass {
  * @return the current window height size class of the device as [WindowHeightSizeClass]
  */
 @Composable
-@ExperimentalMultiplatform
 fun currentHeightClass(): WindowHeightSizeClass {
     val currentSize = currentSizeClass()
     return currentSize.heightSizeClass
 }
 
 /**
- * Displays the correct content based on the current [ResponsiveClass] of the window.
- *
- * It requires the implementation of the official [org.jetbrains.compose.material3:material3-window-size-class](https://www.jetbrains.com/help/kotlin-multiplatform-dev/whats-new-compose-170.html#material3-material3-window-size-class)
- * library
+ * Displays the correct content based on the current [ResponsiveClass] of the window
  *
  * @param onExpandedSizeClass The content to display when the device's window currently belongs to expanded class
  * @param onExpandedWidthMediumHeight The content to display when the device's window currently belongs to expanded width
@@ -169,7 +163,6 @@ fun currentHeightClass(): WindowHeightSizeClass {
  * class and medium height class
  */
 @Composable
-@ExperimentalMultiplatform
 fun ResponsiveContent(
     onExpandedSizeClass: @Composable () -> Unit,
     onExpandedWidthMediumHeight: (@Composable () -> Unit)? = onExpandedSizeClass,
@@ -196,10 +189,7 @@ fun ResponsiveContent(
 }
 
 /**
- * Executes an action based on the current [ResponsiveClass] of the window.
- *
- * It requires the implementation of the official [org.jetbrains.compose.material3:material3-window-size-class](https://www.jetbrains.com/help/kotlin-multiplatform-dev/whats-new-compose-170.html#material3-material3-window-size-class)
- * library
+ * Executes an action based on the current [ResponsiveClass] of the window
  *
  * @param onExpandedSizeClass The action to execute when the device's window currently belongs to expanded class
  * @param onExpandedWidthMediumHeight The action to execute when the device's window currently belongs to expanded width
@@ -218,7 +208,6 @@ fun ResponsiveContent(
  * class and medium height class
  */
 @Composable
-@ExperimentalMultiplatform
 fun responsiveAction(
     onExpandedSizeClass: () -> Unit,
     onExpandedWidthMediumHeight: (() -> Unit)? = onExpandedSizeClass,
@@ -245,10 +234,7 @@ fun responsiveAction(
 }
 
 /**
- * Assigns a specific value based on the current [ResponsiveClass] of the window.
- *
- * It requires the implementation of the official [org.jetbrains.compose.material3:material3-window-size-class](https://www.jetbrains.com/help/kotlin-multiplatform-dev/whats-new-compose-170.html#material3-material3-window-size-class)
- * library
+ * Assigns a specific value based on the current [ResponsiveClass] of the window
  *
  * @param onExpandedSizeClass The value to assign when the device's window currently belongs to expanded class
  * @param onExpandedWidthMediumHeight The value to assign when the device's window currently belongs to expanded width
@@ -267,7 +253,6 @@ fun responsiveAction(
  * class and medium height class
  */
 @Composable
-@ExperimentalMultiplatform
 fun <T> responsiveAssignment(
     onExpandedSizeClass: () -> T,
     onExpandedWidthMediumHeight: (() -> T) = onExpandedSizeClass,
@@ -300,7 +285,6 @@ fun <T> responsiveAssignment(
  */
 @Returner
 @Composable
-@ExperimentalMultiplatform
 private fun calculateResponsiveClass(): ResponsiveClass {
     val sizeClass = currentSizeClass()
     return ResponsiveClass.getResponsiveClass(

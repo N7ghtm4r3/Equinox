@@ -38,7 +38,7 @@ data class Step(
     val title: StringResource,
     val content: @Composable ColumnScope.() -> Unit,
     val isError: (MutableState<Boolean>)? = null,
-    val dismissAction: (() -> Unit)? = null,
+    val dismissAction: ((MutableState<Boolean>) -> Unit)? = null,
     val dismissIcon: ImageVector = Icons.Default.Cancel,
     val confirmAction: (MutableState<Boolean>) -> Unit = { it.value = false },
     val confirmIcon: ImageVector = Icons.Default.CheckCircle,
