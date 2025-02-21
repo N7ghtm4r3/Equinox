@@ -194,6 +194,9 @@ annotation class CompactClassComponent
 @Retention(value = AnnotationRetention.SOURCE)
 annotation class ResponsiveClassComponent(
 
+    /**
+     * The specific size classes where the component is shown
+     */
     val classes: Array<ResponsiveClass>,
 
     )
