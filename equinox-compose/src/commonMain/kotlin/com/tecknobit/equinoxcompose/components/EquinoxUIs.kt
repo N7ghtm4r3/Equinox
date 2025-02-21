@@ -12,15 +12,20 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.tecknobit.equinoxcompose.resources.Res
 import com.tecknobit.equinoxcompose.resources.an_error_occurred
 import com.tecknobit.equinoxcompose.resources.loading_data
 import com.tecknobit.equinoxcompose.resources.retry
 import kotlinx.coroutines.delay
+import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.StringResource
+import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 
 /**
@@ -413,6 +418,302 @@ private fun ErrorUIContent(
                 retryActionStart = false
             }
         }
+    }
+}
+
+/**
+ * Container component useful to display a custom empty state graphics
+ *
+ * @param containerModifier The modifier to apply to the container [Column]
+ * @param resourceModifier The modifier to apply to the [Image]
+ * @param resourceSize The size occupied by the [resource]
+ * @param contentDescription The content description
+ * @param title Not mandatory representative title
+ * @param titleStyle The style to apply to the [title]
+ * @param subTitle Not mandatory representative subtitle
+ * @param subTitleStyle The style to apply to the [subTitle]
+ * @param action Custom content used to allow the user to react to the empty state shown as needed, for example create
+ * new item, change search, etc...
+ */
+@Composable
+@NonRestartableComposable
+@ExperimentalMultiplatform
+fun EmptyState(
+    containerModifier: Modifier = Modifier,
+    resourceModifier: Modifier = Modifier,
+    resourceSize: Dp = 200.dp,
+    resource: DrawableResource,
+    contentDescription: String?,
+    title: StringResource? = null,
+    titleStyle: TextStyle = TextStyle.Default,
+    subTitle: StringResource? = null,
+    subTitleStyle: TextStyle = TextStyle.Default,
+    action: @Composable (() -> Unit)? = null,
+) {
+    EmptyState(
+        containerModifier = containerModifier,
+        resourceModifier = resourceModifier,
+        resourceSize = resourceSize,
+        resource = resource,
+        contentDescription = contentDescription,
+        title = if (title != null)
+            stringResource(title)
+        else
+            null,
+        titleStyle = titleStyle,
+        subTitle = if (subTitle != null)
+            stringResource(subTitle)
+        else
+            null,
+        subTitleStyle = subTitleStyle,
+        action = action
+    )
+}
+
+/**
+ * Container component useful to display a custom empty state graphics
+ *
+ * @param containerModifier The modifier to apply to the container [Column]
+ * @param resourceModifier The modifier to apply to the [Image]
+ * @param resourceSize The size occupied by the [resource]
+ * @param contentDescription The content description
+ * @param title Not mandatory representative title
+ * @param titleStyle The style to apply to the [title]
+ * @param subTitle Not mandatory representative subtitle
+ * @param subTitleStyle The style to apply to the [subTitle]
+ * @param action Custom content used to allow the user to react to the empty state shown as needed, for example create
+ * new item, change search, etc...
+ */
+@Composable
+@NonRestartableComposable
+@ExperimentalMultiplatform
+fun EmptyState(
+    containerModifier: Modifier = Modifier,
+    resourceModifier: Modifier = Modifier,
+    resourceSize: Dp = 200.dp,
+    resource: DrawableResource,
+    contentDescription: String?,
+    title: String? = null,
+    titleStyle: TextStyle = TextStyle.Default,
+    subTitle: String? = null,
+    subTitleStyle: TextStyle = TextStyle.Default,
+    action: @Composable (() -> Unit)? = null,
+) {
+    EmptyState(
+        containerModifier = containerModifier,
+        resourceModifier = resourceModifier,
+        resourceSize = resourceSize,
+        resource = painterResource(resource),
+        contentDescription = contentDescription,
+        title = title,
+        titleStyle = titleStyle,
+        subTitle = subTitle,
+        subTitleStyle = subTitleStyle,
+        action = action
+    )
+}
+
+/**
+ * Container component useful to display a custom empty state graphics
+ *
+ * @param containerModifier The modifier to apply to the container [Column]
+ * @param resourceModifier The modifier to apply to the [Image]
+ * @param resourceSize The size occupied by the [resource]
+ * @param contentDescription The content description
+ * @param title Not mandatory representative title
+ * @param titleStyle The style to apply to the [title]
+ * @param subTitle Not mandatory representative subtitle
+ * @param subTitleStyle The style to apply to the [subTitle]
+ * @param action Custom content used to allow the user to react to the empty state shown as needed, for example create
+ * new item, change search, etc...
+ */
+@Composable
+@NonRestartableComposable
+@ExperimentalMultiplatform
+fun EmptyState(
+    containerModifier: Modifier = Modifier,
+    resourceModifier: Modifier = Modifier,
+    resourceSize: Dp = 200.dp,
+    resource: ImageVector,
+    contentDescription: String?,
+    title: StringResource? = null,
+    titleStyle: TextStyle = TextStyle.Default,
+    subTitle: StringResource? = null,
+    subTitleStyle: TextStyle = TextStyle.Default,
+    action: @Composable (() -> Unit)? = null,
+) {
+    EmptyState(
+        containerModifier = containerModifier,
+        resourceModifier = resourceModifier,
+        resourceSize = resourceSize,
+        resource = resource,
+        contentDescription = contentDescription,
+        title = if (title != null)
+            stringResource(title)
+        else
+            null,
+        titleStyle = titleStyle,
+        subTitle = if (subTitle != null)
+            stringResource(subTitle)
+        else
+            null,
+        subTitleStyle = subTitleStyle,
+        action = action
+    )
+}
+
+/**
+ * Container component useful to display a custom empty state graphics
+ *
+ * @param containerModifier The modifier to apply to the container [Column]
+ * @param resourceModifier The modifier to apply to the [Image]
+ * @param resourceSize The size occupied by the [resource]
+ * @param contentDescription The content description
+ * @param title Not mandatory representative title
+ * @param titleStyle The style to apply to the [title]
+ * @param subTitle Not mandatory representative subtitle
+ * @param subTitleStyle The style to apply to the [subTitle]
+ * @param action Custom content used to allow the user to react to the empty state shown as needed, for example create
+ * new item, change search, etc...
+ */
+@Composable
+@NonRestartableComposable
+@ExperimentalMultiplatform
+fun EmptyState(
+    containerModifier: Modifier = Modifier,
+    resourceModifier: Modifier = Modifier,
+    resourceSize: Dp = 200.dp,
+    resource: ImageVector,
+    contentDescription: String?,
+    title: String? = null,
+    titleStyle: TextStyle = TextStyle.Default,
+    subTitle: String? = null,
+    subTitleStyle: TextStyle = TextStyle.Default,
+    action: @Composable (() -> Unit)? = null,
+) {
+    EmptyState(
+        containerModifier = containerModifier,
+        resourceModifier = resourceModifier,
+        resourceSize = resourceSize,
+        resource = rememberVectorPainter(
+            image = resource
+        ),
+        contentDescription = contentDescription,
+        title = title,
+        titleStyle = titleStyle,
+        subTitle = subTitle,
+        subTitleStyle = subTitleStyle,
+        action = action
+    )
+}
+
+/**
+ * Container component useful to display a custom empty state graphics
+ *
+ * @param containerModifier The modifier to apply to the container [Column]
+ * @param resourceModifier The modifier to apply to the [Image]
+ * @param resourceSize The size occupied by the [resource]
+ * @param contentDescription The content description
+ * @param title Not mandatory representative title
+ * @param titleStyle The style to apply to the [title]
+ * @param subTitle Not mandatory representative subtitle
+ * @param subTitleStyle The style to apply to the [subTitle]
+ * @param action Custom content used to allow the user to react to the empty state shown as needed, for example create
+ * new item, change search, etc...
+ */
+@Composable
+@NonRestartableComposable
+@ExperimentalMultiplatform
+fun EmptyState(
+    containerModifier: Modifier = Modifier,
+    resourceModifier: Modifier = Modifier,
+    resourceSize: Dp = 200.dp,
+    resource: Painter,
+    contentDescription: String?,
+    title: StringResource? = null,
+    titleStyle: TextStyle = TextStyle.Default,
+    subTitle: StringResource? = null,
+    subTitleStyle: TextStyle = TextStyle.Default,
+    action: @Composable (() -> Unit)? = null,
+) {
+    EmptyState(
+        containerModifier = containerModifier,
+        resourceModifier = resourceModifier,
+        resourceSize = resourceSize,
+        resource = resource,
+        contentDescription = contentDescription,
+        title = if (title != null)
+            stringResource(title)
+        else
+            null,
+        titleStyle = titleStyle,
+        subTitle = if (subTitle != null)
+            stringResource(subTitle)
+        else
+            null,
+        subTitleStyle = subTitleStyle,
+        action = action
+    )
+}
+
+/**
+ * Container component useful to display a custom empty state graphics
+ *
+ * @param containerModifier The modifier to apply to the container [Column]
+ * @param resourceModifier The modifier to apply to the [Image]
+ * @param resourceSize The size occupied by the [resource]
+ * @param contentDescription The content description
+ * @param title Not mandatory representative title
+ * @param titleStyle The style to apply to the [title]
+ * @param subTitle Not mandatory representative subtitle
+ * @param subTitleStyle The style to apply to the [subTitle]
+ * @param action Custom content used to allow the user to react to the empty state shown as needed, for example create
+ * new item, change search, etc...
+ */
+@Composable
+@NonRestartableComposable
+@ExperimentalMultiplatform
+fun EmptyState(
+    containerModifier: Modifier = Modifier,
+    resourceModifier: Modifier = Modifier,
+    resourceSize: Dp = 200.dp,
+    resource: Painter,
+    contentDescription: String?,
+    title: String? = null,
+    titleStyle: TextStyle = TextStyle.Default,
+    subTitle: String? = null,
+    subTitleStyle: TextStyle = TextStyle.Default,
+    action: @Composable (() -> Unit)? = null,
+) {
+    Column(
+        modifier = containerModifier
+            .fillMaxSize(),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
+    ) {
+        Image(
+            modifier = resourceModifier
+                .size(resourceSize),
+            painter = resource,
+            contentDescription = contentDescription
+        )
+        title?.let {
+            Text(
+                modifier = Modifier
+                    .padding(
+                        vertical = 5.dp
+                    ),
+                text = title,
+                style = titleStyle
+            )
+        }
+        subTitle?.let {
+            Text(
+                text = subTitle,
+                style = subTitleStyle
+            )
+        }
+        action?.invoke()
     }
 }
 
