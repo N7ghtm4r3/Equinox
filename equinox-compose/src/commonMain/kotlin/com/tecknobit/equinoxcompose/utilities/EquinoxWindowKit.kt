@@ -12,7 +12,7 @@ import com.tecknobit.equinoxcore.annotations.Returner
 /**
  * `ResponsiveClass` list of the available responsive content classes
  */
-internal enum class ResponsiveClass {
+enum class ResponsiveClass {
 
     /**
      * `EXPANDED_CONTENT` represents the content to be displayed on a device
@@ -112,6 +112,91 @@ internal enum class ResponsiveClass {
     }
 
 }
+
+/**
+ * The `ExpandedClassComponent` annotation is useful to indicate the components which are shown on those devices which
+ * belong to the [Expanded] class
+ *
+ * ### Note:
+ * This annotation is based only on the [WindowWidthSizeClass] categorization, to include also the [WindowHeightSizeClass]
+ * please use the [ResponsiveClassComponent] annotation instead
+ *
+ * @author N7ghtm4r3 - Tecknobit
+ *
+ * @since 1.0.8
+ *
+ * @see MediumClassComponent
+ * @see CompactClassComponent
+ * @see ResponsiveClassComponent
+ */
+@ExperimentalMultiplatform
+@Target(allowedTargets = [AnnotationTarget.FUNCTION, AnnotationTarget.FILE])
+@Retention(value = AnnotationRetention.SOURCE)
+annotation class ExpandedClassComponent
+
+/**
+ * The `MediumClassComponent` annotation is useful to indicate the components which are shown on those devices which
+ * belong to the [Medium] class
+ *
+ * ### Note:
+ * This annotation is based only on the [WindowWidthSizeClass] categorization, to include also the [WindowHeightSizeClass]
+ * please use the [ResponsiveClassComponent] annotation instead
+ *
+ * @author N7ghtm4r3 - Tecknobit
+ *
+ * @since 1.0.8
+ *
+ * @see ExpandedClassComponent
+ * @see CompactClassComponent
+ * @see ResponsiveClassComponent
+ */
+@ExperimentalMultiplatform
+@Target(allowedTargets = [AnnotationTarget.FUNCTION, AnnotationTarget.FILE])
+@Retention(value = AnnotationRetention.SOURCE)
+annotation class MediumClassComponent
+
+/**
+ * The `CompactClassComponent` annotation is useful to indicate the components which are shown on those devices which
+ * belong to the [WindowWidthSizeClass.Compact] class
+ *
+ * ### Note:
+ * This annotation is based only on the [WindowWidthSizeClass] categorization, to include also the [WindowHeightSizeClass]
+ * please use the [ResponsiveClassComponent] annotation instead
+ *
+ * @author N7ghtm4r3 - Tecknobit
+ *
+ * @since 1.0.8
+ *
+ * @see ExpandedClassComponent
+ * @see MediumClassComponent
+ * @see ResponsiveClassComponent
+ */
+@ExperimentalMultiplatform
+@Target(allowedTargets = [AnnotationTarget.FUNCTION, AnnotationTarget.FILE])
+@Retention(value = AnnotationRetention.SOURCE)
+annotation class CompactClassComponent
+
+/**
+ * The `ResponsiveClassComponent` annotation is useful to indicate the components which are shown on those devices which
+ * belong to the specified [classes]. This annotation can include both the [WindowWidthSizeClass] and [WindowHeightSizeClass]
+ * categorizations
+ *
+ * @author N7ghtm4r3 - Tecknobit
+ *
+ * @since 1.0.8
+ *
+ * @see ExpandedClassComponent
+ * @see MediumClassComponent
+ * @see CompactClassComponent
+ */
+@ExperimentalMultiplatform
+@Target(allowedTargets = [AnnotationTarget.FUNCTION, AnnotationTarget.FILE])
+@Retention(value = AnnotationRetention.SOURCE)
+annotation class ResponsiveClassComponent(
+
+    val classes: Array<ResponsiveClass>,
+
+    )
 
 /**
  * Method to get the current window size class of the device

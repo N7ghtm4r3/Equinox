@@ -71,6 +71,7 @@ dependencies {
       prebuilt viewmodel to manage the user account settings and preferences
 - [SessionManager](../documd/compose/apis/SessionManager.md)
 - [EquinoxScreens](../documd/compose/apis/EquinoxScreens.md)
+- [EquinoxWindowKit](../documd/compose/apis/EquinoxWindowKit.md)
 
 The other apis will be gradually released
 

@@ -243,15 +243,15 @@ open class EquinoxLocalUser(
      */
     @RequiresSuperCall
     protected open fun initLocalUser() {
-        hostAddress = getPreference(HOST_ADDRESS_KEY)
+        hostAddress = getNullSafePreference(HOST_ADDRESS_KEY)
         userId = getPreference(USER_IDENTIFIER_KEY)
         userToken = getPreference(USER_TOKEN_KEY)
-        profilePic = getPreference(PROFILE_PIC_KEY)
-        name = getPreference(NAME_KEY)
-        surname = getPreference(SURNAME_KEY)
-        email = getPreference(EMAIL_KEY)
-        password = getPreference(PASSWORD_KEY)
-        language = getPreference(LANGUAGE_KEY)
+        profilePic = getNullSafePreference(PROFILE_PIC_KEY)
+        name = getNullSafePreference(NAME_KEY)
+        surname = getNullSafePreference(SURNAME_KEY)
+        email = getNullSafePreference(EMAIL_KEY)
+        password = getNullSafePreference(PASSWORD_KEY)
+        language = getNullSafePreference(LANGUAGE_KEY)
         theme = ApplicationTheme.getInstance(getPreference(THEME_KEY))
     }
 
@@ -322,17 +322,36 @@ open class EquinoxLocalUser(
     }
 
     /**
+     * Method used to extract a specific value from the custom parameter of the [insertNewUser] method.
+     *
+     * This method is particularly useful in cases where values are passed as varargs,
+     * since Kotlin wraps them inside an array
+     *
+     * @param indexArray The index of the array from retrieve the custom value
+     * @param itemPosition The index of the item inside the created array
+     *
+     * @return the custom value as [T]
+     */
+    @Suppress("UNCHECKED_CAST")
+    protected fun <T> Array<out Any?>.extractsCustomValue(
+        indexArray: Int = 0,
+        itemPosition: Int,
+    ): T {
+        return (this[indexArray] as Array<*>)[itemPosition] as T
+    }
+
+    /**
      * Method to store and set a preference
      *
      * @param key:   the key of the preference
      * @param value: the value of the preference
      */
+    @OptIn(ExperimentalUnsignedTypes::class)
     protected fun setPreference(
         key: String,
         value: String?,
     ) {
-        // TODO: USE THE BUILT-IN METHOD
-        if (preferencesManager.retrieveString(key) != value) {
+        if (!preferencesManager.valueMatchesTo(key, value)) {
             preferencesManager.storeString(
                 key = key,
                 value = value
@@ -348,8 +367,22 @@ open class EquinoxLocalUser(
      */
     protected fun getPreference(
         key: String,
-    ): String {
+    ): String? {
         return preferencesManager.retrieveString(
+            key = key
+        )
+    }
+
+    /**
+     * Method to get a stored preference
+     *
+     * @param key: the key of the preference to get
+     * @return the preference stored as null-safe [String]
+     */
+    protected fun getNullSafePreference(
+        key: String,
+    ): String {
+        return getPreference(
             key = key
         ) ?: ""
     }
