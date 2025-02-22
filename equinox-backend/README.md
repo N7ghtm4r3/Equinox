@@ -87,6 +87,8 @@ Add the JitPack repository to your build file
 - <a href="https://github.com/N7ghtm4r3/Equinox/blob/main/documd/backend/ConfigsGenerator.md">**ConfigsGenerator**</a>
   allows
   you to create automatically the configuration file for your backend
+- <a href="https://github.com/N7ghtm4r3/Equinox/blob/main/documd/backend/IndexesCreator.md">**IndexesCreator**</a>
+  allows you to create automatically the the indexes for your own tables of the database
 - <a href="https://github.com/N7ghtm4r3/Equinox/blob/main/documd/backend/FilteredQuery.md">**FilteredQuery**</a> allows
   you to create dynamic queries with filters parameters
 - <a href="https://github.com/N7ghtm4r3/Equinox/blob/main/documd/backend/EquinoxItemsHelper.md">**EquinoxItemsHelper**</a> allows you to execute batch queries such insertion, deletion and synchronization dynamically
