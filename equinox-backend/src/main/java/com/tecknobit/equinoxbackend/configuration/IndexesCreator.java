@@ -18,6 +18,8 @@ import static com.tecknobit.equinoxbackend.environment.services.builtin.service.
  * The {@code IndexesCreator} class is useful to create custom indexes in the tables made up the database of the system.
  *
  * @author N7ghtm4r3 - Tecknobit
+ *
+ * @since 1.0.8
  */
 @Transactional
 public abstract class IndexesCreator {
@@ -58,6 +60,11 @@ public abstract class IndexesCreator {
     @PersistenceContext
     protected EntityManager entityManager;
 
+    /**
+     * Method used to create the custom indexes
+     *
+     * @apiNote this method required the {@link jakarta.annotation.PostConstruct} annotation to correctly work
+     */
     public abstract void createIndexes();
 
     /**
