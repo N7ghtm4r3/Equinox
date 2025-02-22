@@ -3,6 +3,7 @@ $dokka.linkExtension:html
 $dokka.location:com.tecknobit.equinoxcore.network//validateSelfSignedCertificate/#/PointingToDeclaration/equinox-core/com.tecknobit.equinoxcore.network/[jvm]validate-self-signed-certificate.html
 module:equinox-backend
 com.tecknobit.equinoxbackend.annotations
+com.tecknobit.equinoxbackend.batch
 com.tecknobit.equinoxbackend.configuration
 com.tecknobit.equinoxbackend.environment.helpers
 com.tecknobit.equinoxbackend.environment.services
@@ -19,7 +20,6 @@ com.tecknobit.equinoxcompose.components
 com.tecknobit.equinoxcompose.components.splittext
 com.tecknobit.equinoxcompose.components.stepper
 com.tecknobit.equinoxcompose.components.tabselector
-com.tecknobit.equinoxcompose.helpers.utils
 com.tecknobit.equinoxcompose.network
 com.tecknobit.equinoxcompose.session
 com.tecknobit.equinoxcompose.session.screens

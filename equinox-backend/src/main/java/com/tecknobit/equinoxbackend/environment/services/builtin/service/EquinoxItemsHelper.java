@@ -1,5 +1,6 @@
 package com.tecknobit.equinoxbackend.environment.services.builtin.service;
 
+import com.tecknobit.equinoxbackend.annotations.BatchQueryItem;
 import com.tecknobit.equinoxbackend.environment.services.builtin.entity.EquinoxItem;
 import com.tecknobit.equinoxcore.annotations.Wrapper;
 import jakarta.persistence.EntityManager;
@@ -190,6 +191,7 @@ public abstract class EquinoxItemsHelper {
      *
      * @author N7ghtm4r3 - Tecknobit
      */
+    @BatchQueryItem
     public interface ComplexBatchItem {
 
         /**
@@ -260,10 +262,23 @@ public abstract class EquinoxItemsHelper {
      * @param table The table where execute the synchronization of the data
      * @param batchQuery The manager of the batch query to execute
      */
+    @Wrapper
     protected <V> void syncBatch(SyncBatchModel model, String table, BatchQuery<V> batchQuery) {
+        syncBatch(model, INSERT_IGNORE_INTO, table, batchQuery);
+    }
+
+    /**
+     * Method to execute a batch synchronization of a list of data simultaneously
+     *
+     * @param model      Contains the data about the synchronization such the columns affected and the current list of the data
+     * @param command    The insertion command to execute
+     * @param table      The table where execute the synchronization of the data
+     * @param batchQuery The manager of the batch query to execute
+     */
+    protected <V> void syncBatch(SyncBatchModel model, InsertCommand command, String table, BatchQuery<V> batchQuery) {
         Collection<V> updatedData = batchQuery.getData();
         Collection<V> currentData = model.getCurrentData();
-        batchInsert(INSERT_IGNORE_INTO, table, batchQuery);
+        batchInsert(command, table, batchQuery);
         currentData.removeAll(updatedData);
         batchDelete(table, currentData, model.getDeletingColumns());
         model.afterSync();

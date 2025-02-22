@@ -56,7 +56,10 @@ public void insertCars(String ownerId, ArrayList<String> cars) {
 
 ### Synchronize data
 
-Use the `syncBatch` method to execute a batch synchronization of the data
+Use the `syncBatch` method to execute a batch synchronization of the data, you can also create a dedicated
+procedure using
+the [BatchSynchronizationProcedure](../../equinox-backend/src/main/java/com/tecknobit/equinoxbackend/batch/BatchSynchronizationProcedure.java)
+api class
 
 #### Simple objects
 
@@ -160,6 +163,8 @@ public class Car {
 
 <h6>Map the custom object with the data to use during the synchronization</h6>
 
+- Using `ComplexBatchItem` interface
+
 ```java
 // implement this interface to do that mapping
 public class Car implements ComplexBatchItem {
@@ -208,6 +213,15 @@ public class Car implements ComplexBatchItem {
     }
 
 }
+```
+
+- Using `JoinTableSyncBatchItem` wrapper class for the queries which operate in the join tables
+
+```java
+JoinTableSyncBatchItem<String, String> joinTableItem = new JoinTableSyncBatchItem<>(
+        "owner_id",
+        "owned_id"
+);
 ```
 
 <h6>Execute the synchronization</h6>

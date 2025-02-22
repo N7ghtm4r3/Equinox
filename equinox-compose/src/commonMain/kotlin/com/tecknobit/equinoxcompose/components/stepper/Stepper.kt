@@ -277,7 +277,7 @@ private fun StepAction(
 private fun ActionControls(
     expandsStepIcon: ImageVector,
     expanded: MutableState<Boolean>,
-    dismissAction: (() -> Unit)?,
+    dismissAction: ((MutableState<Boolean>) -> Unit)?,
     dismissIcon: ImageVector,
     dismissButtonColor: Color,
     confirmAction: (MutableState<Boolean>) -> Unit,
@@ -295,7 +295,7 @@ private fun ActionControls(
             Row {
                 dismissAction?.let { action ->
                     IconButton(
-                        onClick = action
+                        onClick = { action.invoke(expanded) }
                     ) {
                         Icon(
                             imageVector = dismissIcon,
@@ -305,11 +305,7 @@ private fun ActionControls(
                     }
                 }
                 IconButton(
-                    onClick = {
-                        confirmAction.invoke(
-                            expanded
-                        )
-                    }
+                    onClick = { confirmAction.invoke(expanded) }
                 ) {
                     Icon(
                         imageVector = confirmIcon,

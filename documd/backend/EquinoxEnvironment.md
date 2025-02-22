@@ -140,10 +140,10 @@ dependencies {
     implementation("org.json:json:20240303")
 
     // implement the backend utilities
-    implementation("io.github.n7ghtm4r3:equinox-backend:1.0.7")
+    implementation("io.github.n7ghtm4r3:equinox-backend:1.0.8")
     
     // implement the core utilities
-    implementation("io.github.n7ghtm4r3:equinox-core:1.0.7")
+    implementation("io.github.n7ghtm4r3:equinox-core:1.0.8")
 
     ...
 
@@ -374,7 +374,7 @@ public abstract class DefaultMyOwnController extends EquinoxController<CustomUse
 
 To execute a custom sign-up operation you must follow these steps to perform it correctly
 
-#### Override getQueryValuesKeys() method
+#### Override getSignUpKeys() method
 
 To create the correct insertion query with your custom parameters of the [CustomUser](#customize-the-equinoxuser) you
 have to override the below method, and you have to add the keys of the custom properties you want to insert with the
@@ -396,8 +396,8 @@ import org.springframework.stereotype.Service;
 public class CustomUsersHelper extends EquinoxUsersHelper<CustomUser, CustomUsersRepository> {
 
     @Override
-    protected List<String> getQueryValuesKeys() {
-        ArrayList<String> custom = new ArrayList<>(super.getQueryValuesKeys());
+    protected List<String> getSignUpKeys() {
+      ArrayList<String> custom = new ArrayList<>(super.getSignUpKeys());
         custom.add("currency");
         return custom;
     }

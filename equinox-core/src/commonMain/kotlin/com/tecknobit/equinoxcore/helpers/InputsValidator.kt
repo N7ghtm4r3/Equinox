@@ -84,7 +84,7 @@ open class InputsValidator {
          */
         @JvmStatic
         protected val URL_REGEX =
-            "^(https?|ftp|file|mailto|data|ws|wss)://(?:[A-Za-z0-9-]+\\.)*[A-Za-z0-9-]+(?::\\d{1,5})?(?:/[A-Za-z0-9%&=?./_-]*)?(?:#[A-Za-z0-9_-]*)?\$"
+            "^[a-zA-Z][a-zA-Z0-9+.-]*://(([a-zA-Z0-9\\-]+\\.)+[a-zA-Z]{2,6}|\\d{1,3}(?:\\.\\d{1,3}){3})(?::\\d{1,5})?(/\\S*)?(\\?(\\S*))?(#(\\S*))?$"
 
         /**
          * `emailValidator` helper to validate the emails values

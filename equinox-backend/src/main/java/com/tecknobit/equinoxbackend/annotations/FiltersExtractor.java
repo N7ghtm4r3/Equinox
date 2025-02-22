@@ -27,7 +27,6 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.SOURCE)
 public @interface FiltersExtractor {
 
-
     /**
      * Short description to indicate what the method will extract
      */

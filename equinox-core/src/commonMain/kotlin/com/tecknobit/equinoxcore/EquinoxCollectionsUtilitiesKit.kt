@@ -61,3 +61,42 @@ fun <T> MutableCollection<T>.mergeIfNotContained(
             this.add(element)
     }
 }
+
+/**
+ * Method used to add an element to a [MutableCollection] if it is not already contained or remove that element if already
+ * contained by the collection. The default behavior of the method is checking the existence in the collection of the
+ * element to toggle, but it can be used also to dynamically insert or remove an element from the collection from example
+ * with checkbox selection, button clicking, etc...
+ *
+ * For example:
+ * ```kotlin
+ * val mainCollection = mutableListOf(1, 2, 3)
+ *
+ * // not contained element
+ * val element = 4
+ *
+ * mainCollection.toggle(
+ *   element = element
+ * )
+ *
+ * println(mainCollection) // the result printed will be 1, 2, 3, 4
+ *
+ * // contained element
+ * val containedElement = 1
+ *
+ * mainCollection.toggle(
+ *   element = containedElement
+ * )
+ *
+ * println(mainCollection) // the result printed will be 2, 3, 4
+ * ```
+ */
+fun <T> MutableCollection<T>.toggle(
+    element: T,
+    add: Boolean = !contains(element),
+) {
+    if (add)
+        add(element)
+    else
+        remove(element)
+}

@@ -3,8 +3,7 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
     <title>ConfigsGenerator</title>
-    <link href="../../../images/logo-icon.svg" rel="icon" type="image/svg">
-    <script>var pathToRoot = "../../../";</script>
+<link href="../../../images/logo-icon.svg" rel="icon" type="image/svg">    <script>var pathToRoot = "../../../";</script>
     <script>document.documentElement.classList.replace("no-js","js");</script>
     <script>const storage = localStorage.getItem("dokka-dark-mode")
     if (storage == null) {
@@ -19,293 +18,164 @@
         }
     }
     </script>
-    <script type="text/javascript" src="https://unpkg.com/kotlin-playground@1/dist/playground.min.js" async></script>
-    <script type="text/javascript" src="../../../scripts/sourceset_dependencies.js" async></script>
-    <link href="../../../styles/style.css" rel="Stylesheet">
-    <link href="../../../styles/main.css" rel="Stylesheet">
-    <link href="../../../styles/prism.css" rel="Stylesheet">
-    <link href="../../../styles/logo-styles.css" rel="Stylesheet">
-    <link href="../../../styles/font-jb-sans-auto.css" rel="Stylesheet">
-    <link href="../../../ui-kit/ui-kit.min.css" rel="Stylesheet">
-    <script type="text/javascript" src="../../../scripts/clipboard.js" async></script>
-    <script type="text/javascript" src="../../../scripts/navigation-loader.js" async></script>
-    <script type="text/javascript" src="../../../scripts/platform-content-handler.js" async></script>
-    <script type="text/javascript" src="../../../scripts/main.js" defer></script>
-    <script type="text/javascript" src="../../../scripts/prism.js" async></script>
-    <script type="text/javascript" src="../../../ui-kit/ui-kit.min.js" defer></script>
-    <script type="text/javascript" src="../../../scripts/symbol-parameters-wrapper_deferred.js" defer></script>
-</head>
+<script type="text/javascript" src="https://unpkg.com/kotlin-playground@1/dist/playground.min.js" async></script>
+<script type="text/javascript" src="../../../scripts/sourceset_dependencies.js" async></script>
+<link href="../../../styles/style.css" rel="Stylesheet">
+<link href="../../../styles/main.css" rel="Stylesheet">
+<link href="../../../styles/prism.css" rel="Stylesheet">
+<link href="../../../styles/logo-styles.css" rel="Stylesheet">
+<link href="../../../styles/font-jb-sans-auto.css" rel="Stylesheet">
+<link href="../../../ui-kit/ui-kit.min.css" rel="Stylesheet">
+<script type="text/javascript" src="../../../scripts/clipboard.js" async></script>
+<script type="text/javascript" src="../../../scripts/navigation-loader.js" async></script>
+<script type="text/javascript" src="../../../scripts/platform-content-handler.js" async></script>
+<script type="text/javascript" src="../../../scripts/main.js" defer></script>
+<script type="text/javascript" src="../../../scripts/prism.js" async></script>
+<script type="text/javascript" src="../../../ui-kit/ui-kit.min.js" defer></script>
+<script type="text/javascript" src="../../../scripts/symbol-parameters-wrapper_deferred.js" defer></script></head>
 <body>
-<div class="root">
+    <div class="root">
     <nav class="navigation theme-dark" id="navigation-wrapper">
-        <a class="library-name--link" href="../../../index.html">
-            Equinox
-        </a>
-        <button class="navigation-controls--btn navigation-controls--btn_toc ui-kit_mobile-only" id="toc-toggle"
-                type="button">Toggle table of contents
+<a class="library-name--link" href="../../../index.html">
+                    Equinox
+            </a>        <button class="navigation-controls--btn navigation-controls--btn_toc ui-kit_mobile-only" id="toc-toggle" type="button">Toggle table of contents
         </button>
         <div class="navigation-controls--break ui-kit_mobile-only"></div>
-        <div class="library-version" id="library-version">1.0.7
+        <div class="library-version" id="library-version">1.0.8
         </div>
         <div class="navigation-controls">
-            <div class="filter-section filter-section_loading" id="filter-section">
-                <button class="platform-tag platform-selector jvm-like" data-active=""
-                        data-filter=":equinox-backend:dokkaHtmlPartial/main">jvm
-                </button>
-                <div class="dropdown filter-section--dropdown" data-role="dropdown" id="filter-section-dropdown">
-                    <button class="button button_dropdown filter-section--dropdown-toggle" role="combobox"
-                            data-role="dropdown-toggle" aria-controls="platform-tags-listbox" aria-haspopup="listbox"
-                            aria-expanded="false" aria-label="Toggle source sets"></button>
-                    <ul role="listbox" id="platform-tags-listbox" class="dropdown--list" data-role="dropdown-listbox">
-                        <div class="dropdown--header"><span>Platform filter</span>
-                            <button class="button" data-role="dropdown-toggle" aria-label="Close platform filter">
-                                <i class="ui-kit-icon ui-kit-icon_cross"></i>
-                            </button>
-                        </div>
+        <div class="filter-section filter-section_loading" id="filter-section">
+                <button class="platform-tag platform-selector jvm-like" data-active="" data-filter=":equinox-backend:dokkaHtmlPartial/main">jvm</button>
+            <div class="dropdown filter-section--dropdown" data-role="dropdown" id="filter-section-dropdown">
+                <button class="button button_dropdown filter-section--dropdown-toggle" role="combobox" data-role="dropdown-toggle" aria-controls="platform-tags-listbox" aria-haspopup="listbox" aria-expanded="false" aria-label="Toggle source sets"></button>
+                <ul role="listbox" id="platform-tags-listbox" class="dropdown--list" data-role="dropdown-listbox">
+                    <div class="dropdown--header"><span>Platform filter</span>
+                        <button class="button" data-role="dropdown-toggle" aria-label="Close platform filter">
+                            <i class="ui-kit-icon ui-kit-icon_cross"></i>
+                        </button>
+                    </div>
                         <li role="option" class="dropdown--option platform-selector-option jvm-like" tabindex="0">
                             <label class="checkbox">
-                                <input type="checkbox" class="checkbox--input"
-                                       id=":equinox-backend:dokkaHtmlPartial/main"
-                                       data-filter=":equinox-backend:dokkaHtmlPartial/main">
+                                <input type="checkbox" class="checkbox--input" id=":equinox-backend:dokkaHtmlPartial/main" data-filter=":equinox-backend:dokkaHtmlPartial/main">
                                 <span class="checkbox--icon"></span>
                                 jvm
                             </label>
                         </li>
-                    </ul>
-                    <div class="dropdown--overlay"></div>
-                </div>
+                </ul>
+                <div class="dropdown--overlay"></div>
             </div>
-            <button class="navigation-controls--btn navigation-controls--btn_theme" id="theme-toggle-button"
-                    type="button">Switch theme
+        </div>
+            <button class="navigation-controls--btn navigation-controls--btn_theme" id="theme-toggle-button" type="button">Switch theme
             </button>
             <div class="navigation-controls--btn navigation-controls--btn_search" id="searchBar" role="button">Search in
                 API
             </div>
         </div>
     </nav>
-    <div id="container">
-        <div class="sidebar" id="leftColumn">
-            <div class="dropdown theme-dark_mobile" data-role="dropdown" id="toc-dropdown">
-                <ul role="listbox" id="toc-listbox" class="dropdown--list dropdown--list_toc-list"
-                    data-role="dropdown-listbox">
-                    <div class="dropdown--header">
+        <div id="container">
+            <div class="sidebar" id="leftColumn">
+                <div class="dropdown theme-dark_mobile" data-role="dropdown" id="toc-dropdown">
+                    <ul role="listbox" id="toc-listbox" class="dropdown--list dropdown--list_toc-list" data-role="dropdown-listbox">
+                        <div class="dropdown--header">
                             <span>
                                     Equinox
                             </span>
-                        <button class="button" data-role="dropdown-toggle" aria-label="Close table of contents">
-                            <i class="ui-kit-icon ui-kit-icon_cross"></i>
-                        </button>
-                    </div>
-                    <div class="sidebar--inner" id="sideMenu"></div>
-                </ul>
-                <div class="dropdown--overlay"></div>
-            </div>
-        </div>
-        <div id="main">
-            <div class="main-content" data-page-type="classlike" id="content"
-                 pageids="equinox-backend::com.tecknobit.equinoxbackend.configuration/ConfigsGenerator///PointingToDeclaration//-1152277508">
-                <div class="breadcrumbs"><a href="../../index.html">equinox-backend</a><span
-                        class="delimiter">/</span><a href="../index.html">com.tecknobit.equinoxbackend.configuration</a><span
-                        class="delimiter">/</span><span class="current">ConfigsGenerator</span></div>
-                <div class="cover ">
-                    <h1 class="cover"><span>Configs</span>
-                        <wbr>
-                        <span><span>Generator</span></span></h1>
-                    <div class="platform-hinted " data-platform-hinted="data-platform-hinted">
-                        <div class="content sourceset-dependent-content" data-active=""
-                             data-togglable=":equinox-backend:dokkaHtmlPartial/main">
-                            <div class="symbol monospace"><span class="token keyword">open </span><span
-                                    class="token keyword">class </span><a href="index.html">ConfigsGenerator</a></div>
-                            <p class="paragraph">The <code class="lang-kotlin">ConfigsGenerator</code> class is useful
-                                to create automatically some configuration files</p><span class="kdoc-tag"><h4 class="">Author</h4><p
-                                class="paragraph">N7ghtm4r3 - Tecknobit</p></span><span class="kdoc-tag"><h4 class="">Since</h4><p
-                                class="paragraph">1.0.1</p></span></div>
-                    </div>
+                            <button class="button" data-role="dropdown-toggle" aria-label="Close table of contents">
+                                <i class="ui-kit-icon ui-kit-icon_cross"></i>
+                            </button>
+                        </div>
+                        <div class="sidebar--inner" id="sideMenu"></div>
+                    </ul>
+                    <div class="dropdown--overlay"></div>
                 </div>
-                <div class="tabbedcontent">
-                    <div class="tabs-section" tabs-section="tabs-section">
-                        <button class="section-tab" data-active="" data-togglable="CONSTRUCTOR,TYPE,PROPERTY,FUNCTION">
-                            Members
-                        </button>
-                    </div>
-                    <div class="tabs-section-body">
-                        <div data-togglable="CONSTRUCTOR">
-                            <h2 class="">Constructors</h2>
-                            <div class="table"><a data-name="1866939545%2FConstructors%2F-1152277508"
-                                                  anchor-label="ConfigsGenerator"
-                                                  id="1866939545%2FConstructors%2F-1152277508"
-                                                  data-filterable-set=":equinox-backend:dokkaHtmlPartial/main"></a>
-                                <div class="table-row" data-togglable="CONSTRUCTOR"
-                                     data-filterable-current=":equinox-backend:dokkaHtmlPartial/main"
-                                     data-filterable-set=":equinox-backend:dokkaHtmlPartial/main">
-                                    <div class="main-subrow keyValue ">
-                                        <div class=""><span class="inline-flex">
+            </div>
+            <div id="main">
+<div class="main-content" data-page-type="classlike" id="content" pageids="equinox-backend::com.tecknobit.equinoxbackend.configuration/ConfigsGenerator///PointingToDeclaration//-1152277508">
+  <div class="breadcrumbs"><a href="../../index.html">equinox-backend</a><span class="delimiter">/</span><a href="../index.html">com.tecknobit.equinoxbackend.configuration</a><span class="delimiter">/</span><span class="current">ConfigsGenerator</span></div>
+  <div class="cover ">
+    <h1 class="cover"><span>Configs</span><wbr><span><span>Generator</span></span></h1>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":equinox-backend:dokkaHtmlPartial/main"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">class </span><a href="index.html">ConfigsGenerator</a></div><p class="paragraph">The <code class="lang-kotlin">ConfigsGenerator</code> class is useful to create automatically some configuration files</p><span class="kdoc-tag"><h4 class="">Author</h4><p class="paragraph">N7ghtm4r3 - Tecknobit</p></span><span class="kdoc-tag"><h4 class="">Since</h4><p class="paragraph">1.0.1</p></span></div></div>
+  </div>
+  <div class="tabbedcontent">
+    <div class="tabs-section" tabs-section="tabs-section"><button class="section-tab" data-active="" data-togglable="CONSTRUCTOR,TYPE,PROPERTY,FUNCTION">Members</button></div>
+    <div class="tabs-section-body">
+      <div data-togglable="CONSTRUCTOR">
+        <h2 class="">Constructors</h2>
+        <div class="table"><a data-name="1866939545%2FConstructors%2F-1152277508" anchor-label="ConfigsGenerator" id="1866939545%2FConstructors%2F-1152277508" data-filterable-set=":equinox-backend:dokkaHtmlPartial/main"></a>
+          <div class="table-row" data-togglable="CONSTRUCTOR" data-filterable-current=":equinox-backend:dokkaHtmlPartial/main" data-filterable-set=":equinox-backend:dokkaHtmlPartial/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
                   <div><a href="-configs-generator.html"><span>Configs</span><wbr><span><span>Generator</span></span></a></div>
 <span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1866939545%2FConstructors%2F-1152277508"></span>
-                    <div class="copy-popup-wrapper "><span
-                            class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
                   </span></span></div>
-                                        <div>
-                                            <div class="title">
-                                                <div class="platform-hinted "
-                                                     data-platform-hinted="data-platform-hinted">
-                                                    <div class="content sourceset-dependent-content" data-active=""
-                                                         data-togglable=":equinox-backend:dokkaHtmlPartial/main">
-                                                        <div class="symbol monospace"><span class="token keyword">constructor</span><span
-                                                                class="token punctuation">(</span><span
-                                                                class="parameters "><span
-                                                                class="parameter ">context<span
-                                                                class="token operator">: </span><a
-                                                                href="https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html">Class</a><span
-                                                                class="token operator">&lt;</span><span
-                                                                class="token keyword">out </span><a
-                                                                href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-any/index.html">Any</a><span
-                                                                class="token operator">&gt;</span></span></span><span
-                                                                class="token punctuation">)</span></div>
-                                                        <div class="brief ">Constructor to init the <a
-                                                                href="index.html">ConfigsGenerator</a> class
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div data-togglable="PROPERTY">
-                            <h2 class="">Properties</h2>
-                            <div class="table"><a data-name="766711961%2FProperties%2F-1152277508"
-                                                  anchor-label="context" id="766711961%2FProperties%2F-1152277508"
-                                                  data-filterable-set=":equinox-backend:dokkaHtmlPartial/main"></a>
-                                <div class="table-row" data-filterable-current=":equinox-backend:dokkaHtmlPartial/main"
-                                     data-filterable-set=":equinox-backend:dokkaHtmlPartial/main">
-                                    <div class="main-subrow keyValue ">
-                                        <div class=""><span class="inline-flex">
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":equinox-backend:dokkaHtmlPartial/main"><div class="symbol monospace"><span class="token keyword">constructor</span><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">context<span class="token operator">: </span><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html">Class</a><span class="token operator">&lt;</span><span class="token keyword">out </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-any/index.html">Any</a><span class="token operator">&gt;</span></span></span><span class="token punctuation">)</span></div><div class="brief ">Constructor to init the <a href="index.html">ConfigsGenerator</a> class</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div data-togglable="PROPERTY">
+        <h2 class="">Properties</h2>
+        <div class="table"><a data-name="766711961%2FProperties%2F-1152277508" anchor-label="context" id="766711961%2FProperties%2F-1152277508" data-filterable-set=":equinox-backend:dokkaHtmlPartial/main"></a>
+          <div class="table-row" data-filterable-current=":equinox-backend:dokkaHtmlPartial/main" data-filterable-set=":equinox-backend:dokkaHtmlPartial/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
                   <div><a href="context.html"><span><span>context</span></span></a></div>
 <span class="anchor-wrapper"><span class="anchor-icon" pointing-to="766711961%2FProperties%2F-1152277508"></span>
-                    <div class="copy-popup-wrapper "><span
-                            class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
                   </span></span></div>
-                                        <div>
-                                            <div class="title">
-                                                <div class="platform-hinted "
-                                                     data-platform-hinted="data-platform-hinted">
-                                                    <div class="content sourceset-dependent-content" data-active=""
-                                                         data-togglable=":equinox-backend:dokkaHtmlPartial/main">
-                                                        <div class="symbol monospace"><span class="token keyword">private </span><span
-                                                                class="token keyword">val </span><a href="context.html">context</a><span
-                                                                class="token operator">: </span><a
-                                                                href="https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html">Class</a><span
-                                                                class="token operator">&lt;</span><span
-                                                                class="token keyword">out </span><a
-                                                                href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-any/index.html">Any</a><span
-                                                                class="token operator">&gt;</span></div>
-                                                        <div class="brief "><code class="lang-kotlin">context</code> the
-                                                            <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html">Class</a>
-                                                            where this method has been invoked
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <a data-name="-1435686129%2FProperties%2F-1152277508"
-                                   anchor-label="CORS_ADVICE_FILE_NAME" id="-1435686129%2FProperties%2F-1152277508"
-                                   data-filterable-set=":equinox-backend:dokkaHtmlPartial/main"></a>
-                                <div class="table-row" data-filterable-current=":equinox-backend:dokkaHtmlPartial/main"
-                                     data-filterable-set=":equinox-backend:dokkaHtmlPartial/main">
-                                    <div class="main-subrow keyValue ">
-                                        <div class=""><span class="inline-flex">
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":equinox-backend:dokkaHtmlPartial/main"><div class="symbol monospace"><span class="token keyword">private </span><span class="token keyword">val </span><a href="context.html">context</a><span class="token operator">: </span><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html">Class</a><span class="token operator">&lt;</span><span class="token keyword">out </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-any/index.html">Any</a><span class="token operator">&gt;</span></div><div class="brief "><code class="lang-kotlin">context</code> the <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html">Class</a> where this method has been invoked</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1435686129%2FProperties%2F-1152277508" anchor-label="CORS_ADVICE_FILE_NAME" id="-1435686129%2FProperties%2F-1152277508" data-filterable-set=":equinox-backend:dokkaHtmlPartial/main"></a>
+          <div class="table-row" data-filterable-current=":equinox-backend:dokkaHtmlPartial/main" data-filterable-set=":equinox-backend:dokkaHtmlPartial/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
                   <div><a href="-c-o-r-s_-a-d-v-i-c-e_-f-i-l-e_-n-a-m-e.html"><span>CORS_</span><wbr><span>ADVICE_</span><wbr><span>FILE_</span><wbr><span>NAME</span></a></div>
 <span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1435686129%2FProperties%2F-1152277508"></span>
-                    <div class="copy-popup-wrapper "><span
-                            class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
                   </span></span></div>
-                                        <div>
-                                            <div class="title">
-                                                <div class="platform-hinted "
-                                                     data-platform-hinted="data-platform-hinted">
-                                                    <div class="content sourceset-dependent-content" data-active=""
-                                                         data-togglable=":equinox-backend:dokkaHtmlPartial/main">
-                                                        <div class="symbol monospace"><span class="token keyword">private </span><span
-                                                                class="token keyword">val </span><a
-                                                                href="-c-o-r-s_-a-d-v-i-c-e_-f-i-l-e_-n-a-m-e.html">CORS_ADVICE_FILE_NAME</a><span
-                                                                class="token operator">: </span><a
-                                                                href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html">String</a><span
-                                                                class="token operator"> = </span><span
-                                                                class="token string">"CORSAdvice"</span></div>
-                                                        <div class="brief "><code class="lang-kotlin">CORS_ADVICE_FILE_NAME</code>
-                                                            the name for the CORS configuration file
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <a data-name="1420590683%2FProperties%2F-1152277508" anchor-label="isKotlinClass"
-                                   id="1420590683%2FProperties%2F-1152277508"
-                                   data-filterable-set=":equinox-backend:dokkaHtmlPartial/main"></a>
-                                <div class="table-row" data-filterable-current=":equinox-backend:dokkaHtmlPartial/main"
-                                     data-filterable-set=":equinox-backend:dokkaHtmlPartial/main">
-                                    <div class="main-subrow keyValue ">
-                                        <div class=""><span class="inline-flex">
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":equinox-backend:dokkaHtmlPartial/main"><div class="symbol monospace"><span class="token keyword">private </span><span class="token keyword">val </span><a href="-c-o-r-s_-a-d-v-i-c-e_-f-i-l-e_-n-a-m-e.html">CORS_ADVICE_FILE_NAME</a><span class="token operator">: </span><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html">String</a><span class="token operator"> = </span><span class="token string">"CORSAdvice"</span></div><div class="brief "><code class="lang-kotlin">CORS_ADVICE_FILE_NAME</code> the name for the CORS configuration file</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1420590683%2FProperties%2F-1152277508" anchor-label="isKotlinClass" id="1420590683%2FProperties%2F-1152277508" data-filterable-set=":equinox-backend:dokkaHtmlPartial/main"></a>
+          <div class="table-row" data-filterable-current=":equinox-backend:dokkaHtmlPartial/main" data-filterable-set=":equinox-backend:dokkaHtmlPartial/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
                   <div><a href="is-kotlin-class.html"><span>is</span><wbr><span>Kotlin</span><wbr><span><span>Class</span></span></a></div>
 <span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1420590683%2FProperties%2F-1152277508"></span>
-                    <div class="copy-popup-wrapper "><span
-                            class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
                   </span></span></div>
-                                        <div>
-                                            <div class="title">
-                                                <div class="platform-hinted "
-                                                     data-platform-hinted="data-platform-hinted">
-                                                    <div class="content sourceset-dependent-content" data-active=""
-                                                         data-togglable=":equinox-backend:dokkaHtmlPartial/main">
-                                                        <div class="symbol monospace"><span class="token keyword">private </span><span
-                                                                class="token keyword">val </span><a
-                                                                href="is-kotlin-class.html">isKotlinClass</a><span
-                                                                class="token operator">: </span><a
-                                                                href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a>
-                                                        </div>
-                                                        <div class="brief "><code
-                                                                class="lang-kotlin">isKotlinClass</code> whether the
-                                                            caller class (<a href="context.html">context</a>) is a
-                                                            <strong>Kotlin</strong> class
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <a data-name="-677724084%2FProperties%2F-1152277508"
-                                   anchor-label="JAVA_CONFIGURATION_FILE_CONTENT"
-                                   id="-677724084%2FProperties%2F-1152277508"
-                                   data-filterable-set=":equinox-backend:dokkaHtmlPartial/main"></a>
-                                <div class="table-row" data-filterable-current=":equinox-backend:dokkaHtmlPartial/main"
-                                     data-filterable-set=":equinox-backend:dokkaHtmlPartial/main">
-                                    <div class="main-subrow keyValue ">
-                                        <div class=""><span class="inline-flex">
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":equinox-backend:dokkaHtmlPartial/main"><div class="symbol monospace"><span class="token keyword">private </span><span class="token keyword">val </span><a href="is-kotlin-class.html">isKotlinClass</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a></div><div class="brief "><code class="lang-kotlin">isKotlinClass</code> whether the caller class (<a href="context.html">context</a>) is a <strong>Kotlin</strong> class</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-677724084%2FProperties%2F-1152277508" anchor-label="JAVA_CONFIGURATION_FILE_CONTENT" id="-677724084%2FProperties%2F-1152277508" data-filterable-set=":equinox-backend:dokkaHtmlPartial/main"></a>
+          <div class="table-row" data-filterable-current=":equinox-backend:dokkaHtmlPartial/main" data-filterable-set=":equinox-backend:dokkaHtmlPartial/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
                   <div><a href="-j-a-v-a_-c-o-n-f-i-g-u-r-a-t-i-o-n_-f-i-l-e_-c-o-n-t-e-n-t.html"><span>JAVA_</span><wbr><span>CONFIGURATION_</span><wbr><span>FILE_</span><wbr><span>CONTENT</span></a></div>
 <span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-677724084%2FProperties%2F-1152277508"></span>
-                    <div class="copy-popup-wrapper "><span
-                            class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
                   </span></span></div>
-                                        <div>
-                                            <div class="title">
-                                                <div class="platform-hinted "
-                                                     data-platform-hinted="data-platform-hinted">
-                                                    <div class="content sourceset-dependent-content" data-active=""
-                                                         data-togglable=":equinox-backend:dokkaHtmlPartial/main">
-                                                        <div class="symbol monospace"><span class="token keyword">private </span><span
-                                                                class="token keyword">val </span><a
-                                                                href="-j-a-v-a_-c-o-n-f-i-g-u-r-a-t-i-o-n_-f-i-l-e_-c-o-n-t-e-n-t.html">JAVA_CONFIGURATION_FILE_CONTENT</a><span
-                                                                class="token operator">: </span><a
-                                                                href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html">String</a><span
-                                                                class="token operator"> = </span><span
-                                                                class="token string">"
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":equinox-backend:dokkaHtmlPartial/main"><div class="symbol monospace"><span class="token keyword">private </span><span class="token keyword">val </span><a href="-j-a-v-a_-c-o-n-f-i-g-u-r-a-t-i-o-n_-f-i-l-e_-c-o-n-t-e-n-t.html">JAVA_CONFIGURATION_FILE_CONTENT</a><span class="token operator">: </span><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html">String</a><span class="token operator"> = </span><span class="token string">"       
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -337,45 +207,22 @@ public class ResourcesConfig implements WebMvcConfigurer {
                 .addResolver(new PathResourceResolver());
     }
 
-}"</span></div>
-                                                        <div class="brief "><code class="lang-kotlin">JAVA_CONFIGURATION_FILE_CONTENT</code>
-                                                            the content of the <span
-                                                                    data-unresolved-link="org.springframework.web.servlet.config.annotation/WebMvcConfigurer///PointingToDeclaration/">WebMvcConfigurer</span>,
-                                                            as <strong>Java class</strong>, to allow the serve of the
-                                                            static resources by the backend
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <a data-name="-278330944%2FProperties%2F-1152277508"
-                                   anchor-label="JAVA_CORS_ADVICE_FILE_CONTENT"
-                                   id="-278330944%2FProperties%2F-1152277508"
-                                   data-filterable-set=":equinox-backend:dokkaHtmlPartial/main"></a>
-                                <div class="table-row" data-filterable-current=":equinox-backend:dokkaHtmlPartial/main"
-                                     data-filterable-set=":equinox-backend:dokkaHtmlPartial/main">
-                                    <div class="main-subrow keyValue ">
-                                        <div class=""><span class="inline-flex">
+}"</span></div><div class="brief "><code class="lang-kotlin">JAVA_CONFIGURATION_FILE_CONTENT</code> the content of the <span data-unresolved-link="org.springframework.web.servlet.config.annotation/WebMvcConfigurer///PointingToDeclaration/">WebMvcConfigurer</span>, as <strong>Java class</strong>, to allow the serve of the static resources by the backend</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-278330944%2FProperties%2F-1152277508" anchor-label="JAVA_CORS_ADVICE_FILE_CONTENT" id="-278330944%2FProperties%2F-1152277508" data-filterable-set=":equinox-backend:dokkaHtmlPartial/main"></a>
+          <div class="table-row" data-filterable-current=":equinox-backend:dokkaHtmlPartial/main" data-filterable-set=":equinox-backend:dokkaHtmlPartial/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
                   <div><a href="-j-a-v-a_-c-o-r-s_-a-d-v-i-c-e_-f-i-l-e_-c-o-n-t-e-n-t.html"><span>JAVA_</span><wbr><span>CORS_</span><wbr><span>ADVICE_</span><wbr><span>FILE_</span><wbr><span>CONTENT</span></a></div>
 <span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-278330944%2FProperties%2F-1152277508"></span>
-                    <div class="copy-popup-wrapper "><span
-                            class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
                   </span></span></div>
-                                        <div>
-                                            <div class="title">
-                                                <div class="platform-hinted "
-                                                     data-platform-hinted="data-platform-hinted">
-                                                    <div class="content sourceset-dependent-content" data-active=""
-                                                         data-togglable=":equinox-backend:dokkaHtmlPartial/main">
-                                                        <div class="symbol monospace"><span class="token keyword">private </span><span
-                                                                class="token keyword">val </span><a
-                                                                href="-j-a-v-a_-c-o-r-s_-a-d-v-i-c-e_-f-i-l-e_-c-o-n-t-e-n-t.html">JAVA_CORS_ADVICE_FILE_CONTENT</a><span
-                                                                class="token operator">: </span><a
-                                                                href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html">String</a><span
-                                                                class="token operator"> = </span><span
-                                                                class="token string">"
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":equinox-backend:dokkaHtmlPartial/main"><div class="symbol monospace"><span class="token keyword">private </span><span class="token keyword">val </span><a href="-j-a-v-a_-c-o-r-s_-a-d-v-i-c-e_-f-i-l-e_-c-o-n-t-e-n-t.html">JAVA_CORS_ADVICE_FILE_CONTENT</a><span class="token operator">: </span><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html">String</a><span class="token operator"> = </span><span class="token string">"            
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -409,44 +256,22 @@ public class CORSAdvice {
         return bean;
     }
             
-}"</span></div>
-                                                        <div class="brief "><code class="lang-kotlin">JAVA_CORS_ADVICE_FILE_CONTENT</code>
-                                                            the content of the <strong>CORSAdvice</strong> file, as
-                                                            <strong>Java class</strong>, to set the CORS origin policy
-                                                            for the backend
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <a data-name="616876779%2FProperties%2F-1152277508"
-                                   anchor-label="KOTLIN_CONFIGURATION_FILE_CONTENT"
-                                   id="616876779%2FProperties%2F-1152277508"
-                                   data-filterable-set=":equinox-backend:dokkaHtmlPartial/main"></a>
-                                <div class="table-row" data-filterable-current=":equinox-backend:dokkaHtmlPartial/main"
-                                     data-filterable-set=":equinox-backend:dokkaHtmlPartial/main">
-                                    <div class="main-subrow keyValue ">
-                                        <div class=""><span class="inline-flex">
+}"</span></div><div class="brief "><code class="lang-kotlin">JAVA_CORS_ADVICE_FILE_CONTENT</code> the content of the <strong>CORSAdvice</strong> file, as <strong>Java class</strong>, to set the CORS origin policy for the backend</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="616876779%2FProperties%2F-1152277508" anchor-label="KOTLIN_CONFIGURATION_FILE_CONTENT" id="616876779%2FProperties%2F-1152277508" data-filterable-set=":equinox-backend:dokkaHtmlPartial/main"></a>
+          <div class="table-row" data-filterable-current=":equinox-backend:dokkaHtmlPartial/main" data-filterable-set=":equinox-backend:dokkaHtmlPartial/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
                   <div><a href="-k-o-t-l-i-n_-c-o-n-f-i-g-u-r-a-t-i-o-n_-f-i-l-e_-c-o-n-t-e-n-t.html"><span>KOTLIN_</span><wbr><span>CONFIGURATION_</span><wbr><span>FILE_</span><wbr><span>CONTENT</span></a></div>
 <span class="anchor-wrapper"><span class="anchor-icon" pointing-to="616876779%2FProperties%2F-1152277508"></span>
-                    <div class="copy-popup-wrapper "><span
-                            class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
                   </span></span></div>
-                                        <div>
-                                            <div class="title">
-                                                <div class="platform-hinted "
-                                                     data-platform-hinted="data-platform-hinted">
-                                                    <div class="content sourceset-dependent-content" data-active=""
-                                                         data-togglable=":equinox-backend:dokkaHtmlPartial/main">
-                                                        <div class="symbol monospace"><span class="token keyword">private </span><span
-                                                                class="token keyword">val </span><a
-                                                                href="-k-o-t-l-i-n_-c-o-n-f-i-g-u-r-a-t-i-o-n_-f-i-l-e_-c-o-n-t-e-n-t.html">KOTLIN_CONFIGURATION_FILE_CONTENT</a><span
-                                                                class="token operator">: </span><a
-                                                                href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html">String</a><span
-                                                                class="token operator"> = </span><span
-                                                                class="token string">"
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":equinox-backend:dokkaHtmlPartial/main"><div class="symbol monospace"><span class="token keyword">private </span><span class="token keyword">val </span><a href="-k-o-t-l-i-n_-c-o-n-f-i-g-u-r-a-t-i-o-n_-f-i-l-e_-c-o-n-t-e-n-t.html">KOTLIN_CONFIGURATION_FILE_CONTENT</a><span class="token operator">: </span><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html">String</a><span class="token operator"> = </span><span class="token string">"            
 import org.springframework.context.annotation.Configuration
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer
@@ -477,45 +302,22 @@ class ResourcesConfig : WebMvcConfigurer {
             .addResolver(PathResourceResolver())
     }
            
-}"</span></div>
-                                                        <div class="brief "><code class="lang-kotlin">KOTLIN_CONFIGURATION_FILE_CONTENT</code>
-                                                            the content of the <span
-                                                                    data-unresolved-link="org.springframework.web.servlet.config.annotation/WebMvcConfigurer///PointingToDeclaration/">WebMvcConfigurer</span>,
-                                                            as <strong>Kotlin class</strong>, to allow the serve of the
-                                                            static resources by the backend
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <a data-name="-1702680545%2FProperties%2F-1152277508"
-                                   anchor-label="KOTLIN_CORS_ADVICE_FILE_CONTENT"
-                                   id="-1702680545%2FProperties%2F-1152277508"
-                                   data-filterable-set=":equinox-backend:dokkaHtmlPartial/main"></a>
-                                <div class="table-row" data-filterable-current=":equinox-backend:dokkaHtmlPartial/main"
-                                     data-filterable-set=":equinox-backend:dokkaHtmlPartial/main">
-                                    <div class="main-subrow keyValue ">
-                                        <div class=""><span class="inline-flex">
+}"</span></div><div class="brief "><code class="lang-kotlin">KOTLIN_CONFIGURATION_FILE_CONTENT</code> the content of the <span data-unresolved-link="org.springframework.web.servlet.config.annotation/WebMvcConfigurer///PointingToDeclaration/">WebMvcConfigurer</span>, as <strong>Kotlin class</strong>, to allow the serve of the static resources by the backend</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1702680545%2FProperties%2F-1152277508" anchor-label="KOTLIN_CORS_ADVICE_FILE_CONTENT" id="-1702680545%2FProperties%2F-1152277508" data-filterable-set=":equinox-backend:dokkaHtmlPartial/main"></a>
+          <div class="table-row" data-filterable-current=":equinox-backend:dokkaHtmlPartial/main" data-filterable-set=":equinox-backend:dokkaHtmlPartial/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
                   <div><a href="-k-o-t-l-i-n_-c-o-r-s_-a-d-v-i-c-e_-f-i-l-e_-c-o-n-t-e-n-t.html"><span>KOTLIN_</span><wbr><span>CORS_</span><wbr><span>ADVICE_</span><wbr><span>FILE_</span><wbr><span>CONTENT</span></a></div>
 <span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1702680545%2FProperties%2F-1152277508"></span>
-                    <div class="copy-popup-wrapper "><span
-                            class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
                   </span></span></div>
-                                        <div>
-                                            <div class="title">
-                                                <div class="platform-hinted "
-                                                     data-platform-hinted="data-platform-hinted">
-                                                    <div class="content sourceset-dependent-content" data-active=""
-                                                         data-togglable=":equinox-backend:dokkaHtmlPartial/main">
-                                                        <div class="symbol monospace"><span class="token keyword">private </span><span
-                                                                class="token keyword">val </span><a
-                                                                href="-k-o-t-l-i-n_-c-o-r-s_-a-d-v-i-c-e_-f-i-l-e_-c-o-n-t-e-n-t.html">KOTLIN_CORS_ADVICE_FILE_CONTENT</a><span
-                                                                class="token operator">: </span><a
-                                                                href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html">String</a><span
-                                                                class="token operator"> = </span><span
-                                                                class="token string">"
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":equinox-backend:dokkaHtmlPartial/main"><div class="symbol monospace"><span class="token keyword">private </span><span class="token keyword">val </span><a href="-k-o-t-l-i-n_-c-o-r-s_-a-d-v-i-c-e_-f-i-l-e_-c-o-n-t-e-n-t.html">KOTLIN_CORS_ADVICE_FILE_CONTENT</a><span class="token operator">: </span><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html">String</a><span class="token operator"> = </span><span class="token string">" 
  import org.springframework.boot.web.servlet.FilterRegistrationBean
  import org.springframework.context.annotation.Bean
  import org.springframework.context.annotation.Configuration
@@ -550,389 +352,167 @@ class ResourcesConfig : WebMvcConfigurer {
          return bean
      }
      
- }"</span></div>
-                                                        <div class="brief "><code class="lang-kotlin">KOTLIN_CORS_ADVICE_FILE_CONTENT</code>
-                                                            the content of the <strong>CORSAdvice</strong> file, as
-                                                            <strong>Kotlin class</strong>, to set the CORS origin policy
-                                                            for the backend
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <a data-name="368997872%2FProperties%2F-1152277508" anchor-label="preferences"
-                                   id="368997872%2FProperties%2F-1152277508"
-                                   data-filterable-set=":equinox-backend:dokkaHtmlPartial/main"></a>
-                                <div class="table-row" data-filterable-current=":equinox-backend:dokkaHtmlPartial/main"
-                                     data-filterable-set=":equinox-backend:dokkaHtmlPartial/main">
-                                    <div class="main-subrow keyValue ">
-                                        <div class=""><span class="inline-flex">
+ }"</span></div><div class="brief "><code class="lang-kotlin">KOTLIN_CORS_ADVICE_FILE_CONTENT</code> the content of the <strong>CORSAdvice</strong> file, as <strong>Kotlin class</strong>, to set the CORS origin policy for the backend</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="368997872%2FProperties%2F-1152277508" anchor-label="preferences" id="368997872%2FProperties%2F-1152277508" data-filterable-set=":equinox-backend:dokkaHtmlPartial/main"></a>
+          <div class="table-row" data-filterable-current=":equinox-backend:dokkaHtmlPartial/main" data-filterable-set=":equinox-backend:dokkaHtmlPartial/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
                   <div><a href="preferences.html"><span><span>preferences</span></span></a></div>
 <span class="anchor-wrapper"><span class="anchor-icon" pointing-to="368997872%2FProperties%2F-1152277508"></span>
-                    <div class="copy-popup-wrapper "><span
-                            class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
                   </span></span></div>
-                                        <div>
-                                            <div class="title">
-                                                <div class="platform-hinted "
-                                                     data-platform-hinted="data-platform-hinted">
-                                                    <div class="content sourceset-dependent-content" data-active=""
-                                                         data-togglable=":equinox-backend:dokkaHtmlPartial/main">
-                                                        <div class="symbol monospace"><span class="token keyword">private </span><span
-                                                                class="token keyword">val </span><a
-                                                                href="preferences.html">preferences</a><span
-                                                                class="token operator">: </span><a
-                                                                href="https://docs.oracle.com/javase/8/docs/api/java/util/prefs/Preferences.html">Preferences</a>
-                                                        </div>
-                                                        <div class="brief "><code class="lang-kotlin">preferences</code>
-                                                            helper to check with the <a
-                                                                    href="config-file-still-not-created.html">configFileStillNotCreated</a>
-                                                            method if a config file has been already created or not
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <a data-name="593695463%2FProperties%2F-1152277508"
-                                   anchor-label="RESOURCES_CONFIG_FILE_NAME" id="593695463%2FProperties%2F-1152277508"
-                                   data-filterable-set=":equinox-backend:dokkaHtmlPartial/main"></a>
-                                <div class="table-row" data-filterable-current=":equinox-backend:dokkaHtmlPartial/main"
-                                     data-filterable-set=":equinox-backend:dokkaHtmlPartial/main">
-                                    <div class="main-subrow keyValue ">
-                                        <div class=""><span class="inline-flex">
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":equinox-backend:dokkaHtmlPartial/main"><div class="symbol monospace"><span class="token keyword">private </span><span class="token keyword">val </span><a href="preferences.html">preferences</a><span class="token operator">: </span><a href="https://docs.oracle.com/javase/8/docs/api/java/util/prefs/Preferences.html">Preferences</a></div><div class="brief "><code class="lang-kotlin">preferences</code> helper to check with the <a href="config-file-still-not-created.html">configFileStillNotCreated</a> method if a config file has been already created or not</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="593695463%2FProperties%2F-1152277508" anchor-label="RESOURCES_CONFIG_FILE_NAME" id="593695463%2FProperties%2F-1152277508" data-filterable-set=":equinox-backend:dokkaHtmlPartial/main"></a>
+          <div class="table-row" data-filterable-current=":equinox-backend:dokkaHtmlPartial/main" data-filterable-set=":equinox-backend:dokkaHtmlPartial/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
                   <div><a href="-r-e-s-o-u-r-c-e-s_-c-o-n-f-i-g_-f-i-l-e_-n-a-m-e.html"><span>RESOURCES_</span><wbr><span>CONFIG_</span><wbr><span>FILE_</span><wbr><span>NAME</span></a></div>
 <span class="anchor-wrapper"><span class="anchor-icon" pointing-to="593695463%2FProperties%2F-1152277508"></span>
-                    <div class="copy-popup-wrapper "><span
-                            class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
                   </span></span></div>
-                                        <div>
-                                            <div class="title">
-                                                <div class="platform-hinted "
-                                                     data-platform-hinted="data-platform-hinted">
-                                                    <div class="content sourceset-dependent-content" data-active=""
-                                                         data-togglable=":equinox-backend:dokkaHtmlPartial/main">
-                                                        <div class="symbol monospace"><span class="token keyword">private </span><span
-                                                                class="token keyword">val </span><a
-                                                                href="-r-e-s-o-u-r-c-e-s_-c-o-n-f-i-g_-f-i-l-e_-n-a-m-e.html">RESOURCES_CONFIG_FILE_NAME</a><span
-                                                                class="token operator">: </span><a
-                                                                href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html">String</a><span
-                                                                class="token operator"> = </span><span
-                                                                class="token string">"ResourcesConfig"</span></div>
-                                                        <div class="brief "><code class="lang-kotlin">RESOURCES_CONFIG_FILE_NAME</code>
-                                                            the name for the resources configuration file
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div data-togglable="FUNCTION">
-                            <h2 class="">Functions</h2>
-                            <div class="table"><a data-name="-1267824924%2FFunctions%2F-1152277508"
-                                                  anchor-label="configFileStillNotCreated"
-                                                  id="-1267824924%2FFunctions%2F-1152277508"
-                                                  data-filterable-set=":equinox-backend:dokkaHtmlPartial/main"></a>
-                                <div class="table-row" data-filterable-current=":equinox-backend:dokkaHtmlPartial/main"
-                                     data-filterable-set=":equinox-backend:dokkaHtmlPartial/main">
-                                    <div class="main-subrow keyValue ">
-                                        <div class=""><span class="inline-flex">
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":equinox-backend:dokkaHtmlPartial/main"><div class="symbol monospace"><span class="token keyword">private </span><span class="token keyword">val </span><a href="-r-e-s-o-u-r-c-e-s_-c-o-n-f-i-g_-f-i-l-e_-n-a-m-e.html">RESOURCES_CONFIG_FILE_NAME</a><span class="token operator">: </span><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html">String</a><span class="token operator"> = </span><span class="token string">"ResourcesConfig"</span></div><div class="brief "><code class="lang-kotlin">RESOURCES_CONFIG_FILE_NAME</code> the name for the resources configuration file</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div data-togglable="FUNCTION">
+        <h2 class="">Functions</h2>
+        <div class="table"><a data-name="-1267824924%2FFunctions%2F-1152277508" anchor-label="configFileStillNotCreated" id="-1267824924%2FFunctions%2F-1152277508" data-filterable-set=":equinox-backend:dokkaHtmlPartial/main"></a>
+          <div class="table-row" data-filterable-current=":equinox-backend:dokkaHtmlPartial/main" data-filterable-set=":equinox-backend:dokkaHtmlPartial/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
                   <div><a href="config-file-still-not-created.html"><span>config</span><wbr><span>File</span><wbr><span>Still</span><wbr><span>Not</span><wbr><span><span>Created</span></span></a></div>
 <span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1267824924%2FFunctions%2F-1152277508"></span>
-                    <div class="copy-popup-wrapper "><span
-                            class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
                   </span></span></div>
-                                        <div>
-                                            <div class="title">
-                                                <div class="platform-hinted "
-                                                     data-platform-hinted="data-platform-hinted">
-                                                    <div class="content sourceset-dependent-content" data-active=""
-                                                         data-togglable=":equinox-backend:dokkaHtmlPartial/main">
-                                                        <div class="symbol monospace"><span class="token keyword">private </span><span
-                                                                class="token keyword">open </span><span
-                                                                class="token keyword">fun </span><a
-                                                                href="config-file-still-not-created.html"><span
-                                                                class="token function">configFileStillNotCreated</span></a><span
-                                                                class="token punctuation">(</span><span
-                                                                class="parameters "><span class="parameter ">configsPath<span
-                                                                class="token operator">: </span><a
-                                                                href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html">String</a></span></span><span
-                                                                class="token punctuation">)</span><span
-                                                                class="token operator">: </span><a
-                                                                href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a>
-                                                        </div>
-                                                        <div class="brief ">Method to check if a config file has been
-                                                            already created for the current project, so to skip its
-                                                            creation
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <a data-name="-1995950428%2FFunctions%2F-1152277508" anchor-label="crateCorsAdviceFile"
-                                   id="-1995950428%2FFunctions%2F-1152277508"
-                                   data-filterable-set=":equinox-backend:dokkaHtmlPartial/main"></a>
-                                <div class="table-row" data-filterable-current=":equinox-backend:dokkaHtmlPartial/main"
-                                     data-filterable-set=":equinox-backend:dokkaHtmlPartial/main">
-                                    <div class="main-subrow keyValue ">
-                                        <div class=""><span class="inline-flex">
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":equinox-backend:dokkaHtmlPartial/main"><div class="symbol monospace"><span class="token keyword">private </span><span class="token keyword">open </span><span class="token keyword">fun </span><a href="config-file-still-not-created.html"><span class="token function">configFileStillNotCreated</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">configsPath<span class="token operator">: </span><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html">String</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a></div><div class="brief ">Method to check if a config file has been already created for the current project, so to skip its creation</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1995950428%2FFunctions%2F-1152277508" anchor-label="crateCorsAdviceFile" id="-1995950428%2FFunctions%2F-1152277508" data-filterable-set=":equinox-backend:dokkaHtmlPartial/main"></a>
+          <div class="table-row" data-filterable-current=":equinox-backend:dokkaHtmlPartial/main" data-filterable-set=":equinox-backend:dokkaHtmlPartial/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
                   <div><a href="crate-cors-advice-file.html"><span>crate</span><wbr><span>Cors</span><wbr><span>Advice</span><wbr><span><span>File</span></span></a></div>
 <span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1995950428%2FFunctions%2F-1152277508"></span>
-                    <div class="copy-popup-wrapper "><span
-                            class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
                   </span></span></div>
-                                        <div>
-                                            <div class="title">
-                                                <div class="platform-hinted "
-                                                     data-platform-hinted="data-platform-hinted">
-                                                    <div class="content sourceset-dependent-content" data-active=""
-                                                         data-togglable=":equinox-backend:dokkaHtmlPartial/main">
-                                                        <div class="symbol monospace"><span
-                                                                class="token keyword">open </span><span
-                                                                class="token keyword">fun </span><a
-                                                                href="crate-cors-advice-file.html"><span
-                                                                class="token function">crateCorsAdviceFile</span></a><span
-                                                                class="token punctuation">(</span><span
-                                                                class="token punctuation">)</span></div>
-                                                        <div class="brief ">Method to create the
-                                                            <strong>CORSAdvice</strong> to correctly set the CORS origin
-                                                            policy for the backend
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <a data-name="1853950247%2FFunctions%2F-1152277508" anchor-label="createConfigFile"
-                                   id="1853950247%2FFunctions%2F-1152277508"
-                                   data-filterable-set=":equinox-backend:dokkaHtmlPartial/main"></a>
-                                <div class="table-row" data-filterable-current=":equinox-backend:dokkaHtmlPartial/main"
-                                     data-filterable-set=":equinox-backend:dokkaHtmlPartial/main">
-                                    <div class="main-subrow keyValue ">
-                                        <div class=""><span class="inline-flex">
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":equinox-backend:dokkaHtmlPartial/main"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">fun </span><a href="crate-cors-advice-file.html"><span class="token function">crateCorsAdviceFile</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span></div><div class="brief ">Method to create the <strong>CORSAdvice</strong> to correctly set the CORS origin policy for the backend </div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1853950247%2FFunctions%2F-1152277508" anchor-label="createConfigFile" id="1853950247%2FFunctions%2F-1152277508" data-filterable-set=":equinox-backend:dokkaHtmlPartial/main"></a>
+          <div class="table-row" data-filterable-current=":equinox-backend:dokkaHtmlPartial/main" data-filterable-set=":equinox-backend:dokkaHtmlPartial/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
                   <div><a href="create-config-file.html"><span>create</span><wbr><span>Config</span><wbr><span><span>File</span></span></a></div>
 <span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1853950247%2FFunctions%2F-1152277508"></span>
-                    <div class="copy-popup-wrapper "><span
-                            class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
                   </span></span></div>
-                                        <div>
-                                            <div class="title">
-                                                <div class="platform-hinted "
-                                                     data-platform-hinted="data-platform-hinted">
-                                                    <div class="content sourceset-dependent-content" data-active=""
-                                                         data-togglable=":equinox-backend:dokkaHtmlPartial/main">
-                                                        <div class="symbol monospace"><span class="token keyword">private </span><span
-                                                                class="token keyword">open </span><span
-                                                                class="token keyword">fun </span><a
-                                                                href="create-config-file.html"><span
-                                                                class="token function">createConfigFile</span></a><span
-                                                                class="token punctuation">(</span><span
-                                                                class="parameters "><span class="parameter ">configsPath<span
-                                                                class="token operator">: </span><a
-                                                                href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html">String</a><span
-                                                                class="token punctuation">, </span></span><span
-                                                                class="parameter ">content<span
-                                                                class="token operator">: </span><a
-                                                                href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html">String</a></span></span><span
-                                                                class="token punctuation">)</span></div>
-                                                        <div class="brief ">Method to create the config file and then
-                                                            save it
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <a data-name="-2112698288%2FFunctions%2F-1152277508"
-                                   anchor-label="createResourcesConfigFile" id="-2112698288%2FFunctions%2F-1152277508"
-                                   data-filterable-set=":equinox-backend:dokkaHtmlPartial/main"></a>
-                                <div class="table-row" data-filterable-current=":equinox-backend:dokkaHtmlPartial/main"
-                                     data-filterable-set=":equinox-backend:dokkaHtmlPartial/main">
-                                    <div class="main-subrow keyValue ">
-                                        <div class=""><span class="inline-flex">
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":equinox-backend:dokkaHtmlPartial/main"><div class="symbol monospace"><span class="token keyword">private </span><span class="token keyword">open </span><span class="token keyword">fun </span><a href="create-config-file.html"><span class="token function">createConfigFile</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">configsPath<span class="token operator">: </span><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">content<span class="token operator">: </span><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html">String</a></span></span><span class="token punctuation">)</span></div><div class="brief ">Method to create the config file and then save it</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-2112698288%2FFunctions%2F-1152277508" anchor-label="createResourcesConfigFile" id="-2112698288%2FFunctions%2F-1152277508" data-filterable-set=":equinox-backend:dokkaHtmlPartial/main"></a>
+          <div class="table-row" data-filterable-current=":equinox-backend:dokkaHtmlPartial/main" data-filterable-set=":equinox-backend:dokkaHtmlPartial/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
                   <div><a href="create-resources-config-file.html"><span>create</span><wbr><span>Resources</span><wbr><span>Config</span><wbr><span><span>File</span></span></a></div>
 <span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-2112698288%2FFunctions%2F-1152277508"></span>
-                    <div class="copy-popup-wrapper "><span
-                            class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
                   </span></span></div>
-                                        <div>
-                                            <div class="title">
-                                                <div class="platform-hinted "
-                                                     data-platform-hinted="data-platform-hinted">
-                                                    <div class="content sourceset-dependent-content" data-active=""
-                                                         data-togglable=":equinox-backend:dokkaHtmlPartial/main">
-                                                        <div class="symbol monospace"><span
-                                                                class="token keyword">open </span><span
-                                                                class="token keyword">fun </span><a
-                                                                href="create-resources-config-file.html"><span
-                                                                class="token function">createResourcesConfigFile</span></a><span
-                                                                class="token punctuation">(</span><span
-                                                                class="parameters "><span
-                                                                class="parameter ">containers<span
-                                                                class="token operator">: </span><a
-                                                                href="https://docs.oracle.com/javase/8/docs/api/java/util/HashSet.html">HashSet</a><span
-                                                                class="token operator">&lt;</span><a
-                                                                href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html">String</a><span
-                                                                class="token operator">&gt;</span></span></span><span
-                                                                class="token punctuation">)</span></div>
-                                                        <div class="brief ">Method to create the <span
-                                                                data-unresolved-link="org.springframework.web.servlet.config.annotation/WebMvcConfigurer///PointingToDeclaration/">WebMvcConfigurer</span>
-                                                            to correctly serve the static resources by backend
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <a data-name="-144876558%2FFunctions%2F-1152277508" anchor-label="getConfigFileContent"
-                                   id="-144876558%2FFunctions%2F-1152277508"
-                                   data-filterable-set=":equinox-backend:dokkaHtmlPartial/main"></a>
-                                <div class="table-row" data-filterable-current=":equinox-backend:dokkaHtmlPartial/main"
-                                     data-filterable-set=":equinox-backend:dokkaHtmlPartial/main">
-                                    <div class="main-subrow keyValue ">
-                                        <div class=""><span class="inline-flex">
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":equinox-backend:dokkaHtmlPartial/main"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">fun </span><a href="create-resources-config-file.html"><span class="token function">createResourcesConfigFile</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">containers<span class="token operator">: </span><a href="https://docs.oracle.com/javase/8/docs/api/java/util/HashSet.html">HashSet</a><span class="token operator">&lt;</span><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html">String</a><span class="token operator">&gt;</span></span></span><span class="token punctuation">)</span></div><div class="brief ">Method to create the <span data-unresolved-link="org.springframework.web.servlet.config.annotation/WebMvcConfigurer///PointingToDeclaration/">WebMvcConfigurer</span> to correctly serve the static resources by backend</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-144876558%2FFunctions%2F-1152277508" anchor-label="getConfigFileContent" id="-144876558%2FFunctions%2F-1152277508" data-filterable-set=":equinox-backend:dokkaHtmlPartial/main"></a>
+          <div class="table-row" data-filterable-current=":equinox-backend:dokkaHtmlPartial/main" data-filterable-set=":equinox-backend:dokkaHtmlPartial/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
                   <div><a href="get-config-file-content.html"><span>get</span><wbr><span>Config</span><wbr><span>File</span><wbr><span><span>Content</span></span></a></div>
 <span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-144876558%2FFunctions%2F-1152277508"></span>
-                    <div class="copy-popup-wrapper "><span
-                            class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
                   </span></span></div>
-                                        <div>
-                                            <div class="title">
-                                                <div class="platform-hinted "
-                                                     data-platform-hinted="data-platform-hinted">
-                                                    <div class="content sourceset-dependent-content" data-active=""
-                                                         data-togglable=":equinox-backend:dokkaHtmlPartial/main">
-                                                        <div class="symbol monospace"><span class="token keyword">private </span><span
-                                                                class="token keyword">open </span><span
-                                                                class="token keyword">fun </span><a
-                                                                href="get-config-file-content.html"><span
-                                                                class="token function">getConfigFileContent</span></a><span
-                                                                class="token punctuation">(</span><span
-                                                                class="parameters "><span class="parameter ">kotlinContent<span
-                                                                class="token operator">: </span><a
-                                                                href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html">String</a><span
-                                                                class="token punctuation">, </span></span><span
-                                                                class="parameter ">javaContent<span
-                                                                class="token operator">: </span><a
-                                                                href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html">String</a></span></span><span
-                                                                class="token punctuation">)</span><span
-                                                                class="token operator">: </span><a
-                                                                href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html">String</a>
-                                                        </div>
-                                                        <div class="brief ">Method to get the content of the
-                                                            configuration file to create
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <a data-name="-1495652435%2FFunctions%2F-1152277508" anchor-label="getConfigsPath"
-                                   id="-1495652435%2FFunctions%2F-1152277508"
-                                   data-filterable-set=":equinox-backend:dokkaHtmlPartial/main"></a>
-                                <div class="table-row" data-filterable-current=":equinox-backend:dokkaHtmlPartial/main"
-                                     data-filterable-set=":equinox-backend:dokkaHtmlPartial/main">
-                                    <div class="main-subrow keyValue ">
-                                        <div class=""><span class="inline-flex">
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":equinox-backend:dokkaHtmlPartial/main"><div class="symbol monospace"><span class="token keyword">private </span><span class="token keyword">open </span><span class="token keyword">fun </span><a href="get-config-file-content.html"><span class="token function">getConfigFileContent</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">kotlinContent<span class="token operator">: </span><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">javaContent<span class="token operator">: </span><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html">String</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html">String</a></div><div class="brief ">Method to get the content of the configuration file to create</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1495652435%2FFunctions%2F-1152277508" anchor-label="getConfigsPath" id="-1495652435%2FFunctions%2F-1152277508" data-filterable-set=":equinox-backend:dokkaHtmlPartial/main"></a>
+          <div class="table-row" data-filterable-current=":equinox-backend:dokkaHtmlPartial/main" data-filterable-set=":equinox-backend:dokkaHtmlPartial/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
                   <div><a href="get-configs-path.html"><span>get</span><wbr><span>Configs</span><wbr><span><span>Path</span></span></a></div>
 <span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1495652435%2FFunctions%2F-1152277508"></span>
-                    <div class="copy-popup-wrapper "><span
-                            class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
                   </span></span></div>
-                                        <div>
-                                            <div class="title">
-                                                <div class="platform-hinted "
-                                                     data-platform-hinted="data-platform-hinted">
-                                                    <div class="content sourceset-dependent-content" data-active=""
-                                                         data-togglable=":equinox-backend:dokkaHtmlPartial/main">
-                                                        <div class="symbol monospace"><span class="token keyword">private </span><span
-                                                                class="token keyword">open </span><span
-                                                                class="token keyword">fun </span><a
-                                                                href="get-configs-path.html"><span
-                                                                class="token function">getConfigsPath</span></a><span
-                                                                class="token punctuation">(</span><span
-                                                                class="parameters "><span class="parameter ">configFileName<span
-                                                                class="token operator">: </span><a
-                                                                href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html">String</a></span></span><span
-                                                                class="token punctuation">)</span><span
-                                                                class="token operator">: </span><a
-                                                                href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html">String</a>
-                                                        </div>
-                                                        <div class="brief ">Method to get the path where place the
-                                                            configuration file class
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <a data-name="1420590683%2FFunctions%2F-1152277508" anchor-label="isKotlinClass"
-                                   id="1420590683%2FFunctions%2F-1152277508"
-                                   data-filterable-set=":equinox-backend:dokkaHtmlPartial/main"></a>
-                                <div class="table-row" data-filterable-current=":equinox-backend:dokkaHtmlPartial/main"
-                                     data-filterable-set=":equinox-backend:dokkaHtmlPartial/main">
-                                    <div class="main-subrow keyValue ">
-                                        <div class=""><span class="inline-flex">
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":equinox-backend:dokkaHtmlPartial/main"><div class="symbol monospace"><span class="token keyword">private </span><span class="token keyword">open </span><span class="token keyword">fun </span><a href="get-configs-path.html"><span class="token function">getConfigsPath</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">configFileName<span class="token operator">: </span><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html">String</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html">String</a></div><div class="brief ">Method to get the path where place the configuration file class</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1420590683%2FFunctions%2F-1152277508" anchor-label="isKotlinClass" id="1420590683%2FFunctions%2F-1152277508" data-filterable-set=":equinox-backend:dokkaHtmlPartial/main"></a>
+          <div class="table-row" data-filterable-current=":equinox-backend:dokkaHtmlPartial/main" data-filterable-set=":equinox-backend:dokkaHtmlPartial/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
                   <div><a href="is-kotlin-class.html"><span>is</span><wbr><span>Kotlin</span><wbr><span><span>Class</span></span></a></div>
 <span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1420590683%2FFunctions%2F-1152277508"></span>
-                    <div class="copy-popup-wrapper "><span
-                            class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
                   </span></span></div>
-                                        <div>
-                                            <div class="title">
-                                                <div class="platform-hinted "
-                                                     data-platform-hinted="data-platform-hinted">
-                                                    <div class="content sourceset-dependent-content" data-active=""
-                                                         data-togglable=":equinox-backend:dokkaHtmlPartial/main">
-                                                        <div class="symbol monospace"><span class="token keyword">private </span><span
-                                                                class="token keyword">open </span><span
-                                                                class="token keyword">fun </span><a
-                                                                href="is-kotlin-class.html"><span
-                                                                class="token function">isKotlinClass</span></a><span
-                                                                class="token punctuation">(</span><span
-                                                                class="token punctuation">)</span><span
-                                                                class="token operator">: </span><a
-                                                                href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a>
-                                                        </div>
-                                                        <div class="brief ">Method to get whether the caller class is a
-                                                            <strong>Kotlin</strong> class
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":equinox-backend:dokkaHtmlPartial/main"><div class="symbol monospace"><span class="token keyword">private </span><span class="token keyword">open </span><span class="token keyword">fun </span><a href="is-kotlin-class.html"><span class="token function">isKotlinClass</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a></div><div class="brief ">Method to get whether the caller class is a <strong>Kotlin</strong> class </div></div></div>
                 </div>
+              </div>
             </div>
-            <div class="footer">
-                <a href="#content" id="go-to-top-link" class="footer--button footer--button_go-to-top"></a>
-                <span>© 2025 Copyright</span>
-                <span class="pull-right">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    <div class="footer">
+        <a href="#content" id="go-to-top-link" class="footer--button footer--button_go-to-top"></a>
+        <span>© 2025 Copyright</span>
+        <span class="pull-right">
             <span>Generated by </span>
             <a class="footer--link footer--link_external" href="https://github.com/Kotlin/dokka">
                 <span>dokka</span>
             </a>
         </span>
+    </div>
             </div>
         </div>
     </div>
-</div>
 </body>
 </html>

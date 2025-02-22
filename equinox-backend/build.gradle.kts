@@ -12,7 +12,7 @@ plugins {
 apply(plugin = "io.spring.dependency-management")
 
 group = "com.tecknobit.equinoxbackend"
-version = "1.0.7"
+version = "1.0.8"
 
 repositories {
     mavenCentral()
@@ -41,7 +41,7 @@ mavenPublishing {
     coordinates(
         groupId = "io.github.n7ghtm4r3",
         artifactId = "equinox-backend",
-        version = "1.0.7"
+        version = "1.0.8"
     )
     pom {
         name.set("Equinox")
