@@ -56,7 +56,10 @@ public void insertCars(String ownerId, ArrayList<String> cars) {
 
 ### Synchronize data
 
-Use the `syncBatch` method to execute a batch synchronization of the data
+Use the `syncBatch` method to execute a batch synchronization of the data, you can also create a dedicated
+procedure using
+the [BatchSynchronizationProcedure](../../equinox-backend/src/main/java/com/tecknobit/equinoxbackend/batch/BatchSynchronizationProcedure.java)
+api class
 
 #### Simple objects
 
