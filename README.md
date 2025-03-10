@@ -1,6 +1,6 @@
 # Equinox
 
-Optimal framework for integrating **Spring Boot** backend with **Kotlin Multiplatform** applications
+Optimal framework for integrating **Spring Boot** backend with **Compose Multiplatform** applications
 
 ## Architecture Overview
 
