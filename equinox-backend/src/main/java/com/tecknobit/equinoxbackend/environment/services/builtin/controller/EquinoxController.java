@@ -7,12 +7,16 @@ import com.tecknobit.equinoxbackend.environment.services.users.entity.EquinoxUse
 import com.tecknobit.equinoxbackend.environment.services.users.repository.EquinoxUsersRepository;
 import com.tecknobit.equinoxbackend.environment.services.users.service.EquinoxUsersService;
 import com.tecknobit.equinoxbackend.resourcesutils.ResourcesProvider;
+import com.tecknobit.equinoxcore.annotations.*;
 import com.tecknobit.equinoxcore.network.ResponseStatus;
 import com.tecknobit.mantis.Mantis;
+import jakarta.annotation.Nullable;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -70,9 +74,17 @@ abstract public class EquinoxController<T extends EquinoxUser, R extends Equinox
      */
     public static ResourcesProvider resourcesProvider;
 
+    @Autowired
+    @FutureEquinoxApi(
+            releaseVersion = "1.0.9",
+            additionalNotes = "This will be replace the current translating system with the Mantis library"
+    )
+    protected MessageSource messageSource;
+
     /**
      * {@code mantis} the translations manager
      */
+    @Deprecated(forRemoval = true, since = "1.0.9")
     protected static final Mantis mantis;
 
     static {
@@ -86,18 +98,18 @@ abstract public class EquinoxController<T extends EquinoxUser, R extends Equinox
     /**
      * {@code WRONG_PROCEDURE_MESSAGE} message to use when the procedure is wrong
      */
-    public static final String WRONG_PROCEDURE_MESSAGE = "wrong_procedure_key";
+    public static final String WRONG_PROCEDURE_MESSAGE = "wrong_procedure";
 
     /**
      * {@code NOT_AUTHORIZED_OR_WRONG_DETAILS_MESSAGE} message to use when the request is by a not authorized user or
      * tried to fetch wrong details
      */
-    public static final String NOT_AUTHORIZED_OR_WRONG_DETAILS_MESSAGE = "not_authorized_key";
+    public static final String NOT_AUTHORIZED_OR_WRONG_DETAILS_MESSAGE = "not_authorized";
 
     /**
      * {@code RESPONSE_SUCCESSFUL_MESSAGE} message to use when the request has been successful
      */
-    public static final String RESPONSE_SUCCESSFUL_MESSAGE = "operation_executed_successfully_key";
+    public static final String RESPONSE_SUCCESSFUL_MESSAGE = "operation_executed_successfully";
 
     /**
      * {@code usersRepository} instance for the user repository
@@ -160,16 +172,25 @@ abstract public class EquinoxController<T extends EquinoxUser, R extends Equinox
      * @param token The token of the user
      * @return whether the user is an authorized user as boolean
      */
+    @Validator
     protected boolean isMe(String id, String token) {
         Optional<T> query = usersRepository.findById(id);
         me = query.orElse(null);
         boolean isMe = me != null && me.getToken().equals(token);
         if (!isMe) {
             me = null;
-            mantis.changeCurrentLocale(DEFAULT_LANGUAGE);
+            setSessionLocale(DEFAULT_LANGUAGE);
         } else
-            mantis.changeCurrentLocale(me.getLanguage());
+            setSessionLocale(me.getLanguage());
         return isMe;
+    }
+
+    protected void setSessionLocale(String locale) {
+        setSessionLocale(Locale.forLanguageTag(locale));
+    }
+
+    protected void setSessionLocale(Locale locale) {
+        LocaleContextHolder.setLocale(locale);
     }
 
     /**
@@ -177,8 +198,34 @@ abstract public class EquinoxController<T extends EquinoxUser, R extends Equinox
      *
      * @return the payload for a successful response as {@link String}
      */
+    @Wrapper
+    @Assembler
     protected String successResponse() {
-        return plainResponse(SUCCESSFUL, mantis.getResource(RESPONSE_SUCCESSFUL_MESSAGE));
+        return successResponse(RESPONSE_SUCCESSFUL_MESSAGE);
+    }
+
+    /**
+     * Method to get the payload for a successful response
+     *
+     * @param message The message to send as response
+     * @return the payload for a successful response as {@link String}
+     */
+    @Wrapper
+    @Assembler
+    protected String successResponse(String message) {
+        return successResponse(message, (Object) null);
+    }
+
+    /**
+     * Method to get the payload for a successful response
+     *
+     * @param message The message to send as response
+     * @return the payload for a successful response as {@link String}
+     */
+    @Wrapper
+    @Assembler
+    protected String successResponse(String message, Object... args) {
+        return plainResponse(SUCCESSFUL, getInternationalizedMessage(message, args));
     }
 
     /**
@@ -188,6 +235,7 @@ abstract public class EquinoxController<T extends EquinoxUser, R extends Equinox
      * @param <V>    generic type for the values in the payload
      * @return the payload for a successful response as {@link HashMap} of {@link V}
      */
+    @Assembler
     @SuppressWarnings("unchecked")
     protected <V> HashMap<String, V> successResponse(V value) {
         HashMap<String, V> response = new HashMap<>();
@@ -202,30 +250,23 @@ abstract public class EquinoxController<T extends EquinoxUser, R extends Equinox
      * @param message The message to send as response
      * @return the payload for a successful response as {@link String}
      */
+    @Assembler
     protected String successResponse(JSONObject message) {
         return new JSONObject()
                 .put(RESPONSE_STATUS_KEY, SUCCESSFUL)
                 .put(RESPONSE_DATA_KEY, message).toString();
     }
 
-    /**
-     * Method to get the payload for a successful response
-     *
-     * @param message The message to send as response
-     * @return the payload for a successful response as {@link String}
-     */
-    protected String successResponse(String message) {
-        return plainResponse(SUCCESSFUL, mantis.getResource(message));
+    @Wrapper
+    @Assembler
+    protected String failedResponse(String errorKey) {
+        return failedResponse(errorKey, null);
     }
 
-    /**
-     * Method to get the payload for a failed response
-     *
-     * @param error The error message to send as response
-     * @return the payload for a failed response as {@link String}
-     */
-    protected String failedResponse(String error) {
-        return plainResponse(FAILED, mantis.getResource(error));
+    @Wrapper
+    @Assembler
+    protected String failedResponse(String errorKey, @Nullable Object[] args) {
+        return plainResponse(FAILED, getInternationalizedMessage(errorKey, args));
     }
 
     /**
@@ -239,6 +280,17 @@ abstract public class EquinoxController<T extends EquinoxUser, R extends Equinox
         return new JSONObject()
                 .put(RESPONSE_STATUS_KEY, status)
                 .put(RESPONSE_DATA_KEY, message).toString();
+    }
+
+    @Wrapper
+    @Returner
+    protected String getInternationalizedMessage(String errorKey) {
+        return getInternationalizedMessage(errorKey, null);
+    }
+
+    @Returner
+    protected String getInternationalizedMessage(String errorKey, @Nullable Object[] args) {
+        return messageSource.getMessage(errorKey, args, LocaleContextHolder.getLocale());
     }
 
     /**

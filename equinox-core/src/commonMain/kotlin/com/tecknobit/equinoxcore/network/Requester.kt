@@ -75,7 +75,7 @@ abstract class Requester(
          * `DEFAULT_CONNECTION_ERROR_MESSAGE` The message to send when an error during the communication with the
          * backend occurred
          */
-        const val DEFAULT_CONNECTION_ERROR_MESSAGE = "connection_error_message_key"
+        const val DEFAULT_CONNECTION_ERROR_MESSAGE = "connection_error_message"
 
         /**
          * Method to execute and manage the response of a request

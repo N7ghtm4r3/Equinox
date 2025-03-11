@@ -21,7 +21,7 @@ open class InputsValidator {
         /**
          * `WRONG_NAME_MESSAGE` error message used when the name inserted is not valid
          */
-        const val WRONG_NAME_MESSAGE: String = "wrong_name_key"
+        const val WRONG_NAME_MESSAGE: String = "wrong_name"
 
         /**
          * `NAME_MAX_LENGTH` the max valid length for the username
@@ -31,7 +31,7 @@ open class InputsValidator {
         /**
          * `WRONG_SURNAME_MESSAGE` error message used when the surname inserted is not valid
          */
-        const val WRONG_SURNAME_MESSAGE: String = "wrong_surname_key"
+        const val WRONG_SURNAME_MESSAGE: String = "wrong_surname"
 
         /**
          * `SURNAME_MAX_LENGTH` the max valid length for the surname
@@ -41,7 +41,7 @@ open class InputsValidator {
         /**
          * `WRONG_EMAIL_MESSAGE` error message used when the email inserted is not valid
          */
-        const val WRONG_EMAIL_MESSAGE: String = "wrong_email_key"
+        const val WRONG_EMAIL_MESSAGE: String = "wrong_email"
 
         /**
          * `EMAIL_MAX_LENGTH` the max valid length for the email
@@ -51,7 +51,7 @@ open class InputsValidator {
         /**
          * `WRONG_PASSWORD_MESSAGE` error message used when the password inserted is not valid
          */
-        const val WRONG_PASSWORD_MESSAGE: String = "wrong_password_key"
+        const val WRONG_PASSWORD_MESSAGE: String = "wrong_password"
 
         /**
          * `PASSWORD_MIN_LENGTH` the min valid length for the password
@@ -66,7 +66,7 @@ open class InputsValidator {
         /**
          * `WRONG_LANGUAGE_MESSAGE` error message used when the language inserted is not valid
          */
-        const val WRONG_LANGUAGE_MESSAGE: String = "wrong_language_key"
+        const val WRONG_LANGUAGE_MESSAGE: String = "wrong_language"
 
         /**
          * `DEFAULT_LANGUAGE` default language used
