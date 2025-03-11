@@ -289,7 +289,7 @@ fun JsonElement?.treatsAsNullableLong(
  *
  * @return the [JsonElement] as null-safe [ULong]
  */
-fun JsonElement?.treatsAsLong(
+fun JsonElement?.treatsAsULong(
     defValue: ULong = 0u,
 ): ULong {
     return treatsAsNullableULong(

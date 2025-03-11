@@ -59,3 +59,8 @@ const val LANGUAGE_KEY = "language"
  * `THEME_KEY` the key for the **"theme"** field
  */
 const val THEME_KEY = "theme"
+
+/**
+ * `KEYWORDS_KEY` the key for the **"keywords"** field
+ */
+const val KEYWORDS_KEY = "keywords"
