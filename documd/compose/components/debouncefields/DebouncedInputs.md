@@ -12,10 +12,10 @@ fun App() {
     DebouncedTextField(
         value = state,
         placeholder = "your_placeholder",
-        debounceDelay = // custom delay default 500 ms
-            debounce = {
-                // your debounce logic here
-            }
+        debounceDelay = ,// custom delay default 500 ms
+        debounce = {
+            // your debounce logic here
+        }
     )
 }
 ```
@@ -28,10 +28,10 @@ fun App() {
     DebouncedOutlinedTextField(
         value = state,
         placeholder = "your_placeholder",
-        debounceDelay = // custom delay default 500 ms
-            debounce = {
-                // your debounce logic here
-            }
+        debounceDelay = ,// custom delay default 500 ms
+        debounce = {
+            // your debounce logic here
+        }
     )
 }
 ```
