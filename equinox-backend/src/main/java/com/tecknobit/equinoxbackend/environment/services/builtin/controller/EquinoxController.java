@@ -2,7 +2,6 @@ package com.tecknobit.equinoxbackend.environment.services.builtin.controller;
 
 import com.tecknobit.apimanager.apis.ServerProtector;
 import com.tecknobit.apimanager.formatters.JsonHelper;
-import com.tecknobit.equinoxbackend.configuration.ConfigsGenerator;
 import com.tecknobit.equinoxbackend.configuration.EquinoxBackendConfiguration;
 import com.tecknobit.equinoxbackend.environment.services.users.entity.EquinoxUser;
 import com.tecknobit.equinoxbackend.environment.services.users.repository.EquinoxUsersRepository;
@@ -10,6 +9,7 @@ import com.tecknobit.equinoxbackend.environment.services.users.service.EquinoxUs
 import com.tecknobit.equinoxbackend.resourcesutils.ResourcesProvider;
 import com.tecknobit.equinoxcore.network.ResponseStatus;
 import com.tecknobit.mantis.Mantis;
+import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
@@ -119,6 +119,24 @@ abstract public class EquinoxController<T extends EquinoxUser, R extends Equinox
      * Method to load the {@link #jsonHelper}
      *
      * @param payload The payload received with the request
+     */
+    protected void loadJsonHelper(JSONObject payload) {
+        jsonHelper.setJSONObjectSource(payload);
+    }
+
+    /**
+     * Method to load the {@link #jsonHelper}
+     *
+     * @param payload The payload received with the request
+     */
+    protected void loadJsonHelper(JSONArray payload) {
+        jsonHelper.setJSONArraySource(payload);
+    }
+
+    /**
+     * Method to load the {@link #jsonHelper}
+     *
+     * @param payload The payload received with the request
      * @param <V>      generic type for the values in the payload
      */
     protected <V> void loadJsonHelper(Map<String, V> payload) {
@@ -217,7 +235,7 @@ abstract public class EquinoxController<T extends EquinoxUser, R extends Equinox
      * @param message The message to send as response
      * @return the payload for a response as {@link String}
      */
-    private String plainResponse(ResponseStatus status, String message) {
+    protected String plainResponse(ResponseStatus status, String message) {
         return new JSONObject()
                 .put(RESPONSE_STATUS_KEY, status)
                 .put(RESPONSE_DATA_KEY, message).toString();
@@ -312,9 +330,6 @@ abstract public class EquinoxController<T extends EquinoxUser, R extends Equinox
         resourcesProvider = new ResourcesProvider(RESOURCES_KEY, subDirectories);
         resourcesProvider.createContainerDirectory();
         resourcesProvider.createSubDirectories();
-        ConfigsGenerator configsGenerator = new ConfigsGenerator(context);
-        configsGenerator.createResourcesConfigFile(resourcesProvider.getContainers());
-        configsGenerator.crateCorsAdviceFile();
     }
 
 }

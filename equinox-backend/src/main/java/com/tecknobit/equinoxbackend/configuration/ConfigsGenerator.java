@@ -15,6 +15,11 @@ import java.util.prefs.Preferences;
  * @author N7ghtm4r3 - Tecknobit
  * @since 1.0.1
  */
+@Deprecated(
+        since = "1.0.9",
+        forRemoval = true
+)
+// SEE THE NEW DOCUMENTATION WHICH REPLACE THIS AS https://github.com/N7ghtm4r3/Equinox/blob/main/documd/backend/Configurations.md
 public class ConfigsGenerator {
 
     /**
