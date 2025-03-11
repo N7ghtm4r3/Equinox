@@ -136,17 +136,6 @@ public class EquinoxUsersService<T extends EquinoxUser, R extends EquinoxUsersRe
      * @return a list of keys as {@link List} of {@link String}
      * @apiNote This method allows a customizable sign-up with custom parameters added in a customization of the {@link EquinoxUser}
      */
-    @Deprecated(since = "1.0.8", forRemoval = true)
-    protected List<String> getQueryValuesKeys() {
-        return DEFAULT_USER_SIGN_UP_KEYS;
-    }
-
-    /**
-     * Method to get the list of keys to use in the {@link #BASE_SIGN_UP_QUERY}
-     *
-     * @return a list of keys as {@link List} of {@link String}
-     * @apiNote This method allows a customizable sign-up with custom parameters added in a customization of the {@link EquinoxUser}
-     */
     protected List<String> getSignUpKeys() {
         return DEFAULT_USER_SIGN_UP_KEYS;
     }
