@@ -108,7 +108,7 @@ class Retriever(
      */
     fun execute(
         currentContext: KClass<*>,
-        routine: () -> Unit,
+        routine: suspend () -> Unit,
         repeatRoutine: Boolean = true,
         refreshDelay: Long = 1000L,
     ) {
@@ -157,7 +157,7 @@ class Retriever(
      */
     private data class RetrievingRoutine(
         val currentContext: KClass<*>,
-        val routine: () -> Unit,
+        val routine: suspend () -> Unit,
         val repeatRoutine: Boolean = true,
         val refreshDelay: Long = 1000L,
     )
@@ -302,7 +302,7 @@ class Retriever(
          */
         fun retrieve(
             currentContext: KClass<*>,
-            routine: () -> Unit,
+            routine: suspend () -> Unit,
             repeatRoutine: Boolean = true,
             refreshDelay: Long = 1000L,
         )

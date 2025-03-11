@@ -1,7 +1,7 @@
 package com.tecknobit.equinoxcore.annotations
 
 import kotlin.annotation.AnnotationRetention.SOURCE
-import kotlin.annotation.AnnotationTarget.*
+import kotlin.annotation.AnnotationTarget.FUNCTION
 
 /**
  * The `@Validator` annotation is applied to those methods which are used to check the validity of an input, and it is
@@ -24,7 +24,7 @@ import kotlin.annotation.AnnotationTarget.*
  * @since 1.0.9
  */
 @Retention(SOURCE)
-@Target(FUNCTION, FILE, CLASS)
+@Target(FUNCTION)
 annotation class Validator(
     val validWhen: String = "",
 )

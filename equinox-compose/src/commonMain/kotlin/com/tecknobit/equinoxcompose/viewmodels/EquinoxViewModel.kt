@@ -68,7 +68,7 @@ abstract class EquinoxViewModel(
      */
     override fun retrieve(
         currentContext: KClass<*>,
-        routine: () -> Unit,
+        routine: suspend () -> Unit,
         repeatRoutine: Boolean,
         refreshDelay: Long,
     ) {
