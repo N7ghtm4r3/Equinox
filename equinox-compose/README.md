@@ -88,10 +88,9 @@ The other apis will be gradually released
 - [TabSelector](../documd/compose/components/tabselector/TabSelector.md)
 - [ChameleonText](../documd/compose/components/chameleontext/ChameleonText.md)
 - [Stepper](../documd/compose/components/stepper/Stepper.md)
+- [DebouncedInputs](../documd/compose/components/debouncefields/DebouncedInputs.md)
 
 The others components will be gradually released
-
-
 
 ## Support
 
