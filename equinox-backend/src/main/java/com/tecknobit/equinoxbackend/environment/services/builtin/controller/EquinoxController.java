@@ -114,11 +114,6 @@ abstract public class EquinoxController<T extends EquinoxUser, R extends Equinox
     public static final String RESPONSE_SUCCESSFUL_MESSAGE = "operation_executed_successfully";
 
     /**
-     * {@code HOST_ADDRESS_KEY} the key for the "host_address" field
-     */
-    public static final String HOST_ADDRESS_KEY = "host_address";
-
-    /**
      * {@code WRONG_NAME_MESSAGE} error message used when the name inserted is not valid
      */
     public static final String WRONG_NAME_MESSAGE = "wrong_name";

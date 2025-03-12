@@ -19,7 +19,7 @@ open class InputsValidator {
         @Deprecated(
             message = "This constant has been moved",
             replaceWith = ReplaceWith(
-                expression = "EquinoxController.HOST_ADDRESS_KEY"
+                expression = "CommonKeys.HOST_ADDRESS_KEY"
             ),
             level = DeprecationLevel.ERROR
         )
