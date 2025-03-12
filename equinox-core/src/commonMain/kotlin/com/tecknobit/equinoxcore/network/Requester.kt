@@ -2,6 +2,13 @@ package com.tecknobit.equinoxcore.network
 
 import com.tecknobit.equinoxcore.annotations.Assembler
 import com.tecknobit.equinoxcore.annotations.Wrapper
+import com.tecknobit.equinoxcore.json.treatsAsString
+import com.tecknobit.equinoxcore.network.Requester.Companion.RESPONSE_DATA_KEY
+import com.tecknobit.equinoxcore.network.Requester.Companion.RESPONSE_STATUS_KEY
+import com.tecknobit.equinoxcore.network.Requester.Companion.toNullableResponseData
+import com.tecknobit.equinoxcore.network.Requester.Companion.toResponseArrayData
+import com.tecknobit.equinoxcore.network.Requester.Companion.toResponseContent
+import com.tecknobit.equinoxcore.network.Requester.Companion.toResponseData
 import com.tecknobit.equinoxcore.network.ResponseStatus.*
 import com.tecknobit.equinoxcore.pagination.PaginatedResponse
 import com.tecknobit.equinoxcore.pagination.PaginatedResponse.Companion.PAGE_KEY
@@ -682,7 +689,23 @@ abstract class Requester(
             }
             parameters {
                 query?.entries?.forEach { parameter ->
-                    parameter(parameter.key, parameter.value)
+                    val value = parameter.value
+                    when (value) {
+                        is JsonArray -> {
+                            val parametersList = StringBuilder()
+                            val rawParameters = value.jsonArray
+                            rawParameters.forEachIndexed { index, element ->
+                                parametersList.append(element.treatsAsString())
+                                if (index != rawParameters.lastIndex)
+                                    parametersList.append(",")
+                            }
+                            parameter(parameter.key, parametersList)
+                        }
+
+                        else -> {
+                            parameter(parameter.key, value.treatsAsString())
+                        }
+                    }
                 }
             }
             payload?.invoke()

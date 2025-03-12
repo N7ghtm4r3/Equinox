@@ -18,7 +18,7 @@ const val TOKEN_KEY = "token"
 /**
  * `HOST_ADDRESS_KEY` the key for the **"host_address"** field
  */
-const val HOST_ADDRESS_KEY: String = "host_address"
+const val HOST_ADDRESS_KEY = "host_address"
 
 /**
  * `SERVER_SECRET_KEY` the key for the **"server_secret"** field
