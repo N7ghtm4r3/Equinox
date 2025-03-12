@@ -7,7 +7,10 @@ import com.tecknobit.equinoxbackend.environment.services.users.entity.EquinoxUse
 import com.tecknobit.equinoxbackend.environment.services.users.repository.EquinoxUsersRepository;
 import com.tecknobit.equinoxbackend.environment.services.users.service.EquinoxUsersService;
 import com.tecknobit.equinoxbackend.resourcesutils.ResourcesProvider;
-import com.tecknobit.equinoxcore.annotations.*;
+import com.tecknobit.equinoxcore.annotations.Assembler;
+import com.tecknobit.equinoxcore.annotations.Returner;
+import com.tecknobit.equinoxcore.annotations.Validator;
+import com.tecknobit.equinoxcore.annotations.Wrapper;
 import com.tecknobit.equinoxcore.network.ResponseStatus;
 import com.tecknobit.mantis.Mantis;
 import jakarta.annotation.Nullable;
@@ -75,10 +78,6 @@ abstract public class EquinoxController<T extends EquinoxUser, R extends Equinox
     public static ResourcesProvider resourcesProvider;
 
     @Autowired
-    @FutureEquinoxApi(
-            releaseVersion = "1.0.9",
-            additionalNotes = "This will be replace the current translating system with the Mantis library"
-    )
     protected MessageSource messageSource;
 
     /**
@@ -110,6 +109,36 @@ abstract public class EquinoxController<T extends EquinoxUser, R extends Equinox
      * {@code RESPONSE_SUCCESSFUL_MESSAGE} message to use when the request has been successful
      */
     public static final String RESPONSE_SUCCESSFUL_MESSAGE = "operation_executed_successfully";
+
+    /**
+     * {@code HOST_ADDRESS_KEY} the key for the "host_address" field
+     */
+    public static final String HOST_ADDRESS_KEY = "host_address";
+
+    /**
+     * {@code WRONG_NAME_MESSAGE} error message used when the name inserted is not valid
+     */
+    public static final String WRONG_NAME_MESSAGE = "wrong_name";
+
+    /**
+     * {@code WRONG_SURNAME_MESSAGE} error message used when the surname inserted is not valid
+     */
+    public static final String WRONG_SURNAME_MESSAGE = "wrong_surname";
+
+    /**
+     * {@code WRONG_EMAIL_MESSAGE} error message used when the email inserted is not valid
+     */
+    public static final String WRONG_EMAIL_MESSAGE = "wrong_email";
+
+    /**
+     * {@code WRONG_PASSWORD_MESSAGE} error message used when the password inserted is not valid
+     */
+    public static final String WRONG_PASSWORD_MESSAGE = "wrong_password";
+
+    /**
+     * {@code WRONG_LANGUAGE_MESSAGE} error message used when the language inserted is not valid
+     */
+    public static final String WRONG_LANGUAGE_MESSAGE = "wrong_language";
 
     /**
      * {@code usersRepository} instance for the user repository
