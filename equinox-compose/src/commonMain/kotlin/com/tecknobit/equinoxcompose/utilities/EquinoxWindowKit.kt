@@ -198,7 +198,7 @@ annotation class ResponsiveClassComponent(
     )
 
 /**
- * Method to get the current window size class of the device
+ * Method used to get the current window size class of the device
  *
  * @return the current window size class of the device as [WindowSizeClass]
  */
@@ -206,7 +206,7 @@ annotation class ResponsiveClassComponent(
 expect fun currentSizeClass(): WindowSizeClass
 
 /**
- * Method to get the current window width size class of the device
+ * Method used to get the current window width size class of the device
  *
  * @return the current window width size class of the device as [WindowWidthSizeClass]
  */
@@ -217,7 +217,7 @@ fun currentWidthClass(): WindowWidthSizeClass {
 }
 
 /**
- * Method to get the current window height size class of the device
+ * Method used to get the current window height size class of the device
  *
  * @return the current window height size class of the device as [WindowHeightSizeClass]
  */

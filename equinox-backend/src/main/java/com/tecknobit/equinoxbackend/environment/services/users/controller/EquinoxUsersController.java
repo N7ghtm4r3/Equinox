@@ -16,8 +16,8 @@ import java.util.Map;
 import static com.tecknobit.apimanager.apis.APIRequest.RequestMethod.*;
 import static com.tecknobit.apimanager.apis.ServerProtector.SERVER_SECRET_KEY;
 import static com.tecknobit.equinoxcore.helpers.CommonKeysKt.*;
-import static com.tecknobit.equinoxcore.helpers.InputsValidator.*;
 import static com.tecknobit.equinoxcore.helpers.InputsValidator.Companion;
+import static com.tecknobit.equinoxcore.helpers.InputsValidator.DEFAULT_LANGUAGE;
 import static com.tecknobit.equinoxcore.network.EquinoxBaseEndpointsSet.*;
 
 /**
@@ -116,7 +116,7 @@ public class EquinoxUsersController<T extends EquinoxUser, R extends EquinoxUser
     }
 
     /**
-     * Method to get the list of the custom parameters of a custom {@link EquinoxUser} from the payload of the {@link #signUp(Map)}
+     * Method used to get the list of the custom parameters of a custom {@link EquinoxUser} from the payload of the {@link #signUp(Map)}
      * method
      *
      * @return the custom parameters as array of {@link Object}
@@ -216,7 +216,7 @@ public class EquinoxUsersController<T extends EquinoxUser, R extends EquinoxUser
     }
 
     /**
-     * Method to get the list of the custom parameters of a custom {@link EquinoxUser} from the payload of the {@link #signIn(Map)}
+     * Method used to get the list of the custom parameters of a custom {@link EquinoxUser} from the payload of the {@link #signIn(Map)}
      * method 
      *
      * @return the custom parameters as array of {@link Object}
@@ -304,7 +304,7 @@ public class EquinoxUsersController<T extends EquinoxUser, R extends EquinoxUser
     }
 
     /**
-     * Method to get the dynamic data of the user to correctly update in all the devices where the user is connected
+     * Method used to get the dynamic data of the user to correctly update in all the devices where the user is connected
      *
      * @param id    The identifier of the user
      * @param token The token of the user

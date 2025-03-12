@@ -27,7 +27,7 @@ public class EquinoxBackendConfiguration {
     }
 
     /**
-     * Method to get the {@link #serverProtectorEnabled} instance
+     * Method used to get the {@link #serverProtectorEnabled} instance
      *
      * @return the {@link #serverProtectorEnabled} instance as boolean
      */
@@ -46,7 +46,7 @@ public class EquinoxBackendConfiguration {
     }
 
     /**
-     * Method to get the current {@link #configuration} instance
+     * Method used to get the current {@link #configuration} instance
      *
      * @return the current {@link #configuration} instance as {@link EquinoxBackendConfiguration}
      */

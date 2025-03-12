@@ -157,7 +157,7 @@ public class EquinoxUser extends EquinoxItem {
     }
 
     /**
-     * Method to get {@link #token} instance 
+     * Method used to get {@link #token} instance 
      *
      * @return {@link #token} instance as {@link String}
      */
@@ -166,7 +166,7 @@ public class EquinoxUser extends EquinoxItem {
     }
 
     /**
-     * Method to get {@link #name} instance 
+     * Method used to get {@link #name} instance 
      *
      * @return {@link #name} instance as {@link String}
      */
@@ -175,7 +175,7 @@ public class EquinoxUser extends EquinoxItem {
     }
 
     /**
-     * Method to get {@link #surname} instance 
+     * Method used to get {@link #surname} instance 
      *
      * @return {@link #surname} instance as {@link String}
      */
@@ -184,7 +184,7 @@ public class EquinoxUser extends EquinoxItem {
     }
 
     /**
-     * Method to get the complete name of the user 
+     * Method used to get the complete name of the user 
      *
      * @return the complete name of the user as {@link String}
      */
@@ -194,7 +194,7 @@ public class EquinoxUser extends EquinoxItem {
     }
 
     /**
-     * Method to get {@link #email} instance 
+     * Method used to get {@link #email} instance 
      *
      * @return {@link #email} instance as {@link String}
      */
@@ -203,7 +203,7 @@ public class EquinoxUser extends EquinoxItem {
     }
 
     /**
-     * Method to get {@link #password} instance 
+     * Method used to get {@link #password} instance 
      *
      * @return {@link #password} instance as {@link String}
      */
@@ -212,7 +212,7 @@ public class EquinoxUser extends EquinoxItem {
     }
 
     /**
-     * Method to get {@link #profilePic} instance 
+     * Method used to get {@link #profilePic} instance 
      *
      * @return {@link #profilePic} instance as {@link String}
      */
@@ -222,7 +222,7 @@ public class EquinoxUser extends EquinoxItem {
     }
 
     /**
-     * Method to get {@link #language} instance 
+     * Method used to get {@link #language} instance 
      *
      * @return {@link #language} instance as {@link String}
      */

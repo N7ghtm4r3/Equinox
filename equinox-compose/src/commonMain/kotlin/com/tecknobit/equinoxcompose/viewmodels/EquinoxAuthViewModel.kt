@@ -170,7 +170,7 @@ abstract class EquinoxAuthViewModel(
     }
 
     /**
-     * Method to get the current user language
+     * Method used to get the current user language
      *
      * @return the user language as [String]
      */
@@ -184,7 +184,7 @@ abstract class EquinoxAuthViewModel(
     }
 
     /**
-     * Method to get a supported language for the user
+     * Method used to get a supported language for the user
      *
      * @return a supported language for the user as [String]
      */
@@ -196,7 +196,7 @@ abstract class EquinoxAuthViewModel(
     }
 
     /**
-     * Method to get the list of the custom parameters to use in the [signUp] request
+     * Method used to get the list of the custom parameters to use in the [signUp] request
      *
      * The order of the custom parameters must be the same of that specified in your customization of the
      * [getSignUpValuesKeys()](https://github.com/N7ghtm4r3/Equinox/blob/main/src/main/java/com/tecknobit/equinox/environment/helpers/services/EquinoxUsersHelper.java#L133)
@@ -291,7 +291,7 @@ abstract class EquinoxAuthViewModel(
     }
 
     /**
-     * Method to get the list of the custom parameters to use in the [signIn] request.
+     * Method used to get the list of the custom parameters to use in the [signIn] request.
      *
      * The order of the custom parameters must be the same of that specified in your customization of the
      * [getSignUpValuesKeys()](https://github.com/N7ghtm4r3/Equinox/blob/main/src/main/java/com/tecknobit/equinox/environment/helpers/services/EquinoxUsersHelper.java#L133)

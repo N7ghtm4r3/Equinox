@@ -339,7 +339,7 @@ fun JsonElement?.treatsAsNullableString(
 }
 
 /**
- * Method to get the nullable content from a [JsonPrimitive] element
+ * Method used to get the nullable content from a [JsonPrimitive] element
  *
  * @return the nullable content as [String] or null if not exists
  */

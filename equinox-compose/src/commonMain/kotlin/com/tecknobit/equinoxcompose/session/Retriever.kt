@@ -38,7 +38,7 @@ class Retriever(
         }
 
         /**
-         * Method to get the current active context where the [retrieverScope] is executing
+         * Method used to get the current active context where the [retrieverScope] is executing
          *
          * @return the current active context as [KClass]
          */
@@ -60,7 +60,7 @@ class Retriever(
     private lateinit var lastRoutineExecuted: RetrievingRoutine
 
     /**
-     * Method to get whether the [retrieverScope] can start, so if there aren't other jobs that
+     * Method used to get whether the [retrieverScope] can start, so if there aren't other jobs that
      * routine is already executing
      *
      *
@@ -237,7 +237,7 @@ class Retriever(
     interface RetrieverWrapper {
 
         /**
-         * Method to get whether the [retrieverScope] can start, so if there aren't other jobs that
+         * Method used to get whether the [retrieverScope] can start, so if there aren't other jobs that
          * routine is already executing
          *
          * No-any params required

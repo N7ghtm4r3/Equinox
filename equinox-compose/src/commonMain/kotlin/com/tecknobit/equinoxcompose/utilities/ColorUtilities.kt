@@ -28,7 +28,7 @@ fun generateRandomColor(): Color {
 }
 
 /**
- * Method to get the color from its hex code
+ * Method used to get the color from its hex code
  *
  * @return color as [Color]
  */

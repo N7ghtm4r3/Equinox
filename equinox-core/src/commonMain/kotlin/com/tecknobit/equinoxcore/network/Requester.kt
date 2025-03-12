@@ -160,7 +160,7 @@ abstract class Requester(
         }
 
         /**
-         * Method to get whether the request has been successful or not
+         * Method used to get whether the request has been successful or not
          *
          * @param response The response of the request
          *
@@ -179,7 +179,7 @@ abstract class Requester(
         }
 
         /**
-         * Method to get directly the response data from the request response
+         * Method used to get directly the response data from the request response
          *
          * @return the [RESPONSE_DATA_KEY] value as nullable [JsonObject]
          *
@@ -217,7 +217,7 @@ abstract class Requester(
         }
 
         /**
-         * Method to get directly the response data from the request response
+         * Method used to get directly the response data from the request response
          *
          * @return the [RESPONSE_DATA_KEY] value as [JsonObject]
          *
@@ -253,7 +253,7 @@ abstract class Requester(
         }
 
         /**
-         * Method to get directly the response data from the request response and format as [JsonArray]
+         * Method used to get directly the response data from the request response and format as [JsonArray]
          *
          * @return the [RESPONSE_DATA_KEY] value as [JsonArray]
          *
@@ -290,7 +290,7 @@ abstract class Requester(
         }
 
         /**
-         * Method to get directly the response data from the request response and format as [String]
+         * Method used to get directly the response data from the request response and format as [String]
          *
          * @return the [RESPONSE_DATA_KEY] value as [String]
          *

@@ -77,7 +77,7 @@ public abstract class FilteredQuery<T> {
     }
 
     /**
-     * Method to get the paginated entities executing the query
+     * Method used to get the paginated entities executing the query
      *
      * @param pageable The pageable value to use to paginate the query
      * @return the entities retrieved from database as {@link List} of {@link T}
@@ -91,7 +91,7 @@ public abstract class FilteredQuery<T> {
     }
 
     /**
-     * Method to get the entities executing the query
+     * Method used to get the entities executing the query
      *
      * @return the entities retrieved from database as {@link List} of {@link T}
      */

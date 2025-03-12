@@ -111,7 +111,7 @@ public abstract class BatchSynchronizationProcedure<O, D, V> extends EquinoxItem
     }
 
     /**
-     * Method to get the {@link #owner}
+     * Method used to get the {@link #owner}
      *
      * @return the {@link #owner} as {@link O}
      */
@@ -120,7 +120,7 @@ public abstract class BatchSynchronizationProcedure<O, D, V> extends EquinoxItem
     }
 
     /**
-     * Method to get the {@link #ownedItems}
+     * Method used to get the {@link #ownedItems}
      *
      * @return the {@link #ownedItems} as {@link Collection} of {@link D}
      */
@@ -129,7 +129,7 @@ public abstract class BatchSynchronizationProcedure<O, D, V> extends EquinoxItem
     }
 
     /**
-     * Method to get the {@link #model}
+     * Method used to get the {@link #model}
      *
      * @return the {@link #model} as {@link SyncBatchModel}
      */
@@ -138,7 +138,7 @@ public abstract class BatchSynchronizationProcedure<O, D, V> extends EquinoxItem
     }
 
     /**
-     * Method to get the {@link #table}
+     * Method used to get the {@link #table}
      *
      * @return the {@link #table} as {@link String}
      */
@@ -147,7 +147,7 @@ public abstract class BatchSynchronizationProcedure<O, D, V> extends EquinoxItem
     }
 
     /**
-     * Method to get the {@link #batchQuery}
+     * Method used to get the {@link #batchQuery}
      *
      * @return the {@link #batchQuery} as {@link BatchQuery} of {@link V}
      */
@@ -156,7 +156,7 @@ public abstract class BatchSynchronizationProcedure<O, D, V> extends EquinoxItem
     }
 
     /**
-     * Method to get the {@link #currentDataCallback}
+     * Method used to get the {@link #currentDataCallback}
      *
      * @return the {@link #currentDataCallback} as {@link CurrentDataCallback} of {@link D}
      */

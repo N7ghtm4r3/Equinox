@@ -77,7 +77,10 @@ abstract public class EquinoxController<T extends EquinoxUser, R extends Equinox
      */
     public static ResourcesProvider resourcesProvider;
 
-    @Autowired
+    /**
+     * {@code messageSource} the message source used to manage the resources messages bundle
+     */
+    @Autowired(required = false)
     protected MessageSource messageSource;
 
     /**
@@ -197,7 +200,7 @@ abstract public class EquinoxController<T extends EquinoxUser, R extends Equinox
      * Method to check whether the user who made a request is an authorized user <br>
      * If the user is authorized the {@link #me} instance is loaded
      *
-     * @param id:    the identifier of the user
+     * @param id The identifier of the user
      * @param token The token of the user
      * @return whether the user is an authorized user as boolean
      */
@@ -214,16 +217,27 @@ abstract public class EquinoxController<T extends EquinoxUser, R extends Equinox
         return isMe;
     }
 
+    /**
+     * Method used to change the current locale of the session
+     *
+     * @param locale The locale of the session to set
+     */
+    @Wrapper
     protected void setSessionLocale(String locale) {
         setSessionLocale(Locale.forLanguageTag(locale));
     }
 
+    /**
+     * Method used to change the current locale of the session
+     *
+     * @param locale The locale of the session to set
+     */
     protected void setSessionLocale(Locale locale) {
         LocaleContextHolder.setLocale(locale);
     }
 
     /**
-     * Method to get the payload for a successful response 
+     * Method used to get the payload for a successful response 
      *
      * @return the payload for a successful response as {@link String}
      */
@@ -234,7 +248,7 @@ abstract public class EquinoxController<T extends EquinoxUser, R extends Equinox
     }
 
     /**
-     * Method to get the payload for a successful response
+     * Method used to get the payload for a successful response
      *
      * @param message The message to send as response
      * @return the payload for a successful response as {@link String}
@@ -246,7 +260,7 @@ abstract public class EquinoxController<T extends EquinoxUser, R extends Equinox
     }
 
     /**
-     * Method to get the payload for a successful response
+     * Method used to get the payload for a successful response
      *
      * @param message The message to send as response
      * @return the payload for a successful response as {@link String}
@@ -258,14 +272,13 @@ abstract public class EquinoxController<T extends EquinoxUser, R extends Equinox
     }
 
     /**
-     * Method to get the payload for a successful response
+     * Method used to get the payload for a successful response
      *
      * @param value The value to send as response
      * @param <V>    generic type for the values in the payload
      * @return the payload for a successful response as {@link HashMap} of {@link V}
      */
     @Assembler
-    @SuppressWarnings("unchecked")
     protected <V> HashMap<String, V> successResponse(V value) {
         HashMap<String, V> response = new HashMap<>();
         response.put(RESPONSE_DATA_KEY, value);
@@ -274,7 +287,7 @@ abstract public class EquinoxController<T extends EquinoxUser, R extends Equinox
     }
 
     /**
-     * Method to get the payload for a successful response
+     * Method used to get the payload for a successful response
      *
      * @param message The message to send as response
      * @return the payload for a successful response as {@link String}
@@ -286,12 +299,25 @@ abstract public class EquinoxController<T extends EquinoxUser, R extends Equinox
                 .put(RESPONSE_DATA_KEY, message).toString();
     }
 
+    /**
+     * Method used to get the payload for a failed response
+     *
+     * @param errorKey The key of the error
+     * @return the payload for a failed response as {@link String}
+     */
     @Wrapper
     @Assembler
     protected String failedResponse(String errorKey) {
         return failedResponse(errorKey, null);
     }
 
+    /**
+     * Method used to get the payload for a failed response
+     *
+     * @param errorKey The key of the error
+     * @param args     The arguments used to format the response
+     * @return the payload for a failed response as {@link String}
+     */
     @Wrapper
     @Assembler
     protected String failedResponse(String errorKey, @Nullable Object[] args) {
@@ -311,15 +337,29 @@ abstract public class EquinoxController<T extends EquinoxUser, R extends Equinox
                 .put(RESPONSE_DATA_KEY, message).toString();
     }
 
+    /**
+     * Method used to get the international message
+     *
+     * @param messageKey The message of the international message
+     * @return the internationalized message as {@link String}
+     */
     @Wrapper
     @Returner
-    protected String getInternationalizedMessage(String errorKey) {
-        return getInternationalizedMessage(errorKey, null);
+    protected String getInternationalizedMessage(String messageKey) {
+        return getInternationalizedMessage(messageKey, null);
     }
 
+    /**
+     * Method used to get the international message
+     *
+     * @param messageKey The message of the international message
+     * @param args The arguments used to format the international message
+     *
+     * @return the internationalized message as {@link String}
+     */
     @Returner
-    protected String getInternationalizedMessage(String errorKey, @Nullable Object[] args) {
-        return messageSource.getMessage(errorKey, args, LocaleContextHolder.getLocale());
+    protected String getInternationalizedMessage(String messageKey, @Nullable Object[] args) {
+        return messageSource.getMessage(messageKey, args, LocaleContextHolder.getLocale());
     }
 
     /**

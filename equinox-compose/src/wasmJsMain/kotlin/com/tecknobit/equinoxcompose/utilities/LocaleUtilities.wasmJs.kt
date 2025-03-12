@@ -3,7 +3,7 @@ package com.tecknobit.equinoxcompose.utilities
 import kotlinx.browser.window
 
 /**
- * Method to get the current locale language set
+ * Method used to get the current locale language set
  *
  * @return the current locale language set as [String]
  */

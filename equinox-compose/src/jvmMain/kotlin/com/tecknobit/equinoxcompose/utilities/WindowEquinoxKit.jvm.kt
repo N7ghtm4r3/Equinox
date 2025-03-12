@@ -6,7 +6,7 @@ import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import androidx.compose.runtime.Composable
 
 /**
- * Method to get the current window size class of the device
+ * Method used to get the current window size class of the device
  *
  * @return the current window size class of the device as [WindowSizeClass]
  */
