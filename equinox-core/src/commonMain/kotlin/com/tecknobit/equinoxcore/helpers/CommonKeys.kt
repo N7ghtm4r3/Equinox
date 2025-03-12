@@ -16,6 +16,11 @@ const val IDENTIFIER_KEY = "id"
 const val TOKEN_KEY = "token"
 
 /**
+ * `HOST_ADDRESS_KEY` the key for the **"host_address"** field
+ */
+const val HOST_ADDRESS_KEY = "host_address"
+
+/**
  * `SERVER_SECRET_KEY` the key for the **"server_secret"** field
  */
 const val SERVER_SECRET_KEY = "server_secret"
@@ -59,3 +64,8 @@ const val LANGUAGE_KEY = "language"
  * `THEME_KEY` the key for the **"theme"** field
  */
 const val THEME_KEY = "theme"
+
+/**
+ * `KEYWORDS_KEY` the key for the **"keywords"** field
+ */
+const val KEYWORDS_KEY = "keywords"

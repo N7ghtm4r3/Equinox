@@ -683,7 +683,7 @@ fun ChameleonText(
 }
 
 /**
- * Method to get the color to use on a specified [backgroundColor] based on its luminance
+ * Method used to get the color to use on a specified [backgroundColor] based on its luminance
  *
  * @param backgroundColor The background color where the text is on top
  *

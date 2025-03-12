@@ -72,14 +72,14 @@ public abstract class EquinoxItemsHelper {
     public interface SyncBatchModel {
 
         /**
-         * Method to get the current list of data
+         * Method used to get the current list of data
          *
          * @return the current list of identifiers as {@link Collection} of {@link V}
          */
         <V> Collection<V> getCurrentData();
 
         /**
-         * Method to get the columns where execute the deletion of the items to delete
+         * Method used to get the columns where execute the deletion of the items to delete
          *
          * @return columns where execute the deletion as array of {@link String}
          */
@@ -147,7 +147,7 @@ public abstract class EquinoxItemsHelper {
     public interface BatchQuery<V> {
 
         /**
-         * Method to get the data to use in the batch query
+         * Method used to get the data to use in the batch query
          *
          * @return the updated data as {@link Collection} of {@link V}
          */
@@ -163,7 +163,7 @@ public abstract class EquinoxItemsHelper {
         void prepareQuery(Query query, int index, Collection<V> items);
 
         /**
-         * Method to get the columns used in the query
+         * Method used to get the columns used in the query
          *
          * @return columns used in the query as array of {@link String}
          */

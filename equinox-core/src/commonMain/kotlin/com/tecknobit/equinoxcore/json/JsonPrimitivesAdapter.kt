@@ -289,7 +289,7 @@ fun JsonElement?.treatsAsNullableLong(
  *
  * @return the [JsonElement] as null-safe [ULong]
  */
-fun JsonElement?.treatsAsLong(
+fun JsonElement?.treatsAsULong(
     defValue: ULong = 0u,
 ): ULong {
     return treatsAsNullableULong(
@@ -339,7 +339,7 @@ fun JsonElement?.treatsAsNullableString(
 }
 
 /**
- * Method to get the nullable content from a [JsonPrimitive] element
+ * Method used to get the nullable content from a [JsonPrimitive] element
  *
  * @return the nullable content as [String] or null if not exists
  */

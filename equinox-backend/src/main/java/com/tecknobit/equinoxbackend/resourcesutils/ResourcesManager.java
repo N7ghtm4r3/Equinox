@@ -61,7 +61,7 @@ public interface ResourcesManager {
     }
 
     /**
-     * Method to get the suffix of a resource file
+     * Method used to get the suffix of a resource file
      *
      * @param resource: the resource file from get its suffix
      * @return the suffix of the resource file as {@link String}

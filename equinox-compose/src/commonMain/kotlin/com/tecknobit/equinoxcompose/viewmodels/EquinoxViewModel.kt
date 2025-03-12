@@ -36,7 +36,7 @@ abstract class EquinoxViewModel(
     private val retriever = Retriever(viewModelScope)
 
     /**
-     * Method to get whether the [viewModelScope] can start, so if there aren't other jobs that
+     * Method used to get whether the [viewModelScope] can start, so if there aren't other jobs that
      * routine is already executing
      *
      *
@@ -68,7 +68,7 @@ abstract class EquinoxViewModel(
      */
     override fun retrieve(
         currentContext: KClass<*>,
-        routine: () -> Unit,
+        routine: suspend () -> Unit,
         repeatRoutine: Boolean,
         refreshDelay: Long,
     ) {

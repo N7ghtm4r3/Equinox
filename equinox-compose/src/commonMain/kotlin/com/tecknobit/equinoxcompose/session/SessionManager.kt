@@ -323,7 +323,7 @@ private fun hasBeenDisconnectedAction() {
 }
 
 /**
- * Method to get the current status of the session as [SessionStatus]
+ * Method used to get the current status of the session as [SessionStatus]
  */
 fun getCurrentSessionStatus(): SessionStatus {
     return sessionStatus.value

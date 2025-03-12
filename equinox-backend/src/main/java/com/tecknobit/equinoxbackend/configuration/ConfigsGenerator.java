@@ -15,6 +15,11 @@ import java.util.prefs.Preferences;
  * @author N7ghtm4r3 - Tecknobit
  * @since 1.0.1
  */
+@Deprecated(
+        since = "1.0.9",
+        forRemoval = true
+)
+// SEE THE NEW DOCUMENTATION WHICH REPLACE THIS AS https://github.com/N7ghtm4r3/Equinox/blob/main/documd/backend/Configurations.md
 public class ConfigsGenerator {
 
     /**
@@ -259,7 +264,7 @@ public class ConfigsGenerator {
     }
 
     /**
-     * Method to get whether the caller class is a <b>Kotlin</b> class <br>
+     * Method used to get whether the caller class is a <b>Kotlin</b> class <br>
      *
      * @return whether the caller class is a <b>Kotlin</b> class as boolean
      */
@@ -319,7 +324,7 @@ public class ConfigsGenerator {
     }
 
     /**
-     * Method to get the content of the configuration file to create
+     * Method used to get the content of the configuration file to create
      *
      * @param kotlinContent: the kotlin version of the content to create the relate config file
      * @param javaContent:   the java version of the content to create the relate config file
@@ -380,7 +385,7 @@ public class ConfigsGenerator {
     }
 
     /**
-     * Method to get the path where place the configuration file class
+     * Method used to get the path where place the configuration file class
      *
      * @param configFileName: the name of the configuration file to create
      * @return the path where place the configuration file class as {@link String}

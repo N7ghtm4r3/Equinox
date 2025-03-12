@@ -38,7 +38,7 @@ class Retriever(
         }
 
         /**
-         * Method to get the current active context where the [retrieverScope] is executing
+         * Method used to get the current active context where the [retrieverScope] is executing
          *
          * @return the current active context as [KClass]
          */
@@ -60,7 +60,7 @@ class Retriever(
     private lateinit var lastRoutineExecuted: RetrievingRoutine
 
     /**
-     * Method to get whether the [retrieverScope] can start, so if there aren't other jobs that
+     * Method used to get whether the [retrieverScope] can start, so if there aren't other jobs that
      * routine is already executing
      *
      *
@@ -108,7 +108,7 @@ class Retriever(
      */
     fun execute(
         currentContext: KClass<*>,
-        routine: () -> Unit,
+        routine: suspend () -> Unit,
         repeatRoutine: Boolean = true,
         refreshDelay: Long = 1000L,
     ) {
@@ -157,7 +157,7 @@ class Retriever(
      */
     private data class RetrievingRoutine(
         val currentContext: KClass<*>,
-        val routine: () -> Unit,
+        val routine: suspend () -> Unit,
         val repeatRoutine: Boolean = true,
         val refreshDelay: Long = 1000L,
     )
@@ -237,7 +237,7 @@ class Retriever(
     interface RetrieverWrapper {
 
         /**
-         * Method to get whether the [retrieverScope] can start, so if there aren't other jobs that
+         * Method used to get whether the [retrieverScope] can start, so if there aren't other jobs that
          * routine is already executing
          *
          * No-any params required
@@ -302,7 +302,7 @@ class Retriever(
          */
         fun retrieve(
             currentContext: KClass<*>,
-            routine: () -> Unit,
+            routine: suspend () -> Unit,
             repeatRoutine: Boolean = true,
             refreshDelay: Long = 1000L,
         )

@@ -131,18 +131,7 @@ public class EquinoxUsersService<T extends EquinoxUser, R extends EquinoxUsersRe
     }
 
     /**
-     * Method to get the list of keys to use in the {@link #BASE_SIGN_UP_QUERY}
-     *
-     * @return a list of keys as {@link List} of {@link String}
-     * @apiNote This method allows a customizable sign-up with custom parameters added in a customization of the {@link EquinoxUser}
-     */
-    @Deprecated(since = "1.0.8", forRemoval = true)
-    protected List<String> getQueryValuesKeys() {
-        return DEFAULT_USER_SIGN_UP_KEYS;
-    }
-
-    /**
-     * Method to get the list of keys to use in the {@link #BASE_SIGN_UP_QUERY}
+     * Method used to get the list of keys to use in the {@link #BASE_SIGN_UP_QUERY}
      *
      * @return a list of keys as {@link List} of {@link String}
      * @apiNote This method allows a customizable sign-up with custom parameters added in a customization of the {@link EquinoxUser}
@@ -207,7 +196,7 @@ public class EquinoxUsersService<T extends EquinoxUser, R extends EquinoxUsersRe
     }
 
     /**
-     * Method to get whether the user is present in the database
+     * Method used to get whether the user is present in the database
      *
      * @param userId The identifier of the user to check
      * @return whether the user exists as {@code boolean}
@@ -217,7 +206,7 @@ public class EquinoxUsersService<T extends EquinoxUser, R extends EquinoxUsersRe
     }
 
     /**
-     * Method to get the dynamic data of the user to correctly update in all the devices where the user is connected
+     * Method used to get the dynamic data of the user to correctly update in all the devices where the user is connected
      *
      * @param userId The identifier of the user
      * @return the dynamic data as {@link JSONObject}
@@ -238,7 +227,7 @@ public class EquinoxUsersService<T extends EquinoxUser, R extends EquinoxUsersRe
     }
 
     /**
-     * Method to get the list of keys to use in the {@link #getDynamicAccountData(String)} method
+     * Method used to get the list of keys to use in the {@link #getDynamicAccountData(String)} method
      *
      * @return a list of keys as {@link List} of {@link String}
      * @apiNote This method allows a customizable retrieving of custom parameters added in a customization of the {@link EquinoxUser}

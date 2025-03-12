@@ -1,6 +1,6 @@
 # Equinox Backend
 
-**v1.0.8**
+**v1.0.9**
 
 Utilities and apis for the backends based on the **Spring Boot**'s architecture
 
@@ -10,7 +10,7 @@ Utilities and apis for the backends based on the **Spring Boot**'s architecture
 
 ```gradle
 [versions]
-equinox = "1.0.8"
+equinox = "1.0.9"
 
 [libraries]
 equinox-backend = { module = "io.github.n7ghtm4r3:equinox-backend", version.ref = "equinox" }
@@ -47,10 +47,10 @@ Add the JitPack repository to your build file
     dependencies {
        
         // implement the backend utilities
-        implementation 'io.github.n7ghtm4r3:equinox-backend:1.0.8'
+        implementation 'io.github.n7ghtm4r3:equinox-backend:1.0.9'
         
         // implement the core utilities
-        implementation 'io.github.n7ghtm4r3:equinox-core:1.0.8'
+        implementation 'io.github.n7ghtm4r3:equinox-core:1.0.9'
     }
     ```
 
@@ -60,10 +60,10 @@ Add the JitPack repository to your build file
     dependencies {
         
         // implement the backend utilities
-        implementation("io.github.n7ghtm4r3:equinox-backend:1.0.8")
+        implementation("io.github.n7ghtm4r3:equinox-backend:1.0.9")
         
         // implement the core utilities
-        implementation("io.github.n7ghtm4r3:equinox-core:1.0.8")
+        implementation("io.github.n7ghtm4r3:equinox-core:1.0.9")
     }
     ```
 
@@ -84,9 +84,6 @@ Add the JitPack repository to your build file
 
 - <a href="https://github.com/N7ghtm4r3/Equinox/blob/main/documd/backend/ResourcesProvider.md">**ResourcesProvider**</a>
   allows you to manage the static resources to serve to the clients
-- <a href="https://github.com/N7ghtm4r3/Equinox/blob/main/documd/backend/ConfigsGenerator.md">**ConfigsGenerator**</a>
-  allows
-  you to create automatically the configuration file for your backend
 - <a href="https://github.com/N7ghtm4r3/Equinox/blob/main/documd/backend/IndexesCreator.md">**IndexesCreator**</a>
   allows you to create automatically the the indexes for your own tables of the database
 - <a href="https://github.com/N7ghtm4r3/Equinox/blob/main/documd/backend/FilteredQuery.md">**FilteredQuery**</a> allows
@@ -104,6 +101,21 @@ a
 look [here](https://github.com/N7ghtm4r3/Equinox/blob/main/documd/backend/EquinoxEnvironment.md) to check how it works
 and how
 to implement it on your own backend
+
+## Configure your backend
+
+To configure your backend as you need you can follow this [guide](../documd/backend/Configurations.md) to directly copy
+the `@Component` classes you need and implement them in your backend instance, personal advice is put them in a folder
+named `configuration` for clean implementation and better readability as follows:
+
+ ``` bash
+  com.your.package
+   |-- configuration
+       |-- config_class
+       |-- config_class
+       |-- config_class
+       |-- ...
+  ```
 
 ## Support
 

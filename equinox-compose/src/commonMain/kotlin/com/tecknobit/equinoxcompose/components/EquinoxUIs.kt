@@ -444,55 +444,6 @@ fun EmptyState(
     resourceSize: Dp = 200.dp,
     resource: DrawableResource,
     contentDescription: String?,
-    title: StringResource? = null,
-    titleStyle: TextStyle = TextStyle.Default,
-    subTitle: StringResource? = null,
-    subTitleStyle: TextStyle = TextStyle.Default,
-    action: @Composable (() -> Unit)? = null,
-) {
-    EmptyState(
-        containerModifier = containerModifier,
-        resourceModifier = resourceModifier,
-        resourceSize = resourceSize,
-        resource = resource,
-        contentDescription = contentDescription,
-        title = if (title != null)
-            stringResource(title)
-        else
-            null,
-        titleStyle = titleStyle,
-        subTitle = if (subTitle != null)
-            stringResource(subTitle)
-        else
-            null,
-        subTitleStyle = subTitleStyle,
-        action = action
-    )
-}
-
-/**
- * Container component useful to display a custom empty state graphics
- *
- * @param containerModifier The modifier to apply to the container [Column]
- * @param resourceModifier The modifier to apply to the [Image]
- * @param resourceSize The size occupied by the [resource]
- * @param contentDescription The content description
- * @param title Not mandatory representative title
- * @param titleStyle The style to apply to the [title]
- * @param subTitle Not mandatory representative subtitle
- * @param subTitleStyle The style to apply to the [subTitle]
- * @param action Custom content used to allow the user to react to the empty state shown as needed, for example create
- * new item, change search, etc...
- */
-@Composable
-@NonRestartableComposable
-@ExperimentalMultiplatform
-fun EmptyState(
-    containerModifier: Modifier = Modifier,
-    resourceModifier: Modifier = Modifier,
-    resourceSize: Dp = 200.dp,
-    resource: DrawableResource,
-    contentDescription: String?,
     title: String? = null,
     titleStyle: TextStyle = TextStyle.Default,
     subTitle: String? = null,
@@ -508,55 +459,6 @@ fun EmptyState(
         title = title,
         titleStyle = titleStyle,
         subTitle = subTitle,
-        subTitleStyle = subTitleStyle,
-        action = action
-    )
-}
-
-/**
- * Container component useful to display a custom empty state graphics
- *
- * @param containerModifier The modifier to apply to the container [Column]
- * @param resourceModifier The modifier to apply to the [Image]
- * @param resourceSize The size occupied by the [resource]
- * @param contentDescription The content description
- * @param title Not mandatory representative title
- * @param titleStyle The style to apply to the [title]
- * @param subTitle Not mandatory representative subtitle
- * @param subTitleStyle The style to apply to the [subTitle]
- * @param action Custom content used to allow the user to react to the empty state shown as needed, for example create
- * new item, change search, etc...
- */
-@Composable
-@NonRestartableComposable
-@ExperimentalMultiplatform
-fun EmptyState(
-    containerModifier: Modifier = Modifier,
-    resourceModifier: Modifier = Modifier,
-    resourceSize: Dp = 200.dp,
-    resource: ImageVector,
-    contentDescription: String?,
-    title: StringResource? = null,
-    titleStyle: TextStyle = TextStyle.Default,
-    subTitle: StringResource? = null,
-    subTitleStyle: TextStyle = TextStyle.Default,
-    action: @Composable (() -> Unit)? = null,
-) {
-    EmptyState(
-        containerModifier = containerModifier,
-        resourceModifier = resourceModifier,
-        resourceSize = resourceSize,
-        resource = resource,
-        contentDescription = contentDescription,
-        title = if (title != null)
-            stringResource(title)
-        else
-            null,
-        titleStyle = titleStyle,
-        subTitle = if (subTitle != null)
-            stringResource(subTitle)
-        else
-            null,
         subTitleStyle = subTitleStyle,
         action = action
     )
@@ -602,55 +504,6 @@ fun EmptyState(
         title = title,
         titleStyle = titleStyle,
         subTitle = subTitle,
-        subTitleStyle = subTitleStyle,
-        action = action
-    )
-}
-
-/**
- * Container component useful to display a custom empty state graphics
- *
- * @param containerModifier The modifier to apply to the container [Column]
- * @param resourceModifier The modifier to apply to the [Image]
- * @param resourceSize The size occupied by the [resource]
- * @param contentDescription The content description
- * @param title Not mandatory representative title
- * @param titleStyle The style to apply to the [title]
- * @param subTitle Not mandatory representative subtitle
- * @param subTitleStyle The style to apply to the [subTitle]
- * @param action Custom content used to allow the user to react to the empty state shown as needed, for example create
- * new item, change search, etc...
- */
-@Composable
-@NonRestartableComposable
-@ExperimentalMultiplatform
-fun EmptyState(
-    containerModifier: Modifier = Modifier,
-    resourceModifier: Modifier = Modifier,
-    resourceSize: Dp = 200.dp,
-    resource: Painter,
-    contentDescription: String?,
-    title: StringResource? = null,
-    titleStyle: TextStyle = TextStyle.Default,
-    subTitle: StringResource? = null,
-    subTitleStyle: TextStyle = TextStyle.Default,
-    action: @Composable (() -> Unit)? = null,
-) {
-    EmptyState(
-        containerModifier = containerModifier,
-        resourceModifier = resourceModifier,
-        resourceSize = resourceSize,
-        resource = resource,
-        contentDescription = contentDescription,
-        title = if (title != null)
-            stringResource(title)
-        else
-            null,
-        titleStyle = titleStyle,
-        subTitle = if (subTitle != null)
-            stringResource(subTitle)
-        else
-            null,
         subTitleStyle = subTitleStyle,
         action = action
     )

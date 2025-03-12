@@ -107,7 +107,7 @@ object TimeFormatter {
     var invalidTimeStringDefValue: String? = null
 
     /**
-     * Method to get the current timestamp value in milliseconds
+     * Method used to get the current timestamp value in milliseconds
      *
      * @return current timestamp as [Long]
      */

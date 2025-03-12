@@ -41,7 +41,7 @@ public class JoinTableSyncBatchItem<O, D> implements EquinoxItemsHelper.ComplexB
     }
 
     /**
-     * Method to get the {@link #owner}
+     * Method used to get the {@link #owner}
      *
      * @return the {@link #owner} as {@link O}
      */
@@ -50,7 +50,7 @@ public class JoinTableSyncBatchItem<O, D> implements EquinoxItemsHelper.ComplexB
     }
 
     /**
-     * Method to get the {@link #owned}
+     * Method used to get the {@link #owned}
      *
      * @return the {@link #owned} as {@link D}
      */

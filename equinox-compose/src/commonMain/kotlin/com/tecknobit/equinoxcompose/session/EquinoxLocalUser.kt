@@ -4,7 +4,6 @@ import com.tecknobit.equinoxcompose.session.EquinoxLocalUser.ApplicationTheme.Au
 import com.tecknobit.equinoxcore.annotations.RequiresSuperCall
 import com.tecknobit.equinoxcore.annotations.Structure
 import com.tecknobit.equinoxcore.helpers.*
-import com.tecknobit.equinoxcore.helpers.InputsValidator.Companion.HOST_ADDRESS_KEY
 import com.tecknobit.equinoxcore.json.treatsAsString
 import com.tecknobit.equinoxcore.network.Requester.Companion.USER_IDENTIFIER_KEY
 import com.tecknobit.equinoxcore.network.Requester.Companion.USER_TOKEN_KEY
@@ -47,7 +46,7 @@ open class EquinoxLocalUser(
         companion object {
 
             /**
-             * Method to get an instance of the [ApplicationTheme]
+             * Method used to get an instance of the [ApplicationTheme]
              *
              * @param theme The name of the theme to get
              * @return the theme instance as [ApplicationTheme]
@@ -220,7 +219,7 @@ open class EquinoxLocalUser(
 
     val isAuthenticated: Boolean
         /**
-         * Method to get whether the user is already authenticated in a session
+         * Method used to get whether the user is already authenticated in a session
          *
          * @return whether the user is already authenticated in a session as [Boolean]
          */
@@ -228,7 +227,7 @@ open class EquinoxLocalUser(
 
     val completeName: String
         /**
-         * Method to get the complete name of the user
+         * Method used to get the complete name of the user
          *
          * @return the complete name of the user as [String]
          */
@@ -360,7 +359,7 @@ open class EquinoxLocalUser(
     }
 
     /**
-     * Method to get a stored preference
+     * Method used to get a stored preference
      *
      * @param key: the key of the preference to get
      * @return the preference stored as nullable [String]
@@ -374,7 +373,7 @@ open class EquinoxLocalUser(
     }
 
     /**
-     * Method to get a stored preference
+     * Method used to get a stored preference
      *
      * @param key: the key of the preference to get
      * @return the preference stored as null-safe [String]

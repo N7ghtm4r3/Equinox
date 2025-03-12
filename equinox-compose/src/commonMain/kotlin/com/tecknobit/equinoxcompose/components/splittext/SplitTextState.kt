@@ -63,7 +63,7 @@ class SplitTextState internal constructor(
     }
 
     /**
-     * Method to get the complete text of the [SplitText] component
+     * Method used to get the complete text of the [SplitText] component
      *
      * @return each part of the [textSlices] as unique [String]
      */

@@ -129,7 +129,6 @@ enum class ResponsiveClass {
  * @see CompactClassComponent
  * @see ResponsiveClassComponent
  */
-@ExperimentalMultiplatform
 @Target(allowedTargets = [AnnotationTarget.FUNCTION, AnnotationTarget.FILE])
 @Retention(value = AnnotationRetention.SOURCE)
 annotation class ExpandedClassComponent
@@ -150,7 +149,6 @@ annotation class ExpandedClassComponent
  * @see CompactClassComponent
  * @see ResponsiveClassComponent
  */
-@ExperimentalMultiplatform
 @Target(allowedTargets = [AnnotationTarget.FUNCTION, AnnotationTarget.FILE])
 @Retention(value = AnnotationRetention.SOURCE)
 annotation class MediumClassComponent
@@ -171,7 +169,6 @@ annotation class MediumClassComponent
  * @see MediumClassComponent
  * @see ResponsiveClassComponent
  */
-@ExperimentalMultiplatform
 @Target(allowedTargets = [AnnotationTarget.FUNCTION, AnnotationTarget.FILE])
 @Retention(value = AnnotationRetention.SOURCE)
 annotation class CompactClassComponent
@@ -189,7 +186,6 @@ annotation class CompactClassComponent
  * @see MediumClassComponent
  * @see CompactClassComponent
  */
-@ExperimentalMultiplatform
 @Target(allowedTargets = [AnnotationTarget.FUNCTION, AnnotationTarget.FILE])
 @Retention(value = AnnotationRetention.SOURCE)
 annotation class ResponsiveClassComponent(
@@ -202,7 +198,7 @@ annotation class ResponsiveClassComponent(
     )
 
 /**
- * Method to get the current window size class of the device
+ * Method used to get the current window size class of the device
  *
  * @return the current window size class of the device as [WindowSizeClass]
  */
@@ -210,7 +206,7 @@ annotation class ResponsiveClassComponent(
 expect fun currentSizeClass(): WindowSizeClass
 
 /**
- * Method to get the current window width size class of the device
+ * Method used to get the current window width size class of the device
  *
  * @return the current window width size class of the device as [WindowWidthSizeClass]
  */
@@ -221,7 +217,7 @@ fun currentWidthClass(): WindowWidthSizeClass {
 }
 
 /**
- * Method to get the current window height size class of the device
+ * Method used to get the current window height size class of the device
  *
  * @return the current window height size class of the device as [WindowHeightSizeClass]
  */

@@ -17,7 +17,7 @@ import static com.tecknobit.apimanager.apis.APIRequest.RequestMethod.*;
 import static com.tecknobit.apimanager.apis.ServerProtector.SERVER_SECRET_KEY;
 import static com.tecknobit.equinoxcore.helpers.CommonKeysKt.*;
 import static com.tecknobit.equinoxcore.helpers.InputsValidator.Companion;
-import static com.tecknobit.equinoxcore.helpers.InputsValidator.*;
+import static com.tecknobit.equinoxcore.helpers.InputsValidator.DEFAULT_LANGUAGE;
 import static com.tecknobit.equinoxcore.network.EquinoxBaseEndpointsSet.*;
 
 /**
@@ -77,7 +77,7 @@ public class EquinoxUsersController<T extends EquinoxUser, R extends EquinoxUser
     @RequestPath(path = "/api/v1/users/signUp", method = POST)
     public String signUp(@RequestBody Map<String, String> payload) {
         loadJsonHelper(payload);
-        mantis.changeCurrentLocale(jsonHelper.getString(LANGUAGE_KEY, DEFAULT_LANGUAGE));
+        setSessionLocale(jsonHelper.getString(LANGUAGE_KEY, DEFAULT_LANGUAGE));
         if (configuration.isServerProtectorEnabled() && !serverProtector.serverSecretMatches(jsonHelper.getString(SERVER_SECRET_KEY)))
             return failedResponse(NOT_AUTHORIZED_OR_WRONG_DETAILS_MESSAGE);
         String name = jsonHelper.getString(NAME_KEY);
@@ -85,7 +85,7 @@ public class EquinoxUsersController<T extends EquinoxUser, R extends EquinoxUser
         String email = jsonHelper.getString(EMAIL_KEY);
         String password = jsonHelper.getString(PASSWORD_KEY);
         String language = jsonHelper.getString(LANGUAGE_KEY, DEFAULT_LANGUAGE);
-        mantis.changeCurrentLocale(language);
+        setSessionLocale(language);
         Object[] custom = getSignUpCustomParams();
         String signUpValidation = validateSignUp(name, surname, email, password, language, custom);
         if (signUpValidation != null)
@@ -104,7 +104,7 @@ public class EquinoxUsersController<T extends EquinoxUser, R extends EquinoxUser
                     language,
                     custom
             );
-            mantis.changeCurrentLocale(DEFAULT_LANGUAGE);
+            setSessionLocale(DEFAULT_LANGUAGE);
             return successResponse(response
                     .put(IDENTIFIER_KEY, id)
                     .put(TOKEN_KEY, token)
@@ -116,7 +116,7 @@ public class EquinoxUsersController<T extends EquinoxUser, R extends EquinoxUser
     }
 
     /**
-     * Method to get the list of the custom parameters of a custom {@link EquinoxUser} from the payload of the {@link #signUp(Map)}
+     * Method used to get the list of the custom parameters of a custom {@link EquinoxUser} from the payload of the {@link #signUp(Map)}
      * method
      *
      * @return the custom parameters as array of {@link Object}
@@ -199,7 +199,7 @@ public class EquinoxUsersController<T extends EquinoxUser, R extends EquinoxUser
         String email = jsonHelper.getString(EMAIL_KEY);
         String password = jsonHelper.getString(PASSWORD_KEY);
         String language = jsonHelper.getString(LANGUAGE_KEY, DEFAULT_LANGUAGE);
-        mantis.changeCurrentLocale(language);
+        setSessionLocale(language);
         Object[] custom = getSignInCustomParams();
         String signInValidation = validateSignIn(email, password, language, custom);
         if (signInValidation != null)
@@ -208,7 +208,7 @@ public class EquinoxUsersController<T extends EquinoxUser, R extends EquinoxUser
             T user = usersService.signInUser(email.toLowerCase(), password, custom);
             if (user == null)
                 return failedResponse(NOT_AUTHORIZED_OR_WRONG_DETAILS_MESSAGE);
-            mantis.changeCurrentLocale(DEFAULT_LANGUAGE);
+            setSessionLocale(DEFAULT_LANGUAGE);
             return successResponse(assembleSignInSuccessResponse(user));
         } catch (Exception e) {
             return failedResponse(WRONG_PROCEDURE_MESSAGE);
@@ -216,7 +216,7 @@ public class EquinoxUsersController<T extends EquinoxUser, R extends EquinoxUser
     }
 
     /**
-     * Method to get the list of the custom parameters of a custom {@link EquinoxUser} from the payload of the {@link #signIn(Map)}
+     * Method used to get the list of the custom parameters of a custom {@link EquinoxUser} from the payload of the {@link #signIn(Map)}
      * method 
      *
      * @return the custom parameters as array of {@link Object}
@@ -304,7 +304,7 @@ public class EquinoxUsersController<T extends EquinoxUser, R extends EquinoxUser
     }
 
     /**
-     * Method to get the dynamic data of the user to correctly update in all the devices where the user is connected
+     * Method used to get the dynamic data of the user to correctly update in all the devices where the user is connected
      *
      * @param id    The identifier of the user
      * @param token The token of the user

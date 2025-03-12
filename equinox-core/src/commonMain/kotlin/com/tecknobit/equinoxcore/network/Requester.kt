@@ -2,6 +2,13 @@ package com.tecknobit.equinoxcore.network
 
 import com.tecknobit.equinoxcore.annotations.Assembler
 import com.tecknobit.equinoxcore.annotations.Wrapper
+import com.tecknobit.equinoxcore.json.treatsAsString
+import com.tecknobit.equinoxcore.network.Requester.Companion.RESPONSE_DATA_KEY
+import com.tecknobit.equinoxcore.network.Requester.Companion.RESPONSE_STATUS_KEY
+import com.tecknobit.equinoxcore.network.Requester.Companion.toNullableResponseData
+import com.tecknobit.equinoxcore.network.Requester.Companion.toResponseArrayData
+import com.tecknobit.equinoxcore.network.Requester.Companion.toResponseContent
+import com.tecknobit.equinoxcore.network.Requester.Companion.toResponseData
 import com.tecknobit.equinoxcore.network.ResponseStatus.*
 import com.tecknobit.equinoxcore.pagination.PaginatedResponse
 import com.tecknobit.equinoxcore.pagination.PaginatedResponse.Companion.PAGE_KEY
@@ -75,7 +82,7 @@ abstract class Requester(
          * `DEFAULT_CONNECTION_ERROR_MESSAGE` The message to send when an error during the communication with the
          * backend occurred
          */
-        const val DEFAULT_CONNECTION_ERROR_MESSAGE = "connection_error_message_key"
+        const val DEFAULT_CONNECTION_ERROR_MESSAGE = "connection_error_message"
 
         /**
          * Method to execute and manage the response of a request
@@ -160,7 +167,7 @@ abstract class Requester(
         }
 
         /**
-         * Method to get whether the request has been successful or not
+         * Method used to get whether the request has been successful or not
          *
          * @param response The response of the request
          *
@@ -179,7 +186,7 @@ abstract class Requester(
         }
 
         /**
-         * Method to get directly the response data from the request response
+         * Method used to get directly the response data from the request response
          *
          * @return the [RESPONSE_DATA_KEY] value as nullable [JsonObject]
          *
@@ -217,7 +224,7 @@ abstract class Requester(
         }
 
         /**
-         * Method to get directly the response data from the request response
+         * Method used to get directly the response data from the request response
          *
          * @return the [RESPONSE_DATA_KEY] value as [JsonObject]
          *
@@ -253,7 +260,7 @@ abstract class Requester(
         }
 
         /**
-         * Method to get directly the response data from the request response and format as [JsonArray]
+         * Method used to get directly the response data from the request response and format as [JsonArray]
          *
          * @return the [RESPONSE_DATA_KEY] value as [JsonArray]
          *
@@ -290,7 +297,7 @@ abstract class Requester(
         }
 
         /**
-         * Method to get directly the response data from the request response and format as [String]
+         * Method used to get directly the response data from the request response and format as [String]
          *
          * @return the [RESPONSE_DATA_KEY] value as [String]
          *
@@ -682,7 +689,23 @@ abstract class Requester(
             }
             parameters {
                 query?.entries?.forEach { parameter ->
-                    parameter(parameter.key, parameter.value)
+                    val value = parameter.value
+                    when (value) {
+                        is JsonArray -> {
+                            val parametersList = StringBuilder()
+                            val rawParameters = value.jsonArray
+                            rawParameters.forEachIndexed { index, element ->
+                                parametersList.append(element.treatsAsString())
+                                if (index != rawParameters.lastIndex)
+                                    parametersList.append(",")
+                            }
+                            parameter(parameter.key, parametersList)
+                        }
+
+                        else -> {
+                            parameter(parameter.key, value.treatsAsString())
+                        }
+                    }
                 }
             }
             payload?.invoke()

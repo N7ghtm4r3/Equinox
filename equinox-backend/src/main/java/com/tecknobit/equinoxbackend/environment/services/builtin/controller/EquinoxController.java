@@ -2,17 +2,24 @@ package com.tecknobit.equinoxbackend.environment.services.builtin.controller;
 
 import com.tecknobit.apimanager.apis.ServerProtector;
 import com.tecknobit.apimanager.formatters.JsonHelper;
-import com.tecknobit.equinoxbackend.configuration.ConfigsGenerator;
 import com.tecknobit.equinoxbackend.configuration.EquinoxBackendConfiguration;
 import com.tecknobit.equinoxbackend.environment.services.users.entity.EquinoxUser;
 import com.tecknobit.equinoxbackend.environment.services.users.repository.EquinoxUsersRepository;
 import com.tecknobit.equinoxbackend.environment.services.users.service.EquinoxUsersService;
 import com.tecknobit.equinoxbackend.resourcesutils.ResourcesProvider;
+import com.tecknobit.equinoxcore.annotations.Assembler;
+import com.tecknobit.equinoxcore.annotations.Returner;
+import com.tecknobit.equinoxcore.annotations.Validator;
+import com.tecknobit.equinoxcore.annotations.Wrapper;
 import com.tecknobit.equinoxcore.network.ResponseStatus;
 import com.tecknobit.mantis.Mantis;
+import jakarta.annotation.Nullable;
+import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -71,8 +78,15 @@ abstract public class EquinoxController<T extends EquinoxUser, R extends Equinox
     public static ResourcesProvider resourcesProvider;
 
     /**
+     * {@code messageSource} the message source used to manage the resources messages bundle
+     */
+    @Autowired(required = false)
+    protected MessageSource messageSource;
+
+    /**
      * {@code mantis} the translations manager
      */
+    @Deprecated(forRemoval = true, since = "1.0.9")
     protected static final Mantis mantis;
 
     static {
@@ -86,18 +100,43 @@ abstract public class EquinoxController<T extends EquinoxUser, R extends Equinox
     /**
      * {@code WRONG_PROCEDURE_MESSAGE} message to use when the procedure is wrong
      */
-    public static final String WRONG_PROCEDURE_MESSAGE = "wrong_procedure_key";
+    public static final String WRONG_PROCEDURE_MESSAGE = "wrong_procedure";
 
     /**
      * {@code NOT_AUTHORIZED_OR_WRONG_DETAILS_MESSAGE} message to use when the request is by a not authorized user or
      * tried to fetch wrong details
      */
-    public static final String NOT_AUTHORIZED_OR_WRONG_DETAILS_MESSAGE = "not_authorized_key";
+    public static final String NOT_AUTHORIZED_OR_WRONG_DETAILS_MESSAGE = "not_authorized";
 
     /**
      * {@code RESPONSE_SUCCESSFUL_MESSAGE} message to use when the request has been successful
      */
-    public static final String RESPONSE_SUCCESSFUL_MESSAGE = "operation_executed_successfully_key";
+    public static final String RESPONSE_SUCCESSFUL_MESSAGE = "operation_executed_successfully";
+
+    /**
+     * {@code WRONG_NAME_MESSAGE} error message used when the name inserted is not valid
+     */
+    public static final String WRONG_NAME_MESSAGE = "wrong_name";
+
+    /**
+     * {@code WRONG_SURNAME_MESSAGE} error message used when the surname inserted is not valid
+     */
+    public static final String WRONG_SURNAME_MESSAGE = "wrong_surname";
+
+    /**
+     * {@code WRONG_EMAIL_MESSAGE} error message used when the email inserted is not valid
+     */
+    public static final String WRONG_EMAIL_MESSAGE = "wrong_email";
+
+    /**
+     * {@code WRONG_PASSWORD_MESSAGE} error message used when the password inserted is not valid
+     */
+    public static final String WRONG_PASSWORD_MESSAGE = "wrong_password";
+
+    /**
+     * {@code WRONG_LANGUAGE_MESSAGE} error message used when the language inserted is not valid
+     */
+    public static final String WRONG_LANGUAGE_MESSAGE = "wrong_language";
 
     /**
      * {@code usersRepository} instance for the user repository
@@ -114,6 +153,24 @@ abstract public class EquinoxController<T extends EquinoxUser, R extends Equinox
      * {@code me} user representing the user who made a request on the server
      */
     protected T me;
+
+    /**
+     * Method to load the {@link #jsonHelper}
+     *
+     * @param payload The payload received with the request
+     */
+    protected void loadJsonHelper(JSONObject payload) {
+        jsonHelper.setJSONObjectSource(payload);
+    }
+
+    /**
+     * Method to load the {@link #jsonHelper}
+     *
+     * @param payload The payload received with the request
+     */
+    protected void loadJsonHelper(JSONArray payload) {
+        jsonHelper.setJSONArraySource(payload);
+    }
 
     /**
      * Method to load the {@link #jsonHelper}
@@ -138,39 +195,85 @@ abstract public class EquinoxController<T extends EquinoxUser, R extends Equinox
      * Method to check whether the user who made a request is an authorized user <br>
      * If the user is authorized the {@link #me} instance is loaded
      *
-     * @param id:    the identifier of the user
+     * @param id The identifier of the user
      * @param token The token of the user
      * @return whether the user is an authorized user as boolean
      */
+    @Validator
     protected boolean isMe(String id, String token) {
         Optional<T> query = usersRepository.findById(id);
         me = query.orElse(null);
         boolean isMe = me != null && me.getToken().equals(token);
         if (!isMe) {
             me = null;
-            mantis.changeCurrentLocale(DEFAULT_LANGUAGE);
+            setSessionLocale(DEFAULT_LANGUAGE);
         } else
-            mantis.changeCurrentLocale(me.getLanguage());
+            setSessionLocale(me.getLanguage());
         return isMe;
     }
 
     /**
-     * Method to get the payload for a successful response 
+     * Method used to change the current locale of the session
      *
-     * @return the payload for a successful response as {@link String}
+     * @param locale The locale of the session to set
      */
-    protected String successResponse() {
-        return plainResponse(SUCCESSFUL, mantis.getResource(RESPONSE_SUCCESSFUL_MESSAGE));
+    @Wrapper
+    protected void setSessionLocale(String locale) {
+        setSessionLocale(Locale.forLanguageTag(locale));
     }
 
     /**
-     * Method to get the payload for a successful response
+     * Method used to change the current locale of the session
+     *
+     * @param locale The locale of the session to set
+     */
+    protected void setSessionLocale(Locale locale) {
+        LocaleContextHolder.setLocale(locale);
+    }
+
+    /**
+     * Method used to get the payload for a successful response 
+     *
+     * @return the payload for a successful response as {@link String}
+     */
+    @Wrapper
+    @Assembler
+    protected String successResponse() {
+        return successResponse(RESPONSE_SUCCESSFUL_MESSAGE);
+    }
+
+    /**
+     * Method used to get the payload for a successful response
+     *
+     * @param message The message to send as response
+     * @return the payload for a successful response as {@link String}
+     */
+    @Wrapper
+    @Assembler
+    protected String successResponse(String message) {
+        return successResponse(message, (Object) null);
+    }
+
+    /**
+     * Method used to get the payload for a successful response
+     *
+     * @param message The message to send as response
+     * @return the payload for a successful response as {@link String}
+     */
+    @Wrapper
+    @Assembler
+    protected String successResponse(String message, Object... args) {
+        return plainResponse(SUCCESSFUL, getInternationalizedMessage(message, args));
+    }
+
+    /**
+     * Method used to get the payload for a successful response
      *
      * @param value The value to send as response
      * @param <V>    generic type for the values in the payload
      * @return the payload for a successful response as {@link HashMap} of {@link V}
      */
-    @SuppressWarnings("unchecked")
+    @Assembler
     protected <V> HashMap<String, V> successResponse(V value) {
         HashMap<String, V> response = new HashMap<>();
         response.put(RESPONSE_DATA_KEY, value);
@@ -179,11 +282,12 @@ abstract public class EquinoxController<T extends EquinoxUser, R extends Equinox
     }
 
     /**
-     * Method to get the payload for a successful response
+     * Method used to get the payload for a successful response
      *
      * @param message The message to send as response
      * @return the payload for a successful response as {@link String}
      */
+    @Assembler
     protected String successResponse(JSONObject message) {
         return new JSONObject()
                 .put(RESPONSE_STATUS_KEY, SUCCESSFUL)
@@ -191,23 +295,28 @@ abstract public class EquinoxController<T extends EquinoxUser, R extends Equinox
     }
 
     /**
-     * Method to get the payload for a successful response
+     * Method used to get the payload for a failed response
      *
-     * @param message The message to send as response
-     * @return the payload for a successful response as {@link String}
+     * @param errorKey The key of the error
+     * @return the payload for a failed response as {@link String}
      */
-    protected String successResponse(String message) {
-        return plainResponse(SUCCESSFUL, mantis.getResource(message));
+    @Wrapper
+    @Assembler
+    protected String failedResponse(String errorKey) {
+        return failedResponse(errorKey, null);
     }
 
     /**
-     * Method to get the payload for a failed response
+     * Method used to get the payload for a failed response
      *
-     * @param error The error message to send as response
+     * @param errorKey The key of the error
+     * @param args     The arguments used to format the response
      * @return the payload for a failed response as {@link String}
      */
-    protected String failedResponse(String error) {
-        return plainResponse(FAILED, mantis.getResource(error));
+    @Wrapper
+    @Assembler
+    protected String failedResponse(String errorKey, @Nullable Object[] args) {
+        return plainResponse(FAILED, getInternationalizedMessage(errorKey, args));
     }
 
     /**
@@ -217,10 +326,35 @@ abstract public class EquinoxController<T extends EquinoxUser, R extends Equinox
      * @param message The message to send as response
      * @return the payload for a response as {@link String}
      */
-    private String plainResponse(ResponseStatus status, String message) {
+    protected String plainResponse(ResponseStatus status, String message) {
         return new JSONObject()
                 .put(RESPONSE_STATUS_KEY, status)
                 .put(RESPONSE_DATA_KEY, message).toString();
+    }
+
+    /**
+     * Method used to get the international message
+     *
+     * @param messageKey The message of the international message
+     * @return the internationalized message as {@link String}
+     */
+    @Wrapper
+    @Returner
+    protected String getInternationalizedMessage(String messageKey) {
+        return getInternationalizedMessage(messageKey, null);
+    }
+
+    /**
+     * Method used to get the international message
+     *
+     * @param messageKey The message of the international message
+     * @param args The arguments used to format the international message
+     *
+     * @return the internationalized message as {@link String}
+     */
+    @Returner
+    protected String getInternationalizedMessage(String messageKey, @Nullable Object[] args) {
+        return messageSource.getMessage(messageKey, args, LocaleContextHolder.getLocale());
     }
 
     /**
@@ -312,9 +446,6 @@ abstract public class EquinoxController<T extends EquinoxUser, R extends Equinox
         resourcesProvider = new ResourcesProvider(RESOURCES_KEY, subDirectories);
         resourcesProvider.createContainerDirectory();
         resourcesProvider.createSubDirectories();
-        ConfigsGenerator configsGenerator = new ConfigsGenerator(context);
-        configsGenerator.createResourcesConfigFile(resourcesProvider.getContainers());
-        configsGenerator.crateCorsAdviceFile();
     }
 
 }

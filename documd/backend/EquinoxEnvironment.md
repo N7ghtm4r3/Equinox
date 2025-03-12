@@ -60,7 +60,8 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
         value = {"com.tecknobit.*" /* REQUIRED */, "other.packages..."}
 )
 @ComponentScan(
-        value = {"com.tecknobit.*" /* REQUIRED */, "other.packages..."}
+        value = {"com.tecknobit.*" /* REQUIRED */, "other.packages...",
+                "com.tecknobit.equinoxbackend.environment.configuration" /* REQUIRED TO USE THE PROVIDED MESSAGES BUNDLE*/}
 )
 @SpringBootApplication
 public class Launcher {
@@ -136,14 +137,13 @@ dependencies {
     implementation("com.fasterxml.jackson.core:jackson-databind:2.15.4")
     implementation("mysql:mysql-connector-java:8.0.33")
     implementation("com.github.N7ghtm4r3:APIManager:2.2.4")
-    implementation("com.github.N7ghtm4r3:Mantis:1.0.0")
     implementation("org.json:json:20240303")
 
     // implement the backend utilities
-    implementation("io.github.n7ghtm4r3:equinox-backend:1.0.8")
+    implementation("io.github.n7ghtm4r3:equinox-backend:1.0.9")
     
     // implement the core utilities
-    implementation("io.github.n7ghtm4r3:equinox-core:1.0.8")
+    implementation("io.github.n7ghtm4r3:equinox-core:1.0.9")
 
     ...
 
@@ -180,6 +180,9 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @EnableAutoConfiguration(
         exclude = {DataSourceAutoConfiguration.class, HibernateJpaAutoConfiguration.class}
+)
+@ComponentScan(
+        value = "com.tecknobit.equinoxbackend.environment.configuration" /* REQUIRED TO USE THE PROVIDED MESSAGES BUNDLE*/
 )
 // others basic  SpringBoot's annotations
 public class Launcher {
@@ -577,16 +580,17 @@ public class CustomUsersController extends EquinoxUsersController<CustomUser, Cu
 }
 ```
 
-### Mantis resources set
+### Custom messages resource bundle
 
-You can create your own resources set for internationalizate your backend, but to do it you need to create a [resources.mantis](https://github.com/N7ghtm4r3/Equinox/blob/main/equinox-backend/src/main/resources/resources.mantis)
-file in the resources folder, and `to copy` The set already given
+You can create your own resources set to internationalize your backend creating the set as follows:
 
-> [!NOTE]  
-> The REQUIRED annotations are not more necessary because using the `@Primary` annotations the `com.tecknobit.` package
-> is not more useful to search the repositories, entities and components pre-implemented
-
-
+``` bash 
+resources
+  |-- lang
+       |-- custom_messages.properties
+       |-- custom_messages_any_locale.properties
+       |-- ...
+```
 
 ## Support
 

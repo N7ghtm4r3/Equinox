@@ -89,7 +89,7 @@ class TabSelectorState internal constructor(
     }
 
     /**
-     * Method to get the current [selectedTab] value
+     * Method used to get the current [selectedTab] value
      *
      * @return the current selected tab index value as [Int]
      */

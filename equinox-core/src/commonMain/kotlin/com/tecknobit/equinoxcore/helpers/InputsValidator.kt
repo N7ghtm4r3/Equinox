@@ -1,5 +1,6 @@
 package com.tecknobit.equinoxcore.helpers
 
+import com.tecknobit.equinoxcore.annotations.Validator
 import kotlin.jvm.JvmStatic
 
 /**
@@ -15,12 +16,26 @@ open class InputsValidator {
         /**
          * `HOST_ADDRESS_KEY` the key for the **"host_address"** field
          */
+        @Deprecated(
+            message = "This constant has been moved",
+            replaceWith = ReplaceWith(
+                expression = "CommonKeys.HOST_ADDRESS_KEY"
+            ),
+            level = DeprecationLevel.ERROR
+        )
         const val HOST_ADDRESS_KEY: String = "host_address"
 
         /**
          * `WRONG_NAME_MESSAGE` error message used when the name inserted is not valid
          */
-        const val WRONG_NAME_MESSAGE: String = "wrong_name_key"
+        @Deprecated(
+            message = "This constant has been moved",
+            replaceWith = ReplaceWith(
+                expression = "EquinoxController.WRONG_NAME_MESSAGE"
+            ),
+            level = DeprecationLevel.ERROR
+        )
+        const val WRONG_NAME_MESSAGE: String = "wrong_name"
 
         /**
          * `NAME_MAX_LENGTH` the max valid length for the username
@@ -30,7 +45,14 @@ open class InputsValidator {
         /**
          * `WRONG_SURNAME_MESSAGE` error message used when the surname inserted is not valid
          */
-        const val WRONG_SURNAME_MESSAGE: String = "wrong_surname_key"
+        @Deprecated(
+            message = "This constant has been moved",
+            replaceWith = ReplaceWith(
+                expression = "EquinoxController.WRONG_SURNAME_MESSAGE"
+            ),
+            level = DeprecationLevel.ERROR
+        )
+        const val WRONG_SURNAME_MESSAGE: String = "wrong_surname"
 
         /**
          * `SURNAME_MAX_LENGTH` the max valid length for the surname
@@ -40,7 +62,14 @@ open class InputsValidator {
         /**
          * `WRONG_EMAIL_MESSAGE` error message used when the email inserted is not valid
          */
-        const val WRONG_EMAIL_MESSAGE: String = "wrong_email_key"
+        @Deprecated(
+            message = "This constant has been moved",
+            replaceWith = ReplaceWith(
+                expression = "EquinoxController.WRONG_EMAIL_MESSAGE"
+            ),
+            level = DeprecationLevel.ERROR
+        )
+        const val WRONG_EMAIL_MESSAGE: String = "wrong_email"
 
         /**
          * `EMAIL_MAX_LENGTH` the max valid length for the email
@@ -50,7 +79,14 @@ open class InputsValidator {
         /**
          * `WRONG_PASSWORD_MESSAGE` error message used when the password inserted is not valid
          */
-        const val WRONG_PASSWORD_MESSAGE: String = "wrong_password_key"
+        @Deprecated(
+            message = "This constant has been moved",
+            replaceWith = ReplaceWith(
+                expression = "EquinoxController.WRONG_PASSWORD_MESSAGE"
+            ),
+            level = DeprecationLevel.ERROR
+        )
+        const val WRONG_PASSWORD_MESSAGE: String = "wrong_password"
 
         /**
          * `PASSWORD_MIN_LENGTH` the min valid length for the password
@@ -65,7 +101,14 @@ open class InputsValidator {
         /**
          * `WRONG_LANGUAGE_MESSAGE` error message used when the language inserted is not valid
          */
-        const val WRONG_LANGUAGE_MESSAGE: String = "wrong_language_key"
+        @Deprecated(
+            message = "This constant has been moved",
+            replaceWith = ReplaceWith(
+                expression = "EquinoxController.WRONG_LANGUAGE_MESSAGE"
+            ),
+            level = DeprecationLevel.ERROR
+        )
+        const val WRONG_LANGUAGE_MESSAGE: String = "wrong_language"
 
         /**
          * `DEFAULT_LANGUAGE` default language used
@@ -113,9 +156,12 @@ open class InputsValidator {
         /**
          * Method to validate a host
          *
-         * @param host: host value to check the validity
+         * @param host The host value to check the validity
          * @return whether the host is valid or not as `boolean`
          */
+        @Validator(
+            validWhen = "The host is considered valid when is not null and is a valid host address"
+        )
         fun isHostValid(
             host: String?,
         ): Boolean {
@@ -125,9 +171,10 @@ open class InputsValidator {
         /**
          * Method to validate a server secret
          *
-         * @param serverSecret: name value to check the validity
+         * @param serverSecret The name value to check the validity
          * @return whether the server secret is valid or not as `boolean`
          */
+        @Validator(validWhen = "The server secret is considered valid when is not null and is not empty")
         fun isServerSecretValid(
             serverSecret: String?,
         ): Boolean {
@@ -137,9 +184,15 @@ open class InputsValidator {
         /**
          * Method to validate a name
          *
-         * @param name: name value to check the validity
+         * @param name The name value to check the validity
          * @return whether the name is valid or not as `boolean`
          */
+        @Validator(
+            validWhen = """
+                The name is considered valid when is not null and is not empty and its length in the validity range
+                (max 20 characters)
+            """
+        )
         fun isNameValid(
             name: String?,
         ): Boolean {
@@ -149,9 +202,15 @@ open class InputsValidator {
         /**
          * Method to validate a surname
          *
-         * @param surname: surname value to check the validity
+         * @param surname The surname value to check the validity
          * @return whether the surname is valid or not as `boolean`
          */
+        @Validator(
+            validWhen = """
+                The surname is considered valid when is not null and is not empty and its length in the validity range
+                (max 30 characters)
+            """
+        )
         fun isSurnameValid(
             surname: String?,
         ): Boolean {
@@ -161,9 +220,15 @@ open class InputsValidator {
         /**
          * Method to validate an email
          *
-         * @param email: password value to check the validity
+         * @param email The password value to check the validity
          * @return whether the email is valid or not as `boolean`
          */
+        @Validator(
+            validWhen = """
+                The email is considered valid when is not null and is not empty and its length in the validity range
+                (max 75 characters)
+            """
+        )
         fun isEmailValid(
             email: String?,
         ): Boolean {
@@ -173,9 +238,15 @@ open class InputsValidator {
         /**
          * Method to validate a password
          *
-         * @param password: password value to check the validity
+         * @param password The password value to check the validity
          * @return whether the password is valid or not as `boolean`
          */
+        @Validator(
+            validWhen = """
+                The password is considered valid when is not null and is not empty and its length in the validity range
+                (8-32 characters)
+            """
+        )
         fun isPasswordValid(
             password: String?,
         ): Boolean {
@@ -188,9 +259,10 @@ open class InputsValidator {
         /**
          * Method to validate a language
          *
-         * @param language: language value to check the validity
+         * @param language The language value to check the validity
          * @return whether the language is valid or not as `boolean`
          */
+        @Validator(validWhen = "The language is considered valid when is not null and is not empty and is a supported language")
         fun isLanguageValid(
             language: String?,
         ): Boolean {
@@ -201,14 +273,15 @@ open class InputsValidator {
         /**
          * Method to validate an input
          *
-         * @param field: field value to check the validity
-         * @return whether the field is valid or not as `boolean`
+         * @param input The input value to check the validity
+         * @return whether the input is valid or not as `boolean`
          */
         @JvmStatic
+        @Validator(validWhen = "The input is considered valid when is not null and is not empty")
         protected fun isInputValid(
-            field: String?,
+            input: String?,
         ): Boolean {
-            return !field.isNullOrEmpty()
+            return !input.isNullOrEmpty()
         }
 
     }

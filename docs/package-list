@@ -5,6 +5,7 @@ module:equinox-backend
 com.tecknobit.equinoxbackend.annotations
 com.tecknobit.equinoxbackend.batch
 com.tecknobit.equinoxbackend.configuration
+com.tecknobit.equinoxbackend.environment.configuration
 com.tecknobit.equinoxbackend.environment.helpers
 com.tecknobit.equinoxbackend.environment.services
 com.tecknobit.equinoxbackend.environment.services.builtin.controller
