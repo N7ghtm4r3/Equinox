@@ -155,7 +155,7 @@ abstract public class EquinoxController<T extends EquinoxUser, R extends Equinox
     }
 
     /**
-     * Method to load the {@link #jsonHelper}
+     * Method used to load the {@link #jsonHelper}
      *
      * @param payload The payload received with the request
      */
@@ -164,7 +164,7 @@ abstract public class EquinoxController<T extends EquinoxUser, R extends Equinox
     }
 
     /**
-     * Method to load the {@link #jsonHelper}
+     * Method used to load the {@link #jsonHelper}
      *
      * @param payload The payload received with the request
      */
@@ -173,7 +173,7 @@ abstract public class EquinoxController<T extends EquinoxUser, R extends Equinox
     }
 
     /**
-     * Method to load the {@link #jsonHelper}
+     * Method used to load the {@link #jsonHelper}
      *
      * @param payload The payload received with the request
      * @param <V>      generic type for the values in the payload
@@ -183,7 +183,7 @@ abstract public class EquinoxController<T extends EquinoxUser, R extends Equinox
     }
 
     /**
-     * Method to load the {@link #jsonHelper}
+     * Method used to load the {@link #jsonHelper}
      *
      * @param payload The payload received with the request
      */
@@ -192,7 +192,7 @@ abstract public class EquinoxController<T extends EquinoxUser, R extends Equinox
     }
 
     /**
-     * Method to check whether the user who made a request is an authorized user <br>
+     * Method used to check whether the user who made a request is an authorized user <br>
      * If the user is authorized the {@link #me} instance is loaded
      *
      * @param id The identifier of the user
@@ -320,7 +320,7 @@ abstract public class EquinoxController<T extends EquinoxUser, R extends Equinox
     }
 
     /**
-     * Method to assemble the payload for a response
+     * Method used to assemble the payload for a response
      *
      * @param status  The response code value
      * @param message The message to send as response
@@ -358,7 +358,7 @@ abstract public class EquinoxController<T extends EquinoxUser, R extends Equinox
     }
 
     /**
-     * Method to generate an identifier of an item 
+     * Method used to generate an identifier of an item 
      *
      * @return the identifier as {@link String}
      */
@@ -367,7 +367,7 @@ abstract public class EquinoxController<T extends EquinoxUser, R extends Equinox
     }
 
     /**
-     * Method to init the {@link #serverProtector} and create the resources directories correctly
+     * Method used to init the {@link #serverProtector} and create the resources directories correctly
      *
      * @param context The launcher {@link Class} where this method has been invoked
      * @param args    Custom arguments to share with {@link SpringApplication} and with the {@link #serverProtector}
@@ -422,7 +422,7 @@ abstract public class EquinoxController<T extends EquinoxUser, R extends Equinox
     }
 
     /**
-     * Method to init the {@link #serverProtector} and create the resources directories correctly
+     * Method used to init the {@link #serverProtector} and create the resources directories correctly
      *
      * @param storagePath Instance to manage the storage of the server secret
      * @param saveMessage The message to print when the server secret has been generated,

@@ -231,7 +231,7 @@ public class EquinoxUser extends EquinoxItem {
     }
 
     /**
-     * Method to assemble and return a {@link EquinoxUser} instance
+     * Method used to assemble and return a {@link EquinoxUser} instance
      *
      * @param jUser: user details formatted as JSON
      * @return the user instance as {@link EquinoxUser}

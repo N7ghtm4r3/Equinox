@@ -10,8 +10,7 @@ import com.tecknobit.equinoxcore.network.Requester.Companion.toNullableResponseD
 import com.tecknobit.equinoxcore.network.Requester.Companion.toResponseArrayData
 import com.tecknobit.equinoxcore.network.Requester.Companion.toResponseContent
 import com.tecknobit.equinoxcore.network.Requester.Companion.toResponseData
-import com.tecknobit.equinoxcore.network.ResponseStatus.*
-import com.tecknobit.equinoxcore.pagination.PaginatedResponse
+import com.tecknobit.equinoxcore.network.ResponseStatus.GENERIC_RESPONSE
 import com.tecknobit.equinoxcore.pagination.PaginatedResponse.Companion.PAGE_KEY
 import com.tecknobit.equinoxcore.pagination.PaginatedResponse.Companion.PAGE_SIZE_KEY
 import com.tecknobit.equinoxcore.time.TimeFormatter
@@ -22,7 +21,6 @@ import io.ktor.http.*
 import io.ktor.http.content.*
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
-import kotlinx.serialization.KSerializer
 import kotlinx.serialization.json.*
 import kotlin.js.JsName
 
@@ -84,107 +82,6 @@ abstract class Requester(
          * backend occurred
          */
         const val DEFAULT_CONNECTION_ERROR_MESSAGE = "connection_error_message"
-
-        /**
-         * Method to execute and manage the response of a request
-         *
-         * @param request The request to execute
-         * @param onResponse The action to execute when a response is returned from the backend
-         * @param onConnectionError The action to execute if the request has been failed for a connection error
-         */
-        suspend fun <R : Requester> R.sendRequest(
-            request: suspend R.() -> JsonObject,
-            onResponse: (JsonObject) -> Unit,
-            onConnectionError: ((JsonObject) -> Unit)? = null,
-        ) {
-            return sendRequest(
-                request = request,
-                onSuccess = onResponse,
-                onFailure = onResponse,
-                onConnectionError = onConnectionError
-            )
-        }
-
-        /**
-         * Method to execute and manage the response of a request
-         *
-         * @param request The request to execute
-         * @param onSuccess The action to execute if the request has been successful
-         * @param onFailure The action to execute if the request has been failed
-         * @param onConnectionError The action to execute if the request has been failed for a connection error
-         */
-        suspend fun <R : Requester> R.sendRequest(
-            request: suspend R.() -> JsonObject,
-            onSuccess: (JsonObject) -> Unit,
-            onFailure: (JsonObject) -> Unit,
-            onConnectionError: ((JsonObject) -> Unit)? = null,
-        ) {
-            val response = request.invoke(this@sendRequest)
-            when (isSuccessfulResponse(response)) {
-                SUCCESSFUL -> onSuccess.invoke(response)
-                GENERIC_RESPONSE -> {
-                    if (onConnectionError != null)
-                        onConnectionError.invoke(response)
-                    else
-                        onFailure.invoke(response)
-                }
-
-                else -> onFailure.invoke(response)
-            }
-        }
-
-        /**
-         * Method to execute and manage the paginated response of a request
-         *
-         * @param request The request to execute
-         * @param serializer The serializer of the item in the page
-         * @param onSuccess The action to execute if the request has been successful
-         * @param onFailure The action to execute if the request has been failed
-         * @param onConnectionError The action to execute if the request has been failed for a connection error
-         */
-        suspend fun <R : Requester, T> R.sendPaginatedRequest(
-            request: suspend R.() -> JsonObject,
-            serializer: KSerializer<T>,
-            onSuccess: (PaginatedResponse<T>) -> Unit,
-            onFailure: (JsonObject) -> Unit,
-            onConnectionError: ((JsonObject) -> Unit)? = null,
-        ) {
-            sendRequest(
-                request = { request.invoke(this) },
-                onSuccess = { jPage ->
-                    val pageSerializer = PaginatedResponse.serializer(serializer)
-                    val json = Json {
-                        ignoreUnknownKeys = true
-                    }
-                    val page = json.decodeFromJsonElement(
-                        deserializer = pageSerializer,
-                        element = jPage.toResponseData()
-                    )
-                    onSuccess.invoke(page)
-                },
-                onFailure = onFailure,
-                onConnectionError = onConnectionError
-            )
-        }
-
-        /**
-         * Method used to get whether the request has been successful or not
-         *
-         * @param response The response of the request
-         *
-         * @return whether the request has been successful or not as [ResponseStatus]
-         */
-        private fun isSuccessfulResponse(
-            response: JsonObject?,
-        ): ResponseStatus {
-            if (response == null || !response.containsKey(RESPONSE_STATUS_KEY))
-                return FAILED
-            return when (response.jsonObject[RESPONSE_STATUS_KEY]!!.jsonPrimitive.content) {
-                SUCCESSFUL.name -> SUCCESSFUL
-                GENERIC_RESPONSE.name -> GENERIC_RESPONSE
-                else -> FAILED
-            }
-        }
 
         /**
          * Method used to get directly the response data from the request response
@@ -340,7 +237,7 @@ abstract class Requester(
     protected var mustValidateCertificates: Boolean = false
 
     /**
-     * `interceptorAction` The action of the interceptor to execute when a request has been sent, if not specified is
+     * `interceptorAction` The callback of the interceptor to execute when a request has been sent, if not specified is
      * `null** by default and no interceptions will be executed
      */
     protected var interceptorAction: (() -> Unit)? = null
@@ -361,7 +258,7 @@ abstract class Requester(
     )
 
     /**
-     * `initHost** Method to init correctly the [host] value
+     * `initHost** Method used to init correctly the [host] value
      */
     private val initHost by lazy {
         {
@@ -375,7 +272,7 @@ abstract class Requester(
     }
 
     /**
-     * Method to execute a [RequestMethod.GET] request to the backend
+     * Method used to execute a [RequestMethod.GET] request to the backend
      *
      * @param endpoint The endpoint path of the request url
      * @param query The query parameters of the request
@@ -397,7 +294,7 @@ abstract class Requester(
     }
 
     /**
-     * Method to execute a [RequestMethod.POST] request to the backend
+     * Method used to execute a [RequestMethod.POST] request to the backend
      *
      * @param endpoint The endpoint path of the request url
      * @param query The query parameters of the request
@@ -422,7 +319,7 @@ abstract class Requester(
     }
 
     /**
-     * Method to execute a [RequestMethod.PUT] request to the backend
+     * Method used to execute a [RequestMethod.PUT] request to the backend
      *
      * @param endpoint The endpoint path of the request url
      * @param query The query parameters of the request
@@ -447,7 +344,7 @@ abstract class Requester(
     }
 
     /**
-     * Method to execute a [RequestMethod.PATCH] request to the backend
+     * Method used to execute a [RequestMethod.PATCH] request to the backend
      *
      * @param endpoint The endpoint path of the request url
      * @param query The query parameters of the request
@@ -472,7 +369,7 @@ abstract class Requester(
     }
 
     /**
-     * Method to execute a [RequestMethod.DELETE] request to the backend
+     * Method used to execute a [RequestMethod.DELETE] request to the backend
      *
      * @param endpoint The endpoint path of the request url
      * @param query The query parameters of the request
@@ -497,7 +394,7 @@ abstract class Requester(
     }
 
     /**
-     * Method to create the query with the pagination parameters
+     * Method used to create the query with the pagination parameters
      *
      * @param page The number of the page to request to the backend
      * @param pageSize The size of the result for the page
@@ -516,7 +413,7 @@ abstract class Requester(
     }
 
     /**
-     * Method to execute a request to the backend
+     * Method used to execute a request to the backend
      *
      * @param method The method of the request
      * @param endpoint The endpoint path of the request url
@@ -579,7 +476,7 @@ abstract class Requester(
     }
 
     /**
-     * Method to execute a multipart request to the backend
+     * Method used to execute a multipart request to the backend
      *
      * @param endpoint The endpoint path of the request url
      * @param headers Custom headers of the request
@@ -603,7 +500,7 @@ abstract class Requester(
     }
 
     /**
-     * Method to execute a multipart request to the backend
+     * Method used to execute a multipart request to the backend
      *
      * @param endpoint The endpoint path of the request url
      * @param headers Custom headers of the request
@@ -662,7 +559,7 @@ abstract class Requester(
     }
 
     /**
-     * Method to prepare the details of the request to execute
+     * Method used to prepare the details of the request to execute
      *
      * @param headers Custom headers of the request
      * @param contentType The content type of the request
@@ -714,7 +611,7 @@ abstract class Requester(
     }
 
     /**
-     * Method to print the details of the request sent if the [debugMode] is enabled
+     * Method used to print the details of the request sent if the [debugMode] is enabled
      *
      * @param requestUrl The url of the request
      * @param headers Custom headers of the request
@@ -748,7 +645,7 @@ abstract class Requester(
     }
 
     /**
-     * Method to log the current headers used in the requests
+     * Method used to log the current headers used in the requests
      */
     private fun logHeaders(
         headers: Map<String, Any>,
@@ -765,7 +662,7 @@ abstract class Requester(
     }
 
     /**
-     * Method to log the current query used in the request
+     * Method used to log the current query used in the request
      */
     private fun logQuery(
         query: JsonObject?,
@@ -777,7 +674,7 @@ abstract class Requester(
     }
 
     /**
-     * Method to print a [JsonObject] request part in pretty format
+     * Method used to print a [JsonObject] request part in pretty format
      */
     private fun JsonObject.prettyPrint() {
         val json = Json {
@@ -787,7 +684,7 @@ abstract class Requester(
     }
 
     /**
-     * Method to print a log of an exception occurred during a request sent if the [debugMode] is enabled
+     * Method used to print a log of an exception occurred during a request sent if the [debugMode] is enabled
      *
      * @param exception The exception occurred
      */
@@ -798,7 +695,7 @@ abstract class Requester(
     }
 
     /**
-     * Method to set the [RESPONSE_STATUS_KEY] to send when an error during the connection occurred
+     * Method used to set the [RESPONSE_STATUS_KEY] to send when an error during the connection occurred
      *
      * @return the error message as [JsonObject]
      */
@@ -811,7 +708,7 @@ abstract class Requester(
     }
 
     /**
-     * Method to set the user credentials used to make the authenticated requests
+     * Method used to set the user credentials used to make the authenticated requests
      *
      * @param userId The user identifier to use
      * @param userToken The user token to use
@@ -837,7 +734,7 @@ abstract class Requester(
     }
 
     /**
-     * Method to change, during the runtime for example when the session changed, the host address to make the
+     * Method used to change, during the runtime for example when the session changed, the host address to make the
      * requests
      *
      * @param host The new host address to use
@@ -851,7 +748,7 @@ abstract class Requester(
     }
 
     /**
-     * Method to attach a new interceptor to the [Requester] to execute it when a request has been sent
+     * Method used to attach a new interceptor to the [Requester] to execute it when a request has been sent
      *
      * @param interceptor The interceptor action to attach
      */
@@ -862,7 +759,7 @@ abstract class Requester(
     }
 
     /**
-     * Method to execute the [interceptorAction] if it is specified by the [attachInterceptorOnRequest] method
+     * Method used to execute the [interceptorAction] if it is specified by the [attachInterceptorOnRequest] method
      */
     protected fun interceptRequest() {
         interceptorAction?.invoke()

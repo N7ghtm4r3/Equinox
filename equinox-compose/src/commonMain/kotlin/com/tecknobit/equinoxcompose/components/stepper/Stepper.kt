@@ -115,7 +115,7 @@ fun Stepper(
 }
 
 /**
- * Method to map the special indexes of the steps lit of the [Stepper] component.
+ * Method used to map the special indexes of the steps lit of the [Stepper] component.
  * The special indexes are those indexes near to [Step] which its enabling depends on a state
  *
  * @return the pair of the special indexes as [Pair] of [Int]
@@ -140,7 +140,7 @@ private fun Array<out Step>.mapSpecialIndexes(): Pair<Int, Int> {
 }
 
 /**
- * Method to find the value of a special index
+ * Method used to find the value of a special index
  *
  * @param invalidSpecialIndex The value of an index to consider as not valid
  * @param elementToCheck The step used to check the special index

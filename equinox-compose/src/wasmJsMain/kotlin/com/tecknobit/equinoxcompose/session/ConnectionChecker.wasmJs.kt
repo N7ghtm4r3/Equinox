@@ -13,7 +13,7 @@ import io.ktor.http.*
 private const val POLLING_URL = "https://api.binance.com/api/v3/ping"
 
 /**
- * Method to create a monitor connectivity instance specific for each platform.
+ * Method used to create a monitor connectivity instance specific for each platform.
  * It is useful to monitor the connection status and adapt the content by the [com.tecknobit.equinoxcompose.helpers.session.ManagedContent]
  * component
  *

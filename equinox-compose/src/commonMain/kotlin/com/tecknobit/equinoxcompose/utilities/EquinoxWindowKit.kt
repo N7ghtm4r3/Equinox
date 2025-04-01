@@ -71,7 +71,7 @@ enum class ResponsiveClass {
     companion object {
 
         /**
-         * Method to categorize the content to display based of the size classes currently the device has
+         * Method used to categorize the content to display based of the size classes currently the device has
          *
          * @param widthSizeClass The current width class of the window
          * @param heightSizeClass The current height class of the window
@@ -363,7 +363,7 @@ fun <T> responsiveAssignment(
 }
 
 /**
- * Method to calculate the current [ResponsiveClass] based on the screen dimension
+ * Method used to calculate the current [ResponsiveClass] based on the screen dimension
  *
  * @return the current responsive class as [ResponsiveClass]
  */

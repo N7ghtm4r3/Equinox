@@ -34,7 +34,7 @@ public interface ResourcesManager {
     String PROFILES_DIRECTORY = "profiles";
 
     /**
-     * Method to create the pathname for a profile pic
+     * Method used to create the pathname for a profile pic
      *
      * @param resource:   the resource from create its pathname
      * @param resourceId: the resource identifier
@@ -46,7 +46,7 @@ public interface ResourcesManager {
     }
 
     /**
-     * Method to create the pathname of a resource file
+     * Method used to create the pathname of a resource file
      *
      * @param resource:           the resource from create its pathname
      * @param resourcesDirectory: the specific resources directory to store the resource file
@@ -72,7 +72,7 @@ public interface ResourcesManager {
     }
 
     /**
-     * Method to save a resource file
+     * Method used to save a resource file
      *
      * @param resource: the resource to save
      * @param path:     the path where save the resource file
@@ -86,7 +86,7 @@ public interface ResourcesManager {
     }
 
     /**
-     * Method to delete a profile pic
+     * Method used to delete a profile pic
      *
      * @param userId: the user identifier of the profile pic to delete
      * @return whether the profile pic has been deleted as boolean
@@ -97,7 +97,7 @@ public interface ResourcesManager {
     }
 
     /**
-     * Method to delete a resource file
+     * Method used to delete a resource file
      *
      * @param resourcesDirectory: the resources directory where delete a resource file
      * @param resourceId:         the resource identifier of the resource to delete

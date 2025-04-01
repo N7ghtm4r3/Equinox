@@ -46,7 +46,7 @@ class SplitTextState internal constructor(
     val textSlices = arrayListOf<MutableState<String>>()
 
     /**
-     * Method to allocate each slice of the [textSlices] with their values
+     * Method used to allocate each slice of the [textSlices] with their values
      *
      */
     @Composable

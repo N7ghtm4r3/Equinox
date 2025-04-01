@@ -58,7 +58,7 @@ abstract class EquinoxNoModelScreen(
     }
 
     /**
-     * Method to display the content of the screen
+     * Method used to display the content of the screen
      *
      * Its lifecycle will be managed invoking the [LifecycleManager]
      */
@@ -70,13 +70,13 @@ abstract class EquinoxNoModelScreen(
     }
 
     /**
-     * Method to arrange the content of the screen to display
+     * Method used to arrange the content of the screen to display
      */
     @Composable
     protected abstract fun ArrangeScreenContent()
 
     /**
-     * Method to manage the lifecycle of the composable where this Method has been invoked
+     * Method used to manage the lifecycle of the composable where this Method has been invoked
      *
      * @param lifecycleOwner The owner of the current lifecycle
      */
@@ -208,7 +208,7 @@ abstract class EquinoxNoModelScreen(
     }
 
     /**
-     * Method to log the event occurred in the current screen
+     * Method used to log the event occurred in the current screen
      *
      * @param event The event occurred
      */
@@ -221,7 +221,7 @@ abstract class EquinoxNoModelScreen(
     }
 
     /**
-     * Method to log the event occurred in the current screen
+     * Method used to log the event occurred in the current screen
      *
      * @param event The event occurred
      */
@@ -237,13 +237,13 @@ abstract class EquinoxNoModelScreen(
     }
 
     /**
-     * Method to collect or instantiate the states of the screen
+     * Method used to collect or instantiate the states of the screen
      */
     @Composable
     protected abstract fun CollectStates()
 
     /**
-     * Method to collect or instantiate the states of the screen after a loading required to correctly assign an
+     * Method used to collect or instantiate the states of the screen after a loading required to correctly assign an
      * initial value to the states. For example in your custom screen:
      * ```kotlin
      * @Composable

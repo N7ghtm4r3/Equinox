@@ -44,7 +44,7 @@ public class EquinoxUsersController<T extends EquinoxUser, R extends EquinoxUser
 
 
     /**
-     * Method to sign up in the <b>Equinox's system</b>
+     * Method used to sign up in the <b>Equinox's system</b>
      *
      * @param payload Payload of the request
      *                 <pre>
@@ -123,7 +123,7 @@ public class EquinoxUsersController<T extends EquinoxUser, R extends EquinoxUser
     }
 
     /**
-     * Method to validate the inputs of the {@link #signUp(Map)} method to correctly execute a sign-up operation
+     * Method used to validate the inputs of the {@link #signUp(Map)} method to correctly execute a sign-up operation
      *
      * @param name The name of the user
      * @param surname The surname of the user
@@ -166,7 +166,7 @@ public class EquinoxUsersController<T extends EquinoxUser, R extends EquinoxUser
     }
 
     /**
-     * Method to sign in the <b>Equinox's system</b>
+     * Method used to sign in the <b>Equinox's system</b>
      *
      * @param payload The payload of the request
      *                 <pre>
@@ -225,7 +225,7 @@ public class EquinoxUsersController<T extends EquinoxUser, R extends EquinoxUser
     }
 
     /**
-     * Method to validate the inputs of the {@link #signIn(Map)} method to correctly execute a sign-in operation
+     * Method used to validate the inputs of the {@link #signIn(Map)} method to correctly execute a sign-in operation
      *
      * @param email The email of the user
      * @param password The password of the user
@@ -261,7 +261,7 @@ public class EquinoxUsersController<T extends EquinoxUser, R extends EquinoxUser
     }
 
     /**
-     * Method to assemble the sign-in response with the user details
+     * Method used to assemble the sign-in response with the user details
      *
      * @param user The user authenticated in that operation
      *
@@ -314,7 +314,7 @@ public class EquinoxUsersController<T extends EquinoxUser, R extends EquinoxUser
     }
 
     /**
-     * Method to change the profile pic of the user
+     * Method used to change the profile pic of the user
      *
      * @param id The identifier of the user
      * @param token The token of the user
@@ -348,7 +348,7 @@ public class EquinoxUsersController<T extends EquinoxUser, R extends EquinoxUser
     }
 
     /**
-     * Method to change the email of the user
+     * Method used to change the email of the user
      *
      * @param id The identifier of the user
      * @param token The token of the user
@@ -389,7 +389,7 @@ public class EquinoxUsersController<T extends EquinoxUser, R extends EquinoxUser
     }
 
     /**
-     * Method to change the password of the user
+     * Method used to change the password of the user
      *
      * @param id The identifier of the user
      * @param token The token of the user
@@ -430,7 +430,7 @@ public class EquinoxUsersController<T extends EquinoxUser, R extends EquinoxUser
     }
 
     /**
-     * Method to change the language of the user
+     * Method used to change the language of the user
      *
      * @param id The identifier of the user
      * @param token The token of the user
@@ -471,7 +471,7 @@ public class EquinoxUsersController<T extends EquinoxUser, R extends EquinoxUser
     }
 
     /**
-     * Method to delete the account of the user
+     * Method used to delete the account of the user
      *
      * @param id The identifier of the user
      * @param token The token of the user

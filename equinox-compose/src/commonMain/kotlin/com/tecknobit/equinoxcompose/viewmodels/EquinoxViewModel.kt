@@ -47,7 +47,7 @@ abstract class EquinoxViewModel(
     }
 
     /**
-     * Method to suspend the current [viewModelScope] to execute other requests to the backend,
+     * Method used to suspend the current [viewModelScope] to execute other requests to the backend,
      * the [isRefreshing] instance will be set as **false** to allow the restart of the routine after executing
      * the other requests
      *
@@ -59,7 +59,7 @@ abstract class EquinoxViewModel(
     }
 
     /**
-     * Method to execute the refresh routine designed
+     * Method used to execute the refresh routine designed
      *
      * @param currentContext The current context where the [viewModelScope] is executing
      * @param routine The refresh routine to execute
@@ -81,7 +81,7 @@ abstract class EquinoxViewModel(
     }
 
     /**
-     * Method to restart the current [viewModelScope] after other requests has been executed,
+     * Method used to restart the current [viewModelScope] after other requests has been executed,
      * the [isRefreshing] instance will be set as **true** to deny the restart of the routine after executing
      * the other requests
      *
@@ -91,7 +91,7 @@ abstract class EquinoxViewModel(
     }
 
     /**
-     * Method to suspend the current [viewModelScope] to execute other requests to the backend,
+     * Method used to suspend the current [viewModelScope] to execute other requests to the backend,
      * the [isRefreshing] instance will be set as **false** to allow the restart of the routine after executing
      * the other requests
      *
@@ -101,7 +101,7 @@ abstract class EquinoxViewModel(
     }
 
     /**
-     * Method to display a response message with a snackbar
+     * Method used to display a response message with a snackbar
      *
      * @param response The response from retrieve the message to display
      */
@@ -114,7 +114,7 @@ abstract class EquinoxViewModel(
     }
 
     /**
-     * Method to display a response message with a snackbar
+     * Method used to display a response message with a snackbar
      *
      * @param message The resource identifier of the message to display
      */
@@ -131,7 +131,7 @@ abstract class EquinoxViewModel(
     }
 
     /**
-     * Method to display a response message with a snackbar
+     * Method used to display a response message with a snackbar
      *
      * @param message The message to display
      */

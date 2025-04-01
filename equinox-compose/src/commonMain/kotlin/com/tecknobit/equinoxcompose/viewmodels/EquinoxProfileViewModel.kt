@@ -81,7 +81,7 @@ open class EquinoxProfileViewModel(
     lateinit var newPasswordError: MutableState<Boolean>
 
     /**
-     * Method to execute the profile pic change, look how to integrate
+     * Method used to execute the profile pic change, look how to integrate
      *
      * @param profilePicName The name of the image to set
      * @param profilePicBytes The bytes of the image selected
@@ -112,7 +112,7 @@ open class EquinoxProfileViewModel(
     }
 
     /**
-     * Method to execute the email change
+     * Method used to execute the email change
      *
      * @param onSuccess The action to execute if the request has been successful
      * @param onFailure The action to execute when the request failed
@@ -145,7 +145,7 @@ open class EquinoxProfileViewModel(
     }
 
     /**
-     * Method to execute the password change
+     * Method used to execute the password change
      *
      * @param onSuccess The action to execute if the request has been successful
      * @param onFailure The action to execute when the request failed
@@ -178,7 +178,7 @@ open class EquinoxProfileViewModel(
     }
 
     /**
-     * Method to execute the language change
+     * Method used to execute the language change
      *
      * @param onSuccess The action to execute if the request has been successful
      * @param onFailure The action to execute when the request failed
@@ -206,7 +206,7 @@ open class EquinoxProfileViewModel(
     }
 
     /**
-     * Method to execute the theme change
+     * Method used to execute the theme change
      *
      * @param onChange The action to execute when the theme changed
      */
@@ -218,7 +218,7 @@ open class EquinoxProfileViewModel(
     }
 
     /**
-     * Method to execute the account deletion
+     * Method used to execute the account deletion
      *
      * @param onDelete The action to execute when the account has been deleted
      * @param onFailure The action to execute when the request failed
@@ -243,7 +243,7 @@ open class EquinoxProfileViewModel(
     }
 
     /**
-     * Method to clear the current [localUser] session
+     * Method used to clear the current [localUser] session
      *
      * @param onClear The action to execute when the session has been cleaned
      */

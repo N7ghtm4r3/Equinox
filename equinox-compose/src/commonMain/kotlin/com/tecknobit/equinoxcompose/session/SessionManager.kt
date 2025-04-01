@@ -91,7 +91,7 @@ private lateinit var noInternetConnection: MutableState<Boolean>
 private lateinit var hasBeenDisconnected: MutableState<Boolean>
 
 /**
- * Method to set up the [sessionSetup] instance
+ * Method used to set up the [sessionSetup] instance
  *
  * @param serverOfflineMessage The message to use when the server is offline
  * @param serverOfflineIcon The icon to use when the server is offline
@@ -119,7 +119,7 @@ fun setUpSession(
 }
 
 /**
- * Method to set up the [sessionSetup] instance
+ * Method used to set up the [sessionSetup] instance
  *
  * @param sessionSetupValue The setup to use for the current session
  */
@@ -130,7 +130,7 @@ fun setUpSession(
 }
 
 /**
- * Method to set the value of the [isServerOffline] state, when the value is _true_ will be invoked
+ * Method used to set the value of the [isServerOffline] state, when the value is _true_ will be invoked
  * the [ServerOfflineUi] method, when _false_ will be displayed the normal content
  *
  * @param isServerOfflineValue The value to set
@@ -146,7 +146,7 @@ fun setServerOfflineValue(
 }
 
 /**
- * Method to set the value of the [hasBeenDisconnectedAction] state, when the value is _true_ will be invoked
+ * Method used to set the value of the [hasBeenDisconnectedAction] state, when the value is _true_ will be invoked
  * the [hasBeenDisconnectedAction] method, when _false_ will be displayed the normal content
  *
  * @param hasBeenDisconnectedValue The value to set
@@ -162,7 +162,7 @@ fun setHasBeenDisconnectedValue(
 }
 
 /**
- * Method to display the correct content based on the current scenario such server offline or
+ * Method used to display the correct content based on the current scenario such server offline or
  * device disconnected or no internet connection available
  *
  * @param content The content to display in a normal scenario
@@ -234,7 +234,7 @@ fun ManagedContent(
 }
 
 /**
- * Method to instantiate the session instances to manage the different scenarios
+ * Method used to instantiate the session instances to manage the different scenarios
  */
 @Composable
 private fun InstantiateSessionInstances() {
@@ -251,7 +251,7 @@ private fun InstantiateSessionInstances() {
 }
 
 /**
- * Method to display the content when the server is offline
+ * Method used to display the content when the server is offline
  *
  * @param retryText The informative text for the user
  * @param retryAction The action to retry the connection to the server
@@ -279,7 +279,7 @@ private fun ServerOfflineUi(
 }
 
 /**
- * Method to display the content when the internet connection missing
+ * Method used to display the content when the internet connection missing
  *
  * @param viewModel The viewmodel used by the context from the [ManagedContent] method has been invoked, this is
  * used to stop the refreshing routine when the internet connection is not available
@@ -312,7 +312,7 @@ private fun NoInternetConnectionUi(
 }
 
 /**
- * Method to disconnect the current user from the session
+ * Method used to disconnect the current user from the session
  */
 private fun hasBeenDisconnectedAction() {
     try {

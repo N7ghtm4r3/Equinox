@@ -10,7 +10,7 @@ package com.tecknobit.equinoxcore.dtoutils
 interface DTOConvertible<T> {
 
     /**
-     * Method to convert the object to related Transfer Data Object
+     * Method used to convert the object to related Transfer Data Object
      *
      * @return the DTO as [T]
      */

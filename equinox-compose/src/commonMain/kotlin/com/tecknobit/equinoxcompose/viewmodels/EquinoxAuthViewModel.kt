@@ -128,7 +128,7 @@ abstract class EquinoxAuthViewModel(
     }
 
     /**
-     * Method to execute the sign-up authentication request, if successful the [localUser] will
+     * Method used to execute the sign-up authentication request, if successful the [localUser] will
      * be initialized with the data received by the request
      *
      * @param onFailure The action to execute when the request failed
@@ -209,7 +209,7 @@ abstract class EquinoxAuthViewModel(
     }
 
     /**
-     * Method to validate the inputs for the [signUp] request
+     * Method used to validate the inputs for the [signUp] request
      *
      * @return whether the inputs are valid as [Boolean]
      */
@@ -248,7 +248,7 @@ abstract class EquinoxAuthViewModel(
     }
 
     /**
-     * Method to execute the sign in authentication request, if successful the [localUser] will
+     * Method used to execute the sign in authentication request, if successful the [localUser] will
      * be initialized with the data received by the request
      *
      * @param onFailure The action to execute when the request failed
@@ -303,7 +303,7 @@ abstract class EquinoxAuthViewModel(
     }
 
     /**
-     * Method to validate the inputs for the [signIn] request
+     * Method used to validate the inputs for the [signIn] request
      *
      * @return whether the inputs are valid as [Boolean]
      */
@@ -327,7 +327,7 @@ abstract class EquinoxAuthViewModel(
     }
 
     /**
-     * Method to launch the application after the authentication request, will be instantiated with the user details
+     * Method used to launch the application after the authentication request, will be instantiated with the user details
      * both the [requester] and the [localUser]
      *
      * @param response The response of the authentication request

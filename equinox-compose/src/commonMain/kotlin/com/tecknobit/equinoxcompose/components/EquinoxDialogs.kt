@@ -22,7 +22,7 @@ import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
 
 /**
- * Method to display a custom [AlertDialog]
+ * Method used to display a custom [AlertDialog]
  *
  * @param modifier The modifier to apply to the [AlertDialog]
  * @param titleModifier The modifier to apply to the title of the [AlertDialog]
@@ -88,7 +88,7 @@ fun EquinoxAlertDialog(
 }
 
 /**
- * Method to display a custom [AlertDialog]
+ * Method used to display a custom [AlertDialog]
  *
  * @param modifier The modifier to apply to the [AlertDialog]
  * @param titleModifier The modifier to apply to the title of the [AlertDialog]
@@ -154,7 +154,7 @@ fun EquinoxAlertDialog(
 }
 
 /**
- * Method to display a custom [AlertDialog]
+ * Method used to display a custom [AlertDialog]
  *
  * @param modifier The modifier to apply to the [AlertDialog]
  * @param titleModifier The modifier to apply to the title of the [AlertDialog]
@@ -218,7 +218,7 @@ fun EquinoxAlertDialog(
 }
 
 /**
- * Method to display a custom [AlertDialog]
+ * Method used to display a custom [AlertDialog]
  *
  * @param modifier The modifier to apply to the [AlertDialog]
  * @param titleModifier The modifier to apply to the title of the [AlertDialog]

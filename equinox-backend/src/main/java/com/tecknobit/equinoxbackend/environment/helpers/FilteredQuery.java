@@ -103,7 +103,7 @@ public abstract class FilteredQuery<T> {
     }
 
     /**
-     * Method to prepare the query adding the predicates
+     * Method used to prepare the query adding the predicates
      */
     private void prepareQuery() {
         fillPredicates();
@@ -117,7 +117,7 @@ public abstract class FilteredQuery<T> {
     protected abstract void fillPredicates();
 
     /**
-     * Method to extract from the {@link #rawFilters} the specific set of filters
+     * Method used to extract from the {@link #rawFilters} the specific set of filters
      *
      * @param pattern The pattern to use to extract the specific set
      * @return the specific filters as {@link HashSet} of {@link String}

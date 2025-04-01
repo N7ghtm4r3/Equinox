@@ -82,7 +82,7 @@ open class InputsValidator {
         }
 
         /**
-         * Method to validate a host
+         * Method used to validate a host
          *
          * @param host The host value to check the validity
          * @return whether the host is valid or not as `boolean`
@@ -97,7 +97,7 @@ open class InputsValidator {
         }
 
         /**
-         * Method to validate a server secret
+         * Method used to validate a server secret
          *
          * @param serverSecret The name value to check the validity
          * @return whether the server secret is valid or not as `boolean`
@@ -110,7 +110,7 @@ open class InputsValidator {
         }
 
         /**
-         * Method to validate a name
+         * Method used to validate a name
          *
          * @param name The name value to check the validity
          * @return whether the name is valid or not as `boolean`
@@ -128,7 +128,7 @@ open class InputsValidator {
         }
 
         /**
-         * Method to validate a surname
+         * Method used to validate a surname
          *
          * @param surname The surname value to check the validity
          * @return whether the surname is valid or not as `boolean`
@@ -146,7 +146,7 @@ open class InputsValidator {
         }
 
         /**
-         * Method to validate an email
+         * Method used to validate an email
          *
          * @param email The password value to check the validity
          * @return whether the email is valid or not as `boolean`
@@ -164,7 +164,7 @@ open class InputsValidator {
         }
 
         /**
-         * Method to validate a password
+         * Method used to validate a password
          *
          * @param password The password value to check the validity
          * @return whether the password is valid or not as `boolean`
@@ -185,7 +185,7 @@ open class InputsValidator {
         }
 
         /**
-         * Method to validate a language
+         * Method used to validate a language
          *
          * @param language The language value to check the validity
          * @return whether the language is valid or not as `boolean`
@@ -199,7 +199,7 @@ open class InputsValidator {
         }
 
         /**
-         * Method to validate an input
+         * Method used to validate an input
          *
          * @param input The input value to check the validity
          * @return whether the input is valid or not as `boolean`

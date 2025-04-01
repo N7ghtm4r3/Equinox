@@ -29,7 +29,7 @@ import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 
 /**
- * Method to display a layout when a list of values is empty
+ * Method used to display a layout when a list of values is empty
  *
  * @param containerModifier The modifier to apply to the container column
  * @param animations The set of the animations to use to animate the layout
@@ -100,7 +100,7 @@ fun LoadingItemUI(
 }
 
 /**
- * Method to display the content of the [EmptyListUI]
+ * Method used to display the content of the [EmptyListUI]
  *
  * @param loadingRoutine The routine used to load the data
  * @param loadingIndicator The loading indicator to display
@@ -139,7 +139,7 @@ private fun LoadingItemUIContent(
 }
 
 /**
- * Method to display a layout when a list of values is empty
+ * Method used to display a layout when a list of values is empty
  *
  * @param containerModifier The modifier to apply to the container column
  * @param imageModifier The modifier to apply to the image icon
@@ -172,7 +172,7 @@ fun EmptyListUI(
 }
 
 /**
- * Method to display a layout when a list of values is empty
+ * Method used to display a layout when a list of values is empty
  *
  * @param containerModifier The modifier to apply to the container column
  * @param imageModifier The modifier to apply to the image icon
@@ -221,7 +221,7 @@ fun EmptyListUI(
 }
 
 /**
- * Method to display the content of the [EmptyListUI]
+ * Method used to display the content of the [EmptyListUI]
  *
  * @param containerModifier The modifier to apply to the container column
  * @param imageModifier The modifier to apply to the image icon
@@ -264,7 +264,7 @@ private fun EmptyListUIContent(
 }
 
 /**
- * Method to display a layout when an error occurred
+ * Method used to display a layout when an error occurred
  *
  * @param containerModifier The modifier to apply to the container column
  * @param imageModifier The modifier to apply to the image icon
@@ -303,7 +303,7 @@ fun ErrorUI(
 }
 
 /**
- * Method to display the layout when an error occurred
+ * Method used to display the layout when an error occurred
  *
  * @param containerModifier The modifier to apply to the container column
  * @param imageModifier The modifier to apply to the image icon
@@ -360,7 +360,7 @@ fun ErrorUI(
 }
 
 /**
- * Method to display the content of the [ErrorUI] layout
+ * Method used to display the content of the [ErrorUI] layout
  *
  * @param containerModifier The modifier to apply to the container column
  * @param imageModifier The modifier to apply to the image icon

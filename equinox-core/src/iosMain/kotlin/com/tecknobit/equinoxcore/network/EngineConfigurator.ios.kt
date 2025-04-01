@@ -4,7 +4,7 @@ import io.ktor.client.*
 import io.ktor.client.engine.cio.*
 
 /**
- * Method to obtain a platform-based HTTP engine to execute HTTP requests.
+ * Method used to obtain a platform-based HTTP engine to execute HTTP requests.
  *
  * @param connectionTimeout Timeout duration for the connection.
  * @param byPassSSLValidation Whether bypass the **SSL** certificates validation, this for example

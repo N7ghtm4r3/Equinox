@@ -120,7 +120,7 @@ public class EquinoxBackendConfiguration {
     }
 
     /**
-     * Method to set the {@link #serverProtectorEnabled} instance
+     * Method used to set the {@link #serverProtectorEnabled} instance
      *
      * @param serverProtectorEnabled Whether the protection by the {@link com.tecknobit.apimanager.apis.ServerProtector}
      *                               class is requested to protect the server from not authorized accesses

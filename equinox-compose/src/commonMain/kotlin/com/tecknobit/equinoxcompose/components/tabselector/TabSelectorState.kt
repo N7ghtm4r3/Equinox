@@ -65,7 +65,7 @@ class TabSelectorState internal constructor(
     }
 
     /**
-     * Method to check whether the [currentIndex] is the current [selectedTab]
+     * Method used to check whether the [currentIndex] is the current [selectedTab]
      *
      * @param currentIndex The index to check
      *
@@ -78,7 +78,7 @@ class TabSelectorState internal constructor(
     }
 
     /**
-     * Method to set the value of the selected tab
+     * Method used to set the value of the selected tab
      *
      * @param index The index of the tab to set as the selected
      */

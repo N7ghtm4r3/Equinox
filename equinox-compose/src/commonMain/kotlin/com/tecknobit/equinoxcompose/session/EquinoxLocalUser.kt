@@ -238,7 +238,7 @@ open class EquinoxLocalUser(
     }
 
     /**
-     * Method to init the local user session
+     * Method used to init the local user session
      */
     @RequiresSuperCall
     protected open fun initLocalUser() {
@@ -255,7 +255,7 @@ open class EquinoxLocalUser(
     }
 
     /**
-     * Method to insert and initialize a new local user.
+     * Method used to insert and initialize a new local user.
      *
      * @param hostAddress The host address with which the user communicates.
      * @param name The name of the user.
@@ -340,7 +340,7 @@ open class EquinoxLocalUser(
     }
 
     /**
-     * Method to store and set a preference
+     * Method used to store and set a preference
      *
      * @param key:   the key of the preference
      * @param value: the value of the preference
@@ -387,7 +387,7 @@ open class EquinoxLocalUser(
     }
 
     /**
-     * Method to clear the current local user session
+     * Method used to clear the current local user session
      */
     fun clear() {
         preferencesManager.clearAll()
@@ -395,7 +395,7 @@ open class EquinoxLocalUser(
     }
 
     /**
-     * Method to update the dynamic data of the local user
+     * Method used to update the dynamic data of the local user
      *
      * @param dynamicData The dynamic data to use to update the current user ones
      */

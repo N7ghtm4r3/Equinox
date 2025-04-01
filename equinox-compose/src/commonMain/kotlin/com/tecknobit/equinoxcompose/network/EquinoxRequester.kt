@@ -58,7 +58,7 @@ abstract class EquinoxRequester(
 ) {
 
     /**
-     * Method to change, during the runtime for example when the session changed, the host address to make the
+     * Method used to change, during the runtime for example when the session changed, the host address to make the
      * requests
      *
      * @param host The new host address to use
@@ -68,7 +68,7 @@ abstract class EquinoxRequester(
     }
 
     /**
-     * Method to request the to sign up in the Equinox's system
+     * Method used to request the to sign up in the Equinox's system
      *
      * @param serverSecret The secret of the personal Equinox's backend
      * @param name The name of the user
@@ -107,7 +107,7 @@ abstract class EquinoxRequester(
     }
 
     /**
-     * Method to create the payload for the [signUp] request.
+     * Method used to create the payload for the [signUp] request.
      *
      * #### Usage example:
      *
@@ -165,7 +165,7 @@ abstract class EquinoxRequester(
     }
 
     /**
-     * Method to request the to sign in the Equinox's system
+     * Method used to request the to sign in the Equinox's system
      *
      * @param email The email of the user
      * @param password The password of the user
@@ -192,7 +192,7 @@ abstract class EquinoxRequester(
     }
 
     /**
-     * Method to create the payload for the [signIn] request.
+     * Method used to create the payload for the [signIn] request.
      *
      * #### Usage example:
      *
@@ -230,7 +230,7 @@ abstract class EquinoxRequester(
     }
 
     /**
-     * Method to request the dynamic data of the user
+     * Method used to request the dynamic data of the user
      *
      * @return the result of the request as [JsonObject]
      */
@@ -242,7 +242,7 @@ abstract class EquinoxRequester(
     }
 
     /**
-     * Method to request the to change the profile pic of the user
+     * Method used to request the to change the profile pic of the user
      *
      * @param profilePicName The name of the profile pic
      * @param profilePicBytes The profile pic chosen by the user to set as the new profile pic
@@ -267,7 +267,7 @@ abstract class EquinoxRequester(
     }
 
     /**
-     * Method to request the to change the email of the user
+     * Method used to request the to change the email of the user
      *
      * @param newEmail The new email of the user
      *
@@ -287,7 +287,7 @@ abstract class EquinoxRequester(
     }
 
     /**
-     * Method to request the to change the password of the user
+     * Method used to request the to change the password of the user
      *
      * @param newPassword The new password of the user
      *
@@ -307,7 +307,7 @@ abstract class EquinoxRequester(
     }
 
     /**
-     * Method to request the to change the language of the user
+     * Method used to request the to change the language of the user
      *
      * @param newLanguage The new language of the user
      *
@@ -327,7 +327,7 @@ abstract class EquinoxRequester(
     }
 
     /**
-     * Method to request the to delete the account of the user
+     * Method used to request the to delete the account of the user
      *
      *
      * @return the result of the request as [JsonObject]
@@ -340,7 +340,7 @@ abstract class EquinoxRequester(
     }
 
     /**
-     * Method to assemble the endpoint to make the request to the custom controllers
+     * Method used to assemble the endpoint to make the request to the custom controllers
      *
      * @param customEndpoint The custom endpoint of the request, the main part of the complete url
      * @param subEndpoint The sub-endpoint path of the url
@@ -366,7 +366,7 @@ abstract class EquinoxRequester(
     }
 
     /**
-     * Method to assemble the endpoint to make the request to the users controller
+     * Method used to assemble the endpoint to make the request to the users controller
      *
      * @param endpoint The endpoint path of the url
      *

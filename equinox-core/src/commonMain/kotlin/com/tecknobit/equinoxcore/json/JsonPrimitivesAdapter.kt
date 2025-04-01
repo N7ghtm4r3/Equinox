@@ -3,7 +3,7 @@ package com.tecknobit.equinoxcore.json
 import kotlinx.serialization.json.*
 
 /**
- * Method to treats a [JsonElement] value as null-safe [Boolean]
+ * Method used to treats a [JsonElement] value as null-safe [Boolean]
  *
  * @param defValue The default value to return if the [JsonElement] is null or is not a [Boolean] value
  *
@@ -18,7 +18,7 @@ fun JsonElement?.treatsAsBoolean(
 }
 
 /**
- * Method to treats a [JsonElement] value as nullable [Boolean]
+ * Method used to treats a [JsonElement] value as nullable [Boolean]
  *
  * @param defValue The default value to return if the [JsonElement] is null or is not a [Boolean] value
  *
@@ -31,7 +31,7 @@ fun JsonElement?.treatsAsNullableBoolean(
 }
 
 /**
- * Method to treats a [JsonElement] value as null-safe [Byte]
+ * Method used to treats a [JsonElement] value as null-safe [Byte]
  *
  * @param defValue The default value to return if the [JsonElement] is null or is not a [Byte] value
  *
@@ -46,7 +46,7 @@ fun JsonElement?.treatsAsByte(
 }
 
 /**
- * Method to treats a [JsonElement] value as nullable [Byte]
+ * Method used to treats a [JsonElement] value as nullable [Byte]
  *
  * @param defValue The default value to return if the [JsonElement] is null or is not a [Byte] value
  *
@@ -59,7 +59,7 @@ fun JsonElement?.treatsAsNullableByte(
 }
 
 /**
- * Method to treats a [JsonElement] value as null-safe [UByte]
+ * Method used to treats a [JsonElement] value as null-safe [UByte]
  *
  * @param defValue The default value to return if the [JsonElement] is null or is not a [UByte] value
  *
@@ -74,7 +74,7 @@ fun JsonElement?.treatsAsUByte(
 }
 
 /**
- * Method to treats a [JsonElement] value as nullable [UByte]
+ * Method used to treats a [JsonElement] value as nullable [UByte]
  *
  * @param defValue The default value to return if the [JsonElement] is null or is not a [UByte] value
  *
@@ -87,7 +87,7 @@ fun JsonElement?.treatsAsNullableUByte(
 }
 
 /**
- * Method to treats a [JsonElement] value as null-safe [Short]
+ * Method used to treats a [JsonElement] value as null-safe [Short]
  *
  * @param defValue The default value to return if the [JsonElement] is null or is not a [Short] value
  *
@@ -102,7 +102,7 @@ fun JsonElement?.treatsAsShort(
 }
 
 /**
- * Method to treats a [JsonElement] value as nullable [Short]
+ * Method used to treats a [JsonElement] value as nullable [Short]
  *
  * @param defValue The default value to return if the [JsonElement] is null or is not a [Short] value
  *
@@ -115,7 +115,7 @@ fun JsonElement?.treatsAsNullableShort(
 }
 
 /**
- * Method to treats a [JsonElement] value as null-safe [UShort]
+ * Method used to treats a [JsonElement] value as null-safe [UShort]
  *
  * @param defValue The default value to return if the [JsonElement] is null or is not a [UShort] value
  *
@@ -130,7 +130,7 @@ fun JsonElement?.treatsAsUShort(
 }
 
 /**
- * Method to treats a [JsonElement] value as nullable [UShort]
+ * Method used to treats a [JsonElement] value as nullable [UShort]
  *
  * @param defValue The default value to return if the [JsonElement] is null or is not a [UShort] value
  *
@@ -143,7 +143,7 @@ fun JsonElement?.treatsAsNullableUShort(
 }
 
 /**
- * Method to treats a [JsonElement] value as null-safe [Int]
+ * Method used to treats a [JsonElement] value as null-safe [Int]
  *
  * @param defValue The default value to return if the [JsonElement] is null or is not a [Int] value
  *
@@ -158,7 +158,7 @@ fun JsonElement?.treatsAsInt(
 }
 
 /**
- * Method to treats a [JsonElement] value as nullable [Int]
+ * Method used to treats a [JsonElement] value as nullable [Int]
  *
  * @param defValue The default value to return if the [JsonElement] is null or is not a [Int] value
  *
@@ -171,7 +171,7 @@ fun JsonElement?.treatsAsNullableInt(
 }
 
 /**
- * Method to treats a [JsonElement] value as null-safe [UInt]
+ * Method used to treats a [JsonElement] value as null-safe [UInt]
  *
  * @param defValue The default value to return if the [JsonElement] is null or is not a [UInt] value
  *
@@ -186,7 +186,7 @@ fun JsonElement?.treatsAsUInt(
 }
 
 /**
- * Method to treats a [JsonElement] value as nullable [UInt]
+ * Method used to treats a [JsonElement] value as nullable [UInt]
  *
  * @param defValue The default value to return if the [JsonElement] is null or is not a [UInt] value
  *
@@ -199,7 +199,7 @@ fun JsonElement?.treatsAsNullableUInt(
 }
 
 /**
- * Method to treats a [JsonElement] value as null-safe [Float]
+ * Method used to treats a [JsonElement] value as null-safe [Float]
  *
  * @param defValue The default value to return if the [JsonElement] is null or is not a [Float] value
  *
@@ -214,7 +214,7 @@ fun JsonElement?.treatsAsFloat(
 }
 
 /**
- * Method to treats a [JsonElement] value as nullable [Float]
+ * Method used to treats a [JsonElement] value as nullable [Float]
  *
  * @param defValue The default value to return if the [JsonElement] is null or is not a [Float] value
  *
@@ -227,7 +227,7 @@ fun JsonElement?.treatsAsNullableFloat(
 }
 
 /**
- * Method to treats a [JsonElement] value as null-safe [Double]
+ * Method used to treats a [JsonElement] value as null-safe [Double]
  *
  * @param defValue The default value to return if the [JsonElement] is null or is not a [Double] value
  *
@@ -242,7 +242,7 @@ fun JsonElement?.treatsAsDouble(
 }
 
 /**
- * Method to treats a [JsonElement] value as nullable [Double]
+ * Method used to treats a [JsonElement] value as nullable [Double]
  *
  * @param defValue The default value to return if the [JsonElement] is null or is not a [Double] value
  *
@@ -255,7 +255,7 @@ fun JsonElement?.treatsAsNullableDouble(
 }
 
 /**
- * Method to treats a [JsonElement] value as null-safe [Long]
+ * Method used to treats a [JsonElement] value as null-safe [Long]
  *
  * @param defValue The default value to return if the [JsonElement] is null or is not a [Long] value
  *
@@ -270,7 +270,7 @@ fun JsonElement?.treatsAsLong(
 }
 
 /**
- * Method to treats a [JsonElement] value as nullable [Long]
+ * Method used to treats a [JsonElement] value as nullable [Long]
  *
  * @param defValue The default value to return if the [JsonElement] is null or is not a [Long] value
  *
@@ -283,7 +283,7 @@ fun JsonElement?.treatsAsNullableLong(
 }
 
 /**
- * Method to treats a [JsonElement] value as null-safe [ULong]
+ * Method used to treats a [JsonElement] value as null-safe [ULong]
  *
  * @param defValue The default value to return if the [JsonElement] is null or is not a [ULong] value
  *
@@ -298,7 +298,7 @@ fun JsonElement?.treatsAsULong(
 }
 
 /**
- * Method to treats a [JsonElement] value as nullable [ULong]
+ * Method used to treats a [JsonElement] value as nullable [ULong]
  *
  * @param defValue The default value to return if the [JsonElement] is null or is not a [ULong] value
  *
@@ -311,7 +311,7 @@ fun JsonElement?.treatsAsNullableULong(
 }
 
 /**
- * Method to treats a [JsonElement] value as null-safe [String]
+ * Method used to treats a [JsonElement] value as null-safe [String]
  *
  * @param defValue The default value to return if the [JsonElement] is null or is not a [String] value
  *
@@ -326,7 +326,7 @@ fun JsonElement?.treatsAsString(
 }
 
 /**
- * Method to treats a [JsonElement] value as nullable [String]
+ * Method used to treats a [JsonElement] value as nullable [String]
  *
  * @param defValue The default value to return if the [JsonElement] is null or is not a [String] value
  *
