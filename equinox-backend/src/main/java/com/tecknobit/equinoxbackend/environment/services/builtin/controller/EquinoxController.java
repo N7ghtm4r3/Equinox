@@ -50,37 +50,9 @@ abstract public class EquinoxController<T extends EquinoxUser, R extends Equinox
         H extends EquinoxUsersService<T, R>> {
 
     /**
-     * {@code protector} the instance to launch the server protector to manage the server accesses
-     *
-     * @apiNote the commands scheme:
-     * <ul>
-     *     <li>
-     *         <b>rss</b> -> launch your java application with "rss" to recreate the server secret <br>
-     *                       e.g java -jar your_backend.jar rss
-     *     </li>
-     *     <li>
-     *         <b>dss</b> -> launch your java application with "dss" to delete the current server secret <br>
-     *                       e.g java -jar your_backend.jar dss
-     *     </li>
-     *     <li>
-     *         <b>dssi</b> -> launch your java application with "dssi" to delete the current server secret and interrupt
-     *                        the current workflow of the server <br>
-     *                        e.g java -jar your_backend.jar dssi
-     *     </li>
-     * </ul>
-     */
-    protected static ServerProtector serverProtector;
-
-    /**
      * {@code resourcesProvider} the resources provider and manager
      */
     public static ResourcesProvider resourcesProvider;
-
-    /**
-     * {@code messageSource} the message source used to manage the resources messages bundle
-     */
-    @Autowired(required = false)
-    protected MessageSource messageSource;
 
     /**
      * {@code WRONG_PROCEDURE_MESSAGE} message to use when the procedure is wrong
@@ -124,10 +96,31 @@ abstract public class EquinoxController<T extends EquinoxUser, R extends Equinox
     public static final String WRONG_LANGUAGE_MESSAGE = "wrong_language";
 
     /**
-     * {@code usersRepository} instance for the user repository
+     * {@code protector} the instance to launch the server protector to manage the server accesses
+     *
+     * @apiNote the commands scheme:
+     * <ul>
+     *     <li>
+     *         <b>rss</b> -> launch your java application with "rss" to recreate the server secret <br>
+     *                       e.g java -jar your_backend.jar rss
+     *     </li>
+     *     <li>
+     *         <b>dss</b> -> launch your java application with "dss" to delete the current server secret <br>
+     *                       e.g java -jar your_backend.jar dss
+     *     </li>
+     *     <li>
+     *         <b>dssi</b> -> launch your java application with "dssi" to delete the current server secret and interrupt
+     *                        the current workflow of the server <br>
+     *                        e.g java -jar your_backend.jar dssi
+     *     </li>
+     * </ul>
      */
-    @Autowired(required = false)
-    protected R usersRepository;
+    protected static ServerProtector serverProtector;
+
+    /**
+     * {@code configuration} the current configuration of the Equinox's backend instance
+     */
+    protected final EquinoxBackendConfiguration configuration;
 
     /**
      * {@code jsonHelper} helper to work with JSON values
@@ -135,9 +128,30 @@ abstract public class EquinoxController<T extends EquinoxUser, R extends Equinox
     protected JsonHelper jsonHelper = new JsonHelper("{}");
 
     /**
+     * {@code messageSource} the message source used to manage the resources messages bundle
+     */
+    @Autowired(required = false)
+    protected MessageSource messageSource;
+
+    /**
+     * {@code usersRepository} instance for the user repository
+     */
+    @Autowired(required = false)
+    protected R usersRepository;
+
+    /**
      * {@code me} user representing the user who made a request on the server
      */
     protected T me;
+
+    /**
+     * Constructor to instantiate the {@link EquinoxController}
+     *
+     * @apiNote will be instantiated also the {@link #configuration}
+     */
+    public EquinoxController() {
+        configuration = EquinoxBackendConfiguration.getInstance();
+    }
 
     /**
      * Method to load the {@link #jsonHelper}

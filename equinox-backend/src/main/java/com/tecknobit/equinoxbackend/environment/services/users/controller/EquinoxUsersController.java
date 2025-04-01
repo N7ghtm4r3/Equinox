@@ -1,7 +1,6 @@
 package com.tecknobit.equinoxbackend.environment.services.users.controller;
 
 import com.tecknobit.apimanager.annotations.RequestPath;
-import com.tecknobit.equinoxbackend.configuration.EquinoxBackendConfiguration;
 import com.tecknobit.equinoxbackend.environment.services.builtin.controller.EquinoxController;
 import com.tecknobit.equinoxbackend.environment.services.users.entity.EquinoxUser;
 import com.tecknobit.equinoxbackend.environment.services.users.repository.EquinoxUsersRepository;
@@ -42,19 +41,7 @@ public class EquinoxUsersController<T extends EquinoxUser, R extends EquinoxUser
     @Autowired
     protected H usersService;
 
-    /**
-     * {@code configuration} the current configuration of the Equinox's backend instance
-     */
-    protected final EquinoxBackendConfiguration configuration;
 
-    /**
-     * Constructor to instantiate the {@link EquinoxController}
-     *
-     * @apiNote will be instantiated also the {@link #configuration}
-     */
-    public EquinoxUsersController() {
-        configuration = EquinoxBackendConfiguration.getInstance();
-    }
 
     /**
      * Method to sign up in the <b>Equinox's system</b>
