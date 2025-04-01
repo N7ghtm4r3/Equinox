@@ -87,7 +87,7 @@ open class EquinoxProfileViewModel(
      * @param profilePicBytes The bytes of the image selected
      * @param onFailure The action to execute when the request failed
      */
-    fun changeProfilePic(
+    open fun changeProfilePic(
         profilePicName: String,
         profilePicBytes: ByteArray,
         onFailure: (JsonObject) -> Unit = {
@@ -117,7 +117,7 @@ open class EquinoxProfileViewModel(
      * @param onSuccess The action to execute if the request has been successful
      * @param onFailure The action to execute when the request failed
      */
-    fun changeEmail(
+    open fun changeEmail(
         onSuccess: (() -> Unit)? = null,
         onFailure: (JsonObject) -> Unit = {
             showSnackbarMessage(it)
@@ -150,7 +150,7 @@ open class EquinoxProfileViewModel(
      * @param onSuccess The action to execute if the request has been successful
      * @param onFailure The action to execute when the request failed
      */
-    fun changePassword(
+    open fun changePassword(
         onSuccess: (() -> Unit)? = null,
         onFailure: (JsonObject) -> Unit = {
             showSnackbarMessage(it)
@@ -183,7 +183,7 @@ open class EquinoxProfileViewModel(
      * @param onSuccess The action to execute if the request has been successful
      * @param onFailure The action to execute when the request failed
      */
-    fun changeLanguage(
+    open fun changeLanguage(
         onSuccess: (() -> Unit)? = null,
         onFailure: (JsonObject) -> Unit = {
             showSnackbarMessage(it)
@@ -210,7 +210,7 @@ open class EquinoxProfileViewModel(
      *
      * @param onChange The action to execute when the theme changed
      */
-    fun changeTheme(
+    open fun changeTheme(
         onChange: (() -> Unit)? = null,
     ) {
         localUser.theme = theme.value
@@ -223,7 +223,7 @@ open class EquinoxProfileViewModel(
      * @param onDelete The action to execute when the account has been deleted
      * @param onFailure The action to execute when the request failed
      */
-    fun deleteAccount(
+    open fun deleteAccount(
         onDelete: (() -> Unit)? = null,
         onFailure: (JsonObject) -> Unit = {
             showSnackbarMessage(it)
@@ -247,7 +247,7 @@ open class EquinoxProfileViewModel(
      *
      * @param onClear The action to execute when the session has been cleaned
      */
-    fun clearSession(
+    open fun clearSession(
         onClear: (() -> Unit)? = null,
     ) {
         localUser.clear()
