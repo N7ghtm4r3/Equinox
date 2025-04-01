@@ -268,7 +268,6 @@ import static com.tecknobit.equinoxbackend.environment.services.builtin.entity.E
 import static com.tecknobit.equinoxbackend.environment.services.users.entity.EquinoxUser.USERS_KEY;
 
 @Repository
-@Primary // this is REQUIRED to use correctly this repository instead the EquinoxUsersRepository
 public interface CustomUsersRepository extends EquinoxUsersRepository<CustomUser> {
 
   @Modifying(clearAutomatically = true)
@@ -302,7 +301,6 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
 @Service
-@Primary // this is REQUIRED to use correctly this helper instead the EquinoxUsersHelper
 public class CustomUsersHelper extends EquinoxUsersHelper<CustomUser, CustomUsersRepository> {
 
     public void changeCurrency(String newCurrency, String userId) {
@@ -395,7 +393,6 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
 @Service
-@Primary
 public class CustomUsersHelper extends EquinoxUsersHelper<CustomUser, CustomUsersRepository> {
 
     @Override
@@ -485,7 +482,6 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
 @Service
-@Primary
 public class CustomUsersHelper extends EquinoxUsersHelper<CustomUser, CustomUsersRepository> {
 
     @Override

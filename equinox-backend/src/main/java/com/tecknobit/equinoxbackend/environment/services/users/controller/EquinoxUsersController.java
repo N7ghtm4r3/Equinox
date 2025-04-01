@@ -62,7 +62,7 @@ public class EquinoxUsersController<T extends EquinoxUser, R extends EquinoxUser
      */
     @PostMapping(path = SIGN_UP_ENDPOINT)
     @RequestPath(path = "/api/v1/users/signUp", method = POST)
-    public String signUp(@RequestBody Map<String, String> payload) {
+    public String signUp(@RequestBody Map<String, Object> payload) {
         loadJsonHelper(payload);
         setSessionLocale(jsonHelper.getString(LANGUAGE_KEY, DEFAULT_LANGUAGE));
         if (configuration.isServerProtectorEnabled() && !serverProtector.serverSecretMatches(jsonHelper.getString(SERVER_SECRET_KEY)))
@@ -181,7 +181,7 @@ public class EquinoxUsersController<T extends EquinoxUser, R extends EquinoxUser
      */
     @PostMapping(path = SIGN_IN_ENDPOINT)
     @RequestPath(path = "/api/v1/users/signIn", method = POST)
-    public String signIn(@RequestBody Map<String, String> payload) {
+    public String signIn(@RequestBody Map<String, Object> payload) {
         loadJsonHelper(payload);
         String email = jsonHelper.getString(EMAIL_KEY);
         String password = jsonHelper.getString(PASSWORD_KEY);
