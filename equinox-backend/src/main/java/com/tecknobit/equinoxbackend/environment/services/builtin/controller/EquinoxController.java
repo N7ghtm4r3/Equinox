@@ -12,7 +12,6 @@ import com.tecknobit.equinoxcore.annotations.Returner;
 import com.tecknobit.equinoxcore.annotations.Validator;
 import com.tecknobit.equinoxcore.annotations.Wrapper;
 import com.tecknobit.equinoxcore.network.ResponseStatus;
-import com.tecknobit.mantis.Mantis;
 import jakarta.annotation.Nullable;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -82,20 +81,6 @@ abstract public class EquinoxController<T extends EquinoxUser, R extends Equinox
      */
     @Autowired(required = false)
     protected MessageSource messageSource;
-
-    /**
-     * {@code mantis} the translations manager
-     */
-    @Deprecated(forRemoval = true, since = "1.0.9")
-    protected static final Mantis mantis;
-
-    static {
-        try {
-            mantis = new Mantis(DEFAULT_LANGUAGE);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
 
     /**
      * {@code WRONG_PROCEDURE_MESSAGE} message to use when the procedure is wrong

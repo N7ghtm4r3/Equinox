@@ -1,7 +1,7 @@
 [versions]
 agp = "8.5.2"
 kmprefs = "1.0.1"
-kotlin = "2.1.0"
+kotlin = "2.1.10"
 android-minSdk = "24"
 android-compileSdk = "34"
 dokka = "2.0.0"
@@ -12,8 +12,6 @@ ktor = "3.0.3"
 jacksonDatabind = "2.18.2"
 springBoot = "3.2.3"
 kotlinxCoroutinesCore = "1.10.1"
-#TODO: TO REMOVE IN 1.10.0
-mantis = "1.0.0"
 apimanager = "2.2.4"
 json = "20250107"
 #equinox-core
@@ -40,8 +38,6 @@ spring-boot-starter-data-jpa = { module = "org.springframework.boot:spring-boot-
 boot-spring-boot-starter-web = { module = "org.springframework.boot:spring-boot-starter-web", version.ref = "springBoot" }
 jackson-databind = { module = "com.fasterxml.jackson.core:jackson-databind", version.ref = "jacksonDatabind" }
 kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinxCoroutinesCore" }
-#TODO: TO REMOVE IN 1.10.0
-mantis = { module = "com.github.N7ghtm4r3:Mantis", version.ref = "mantis" }
 json = { module = "org.json:json", version.ref = "json" }
 apimanager = { module = "com.github.N7ghtm4r3:APIManager", version.ref = "apimanager" }
 #equinox-core

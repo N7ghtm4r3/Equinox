@@ -14,45 +14,9 @@ open class InputsValidator {
     companion object {
 
         /**
-         * `HOST_ADDRESS_KEY` the key for the **"host_address"** field
-         */
-        @Deprecated(
-            message = "This constant has been moved",
-            replaceWith = ReplaceWith(
-                expression = "CommonKeys.HOST_ADDRESS_KEY"
-            ),
-            level = DeprecationLevel.ERROR
-        )
-        const val HOST_ADDRESS_KEY: String = "host_address"
-
-        /**
-         * `WRONG_NAME_MESSAGE` error message used when the name inserted is not valid
-         */
-        @Deprecated(
-            message = "This constant has been moved",
-            replaceWith = ReplaceWith(
-                expression = "EquinoxController.WRONG_NAME_MESSAGE"
-            ),
-            level = DeprecationLevel.ERROR
-        )
-        const val WRONG_NAME_MESSAGE: String = "wrong_name"
-
-        /**
          * `NAME_MAX_LENGTH` the max valid length for the username
          */
         const val NAME_MAX_LENGTH: Int = 20
-
-        /**
-         * `WRONG_SURNAME_MESSAGE` error message used when the surname inserted is not valid
-         */
-        @Deprecated(
-            message = "This constant has been moved",
-            replaceWith = ReplaceWith(
-                expression = "EquinoxController.WRONG_SURNAME_MESSAGE"
-            ),
-            level = DeprecationLevel.ERROR
-        )
-        const val WRONG_SURNAME_MESSAGE: String = "wrong_surname"
 
         /**
          * `SURNAME_MAX_LENGTH` the max valid length for the surname
@@ -60,33 +24,9 @@ open class InputsValidator {
         const val SURNAME_MAX_LENGTH: Int = 30
 
         /**
-         * `WRONG_EMAIL_MESSAGE` error message used when the email inserted is not valid
-         */
-        @Deprecated(
-            message = "This constant has been moved",
-            replaceWith = ReplaceWith(
-                expression = "EquinoxController.WRONG_EMAIL_MESSAGE"
-            ),
-            level = DeprecationLevel.ERROR
-        )
-        const val WRONG_EMAIL_MESSAGE: String = "wrong_email"
-
-        /**
          * `EMAIL_MAX_LENGTH` the max valid length for the email
          */
         const val EMAIL_MAX_LENGTH: Int = 75
-
-        /**
-         * `WRONG_PASSWORD_MESSAGE` error message used when the password inserted is not valid
-         */
-        @Deprecated(
-            message = "This constant has been moved",
-            replaceWith = ReplaceWith(
-                expression = "EquinoxController.WRONG_PASSWORD_MESSAGE"
-            ),
-            level = DeprecationLevel.ERROR
-        )
-        const val WRONG_PASSWORD_MESSAGE: String = "wrong_password"
 
         /**
          * `PASSWORD_MIN_LENGTH` the min valid length for the password
@@ -97,18 +37,6 @@ open class InputsValidator {
          * `PASSWORD_MAX_LENGTH` the max valid length for the password
          */
         const val PASSWORD_MAX_LENGTH: Int = 32
-
-        /**
-         * `WRONG_LANGUAGE_MESSAGE` error message used when the language inserted is not valid
-         */
-        @Deprecated(
-            message = "This constant has been moved",
-            replaceWith = ReplaceWith(
-                expression = "EquinoxController.WRONG_LANGUAGE_MESSAGE"
-            ),
-            level = DeprecationLevel.ERROR
-        )
-        const val WRONG_LANGUAGE_MESSAGE: String = "wrong_language"
 
         /**
          * `DEFAULT_LANGUAGE` default language used

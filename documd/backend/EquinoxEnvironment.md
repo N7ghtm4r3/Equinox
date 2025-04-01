@@ -140,10 +140,10 @@ dependencies {
     implementation("org.json:json:20240303")
 
     // implement the backend utilities
-    implementation("io.github.n7ghtm4r3:equinox-backend:1.0.9")
+    implementation("io.github.n7ghtm4r3:equinox-backend:1.1.0")
     
     // implement the core utilities
-    implementation("io.github.n7ghtm4r3:equinox-core:1.0.9")
+    implementation("io.github.n7ghtm4r3:equinox-core:1.1.0")
 
     ...
 
