@@ -3,6 +3,8 @@ package com.tecknobit.equinoxbackend.environment.services.builtin.controller;
 import com.tecknobit.apimanager.apis.ServerProtector;
 import com.tecknobit.apimanager.formatters.JsonHelper;
 import com.tecknobit.equinoxbackend.configuration.EquinoxBackendConfiguration;
+import com.tecknobit.equinoxbackend.configuration.EquinoxBackendConfiguration.ResourcesConfig;
+import com.tecknobit.equinoxbackend.configuration.EquinoxBackendConfiguration.ServerProtectorConfig;
 import com.tecknobit.equinoxbackend.environment.services.users.entity.EquinoxUser;
 import com.tecknobit.equinoxbackend.environment.services.users.repository.EquinoxUsersRepository;
 import com.tecknobit.equinoxbackend.environment.services.users.service.EquinoxUsersService;
@@ -22,7 +24,6 @@ import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.io.IOException;
 import java.util.*;
 
 import static com.tecknobit.equinoxbackend.resourcesutils.ResourcesManager.PROFILES_DIRECTORY;
@@ -368,6 +369,61 @@ abstract public class EquinoxController<T extends EquinoxUser, R extends Equinox
     /**
      * Method to init the {@link #serverProtector} and create the resources directories correctly
      *
+     * @param context The launcher {@link Class} where this method has been invoked
+     * @param args    Custom arguments to share with {@link SpringApplication} and with the {@link #serverProtector}
+     * @apiNote the arguments scheme:
+     * <ul>
+     *     <li>
+     *         {@link #serverProtector} ->
+     *         <ul>
+     *          <li>
+     *             <b>rss</b> -> launch your java application with "rss" to recreate the server secret <br>
+     *                       e.g java -jar your_backend.jar rss
+     *             </li>
+     *              <li>
+     *                  <b>dss</b> -> launch your java application with "dss" to delete the current server secret <br>
+     *                       e.g java -jar your_backend.jar dss
+     *              </li>
+     *              <li>
+     *                  <b>dssi</b> -> launch your java application with "dssi" to delete the current server secret and interrupt
+     *                        the current workflow of the server <br>
+     *                        e.g java -jar your_backend.jar dssi
+     *              </li>
+     *          </ul>
+     *     </li>
+     *     <li>
+     *         {@link SpringApplication} -> see the allowed arguments <a href="https://docs.spring.io/spring-boot/docs/current/reference/html/application-properties.html">here</a>
+     *     </li>
+     * </ul>
+     * @since 1.1.0
+     */
+    public static void initEquinoxEnvironment(Class<?> context, String[] args) {
+        try {
+            EquinoxBackendConfiguration backendConfiguration = EquinoxBackendConfiguration.getInstance();
+            ResourcesConfig resourcesConfig = backendConfiguration.getResourcesConfig();
+            if (resourcesConfig.createResourcesFolder()) {
+                resourcesProvider = new ResourcesProvider(RESOURCES_KEY, resourcesConfig.getSubdirectories());
+                resourcesProvider.createContainerDirectory();
+                resourcesProvider.createSubDirectories();
+            }
+            if (backendConfiguration.serverProtectorEnabled()) {
+                if (serverProtector != null)
+                    throw new IllegalAccessException("The protector has been already instantiated");
+                ServerProtectorConfig serverProtectorConfig = backendConfiguration.getServerProtectorConfig();
+                serverProtector = new ServerProtector(
+                        serverProtectorConfig.getStoragePath(),
+                        serverProtectorConfig.getSaveMessage()
+                );
+                serverProtector.launch(args);
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     * Method to init the {@link #serverProtector} and create the resources directories correctly
+     *
      * @param storagePath Instance to manage the storage of the server secret
      * @param saveMessage The message to print when the server secret has been generated,
      *                     the start of the message is <b>"Note: is not an error, but is an alert!
@@ -401,6 +457,7 @@ abstract public class EquinoxController<T extends EquinoxUser, R extends Equinox
      *     </li>
      * </ul>
      */
+    @Deprecated(forRemoval = true, since = "1.1.0")
     public static void initEquinoxEnvironment(String storagePath, String saveMessage, Class<?> context, String[] args,
                                               String... customSubDirectories) {
         try {
@@ -409,42 +466,14 @@ abstract public class EquinoxController<T extends EquinoxUser, R extends Equinox
             serverProtector = new ServerProtector(storagePath, saveMessage);
             serverProtector.launch(args);
             EquinoxBackendConfiguration.getInstance().setServerProtectorEnabled(true);
-            setBasicResourcesConfiguration(context, customSubDirectories);
+            List<String> subDirectories = new ArrayList<>(Arrays.stream(customSubDirectories).toList());
+            subDirectories.add(PROFILES_DIRECTORY);
+            resourcesProvider = new ResourcesProvider(RESOURCES_KEY, subDirectories);
+            resourcesProvider.createContainerDirectory();
+            resourcesProvider.createSubDirectories();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-    }
-
-    /**
-     * Method to create resources directories correctly
-     *
-     * @param context              The launcher {@link Class} where this method has been invoked
-     * @param customSubDirectories The custom subdirectories of the user
-     * @apiNote the {@link #serverProtector} will not be instantiated
-     */
-    public static void initEquinoxEnvironment(Class<?> context, String... customSubDirectories) {
-        try {
-            EquinoxBackendConfiguration.getInstance().setServerProtectorEnabled(false);
-            setBasicResourcesConfiguration(context, customSubDirectories);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    /**
-     * Method to configure the resources folders required by the Equinox's environment and the beans classes to
-     * correctly serve the static resources and set the CORS policy
-     *
-     * @param context The launcher {@link Class} where this method has been invoked
-     * @param customSubDirectories The custom subdirectories of the user
-     * @throws IOException when an error during the creation of the files occurred
-     */
-    private static void setBasicResourcesConfiguration(Class<?> context, String... customSubDirectories) throws IOException {
-        List<String> subDirectories = new ArrayList<>(Arrays.stream(customSubDirectories).toList());
-        subDirectories.add(PROFILES_DIRECTORY);
-        resourcesProvider = new ResourcesProvider(RESOURCES_KEY, subDirectories);
-        resourcesProvider.createContainerDirectory();
-        resourcesProvider.createSubDirectories();
     }
 
 }

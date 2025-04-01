@@ -65,7 +65,7 @@ public class EquinoxUsersController<T extends EquinoxUser, R extends EquinoxUser
     public String signUp(@RequestBody Map<String, Object> payload) {
         loadJsonHelper(payload);
         setSessionLocale(jsonHelper.getString(LANGUAGE_KEY, DEFAULT_LANGUAGE));
-        if (configuration.isServerProtectorEnabled() && !serverProtector.serverSecretMatches(jsonHelper.getString(SERVER_SECRET_KEY)))
+        if (configuration.serverProtectorEnabled() && !serverProtector.serverSecretMatches(jsonHelper.getString(SERVER_SECRET_KEY)))
             return failedResponse(NOT_AUTHORIZED_OR_WRONG_DETAILS_MESSAGE);
         String name = jsonHelper.getString(NAME_KEY);
         String surname = jsonHelper.getString(SURNAME_KEY);
