@@ -21,8 +21,8 @@ import com.tecknobit.equinoxcore.helpers.NAME_KEY
 import com.tecknobit.equinoxcore.helpers.SURNAME_KEY
 import com.tecknobit.equinoxcore.network.Requester.Companion.USER_IDENTIFIER_KEY
 import com.tecknobit.equinoxcore.network.Requester.Companion.USER_TOKEN_KEY
-import com.tecknobit.equinoxcore.network.Requester.Companion.sendRequest
 import com.tecknobit.equinoxcore.network.Requester.Companion.toResponseData
+import com.tecknobit.equinoxcore.network.sendRequest
 import kotlinx.coroutines.launch
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.jsonPrimitive
