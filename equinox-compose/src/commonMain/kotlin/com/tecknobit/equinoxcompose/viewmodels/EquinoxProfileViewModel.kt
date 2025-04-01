@@ -251,10 +251,7 @@ open class EquinoxProfileViewModel(
         onClear: (() -> Unit)? = null,
     ) {
         localUser.clear()
-        requester.setUserCredentials(
-            userId = null,
-            userToken = null
-        )
+        requester.clearSession()
         onClear?.invoke()
     }
 

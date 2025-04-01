@@ -1,6 +1,11 @@
 package com.tecknobit.equinoxcore.helpers
 
 /**
+ * `USER_KEY` the key for the **"user"** field
+ */
+const val USER_KEY = "user"
+
+/**
  * `USERS_KEY` the key for the **"users"** field
  */
 const val USERS_KEY = "users"
@@ -69,3 +74,8 @@ const val THEME_KEY = "theme"
  * `KEYWORDS_KEY` the key for the **"keywords"** field
  */
 const val KEYWORDS_KEY = "keywords"
+
+/**
+ * `CREATION_DATE_KEY` the key for the **"creation_date"** field
+ */
+const val CREATION_DATE_KEY = "creation_date"

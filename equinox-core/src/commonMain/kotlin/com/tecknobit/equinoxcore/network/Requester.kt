@@ -1,6 +1,7 @@
 package com.tecknobit.equinoxcore.network
 
 import com.tecknobit.equinoxcore.annotations.Assembler
+import com.tecknobit.equinoxcore.annotations.RequiresSuperCall
 import com.tecknobit.equinoxcore.annotations.Wrapper
 import com.tecknobit.equinoxcore.json.treatsAsString
 import com.tecknobit.equinoxcore.network.Requester.Companion.RESPONSE_DATA_KEY
@@ -821,6 +822,18 @@ abstract class Requester(
     ) {
         this.userId = userId
         this.userToken = userToken
+    }
+
+    /**
+     * Method used to clear the current session of the requester, for example, after user logged out or
+     * changed the auth credentials
+     */
+    @RequiresSuperCall
+    open fun clearSession() {
+        setUserCredentials(
+            userId = null,
+            userToken = null
+        )
     }
 
     /**
