@@ -270,6 +270,7 @@ private fun EmptyListUIContent(
  * @param imageModifier The modifier to apply to the image icon
  * @param animations The set of the animations to use to animate the layout
  * @param textStyle The style to apply to the text
+ * @param backgroundColor The color of the background
  * @param errorIcon The error icon used, as default is used the **Icons.Default.Error**
  * @param errorColor The error color used, as default is used the **MaterialTheme.colorScheme.errorContainer**
  * @param errorMessage The error that occurred or to indicate a generic error
@@ -283,6 +284,7 @@ fun ErrorUI(
     imageModifier: Modifier = Modifier,
     animations: UIAnimations? = null,
     textStyle: TextStyle = TextStyle.Default,
+    backgroundColor: Color = MaterialTheme.colorScheme.background,
     errorIcon: ImageVector = Icons.Default.Error,
     errorColor: Color = MaterialTheme.colorScheme.error,
     errorMessage: StringResource = Res.string.an_error_occurred,
@@ -294,6 +296,7 @@ fun ErrorUI(
         imageModifier = imageModifier,
         animations = animations,
         textStyle = textStyle,
+        backgroundColor = backgroundColor,
         errorIcon = errorIcon,
         errorColor = errorColor,
         errorMessage = stringResource(errorMessage),
@@ -309,6 +312,7 @@ fun ErrorUI(
  * @param imageModifier The modifier to apply to the image icon
  * @param animations The set of the animations to use to animate the layout
  * @param textStyle The style to apply to the text
+ * @param backgroundColor The color of the background
  * @param errorIcon The error icon used, as default is used the **Icons.Default.Error**
  * @param errorColor The error color used, as default is used the **MaterialTheme.colorScheme.errorContainer**
  * @param errorMessage The error that occurred or to indicate a generic error
@@ -322,6 +326,7 @@ fun ErrorUI(
     imageModifier: Modifier = Modifier,
     animations: UIAnimations? = null,
     textStyle: TextStyle = TextStyle.Default,
+    backgroundColor: Color = MaterialTheme.colorScheme.background,
     errorIcon: ImageVector = Icons.Default.Error,
     errorColor: Color = MaterialTheme.colorScheme.error,
     errorMessage: String,
@@ -338,6 +343,7 @@ fun ErrorUI(
                 containerModifier = containerModifier,
                 imageModifier = imageModifier,
                 textStyle = textStyle,
+                backgroundColor = backgroundColor,
                 errorIcon = errorIcon,
                 errorColor = errorColor,
                 errorMessage = errorMessage,
@@ -350,6 +356,7 @@ fun ErrorUI(
             containerModifier = containerModifier,
             imageModifier = imageModifier,
             textStyle = textStyle,
+            backgroundColor = backgroundColor,
             errorIcon = errorIcon,
             errorColor = errorColor,
             errorMessage = errorMessage,
@@ -365,6 +372,7 @@ fun ErrorUI(
  * @param containerModifier The modifier to apply to the container column
  * @param imageModifier The modifier to apply to the image icon
  * @param textStyle The style to apply to the text
+ * @param backgroundColor The color of the background
  * @param errorIcon The error icon used, as default is used the **Icons.Default.Error**
  * @param errorColor The error color used, as default is used the **MaterialTheme.colorScheme.errorContainer**
  * @param errorMessage The error that occurred or to indicate a generic error
@@ -377,6 +385,7 @@ private fun ErrorUIContent(
     containerModifier: Modifier = Modifier,
     imageModifier: Modifier = Modifier,
     textStyle: TextStyle = TextStyle.Default,
+    backgroundColor: Color = MaterialTheme.colorScheme.background,
     errorIcon: ImageVector = Icons.Default.Error,
     errorColor: Color = MaterialTheme.colorScheme.error,
     errorMessage: String,
@@ -386,7 +395,7 @@ private fun ErrorUIContent(
     Column(
         modifier = containerModifier
             .fillMaxSize()
-            .background(MaterialTheme.colorScheme.background),
+            .background(backgroundColor),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
