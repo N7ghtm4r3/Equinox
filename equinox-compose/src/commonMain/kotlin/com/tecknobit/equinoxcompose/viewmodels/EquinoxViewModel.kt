@@ -1,6 +1,9 @@
 package com.tecknobit.equinoxcompose.viewmodels
 
+import androidx.compose.material3.SnackbarDuration
+import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.SnackbarResult.*
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.tecknobit.equinoxcompose.session.Retriever
@@ -104,12 +107,33 @@ abstract class EquinoxViewModel(
      * Method used to display a response message with a snackbar
      *
      * @param response The response from retrieve the message to display
+     * @param actionLabel Optional action label to show as button in the Snackbar
+     * @param onDismiss Is the callback to invoke when the snackbar dismissed without the user click of the [actionLabel]
+     * @param onActionPerformed Is the callback to invoke when the user clicked the [actionLabel]
+     * @param withDismissAction A boolean to show a dismiss action in the Snackbar. This is
+     *   recommended to be set to true for better accessibility when a Snackbar is set with a
+     *   [SnackbarDuration.Indefinite]
+     * @param duration Duration to control how long snackbar will be shown in [SnackbarHost], either
+     *   [SnackbarDuration.Short], [SnackbarDuration.Long] or [SnackbarDuration.Indefinite]
      */
     fun showSnackbarMessage(
         response: JsonObject,
+        actionLabel: String? = null,
+        onDismiss: (() -> Unit)? = null,
+        onActionPerformed: (() -> Unit)? = null,
+        withDismissAction: Boolean = false,
+        duration: SnackbarDuration = if (actionLabel == null)
+            SnackbarDuration.Short
+        else
+            SnackbarDuration.Indefinite,
     ) {
         showSnackbarMessage(
-            message = response.toResponseContent()
+            message = response.toResponseContent(),
+            actionLabel = actionLabel,
+            onDismiss = onDismiss,
+            onActionPerformed = onActionPerformed,
+            withDismissAction = withDismissAction,
+            duration = duration
         )
     }
 
@@ -117,15 +141,41 @@ abstract class EquinoxViewModel(
      * Method used to display a response message with a snackbar
      *
      * @param message The resource identifier of the message to display
+     * @param actionLabel Optional action label to show as button in the Snackbar
+     * @param onDismiss Is the callback to invoke when the snackbar dismissed without the user click of the [actionLabel]
+     * @param onActionPerformed Is the callback to invoke when the user clicked the [actionLabel]
+     * @param withDismissAction A boolean to show a dismiss action in the Snackbar. This is
+     *   recommended to be set to true for better accessibility when a Snackbar is set with a
+     *   [SnackbarDuration.Indefinite]
+     * @param duration Duration to control how long snackbar will be shown in [SnackbarHost], either
+     *   [SnackbarDuration.Short], [SnackbarDuration.Long] or [SnackbarDuration.Indefinite]
      */
     fun showSnackbarMessage(
         message: StringResource,
+        actionLabel: StringResource? = null,
+        onDismiss: (() -> Unit)? = null,
+        onActionPerformed: (() -> Unit)? = null,
+        withDismissAction: Boolean = false,
+        duration: SnackbarDuration = if (actionLabel == null)
+            SnackbarDuration.Short
+        else
+            SnackbarDuration.Indefinite,
     ) {
         viewModelScope.launch {
             showSnackbarMessage(
                 message = getString(
                     resource = message
-                )
+                ),
+                actionLabel = if (actionLabel != null) {
+                    getString(
+                        resource = actionLabel
+                    )
+                } else
+                    null,
+                onDismiss = onDismiss,
+                onActionPerformed = onActionPerformed,
+                withDismissAction = withDismissAction,
+                duration = duration
             )
         }
     }
@@ -134,13 +184,39 @@ abstract class EquinoxViewModel(
      * Method used to display a response message with a snackbar
      *
      * @param message The message to display
+     * @param actionLabel Optional action label to show as button in the Snackbar
+     * @param onDismiss Is the callback to invoke when the snackbar dismissed without the user click of the [actionLabel]
+     * @param onActionPerformed Is the callback to invoke when the user clicked the [actionLabel]
+     * @param withDismissAction A boolean to show a dismiss action in the Snackbar. This is
+     *   recommended to be set to true for better accessibility when a Snackbar is set with a
+     *   [SnackbarDuration.Indefinite]
+     * @param duration Duration to control how long snackbar will be shown in [SnackbarHost], either
+     *   [SnackbarDuration.Short], [SnackbarDuration.Long] or [SnackbarDuration.Indefinite]
      */
     fun showSnackbarMessage(
         message: String,
+        actionLabel: String? = null,
+        onDismiss: (() -> Unit)? = null,
+        onActionPerformed: (() -> Unit)? = null,
+        withDismissAction: Boolean = false,
+        duration: SnackbarDuration = if (actionLabel == null)
+            SnackbarDuration.Short
+        else
+            SnackbarDuration.Indefinite,
     ) {
         snackbarHostState?.let { state ->
             viewModelScope.launch {
-                state.showSnackbar(message)
+                state.showSnackbar(
+                    message = message,
+                    actionLabel = actionLabel,
+                    withDismissAction = withDismissAction,
+                    duration = duration,
+                ).let { snackbarResult ->
+                    when (snackbarResult) {
+                        Dismissed -> onDismiss?.invoke()
+                        ActionPerformed -> onActionPerformed?.invoke()
+                    }
+                }
             }
         }
     }
