@@ -20,17 +20,43 @@ import com.tecknobit.equinoxcompose.utilities.ResponsiveClassComponent
 import com.tecknobit.equinoxcompose.utilities.ResponsiveContent
 import com.tecknobit.equinoxcore.annotations.RequiresSuperCall
 import com.tecknobit.equinoxcore.annotations.Structure
+import org.jetbrains.compose.resources.stringResource
 
+/**
+ * The `NavigatorScreen` provides a responsive navigation system that dynamically adjusts the navigation bars and content
+ * of each screen based on the current [com.tecknobit.equinoxcompose.utilities.ResponsiveClass]
+ *
+ * Related documentation: [NavigatorScreen.md](https://github.com/N7ghtm4r3/Equinox/blob/main/documd/navigation/NavigatorScreen.md)
+ *
+ * @property loggerEnabled Whether enabled the logging to log the events occurred in the [ShowContent] composable,
+ * it is suggested to disable it in production
+ *
+ * @param T The type of the [NavigatorTab] used by the navigator
+ *
+ * @author N7ghtm4r3 - Tecknobit
+ *
+ * @see EquinoxNoModelScreen
+ *
+ * @since 1.0.0
+ *
+ */
 @Structure
 @ExperimentalComposeApi
-abstract class NavigatorScreen : EquinoxNoModelScreen() {
+abstract class NavigatorScreen<T : NavigatorTab<*>>(
+    loggerEnabled: Boolean = true,
+) : EquinoxNoModelScreen(
+    loggerEnabled = loggerEnabled
+) {
 
     /**
-     *`activeNavigationTabIndex` the index of the current [NavigationTab] displayed
+     *`activeNavigationTabIndex` the index of the current [NavigatorTab] displayed
      */
     protected lateinit var activeNavigationTabIndex: MutableState<Int>
 
-    protected val tabs: Array<NavigationTab> by lazy { navigationTabs() }
+    /**
+     *`tabs` the reachable destinations tabs
+     */
+    protected val tabs: Array<T> by lazy { navigationTabs() }
 
     @Composable
     @LayoutCoordinator
@@ -144,7 +170,7 @@ abstract class NavigatorScreen : EquinoxNoModelScreen() {
     )
     protected open fun SideNavigationItem(
         index: Int,
-        tab: NavigationTab,
+        tab: T,
     ) {
         NavigationDrawerItem(
             modifier = Modifier
@@ -165,7 +191,7 @@ abstract class NavigatorScreen : EquinoxNoModelScreen() {
             },
             label = {
                 Text(
-                    text = tab.title,
+                    text = tab.prepareTitle(),
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis
                 )
@@ -216,7 +242,7 @@ abstract class NavigatorScreen : EquinoxNoModelScreen() {
     )
     protected open fun RowScope.BottomNavigationItem(
         index: Int,
-        tab: NavigationTab,
+        tab: T,
     ) {
         NavigationBarItem(
             selected = index == activeNavigationTabIndex.value,
@@ -229,12 +255,23 @@ abstract class NavigatorScreen : EquinoxNoModelScreen() {
             },
             label = {
                 Text(
-                    text = tab.title,
+                    text = tab.prepareTitle(),
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis
                 )
             }
         )
+    }
+
+    @Composable
+    protected open fun NavigatorTab<*>.prepareTitle(): String {
+        return when (this) {
+            is NavigationTab -> title
+            is I18nNavigationTab -> stringResource(title)
+            else -> {
+                title.toString()
+            }
+        }
     }
 
     /**
@@ -279,6 +316,6 @@ abstract class NavigatorScreen : EquinoxNoModelScreen() {
         activeNavigationTabIndex = rememberSaveable { mutableStateOf(0) }
     }
 
-    protected abstract fun navigationTabs(): Array<NavigationTab>
+    protected abstract fun navigationTabs(): Array<T>
 
 }

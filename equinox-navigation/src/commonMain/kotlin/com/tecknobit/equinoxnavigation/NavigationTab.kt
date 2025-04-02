@@ -1,6 +1,17 @@
 package com.tecknobit.equinoxnavigation
 
 import androidx.compose.ui.graphics.vector.ImageVector
+import org.jetbrains.compose.resources.StringResource
+
+interface NavigatorTab<T> {
+
+    val title: T
+
+    val icon: ImageVector
+
+    val contentDescription: String
+
+}
 
 /**
  * The `NavigationTab` data class represents the information about a tab used to navigate between the screens
@@ -15,7 +26,13 @@ import androidx.compose.ui.graphics.vector.ImageVector
  * @since 1.0.0
  */
 data class NavigationTab(
-    val title: String,
-    val icon: ImageVector,
-    val contentDescription: String,
-)
+    override val title: String,
+    override val icon: ImageVector,
+    override val contentDescription: String,
+) : NavigatorTab<String>
+
+data class I18nNavigationTab(
+    override val title: StringResource,
+    override val icon: ImageVector,
+    override val contentDescription: String,
+) : NavigatorTab<StringResource>
