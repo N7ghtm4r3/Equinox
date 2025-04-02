@@ -1,4 +1,3 @@
-
 import com.vanniktech.maven.publish.JavadocJar
 import com.vanniktech.maven.publish.KotlinMultiplatform
 import com.vanniktech.maven.publish.SonatypeHost
@@ -7,13 +6,15 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
+    alias(libs.plugins.jetbrainsCompose)
     alias(libs.plugins.androidLibrary)
     alias(libs.plugins.vanniktech.mavenPublish)
+    alias(libs.plugins.compose.compiler)
     kotlin("plugin.serialization") version "2.1.0"
 }
 
-group = "com.tecknobit.equinoxcore"
-version = "1.1.0"
+group = "com.tecknobit.equinoxnavigation"
+version = "1.0.0"
 
 repositories {
     google()
@@ -43,7 +44,7 @@ kotlin {
         iosSimulatorArm64()
     ).forEach { iosTarget ->
         iosTarget.binaries.framework {
-            baseName = "equinox-core"
+            baseName = "equinox-navigation"
             isStatic = true
         }
     }
@@ -62,22 +63,21 @@ kotlin {
 
         val androidMain by getting {
             dependencies {
-                implementation(libs.ktor.client.okhttp)
-                implementation(libs.startup.runtime)
             }
         }
 
         val commonMain by getting {
             dependencies {
-                implementation(libs.kotlinx.serialization.json)
-                implementation(libs.ktor.client.core)
-                implementation(libs.kotlinx.datetime)
+                implementation(compose.components.resources)
+                implementation(compose.foundation)
+                implementation(compose.material3)
+                implementation(project(":equinox-core"))
+                implementation(project(":equinox-compose"))
             }
         }
 
         val jvmMain by getting {
             dependencies {
-                implementation(libs.ktor.client.okhttp)
             }
         }
 
@@ -89,14 +89,10 @@ kotlin {
             iosX64Main.dependsOn(this)
             iosArm64Main.dependsOn(this)
             iosSimulatorArm64Main.dependsOn(this)
-            dependencies {
-                implementation(libs.ktor.client.cio)
-            }
         }
 
         val wasmJsMain by getting {
             dependencies {
-                implementation(libs.ktor.client.js)
             }
         }
 
@@ -114,12 +110,13 @@ mavenPublishing {
     )
     coordinates(
         groupId = "io.github.n7ghtm4r3",
-        artifactId = "equinox-core",
-        version = "1.1.0"
+        artifactId = "equinox-navigation",
+        version = "1.0.0"
     )
     pom {
-        name.set("Equinox Core")
-        description.set("Core utilities for CMP and Spring technologies")
+        name.set("Equinox Navigation")
+        // TODO: TO SET 
+        description.set("Core utilities for KMP and Spring technologies")
         inceptionYear.set("2025")
         url.set("https://github.com/N7ghtm4r3/Equinox")
 
@@ -146,7 +143,7 @@ mavenPublishing {
 }
 
 android {
-    namespace = "com.tecknobit.equinoxcore"
+    namespace = "com.tecknobit.equinoxnavigation"
     compileSdk = libs.versions.android.compileSdk.get().toInt()
     defaultConfig {
         minSdk = libs.versions.android.minSdk.get().toInt()

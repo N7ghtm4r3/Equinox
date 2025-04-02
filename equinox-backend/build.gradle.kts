@@ -50,8 +50,8 @@ mavenPublishing {
 
         licenses {
             license {
-                name.set("MIT")
-                url.set("https://opensource.org/license/mit")
+                name.set("APACHE2")
+                url.set("https://opensource.org/license/apache-2-0")
             }
         }
         developers {
