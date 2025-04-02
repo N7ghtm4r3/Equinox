@@ -114,6 +114,68 @@ enum class ResponsiveClass {
 }
 
 /**
+ * The `LayoutCoordinator` annotation is useful to indicate the components which are just coordinator of the specific
+ * components designed for the specific size [classes]
+ *
+ * #### Usage example
+ *
+ * ```kotlin
+ * @Composable
+ * @NonRestartableComposable
+ * @LayoutCoordinator(
+ *      classes = [EXPANDED_CONTENT, MEDIUM_CONTENT, MEDIUM_EXPANDED_CONTENT, COMPACT_CONTENT] // not mandatory
+ * )
+ * fun Passwords() {
+ *     ResponsiveContent(
+ *         onExpandedSizeClass = {
+ *             PasswordsGrid()
+ *         },
+ *         onMediumSizeClass = {
+ *             PasswordsGrid()
+ *         },
+ *         onMediumWidthExpandedHeight = {
+ *             PasswordsList()
+ *         },
+ *         onCompactSizeClass = {
+ *             PasswordsList()
+ *         }
+ *     )
+ * }
+ *
+ * @Composable
+ * @NonRestartableComposable
+ * @ResponsiveClassComponent(
+ *     classes = [EXPANDED_CONTENT, MEDIUM_CONTENT]
+ * )
+ * private fun PasswordsGrid() {
+ *     // the specific code of the component
+ * }
+ *
+ * @Composable
+ * @NonRestartableComposable
+ * @ResponsiveClassComponent(
+ *     classes = [MEDIUM_EXPANDED_CONTENT, COMPACT_CONTENT]
+ * )
+ * private fun PasswordsList() {
+ *     // the specific code of the component
+ * }
+ * ```
+ *
+ * @author N7ghtm4r3 - Tecknobit
+ *
+ * @since 1.1.0
+ */
+@Target(allowedTargets = [AnnotationTarget.FUNCTION])
+@Retention(value = AnnotationRetention.SOURCE)
+annotation class LayoutCoordinator(
+
+    /**
+     * The specific size classes which the coordinator has to manage
+     */
+    val classes: Array<ResponsiveClass> = [],
+)
+
+/**
  * The `ExpandedClassComponent` annotation is useful to indicate the components which are shown on those devices which
  * belong to the [Expanded] class
  *

@@ -222,7 +222,7 @@ fun Modifier.disableWritingModeOnTap() = this
  *
  * #### Usage example:
  *
- * ```
+ * ```kotlin
  * val isWritingMode = remember { mutableStateOf(false) }
  * Scaffold(
  *      modifier = Modifier

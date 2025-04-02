@@ -111,7 +111,7 @@ abstract class EquinoxRequester(
      *
      * #### Usage example:
      *
-     * ```
+     * ```kotlin
      * @CustomParametersOrder(order = ["currency"]) // optional
      * override fun getSignUpPayload(
      *         serverSecret: String,
@@ -196,7 +196,7 @@ abstract class EquinoxRequester(
      *
      * #### Usage example:
      *
-     * ```
+     * ```kotlin
      * @CustomParametersOrder(order = ["currency"])
      * override fun getSignInPayload(
      *      email: String,
