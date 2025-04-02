@@ -40,7 +40,6 @@ import org.jetbrains.compose.resources.stringResource
  * @param steps The steps to display by the component, a little tip is wrap the creation of the array with the
  * [remember] function to avoid to recreate the array during the recompositions
  */
-@ExperimentalLayoutApi
 @Composable
 @NonRestartableComposable
 fun Stepper(

@@ -27,11 +27,11 @@ fun rememberSplitTextState(
 }
 
 /**
- * The **SplitTextState** class is useful to manage a [SplitText] component giving the details currently
+ * The `SplitTextState` class is useful to manage a [SplitText] component giving the details currently
  * used in that component
  *
- * @param splits The number of splits used to create the component
- * @param initialSliceValues The initial values of the slices
+ * @property splits The number of splits used to create the component
+ * @property initialSliceValues The initial values of the slices
  *
  * @author N7ghtm4r3 - Tecknobit
  */
@@ -78,12 +78,12 @@ class SplitTextState internal constructor(
 }
 
 /**
- * The **SplitTextSaver** custom saver allow the [SplitTextState] to save and restore correctly the
+ * The `SplitTextSaver` custom saver allows the [SplitTextState] to save and restore correctly the
  * values for the [SplitText] component
  *
- * @see Saver
- *
  * @author N7ghtm4r3 - Tecknobit
+ *
+ * @see Saver
  */
 internal object SplitTextSaver : Saver<SplitTextState, Pair<Int, List<String>>> {
 

@@ -123,7 +123,6 @@ private val defaultOnValueChange: (
  * @param shape defines the shape of this text field's container
  */
 @Composable
-@ExperimentalMultiplatform
 fun DebouncedTextField(
     modifier: Modifier = Modifier,
     textFieldStyle: TextStyle = LocalTextStyle.current,
@@ -279,7 +278,6 @@ fun DebouncedTextField(
  * @param shape defines the shape of this text field's container
  */
 @Composable
-@ExperimentalMultiplatform
 fun DebouncedTextField(
     modifier: Modifier = Modifier,
     textFieldStyle: TextStyle = LocalTextStyle.current,
@@ -732,7 +730,6 @@ fun EquinoxTextField(
  * @param shape defines the shape of this text field's border
  */
 @Composable
-@ExperimentalMultiplatform
 fun DebouncedOutlinedTextField(
     modifier: Modifier = Modifier,
     outlinedTextFieldStyle: TextStyle = LocalTextStyle.current,
@@ -893,7 +890,6 @@ fun DebouncedOutlinedTextField(
  * @param shape defines the shape of this text field's border
  */
 @Composable
-@ExperimentalMultiplatform
 fun DebouncedOutlinedTextField(
     modifier: Modifier = Modifier,
     outlinedTextFieldStyle: TextStyle = LocalTextStyle.current,
