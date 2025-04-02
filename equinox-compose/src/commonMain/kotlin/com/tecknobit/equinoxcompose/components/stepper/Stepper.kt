@@ -27,7 +27,8 @@ import org.jetbrains.compose.resources.stringResource
  *
  * Related documentation [Stepper.md](Stepper.md)
  *
- * @param modifier The modifier to apply to the component
+ * @param containerModifier The modifier to apply to the container [Column]
+ * @param stepperModifier The modifier to apply to the component
  * @param headerSection A custom header of the stepper
  * @param startStepShape The shape to apply to the first visible [Step]
  * @param middleStepShape The shape to apply to those steps in the middle
@@ -43,7 +44,8 @@ import org.jetbrains.compose.resources.stringResource
 @Composable
 @NonRestartableComposable
 fun Stepper(
-    modifier: Modifier = Modifier,
+    containerModifier: Modifier = Modifier,
+    stepperModifier: Modifier = Modifier,
     headerSection: @Composable (() -> Unit)? = null,
     startStepShape: Shape = RoundedCornerShape(
         topStart = 12.dp,
@@ -65,12 +67,12 @@ fun Stepper(
     val lastIndex = remember { specialIndexes.second }
     val lastStep = remember { steps.last() }
     Column(
-        modifier = modifier,
+        modifier = containerModifier,
         verticalArrangement = Arrangement.spacedBy(10.dp)
     ) {
         headerSection?.invoke()
         Column(
-            modifier = Modifier
+            modifier = stepperModifier
                 .verticalScroll(rememberScrollState())
         ) {
             steps.forEachIndexed { index, step ->
