@@ -30,7 +30,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
 /**
- * Custom component used to pick a numerical quantity value
+ * Component used to pick a numerical quantity value
  *
  * @param modifier The modifier to apply to the component
  * @param state The state of the component

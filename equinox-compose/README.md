@@ -89,6 +89,7 @@ The other apis will be gradually released
 - [ChameleonText](../documd/compose/components/chameleontext/ChameleonText.md)
 - [Stepper](../documd/compose/components/stepper/Stepper.md)
 - [DebouncedInputs](../documd/compose/components/debouncefields/DebouncedInputs.md)
+- [QuantityPicker](../documd/compose/components/quantitypicker/QuantityPicker.md)
 
 The others components will be gradually released
 
