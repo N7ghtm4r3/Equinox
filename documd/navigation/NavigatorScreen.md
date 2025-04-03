@@ -189,7 +189,7 @@ class HomeScreen : NavigatorScreen<NavigationTab>() {
 #### Customize the bottom bar navigation item
 
 The structure is the same of the [Out-of-the-box implementation](#out-of-the-box-implementation), but you need to
-override the `SideNavigationItem` method where you can customize the navigation item for bottom bar
+override the `BottomNavigationItem` method where you can customize the navigation item for bottom bar
 
 ```kotlin
 @OptIn(ExperimentalComposeApi::class)
