@@ -1,16 +1,16 @@
 package com.tecknobit.equinoxcompose.components
 
-import androidx.compose.material3.AlertDialog
-import androidx.compose.material3.Icon
-import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.NonRestartableComposable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import com.tecknobit.equinoxcompose.resources.Res
@@ -22,9 +22,18 @@ import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
 
 /**
- * Method to display a custom [AlertDialog]
+ * Method used to display a custom [AlertDialog]
  *
  * @param modifier The modifier to apply to the [AlertDialog]
+ * @param shape defines the shape of this dialog's container
+ * @param containerColor the color used for the background of this dialog. Use [Color.Transparent]
+ *   to have no color.
+ * @param iconContentColor the content color used for the icon
+ * @param titleContentColor the content color used for the title
+ * @param textContentColor the content color used for the text
+ * @param tonalElevation when [containerColor] is [ColorScheme.surface], a translucent primary color
+ *   overlay is applied on top of the container. A higher tonal elevation value will result in a
+ *   darker color in light theme and lighter color in dark theme. See also: [Surface]
  * @param titleModifier The modifier to apply to the title of the [AlertDialog]
  * @param titleStyle The style to apply to the title of the [AlertDialog]
  * @param show: whether show the alert dialog
@@ -45,6 +54,13 @@ import org.jetbrains.compose.resources.stringResource
 @NonRestartableComposable
 fun EquinoxAlertDialog(
     modifier: Modifier = Modifier,
+    shape: Shape = AlertDialogDefaults.shape,
+    containerColor: Color = AlertDialogDefaults.containerColor,
+    iconContentColor: Color = AlertDialogDefaults.iconContentColor,
+    titleContentColor: Color = AlertDialogDefaults.titleContentColor,
+    textContentColor: Color = AlertDialogDefaults.textContentColor,
+    tonalElevation: Dp = AlertDialogDefaults.TonalElevation,
+    properties: DialogProperties = DialogProperties(),
     titleModifier: Modifier = Modifier,
     titleStyle: TextStyle = TextStyle.Default,
     show: MutableState<Boolean>,
@@ -65,6 +81,13 @@ fun EquinoxAlertDialog(
 ) {
     EquinoxAlertDialog(
         modifier = modifier,
+        shape = shape,
+        containerColor = containerColor,
+        iconContentColor = iconContentColor,
+        titleContentColor = titleContentColor,
+        textContentColor = textContentColor,
+        tonalElevation = tonalElevation,
+        properties = properties,
         titleModifier = titleModifier,
         titleStyle = titleStyle,
         show = show,
@@ -88,9 +111,18 @@ fun EquinoxAlertDialog(
 }
 
 /**
- * Method to display a custom [AlertDialog]
+ * Method used to display a custom [AlertDialog]
  *
  * @param modifier The modifier to apply to the [AlertDialog]
+ * @param shape defines the shape of this dialog's container
+ * @param containerColor the color used for the background of this dialog. Use [Color.Transparent]
+ *   to have no color.
+ * @param iconContentColor the content color used for the icon
+ * @param titleContentColor the content color used for the title
+ * @param textContentColor the content color used for the text
+ * @param tonalElevation when [containerColor] is [ColorScheme.surface], a translucent primary color
+ *   overlay is applied on top of the container. A higher tonal elevation value will result in a
+ *   darker color in light theme and lighter color in dark theme. See also: [Surface]
  * @param titleModifier The modifier to apply to the title of the [AlertDialog]
  * @param titleStyle The style to apply to the title of the [AlertDialog]
  * @param show: whether show the alert dialog
@@ -111,6 +143,13 @@ fun EquinoxAlertDialog(
 @NonRestartableComposable
 fun EquinoxAlertDialog(
     modifier: Modifier = Modifier,
+    shape: Shape = AlertDialogDefaults.shape,
+    containerColor: Color = AlertDialogDefaults.containerColor,
+    iconContentColor: Color = AlertDialogDefaults.iconContentColor,
+    titleContentColor: Color = AlertDialogDefaults.titleContentColor,
+    textContentColor: Color = AlertDialogDefaults.textContentColor,
+    tonalElevation: Dp = AlertDialogDefaults.TonalElevation,
+    properties: DialogProperties = DialogProperties(),
     titleModifier: Modifier = Modifier,
     titleStyle: TextStyle = TextStyle.Default,
     show: MutableState<Boolean>,
@@ -131,6 +170,13 @@ fun EquinoxAlertDialog(
 ) {
     EquinoxAlertDialog(
         modifier = modifier,
+        shape = shape,
+        containerColor = containerColor,
+        iconContentColor = iconContentColor,
+        titleContentColor = titleContentColor,
+        textContentColor = textContentColor,
+        tonalElevation = tonalElevation,
+        properties = properties,
         titleModifier = titleModifier,
         titleStyle = titleStyle,
         show = show,
@@ -154,9 +200,18 @@ fun EquinoxAlertDialog(
 }
 
 /**
- * Method to display a custom [AlertDialog]
+ * Method used to display a custom [AlertDialog]
  *
  * @param modifier The modifier to apply to the [AlertDialog]
+ * @param shape defines the shape of this dialog's container
+ * @param containerColor the color used for the background of this dialog. Use [Color.Transparent]
+ *   to have no color.
+ * @param iconContentColor the content color used for the icon
+ * @param titleContentColor the content color used for the title
+ * @param textContentColor the content color used for the text
+ * @param tonalElevation when [containerColor] is [ColorScheme.surface], a translucent primary color
+ *   overlay is applied on top of the container. A higher tonal elevation value will result in a
+ *   darker color in light theme and lighter color in dark theme. See also: [Surface]
  * @param titleModifier The modifier to apply to the title of the [AlertDialog]
  * @param titleStyle The style to apply to the title of the [AlertDialog]
  * @param show: whether show the alert dialog
@@ -177,6 +232,13 @@ fun EquinoxAlertDialog(
 @NonRestartableComposable
 fun EquinoxAlertDialog(
     modifier: Modifier = Modifier,
+    shape: Shape = AlertDialogDefaults.shape,
+    containerColor: Color = AlertDialogDefaults.containerColor,
+    iconContentColor: Color = AlertDialogDefaults.iconContentColor,
+    titleContentColor: Color = AlertDialogDefaults.titleContentColor,
+    textContentColor: Color = AlertDialogDefaults.textContentColor,
+    tonalElevation: Dp = AlertDialogDefaults.TonalElevation,
+    properties: DialogProperties = DialogProperties(),
     titleModifier: Modifier = Modifier,
     titleStyle: TextStyle = TextStyle.Default,
     show: MutableState<Boolean>,
@@ -197,6 +259,13 @@ fun EquinoxAlertDialog(
 ) {
     EquinoxAlertDialog(
         modifier = modifier,
+        shape = shape,
+        containerColor = containerColor,
+        iconContentColor = iconContentColor,
+        titleContentColor = titleContentColor,
+        textContentColor = textContentColor,
+        tonalElevation = tonalElevation,
+        properties = properties,
         titleModifier = titleModifier,
         titleStyle = titleStyle,
         show = show,
@@ -218,9 +287,19 @@ fun EquinoxAlertDialog(
 }
 
 /**
- * Method to display a custom [AlertDialog]
+ * Method used to display a custom [AlertDialog]
  *
  * @param modifier The modifier to apply to the [AlertDialog]
+ * @param shape defines the shape of this dialog's container
+ * @param containerColor the color used for the background of this dialog. Use [Color.Transparent]
+ *   to have no color.
+ * @param iconContentColor the content color used for the icon
+ * @param titleContentColor the content color used for the title
+ * @param textContentColor the content color used for the text
+ * @param tonalElevation when [containerColor] is [ColorScheme.surface], a translucent primary color
+ *   overlay is applied on top of the container. A higher tonal elevation value will result in a
+ *   darker color in light theme and lighter color in dark theme. See also: [Surface]
+ * @param properties typically platform specific properties to further configure the dialog
  * @param titleModifier The modifier to apply to the title of the [AlertDialog]
  * @param titleStyle The style to apply to the title of the [AlertDialog]
  * @param show: whether show the alert dialog
@@ -241,6 +320,13 @@ fun EquinoxAlertDialog(
 @NonRestartableComposable
 fun EquinoxAlertDialog(
     modifier: Modifier = Modifier,
+    shape: Shape = AlertDialogDefaults.shape,
+    containerColor: Color = AlertDialogDefaults.containerColor,
+    iconContentColor: Color = AlertDialogDefaults.iconContentColor,
+    titleContentColor: Color = AlertDialogDefaults.titleContentColor,
+    textContentColor: Color = AlertDialogDefaults.textContentColor,
+    tonalElevation: Dp = AlertDialogDefaults.TonalElevation,
+    properties: DialogProperties = DialogProperties(),
     titleModifier: Modifier = Modifier,
     titleStyle: TextStyle = TextStyle.Default,
     show: MutableState<Boolean>,
@@ -263,6 +349,13 @@ fun EquinoxAlertDialog(
         viewModel?.suspendRetriever()
         AlertDialog(
             modifier = modifier,
+            shape = shape,
+            containerColor = containerColor,
+            iconContentColor = iconContentColor,
+            titleContentColor = titleContentColor,
+            textContentColor = textContentColor,
+            tonalElevation = tonalElevation,
+            properties = properties,
             icon = {
                 if (icon != null) {
                     Icon(

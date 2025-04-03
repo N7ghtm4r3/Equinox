@@ -13,7 +13,7 @@ plugins {
 }
 
 group = "com.tecknobit.equinoxcore"
-version = "1.0.9"
+version = "1.1.0"
 
 repositories {
     google()
@@ -115,18 +115,18 @@ mavenPublishing {
     coordinates(
         groupId = "io.github.n7ghtm4r3",
         artifactId = "equinox-core",
-        version = "1.0.9"
+        version = "1.1.0"
     )
     pom {
         name.set("Equinox Core")
-        description.set("Core utilities for KMP and Spring technologies")
+        description.set("Core utilities for CMP and Spring technologies")
         inceptionYear.set("2025")
         url.set("https://github.com/N7ghtm4r3/Equinox")
 
         licenses {
             license {
-                name.set("MIT")
-                url.set("https://opensource.org/license/mit")
+                name.set("APACHE2")
+                url.set("https://opensource.org/license/apache-2-0")
             }
         }
         developers {

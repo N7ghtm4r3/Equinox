@@ -6,7 +6,7 @@ import android.content.Context.CLIPBOARD_SERVICE
 import com.tecknobit.equinoxcore.utilities.AppContext
 
 /**
- * Method to copy to the clipboard a content value
+ * Method used to copy to the clipboard a content value
  *
  * @param content The content to copy
  * @param onCopy The action to execute after the copy in the clipboard

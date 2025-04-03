@@ -1,7 +1,6 @@
 package com.tecknobit.equinoxbackend.environment.services.users.controller;
 
 import com.tecknobit.apimanager.annotations.RequestPath;
-import com.tecknobit.equinoxbackend.configuration.EquinoxBackendConfiguration;
 import com.tecknobit.equinoxbackend.environment.services.builtin.controller.EquinoxController;
 import com.tecknobit.equinoxbackend.environment.services.users.entity.EquinoxUser;
 import com.tecknobit.equinoxbackend.environment.services.users.repository.EquinoxUsersRepository;
@@ -42,22 +41,10 @@ public class EquinoxUsersController<T extends EquinoxUser, R extends EquinoxUser
     @Autowired
     protected H usersService;
 
-    /**
-     * {@code configuration} the current configuration of the Equinox's backend instance
-     */
-    protected final EquinoxBackendConfiguration configuration;
+
 
     /**
-     * Constructor to instantiate the {@link EquinoxController}
-     *
-     * @apiNote will be instantiated also the {@link #configuration}
-     */
-    public EquinoxUsersController() {
-        configuration = EquinoxBackendConfiguration.getInstance();
-    }
-
-    /**
-     * Method to sign up in the <b>Equinox's system</b>
+     * Method used to sign up in the <b>Equinox's system</b>
      *
      * @param payload Payload of the request
      *                 <pre>
@@ -75,10 +62,10 @@ public class EquinoxUsersController<T extends EquinoxUser, R extends EquinoxUser
      */
     @PostMapping(path = SIGN_UP_ENDPOINT)
     @RequestPath(path = "/api/v1/users/signUp", method = POST)
-    public String signUp(@RequestBody Map<String, String> payload) {
+    public String signUp(@RequestBody Map<String, Object> payload) {
         loadJsonHelper(payload);
         setSessionLocale(jsonHelper.getString(LANGUAGE_KEY, DEFAULT_LANGUAGE));
-        if (configuration.isServerProtectorEnabled() && !serverProtector.serverSecretMatches(jsonHelper.getString(SERVER_SECRET_KEY)))
+        if (configuration.serverProtectorEnabled() && !serverProtector.serverSecretMatches(jsonHelper.getString(SERVER_SECRET_KEY)))
             return failedResponse(NOT_AUTHORIZED_OR_WRONG_DETAILS_MESSAGE);
         String name = jsonHelper.getString(NAME_KEY);
         String surname = jsonHelper.getString(SURNAME_KEY);
@@ -136,7 +123,7 @@ public class EquinoxUsersController<T extends EquinoxUser, R extends EquinoxUser
     }
 
     /**
-     * Method to validate the inputs of the {@link #signUp(Map)} method to correctly execute a sign-up operation
+     * Method used to validate the inputs of the {@link #signUp(Map)} method to correctly execute a sign-up operation
      *
      * @param name The name of the user
      * @param surname The surname of the user
@@ -179,7 +166,7 @@ public class EquinoxUsersController<T extends EquinoxUser, R extends EquinoxUser
     }
 
     /**
-     * Method to sign in the <b>Equinox's system</b>
+     * Method used to sign in the <b>Equinox's system</b>
      *
      * @param payload The payload of the request
      *                 <pre>
@@ -194,7 +181,7 @@ public class EquinoxUsersController<T extends EquinoxUser, R extends EquinoxUser
      */
     @PostMapping(path = SIGN_IN_ENDPOINT)
     @RequestPath(path = "/api/v1/users/signIn", method = POST)
-    public String signIn(@RequestBody Map<String, String> payload) {
+    public String signIn(@RequestBody Map<String, Object> payload) {
         loadJsonHelper(payload);
         String email = jsonHelper.getString(EMAIL_KEY);
         String password = jsonHelper.getString(PASSWORD_KEY);
@@ -238,7 +225,7 @@ public class EquinoxUsersController<T extends EquinoxUser, R extends EquinoxUser
     }
 
     /**
-     * Method to validate the inputs of the {@link #signIn(Map)} method to correctly execute a sign-in operation
+     * Method used to validate the inputs of the {@link #signIn(Map)} method to correctly execute a sign-in operation
      *
      * @param email The email of the user
      * @param password The password of the user
@@ -274,7 +261,7 @@ public class EquinoxUsersController<T extends EquinoxUser, R extends EquinoxUser
     }
 
     /**
-     * Method to assemble the sign-in response with the user details
+     * Method used to assemble the sign-in response with the user details
      *
      * @param user The user authenticated in that operation
      *
@@ -327,7 +314,7 @@ public class EquinoxUsersController<T extends EquinoxUser, R extends EquinoxUser
     }
 
     /**
-     * Method to change the profile pic of the user
+     * Method used to change the profile pic of the user
      *
      * @param id The identifier of the user
      * @param token The token of the user
@@ -361,7 +348,7 @@ public class EquinoxUsersController<T extends EquinoxUser, R extends EquinoxUser
     }
 
     /**
-     * Method to change the email of the user
+     * Method used to change the email of the user
      *
      * @param id The identifier of the user
      * @param token The token of the user
@@ -402,7 +389,7 @@ public class EquinoxUsersController<T extends EquinoxUser, R extends EquinoxUser
     }
 
     /**
-     * Method to change the password of the user
+     * Method used to change the password of the user
      *
      * @param id The identifier of the user
      * @param token The token of the user
@@ -443,7 +430,7 @@ public class EquinoxUsersController<T extends EquinoxUser, R extends EquinoxUser
     }
 
     /**
-     * Method to change the language of the user
+     * Method used to change the language of the user
      *
      * @param id The identifier of the user
      * @param token The token of the user
@@ -484,7 +471,7 @@ public class EquinoxUsersController<T extends EquinoxUser, R extends EquinoxUser
     }
 
     /**
-     * Method to delete the account of the user
+     * Method used to delete the account of the user
      *
      * @param id The identifier of the user
      * @param token The token of the user

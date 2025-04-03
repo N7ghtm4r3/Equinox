@@ -30,7 +30,7 @@ public class JoinTableSyncBatchItem<O, D> implements EquinoxItemsHelper.ComplexB
     protected final D owned;
 
     /**
-     * Method to initialize the object
+     * Method used to initialize the object
      *
      * @param owner The owner entity in the relationship
      * @param owned The owned entity in the relationship

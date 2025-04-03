@@ -5,7 +5,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Cancel
 import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.ExperimentalComposeApi
 import androidx.compose.runtime.MutableState
 import androidx.compose.ui.graphics.vector.ImageVector
 import org.jetbrains.compose.resources.StringResource
@@ -29,7 +28,6 @@ import org.jetbrains.compose.resources.StringResource
  *
  * @since 1.0.7
  */
-@ExperimentalComposeApi
 data class Step(
     val actionControls: @Composable (() -> Unit)? = null,
     val initiallyExpanded: Boolean = false,

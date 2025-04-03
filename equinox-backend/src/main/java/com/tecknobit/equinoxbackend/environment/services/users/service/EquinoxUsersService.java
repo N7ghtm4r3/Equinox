@@ -105,7 +105,7 @@ public class EquinoxUsersService<T extends EquinoxUser, R extends EquinoxUsersRe
     }
 
     /**
-     * Method to sign up a new user in the system
+     * Method used to sign up a new user in the system
      *
      * @param id:       the identifier of the user
      * @param token:    the token of the user
@@ -141,7 +141,7 @@ public class EquinoxUsersService<T extends EquinoxUser, R extends EquinoxUsersRe
     }
 
     /**
-     * Method to arrange the {@link #BASE_SIGN_UP_QUERY} with dynamic list of values to use in that query
+     * Method used to arrange the {@link #BASE_SIGN_UP_QUERY} with dynamic list of values to use in that query
      *
      * @param queryBuilder The builder of the query to execute
      * @param list The list to arrange
@@ -166,7 +166,7 @@ public class EquinoxUsersService<T extends EquinoxUser, R extends EquinoxUsersRe
     }
 
     /**
-     * Method to sign in an existing user
+     * Method used to sign in an existing user
      *
      * @param email:    the email of the user
      * @param password The password of the user
@@ -182,7 +182,7 @@ public class EquinoxUsersService<T extends EquinoxUser, R extends EquinoxUsersRe
     }
 
     /**
-     * Method to validate the sign in request
+     * Method used to validate the sign in request
      *
      * @param user:    the user to validated
      * @param password The password of the user
@@ -237,7 +237,7 @@ public class EquinoxUsersService<T extends EquinoxUser, R extends EquinoxUsersRe
     }
 
     /**
-     * Method to arrange the dynamic data query to execute by the {@link #getDynamicAccountData(String)} method
+     * Method used to arrange the dynamic data query to execute by the {@link #getDynamicAccountData(String)} method
      *
      * @param queryBuilder The builder of the query to execute
      * @param list         The list to arrange
@@ -254,7 +254,7 @@ public class EquinoxUsersService<T extends EquinoxUser, R extends EquinoxUsersRe
     }
 
     /**
-     * Method to change the profile pic of the {@link EquinoxUser}
+     * Method used to change the profile pic of the {@link EquinoxUser}
      *
      * @param profilePic The profile pic resource
      * @param userId:     the identifier of the user
@@ -268,7 +268,7 @@ public class EquinoxUsersService<T extends EquinoxUser, R extends EquinoxUsersRe
     }
 
     /**
-     * Method to change the email of the {@link EquinoxUser}
+     * Method used to change the email of the {@link EquinoxUser}
      *
      * @param newEmail The new email of the user
      * @param userId:   the identifier of the user
@@ -278,7 +278,7 @@ public class EquinoxUsersService<T extends EquinoxUser, R extends EquinoxUsersRe
     }
 
     /**
-     * Method to change the password of the {@link EquinoxUser}
+     * Method used to change the password of the {@link EquinoxUser}
      *
      * @param newPassword The new password of the user
      * @param userId:      the identifier of the user
@@ -288,7 +288,7 @@ public class EquinoxUsersService<T extends EquinoxUser, R extends EquinoxUsersRe
     }
 
     /**
-     * Method to change the language of the {@link EquinoxUser}
+     * Method used to change the language of the {@link EquinoxUser}
      *
      * @param newLanguage The new language of the user
      * @param userId:      the identifier of the user
@@ -298,7 +298,7 @@ public class EquinoxUsersService<T extends EquinoxUser, R extends EquinoxUsersRe
     }
 
     /**
-     * Method to delete a user
+     * Method used to delete a user
      *
      * @param id The identifier of the user to delete
      */
@@ -308,7 +308,7 @@ public class EquinoxUsersService<T extends EquinoxUser, R extends EquinoxUsersRe
     }
 
     /**
-     * Method to hash a sensitive user data
+     * Method used to hash a sensitive user data
      *
      * @param secret The user value to hash
      * @throws NoSuchAlgorithmException when the hash of the user value fails

@@ -9,8 +9,8 @@ import com.tecknobit.equinoxcompose.session.EquinoxLocalUser.ApplicationTheme
 import com.tecknobit.equinoxcore.helpers.InputsValidator.Companion.isEmailValid
 import com.tecknobit.equinoxcore.helpers.InputsValidator.Companion.isPasswordValid
 import com.tecknobit.equinoxcore.helpers.PROFILE_PIC_KEY
-import com.tecknobit.equinoxcore.network.Requester.Companion.sendRequest
 import com.tecknobit.equinoxcore.network.Requester.Companion.toResponseData
+import com.tecknobit.equinoxcore.network.sendRequest
 import kotlinx.coroutines.launch
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.jsonPrimitive
@@ -81,13 +81,13 @@ open class EquinoxProfileViewModel(
     lateinit var newPasswordError: MutableState<Boolean>
 
     /**
-     * Method to execute the profile pic change, look how to integrate
+     * Method used to execute the profile pic change, look how to integrate
      *
      * @param profilePicName The name of the image to set
      * @param profilePicBytes The bytes of the image selected
      * @param onFailure The action to execute when the request failed
      */
-    fun changeProfilePic(
+    open fun changeProfilePic(
         profilePicName: String,
         profilePicBytes: ByteArray,
         onFailure: (JsonObject) -> Unit = {
@@ -112,12 +112,12 @@ open class EquinoxProfileViewModel(
     }
 
     /**
-     * Method to execute the email change
+     * Method used to execute the email change
      *
      * @param onSuccess The action to execute if the request has been successful
      * @param onFailure The action to execute when the request failed
      */
-    fun changeEmail(
+    open fun changeEmail(
         onSuccess: (() -> Unit)? = null,
         onFailure: (JsonObject) -> Unit = {
             showSnackbarMessage(it)
@@ -145,12 +145,12 @@ open class EquinoxProfileViewModel(
     }
 
     /**
-     * Method to execute the password change
+     * Method used to execute the password change
      *
      * @param onSuccess The action to execute if the request has been successful
      * @param onFailure The action to execute when the request failed
      */
-    fun changePassword(
+    open fun changePassword(
         onSuccess: (() -> Unit)? = null,
         onFailure: (JsonObject) -> Unit = {
             showSnackbarMessage(it)
@@ -178,12 +178,12 @@ open class EquinoxProfileViewModel(
     }
 
     /**
-     * Method to execute the language change
+     * Method used to execute the language change
      *
      * @param onSuccess The action to execute if the request has been successful
      * @param onFailure The action to execute when the request failed
      */
-    fun changeLanguage(
+    open fun changeLanguage(
         onSuccess: (() -> Unit)? = null,
         onFailure: (JsonObject) -> Unit = {
             showSnackbarMessage(it)
@@ -206,11 +206,11 @@ open class EquinoxProfileViewModel(
     }
 
     /**
-     * Method to execute the theme change
+     * Method used to execute the theme change
      *
      * @param onChange The action to execute when the theme changed
      */
-    fun changeTheme(
+    open fun changeTheme(
         onChange: (() -> Unit)? = null,
     ) {
         localUser.theme = theme.value
@@ -218,12 +218,12 @@ open class EquinoxProfileViewModel(
     }
 
     /**
-     * Method to execute the account deletion
+     * Method used to execute the account deletion
      *
      * @param onDelete The action to execute when the account has been deleted
      * @param onFailure The action to execute when the request failed
      */
-    fun deleteAccount(
+    open fun deleteAccount(
         onDelete: (() -> Unit)? = null,
         onFailure: (JsonObject) -> Unit = {
             showSnackbarMessage(it)
@@ -243,18 +243,15 @@ open class EquinoxProfileViewModel(
     }
 
     /**
-     * Method to clear the current [localUser] session
+     * Method used to clear the current [localUser] session
      *
      * @param onClear The action to execute when the session has been cleaned
      */
-    fun clearSession(
+    open fun clearSession(
         onClear: (() -> Unit)? = null,
     ) {
         localUser.clear()
-        requester.setUserCredentials(
-            userId = null,
-            userToken = null
-        )
+        requester.clearSession()
         onClear?.invoke()
     }
 

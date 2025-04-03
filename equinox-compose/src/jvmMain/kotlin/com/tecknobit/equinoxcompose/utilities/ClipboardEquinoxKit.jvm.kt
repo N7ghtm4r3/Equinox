@@ -4,7 +4,7 @@ import java.awt.Toolkit
 import java.awt.datatransfer.StringSelection
 
 /**
- * Method to copy to the clipboard a content value
+ * Method used to copy to the clipboard a content value
  *
  * @param content The content to copy
  * @param onCopy The action to execute after the copy in the clipboard

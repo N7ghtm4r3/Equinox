@@ -82,7 +82,7 @@ public class ResourcesProvider {
     }
 
     /**
-     * Method to create the {@link #containerDirectory}
+     * Method used to create the {@link #containerDirectory}
      */
     @Wrapper
     public void createContainerDirectory() {
@@ -90,7 +90,7 @@ public class ResourcesProvider {
     }
 
     /**
-     * Method to create a new container directory
+     * Method used to create a new container directory
      *
      * @param containerDirectory: the new container directory to create
      */
@@ -100,7 +100,7 @@ public class ResourcesProvider {
     }
 
     /**
-     * Method to create a new subdirectory for the {@link #containerDirectory}
+     * Method used to create a new subdirectory for the {@link #containerDirectory}
      *
      * @param subDirectory: the new subdirectory to create
      */
@@ -110,7 +110,7 @@ public class ResourcesProvider {
     }
 
     /**
-     * Method to create a new subdirectory
+     * Method used to create a new subdirectory
      *
      * @param containerDirectory: the container folder where create the new subdirectory
      * @param subDirectory: the new subdirectory to create
@@ -121,7 +121,7 @@ public class ResourcesProvider {
     }
 
     /**
-     * Method to create the list of the {@link #subDirectories} for the {@link #containerDirectory}
+     * Method used to create the list of the {@link #subDirectories} for the {@link #containerDirectory}
      */
     @Wrapper
     public void createSubDirectories() {
@@ -129,7 +129,7 @@ public class ResourcesProvider {
     }
 
     /**
-     * Method to create the list of the subDirectories for a container directory
+     * Method used to create the list of the subDirectories for a container directory
      *
      * @param containerDirectory: the container directory to create
      * @param subDirectories: the subdirectories of the subDirectories folder
@@ -141,7 +141,7 @@ public class ResourcesProvider {
     }
 
     /**
-     * Method to create a new resource directory
+     * Method used to create a new resource directory
      *
      * @param resDirectory: the pathname of the new folder to create, if not already exists
      */
@@ -153,7 +153,7 @@ public class ResourcesProvider {
     }
 
     /**
-     * Method to format the pathname of a directory
+     * Method used to format the pathname of a directory
      *
      * @param directory: the raw pathname to format, sample path: directory
      * @return the pathname formatted as {@link String}, sample path formatted: directory/
@@ -165,7 +165,7 @@ public class ResourcesProvider {
     }
 
     /**
-     * Method to print the error occurred during the creation of a resources directory
+     * Method used to print the error occurred during the creation of a resources directory
      * @param directory: the directory when, during the creation, occurred an error
      */
     private void printError(String directory) {

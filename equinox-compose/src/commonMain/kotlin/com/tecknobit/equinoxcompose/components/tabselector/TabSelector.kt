@@ -9,7 +9,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.NonRestartableComposable
 import androidx.compose.runtime.snapshotFlow
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.Shape
@@ -33,7 +32,6 @@ import kotlinx.coroutines.launch
  */
 @Composable
 @NonRestartableComposable
-@ExperimentalComposeUiApi
 fun TabSelector(
     modifier: Modifier = Modifier,
     state: TabSelectorState,

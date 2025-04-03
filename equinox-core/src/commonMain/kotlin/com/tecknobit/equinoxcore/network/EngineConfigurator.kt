@@ -3,7 +3,7 @@ package com.tecknobit.equinoxcore.network
 import io.ktor.client.*
 
 /**
- * Method to obtain a platform-based http client engine to execute the HTTP requests
+ * Method used to obtain a platform-based http client engine to execute the HTTP requests
  *
  * @param connectionTimeout Time to keep alive request then throw the connection refused error
  * @param byPassSSLValidation Whether bypass the **SSL** certificates validation, this for example

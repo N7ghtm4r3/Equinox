@@ -27,7 +27,7 @@ class Retriever(
         private lateinit var currentContext: KClass<*>
 
         /**
-         * Method to set the current active context where the [retrieverScope] is executing
+         * Method used to set the current active context where the [retrieverScope] is executing
          *
          * @param currentContext The current active context to set
          */
@@ -71,7 +71,7 @@ class Retriever(
     }
 
     /**
-     * Method to suspend the current [retrieverScope] to execute other requests to the backend,
+     * Method used to suspend the current [retrieverScope] to execute other requests to the backend,
      * the [isRefreshing] instance will be set as **false** to allow the restart of the routine after executing
      * the other requests
      *
@@ -82,7 +82,7 @@ class Retriever(
     }
 
     /**
-     * Method to restart the current [retrieverScope] after other requests has been executed,
+     * Method used to restart the current [retrieverScope] after other requests has been executed,
      * the [isRefreshing] instance will be set as **true** to deny the restart of the routine after executing
      * the other requests
      *
@@ -99,7 +99,7 @@ class Retriever(
     }
 
     /**
-     * Method to execute the refresh routine designed
+     * Method used to execute the refresh routine designed
      *
      * @param currentContext The current context where the [retrieverScope] is executing
      * @param routine The refresh routine to execute
@@ -133,7 +133,7 @@ class Retriever(
     }
 
     /**
-     * Method to check if the [retrieverScope] can continue to refresh or need to be stopped, this for
+     * Method used to check if the [retrieverScope] can continue to refresh or need to be stopped, this for
      * example when the UI displayed changes and the requests to refresh the UI data
      * also changes
      *
@@ -247,7 +247,7 @@ class Retriever(
         fun canRetrieverStart(): Boolean
 
         /**
-         * Method to conditionally suspend the current [retrieverScope] to execute other requests to the backend,
+         * Method used to conditionally suspend the current [retrieverScope] to execute other requests to the backend,
          * the [isRefreshing] instance will be set as **false** to allow the restart of the routine after executing
          * the other requests
          *
@@ -261,7 +261,7 @@ class Retriever(
         }
 
         /**
-         * Method to suspend the current [retrieverScope] to execute other requests to the backend,
+         * Method used to suspend the current [retrieverScope] to execute other requests to the backend,
          * the [isRefreshing] instance will be set as **false** to allow the restart of the routine after executing
          * the other requests
          *
@@ -270,7 +270,7 @@ class Retriever(
         fun suspendRetriever()
 
         /**
-         * Method to conditionally restart the current [retrieverScope] after other requests has been executed,
+         * Method used to conditionally restart the current [retrieverScope] after other requests has been executed,
          * the [isRefreshing] instance will be set as **true** to deny the restart of the routine after executing
          * the other requests
          *
@@ -284,7 +284,7 @@ class Retriever(
         }
 
         /**
-         * Method to restart the current [retrieverScope] after other requests has been executed,
+         * Method used to restart the current [retrieverScope] after other requests has been executed,
          * the [isRefreshing] instance will be set as **true** to deny the restart of the routine after executing
          * the other requests
          *
@@ -293,7 +293,7 @@ class Retriever(
         fun restartRetriever()
 
         /**
-         * Method to execute the refresh routine designed
+         * Method used to execute the refresh routine designed
          *
          * @param currentContext The current context where the [retrieverScope] is executing
          * @param routine The refresh routine to execute
@@ -308,7 +308,7 @@ class Retriever(
         )
 
         /**
-         * Method to check if the [retrieverScope] can continue to refresh or need to be stopped, this for
+         * Method used to check if the [retrieverScope] can continue to refresh or need to be stopped, this for
          * example when the UI displayed changes and the requests to refresh the UI data
          * also changes
          *
@@ -321,7 +321,7 @@ class Retriever(
         ) : Boolean
 
         /**
-         * Method to set the current active context where the [retrieverScope] is executing
+         * Method used to set the current active context where the [retrieverScope] is executing
          *
          * @param currentContext The current active context to set
          */

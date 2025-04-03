@@ -27,7 +27,8 @@ import org.jetbrains.compose.resources.stringResource
  *
  * Related documentation [Stepper.md](Stepper.md)
  *
- * @param modifier The modifier to apply to the component
+ * @param containerModifier The modifier to apply to the container [Column]
+ * @param stepperModifier The modifier to apply to the component
  * @param headerSection A custom header of the stepper
  * @param startStepShape The shape to apply to the first visible [Step]
  * @param middleStepShape The shape to apply to those steps in the middle
@@ -39,11 +40,11 @@ import org.jetbrains.compose.resources.stringResource
  * @param steps The steps to display by the component, a little tip is wrap the creation of the array with the
  * [remember] function to avoid to recreate the array during the recompositions
  */
-@ExperimentalLayoutApi
 @Composable
 @NonRestartableComposable
 fun Stepper(
-    modifier: Modifier = Modifier,
+    containerModifier: Modifier = Modifier,
+    stepperModifier: Modifier = Modifier,
     headerSection: @Composable (() -> Unit)? = null,
     startStepShape: Shape = RoundedCornerShape(
         topStart = 12.dp,
@@ -65,12 +66,12 @@ fun Stepper(
     val lastIndex = remember { specialIndexes.second }
     val lastStep = remember { steps.last() }
     Column(
-        modifier = modifier,
+        modifier = containerModifier,
         verticalArrangement = Arrangement.spacedBy(10.dp)
     ) {
         headerSection?.invoke()
         Column(
-            modifier = Modifier
+            modifier = stepperModifier
                 .verticalScroll(rememberScrollState())
         ) {
             steps.forEachIndexed { index, step ->
@@ -115,7 +116,7 @@ fun Stepper(
 }
 
 /**
- * Method to map the special indexes of the steps lit of the [Stepper] component.
+ * Method used to map the special indexes of the steps lit of the [Stepper] component.
  * The special indexes are those indexes near to [Step] which its enabling depends on a state
  *
  * @return the pair of the special indexes as [Pair] of [Int]
@@ -140,7 +141,7 @@ private fun Array<out Step>.mapSpecialIndexes(): Pair<Int, Int> {
 }
 
 /**
- * Method to find the value of a special index
+ * Method used to find the value of a special index
  *
  * @param invalidSpecialIndex The value of an index to consider as not valid
  * @param elementToCheck The step used to check the special index

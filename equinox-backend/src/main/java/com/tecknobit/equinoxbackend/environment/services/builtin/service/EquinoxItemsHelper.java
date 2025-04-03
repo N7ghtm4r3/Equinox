@@ -154,7 +154,7 @@ public abstract class EquinoxItemsHelper {
         Collection<V> getData();
 
         /**
-         * Method to prepare the batch query such fill the parameters programmatically
+         * Method used to prepare the batch query such fill the parameters programmatically
          *
          * @param query Query instance used to execute the SQL command
          * @param index The pre-increment index to format the values in the query, its initial value is 1
@@ -256,7 +256,7 @@ public abstract class EquinoxItemsHelper {
     protected EntityManager entityManager;
 
     /**
-     * Method to execute a batch synchronization of a list of data simultaneously
+     * Method used to execute a batch synchronization of a list of data simultaneously
      *
      * @param model Contains the data about the synchronization such the columns affected and the current list of the data
      * @param table The table where execute the synchronization of the data
@@ -268,7 +268,7 @@ public abstract class EquinoxItemsHelper {
     }
 
     /**
-     * Method to execute a batch synchronization of a list of data simultaneously
+     * Method used to execute a batch synchronization of a list of data simultaneously
      *
      * @param model      Contains the data about the synchronization such the columns affected and the current list of the data
      * @param command    The insertion command to execute
@@ -285,7 +285,7 @@ public abstract class EquinoxItemsHelper {
     }
 
     /**
-     * Method to execute a batch insert of a list of data simultaneously
+     * Method used to execute a batch insert of a list of data simultaneously
      *
      * @param command The insertion command to execute
      * @param table The table where execute the batch insert
@@ -305,7 +305,7 @@ public abstract class EquinoxItemsHelper {
     }
 
     /**
-     * Method to execute a batch delete of a single list of data simultaneously
+     * Method used to execute a batch delete of a single list of data simultaneously
      *
      * @param table   The table where execute the batch insert
      * @param values  The values to simultaneously delete
@@ -326,7 +326,7 @@ public abstract class EquinoxItemsHelper {
     }
 
     /**
-     * Method to format the in clause for the query
+     * Method used to format the in clause for the query
      *
      * @param columns The columns number
      * @param inValues The values used in the in clause to format
@@ -359,7 +359,7 @@ public abstract class EquinoxItemsHelper {
     }
 
     /**
-     * Method to format the in clause for the query with {@link ComplexBatchItem} values
+     * Method used to format the in clause for the query with {@link ComplexBatchItem} values
      *
      * @param columns  The columns number
      * @param inValues The complex batch items used in the in clause to format
@@ -395,7 +395,7 @@ public abstract class EquinoxItemsHelper {
     }
 
     /**
-     * Method to format the columns value for the query
+     * Method used to format the columns value for the query
      *
      * @param columns The columns used in the query
      *
@@ -409,7 +409,7 @@ public abstract class EquinoxItemsHelper {
     }
 
     /**
-     * Method to format the placeholder value for the query
+     * Method used to format the placeholder value for the query
      *
      * @param columns The columns used in the query
      *
@@ -423,7 +423,7 @@ public abstract class EquinoxItemsHelper {
     }
 
     /**
-     * Method to format a list of values for the query
+     * Method used to format a list of values for the query
      *
      * @param start The starter character
      * @param values The values to format

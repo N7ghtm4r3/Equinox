@@ -67,25 +67,13 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 public class Launcher {
 
   public static void main(String[] args) {
-
-    // used without init the server protector as needed  
     EquinoxController.initEquinoxEnvironment(
             Launcher.class,
-            customSubDirectoryOne, customSubDirectoryTwo, ...)
-
-    // used to init the server protector to manage the server accesses
-    EquinoxController.initEquinoxEnvironment(
-            "the path where storage the server secret",
-            "the message to print when the server secret has been generated",
-            Launcher.class,
-            args,
-            customSubDirectoryOne, customSubDirectoryTwo, ...)
-
+            args
+    );
     // ... your code ...
-
-    // normally launch your SpringBoot's application
+    // then normally launch your SpringBoot's application
     SpringApplication.run(Launcher.class, args);
-
   }
 
   // to check the current mapped endpoints you can use this method
@@ -140,10 +128,10 @@ dependencies {
     implementation("org.json:json:20240303")
 
     // implement the backend utilities
-    implementation("io.github.n7ghtm4r3:equinox-backend:1.0.9")
+    implementation("io.github.n7ghtm4r3:equinox-backend:1.1.0")
     
     // implement the core utilities
-    implementation("io.github.n7ghtm4r3:equinox-core:1.0.9")
+    implementation("io.github.n7ghtm4r3:equinox-core:1.1.0")
 
     ...
 
@@ -159,6 +147,38 @@ If you need to customize any classes of the base environment you need to follow 
 after your own customization, in this example you need to add the **currency** field to your user and add also the
 related
 change request.
+
+### Configure your backend
+
+#### Create the config file
+
+To configure your backend instance as needed you have to create the `equinox.config` file and place it as below:
+
+``` bash 
+resources
+  |-- equinox.config
+```
+
+#### Fill the configuration
+
+You can copy and fill the below `JSON` as you need:
+
+```json
+{
+  // omit this to disable the server protector usage
+  server_protector: {
+    storage_path: "storage_path_of_the_protector",
+    save_message: "save_message_value"
+  },
+  resources: {
+    resources_folder: true,
+    // false to avoid to create the resources folder 
+    subdirectories: [
+      // list of subdirectories to create inside the resources folder, omit to avoid the creation
+    ]
+  }
+}
+```
 
 ### Backend with no database needed
 
@@ -268,7 +288,6 @@ import static com.tecknobit.equinoxbackend.environment.services.builtin.entity.E
 import static com.tecknobit.equinoxbackend.environment.services.users.entity.EquinoxUser.USERS_KEY;
 
 @Repository
-@Primary // this is REQUIRED to use correctly this repository instead the EquinoxUsersRepository
 public interface CustomUsersRepository extends EquinoxUsersRepository<CustomUser> {
 
   @Modifying(clearAutomatically = true)
@@ -302,7 +321,6 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
 @Service
-@Primary // this is REQUIRED to use correctly this helper instead the EquinoxUsersHelper
 public class CustomUsersHelper extends EquinoxUsersHelper<CustomUser, CustomUsersRepository> {
 
     public void changeCurrency(String newCurrency, String userId) {
@@ -395,7 +413,6 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
 @Service
-@Primary
 public class CustomUsersHelper extends EquinoxUsersHelper<CustomUser, CustomUsersRepository> {
 
     @Override
@@ -485,7 +502,6 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
 @Service
-@Primary
 public class CustomUsersHelper extends EquinoxUsersHelper<CustomUser, CustomUsersRepository> {
 
     @Override

@@ -11,7 +11,7 @@ import javax.net.ssl.TrustManager
 import javax.net.ssl.X509TrustManager
 
 /**
- * Method to obtain a platform-based http client engine to execute the HTTP requests
+ * Method used to obtain a platform-based http client engine to execute the HTTP requests
  *
  * @param connectionTimeout Time to keep alive request then throw the connection refused error
  * @param byPassSSLValidation Whether bypass the **SSL** certificates validation, this for example
@@ -40,7 +40,7 @@ internal actual fun obtainHttpEngine(
 }
 
 /**
- * Method to validate a self-signed SLL certificate and bypass the checks of its validity<br></br>
+ * Method used to validate a self-signed SLL certificate and bypass the checks of its validity<br></br>
  *
  * @return list of trust managers as [Array] of [TrustManager]
  *

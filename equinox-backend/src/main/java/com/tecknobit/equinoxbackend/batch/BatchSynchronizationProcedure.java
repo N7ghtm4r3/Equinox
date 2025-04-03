@@ -165,7 +165,7 @@ public abstract class BatchSynchronizationProcedure<O, D, V> extends EquinoxItem
     }
 
     /**
-     * Method to set the {@link #currentDataCallback} instance
+     * Method used to set the {@link #currentDataCallback} instance
      *
      * @param currentDataCallback The callback used to retrieve the current data
      */
@@ -186,7 +186,7 @@ public abstract class BatchSynchronizationProcedure<O, D, V> extends EquinoxItem
     public interface CurrentDataCallback<D> {
 
         /**
-         * Method to retrieve the current data owned by the {@link #owner} entity
+         * Method used to retrieve the current data owned by the {@link #owner} entity
          *
          * @return the current data owned by the {@link #owner} entity as {@link Collection} of {@link D}
          */

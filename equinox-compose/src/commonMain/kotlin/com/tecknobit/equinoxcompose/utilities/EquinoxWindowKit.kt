@@ -71,7 +71,7 @@ enum class ResponsiveClass {
     companion object {
 
         /**
-         * Method to categorize the content to display based of the size classes currently the device has
+         * Method used to categorize the content to display based of the size classes currently the device has
          *
          * @param widthSizeClass The current width class of the window
          * @param heightSizeClass The current height class of the window
@@ -112,6 +112,68 @@ enum class ResponsiveClass {
     }
 
 }
+
+/**
+ * The `LayoutCoordinator` annotation is useful to indicate the components which are just coordinator of the specific
+ * components designed for the specific size [classes]
+ *
+ * #### Usage example
+ *
+ * ```kotlin
+ * @Composable
+ * @NonRestartableComposable
+ * @LayoutCoordinator(
+ *      classes = [EXPANDED_CONTENT, MEDIUM_CONTENT, MEDIUM_EXPANDED_CONTENT, COMPACT_CONTENT] // not mandatory
+ * )
+ * fun Passwords() {
+ *     ResponsiveContent(
+ *         onExpandedSizeClass = {
+ *             PasswordsGrid()
+ *         },
+ *         onMediumSizeClass = {
+ *             PasswordsGrid()
+ *         },
+ *         onMediumWidthExpandedHeight = {
+ *             PasswordsList()
+ *         },
+ *         onCompactSizeClass = {
+ *             PasswordsList()
+ *         }
+ *     )
+ * }
+ *
+ * @Composable
+ * @NonRestartableComposable
+ * @ResponsiveClassComponent(
+ *     classes = [EXPANDED_CONTENT, MEDIUM_CONTENT]
+ * )
+ * private fun PasswordsGrid() {
+ *     // the specific code of the component
+ * }
+ *
+ * @Composable
+ * @NonRestartableComposable
+ * @ResponsiveClassComponent(
+ *     classes = [MEDIUM_EXPANDED_CONTENT, COMPACT_CONTENT]
+ * )
+ * private fun PasswordsList() {
+ *     // the specific code of the component
+ * }
+ * ```
+ *
+ * @author N7ghtm4r3 - Tecknobit
+ *
+ * @since 1.1.0
+ */
+@Target(allowedTargets = [AnnotationTarget.FUNCTION])
+@Retention(value = AnnotationRetention.SOURCE)
+annotation class LayoutCoordinator(
+
+    /**
+     * The specific size classes which the coordinator has to manage
+     */
+    val classes: Array<ResponsiveClass> = [],
+)
 
 /**
  * The `ExpandedClassComponent` annotation is useful to indicate the components which are shown on those devices which
@@ -363,7 +425,7 @@ fun <T> responsiveAssignment(
 }
 
 /**
- * Method to calculate the current [ResponsiveClass] based on the screen dimension
+ * Method used to calculate the current [ResponsiveClass] based on the screen dimension
  *
  * @return the current responsive class as [ResponsiveClass]
  */

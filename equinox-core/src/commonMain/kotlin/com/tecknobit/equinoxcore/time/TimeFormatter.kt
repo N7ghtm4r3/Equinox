@@ -116,7 +116,7 @@ object TimeFormatter {
     }
 
     /**
-     * Method to format the current timestamp as string
+     * Method used to format the current timestamp as string
      *
      * @param pattern The pattern to use to format the millis value
      *
@@ -132,7 +132,7 @@ object TimeFormatter {
     }
 
     /**
-     * Method to format a [Long] value into the corresponding date-string value
+     * Method used to format a [Long] value into the corresponding date-string value
      *
      * @param invalidTimeDefValue The default value to specify an invalid temporal value not to be formatted
      * @param pattern The pattern to use to format the long value
@@ -156,7 +156,7 @@ object TimeFormatter {
     }
 
     /**
-     * Method to format a [String] value into the corresponding timestamp value
+     * Method used to format a [String] value into the corresponding timestamp value
      *
      * @param invalidTimeDefValue The default value to specify an invalid temporal value not to be formatted
      * @param pattern The pattern to use to format the string value
@@ -183,7 +183,7 @@ object TimeFormatter {
     }
 
     /**
-     * Method to format a [String] value which contains both date and time related values
+     * Method used to format a [String] value which contains both date and time related values
      *
      * @param pattern The pattern to use to format the string value
      *
@@ -204,7 +204,7 @@ object TimeFormatter {
     }
 
     /**
-     * Method to format a [String] value which contains just date related values
+     * Method used to format a [String] value which contains just date related values
      *
      * @param pattern The pattern to use to format the string value
      *
@@ -232,7 +232,7 @@ object TimeFormatter {
     }
 
     /**
-     * Method to count the nanoseconds passed from the [Long] value to the current timestamp
+     * Method used to count the nanoseconds passed from the [Long] value to the current timestamp
      *
      * @return the nanoseconds passed as [Long]
      *
@@ -246,7 +246,7 @@ object TimeFormatter {
     }
 
     /**
-     * Method to count the nanoseconds passed from the [Long] value to the [untilDate]
+     * Method used to count the nanoseconds passed from the [Long] value to the [untilDate]
      *
      * @param untilDate The second date used to count the nanoseconds
      *
@@ -264,7 +264,7 @@ object TimeFormatter {
     }
 
     /**
-     * Method to count the milliseconds passed from the [Long] value to the current timestamp
+     * Method used to count the milliseconds passed from the [Long] value to the current timestamp
      *
      * @return the milliseconds passed as [Long]
      *
@@ -278,7 +278,7 @@ object TimeFormatter {
     }
 
     /**
-     * Method to count the milliseconds passed from the [Long] value to the [untilDate]
+     * Method used to count the milliseconds passed from the [Long] value to the [untilDate]
      *
      * @param untilDate The second date used to count the milliseconds
      *
@@ -295,7 +295,7 @@ object TimeFormatter {
     }
 
     /**
-     * Method to count the seconds passed from the [Long] value to the current timestamp
+     * Method used to count the seconds passed from the [Long] value to the current timestamp
      *
      * @return the seconds passed as [Long]
      *
@@ -309,7 +309,7 @@ object TimeFormatter {
     }
 
     /**
-     * Method to count the seconds passed from the [Long] value to the [untilDate]
+     * Method used to count the seconds passed from the [Long] value to the [untilDate]
      *
      * @param untilDate The second date used to count the seconds
      *
@@ -327,7 +327,7 @@ object TimeFormatter {
     }
 
     /**
-     * Method to count the minutes passed from the [Long] value to the current timestamp
+     * Method used to count the minutes passed from the [Long] value to the current timestamp
      *
      * @return the minutes passed as [Long]
      *
@@ -341,7 +341,7 @@ object TimeFormatter {
     }
 
     /**
-     * Method to count the minutes passed from the [Long] value to the [untilDate]
+     * Method used to count the minutes passed from the [Long] value to the [untilDate]
      *
      * @param untilDate The second date used to count the minutes
      *
@@ -359,7 +359,7 @@ object TimeFormatter {
     }
 
     /**
-     * Method to count the hours passed from the [Long] value to the current timestamp
+     * Method used to count the hours passed from the [Long] value to the current timestamp
      *
      * @return the hours passed as [Long]
      *
@@ -374,7 +374,7 @@ object TimeFormatter {
     }
 
     /**
-     * Method to count the hours passed from the [Long] value to the [untilDate]
+     * Method used to count the hours passed from the [Long] value to the [untilDate]
      *
      * @param untilDate The second date used to count the hours
      *
@@ -392,7 +392,7 @@ object TimeFormatter {
     }
 
     /**
-     * Method to count the days passed from the [Long] value to the current timestamp
+     * Method used to count the days passed from the [Long] value to the current timestamp
      *
      * @return the days passed as [Long]
      *
@@ -406,7 +406,7 @@ object TimeFormatter {
     }
 
     /**
-     * Method to count the days passed from the [Long] value to the [untilDate]
+     * Method used to count the days passed from the [Long] value to the [untilDate]
      *
      * @param untilDate The second date used to count the days
      *
@@ -425,7 +425,7 @@ object TimeFormatter {
     }
 
     /**
-     * Method to count the weeks passed from the [Long] value to the current timestamp
+     * Method used to count the weeks passed from the [Long] value to the current timestamp
      *
      * @return the weeks passed as [Long]
      *
@@ -439,7 +439,7 @@ object TimeFormatter {
     }
 
     /**
-     * Method to count the weeks passed from the [Long] value to the [untilDate]
+     * Method used to count the weeks passed from the [Long] value to the [untilDate]
      *
      * @param untilDate The second date used to count the weeks
      *
@@ -458,7 +458,7 @@ object TimeFormatter {
     }
 
     /**
-     * Method to count the months passed from the [Long] value to the current timestamp
+     * Method used to count the months passed from the [Long] value to the current timestamp
      *
      * @return the months passed as [Long]
      *
@@ -472,7 +472,7 @@ object TimeFormatter {
     }
 
     /**
-     * Method to count the months passed from the [Long] value to the [untilDate]
+     * Method used to count the months passed from the [Long] value to the [untilDate]
      *
      * @param untilDate The second date used to count the months
      *
@@ -491,7 +491,7 @@ object TimeFormatter {
     }
 
     /**
-     * Method to count the quarters passed from the [Long] value to the current timestamp
+     * Method used to count the quarters passed from the [Long] value to the current timestamp
      *
      * @return the quarters passed as [Long]
      *
@@ -505,7 +505,7 @@ object TimeFormatter {
     }
 
     /**
-     * Method to count the quarters passed from the [Long] value to the [untilDate]
+     * Method used to count the quarters passed from the [Long] value to the [untilDate]
      *
      * @param untilDate The second date used to count the quarters
      *
@@ -524,7 +524,7 @@ object TimeFormatter {
     }
 
     /**
-     * Method to count the years passed from the [Long] value to the current timestamp
+     * Method used to count the years passed from the [Long] value to the current timestamp
      *
      * @return the years passed as [Long]
      *
@@ -538,7 +538,7 @@ object TimeFormatter {
     }
 
     /**
-     * Method to count the years passed from the [Long] value to the [untilDate]
+     * Method used to count the years passed from the [Long] value to the [untilDate]
      *
      * @param untilDate The second date used to count the years
      *
@@ -557,7 +557,7 @@ object TimeFormatter {
     }
 
     /**
-     * Method to count the centuries passed from the [Long] value to the current timestamp
+     * Method used to count the centuries passed from the [Long] value to the current timestamp
      *
      * @return the centuries passed as [Long]
      *
@@ -571,7 +571,7 @@ object TimeFormatter {
     }
 
     /**
-     * Method to count the centuries passed from the [Long] value to the [untilDate]
+     * Method used to count the centuries passed from the [Long] value to the [untilDate]
      *
      * @param untilDate The second date used to count the centuries
      *
@@ -590,7 +590,7 @@ object TimeFormatter {
     }
 
     /**
-     * Method to calculate a temporal gap between the [baseDate] and the [untilDate]
+     * Method used to calculate a temporal gap between the [baseDate] and the [untilDate]
      *
      * @param baseDate The first date used to calculate the temporal gap
      * @param untilDate The second date used to calculate the temporal gap
@@ -617,7 +617,7 @@ object TimeFormatter {
     }
 
     /**
-     * Method to transform a [Long] value into the corresponding [LocalDate]
+     * Method used to transform a [Long] value into the corresponding [LocalDate]
      *
      * @return the local date value as [LocalDate]
      */
@@ -626,7 +626,7 @@ object TimeFormatter {
     }
 
     /**
-     * Method to transform a [Long] value into the corresponding [LocalDateTime]
+     * Method used to transform a [Long] value into the corresponding [LocalDateTime]
      *
      * @return the local date value as [LocalDateTime]
      */
@@ -636,7 +636,7 @@ object TimeFormatter {
     }
 
     /**
-     * Method to transform a [LocalDateTime] value into the corresponding nanoseconds value
+     * Method used to transform a [LocalDateTime] value into the corresponding nanoseconds value
      *
      * @return the local date time value in nanoseconds as [Long]
      */
@@ -645,7 +645,7 @@ object TimeFormatter {
     }
 
     /**
-     * Method to transform a [LocalDateTime] value into the corresponding seconds value
+     * Method used to transform a [LocalDateTime] value into the corresponding seconds value
      *
      * @return the local date time value in seconds as [Long]
      */
@@ -654,7 +654,7 @@ object TimeFormatter {
     }
 
     /**
-     * Method to transform a [LocalDateTime] value into the corresponding milliseconds value
+     * Method used to transform a [LocalDateTime] value into the corresponding milliseconds value
      *
      * @return the local date time value in milliseconds as [Long]
      */

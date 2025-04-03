@@ -1,7 +1,8 @@
 package com.tecknobit.equinoxcompose.session.screens
 
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.NonRestartableComposable
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.Lifecycle.Event
@@ -16,7 +17,7 @@ import com.tecknobit.equinoxcore.annotations.Structure
 /**
  * The `EquinoxNoModelScreen` class is useful to create a screen with a lifecycle management similar to the Android's activities
  *
- * Related documentation: [EquinoxScreens.md](https://github.com/N7ghtm4r3/Equinox-Compose/blob/main/documd/EquinoxScreens.md)
+ * Related documentation: [EquinoxScreens.md](https://github.com/N7ghtm4r3/Equinox/blob/main/documd/compose/apis/EquinoxScreens.md)
  *
  * @property loggerEnabled Whether enabled the logging to log the events occurred in the [ShowContent] composable,
  * it is suggested to disable it in production
@@ -58,7 +59,7 @@ abstract class EquinoxNoModelScreen(
     }
 
     /**
-     * Method to display the content of the screen
+     * Method used to display the content of the screen
      *
      * Its lifecycle will be managed invoking the [LifecycleManager]
      */
@@ -70,13 +71,13 @@ abstract class EquinoxNoModelScreen(
     }
 
     /**
-     * Method to arrange the content of the screen to display
+     * Method used to arrange the content of the screen to display
      */
     @Composable
     protected abstract fun ArrangeScreenContent()
 
     /**
-     * Method to manage the lifecycle of the composable where this Method has been invoked
+     * Method used to manage the lifecycle of the composable where this Method has been invoked
      *
      * @param lifecycleOwner The owner of the current lifecycle
      */
@@ -208,7 +209,7 @@ abstract class EquinoxNoModelScreen(
     }
 
     /**
-     * Method to log the event occurred in the current screen
+     * Method used to log the event occurred in the current screen
      *
      * @param event The event occurred
      */
@@ -221,7 +222,7 @@ abstract class EquinoxNoModelScreen(
     }
 
     /**
-     * Method to log the event occurred in the current screen
+     * Method used to log the event occurred in the current screen
      *
      * @param event The event occurred
      */
@@ -237,13 +238,13 @@ abstract class EquinoxNoModelScreen(
     }
 
     /**
-     * Method to collect or instantiate the states of the screen
+     * Method used to collect or instantiate the states of the screen
      */
     @Composable
     protected abstract fun CollectStates()
 
     /**
-     * Method to collect or instantiate the states of the screen after a loading required to correctly assign an
+     * Method used to collect or instantiate the states of the screen after a loading required to correctly assign an
      * initial value to the states. For example in your custom screen:
      * ```kotlin
      * @Composable
@@ -271,59 +272,6 @@ abstract class EquinoxNoModelScreen(
     @Composable
     @NonRestartableComposable
     protected open fun CollectStatesAfterLoading() {
-    }
-
-    /**
-     * Method used to wait asynchronously the change of the state of a `null` item to its non-null value.
-     *
-     * This method is useful in those scenarios where the content to display depends on the non-null item.
-     *
-     * For example:
-     * ```kotlin
-     * @Composable
-     * override fun ArrangeScreenContent() {
-     *     val text = remember { mutableStateOf<String?>(null) }
-     *
-     *     // simulated waiting
-     *     LaunchedEffect(Unit) {
-     *         delay(1000)
-     *         text.value = "Hello World!"
-     *     }
-     *
-     *     awaitNullItemLoaded(
-     *         itemToWait = text.value,
-     *         extras = null, // any extras condition
-     *         loadedContent = { nullSafeText -> // non-null value
-     *             // the UI content which depends on the text state
-     *             Text(
-     *                 text = nullSafeText
-     *             )
-     *         }
-     *     )
-     * }
-     * ```
-     *
-     * @param itemToWait The item initially null to wait
-     * @param extras Extra conditions to apply to show the [loadedContent] that depends on the non-null value of the
-     * [itemToWait]
-     * @param loadedContent The content to display when the [itemToWait] is not more `null`
-     */
-    @Composable
-    @NonRestartableComposable
-    protected fun <T> awaitNullItemLoaded(
-        itemToWait: T?,
-        extras: (T) -> Boolean = { true },
-        loadedContent: @Composable (T) -> Unit,
-    ) {
-        var loaded by remember { mutableStateOf(false) }
-        LaunchedEffect(itemToWait) {
-            loaded = itemToWait != null && extras(itemToWait)
-        }
-        AnimatedVisibility(
-            visible = loaded
-        ) {
-            loadedContent(itemToWait!!)
-        }
     }
 
 }

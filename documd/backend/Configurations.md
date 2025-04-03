@@ -102,7 +102,7 @@ import org.springframework.web.filter.CorsFilter;
 public class CORSAdvice {
 
     /**
-     * Method to set the CORS filter 
+     * Method used to set the CORS filter 
      */
     @Bean
     public FilterRegistrationBean corsFilter() {
@@ -140,7 +140,7 @@ import org.springframework.web.filter.CorsFilter
 class CORSAdvice {
 
     /**
-     * Method to set the CORS filter
+     * Method used to set the CORS filter
      */
     @Bean
     fun corsFilter(): FilterRegistrationBean<*> {
