@@ -115,8 +115,7 @@ mavenPublishing {
     )
     pom {
         name.set("Equinox Navigation")
-        // TODO: TO SET 
-        description.set("Core utilities for KMP and Spring technologies")
+        description.set("Utilities to handle the navigation in Compose Multiplatform applications")
         inceptionYear.set("2025")
         url.set("https://github.com/N7ghtm4r3/Equinox")
 
