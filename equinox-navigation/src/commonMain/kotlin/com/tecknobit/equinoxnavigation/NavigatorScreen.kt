@@ -58,6 +58,21 @@ abstract class NavigatorScreen<T : NavigatorTab<*>>(
      */
     protected val tabs: Array<T> by lazy { navigationTabs() }
 
+    /**
+     * Method used to retrieve the tabs to assign to the [tabs] array
+     *
+     * @return the tabs used by the [NavigatorScreen] as [Array] of [T]
+     */
+    protected abstract fun navigationTabs(): Array<T>
+
+    /**
+     * Responsive navigation system based on the current [com.tecknobit.equinoxcompose.utilities.ResponsiveClass]
+     *
+     * @param sideBarModifier The modifier to apply to the [SideNavigationArrangement] bar
+     * @param sideBarWidth The default width of the [SideNavigationArrangement] bar
+     * @param bottomBarModifier The modifier to apply to the [BottomNavigationArrangement] bar
+     * @param backgroundTab The color to apply as background of the tabs
+     */
     @Composable
     @LayoutCoordinator
     @NonRestartableComposable
@@ -97,6 +112,13 @@ abstract class NavigatorScreen<T : NavigatorTab<*>>(
         )
     }
 
+    /**
+     * Custom [NavigationRail] displayed on the [EXPANDED_CONTENT] and [MEDIUM_CONTENT] responsive screen classes
+     *
+     * @param modifier The modifier to apply to the navigation bar
+     * @param sideBarWidth The default width of the navigation bar
+     * @param backgroundTab The color to apply as background of the tabs
+     */
     @Composable
     @NonRestartableComposable
     @ResponsiveClassComponent(
@@ -147,6 +169,9 @@ abstract class NavigatorScreen<T : NavigatorTab<*>>(
         }
     }
 
+    /**
+     * Custom header content to display on the [SideNavigationArrangement] bar
+     */
     @Composable
     @NonRestartableComposable
     @ResponsiveClassComponent(
@@ -155,6 +180,9 @@ abstract class NavigatorScreen<T : NavigatorTab<*>>(
     protected open fun SideNavigationHeaderContent() {
     }
 
+    /**
+     * Custom footer content to display on the [SideNavigationArrangement] bar
+     */
     @Composable
     @NonRestartableComposable
     @ResponsiveClassComponent(
@@ -163,6 +191,12 @@ abstract class NavigatorScreen<T : NavigatorTab<*>>(
     protected open fun SideNavigationFooterContent() {
     }
 
+    /**
+     * The navigation item of the [SideNavigationArrangement] bar
+     *
+     * @param index The index related to the item in the [tabs] array
+     * @param tab The related tab of the [index]
+     */
     @Composable
     @NonRestartableComposable
     @ResponsiveClassComponent(
@@ -199,6 +233,12 @@ abstract class NavigatorScreen<T : NavigatorTab<*>>(
         )
     }
 
+    /**
+     * Custom [BottomAppBar] displayed on the [MEDIUM_EXPANDED_CONTENT] and [COMPACT_CONTENT] responsive screen classes
+     *
+     * @param modifier The modifier to apply to the navigation bar
+     * @param backgroundTab The color to apply as background of the tabs
+     */
     @Composable
     @NonRestartableComposable
     @ResponsiveClassComponent(
@@ -235,6 +275,12 @@ abstract class NavigatorScreen<T : NavigatorTab<*>>(
         }
     }
 
+    /**
+     * The navigation item of the [BottomNavigationItem] bar
+     *
+     * @param index The index related to the item in the [tabs] array
+     * @param tab The related tab of the [index]
+     */
     @Composable
     @NonRestartableComposable
     @ResponsiveClassComponent(
@@ -263,14 +309,18 @@ abstract class NavigatorScreen<T : NavigatorTab<*>>(
         )
     }
 
+    /**
+     * Method used to prepare the title for the [SideNavigationItem] and the [BottomNavigationItem] based on
+     * the [NavigatorTab] used by the navigator
+     *
+     * @return the title for the tab as [String]
+     */
     @Composable
     protected open fun NavigatorTab<*>.prepareTitle(): String {
         return when (this) {
             is NavigationTab -> title
             is I18nNavigationTab -> stringResource(title)
-            else -> {
-                title.toString()
-            }
+            else -> title.toString()
         }
     }
 
@@ -310,12 +360,13 @@ abstract class NavigatorScreen<T : NavigatorTab<*>>(
      */
     protected abstract fun Int.tabContent(): EquinoxNoModelScreen
 
+    /**
+     * Method used to collect or instantiate the states of the screen
+     */
     @Composable
     @RequiresSuperCall
     override fun CollectStates() {
         activeNavigationTabIndex = rememberSaveable { mutableStateOf(0) }
     }
-
-    protected abstract fun navigationTabs(): Array<T>
 
 }
