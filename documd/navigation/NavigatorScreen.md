@@ -70,7 +70,7 @@ class HomeScreen : NavigatorScreen<NavigationTab>() {
     override fun Int.tabContent(): EquinoxNoModelScreen {
         // here you can insert the custom logic to retrieve the specific content for the tab to display
         return when (this) {
-            1 -> A() // your custom EquinoxNoModelScreen
+            0 -> A() // your custom EquinoxNoModelScreen
             else -> B() // your custom EquinoxNoModelScreen
         }
     }
