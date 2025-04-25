@@ -5,8 +5,6 @@ import com.tecknobit.equinoxcore.annotations.RequiresSuperCall
 import com.tecknobit.equinoxcore.annotations.Structure
 import com.tecknobit.equinoxcore.helpers.*
 import com.tecknobit.equinoxcore.json.treatsAsString
-import com.tecknobit.equinoxcore.network.Requester.Companion.USER_IDENTIFIER_KEY
-import com.tecknobit.equinoxcore.network.Requester.Companion.USER_TOKEN_KEY
 import com.tecknobit.kmprefs.KMPrefs
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.jsonPrimitive
@@ -94,7 +92,7 @@ open class EquinoxLocalUser(
         set(value) {
             if (field != value) {
                 setPreference(
-                    key = USER_IDENTIFIER_KEY,
+                    key = IDENTIFIER_KEY,
                     value = value
                 )
                 field = value
@@ -108,7 +106,7 @@ open class EquinoxLocalUser(
         set(value) {
             if (field != value) {
                 setPreference(
-                    key = USER_TOKEN_KEY,
+                    key = TOKEN_KEY,
                     value = value
                 )
                 field = value
@@ -243,8 +241,8 @@ open class EquinoxLocalUser(
     @RequiresSuperCall
     protected open fun initLocalUser() {
         hostAddress = getNullSafePreference(HOST_ADDRESS_KEY)
-        userId = getPreference(USER_IDENTIFIER_KEY)
-        userToken = getPreference(USER_TOKEN_KEY)
+        userId = getPreference(IDENTIFIER_KEY)
+        userToken = getPreference(TOKEN_KEY)
         profilePic = getNullSafePreference(PROFILE_PIC_KEY)
         name = getNullSafePreference(NAME_KEY)
         surname = getNullSafePreference(SURNAME_KEY)
@@ -310,7 +308,7 @@ open class EquinoxLocalUser(
     ) {
         this.hostAddress = hostAddress
         userId = response[USER_IDENTIFIER_KEY]!!.jsonPrimitive.content
-        userToken = response[USER_TOKEN_KEY]!!.jsonPrimitive.content
+        userToken = response[TOKEN_KEY]!!.jsonPrimitive.content
         profilePic = response[PROFILE_PIC_KEY]!!.jsonPrimitive.content
         this.name = name
         this.surname = surname

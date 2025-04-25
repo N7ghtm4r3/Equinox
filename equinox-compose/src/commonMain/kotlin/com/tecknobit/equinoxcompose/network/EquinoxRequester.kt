@@ -234,7 +234,7 @@ abstract class EquinoxRequester(
      *
      * @return the result of the request as [JsonObject]
      */
-    @RequestPath(path = "/api/v1/users/{id}/dynamicAccountData", method = GET)
+    @RequestPath(path = "/api/v1/users/{user_id}/dynamicAccountData", method = GET)
     suspend fun getDynamicAccountData(): JsonObject {
         return execGet(
             endpoint = assembleUsersEndpointPath(DYNAMIC_ACCOUNT_DATA_ENDPOINT)
@@ -249,7 +249,7 @@ abstract class EquinoxRequester(
      *
      * @return the result of the request as [JsonObject]
      */
-    @RequestPath(path = "/api/v1/users/{id}/changeProfilePic", method = POST)
+    @RequestPath(path = "/api/v1/users/{user_id}/changeProfilePic", method = POST)
     open suspend fun changeProfilePic(
         profilePicName: String,
         profilePicBytes: ByteArray,
@@ -273,7 +273,7 @@ abstract class EquinoxRequester(
      *
      * @return the result of the request as [JsonObject]
      */
-    @RequestPath(path = "/api/v1/users/{id}/changeEmail", method = PATCH)
+    @RequestPath(path = "/api/v1/users/{user_id}/changeEmail", method = PATCH)
     open suspend fun changeEmail(
         newEmail: String,
     ): JsonObject {
@@ -293,7 +293,7 @@ abstract class EquinoxRequester(
      *
      * @return the result of the request as [JsonObject]
      */
-    @RequestPath(path = "/api/v1/users/{id}/changePassword", method = PATCH)
+    @RequestPath(path = "/api/v1/users/{user_id}/changePassword", method = PATCH)
     open suspend fun changePassword(
         newPassword: String,
     ): JsonObject {
@@ -313,7 +313,7 @@ abstract class EquinoxRequester(
      *
      * @return the result of the request as [JsonObject]
      */
-    @RequestPath(path = "/api/v1/users/{id}/changeLanguage", method = PATCH)
+    @RequestPath(path = "/api/v1/users/{user_id}/changeLanguage", method = PATCH)
     open suspend fun changeLanguage(
         newLanguage: String,
     ): JsonObject {
@@ -332,7 +332,7 @@ abstract class EquinoxRequester(
      *
      * @return the result of the request as [JsonObject]
      */
-    @RequestPath(path = "/api/v1/users/{id}", method = DELETE)
+    @RequestPath(path = "/api/v1/users/{user_id}", method = DELETE)
     open suspend fun deleteAccount(): JsonObject {
         return execDelete(
             endpoint = assembleUsersEndpointPath()

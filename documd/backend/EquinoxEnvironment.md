@@ -364,7 +364,7 @@ public class CustomUsersController extends EquinoxUsersController<CustomUser, Cu
     }
 
     @PatchMapping(
-            path = {"users/{id}/changeCurrency"},
+            path = {"users/{user_id}/changeCurrency"},
             headers = {TOKEN_KEY}
     )
     public String changeCurrency(

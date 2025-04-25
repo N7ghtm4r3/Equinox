@@ -41,8 +41,6 @@ public class EquinoxUsersController<T extends EquinoxUser, R extends EquinoxUser
     @Autowired
     protected H usersService;
 
-
-
     /**
      * Method used to sign up in the <b>Equinox's system</b>
      *
@@ -79,10 +77,10 @@ public class EquinoxUsersController<T extends EquinoxUser, R extends EquinoxUser
             return failedResponse(signUpValidation);
         try {
             JSONObject response = new JSONObject();
-            String id = generateIdentifier();
+            String userId = generateIdentifier();
             String token = generateIdentifier();
             usersService.signUpUser(
-                    id,
+                    userId,
                     token,
                     name,
                     surname,
@@ -93,7 +91,7 @@ public class EquinoxUsersController<T extends EquinoxUser, R extends EquinoxUser
             );
             setSessionLocale(DEFAULT_LANGUAGE);
             return successResponse(response
-                    .put(IDENTIFIER_KEY, id)
+                    .put(USER_IDENTIFIER_KEY, userId)
                     .put(TOKEN_KEY, token)
                     .put(PROFILE_PIC_KEY, DEFAULT_PROFILE_PIC)
             );
@@ -281,7 +279,7 @@ public class EquinoxUsersController<T extends EquinoxUser, R extends EquinoxUser
      */
     protected JSONObject assembleSignInSuccessResponse(T user) {
         JSONObject response = new JSONObject();
-        response.put(IDENTIFIER_KEY, user.getId());
+        response.put(USER_IDENTIFIER_KEY, user.getId());
         response.put(TOKEN_KEY, user.getToken());
         response.put(PROFILE_PIC_KEY, user.getProfilePic());
         response.put(NAME_KEY, user.getName());
@@ -293,53 +291,53 @@ public class EquinoxUsersController<T extends EquinoxUser, R extends EquinoxUser
     /**
      * Method used to get the dynamic data of the user to correctly update in all the devices where the user is connected
      *
-     * @param id    The identifier of the user
+     * @param userId    The identifier of the user
      * @param token The token of the user
      * @return the result of the request as {@link String}
      */
     @GetMapping(
-            path = USERS_KEY + "/{" + IDENTIFIER_KEY + "}" + DYNAMIC_ACCOUNT_DATA_ENDPOINT,
+            path = USERS_KEY + "/{" + USER_IDENTIFIER_KEY + "}" + DYNAMIC_ACCOUNT_DATA_ENDPOINT,
             headers = {
                     TOKEN_KEY
             }
     )
-    @RequestPath(path = "/api/v1/users/{id}/dynamicAccountData", method = GET)
+    @RequestPath(path = "/api/v1/users/{user_id}/dynamicAccountData", method = GET)
     public String getDynamicAccountData(
-            @PathVariable(IDENTIFIER_KEY) String id,
+            @PathVariable(USER_IDENTIFIER_KEY) String userId,
             @RequestHeader(TOKEN_KEY) String token
     ) {
-        if (!isMe(id, token))
+        if (!isMe(userId, token))
             return failedResponse(NOT_AUTHORIZED_OR_WRONG_DETAILS_MESSAGE);
-        return successResponse(usersService.getDynamicAccountData(id));
+        return successResponse(usersService.getDynamicAccountData(userId));
     }
 
     /**
      * Method used to change the profile pic of the user
      *
-     * @param id The identifier of the user
+     * @param userId The identifier of the user
      * @param token The token of the user
      * @param profilePic The profile pic chosen by the user to set as the new profile pic
      * @return the result of the request as {@link String}
      */
     @PostMapping(
-            path = USERS_KEY + "/{" + IDENTIFIER_KEY + "}" + CHANGE_PROFILE_PIC_ENDPOINT,
+            path = USERS_KEY + "/{" + USER_IDENTIFIER_KEY + "}" + CHANGE_PROFILE_PIC_ENDPOINT,
             headers = {
                     TOKEN_KEY
             }
     )
-    @RequestPath(path = "/api/v1/users/{id}/changeProfilePic", method = POST)
+    @RequestPath(path = "/api/v1/users/{user_id}/changeProfilePic", method = POST)
     public String changeProfilePic(
-            @PathVariable(IDENTIFIER_KEY) String id,
+            @PathVariable(USER_IDENTIFIER_KEY) String userId,
             @RequestHeader(TOKEN_KEY) String token,
             @RequestParam(PROFILE_PIC_KEY) MultipartFile profilePic
     ) {
-        if (!isMe(id, token))
+        if (!isMe(userId, token))
             return failedResponse(NOT_AUTHORIZED_OR_WRONG_DETAILS_MESSAGE);
         if (profilePic.isEmpty())
             return failedResponse(WRONG_PROCEDURE_MESSAGE);
         JSONObject response = new JSONObject();
         try {
-            String profilePicUrl = usersService.changeProfilePic(profilePic, id);
+            String profilePicUrl = usersService.changeProfilePic(profilePic, userId);
             response.put(PROFILE_PIC_KEY, profilePicUrl);
             return successResponse(response);
         } catch (Exception e) {
@@ -350,7 +348,7 @@ public class EquinoxUsersController<T extends EquinoxUser, R extends EquinoxUser
     /**
      * Method used to change the email of the user
      *
-     * @param id The identifier of the user
+     * @param userId The identifier of the user
      * @param token The token of the user
      * @param payload Payload of the request
      *                 <pre>
@@ -363,25 +361,25 @@ public class EquinoxUsersController<T extends EquinoxUser, R extends EquinoxUser
      * @return the result of the request as {@link String}
      */
     @PatchMapping(
-            path = USERS_KEY + "/{" + IDENTIFIER_KEY + "}" + CHANGE_EMAIL_ENDPOINT,
+            path = USERS_KEY + "/{" + USER_IDENTIFIER_KEY + "}" + CHANGE_EMAIL_ENDPOINT,
             headers = {
                     TOKEN_KEY
             }
     )
-    @RequestPath(path = "/api/v1/users/{id}/changeEmail", method = PATCH)
+    @RequestPath(path = "/api/v1/users/{user_id}/changeEmail", method = PATCH)
     public String changeEmail(
-            @PathVariable(IDENTIFIER_KEY) String id,
+            @PathVariable(USER_IDENTIFIER_KEY) String userId,
             @RequestHeader(TOKEN_KEY) String token,
             @RequestBody Map<String, String> payload
     ) {
-        if (!isMe(id, token))
+        if (!isMe(userId, token))
             return failedResponse(NOT_AUTHORIZED_OR_WRONG_DETAILS_MESSAGE);
         loadJsonHelper(payload);
         String email = jsonHelper.getString(EMAIL_KEY);
         if (!Companion.isEmailValid(email))
             return failedResponse(WRONG_EMAIL_MESSAGE);
         try {
-            usersService.changeEmail(email, id);
+            usersService.changeEmail(email, userId);
             return successResponse();
         } catch (Exception e) {
             return failedResponse(WRONG_PROCEDURE_MESSAGE);
@@ -391,7 +389,7 @@ public class EquinoxUsersController<T extends EquinoxUser, R extends EquinoxUser
     /**
      * Method used to change the password of the user
      *
-     * @param id The identifier of the user
+     * @param userId The identifier of the user
      * @param token The token of the user
      * @param payload Payload of the request
      *                 <pre>
@@ -404,25 +402,25 @@ public class EquinoxUsersController<T extends EquinoxUser, R extends EquinoxUser
      * @return the result of the request as {@link String}
      */
     @PatchMapping(
-            path = USERS_KEY + "/{" + IDENTIFIER_KEY + "}" + CHANGE_PASSWORD_ENDPOINT,
+            path = USERS_KEY + "/{" + USER_IDENTIFIER_KEY + "}" + CHANGE_PASSWORD_ENDPOINT,
             headers = {
                     TOKEN_KEY
             }
     )
-    @RequestPath(path = "/api/v1/users/{id}/changePassword", method = PATCH)
+    @RequestPath(path = "/api/v1/users/{user_id}/changePassword", method = PATCH)
     public String changePassword(
-            @PathVariable(IDENTIFIER_KEY) String id,
+            @PathVariable(USER_IDENTIFIER_KEY) String userId,
             @RequestHeader(TOKEN_KEY) String token,
             @RequestBody Map<String, String> payload
     ) {
-        if (!isMe(id, token))
+        if (!isMe(userId, token))
             return failedResponse(NOT_AUTHORIZED_OR_WRONG_DETAILS_MESSAGE);
         loadJsonHelper(payload);
         String password = jsonHelper.getString(PASSWORD_KEY);
         if (!Companion.isPasswordValid(password))
             return failedResponse(WRONG_PASSWORD_MESSAGE);
         try {
-            usersService.changePassword(password, id);
+            usersService.changePassword(password, userId);
             return successResponse();
         } catch (Exception e) {
             return failedResponse(WRONG_PROCEDURE_MESSAGE);
@@ -432,7 +430,7 @@ public class EquinoxUsersController<T extends EquinoxUser, R extends EquinoxUser
     /**
      * Method used to change the language of the user
      *
-     * @param id The identifier of the user
+     * @param userId The identifier of the user
      * @param token The token of the user
      * @param payload Payload of the request
      *                 <pre>
@@ -445,25 +443,25 @@ public class EquinoxUsersController<T extends EquinoxUser, R extends EquinoxUser
      * @return the result of the request as {@link String}
      */
     @PatchMapping(
-            path = USERS_KEY + "/{" + IDENTIFIER_KEY + "}" + CHANGE_LANGUAGE_ENDPOINT,
+            path = USERS_KEY + "/{" + USER_IDENTIFIER_KEY + "}" + CHANGE_LANGUAGE_ENDPOINT,
             headers = {
                     TOKEN_KEY
             }
     )
-    @RequestPath(path = "/api/v1/users/{id}/changeLanguage", method = PATCH)
+    @RequestPath(path = "/api/v1/users/{user_id}/changeLanguage", method = PATCH)
     public String changeLanguage(
-            @PathVariable(IDENTIFIER_KEY) String id,
+            @PathVariable(USER_IDENTIFIER_KEY) String userId,
             @RequestHeader(TOKEN_KEY) String token,
             @RequestBody Map<String, String> payload
     ) {
-        if (!isMe(id, token))
+        if (!isMe(userId, token))
             return failedResponse(NOT_AUTHORIZED_OR_WRONG_DETAILS_MESSAGE);
         loadJsonHelper(payload);
         String language = jsonHelper.getString(LANGUAGE_KEY);
         if (!Companion.isLanguageValid(language))
             return failedResponse(WRONG_LANGUAGE_MESSAGE);
         try {
-            usersService.changeLanguage(language, id);
+            usersService.changeLanguage(language, userId);
             return successResponse();
         } catch (Exception e) {
             return failedResponse(WRONG_PROCEDURE_MESSAGE);
@@ -473,24 +471,24 @@ public class EquinoxUsersController<T extends EquinoxUser, R extends EquinoxUser
     /**
      * Method used to delete the account of the user
      *
-     * @param id The identifier of the user
+     * @param userId The identifier of the user
      * @param token The token of the user
      * @return the result of the request as {@link String}
      */
     @DeleteMapping(
-            path = USERS_KEY + "/{" + IDENTIFIER_KEY + "}",
+            path = USERS_KEY + "/{" + USER_IDENTIFIER_KEY + "}",
             headers = {
                     TOKEN_KEY
             }
     )
-    @RequestPath(path = "/api/v1/users/{id}", method = DELETE)
+    @RequestPath(path = "/api/v1/users/{user_id}", method = DELETE)
     public String deleteAccount(
-            @PathVariable(IDENTIFIER_KEY) String id,
+            @PathVariable(USER_IDENTIFIER_KEY) String userId,
             @RequestHeader(TOKEN_KEY) String token
     ) {
-        if (!isMe(id, token))
+        if (!isMe(userId, token))
             return failedResponse(NOT_AUTHORIZED_OR_WRONG_DETAILS_MESSAGE);
-        usersService.deleteUser(id);
+        usersService.deleteUser(userId);
         return successResponse();
     }
 

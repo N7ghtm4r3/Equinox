@@ -3,6 +3,7 @@ package com.tecknobit.equinoxcore.network
 import com.tecknobit.equinoxcore.annotations.Assembler
 import com.tecknobit.equinoxcore.annotations.RequiresSuperCall
 import com.tecknobit.equinoxcore.annotations.Wrapper
+import com.tecknobit.equinoxcore.helpers.TOKEN_KEY
 import com.tecknobit.equinoxcore.json.treatsAsString
 import com.tecknobit.equinoxcore.network.Requester.Companion.RESPONSE_DATA_KEY
 import com.tecknobit.equinoxcore.network.Requester.Companion.RESPONSE_STATUS_KEY
@@ -55,11 +56,19 @@ abstract class Requester(
         /**
          * `USER_IDENTIFIER_KEY` The key for the user <b>"id"</b> field
          */
+        @Deprecated(
+            message = "Moved into CommonKeys",
+            level = DeprecationLevel.ERROR
+        )
         const val USER_IDENTIFIER_KEY = "id"
 
         /**
          * `USER_TOKEN_KEY` The key for the user <b>"token"</b> field
          */
+        @Deprecated(
+            message = "Will be removed in next release",
+            level = DeprecationLevel.ERROR
+        )
         const val USER_TOKEN_KEY = "token"
 
         /**
@@ -576,7 +585,7 @@ abstract class Requester(
         url {
             headers {
                 userToken?.let { token ->
-                    append(USER_TOKEN_KEY, token)
+                    append(TOKEN_KEY, token)
                 }
                 headers.forEach { header ->
                     append(header.key, header.value.toString())
@@ -653,7 +662,7 @@ abstract class Requester(
         if (headers.isNotEmpty()) {
             println("\n-HEADERS")
             userToken?.let {
-                println("$USER_TOKEN_KEY: $userToken")
+                println("$TOKEN_KEY: $userToken")
             }
             headers.forEach { header ->
                 println(header.key + ": " + header.value)
