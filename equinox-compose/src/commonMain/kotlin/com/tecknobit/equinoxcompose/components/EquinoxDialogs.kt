@@ -51,7 +51,6 @@ import org.jetbrains.compose.resources.stringResource
  * @param confirmTextStyle The style to apply to the confirmation text
  */
 @Composable
-@NonRestartableComposable
 fun EquinoxAlertDialog(
     modifier: Modifier = Modifier,
     shape: Shape = AlertDialogDefaults.shape,
@@ -229,7 +228,6 @@ fun EquinoxAlertDialog(
  * @param confirmTextStyle The style to apply to the confirmation text
  */
 @Composable
-@NonRestartableComposable
 fun EquinoxAlertDialog(
     modifier: Modifier = Modifier,
     shape: Shape = AlertDialogDefaults.shape,
@@ -417,7 +415,6 @@ fun EquinoxAlertDialog(
     wrapperOf = "Dialog"
 )
 @Composable
-@NonRestartableComposable
 fun EquinoxDialog(
     show: MutableState<Boolean>,
     viewModel: EquinoxViewModel? = null,

@@ -75,7 +75,6 @@ abstract class NavigatorScreen<T : NavigatorTab<*>>(
      */
     @Composable
     @LayoutCoordinator
-    @NonRestartableComposable
     protected fun NavigationContent(
         sideBarModifier: Modifier = Modifier,
         sideBarWidth: Dp = 185.dp,
@@ -120,7 +119,6 @@ abstract class NavigatorScreen<T : NavigatorTab<*>>(
      * @param backgroundTab The color to apply as background of the tabs
      */
     @Composable
-    @NonRestartableComposable
     @ResponsiveClassComponent(
         classes = [EXPANDED_CONTENT, MEDIUM_CONTENT]
     )
@@ -173,7 +171,6 @@ abstract class NavigatorScreen<T : NavigatorTab<*>>(
      * Custom header content to display on the [SideNavigationArrangement] bar
      */
     @Composable
-    @NonRestartableComposable
     @ResponsiveClassComponent(
         classes = [EXPANDED_CONTENT, MEDIUM_CONTENT]
     )
@@ -184,7 +181,6 @@ abstract class NavigatorScreen<T : NavigatorTab<*>>(
      * Custom footer content to display on the [SideNavigationArrangement] bar
      */
     @Composable
-    @NonRestartableComposable
     @ResponsiveClassComponent(
         classes = [EXPANDED_CONTENT, MEDIUM_CONTENT]
     )
@@ -198,7 +194,6 @@ abstract class NavigatorScreen<T : NavigatorTab<*>>(
      * @param tab The related tab of the [index]
      */
     @Composable
-    @NonRestartableComposable
     @ResponsiveClassComponent(
         classes = [EXPANDED_CONTENT, MEDIUM_CONTENT]
     )
@@ -240,7 +235,6 @@ abstract class NavigatorScreen<T : NavigatorTab<*>>(
      * @param backgroundTab The color to apply as background of the tabs
      */
     @Composable
-    @NonRestartableComposable
     @ResponsiveClassComponent(
         classes = [MEDIUM_EXPANDED_CONTENT, COMPACT_CONTENT]
     )
@@ -282,7 +276,6 @@ abstract class NavigatorScreen<T : NavigatorTab<*>>(
      * @param tab The related tab of the [index]
      */
     @Composable
-    @NonRestartableComposable
     @ResponsiveClassComponent(
         classes = [MEDIUM_EXPANDED_CONTENT, COMPACT_CONTENT]
     )
@@ -330,7 +323,6 @@ abstract class NavigatorScreen<T : NavigatorTab<*>>(
      * @param paddingValues The values of the padding to apply to the content
      */
     @Composable
-    @NonRestartableComposable
     private fun ScreenTabContent(
         paddingValues: PaddingValues,
     ) {

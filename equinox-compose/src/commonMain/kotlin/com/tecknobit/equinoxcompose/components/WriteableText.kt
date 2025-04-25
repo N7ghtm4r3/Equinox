@@ -7,7 +7,6 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.NonRestartableComposable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.onFocusEvent
 import androidx.compose.ui.graphics.Color
@@ -47,7 +46,6 @@ private lateinit var currentActiveWritingMode: MutableState<Boolean>
  * @param changeEditModeClickingOnSimpleText: whether clicking on the [Text] the writing mode is directly enabled
  */
 @Composable
-@NonRestartableComposable
 fun WriteableText(
     isInWritingMode: MutableState<Boolean>,
     writableModifier: Modifier = Modifier,
@@ -116,7 +114,6 @@ fun WriteableText(
  * @param changeEditModeClickingOnSimpleText: whether clicking on the [Text] the writing mode is directly enabled
  */
 @Composable
-@NonRestartableComposable
 fun WriteableText(
     isInWritingMode: MutableState<Boolean>,
     writableModifier: Modifier = Modifier,

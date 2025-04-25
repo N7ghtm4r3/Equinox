@@ -45,7 +45,6 @@ import org.jetbrains.compose.resources.stringResource
  * @param onClick The action to execute when the tile has been clicked
  */
 @Composable
-@NonRestartableComposable
 fun DashedTile(
     modifier: Modifier = Modifier,
     strokeWidth: Float = 5f,
@@ -167,7 +166,6 @@ fun DashedTile(
  * @param onClick The action to execute when the tile has been clicked
  */
 @Composable
-@NonRestartableComposable
 fun Tile(
     modifier: Modifier = Modifier,
     size: Dp = 115.dp,
@@ -219,7 +217,6 @@ fun Tile(
  * @param onClick The action to execute when the tile has been clicked
  */
 @Composable
-@NonRestartableComposable
 fun Tile(
     modifier: Modifier = Modifier,
     size: Dp = 115.dp,

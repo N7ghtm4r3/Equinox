@@ -18,7 +18,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.ExperimentalComposeApi
-import androidx.compose.runtime.NonRestartableComposable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -44,7 +43,6 @@ import androidx.compose.ui.unit.dp
  */
 @ExperimentalComposeApi
 @Composable
-@NonRestartableComposable
 fun QuantityPicker(
     modifier: Modifier = Modifier,
     state: QuantityPickerState,
@@ -93,7 +91,6 @@ fun QuantityPicker(
  * @since 1.1.0
  */
 @Composable
-@NonRestartableComposable
 private fun DecrementButton(
     appearance: QuantityButtonAppearance,
     state: QuantityPickerState,
@@ -121,7 +118,6 @@ private fun DecrementButton(
  * @since 1.1.0
  */
 @Composable
-@NonRestartableComposable
 private fun IncrementButton(
     appearance: QuantityButtonAppearance,
     state: QuantityPickerState,
@@ -151,7 +147,6 @@ private fun IncrementButton(
  * @since 1.1.0
  */
 @Composable
-@NonRestartableComposable
 private fun QuantityButton(
     appearance: QuantityButtonAppearance,
     quantityAction: () -> Unit,

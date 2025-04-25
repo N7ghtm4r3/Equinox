@@ -411,7 +411,6 @@ private const val BLUE_PERCEPTION = 0.114
  * @param hexBackgroundColor The background color, in the hexadecimal format, where the text is displayed
  */
 @Composable
-@NonRestartableComposable
 fun ChameleonText(
     text: StringResource,
     modifier: Modifier = Modifier,
@@ -563,7 +562,6 @@ fun ChameleonText(
  * @param backgroundColor The background color where the text is displayed
  */
 @Composable
-@NonRestartableComposable
 fun ChameleonText(
     text: StringResource,
     modifier: Modifier = Modifier,

@@ -41,7 +41,6 @@ import org.jetbrains.compose.resources.stringResource
  * @param collapsedIcon The icon displayed when the text is in collapsed mode
  */
 @Composable
-@NonRestartableComposable
 fun ExpandableText(
     containerModifier: Modifier = Modifier,
     textModifier: Modifier = Modifier,
@@ -85,7 +84,6 @@ fun ExpandableText(
  * @param collapsedIcon The icon displayed when the text is in collapsed mode
  */
 @Composable
-@NonRestartableComposable
 fun ExpandableText(
     containerModifier: Modifier = Modifier,
     textModifier: Modifier = Modifier,

@@ -41,7 +41,6 @@ import org.jetbrains.compose.resources.stringResource
  * @param themeColor The color to use into the composable
  */
 @Composable
-@NonRestartableComposable
 fun LoadingItemUI(
     containerModifier: Modifier = Modifier,
     animations: UIAnimations? = null,
@@ -108,7 +107,6 @@ fun LoadingItemUI(
  * @param contentLoaded The content to display when the data have been loaded
  */
 @Composable
-@NonRestartableComposable
 private fun LoadingItemUIContent(
     loadingRoutine: suspend () -> Boolean,
     initialDelay: Long?,
@@ -150,7 +148,6 @@ private fun LoadingItemUIContent(
  * @param subText The description of the layout
  */
 @Composable
-@NonRestartableComposable
 fun EmptyListUI(
     containerModifier: Modifier = Modifier,
     imageModifier: Modifier = Modifier,
@@ -183,7 +180,6 @@ fun EmptyListUI(
  * @param subText The description of the layout
  */
 @Composable
-@NonRestartableComposable
 fun EmptyListUI(
     containerModifier: Modifier = Modifier,
     imageModifier: Modifier = Modifier,
@@ -278,7 +274,6 @@ private fun EmptyListUIContent(
  * @param retryText The retry message
  */
 @Composable
-@NonRestartableComposable
 fun ErrorUI(
     containerModifier: Modifier = Modifier,
     imageModifier: Modifier = Modifier,
@@ -320,7 +315,6 @@ fun ErrorUI(
  * @param retryText The retry message
  */
 @Composable
-@NonRestartableComposable
 fun ErrorUI(
     containerModifier: Modifier = Modifier,
     imageModifier: Modifier = Modifier,
@@ -380,7 +374,6 @@ fun ErrorUI(
  * @param retryText The retry message
  */
 @Composable
-@NonRestartableComposable
 private fun ErrorUIContent(
     containerModifier: Modifier = Modifier,
     imageModifier: Modifier = Modifier,
@@ -446,7 +439,6 @@ private fun ErrorUIContent(
  * new item, change search, etc...
  */
 @Composable
-@NonRestartableComposable
 @ExperimentalMultiplatform
 fun EmptyState(
     animations: UIAnimations? = null,
@@ -492,7 +484,6 @@ fun EmptyState(
  * new item, change search, etc...
  */
 @Composable
-@NonRestartableComposable
 @ExperimentalMultiplatform
 fun EmptyState(
     animations: UIAnimations? = null,
@@ -540,7 +531,6 @@ fun EmptyState(
  * new item, change search, etc...
  */
 @Composable
-@NonRestartableComposable
 @ExperimentalMultiplatform
 fun EmptyState(
     animations: UIAnimations? = null,

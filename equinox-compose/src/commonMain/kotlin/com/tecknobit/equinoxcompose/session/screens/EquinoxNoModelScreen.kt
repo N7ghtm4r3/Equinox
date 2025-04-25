@@ -2,7 +2,6 @@ package com.tecknobit.equinoxcompose.session.screens
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
-import androidx.compose.runtime.NonRestartableComposable
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.Lifecycle.Event
@@ -263,14 +262,12 @@ abstract class EquinoxNoModelScreen(
      *
      * // override and customize it with your logic
      * @Composable
-     * @NonRestartableComposable
      * override fun CollectStatesAfterLoading() {
      *    // initialize your states depending of the loaded value
      * }
      * ```
      */
     @Composable
-    @NonRestartableComposable
     protected open fun CollectStatesAfterLoading() {
     }
 
