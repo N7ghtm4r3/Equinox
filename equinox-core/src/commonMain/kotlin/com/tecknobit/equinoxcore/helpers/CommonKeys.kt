@@ -84,3 +84,18 @@ const val KEYWORDS_KEY = "keywords"
  * `CREATION_DATE_KEY` the key for the `creation_date` field
  */
 const val CREATION_DATE_KEY = "creation_date"
+
+/**
+ * `STATUS_KEY` the key for the `status` field
+ */
+const val STATUS_KEY = "status"
+
+/**
+ * `AUTHOR_KEY` the key for the `author` field
+ */
+const val AUTHOR_KEY = "author"
+
+/**
+ * `OWNER_KEY` the key for the `owner` field
+ */
+const val OWNER_KEY = "owner"
