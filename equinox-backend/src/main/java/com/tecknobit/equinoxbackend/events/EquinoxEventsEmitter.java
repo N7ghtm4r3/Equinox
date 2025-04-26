@@ -1,31 +1,34 @@
 package com.tecknobit.equinoxbackend.events;
 
-import com.tecknobit.equinoxcore.annotations.FutureEquinoxApi;
-import com.tecknobit.equinoxcore.annotations.Wrapper;
+import jdk.jfr.Experimental;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Component;
 
+/**
+ * The {@code EquinoxEventsEmitter} class is useful to share events between
+ * services in a strict and controlled way by leveraging the {@code enums}.
+ * It is based on top of the {@link ApplicationEventPublisher} API
+ *
+ * @param <T> The type of the event to emit
+ * @author N7ghtm4r3 - Tecknobit
+ * @since 1.1.1
+ */
 @Component
-@FutureEquinoxApi(
-        protoBehavior = """
-                At the moment is just a wrapper of the ApplicationEventPublisher interface, but will be improved and
-                generalized as well in the official implementation
-                """,
-        releaseVersion = "1.1.1",
-        additionalNotes = """
-                - To document the entire system with related MD
-                - Check improvements in the official release
-                - Suggest to create a package (like configuration) "events" where integrate own events system like the custom
-                enum, emitter and collector
-                """
-)
+@Experimental
 public abstract class EquinoxEventsEmitter<T extends Enum<?>> {
 
+    /**
+     * {@code ApplicationEventPublisher} the publisher used to emit the events
+     */
     @Autowired
     private ApplicationEventPublisher publisher;
 
-    @Wrapper
+    /**
+     * Method used to emit the event
+     *
+     * @param event The event to emit
+     */
     public void emitEvent(EquinoxApplicationEvent<T> event) {
         publisher.publishEvent(event);
     }

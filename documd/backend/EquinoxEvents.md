@@ -1,8 +1,7 @@
 ## Equinox Events
 
 Use the `EquinoxEventsEmitter` API, built on top of the `ApplicationEventPublisher` system, to share events between
-services
-in a strict and controlled way by leveraging `enums`
+services in a strict and controlled way by leveraging `enums`
 
 ### Implementation
 
@@ -77,6 +76,20 @@ public class TestEventsEmitter extends EquinoxEventsEmitter<TestEvent> {
 }
 ```
 
+#### Create your own collector
+
+You can create your own collector to customize or for a better readability
+
+```java
+
+@FunctionalInterface // not mandatory, but suggested
+public interface TestEventsCollector extends EquinoxEventsCollector<TestEvent, TestApplicationEvent> {
+
+    // your custom implementation
+
+}
+```
+
 > [!TIP]  
 > Place all files related to the events system into a dedicated `events` package to improve readability and maintain a
 > clean architecture
@@ -134,7 +147,7 @@ You can create multiple collectors implementing the `EquinoxEventsCollector` int
 ```java
 
 @Service
-public class AnyService implements EquinoxEventsCollector<TestEvent, TestApplicationEvent> {
+public class AnyService implements TestEventsCollector {
 
     @Override
     public void onEventCollected(TestApplicationEvent event) {
