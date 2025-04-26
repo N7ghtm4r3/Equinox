@@ -110,11 +110,11 @@ named `configuration` for clean implementation and better readability as follows
 
  ``` bash
   com.your.package
-   |-- configuration
-       |-- config_class
-       |-- config_class
-       |-- config_class
-       |-- ...
+   └── configuration
+       └── config_class
+       └── config_class
+       └── config_class
+       └── ...
   ```
 
 ## Support
