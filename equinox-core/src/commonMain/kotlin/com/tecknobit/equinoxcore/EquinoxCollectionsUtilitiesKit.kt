@@ -3,6 +3,7 @@ package com.tecknobit.equinoxcore
 /**
  * Method split in two phases used to first remove all the items from the main collection that are not present in the
  * [supportCollection], then add all the items present in the same support collection but not in the main one.
+ *
  * For example:
  * ```kotlin
  * val mainCollection = mutableListOf(1, 2, 3)
@@ -19,19 +20,56 @@ package com.tecknobit.equinoxcore
  * ```
  *
  * The duplicate values will be considered as one element, so will be merged
+ *
+ * @param supportCollection The collection from add the element not present in the original collection
  */
 fun <T> MutableCollection<T>.retainAndAdd(
     supportCollection: Collection<T>,
 ) {
     val supportCollectionSet = supportCollection.toHashSet()
-    this.run {
-        retainAll(supportCollectionSet)
-        addAll(
-            supportCollectionSet.filter { supportItem ->
-                supportItem !in this
-            }
-        )
-    }
+    retainAll(supportCollectionSet)
+    addAll(
+        supportCollectionSet.filter { supportItem ->
+            supportItem !in this
+        }
+    )
+}
+
+/**
+ * Method split in two phases used to first remove all the items from the main collection that are not present in the
+ * [supportCollection], then add all the items present in the same support collection but not in the main one.
+ * For example:
+ * ```kotlin
+ * val mainCollection = mutableListOf(1, 2, 3)
+ *
+ * val supportCollection = listOf(2, 3, 4)
+ *
+ * // apply the retainAndAdd method
+ * mainCollection.retainAndAdd(
+ *   supportCollection = supportCollection
+ * )
+ *
+ * println(mainCollection) // the result printed will be 2, 3, 4
+ *
+ * ```
+ *
+ * The duplicate values will be considered as one element, so will be merged
+ *
+ * @param addFrom The starting index from which to add elements from the [supportCollection], following the same constraints
+ * @param supportCollection The collection from add the element not present in the original collection
+ */
+fun <T> MutableList<T>.retainAndAdd(
+    addFrom: Int = lastIndex,
+    supportCollection: Collection<T>,
+) {
+    val supportCollectionSet = supportCollection.toHashSet()
+    retainAll(supportCollectionSet)
+    addAll(
+        index = addFrom,
+        elements = supportCollectionSet.filter { supportItem ->
+            supportItem !in this
+        }
+    )
 }
 
 /**
