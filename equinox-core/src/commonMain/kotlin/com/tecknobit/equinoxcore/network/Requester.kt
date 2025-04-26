@@ -33,7 +33,9 @@ import kotlin.js.JsName
  * @param userToken The user token
  * @param debugMode Whether the requester is still in development and who is developing needs the log of the requester's
  * workflow, if it is enabled all the details of the requests sent and the errors occurred will be printed in the console
+ * @param requestTimeout Maximum time to wait before a timeout exception is thrown
  * @param connectionTimeout Time to keep alive request then throw the connection refused error
+ * @param socketTimeout Maximum idle time to wait during an I/O operation on a socket
  * @param connectionErrorMessage The error to send when a connection error occurred
  * @param byPassSSLValidation Whether bypass the **SSL** certificates validation, this for example
  * when is a self-signed the certificate USE WITH CAUTION
@@ -45,7 +47,9 @@ abstract class Requester(
     protected var userId: String? = null,
     protected var userToken: String? = null,
     protected var debugMode: Boolean = false,
+    protected val requestTimeout: Long = DEFAULT_REQUEST_TIMEOUT,
     protected val connectionTimeout: Long = DEFAULT_REQUEST_TIMEOUT,
+    protected val socketTimeout: Long = DEFAULT_REQUEST_TIMEOUT,
     @JsName("connection_error_message")
     protected val connectionErrorMessage: String,
     protected val byPassSSLValidation: Boolean = false,
@@ -255,7 +259,9 @@ abstract class Requester(
      * `ktorClient` the HTTP client used to send the stats and the performance data
      */
     protected val ktorClient = obtainHttpEngine(
+        requestTimeout = requestTimeout,
         connectionTimeout = connectionTimeout,
+        socketTimeout = socketTimeout,
         byPassSSLValidation = byPassSSLValidation
     )
 

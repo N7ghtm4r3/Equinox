@@ -30,7 +30,9 @@ import kotlinx.serialization.json.put
  * @param userToken The user token
  * @param debugMode Whether the requester is still in development and who is developing needs the log of the requester's
  * workflow, if it is enabled all the details of the requests sent and the errors occurred will be printed in the console
+ * @param requestTimeout Maximum time to wait before a timeout exception is thrown
  * @param connectionTimeout Time to keep alive request then throw the connection refused error
+ * @param socketTimeout Maximum idle time to wait during an I/O operation on a socket
  * @param connectionErrorMessage The error to send when a connection error occurred
  * @param byPassSSLValidation Whether bypass the **SSL** certificates validation, this for example
  * when is a self-signed the certificate USE WITH CAUTION
@@ -44,7 +46,9 @@ abstract class EquinoxRequester(
     userId: String? = null,
     userToken: String? = null,
     debugMode: Boolean = false,
+    requestTimeout: Long = DEFAULT_REQUEST_TIMEOUT,
     connectionTimeout: Long = DEFAULT_REQUEST_TIMEOUT,
+    socketTimeout: Long = DEFAULT_REQUEST_TIMEOUT,
     connectionErrorMessage: String,
     byPassSSLValidation: Boolean = false,
 ) : Requester(
@@ -52,7 +56,9 @@ abstract class EquinoxRequester(
     userId = userId,
     userToken = userToken,
     debugMode = debugMode,
+    requestTimeout = requestTimeout,
     connectionTimeout = connectionTimeout,
+    socketTimeout = socketTimeout,
     connectionErrorMessage = connectionErrorMessage,
     byPassSSLValidation = byPassSSLValidation
 ) {
