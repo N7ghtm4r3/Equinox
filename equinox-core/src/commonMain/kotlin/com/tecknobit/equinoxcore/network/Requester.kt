@@ -256,9 +256,17 @@ abstract class Requester(
     protected var interceptorAction: (() -> Unit)? = null
 
     /**
-     * `ktorClient` the HTTP client used to send the stats and the performance data
+     * `ktorClient` the HTTP client used to make the requests.
+     *
+     * To customize you can do as follows
+     *
+     * ```kotlin
+     * init { // the init block of your own Requester
+     *     ktorClient = HttpClient() // customize as you need
+     * }
+     * ```
      */
-    protected val ktorClient = obtainHttpEngine(
+    protected var ktorClient = obtainHttpEngine(
         requestTimeout = requestTimeout,
         connectionTimeout = connectionTimeout,
         socketTimeout = socketTimeout,
