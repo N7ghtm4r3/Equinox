@@ -68,6 +68,8 @@ fun <T> MutableCollection<T>.mergeIfNotContained(
  * element to toggle, but it can be used also to dynamically insert or remove an element from the collection from example
  * with checkbox selection, button clicking, etc...
  *
+ * @return `true` if the element has been added, `false` if the element has been removed
+ *
  * For example:
  * ```kotlin
  * val mainCollection = mutableListOf(1, 2, 3)
@@ -94,9 +96,12 @@ fun <T> MutableCollection<T>.mergeIfNotContained(
 fun <T> MutableCollection<T>.toggle(
     element: T,
     add: Boolean = !contains(element),
-) {
-    if (add)
+): Boolean {
+    return if (add) {
         add(element)
-    else
+        true
+    } else {
         remove(element)
+        false
+    }
 }
