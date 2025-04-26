@@ -9,6 +9,7 @@ import org.hibernate.Session;
 
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
@@ -164,12 +165,31 @@ public abstract class IndexesCreator {
                                                 String trailingCharacter, boolean escapeDoubleQuotes) {
         if (keywords.isEmpty())
             return "";
-        else {
-            String formattedKeywords = String.join(" ", keywords);
-            if (escapeDoubleQuotes)
-                formattedKeywords = formattedKeywords.replaceAll("\"", "");
-            return leadingCharacter + formattedKeywords + trailingCharacter;
-        }
+        keywords = appendEscapeCharacters(keywords, leadingCharacter, trailingCharacter);
+        String formattedKeywords = String.join(" ", keywords);
+        if (escapeDoubleQuotes)
+            formattedKeywords = formattedKeywords.replaceAll("\"", "");
+        return formattedKeywords;
+    }
+
+    /**
+     * Method used to append the escape characters like leading and trailing characters to each keyword for the
+     * {@link #formatFullTextKeywords(Collection, String, String, boolean)} method for the {@link #_IN_BOOLEAN_MODE}
+     * full text search
+     *
+     * @param keywords          The keywords used in the full text search
+     * @param leadingCharacter  The leading character to add to the keywords string such -, +, etc...
+     * @param trailingCharacter The trailing character to add to the keywords string such *
+     * @return the keywords with the escape characters as {@link Collection} of {@link String}
+     */
+    private static Collection<String> appendEscapeCharacters(Collection<String> keywords, String leadingCharacter,
+                                                             String trailingCharacter) {
+        if (keywords.isEmpty() || (leadingCharacter.isEmpty() && trailingCharacter.isEmpty()))
+            return keywords;
+        String[] tmpKeywords = keywords.toArray(new String[0]);
+        for (int j = 0; j < tmpKeywords.length; j++)
+            tmpKeywords[j] = leadingCharacter + tmpKeywords[j] + trailingCharacter;
+        return Arrays.stream(tmpKeywords).toList();
     }
 
 }
