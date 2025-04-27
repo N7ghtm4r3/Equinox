@@ -9,10 +9,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons.Outlined
 import androidx.compose.material.icons.outlined.ArrowCircleDown
 import androidx.compose.material.icons.outlined.ArrowCircleUp
-import androidx.compose.material3.HorizontalDivider
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.Text
+import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -44,7 +41,7 @@ import org.jetbrains.compose.resources.stringResource
 fun ExpandableText(
     containerModifier: Modifier = Modifier,
     textModifier: Modifier = Modifier,
-    textStyle: TextStyle = TextStyle.Default,
+    textStyle: TextStyle = LocalTextStyle.current,
     text: StringResource,
     maxLines: Int = 5,
     expandedMaxLines: Int = Int.MAX_VALUE,
@@ -87,7 +84,7 @@ fun ExpandableText(
 fun ExpandableText(
     containerModifier: Modifier = Modifier,
     textModifier: Modifier = Modifier,
-    textStyle: TextStyle = TextStyle.Default,
+    textStyle: TextStyle = LocalTextStyle.current,
     text: String,
     maxLines: Int = 5,
     expandedMaxLines: Int = Int.MAX_VALUE,

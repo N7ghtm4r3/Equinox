@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.DividerDefaults
+import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.NonRestartableComposable
@@ -40,7 +41,7 @@ fun TextDivider(
     thickness: Dp = DividerDefaults.Thickness,
     dividerColor: Color = DividerDefaults.color,
     text: StringResource,
-    textStyle: TextStyle = TextStyle.Default,
+    textStyle: TextStyle = LocalTextStyle.current,
 ) {
     TextDivider(
         containerModifier = containerModifier,
@@ -75,7 +76,7 @@ fun TextDivider(
     thickness: Dp = DividerDefaults.Thickness,
     dividerColor: Color = DividerDefaults.color,
     text: String,
-    textStyle: TextStyle = TextStyle.Default,
+    textStyle: TextStyle = LocalTextStyle.current,
 ) {
     Row(
         modifier = containerModifier

@@ -44,7 +44,7 @@ import org.jetbrains.compose.resources.stringResource
 fun LoadingItemUI(
     containerModifier: Modifier = Modifier,
     animations: UIAnimations? = null,
-    textStyle: TextStyle = TextStyle.Default,
+    textStyle: TextStyle = LocalTextStyle.current,
     loadingRoutine: suspend () -> Boolean,
     initialDelay: Long? = null,
     contentLoaded: @Composable () -> Unit,
@@ -152,7 +152,7 @@ fun EmptyListUI(
     containerModifier: Modifier = Modifier,
     imageModifier: Modifier = Modifier,
     animations: UIAnimations? = null,
-    textStyle: TextStyle = TextStyle.Default,
+    textStyle: TextStyle = LocalTextStyle.current,
     icon: ImageVector,
     themeColor: Color = MaterialTheme.colorScheme.primary,
     subText: StringResource,
@@ -184,7 +184,7 @@ fun EmptyListUI(
     containerModifier: Modifier = Modifier,
     imageModifier: Modifier = Modifier,
     animations: UIAnimations? = null,
-    textStyle: TextStyle = TextStyle.Default,
+    textStyle: TextStyle = LocalTextStyle.current,
     icon: ImageVector,
     themeColor: Color = MaterialTheme.colorScheme.primary,
     subText: String,
@@ -231,7 +231,7 @@ fun EmptyListUI(
 private fun EmptyListUIContent(
     containerModifier: Modifier = Modifier,
     imageModifier: Modifier = Modifier,
-    textStyle: TextStyle = TextStyle.Default,
+    textStyle: TextStyle = LocalTextStyle.current,
     icon: ImageVector,
     themeColor: Color = MaterialTheme.colorScheme.primary,
     subText: String,
@@ -278,7 +278,7 @@ fun ErrorUI(
     containerModifier: Modifier = Modifier,
     imageModifier: Modifier = Modifier,
     animations: UIAnimations? = null,
-    textStyle: TextStyle = TextStyle.Default,
+    textStyle: TextStyle = LocalTextStyle.current,
     backgroundColor: Color = MaterialTheme.colorScheme.background,
     errorIcon: ImageVector = Icons.Default.Error,
     errorColor: Color = MaterialTheme.colorScheme.error,
@@ -319,7 +319,7 @@ fun ErrorUI(
     containerModifier: Modifier = Modifier,
     imageModifier: Modifier = Modifier,
     animations: UIAnimations? = null,
-    textStyle: TextStyle = TextStyle.Default,
+    textStyle: TextStyle = LocalTextStyle.current,
     backgroundColor: Color = MaterialTheme.colorScheme.background,
     errorIcon: ImageVector = Icons.Default.Error,
     errorColor: Color = MaterialTheme.colorScheme.error,
@@ -377,7 +377,7 @@ fun ErrorUI(
 private fun ErrorUIContent(
     containerModifier: Modifier = Modifier,
     imageModifier: Modifier = Modifier,
-    textStyle: TextStyle = TextStyle.Default,
+    textStyle: TextStyle = LocalTextStyle.current,
     backgroundColor: Color = MaterialTheme.colorScheme.background,
     errorIcon: ImageVector = Icons.Default.Error,
     errorColor: Color = MaterialTheme.colorScheme.error,
@@ -448,9 +448,9 @@ fun EmptyState(
     resource: DrawableResource,
     contentDescription: String?,
     title: String? = null,
-    titleStyle: TextStyle = TextStyle.Default,
+    titleStyle: TextStyle = LocalTextStyle.current,
     subTitle: String? = null,
-    subTitleStyle: TextStyle = TextStyle.Default,
+    subTitleStyle: TextStyle = LocalTextStyle.current,
     action: @Composable (() -> Unit)? = null,
 ) {
     EmptyState(
@@ -493,9 +493,9 @@ fun EmptyState(
     resource: ImageVector,
     contentDescription: String?,
     title: String? = null,
-    titleStyle: TextStyle = TextStyle.Default,
+    titleStyle: TextStyle = LocalTextStyle.current,
     subTitle: String? = null,
-    subTitleStyle: TextStyle = TextStyle.Default,
+    subTitleStyle: TextStyle = LocalTextStyle.current,
     action: @Composable (() -> Unit)? = null,
 ) {
     EmptyState(
@@ -540,9 +540,9 @@ fun EmptyState(
     resource: Painter,
     contentDescription: String?,
     title: String? = null,
-    titleStyle: TextStyle = TextStyle.Default,
+    titleStyle: TextStyle = LocalTextStyle.current,
     subTitle: String? = null,
-    subTitleStyle: TextStyle = TextStyle.Default,
+    subTitleStyle: TextStyle = LocalTextStyle.current,
     action: @Composable (() -> Unit)? = null,
 ) {
     if (animations != null) {
@@ -603,9 +603,9 @@ private fun EmptyStateContent(
     resource: Painter,
     contentDescription: String?,
     title: String? = null,
-    titleStyle: TextStyle = TextStyle.Default,
+    titleStyle: TextStyle = LocalTextStyle.current,
     subTitle: String? = null,
-    subTitleStyle: TextStyle = TextStyle.Default,
+    subTitleStyle: TextStyle = LocalTextStyle.current,
     action: @Composable (() -> Unit)? = null,
 ) {
     Column(

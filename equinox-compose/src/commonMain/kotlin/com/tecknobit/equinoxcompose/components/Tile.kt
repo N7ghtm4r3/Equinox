@@ -59,7 +59,7 @@ fun DashedTile(
     iconSize: Dp = 65.dp,
     text: StringResource,
     fontWeight: FontWeight = FontWeight.Bold,
-    textStyle: TextStyle = TextStyle.Default.merge(
+    textStyle: TextStyle = LocalTextStyle.current.merge(
         color = contentColor,
         fontWeight = fontWeight
     ),
@@ -119,7 +119,7 @@ fun DashedTile(
     iconSize: Dp = 65.dp,
     text: String,
     fontWeight: FontWeight = FontWeight.Bold,
-    textStyle: TextStyle = TextStyle.Default.merge(
+    textStyle: TextStyle = LocalTextStyle.current.merge(
         color = contentColor,
         fontWeight = fontWeight
     ),
@@ -179,7 +179,7 @@ fun Tile(
     iconSize: Dp = 65.dp,
     text: StringResource,
     fontWeight: FontWeight = FontWeight.Bold,
-    textStyle: TextStyle = TextStyle.Default.merge(
+    textStyle: TextStyle = LocalTextStyle.current.merge(
         color = contentColor,
         fontWeight = fontWeight
     ),
@@ -230,7 +230,7 @@ fun Tile(
     iconSize: Dp = 65.dp,
     text: String,
     fontWeight: FontWeight = FontWeight.Bold,
-    textStyle: TextStyle = TextStyle.Default.merge(
+    textStyle: TextStyle = LocalTextStyle.current.merge(
         color = contentColor,
         fontWeight = fontWeight
     ),

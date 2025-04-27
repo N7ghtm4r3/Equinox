@@ -14,6 +14,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Remove
 import androidx.compose.material3.Icon
+import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -47,11 +48,11 @@ fun QuantityPicker(
     modifier: Modifier = Modifier,
     state: QuantityPickerState,
     informativeText: String? = null,
-    informativeTextStyle: TextStyle = TextStyle.Default,
+    informativeTextStyle: TextStyle = LocalTextStyle.current,
     decrementButtonAppearance: QuantityButtonAppearance = quantityButtonAppearance(
         icon = Icons.Default.Remove
     ),
-    quantityIndicatorStyle: TextStyle = TextStyle.Default,
+    quantityIndicatorStyle: TextStyle = LocalTextStyle.current,
     incrementButtonAppearance: QuantityButtonAppearance = quantityButtonAppearance(
         icon = Icons.Default.Add
     ),

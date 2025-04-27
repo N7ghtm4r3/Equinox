@@ -120,7 +120,7 @@ fun WriteableText(
 @Composable
 @Deprecated(
     message = "This component will be removed in the next version due its like a workaround of a fine tuned input text",
-    level = DeprecationLevel.ERROR
+    level = DeprecationLevel.WARNING
 )
 fun WriteableText(
     isInWritingMode: MutableState<Boolean>,
@@ -300,7 +300,7 @@ fun enableWritingMode() {
  */
 @Deprecated(
     message = "This component will be removed in the next version due its like a workaround of a fine tuned input text",
-    level = DeprecationLevel.ERROR
+    level = DeprecationLevel.WARNING
 )
 fun disableWritingMode() {
     if (::currentActiveWritingMode.isInitialized)
