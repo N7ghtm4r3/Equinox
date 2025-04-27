@@ -1,6 +1,9 @@
 package com.tecknobit.equinoxcompose.components
 
-import androidx.compose.animation.*
+import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.EnterTransition
+import androidx.compose.animation.ExitTransition
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -39,6 +42,7 @@ import org.jetbrains.compose.resources.stringResource
  * @param textStyle The style to apply to the text
  * @param loadingRoutine The routine used to load the data
  * @param initialDelay An initial delay to apply to the [loadingRoutine] before to start
+ * @param loadingIndicatorBackground The background to apply to the [loadingIndicator] content
  * @param loadingIndicator The loading indicator to display
  * @param contentLoaded The content to display when the data have been loaded
  * @param themeColor The color to use into the composable
@@ -52,28 +56,29 @@ fun LoadingItemUI(
     initialDelay: Long? = null,
     contentLoaded: @Composable () -> Unit,
     themeColor: Color = MaterialTheme.colorScheme.primary,
+    loadingIndicatorBackground: Color = MaterialTheme.colorScheme.background,
     loadingIndicator: @Composable () -> Unit = {
-        Surface {
-            Column(
-                modifier = containerModifier,
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center
-            ) {
-                CircularProgressIndicator(
-                    modifier = Modifier
-                        .size(85.dp),
-                    strokeWidth = 8.dp
-                )
-                Text(
-                    modifier = Modifier
-                        .padding(
-                            top = 16.dp
-                        ),
-                    style = textStyle,
-                    text = stringResource(Res.string.loading_data),
-                    color = themeColor
-                )
-            }
+        Column(
+            modifier = containerModifier
+                .background(loadingIndicatorBackground),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
+        ) {
+            CircularProgressIndicator(
+                modifier = Modifier
+                    .size(85.dp),
+                strokeWidth = 8.dp,
+                color = themeColor
+            )
+            Text(
+                modifier = Modifier
+                    .padding(
+                        top = 16.dp
+                    ),
+                style = textStyle,
+                text = stringResource(Res.string.loading_data),
+                color = themeColor
+            )
         }
     },
 ) {
@@ -122,19 +127,13 @@ private fun LoadingItemUIContent(
         }
         isLoaded = loadingRoutine()
     }
-    AnimatedVisibility(
-        visible = isLoaded,
-        enter = fadeIn(),
-        exit = fadeOut()
+    AnimatedContent(
+        targetState = isLoaded
     ) {
-        contentLoaded()
-    }
-    AnimatedVisibility(
-        visible = !isLoaded,
-        enter = fadeIn(),
-        exit = fadeOut()
-    ) {
-        loadingIndicator()
+        if (isLoaded)
+            contentLoaded()
+        else
+            loadingIndicator()
     }
 }
 
