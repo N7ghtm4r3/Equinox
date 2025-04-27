@@ -441,7 +441,7 @@ val EXPANDED_CONTAINER = 1280.dp
 /**
  * `EXPANDED_WIDHT_MEDIUM_HEIGHT_CONTAINER` constant value used to give the max width to containers in [EXPANDED_MEDIUM_CONTENT]'s screen class
  */
-val EXPANDED_WIDHT_MEDIUM_HEIGHT_CONTAINER = 976.dp
+val EXPANDED_WIDHT_MEDIUM_HEIGHT_CONTAINER = 990.dp
 
 /**
  * `MEDIUM_CONTAINER` constant value used to give the max width to containers in [MEDIUM_CONTENT]'s screen class
@@ -451,7 +451,7 @@ val MEDIUM_CONTAINER = 768.dp
 /**
  * `COMPACT_CONTAINER` constant value used to give the max width to containers in [COMPACT_CONTENT]'s screen class
  */
-val COMPACT_CONTAINER = 376.dp
+val COMPACT_CONTAINER = 390.dp
 
 /**
  * Method used to retrieve the specific max width value based on the current [ResponsiveClass] of the window
