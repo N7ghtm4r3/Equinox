@@ -81,7 +81,7 @@ The other apis will be gradually released
 - [EquinoxInputs](src/commonMain/kotlin/com/tecknobit/equinoxcompose/components/EquinoxInputs.kt)
 - [EquinoxUIs](src/commonMain/kotlin/com/tecknobit/equinoxcompose/components/EquinoxUIs.kt)
 - [TextDivider](../documd/compose/components/textdivider/TextDivider.md)
-- [WriteableText](../documd/compose/components/writeabletext/WriteableText.md)
+- [WriteableText](../documd/compose/components/writeabletext/WriteableText.md) (DEPRECATED)
 - [Tile](../documd/compose/components/tile/Tile.md)
 - [SplitText](../documd/compose/components/splittext/SplitText.md)
 - [ExpandableText](../documd/compose/components/expandabletext/ExpandableText.md)
@@ -90,6 +90,7 @@ The other apis will be gradually released
 - [Stepper](../documd/compose/components/stepper/Stepper.md)
 - [DebouncedInputs](../documd/compose/components/debouncefields/DebouncedInputs.md)
 - [QuantityPicker](../documd/compose/components/quantitypicker/QuantityPicker.md)
+- [BadgeText](../documd/compose/components/badgetext/BadgeText.md)
 
 The others components will be gradually released
 
