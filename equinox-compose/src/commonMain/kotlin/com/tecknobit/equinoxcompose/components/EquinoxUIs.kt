@@ -6,6 +6,7 @@ import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
@@ -428,7 +429,64 @@ private fun ErrorUIContent(
  * @param animations The set of the animations to use to animate the layout
  * @param containerModifier The modifier to apply to the container [Column]
  * @param resourceModifier The modifier to apply to the [Image]
+ * @param resourceSize The size occupied by the empty state
+ * @param lightResource The empty state resource to display when is the light theme used
+ * @param darkResource The empty state resource to display when is the dark theme used
+ * @param useDarkResource Whether to use the [lightResource] or the [darkResource] one
+ * @param contentDescription The content description
+ * @param verticalSpacing The vertical spacing applied to the [title] and [subTitle] texts
+ * @param title Not mandatory representative title
+ * @param titleStyle The style to apply to the [title]
+ * @param subTitle Not mandatory representative subtitle
+ * @param subTitleStyle The style to apply to the [subTitle]
+ * @param action Custom content used to allow the user to react to the empty state shown as needed, for example create
+ * new item, change search, etc...
+ */
+@Composable
+@ExperimentalMultiplatform
+fun EmptyState(
+    animations: UIAnimations? = null,
+    containerModifier: Modifier = Modifier,
+    resourceModifier: Modifier = Modifier,
+    resourceSize: Dp = 200.dp,
+    lightResource: DrawableResource,
+    darkResource: DrawableResource,
+    useDarkResource: Boolean = isSystemInDarkTheme(),
+    contentDescription: String?,
+    verticalSpacing: Dp = 5.dp,
+    title: String? = null,
+    titleStyle: TextStyle = LocalTextStyle.current,
+    subTitle: String? = null,
+    subTitleStyle: TextStyle = LocalTextStyle.current,
+    action: @Composable (() -> Unit)? = null,
+) {
+    EmptyState(
+        animations = animations,
+        containerModifier = containerModifier,
+        resourceModifier = resourceModifier,
+        resourceSize = resourceSize,
+        resource = if (useDarkResource)
+            darkResource
+        else
+            lightResource,
+        contentDescription = contentDescription,
+        verticalSpacing = verticalSpacing,
+        title = title,
+        titleStyle = titleStyle,
+        subTitle = subTitle,
+        subTitleStyle = subTitleStyle,
+        action = action
+    )
+}
+
+/**
+ * Container component useful to display a custom empty state graphics
+ *
+ * @param animations The set of the animations to use to animate the layout
+ * @param containerModifier The modifier to apply to the container [Column]
+ * @param resourceModifier The modifier to apply to the [Image]
  * @param resourceSize The size occupied by the [resource]
+ * @param resource The empty state resource to display
  * @param contentDescription The content description
  * @param verticalSpacing The vertical spacing applied to the [title] and [subTitle] texts
  * @param title Not mandatory representative title
@@ -476,7 +534,64 @@ fun EmptyState(
  * @param animations The set of the animations to use to animate the layout
  * @param containerModifier The modifier to apply to the container [Column]
  * @param resourceModifier The modifier to apply to the [Image]
+ * @param resourceSize The size occupied by the empty state
+ * @param lightResource The empty state resource to display when is the light theme used
+ * @param darkResource The empty state resource to display when is the dark theme used
+ * @param useDarkResource Whether to use the [lightResource] or the [darkResource] one
+ * @param contentDescription The content description
+ * @param verticalSpacing The vertical spacing applied to the [title] and [subTitle] texts
+ * @param title Not mandatory representative title
+ * @param titleStyle The style to apply to the [title]
+ * @param subTitle Not mandatory representative subtitle
+ * @param subTitleStyle The style to apply to the [subTitle]
+ * @param action Custom content used to allow the user to react to the empty state shown as needed, for example create
+ * new item, change search, etc...
+ */
+@Composable
+@ExperimentalMultiplatform
+fun EmptyState(
+    animations: UIAnimations? = null,
+    containerModifier: Modifier = Modifier,
+    resourceModifier: Modifier = Modifier,
+    resourceSize: Dp = 200.dp,
+    lightResource: ImageVector,
+    darkResource: ImageVector,
+    useDarkResource: Boolean = isSystemInDarkTheme(),
+    contentDescription: String?,
+    verticalSpacing: Dp = 5.dp,
+    title: String? = null,
+    titleStyle: TextStyle = LocalTextStyle.current,
+    subTitle: String? = null,
+    subTitleStyle: TextStyle = LocalTextStyle.current,
+    action: @Composable (() -> Unit)? = null,
+) {
+    EmptyState(
+        animations = animations,
+        containerModifier = containerModifier,
+        resourceModifier = resourceModifier,
+        resourceSize = resourceSize,
+        resource = if (useDarkResource)
+            darkResource
+        else
+            lightResource,
+        contentDescription = contentDescription,
+        verticalSpacing = verticalSpacing,
+        title = title,
+        titleStyle = titleStyle,
+        subTitle = subTitle,
+        subTitleStyle = subTitleStyle,
+        action = action
+    )
+}
+
+/**
+ * Container component useful to display a custom empty state graphics
+ *
+ * @param animations The set of the animations to use to animate the layout
+ * @param containerModifier The modifier to apply to the container [Column]
+ * @param resourceModifier The modifier to apply to the [Image]
  * @param resourceSize The size occupied by the [resource]
+ * @param resource The empty state resource to display
  * @param contentDescription The content description
  * @param verticalSpacing The vertical spacing applied to the [title] and [subTitle] texts
  * @param title Not mandatory representative title
@@ -526,7 +641,64 @@ fun EmptyState(
  * @param animations The set of the animations to use to animate the layout
  * @param containerModifier The modifier to apply to the container [Column]
  * @param resourceModifier The modifier to apply to the [Image]
+ * @param resourceSize The size occupied by the empty state
+ * @param lightResource The empty state resource to display when is the light theme used
+ * @param darkResource The empty state resource to display when is the dark theme used
+ * @param useDarkResource Whether to use the [lightResource] or the [darkResource] one
+ * @param contentDescription The content description
+ * @param verticalSpacing The vertical spacing applied to the [title] and [subTitle] texts
+ * @param title Not mandatory representative title
+ * @param titleStyle The style to apply to the [title]
+ * @param subTitle Not mandatory representative subtitle
+ * @param subTitleStyle The style to apply to the [subTitle]
+ * @param action Custom content used to allow the user to react to the empty state shown as needed, for example create
+ * new item, change search, etc...
+ */
+@Composable
+@ExperimentalMultiplatform
+fun EmptyState(
+    animations: UIAnimations? = null,
+    containerModifier: Modifier = Modifier,
+    resourceModifier: Modifier = Modifier,
+    resourceSize: Dp = 200.dp,
+    lightResource: Painter,
+    darkResource: Painter,
+    useDarkResource: Boolean = isSystemInDarkTheme(),
+    contentDescription: String?,
+    verticalSpacing: Dp = 5.dp,
+    title: String? = null,
+    titleStyle: TextStyle = LocalTextStyle.current,
+    subTitle: String? = null,
+    subTitleStyle: TextStyle = LocalTextStyle.current,
+    action: @Composable (() -> Unit)? = null,
+) {
+    EmptyState(
+        animations = animations,
+        containerModifier = containerModifier,
+        resourceModifier = resourceModifier,
+        resourceSize = resourceSize,
+        resource = if (useDarkResource)
+            darkResource
+        else
+            lightResource,
+        contentDescription = contentDescription,
+        verticalSpacing = verticalSpacing,
+        title = title,
+        titleStyle = titleStyle,
+        subTitle = subTitle,
+        subTitleStyle = subTitleStyle,
+        action = action
+    )
+}
+
+/**
+ * Container component useful to display a custom empty state graphics
+ *
+ * @param animations The set of the animations to use to animate the layout
+ * @param containerModifier The modifier to apply to the container [Column]
+ * @param resourceModifier The modifier to apply to the [Image]
  * @param resourceSize The size occupied by the [resource]
+ * @param resource The empty state resource to display
  * @param contentDescription The content description
  * @param verticalSpacing The vertical spacing applied to the [title] and [subTitle] texts
  * @param title Not mandatory representative title
@@ -595,6 +767,7 @@ fun EmptyState(
  * @param containerModifier The modifier to apply to the container [Column]
  * @param resourceModifier The modifier to apply to the [Image]
  * @param resourceSize The size occupied by the [resource]
+ * @param resource The empty state resource to display
  * @param contentDescription The content description
  * @param verticalSpacing The vertical spacing applied to the [title] and [subTitle] texts
  * @param title Not mandatory representative title
