@@ -46,6 +46,10 @@ private lateinit var currentActiveWritingMode: MutableState<Boolean>
  * @param changeEditModeClickingOnSimpleText: whether clicking on the [Text] the writing mode is directly enabled
  */
 @Composable
+@Deprecated(
+    message = "This component will be removed in the next version due its like a workaround of a fine tuned input text",
+    level = DeprecationLevel.ERROR
+)
 fun WriteableText(
     isInWritingMode: MutableState<Boolean>,
     writableModifier: Modifier = Modifier,
@@ -114,6 +118,10 @@ fun WriteableText(
  * @param changeEditModeClickingOnSimpleText: whether clicking on the [Text] the writing mode is directly enabled
  */
 @Composable
+@Deprecated(
+    message = "This component will be removed in the next version due its like a workaround of a fine tuned input text",
+    level = DeprecationLevel.ERROR
+)
 fun WriteableText(
     isInWritingMode: MutableState<Boolean>,
     writableModifier: Modifier = Modifier,
@@ -206,6 +214,10 @@ fun WriteableText(
  * }
  * ```
  */
+@Deprecated(
+    message = "This component will be removed in the next version due its like a workaround of a fine tuned input text",
+    level = DeprecationLevel.ERROR
+)
 fun Modifier.disableWritingModeOnTap() = this
     .pointerInput(Unit) {
         detectTapGestures {
@@ -257,6 +269,10 @@ fun Modifier.disableWritingModeOnTap() = this
  * }
  * ```
  */
+@Deprecated(
+    message = "This component will be removed in the next version due its like a workaround of a fine tuned input text",
+    level = DeprecationLevel.ERROR
+)
 fun Modifier.disableWritingModeOnFocusGain() = this
     .onFocusEvent { event ->
         if (event.hasFocus)
@@ -268,6 +284,10 @@ fun Modifier.disableWritingModeOnFocusGain() = this
  *
  * No-any params required
  */
+@Deprecated(
+    message = "This component will be removed in the next version due its like a workaround of a fine tuned input text",
+    level = DeprecationLevel.ERROR
+)
 fun enableWritingMode() {
     if (::currentActiveWritingMode.isInitialized)
         currentActiveWritingMode.value = true
@@ -278,6 +298,10 @@ fun enableWritingMode() {
  *
  * No-any params required
  */
+@Deprecated(
+    message = "This component will be removed in the next version due its like a workaround of a fine tuned input text",
+    level = DeprecationLevel.ERROR
+)
 fun disableWritingMode() {
     if (::currentActiveWritingMode.isInitialized)
         currentActiveWritingMode.value = false
