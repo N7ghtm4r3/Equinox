@@ -209,6 +209,7 @@ abstract class EquinoxAuthViewModel(
      *
      * @return whether the inputs are valid as [Boolean]
      */
+    @RequiresSuperCall
     protected open fun signUpFormIsValid(): Boolean {
         var isValid: Boolean = isHostValid(host.value)
         if (!isValid) {
@@ -300,6 +301,7 @@ abstract class EquinoxAuthViewModel(
      *
      * @return whether the inputs are valid as [Boolean]
      */
+    @RequiresSuperCall
     protected open fun signInFormIsValid(): Boolean {
         var isValid: Boolean = isHostValid(host.value)
         if (!isValid) {
