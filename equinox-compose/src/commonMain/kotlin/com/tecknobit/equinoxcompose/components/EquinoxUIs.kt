@@ -431,6 +431,7 @@ private fun ErrorUIContent(
  * @param resourceModifier The modifier to apply to the [Image]
  * @param resourceSize The size occupied by the [resource]
  * @param contentDescription The content description
+ * @param verticalSpacing The vertical spacing applied to the [title] and [subTitle] texts
  * @param title Not mandatory representative title
  * @param titleStyle The style to apply to the [title]
  * @param subTitle Not mandatory representative subtitle
@@ -447,6 +448,7 @@ fun EmptyState(
     resourceSize: Dp = 200.dp,
     resource: DrawableResource,
     contentDescription: String?,
+    verticalSpacing: Dp = 5.dp,
     title: String? = null,
     titleStyle: TextStyle = LocalTextStyle.current,
     subTitle: String? = null,
@@ -460,6 +462,7 @@ fun EmptyState(
         resourceSize = resourceSize,
         resource = painterResource(resource),
         contentDescription = contentDescription,
+        verticalSpacing = verticalSpacing,
         title = title,
         titleStyle = titleStyle,
         subTitle = subTitle,
@@ -476,6 +479,7 @@ fun EmptyState(
  * @param resourceModifier The modifier to apply to the [Image]
  * @param resourceSize The size occupied by the [resource]
  * @param contentDescription The content description
+ * @param verticalSpacing The vertical spacing applied to the [title] and [subTitle] texts
  * @param title Not mandatory representative title
  * @param titleStyle The style to apply to the [title]
  * @param subTitle Not mandatory representative subtitle
@@ -492,6 +496,7 @@ fun EmptyState(
     resourceSize: Dp = 200.dp,
     resource: ImageVector,
     contentDescription: String?,
+    verticalSpacing: Dp = 5.dp,
     title: String? = null,
     titleStyle: TextStyle = LocalTextStyle.current,
     subTitle: String? = null,
@@ -507,6 +512,7 @@ fun EmptyState(
             image = resource
         ),
         contentDescription = contentDescription,
+        verticalSpacing = verticalSpacing,
         title = title,
         titleStyle = titleStyle,
         subTitle = subTitle,
@@ -523,6 +529,7 @@ fun EmptyState(
  * @param resourceModifier The modifier to apply to the [Image]
  * @param resourceSize The size occupied by the [resource]
  * @param contentDescription The content description
+ * @param verticalSpacing The vertical spacing applied to the [title] and [subTitle] texts
  * @param title Not mandatory representative title
  * @param titleStyle The style to apply to the [title]
  * @param subTitle Not mandatory representative subtitle
@@ -539,6 +546,7 @@ fun EmptyState(
     resourceSize: Dp = 200.dp,
     resource: Painter,
     contentDescription: String?,
+    verticalSpacing: Dp = 5.dp,
     title: String? = null,
     titleStyle: TextStyle = LocalTextStyle.current,
     subTitle: String? = null,
@@ -557,6 +565,7 @@ fun EmptyState(
                 resourceSize = resourceSize,
                 resource = resource,
                 contentDescription = contentDescription,
+                verticalSpacing = verticalSpacing,
                 title = title,
                 titleStyle = titleStyle,
                 subTitle = subTitle,
@@ -571,6 +580,7 @@ fun EmptyState(
             resourceSize = resourceSize,
             resource = resource,
             contentDescription = contentDescription,
+            verticalSpacing = verticalSpacing,
             title = title,
             titleStyle = titleStyle,
             subTitle = subTitle,
@@ -587,6 +597,7 @@ fun EmptyState(
  * @param resourceModifier The modifier to apply to the [Image]
  * @param resourceSize The size occupied by the [resource]
  * @param contentDescription The content description
+ * @param verticalSpacing The vertical spacing applied to the [title] and [subTitle] texts
  * @param title Not mandatory representative title
  * @param titleStyle The style to apply to the [title]
  * @param subTitle Not mandatory representative subtitle
@@ -602,6 +613,7 @@ private fun EmptyStateContent(
     resourceSize: Dp = 200.dp,
     resource: Painter,
     contentDescription: String?,
+    verticalSpacing: Dp = 5.dp,
     title: String? = null,
     titleStyle: TextStyle = LocalTextStyle.current,
     subTitle: String? = null,
@@ -624,7 +636,7 @@ private fun EmptyStateContent(
             Text(
                 modifier = Modifier
                     .padding(
-                        vertical = 5.dp
+                        vertical = verticalSpacing
                     ),
                 text = title,
                 style = titleStyle
@@ -632,6 +644,10 @@ private fun EmptyStateContent(
         }
         subTitle?.let {
             Text(
+                modifier = Modifier
+                    .padding(
+                        vertical = verticalSpacing
+                    ),
                 text = subTitle,
                 style = subTitleStyle
             )
