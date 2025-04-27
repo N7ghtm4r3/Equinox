@@ -8,6 +8,7 @@ import androidx.compose.material.icons.filled.Warning
 import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.*
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.TextStyle
@@ -169,6 +170,7 @@ fun setHasBeenDisconnectedValue(
  * Method used to display the correct content based on the current scenario such server offline or
  * device disconnected or no internet connection available
  *
+ * @param modifier The modifier to apply to the uis
  * @param content The content to display in a normal scenario
  * @param viewModel The viewmodel used by the context where this method has been invoked, this is
  * used to stop the refreshing routine when the internet connection is not available by the [NoInternetConnectionUi]
@@ -183,6 +185,7 @@ fun setHasBeenDisconnectedValue(
  */
 @Composable
 fun ManagedContent(
+    modifier: Modifier = Modifier,
     content: @Composable () -> Unit,
     viewModel: EquinoxViewModel,
     loadingRoutine: (suspend () -> Boolean)? = null,
@@ -202,6 +205,7 @@ fun ManagedContent(
     ) {
         sessionStatus.value = SERVER_OFFLINE
         ServerOfflineUi(
+            modifier = modifier,
             uiDefaults = serverOfflineUiDefaults,
             retryText = serverOfflineRetryText,
             retryAction = serverOfflineRetryAction
@@ -214,6 +218,7 @@ fun ManagedContent(
     ) {
         sessionStatus.value = NO_INTERNET_CONNECTION
         NoInternetConnectionUi(
+            modifier = modifier,
             uiDefaults = noInternetConnectionUiDefaults,
             viewModel = viewModel,
             retryText = noInternetConnectionRetryText,
@@ -233,6 +238,7 @@ fun ManagedContent(
             viewModel.restartRetriever()
             if (loadingRoutine != null) {
                 LoadingItemUI(
+                    containerModifier = modifier,
                     loadingRoutine = loadingRoutine,
                     initialDelay = initialDelay,
                     contentLoaded = content
@@ -263,6 +269,7 @@ private fun InstantiateSessionInstances() {
 /**
  * Method used to display the content when the server is offline
  *
+ * @param modifier The modifier to apply to the ui
  * @param uiDefaults The style for this fallback page
  * @param retryText The informative text for the user
  * @param retryAction The action to retry the connection to the server
@@ -270,11 +277,13 @@ private fun InstantiateSessionInstances() {
 @Composable
 @NonRestartableComposable
 private fun ServerOfflineUi(
+    modifier: Modifier = Modifier,
     uiDefaults: FallbackUiDefaults,
     retryText: StringResource?,
     retryAction: @Composable (() -> Unit)?,
 ) {
     ErrorUI(
+        containerModifier = modifier,
         backgroundColor = uiDefaults.containerColor,
         textStyle = uiDefaults.textStyle,
         errorColor = uiDefaults.contentColor,
@@ -296,6 +305,7 @@ private fun ServerOfflineUi(
 /**
  * Method used to display the content when the internet connection missing
  *
+ * @param modifier The modifier to apply to the ui
  * @param viewModel The viewmodel used by the context from the [ManagedContent] method has been invoked, this is
  * used to stop the refreshing routine when the internet connection is not available
  * @param uiDefaults The style for this fallback page
@@ -306,6 +316,7 @@ private fun ServerOfflineUi(
 @Composable
 @NonRestartableComposable
 private fun NoInternetConnectionUi(
+    modifier: Modifier = Modifier,
     viewModel: EquinoxViewModel,
     uiDefaults: FallbackUiDefaults,
     retryText: StringResource?,
@@ -313,6 +324,7 @@ private fun NoInternetConnectionUi(
 ) {
     viewModel.suspendRetriever()
     ErrorUI(
+        containerModifier = modifier,
         backgroundColor = uiDefaults.containerColor,
         textStyle = uiDefaults.textStyle,
         errorColor = uiDefaults.contentColor,

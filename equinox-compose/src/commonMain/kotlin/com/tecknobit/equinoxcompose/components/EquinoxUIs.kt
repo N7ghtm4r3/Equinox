@@ -3,7 +3,10 @@ package com.tecknobit.equinoxcompose.components
 import androidx.compose.animation.*
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Error
 import androidx.compose.material3.*
@@ -52,8 +55,7 @@ fun LoadingItemUI(
     loadingIndicator: @Composable () -> Unit = {
         Surface {
             Column(
-                modifier = containerModifier
-                    .fillMaxSize(),
+                modifier = containerModifier,
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center
             ) {
@@ -237,8 +239,7 @@ private fun EmptyListUIContent(
     subText: String,
 ) {
     Column(
-        modifier = containerModifier
-            .fillMaxSize(),
+        modifier = containerModifier,
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
@@ -387,7 +388,6 @@ private fun ErrorUIContent(
 ) {
     Column(
         modifier = containerModifier
-            .fillMaxSize()
             .background(backgroundColor),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
@@ -621,8 +621,7 @@ private fun EmptyStateContent(
     action: @Composable (() -> Unit)? = null,
 ) {
     Column(
-        modifier = containerModifier
-            .fillMaxSize(),
+        modifier = containerModifier,
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
