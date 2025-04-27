@@ -1,11 +1,20 @@
 package com.tecknobit.equinoxcompose.utilities
 
+import androidx.compose.animation.core.AnimationSpec
+import androidx.compose.animation.core.FastOutSlowInEasing
+import androidx.compose.animation.core.animateDpAsState
+import androidx.compose.animation.core.tween
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.material3.windowsizeclass.WindowHeightSizeClass
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass.Companion.Expanded
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass.Companion.Medium
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.ExperimentalComposeApi
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.dp
 import com.tecknobit.equinoxcompose.utilities.ResponsiveClass.*
 import com.tecknobit.equinoxcore.annotations.Returner
 
@@ -422,6 +431,140 @@ fun <T> responsiveAssignment(
         COMPACT_EXPANDED_CONTENT -> onCompactWidthExpandedHeight()
         COMPACT_MEDIUM_CONTENT -> onCompactWidthMediumHeight()
     }
+}
+
+/**
+ * `EXPANDED_CONTAINER` constant value used to give the max width to containers in [EXPANDED_CONTENT]'s screen class
+ */
+val EXPANDED_CONTAINER = 1280.dp
+
+/**
+ * `EXPANDED_WIDHT_MEDIUM_HEIGHT_CONTAINER` constant value used to give the max width to containers in [EXPANDED_MEDIUM_CONTENT]'s screen class
+ */
+val EXPANDED_WIDHT_MEDIUM_HEIGHT_CONTAINER = 976.dp
+
+/**
+ * `MEDIUM_CONTAINER` constant value used to give the max width to containers in [MEDIUM_CONTENT]'s screen class
+ */
+val MEDIUM_CONTAINER = 768.dp
+
+/**
+ * `COMPACT_CONTAINER` constant value used to give the max width to containers in [COMPACT_CONTENT]'s screen class
+ */
+val COMPACT_CONTAINER = 376.dp
+
+/**
+ * Method used to retrieve the specific max width value based on the current [ResponsiveClass] of the window
+ *
+ * @param expandedContainerWidth The width to assign when the device's window currently belongs to expanded class
+ * @param expandedWidthMediumHeightContainer The width to assign when the device's window currently belongs to expanded width
+ * class and medium height class
+ * @param expandedWidthCompactHeightContainer The width to assign when the device's window currently belongs to expanded width
+ * class and compact height class
+ * @param mediumContainer The width to assign when the device's window currently belongs to medium class
+ * @param mediumWidthExpandedHeightContainer The width to assign when the device's window currently belongs to medium width
+ * class and expanded height class
+ * @param mediumWidthCompactHeightContainer The width to assign when the device's window currently belongs to medium width
+ * class and compact height class
+ * @param compactContainer The width to assign when the device's window currently belongs to compact class
+ * @param compactWidthExpandedHeightContainer The width to assign when the device's window currently belongs to compact width
+ * class and expanded height class
+ * @param compactWidthMediumHeightContainer The width to assign when the device's window currently belongs to compact width
+ * class and medium height class
+ * @param animationSpec The animation to use when the width value changes to make the user experience more smooth
+ *
+ * @return the max width value as [Dp]
+ */
+@Composable
+@ExperimentalComposeApi
+fun responsiveContainerWidth(
+    expandedContainerWidth: Dp = EXPANDED_CONTAINER,
+    expandedWidthMediumHeightContainer: Dp = EXPANDED_WIDHT_MEDIUM_HEIGHT_CONTAINER,
+    expandedWidthCompactHeightContainer: Dp = expandedWidthMediumHeightContainer,
+    mediumContainer: Dp = MEDIUM_CONTAINER,
+    mediumWidthExpandedHeightContainer: Dp = mediumContainer,
+    mediumWidthCompactHeightContainer: Dp = mediumContainer,
+    compactContainer: Dp = COMPACT_CONTAINER,
+    compactWidthExpandedHeightContainer: Dp = compactContainer,
+    compactWidthMediumHeightContainer: Dp = compactContainer,
+    animationSpec: AnimationSpec<Dp>? = tween(
+        durationMillis = 300,
+        easing = FastOutSlowInEasing
+    ),
+): Dp {
+    val targetWidth = responsiveAssignment(
+        onExpandedSizeClass = { expandedContainerWidth },
+        onExpandedWidthMediumHeight = { expandedWidthMediumHeightContainer },
+        onExpandedWidthCompactHeight = { expandedWidthCompactHeightContainer },
+        onMediumSizeClass = { mediumContainer },
+        onMediumWidthExpandedHeight = { mediumWidthExpandedHeightContainer },
+        onMediumWidthCompactHeight = { mediumWidthCompactHeightContainer },
+        onCompactSizeClass = { compactContainer },
+        onCompactWidthExpandedHeight = { compactWidthExpandedHeightContainer },
+        onCompactWidthMediumHeight = { compactWidthMediumHeightContainer }
+    )
+    return if (animationSpec != null) {
+        animateDpAsState(
+            targetValue = targetWidth,
+            animationSpec = animationSpec
+        ).value
+    } else
+        targetWidth
+}
+
+/**
+ * Extension [Modifier] method used to assign the max width value using the [responsiveContainerWidth] method
+ *
+ * @param expandedContainerWidth The width to assign when the device's window currently belongs to expanded class
+ * @param expandedWidthMediumHeightContainer The width to assign when the device's window currently belongs to expanded width
+ * class and medium height class
+ * @param expandedWidthCompactHeightContainer The width to assign when the device's window currently belongs to expanded width
+ * class and compact height class
+ * @param mediumContainer The width to assign when the device's window currently belongs to medium class
+ * @param mediumWidthExpandedHeightContainer The width to assign when the device's window currently belongs to medium width
+ * class and expanded height class
+ * @param mediumWidthCompactHeightContainer The width to assign when the device's window currently belongs to medium width
+ * class and compact height class
+ * @param compactContainer The width to assign when the device's window currently belongs to compact class
+ * @param compactWidthExpandedHeightContainer The width to assign when the device's window currently belongs to compact width
+ * class and expanded height class
+ * @param compactWidthMediumHeightContainer The width to assign when the device's window currently belongs to compact width
+ * class and medium height class
+ * @param animationSpec The animation to use when the width value changes to make the user experience more smooth
+ *
+ * @return the additive modifier property as [Modifier]
+ */
+@Composable
+@ExperimentalComposeApi
+fun Modifier.responsiveMaxWidth(
+    expandedContainerWidth: Dp = EXPANDED_CONTAINER,
+    expandedWidthMediumHeightContainer: Dp = EXPANDED_WIDHT_MEDIUM_HEIGHT_CONTAINER,
+    expandedWidthCompactHeightContainer: Dp = expandedWidthMediumHeightContainer,
+    mediumContainer: Dp = MEDIUM_CONTAINER,
+    mediumWidthExpandedHeightContainer: Dp = mediumContainer,
+    mediumWidthCompactHeightContainer: Dp = mediumContainer,
+    compactContainer: Dp = COMPACT_CONTAINER,
+    compactWidthExpandedHeightContainer: Dp = compactContainer,
+    compactWidthMediumHeightContainer: Dp = compactContainer,
+    animationSpec: AnimationSpec<Dp>? = tween(
+        durationMillis = 300,
+        easing = FastOutSlowInEasing
+    ),
+): Modifier {
+    return widthIn(
+        max = responsiveContainerWidth(
+            expandedContainerWidth = expandedContainerWidth,
+            expandedWidthMediumHeightContainer = expandedWidthMediumHeightContainer,
+            expandedWidthCompactHeightContainer = expandedWidthCompactHeightContainer,
+            mediumContainer = mediumContainer,
+            mediumWidthExpandedHeightContainer = mediumWidthExpandedHeightContainer,
+            mediumWidthCompactHeightContainer = mediumWidthCompactHeightContainer,
+            compactContainer = compactContainer,
+            compactWidthExpandedHeightContainer = compactWidthExpandedHeightContainer,
+            compactWidthMediumHeightContainer = compactWidthMediumHeightContainer,
+            animationSpec = animationSpec
+        )
+    )
 }
 
 /**

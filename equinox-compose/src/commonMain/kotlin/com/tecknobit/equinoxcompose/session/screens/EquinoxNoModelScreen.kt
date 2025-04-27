@@ -53,6 +53,14 @@ abstract class EquinoxNoModelScreen(
         /**
          * `MAX_CONTAINER_WIDTH` constant value used to give a max dimension to container for the large screens
          */
+        @Deprecated(
+            message = "Will be removed in the next version",
+            replaceWith = ReplaceWith(
+                expression = "EXPANDED_CONTAINER",
+                "com.tecknobit.equinoxcompose.utilities"
+            ),
+            level = DeprecationLevel.ERROR
+        )
         val MAX_CONTAINER_WIDTH = 1280.dp
 
     }
