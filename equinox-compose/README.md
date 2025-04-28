@@ -91,6 +91,7 @@ The other apis will be gradually released
 - [DebouncedInputs](../documd/compose/components/debouncefields/DebouncedInputs.md)
 - [QuantityPicker](../documd/compose/components/quantitypicker/QuantityPicker.md)
 - [BadgeText](../documd/compose/components/badgetext/BadgeText.md)
+- [ProgressBars](../documd/compose/components/progressbars/ProgressBars.md)
 
 The others components will be gradually released
 
