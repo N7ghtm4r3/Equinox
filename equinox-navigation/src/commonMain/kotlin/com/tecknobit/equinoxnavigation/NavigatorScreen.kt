@@ -22,6 +22,8 @@ import com.tecknobit.equinoxcompose.utilities.ResponsiveClassComponent
 import com.tecknobit.equinoxcompose.utilities.ResponsiveContent
 import com.tecknobit.equinoxcore.annotations.RequiresSuperCall
 import com.tecknobit.equinoxcore.annotations.Structure
+import com.tecknobit.equinoxnavigation.NavigationMode.BOTTOM_NAVIGATION
+import com.tecknobit.equinoxnavigation.NavigationMode.SIDE_NAVIGATION
 import org.jetbrains.compose.resources.stringResource
 
 /**
@@ -59,6 +61,11 @@ abstract class NavigatorScreen<T : NavigatorTab<*>>(
      *`tabs` the reachable destinations tabs
      */
     protected val tabs: Array<T> by lazy { navigationTabs() }
+
+    /**
+     *`navigationMode` current navigation mode adopted by the navigator
+     */
+    private lateinit var navigationMode: MutableState<NavigationMode>
 
     /**
      * Method used to retrieve the tabs to assign to the [tabs] array
@@ -137,6 +144,7 @@ abstract class NavigatorScreen<T : NavigatorTab<*>>(
         navigationBarColor: Color,
         backgroundTab: Color,
     ) {
+        navigationMode.value = SIDE_NAVIGATION
         Row {
             NavigationRail(
                 modifier = modifier
@@ -266,6 +274,7 @@ abstract class NavigatorScreen<T : NavigatorTab<*>>(
         navigationBarColor: Color,
         backgroundTab: Color,
     ) {
+        navigationMode.value = BOTTOM_NAVIGATION
         Box(
             modifier = Modifier
                 .fillMaxSize()
@@ -378,12 +387,31 @@ abstract class NavigatorScreen<T : NavigatorTab<*>>(
     protected abstract fun Int.tabContent(): EquinoxNoModelScreen
 
     /**
+     * Method used to check whether the current [navigationMode] is [SIDE_NAVIGATION]
+     *
+     * @return whether the navigation mode is [SIDE_NAVIGATION] as [Boolean]
+     */
+    protected fun isSideNavigationMode(): Boolean {
+        return navigationMode.value == SIDE_NAVIGATION
+    }
+
+    /**
+     * Method used to check whether the current [navigationMode] is [BOTTOM_NAVIGATION]
+     *
+     * @return whether the navigation mode is [BOTTOM_NAVIGATION] as [Boolean]
+     */
+    protected fun isBottomNavigationMode(): Boolean {
+        return navigationMode.value == BOTTOM_NAVIGATION
+    }
+
+    /**
      * Method used to collect or instantiate the states of the screen
      */
     @Composable
     @RequiresSuperCall
     override fun CollectStates() {
         activeNavigationTabIndex = rememberSaveable { mutableStateOf(0) }
+        navigationMode = rememberSaveable { mutableStateOf(BOTTOM_NAVIGATION) }
     }
 
 }
