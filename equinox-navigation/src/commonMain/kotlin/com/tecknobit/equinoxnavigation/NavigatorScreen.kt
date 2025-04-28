@@ -146,18 +146,23 @@ abstract class NavigatorScreen<T : NavigatorTab<*>>(
             ) {
                 Column(
                     modifier = Modifier
-                        .fillMaxSize()
-                        .verticalScroll(rememberScrollState()),
+                        .fillMaxSize(),
                 ) {
-                    tabs.forEachIndexed { index, tab ->
-                        SideNavigationItem(
-                            index = index,
-                            tab = tab
-                        )
+                    Column(
+                        modifier = Modifier
+                            .weight(2f)
+                            .verticalScroll(rememberScrollState())
+                    ) {
+                        tabs.forEachIndexed { index, tab ->
+                            SideNavigationItem(
+                                index = index,
+                                tab = tab
+                            )
+                        }
                     }
                     Column(
                         modifier = Modifier
-                            .fillMaxSize()
+                            .weight(1f)
                             .padding(
                                 vertical = 16.dp
                             ),
