@@ -21,6 +21,22 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
+/**
+ * Dynamic horizontal progress bar component. It can be used to display progress that dynamically changes and its based
+ * on arbitrary [completionWidth] value
+ *
+ * @param containerModifier The modifier to apply to the container
+ * @param progressBarModifier The modifier to apply to the progress line
+ * @param completionWidth The arbitrary width value used to represent the progress completion value
+ * @param currentProgress Suspendable routine used to retrieve the current progress value
+ * @param lineColor The color to apply to the progress line
+ * @param cap The style to apply to the extremity of the progress line
+ * @param strokeWidth The width of the stroke of the progress bar
+ * @param total The total reachable value
+ * @param onCompletion Callback invoked when the [currentProgress] reaches the [total] value
+ * @param progressIndicator The content used to display the progress
+ * @param animationSpec Custom animations to apply to the progress line when it changes
+ */
 @Composable
 @ExperimentalComposeUiApi
 fun HorizontalProgressBar(
@@ -69,6 +85,22 @@ fun HorizontalProgressBar(
     )
 }
 
+/**
+ * Static horizontal progress bar component. It can be used to display progress that does not change in time and its
+ * based on arbitrary [completionWidth] value
+ *
+ * @param containerModifier The modifier to apply to the container
+ * @param progressBarModifier The modifier to apply to the progress line
+ * @param completionWidth The arbitrary width value used to represent the progress completion value
+ * @param currentProgress Static current progress value
+ * @param lineColor The color to apply to the progress line
+ * @param cap The style to apply to the extremity of the progress line
+ * @param strokeWidth The width of the stroke of the progress bar
+ * @param total The total reachable value
+ * @param onCompletion Callback invoked when the [currentProgress] reaches the [total] value
+ * @param progressIndicator The content used to display the progress
+ * @param animationSpec Custom animations to apply to the progress line when it changes
+ */
 @Composable
 @ExperimentalComposeUiApi
 fun HorizontalProgressBar(
@@ -134,6 +166,22 @@ fun HorizontalProgressBar(
     }
 }
 
+/**
+ * Dynamic vertical progress bar component. It can be used to display progress that dynamically changes and its based
+ * on arbitrary [completionHeight] value
+ *
+ * @param containerModifier The modifier to apply to the container
+ * @param progressBarModifier The modifier to apply to the progress line
+ * @param completionHeight The arbitrary height value used to represent the progress completion value
+ * @param currentProgress Suspendable routine used to retrieve the current progress value
+ * @param lineColor The color to apply to the progress line
+ * @param cap The style to apply to the extremity of the progress line
+ * @param strokeWidth The width of the stroke of the progress bar
+ * @param total The total reachable value
+ * @param onCompletion Callback invoked when the [currentProgress] reaches the [total] value
+ * @param progressIndicator The content used to display the progress
+ * @param animationSpec Custom animations to apply to the progress line when it changes
+ */
 @Composable
 @ExperimentalComposeUiApi
 fun VerticalProgressBar(
@@ -186,6 +234,13 @@ fun VerticalProgressBar(
     )
 }
 
+/**
+ * Method used to compute the current progress value
+ *
+ * @param currentProgress The suspendable routine used to retrieve the current progress value
+ *
+ * @return the current progress value as [Number]
+ */
 @Composable
 private fun computeCurrentProgressValue(
     currentProgress: suspend () -> Number,
@@ -197,6 +252,22 @@ private fun computeCurrentProgressValue(
     return currentProgressValue
 }
 
+/**
+ * Static vertical progress bar component. It can be used to display progress that does not change in time and its
+ * based on arbitrary [completionHeight] value
+ *
+ * @param containerModifier The modifier to apply to the container
+ * @param progressBarModifier The modifier to apply to the progress line
+ * @param completionHeight The arbitrary height value used to represent the progress completion value
+ * @param currentProgress Suspendable callback used to retrieve the current progress value
+ * @param lineColor The color to apply to the progress line
+ * @param cap The style to apply to the extremity of the progress line
+ * @param strokeWidth The width of the stroke of the progress bar
+ * @param total The total reachable value
+ * @param onCompletion Callback invoked when the [currentProgress] reaches the [total] value
+ * @param progressIndicator The content used to display the progress
+ * @param animationSpec Custom animations to apply to the progress line when it changes
+ */
 @Composable
 @ExperimentalComposeUiApi
 fun VerticalProgressBar(
@@ -268,6 +339,16 @@ fun VerticalProgressBar(
     }
 }
 
+/**
+ * Method used to compute the size of the progress line based on the [currentProgress]
+ *
+ * @param completionRealSize The real size (adapted to the size of the container) represents the total reachable value
+ * @param total The total reachable value
+ * @param currentProgress The current progress value
+ * @param onCompletion Callback to invoke when the [currentProgress] reaches the [total] value
+ *
+ * @return the progress size as [Dp]
+ */
 @Composable
 private fun computeProgressSize(
     completionRealSize: Dp,
@@ -283,6 +364,15 @@ private fun computeProgressSize(
     return progress
 }
 
+/**
+ * Method used to compute the value of the axis reached by the progress line
+ *
+ * @param progress The current progress size
+ * @param currentProgress The current progress value
+ * @param animationSpec Custom animations to apply to the progress line when it changes
+ *
+ * @return the progress size as [Dp]
+ */
 @Composable
 private fun computeCurrentProgressAxisValue(
     progress: Dp,
@@ -299,6 +389,16 @@ private fun computeCurrentProgressAxisValue(
     return currentProgressSize
 }
 
+/**
+ * The progress line component of the [HorizontalProgressBar] and [VerticalProgressBar]
+ *
+ * @param progressBarModifier The modifier to apply to the progress line
+ * @param lineColor The color to apply to the progress line
+ * @param cap The style to apply to the extremity of the progress line
+ * @param endX The value of the end X coordinate reached by the line
+ * @param endY The value of the end Y coordinate reached by the line
+ * @param strokeWidth The width of the stroke of the progress bar
+ */
 @Composable
 private fun ProgressBarLine(
     progressBarModifier: Modifier,
