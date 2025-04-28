@@ -8,6 +8,7 @@ import com.tecknobit.equinoxcompose.session.EquinoxLocalUser
 import com.tecknobit.equinoxcompose.utilities.getCurrentLocaleLanguage
 import com.tecknobit.equinoxcore.annotations.RequiresSuperCall
 import com.tecknobit.equinoxcore.annotations.Structure
+import com.tecknobit.equinoxcore.helpers.*
 import com.tecknobit.equinoxcore.helpers.InputsValidator.Companion.DEFAULT_LANGUAGE
 import com.tecknobit.equinoxcore.helpers.InputsValidator.Companion.LANGUAGES_SUPPORTED
 import com.tecknobit.equinoxcore.helpers.InputsValidator.Companion.isEmailValid
@@ -16,11 +17,6 @@ import com.tecknobit.equinoxcore.helpers.InputsValidator.Companion.isNameValid
 import com.tecknobit.equinoxcore.helpers.InputsValidator.Companion.isPasswordValid
 import com.tecknobit.equinoxcore.helpers.InputsValidator.Companion.isServerSecretValid
 import com.tecknobit.equinoxcore.helpers.InputsValidator.Companion.isSurnameValid
-import com.tecknobit.equinoxcore.helpers.LANGUAGE_KEY
-import com.tecknobit.equinoxcore.helpers.NAME_KEY
-import com.tecknobit.equinoxcore.helpers.SURNAME_KEY
-import com.tecknobit.equinoxcore.network.Requester.Companion.USER_IDENTIFIER_KEY
-import com.tecknobit.equinoxcore.network.Requester.Companion.USER_TOKEN_KEY
 import com.tecknobit.equinoxcore.network.Requester.Companion.toResponseData
 import com.tecknobit.equinoxcore.network.sendRequest
 import kotlinx.coroutines.launch
@@ -213,6 +209,7 @@ abstract class EquinoxAuthViewModel(
      *
      * @return whether the inputs are valid as [Boolean]
      */
+    @RequiresSuperCall
     protected open fun signUpFormIsValid(): Boolean {
         var isValid: Boolean = isHostValid(host.value)
         if (!isValid) {
@@ -276,10 +273,7 @@ abstract class EquinoxAuthViewModel(
                         launchApp(
                             name = data[NAME_KEY]!!.jsonPrimitive.content,
                             surname = data[SURNAME_KEY]!!.jsonPrimitive.content,
-                            language = if (jLanguage != null)
-                                jLanguage.jsonPrimitive.content
-                            else
-                                DEFAULT_LANGUAGE,
+                            language = jLanguage?.jsonPrimitive?.content ?: DEFAULT_LANGUAGE,
                             response = data,
                             custom = getSignInCustomParameters()
                         )
@@ -307,6 +301,7 @@ abstract class EquinoxAuthViewModel(
      *
      * @return whether the inputs are valid as [Boolean]
      */
+    @RequiresSuperCall
     protected open fun signInFormIsValid(): Boolean {
         var isValid: Boolean = isHostValid(host.value)
         if (!isValid) {
@@ -346,7 +341,7 @@ abstract class EquinoxAuthViewModel(
     ) {
         requester.setUserCredentials(
             userId = response[USER_IDENTIFIER_KEY]!!.jsonPrimitive.content,
-            userToken = response[USER_TOKEN_KEY]!!.jsonPrimitive.content
+            userToken = response[TOKEN_KEY]!!.jsonPrimitive.content
         )
         localUser.insertNewUser(
             host.value,

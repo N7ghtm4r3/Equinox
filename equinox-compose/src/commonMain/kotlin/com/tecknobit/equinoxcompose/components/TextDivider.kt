@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.DividerDefaults
+import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.NonRestartableComposable
@@ -23,17 +24,16 @@ import org.jetbrains.compose.resources.stringResource
  *
  * Component to divide sections by a representative text
  *
- * @param containerModifier: the [Modifier] to apply to the container row
- * @param textModifier: the [Modifier] to apply to the text composable
+ * @param containerModifier The [Modifier] to apply to the container row
+ * @param textModifier The [Modifier] to apply to the text composable
  * @param fillMaxWidth: whether the composable must occupy the entire horizontal space
- * @param thickness: thickness of this divider line. Using [Dp.Hairline] will produce a single pixel
+ * @param thickness Thickness of this divider line. Using [Dp.Hairline] will produce a single pixel
  * divider regardless of screen density
- * @param dividerColor: color of this divider line
- * @param text: the text message
- * @param textStyle: the style to apply to the [text]
+ * @param dividerColor The color of this divider line
+ * @param text The text message
+ * @param textStyle The style to apply to the [text]
  */
 @Composable
-@NonRestartableComposable
 fun TextDivider(
     containerModifier: Modifier = Modifier,
     textModifier: Modifier = Modifier,
@@ -41,10 +41,11 @@ fun TextDivider(
     thickness: Dp = DividerDefaults.Thickness,
     dividerColor: Color = DividerDefaults.color,
     text: StringResource,
-    textStyle: TextStyle = TextStyle.Default,
+    textStyle: TextStyle = LocalTextStyle.current,
 ) {
     TextDivider(
         containerModifier = containerModifier,
+        textModifier = textModifier,
         fillMaxWidth = fillMaxWidth,
         thickness = thickness,
         dividerColor = dividerColor,
@@ -57,14 +58,14 @@ fun TextDivider(
  *
  * Component to divide sections by a representative text
  *
- * @param containerModifier: the [Modifier] to apply to the container row
- * @param textModifier: the [Modifier] to apply to the text composable
+ * @param containerModifier The [Modifier] to apply to the container row
+ * @param textModifier The [Modifier] to apply to the text composable
  * @param fillMaxWidth: whether the composable must occupy the entire horizontal space
- * @param thickness: thickness of this divider line. Using [Dp.Hairline] will produce a single pixel
+ * @param thickness Thickness of this divider line. Using [Dp.Hairline] will produce a single pixel
  * divider regardless of screen density
- * @param dividerColor: color of this divider line
- * @param text: the text message
- * @param textStyle: the style to apply to the [text]
+ * @param dividerColor The color of this divider line
+ * @param text The text message
+ * @param textStyle The style to apply to the [text]
  */
 @Composable
 @NonRestartableComposable
@@ -75,7 +76,7 @@ fun TextDivider(
     thickness: Dp = DividerDefaults.Thickness,
     dividerColor: Color = DividerDefaults.color,
     text: String,
-    textStyle: TextStyle = TextStyle.Default,
+    textStyle: TextStyle = LocalTextStyle.current,
 ) {
     Row(
         modifier = containerModifier
@@ -113,10 +114,10 @@ fun TextDivider(
  *
  * Custom divider to center the text message between two lines
  *
- * @param modifier: the [Modifier] to be applied to this divider line.
- * @param thickness: thickness of this divider line. Using [Dp.Hairline] will produce a single pixel
- * divider regardless of screen density.
- * @param color: color of this divider line.
+ * @param modifier The [Modifier] to be applied to this divider line
+ * @param thickness Thickness of this divider line. Using [Dp.Hairline] will produce a single pixel
+ * divider regardless of screen density
+ * @param color The color of this divider line
  */
 @Composable
 @NonRestartableComposable

@@ -51,7 +51,6 @@ import org.jetbrains.compose.resources.stringResource
  * @param confirmTextStyle The style to apply to the confirmation text
  */
 @Composable
-@NonRestartableComposable
 fun EquinoxAlertDialog(
     modifier: Modifier = Modifier,
     shape: Shape = AlertDialogDefaults.shape,
@@ -62,7 +61,7 @@ fun EquinoxAlertDialog(
     tonalElevation: Dp = AlertDialogDefaults.TonalElevation,
     properties: DialogProperties = DialogProperties(),
     titleModifier: Modifier = Modifier,
-    titleStyle: TextStyle = TextStyle.Default,
+    titleStyle: TextStyle = LocalTextStyle.current,
     show: MutableState<Boolean>,
     icon: ImageVector? = null,
     viewModel: EquinoxViewModel? = null,
@@ -74,10 +73,10 @@ fun EquinoxAlertDialog(
     text: StringResource,
     dismissAction: () -> Unit = onDismissAction,
     dismissText: StringResource? = Res.string.dismiss,
-    dismissTextStyle: TextStyle = TextStyle.Default,
+    dismissTextStyle: TextStyle = LocalTextStyle.current,
     confirmAction: () -> Unit,
     confirmText: StringResource = Res.string.confirm,
-    confirmTextStyle: TextStyle = TextStyle.Default,
+    confirmTextStyle: TextStyle = LocalTextStyle.current,
 ) {
     EquinoxAlertDialog(
         modifier = modifier,
@@ -151,7 +150,7 @@ fun EquinoxAlertDialog(
     tonalElevation: Dp = AlertDialogDefaults.TonalElevation,
     properties: DialogProperties = DialogProperties(),
     titleModifier: Modifier = Modifier,
-    titleStyle: TextStyle = TextStyle.Default,
+    titleStyle: TextStyle = LocalTextStyle.current,
     show: MutableState<Boolean>,
     icon: ImageVector? = null,
     viewModel: EquinoxViewModel? = null,
@@ -163,10 +162,10 @@ fun EquinoxAlertDialog(
     text: String,
     dismissAction: () -> Unit = onDismissAction,
     dismissText: String?,
-    dismissTextStyle: TextStyle = TextStyle.Default,
+    dismissTextStyle: TextStyle = LocalTextStyle.current,
     confirmAction: () -> Unit,
     confirmText: String,
-    confirmTextStyle: TextStyle = TextStyle.Default,
+    confirmTextStyle: TextStyle = LocalTextStyle.current,
 ) {
     EquinoxAlertDialog(
         modifier = modifier,
@@ -229,7 +228,6 @@ fun EquinoxAlertDialog(
  * @param confirmTextStyle The style to apply to the confirmation text
  */
 @Composable
-@NonRestartableComposable
 fun EquinoxAlertDialog(
     modifier: Modifier = Modifier,
     shape: Shape = AlertDialogDefaults.shape,
@@ -240,7 +238,7 @@ fun EquinoxAlertDialog(
     tonalElevation: Dp = AlertDialogDefaults.TonalElevation,
     properties: DialogProperties = DialogProperties(),
     titleModifier: Modifier = Modifier,
-    titleStyle: TextStyle = TextStyle.Default,
+    titleStyle: TextStyle = LocalTextStyle.current,
     show: MutableState<Boolean>,
     icon: ImageVector? = null,
     viewModel: EquinoxViewModel? = null,
@@ -252,10 +250,10 @@ fun EquinoxAlertDialog(
     text: @Composable () -> Unit,
     dismissAction: () -> Unit = onDismissAction,
     dismissText: StringResource? = Res.string.dismiss,
-    dismissTextStyle: TextStyle = TextStyle.Default,
+    dismissTextStyle: TextStyle = LocalTextStyle.current,
     confirmAction: () -> Unit,
     confirmText: StringResource = Res.string.confirm,
-    confirmTextStyle: TextStyle = TextStyle.Default,
+    confirmTextStyle: TextStyle = LocalTextStyle.current,
 ) {
     EquinoxAlertDialog(
         modifier = modifier,
@@ -328,7 +326,7 @@ fun EquinoxAlertDialog(
     tonalElevation: Dp = AlertDialogDefaults.TonalElevation,
     properties: DialogProperties = DialogProperties(),
     titleModifier: Modifier = Modifier,
-    titleStyle: TextStyle = TextStyle.Default,
+    titleStyle: TextStyle = LocalTextStyle.current,
     show: MutableState<Boolean>,
     icon: ImageVector? = null,
     viewModel: EquinoxViewModel? = null,
@@ -340,10 +338,10 @@ fun EquinoxAlertDialog(
     text: @Composable () -> Unit,
     dismissAction: () -> Unit = onDismissAction,
     dismissText: String?,
-    dismissTextStyle: TextStyle = TextStyle.Default,
+    dismissTextStyle: TextStyle = LocalTextStyle.current,
     confirmAction: () -> Unit,
     confirmText: String,
-    confirmTextStyle: TextStyle = TextStyle.Default,
+    confirmTextStyle: TextStyle = LocalTextStyle.current,
 ) {
     if (show.value) {
         viewModel?.suspendRetriever()
@@ -417,7 +415,6 @@ fun EquinoxAlertDialog(
     wrapperOf = "Dialog"
 )
 @Composable
-@NonRestartableComposable
 fun EquinoxDialog(
     show: MutableState<Boolean>,
     viewModel: EquinoxViewModel? = null,

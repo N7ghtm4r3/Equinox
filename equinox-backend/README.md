@@ -1,6 +1,6 @@
 # Equinox Backend
 
-**v1.1.0**
+**v1.1.1**
 
 Utilities and apis for the backends based on the **Spring Boot**'s architecture
 
@@ -10,7 +10,7 @@ Utilities and apis for the backends based on the **Spring Boot**'s architecture
 
 ```gradle
 [versions]
-equinox = "1.1.0"
+equinox = "1.1.1"
 
 [libraries]
 equinox-backend = { module = "io.github.n7ghtm4r3:equinox-backend", version.ref = "equinox" }
@@ -47,10 +47,10 @@ Add the JitPack repository to your build file
     dependencies {
        
         // implement the backend utilities
-        implementation 'io.github.n7ghtm4r3:equinox-backend:1.1.0'
+        implementation 'io.github.n7ghtm4r3:equinox-backend:1.1.1'
         
         // implement the core utilities
-        implementation 'io.github.n7ghtm4r3:equinox-core:1.1.0'
+        implementation 'io.github.n7ghtm4r3:equinox-core:1.1.1'
     }
     ```
 
@@ -60,10 +60,10 @@ Add the JitPack repository to your build file
     dependencies {
         
         // implement the backend utilities
-        implementation("io.github.n7ghtm4r3:equinox-backend:1.1.0")
+        implementation("io.github.n7ghtm4r3:equinox-backend:1.1.1")
         
         // implement the core utilities
-        implementation("io.github.n7ghtm4r3:equinox-core:1.1.0")
+        implementation("io.github.n7ghtm4r3:equinox-core:1.1.1")
     }
     ```
 
@@ -89,6 +89,8 @@ Add the JitPack repository to your build file
 - <a href="https://github.com/N7ghtm4r3/Equinox/blob/main/documd/backend/FilteredQuery.md">**FilteredQuery**</a> allows
   you to create dynamic queries with filters parameters
 - <a href="https://github.com/N7ghtm4r3/Equinox/blob/main/documd/backend/EquinoxItemsHelper.md">**EquinoxItemsHelper**</a> allows you to execute batch queries such insertion, deletion and synchronization dynamically
+- <a href="https://github.com/N7ghtm4r3/Equinox/blob/main/documd/backend/EquinoxEvents.md">**EquinoxEventsEmitter**</a>
+  allows you to share and collect events between services
 
 The other apis will be gradually released
 
@@ -110,11 +112,11 @@ named `configuration` for clean implementation and better readability as follows
 
  ``` bash
   com.your.package
-   |-- configuration
-       |-- config_class
-       |-- config_class
-       |-- config_class
-       |-- ...
+   └── configuration
+       └── config_class
+       └── config_class
+       └── config_class
+       └── ...
   ```
 
 ## Support

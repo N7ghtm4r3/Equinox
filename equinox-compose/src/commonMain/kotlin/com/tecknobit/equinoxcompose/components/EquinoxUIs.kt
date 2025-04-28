@@ -1,9 +1,16 @@
 package com.tecknobit.equinoxcompose.components
 
-import androidx.compose.animation.*
+import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.EnterTransition
+import androidx.compose.animation.ExitTransition
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Error
 import androidx.compose.material3.*
@@ -36,43 +43,43 @@ import org.jetbrains.compose.resources.stringResource
  * @param textStyle The style to apply to the text
  * @param loadingRoutine The routine used to load the data
  * @param initialDelay An initial delay to apply to the [loadingRoutine] before to start
+ * @param loadingIndicatorBackground The background to apply to the [loadingIndicator] content
  * @param loadingIndicator The loading indicator to display
  * @param contentLoaded The content to display when the data have been loaded
  * @param themeColor The color to use into the composable
  */
 @Composable
-@NonRestartableComposable
 fun LoadingItemUI(
     containerModifier: Modifier = Modifier,
     animations: UIAnimations? = null,
-    textStyle: TextStyle = TextStyle.Default,
+    textStyle: TextStyle = LocalTextStyle.current,
     loadingRoutine: suspend () -> Boolean,
     initialDelay: Long? = null,
     contentLoaded: @Composable () -> Unit,
     themeColor: Color = MaterialTheme.colorScheme.primary,
+    loadingIndicatorBackground: Color = MaterialTheme.colorScheme.background,
     loadingIndicator: @Composable () -> Unit = {
-        Surface {
-            Column(
-                modifier = containerModifier
-                    .fillMaxSize(),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center
-            ) {
-                CircularProgressIndicator(
-                    modifier = Modifier
-                        .size(85.dp),
-                    strokeWidth = 8.dp
-                )
-                Text(
-                    modifier = Modifier
-                        .padding(
-                            top = 16.dp
-                        ),
-                    style = textStyle,
-                    text = stringResource(Res.string.loading_data),
-                    color = themeColor
-                )
-            }
+        Column(
+            modifier = containerModifier
+                .background(loadingIndicatorBackground),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
+        ) {
+            CircularProgressIndicator(
+                modifier = Modifier
+                    .size(85.dp),
+                strokeWidth = 8.dp,
+                color = themeColor
+            )
+            Text(
+                modifier = Modifier
+                    .padding(
+                        top = 16.dp
+                    ),
+                style = textStyle,
+                text = stringResource(Res.string.loading_data),
+                color = themeColor
+            )
         }
     },
 ) {
@@ -108,7 +115,6 @@ fun LoadingItemUI(
  * @param contentLoaded The content to display when the data have been loaded
  */
 @Composable
-@NonRestartableComposable
 private fun LoadingItemUIContent(
     loadingRoutine: suspend () -> Boolean,
     initialDelay: Long?,
@@ -122,19 +128,13 @@ private fun LoadingItemUIContent(
         }
         isLoaded = loadingRoutine()
     }
-    AnimatedVisibility(
-        visible = isLoaded,
-        enter = fadeIn(),
-        exit = fadeOut()
+    AnimatedContent(
+        targetState = isLoaded
     ) {
-        contentLoaded()
-    }
-    AnimatedVisibility(
-        visible = !isLoaded,
-        enter = fadeIn(),
-        exit = fadeOut()
-    ) {
-        loadingIndicator()
+        if (isLoaded)
+            contentLoaded()
+        else
+            loadingIndicator()
     }
 }
 
@@ -150,12 +150,11 @@ private fun LoadingItemUIContent(
  * @param subText The description of the layout
  */
 @Composable
-@NonRestartableComposable
 fun EmptyListUI(
     containerModifier: Modifier = Modifier,
     imageModifier: Modifier = Modifier,
     animations: UIAnimations? = null,
-    textStyle: TextStyle = TextStyle.Default,
+    textStyle: TextStyle = LocalTextStyle.current,
     icon: ImageVector,
     themeColor: Color = MaterialTheme.colorScheme.primary,
     subText: StringResource,
@@ -183,12 +182,11 @@ fun EmptyListUI(
  * @param subText The description of the layout
  */
 @Composable
-@NonRestartableComposable
 fun EmptyListUI(
     containerModifier: Modifier = Modifier,
     imageModifier: Modifier = Modifier,
     animations: UIAnimations? = null,
-    textStyle: TextStyle = TextStyle.Default,
+    textStyle: TextStyle = LocalTextStyle.current,
     icon: ImageVector,
     themeColor: Color = MaterialTheme.colorScheme.primary,
     subText: String,
@@ -235,14 +233,13 @@ fun EmptyListUI(
 private fun EmptyListUIContent(
     containerModifier: Modifier = Modifier,
     imageModifier: Modifier = Modifier,
-    textStyle: TextStyle = TextStyle.Default,
+    textStyle: TextStyle = LocalTextStyle.current,
     icon: ImageVector,
     themeColor: Color = MaterialTheme.colorScheme.primary,
     subText: String,
 ) {
     Column(
-        modifier = containerModifier
-            .fillMaxSize(),
+        modifier = containerModifier,
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
@@ -278,12 +275,11 @@ private fun EmptyListUIContent(
  * @param retryText The retry message
  */
 @Composable
-@NonRestartableComposable
 fun ErrorUI(
     containerModifier: Modifier = Modifier,
     imageModifier: Modifier = Modifier,
     animations: UIAnimations? = null,
-    textStyle: TextStyle = TextStyle.Default,
+    textStyle: TextStyle = LocalTextStyle.current,
     backgroundColor: Color = MaterialTheme.colorScheme.background,
     errorIcon: ImageVector = Icons.Default.Error,
     errorColor: Color = MaterialTheme.colorScheme.error,
@@ -320,12 +316,11 @@ fun ErrorUI(
  * @param retryText The retry message
  */
 @Composable
-@NonRestartableComposable
 fun ErrorUI(
     containerModifier: Modifier = Modifier,
     imageModifier: Modifier = Modifier,
     animations: UIAnimations? = null,
-    textStyle: TextStyle = TextStyle.Default,
+    textStyle: TextStyle = LocalTextStyle.current,
     backgroundColor: Color = MaterialTheme.colorScheme.background,
     errorIcon: ImageVector = Icons.Default.Error,
     errorColor: Color = MaterialTheme.colorScheme.error,
@@ -380,11 +375,10 @@ fun ErrorUI(
  * @param retryText The retry message
  */
 @Composable
-@NonRestartableComposable
 private fun ErrorUIContent(
     containerModifier: Modifier = Modifier,
     imageModifier: Modifier = Modifier,
-    textStyle: TextStyle = TextStyle.Default,
+    textStyle: TextStyle = LocalTextStyle.current,
     backgroundColor: Color = MaterialTheme.colorScheme.background,
     errorIcon: ImageVector = Icons.Default.Error,
     errorColor: Color = MaterialTheme.colorScheme.error,
@@ -394,7 +388,6 @@ private fun ErrorUIContent(
 ) {
     Column(
         modifier = containerModifier
-            .fillMaxSize()
             .background(backgroundColor),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
@@ -436,8 +429,12 @@ private fun ErrorUIContent(
  * @param animations The set of the animations to use to animate the layout
  * @param containerModifier The modifier to apply to the container [Column]
  * @param resourceModifier The modifier to apply to the [Image]
- * @param resourceSize The size occupied by the [resource]
+ * @param resourceSize The size occupied by the empty state
+ * @param lightResource The empty state resource to display when is the light theme used
+ * @param darkResource The empty state resource to display when is the dark theme used
+ * @param useDarkResource Whether to use the [lightResource] or the [darkResource] one
  * @param contentDescription The content description
+ * @param verticalSpacing The vertical spacing applied to the [title] and [subTitle] texts
  * @param title Not mandatory representative title
  * @param titleStyle The style to apply to the [title]
  * @param subTitle Not mandatory representative subtitle
@@ -446,19 +443,21 @@ private fun ErrorUIContent(
  * new item, change search, etc...
  */
 @Composable
-@NonRestartableComposable
 @ExperimentalMultiplatform
 fun EmptyState(
     animations: UIAnimations? = null,
     containerModifier: Modifier = Modifier,
     resourceModifier: Modifier = Modifier,
     resourceSize: Dp = 200.dp,
-    resource: DrawableResource,
+    lightResource: DrawableResource,
+    darkResource: DrawableResource,
+    useDarkResource: Boolean = isSystemInDarkTheme(),
     contentDescription: String?,
+    verticalSpacing: Dp = 5.dp,
     title: String? = null,
-    titleStyle: TextStyle = TextStyle.Default,
+    titleStyle: TextStyle = LocalTextStyle.current,
     subTitle: String? = null,
-    subTitleStyle: TextStyle = TextStyle.Default,
+    subTitleStyle: TextStyle = LocalTextStyle.current,
     action: @Composable (() -> Unit)? = null,
 ) {
     EmptyState(
@@ -466,8 +465,12 @@ fun EmptyState(
         containerModifier = containerModifier,
         resourceModifier = resourceModifier,
         resourceSize = resourceSize,
-        resource = painterResource(resource),
+        resource = if (useDarkResource)
+            darkResource
+        else
+            lightResource,
         contentDescription = contentDescription,
+        verticalSpacing = verticalSpacing,
         title = title,
         titleStyle = titleStyle,
         subTitle = subTitle,
@@ -483,7 +486,9 @@ fun EmptyState(
  * @param containerModifier The modifier to apply to the container [Column]
  * @param resourceModifier The modifier to apply to the [Image]
  * @param resourceSize The size occupied by the [resource]
+ * @param resource The empty state resource to display
  * @param contentDescription The content description
+ * @param verticalSpacing The vertical spacing applied to the [title] and [subTitle] texts
  * @param title Not mandatory representative title
  * @param titleStyle The style to apply to the [title]
  * @param subTitle Not mandatory representative subtitle
@@ -492,7 +497,111 @@ fun EmptyState(
  * new item, change search, etc...
  */
 @Composable
-@NonRestartableComposable
+@ExperimentalMultiplatform
+fun EmptyState(
+    animations: UIAnimations? = null,
+    containerModifier: Modifier = Modifier,
+    resourceModifier: Modifier = Modifier,
+    resourceSize: Dp = 200.dp,
+    resource: DrawableResource,
+    contentDescription: String?,
+    verticalSpacing: Dp = 5.dp,
+    title: String? = null,
+    titleStyle: TextStyle = LocalTextStyle.current,
+    subTitle: String? = null,
+    subTitleStyle: TextStyle = LocalTextStyle.current,
+    action: @Composable (() -> Unit)? = null,
+) {
+    EmptyState(
+        animations = animations,
+        containerModifier = containerModifier,
+        resourceModifier = resourceModifier,
+        resourceSize = resourceSize,
+        resource = painterResource(resource),
+        contentDescription = contentDescription,
+        verticalSpacing = verticalSpacing,
+        title = title,
+        titleStyle = titleStyle,
+        subTitle = subTitle,
+        subTitleStyle = subTitleStyle,
+        action = action
+    )
+}
+
+/**
+ * Container component useful to display a custom empty state graphics
+ *
+ * @param animations The set of the animations to use to animate the layout
+ * @param containerModifier The modifier to apply to the container [Column]
+ * @param resourceModifier The modifier to apply to the [Image]
+ * @param resourceSize The size occupied by the empty state
+ * @param lightResource The empty state resource to display when is the light theme used
+ * @param darkResource The empty state resource to display when is the dark theme used
+ * @param useDarkResource Whether to use the [lightResource] or the [darkResource] one
+ * @param contentDescription The content description
+ * @param verticalSpacing The vertical spacing applied to the [title] and [subTitle] texts
+ * @param title Not mandatory representative title
+ * @param titleStyle The style to apply to the [title]
+ * @param subTitle Not mandatory representative subtitle
+ * @param subTitleStyle The style to apply to the [subTitle]
+ * @param action Custom content used to allow the user to react to the empty state shown as needed, for example create
+ * new item, change search, etc...
+ */
+@Composable
+@ExperimentalMultiplatform
+fun EmptyState(
+    animations: UIAnimations? = null,
+    containerModifier: Modifier = Modifier,
+    resourceModifier: Modifier = Modifier,
+    resourceSize: Dp = 200.dp,
+    lightResource: ImageVector,
+    darkResource: ImageVector,
+    useDarkResource: Boolean = isSystemInDarkTheme(),
+    contentDescription: String?,
+    verticalSpacing: Dp = 5.dp,
+    title: String? = null,
+    titleStyle: TextStyle = LocalTextStyle.current,
+    subTitle: String? = null,
+    subTitleStyle: TextStyle = LocalTextStyle.current,
+    action: @Composable (() -> Unit)? = null,
+) {
+    EmptyState(
+        animations = animations,
+        containerModifier = containerModifier,
+        resourceModifier = resourceModifier,
+        resourceSize = resourceSize,
+        resource = if (useDarkResource)
+            darkResource
+        else
+            lightResource,
+        contentDescription = contentDescription,
+        verticalSpacing = verticalSpacing,
+        title = title,
+        titleStyle = titleStyle,
+        subTitle = subTitle,
+        subTitleStyle = subTitleStyle,
+        action = action
+    )
+}
+
+/**
+ * Container component useful to display a custom empty state graphics
+ *
+ * @param animations The set of the animations to use to animate the layout
+ * @param containerModifier The modifier to apply to the container [Column]
+ * @param resourceModifier The modifier to apply to the [Image]
+ * @param resourceSize The size occupied by the [resource]
+ * @param resource The empty state resource to display
+ * @param contentDescription The content description
+ * @param verticalSpacing The vertical spacing applied to the [title] and [subTitle] texts
+ * @param title Not mandatory representative title
+ * @param titleStyle The style to apply to the [title]
+ * @param subTitle Not mandatory representative subtitle
+ * @param subTitleStyle The style to apply to the [subTitle]
+ * @param action Custom content used to allow the user to react to the empty state shown as needed, for example create
+ * new item, change search, etc...
+ */
+@Composable
 @ExperimentalMultiplatform
 fun EmptyState(
     animations: UIAnimations? = null,
@@ -501,10 +610,11 @@ fun EmptyState(
     resourceSize: Dp = 200.dp,
     resource: ImageVector,
     contentDescription: String?,
+    verticalSpacing: Dp = 5.dp,
     title: String? = null,
-    titleStyle: TextStyle = TextStyle.Default,
+    titleStyle: TextStyle = LocalTextStyle.current,
     subTitle: String? = null,
-    subTitleStyle: TextStyle = TextStyle.Default,
+    subTitleStyle: TextStyle = LocalTextStyle.current,
     action: @Composable (() -> Unit)? = null,
 ) {
     EmptyState(
@@ -516,6 +626,63 @@ fun EmptyState(
             image = resource
         ),
         contentDescription = contentDescription,
+        verticalSpacing = verticalSpacing,
+        title = title,
+        titleStyle = titleStyle,
+        subTitle = subTitle,
+        subTitleStyle = subTitleStyle,
+        action = action
+    )
+}
+
+/**
+ * Container component useful to display a custom empty state graphics
+ *
+ * @param animations The set of the animations to use to animate the layout
+ * @param containerModifier The modifier to apply to the container [Column]
+ * @param resourceModifier The modifier to apply to the [Image]
+ * @param resourceSize The size occupied by the empty state
+ * @param lightResource The empty state resource to display when is the light theme used
+ * @param darkResource The empty state resource to display when is the dark theme used
+ * @param useDarkResource Whether to use the [lightResource] or the [darkResource] one
+ * @param contentDescription The content description
+ * @param verticalSpacing The vertical spacing applied to the [title] and [subTitle] texts
+ * @param title Not mandatory representative title
+ * @param titleStyle The style to apply to the [title]
+ * @param subTitle Not mandatory representative subtitle
+ * @param subTitleStyle The style to apply to the [subTitle]
+ * @param action Custom content used to allow the user to react to the empty state shown as needed, for example create
+ * new item, change search, etc...
+ */
+@Composable
+@ExperimentalMultiplatform
+fun EmptyState(
+    animations: UIAnimations? = null,
+    containerModifier: Modifier = Modifier,
+    resourceModifier: Modifier = Modifier,
+    resourceSize: Dp = 200.dp,
+    lightResource: Painter,
+    darkResource: Painter,
+    useDarkResource: Boolean = isSystemInDarkTheme(),
+    contentDescription: String?,
+    verticalSpacing: Dp = 5.dp,
+    title: String? = null,
+    titleStyle: TextStyle = LocalTextStyle.current,
+    subTitle: String? = null,
+    subTitleStyle: TextStyle = LocalTextStyle.current,
+    action: @Composable (() -> Unit)? = null,
+) {
+    EmptyState(
+        animations = animations,
+        containerModifier = containerModifier,
+        resourceModifier = resourceModifier,
+        resourceSize = resourceSize,
+        resource = if (useDarkResource)
+            darkResource
+        else
+            lightResource,
+        contentDescription = contentDescription,
+        verticalSpacing = verticalSpacing,
         title = title,
         titleStyle = titleStyle,
         subTitle = subTitle,
@@ -531,7 +698,9 @@ fun EmptyState(
  * @param containerModifier The modifier to apply to the container [Column]
  * @param resourceModifier The modifier to apply to the [Image]
  * @param resourceSize The size occupied by the [resource]
+ * @param resource The empty state resource to display
  * @param contentDescription The content description
+ * @param verticalSpacing The vertical spacing applied to the [title] and [subTitle] texts
  * @param title Not mandatory representative title
  * @param titleStyle The style to apply to the [title]
  * @param subTitle Not mandatory representative subtitle
@@ -540,7 +709,6 @@ fun EmptyState(
  * new item, change search, etc...
  */
 @Composable
-@NonRestartableComposable
 @ExperimentalMultiplatform
 fun EmptyState(
     animations: UIAnimations? = null,
@@ -549,10 +717,11 @@ fun EmptyState(
     resourceSize: Dp = 200.dp,
     resource: Painter,
     contentDescription: String?,
+    verticalSpacing: Dp = 5.dp,
     title: String? = null,
-    titleStyle: TextStyle = TextStyle.Default,
+    titleStyle: TextStyle = LocalTextStyle.current,
     subTitle: String? = null,
-    subTitleStyle: TextStyle = TextStyle.Default,
+    subTitleStyle: TextStyle = LocalTextStyle.current,
     action: @Composable (() -> Unit)? = null,
 ) {
     if (animations != null) {
@@ -567,6 +736,7 @@ fun EmptyState(
                 resourceSize = resourceSize,
                 resource = resource,
                 contentDescription = contentDescription,
+                verticalSpacing = verticalSpacing,
                 title = title,
                 titleStyle = titleStyle,
                 subTitle = subTitle,
@@ -581,6 +751,7 @@ fun EmptyState(
             resourceSize = resourceSize,
             resource = resource,
             contentDescription = contentDescription,
+            verticalSpacing = verticalSpacing,
             title = title,
             titleStyle = titleStyle,
             subTitle = subTitle,
@@ -596,7 +767,9 @@ fun EmptyState(
  * @param containerModifier The modifier to apply to the container [Column]
  * @param resourceModifier The modifier to apply to the [Image]
  * @param resourceSize The size occupied by the [resource]
+ * @param resource The empty state resource to display
  * @param contentDescription The content description
+ * @param verticalSpacing The vertical spacing applied to the [title] and [subTitle] texts
  * @param title Not mandatory representative title
  * @param titleStyle The style to apply to the [title]
  * @param subTitle Not mandatory representative subtitle
@@ -612,15 +785,15 @@ private fun EmptyStateContent(
     resourceSize: Dp = 200.dp,
     resource: Painter,
     contentDescription: String?,
+    verticalSpacing: Dp = 5.dp,
     title: String? = null,
-    titleStyle: TextStyle = TextStyle.Default,
+    titleStyle: TextStyle = LocalTextStyle.current,
     subTitle: String? = null,
-    subTitleStyle: TextStyle = TextStyle.Default,
+    subTitleStyle: TextStyle = LocalTextStyle.current,
     action: @Composable (() -> Unit)? = null,
 ) {
     Column(
-        modifier = containerModifier
-            .fillMaxSize(),
+        modifier = containerModifier,
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
@@ -634,7 +807,7 @@ private fun EmptyStateContent(
             Text(
                 modifier = Modifier
                     .padding(
-                        vertical = 5.dp
+                        vertical = verticalSpacing
                     ),
                 text = title,
                 style = titleStyle
@@ -642,6 +815,10 @@ private fun EmptyStateContent(
         }
         subTitle?.let {
             Text(
+                modifier = Modifier
+                    .padding(
+                        vertical = verticalSpacing
+                    ),
                 text = subTitle,
                 style = subTitleStyle
             )

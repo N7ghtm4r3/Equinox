@@ -85,7 +85,7 @@ open class EquinoxProfileViewModel(
      *
      * @param profilePicName The name of the image to set
      * @param profilePicBytes The bytes of the image selected
-     * @param onFailure The action to execute when the request failed
+     * @param onFailure The callback to invoke when the request failed
      */
     open fun changeProfilePic(
         profilePicName: String,
@@ -114,11 +114,11 @@ open class EquinoxProfileViewModel(
     /**
      * Method used to execute the email change
      *
-     * @param onSuccess The action to execute if the request has been successful
-     * @param onFailure The action to execute when the request failed
+     * @param onChange The callback to invoke if the request has been successful
+     * @param onFailure The callback to invoke when the request failed
      */
     open fun changeEmail(
-        onSuccess: (() -> Unit)? = null,
+        onChange: (() -> Unit)? = null,
         onFailure: (JsonObject) -> Unit = {
             showSnackbarMessage(it)
         },
@@ -137,7 +137,7 @@ open class EquinoxProfileViewModel(
                 onSuccess = {
                     localUser.email = newEmail.value
                     email.value = newEmail.value
-                    onSuccess?.invoke()
+                    onChange?.invoke()
                 },
                 onFailure = onFailure
             )
@@ -147,11 +147,11 @@ open class EquinoxProfileViewModel(
     /**
      * Method used to execute the password change
      *
-     * @param onSuccess The action to execute if the request has been successful
-     * @param onFailure The action to execute when the request failed
+     * @param onChange The callback to invoke if the request has been successful
+     * @param onFailure The callback to invoke when the request failed
      */
     open fun changePassword(
-        onSuccess: (() -> Unit)? = null,
+        onChange: (() -> Unit)? = null,
         onFailure: (JsonObject) -> Unit = {
             showSnackbarMessage(it)
         },
@@ -170,7 +170,7 @@ open class EquinoxProfileViewModel(
                 onSuccess = {
                     localUser.password = newPassword.value
                     password.value = newPassword.value
-                    onSuccess?.invoke()
+                    onChange?.invoke()
                 },
                 onFailure = onFailure
             )
@@ -180,11 +180,11 @@ open class EquinoxProfileViewModel(
     /**
      * Method used to execute the language change
      *
-     * @param onSuccess The action to execute if the request has been successful
-     * @param onFailure The action to execute when the request failed
+     * @param onChange The callback to invoke if the request has been successful
+     * @param onFailure The callback to invoke when the request failed
      */
     open fun changeLanguage(
-        onSuccess: (() -> Unit)? = null,
+        onChange: (() -> Unit)? = null,
         onFailure: (JsonObject) -> Unit = {
             showSnackbarMessage(it)
         },
@@ -198,7 +198,7 @@ open class EquinoxProfileViewModel(
                 },
                 onSuccess = {
                     localUser.language = language.value
-                    onSuccess?.invoke()
+                    onChange?.invoke()
                 },
                 onFailure = onFailure
             )
@@ -208,7 +208,7 @@ open class EquinoxProfileViewModel(
     /**
      * Method used to execute the theme change
      *
-     * @param onChange The action to execute when the theme changed
+     * @param onChange The callback to invoke when the theme changed
      */
     open fun changeTheme(
         onChange: (() -> Unit)? = null,
@@ -220,8 +220,8 @@ open class EquinoxProfileViewModel(
     /**
      * Method used to execute the account deletion
      *
-     * @param onDelete The action to execute when the account has been deleted
-     * @param onFailure The action to execute when the request failed
+     * @param onDelete The callback to invoke when the account has been deleted
+     * @param onFailure The callback to invoke when the request failed
      */
     open fun deleteAccount(
         onDelete: (() -> Unit)? = null,
@@ -245,7 +245,7 @@ open class EquinoxProfileViewModel(
     /**
      * Method used to clear the current [localUser] session
      *
-     * @param onClear The action to execute when the session has been cleaned
+     * @param onClear The callback to invoke when the session has been cleaned
      */
     open fun clearSession(
         onClear: (() -> Unit)? = null,

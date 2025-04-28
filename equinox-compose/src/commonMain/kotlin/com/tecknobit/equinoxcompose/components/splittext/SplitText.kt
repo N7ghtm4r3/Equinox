@@ -67,7 +67,6 @@ data class InfoText(
  * @param infoText The informative text about what the component needs
  */
 @Composable
-@NonRestartableComposable
 fun SplitText(
     columnModifier: Modifier = Modifier,
     rowModifier: Modifier = Modifier,
@@ -128,7 +127,6 @@ fun SplitText(
  * @param currentBox The index of the current box where the focus is applied
  */
 @Composable
-@NonRestartableComposable
 private fun SplitBox(
     currentTextSlices: ArrayList<MutableState<String>>,
     boxSelectedColor: Color = MaterialTheme.colorScheme.inversePrimary,

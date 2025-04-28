@@ -3,7 +3,9 @@ package com.tecknobit.equinoxnavigation
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -20,6 +22,8 @@ import com.tecknobit.equinoxcompose.utilities.ResponsiveClassComponent
 import com.tecknobit.equinoxcompose.utilities.ResponsiveContent
 import com.tecknobit.equinoxcore.annotations.RequiresSuperCall
 import com.tecknobit.equinoxcore.annotations.Structure
+import com.tecknobit.equinoxnavigation.NavigationMode.BOTTOM_NAVIGATION
+import com.tecknobit.equinoxnavigation.NavigationMode.SIDE_NAVIGATION
 import org.jetbrains.compose.resources.stringResource
 
 /**
@@ -59,6 +63,11 @@ abstract class NavigatorScreen<T : NavigatorTab<*>>(
     protected val tabs: Array<T> by lazy { navigationTabs() }
 
     /**
+     *`navigationMode` current navigation mode adopted by the navigator
+     */
+    private lateinit var navigationMode: MutableState<NavigationMode>
+
+    /**
      * Method used to retrieve the tabs to assign to the [tabs] array
      *
      * @return the tabs used by the [NavigatorScreen] as [Array] of [T]
@@ -71,15 +80,16 @@ abstract class NavigatorScreen<T : NavigatorTab<*>>(
      * @param sideBarModifier The modifier to apply to the [SideNavigationArrangement] bar
      * @param sideBarWidth The default width of the [SideNavigationArrangement] bar
      * @param bottomBarModifier The modifier to apply to the [BottomNavigationArrangement] bar
+     * @param navigationBarColor The color to apply to the navigation bars
      * @param backgroundTab The color to apply as background of the tabs
      */
     @Composable
     @LayoutCoordinator
-    @NonRestartableComposable
     protected fun NavigationContent(
         sideBarModifier: Modifier = Modifier,
         sideBarWidth: Dp = 185.dp,
         bottomBarModifier: Modifier = Modifier,
+        navigationBarColor: Color = BottomAppBarDefaults.containerColor,
         backgroundTab: Color = MaterialTheme.colorScheme.background,
     ) {
         ResponsiveContent(
@@ -87,6 +97,7 @@ abstract class NavigatorScreen<T : NavigatorTab<*>>(
                 SideNavigationArrangement(
                     modifier = sideBarModifier,
                     sideBarWidth = sideBarWidth,
+                    navigationBarColor = navigationBarColor,
                     backgroundTab = backgroundTab
                 )
             },
@@ -94,18 +105,21 @@ abstract class NavigatorScreen<T : NavigatorTab<*>>(
                 SideNavigationArrangement(
                     modifier = sideBarModifier,
                     sideBarWidth = sideBarWidth,
+                    navigationBarColor = navigationBarColor,
                     backgroundTab = backgroundTab
                 )
             },
             onMediumWidthExpandedHeight = {
                 BottomNavigationArrangement(
                     modifier = bottomBarModifier,
+                    navigationBarColor = navigationBarColor,
                     backgroundTab = backgroundTab
                 )
             },
             onCompactSizeClass = {
                 BottomNavigationArrangement(
                     modifier = bottomBarModifier,
+                    navigationBarColor = navigationBarColor,
                     backgroundTab = backgroundTab
                 )
             }
@@ -117,40 +131,54 @@ abstract class NavigatorScreen<T : NavigatorTab<*>>(
      *
      * @param modifier The modifier to apply to the navigation bar
      * @param sideBarWidth The default width of the navigation bar
+     * @param navigationBarColor The color to apply to the navigation bars
      * @param backgroundTab The color to apply as background of the tabs
      */
     @Composable
-    @NonRestartableComposable
     @ResponsiveClassComponent(
         classes = [EXPANDED_CONTENT, MEDIUM_CONTENT]
     )
     private fun SideNavigationArrangement(
         modifier: Modifier,
         sideBarWidth: Dp,
+        navigationBarColor: Color,
         backgroundTab: Color,
     ) {
+        navigationMode.value = SIDE_NAVIGATION
         Row {
             NavigationRail(
                 modifier = modifier
                     .width(sideBarWidth),
+                containerColor = navigationBarColor,
                 header = { SideNavigationHeaderContent() }
             ) {
-                tabs.forEachIndexed { index, tab ->
-                    SideNavigationItem(
-                        index = index,
-                        tab = tab
-                    )
-                }
                 Column(
                     modifier = Modifier
-                        .fillMaxSize()
-                        .padding(
-                            bottom = 16.dp
-                        ),
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.Bottom,
-                    content = { SideNavigationFooterContent() }
-                )
+                        .fillMaxSize(),
+                ) {
+                    Column(
+                        modifier = Modifier
+                            .weight(2.7f)
+                            .verticalScroll(rememberScrollState())
+                    ) {
+                        tabs.forEachIndexed { index, tab ->
+                            SideNavigationItem(
+                                index = index,
+                                tab = tab
+                            )
+                        }
+                    }
+                    Column(
+                        modifier = Modifier
+                            .weight(1f)
+                            .padding(
+                                vertical = 16.dp
+                            ),
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement.Bottom,
+                        content = { SideNavigationFooterContent() }
+                    )
+                }
             }
             Column(
                 modifier = Modifier
@@ -173,22 +201,20 @@ abstract class NavigatorScreen<T : NavigatorTab<*>>(
      * Custom header content to display on the [SideNavigationArrangement] bar
      */
     @Composable
-    @NonRestartableComposable
     @ResponsiveClassComponent(
         classes = [EXPANDED_CONTENT, MEDIUM_CONTENT]
     )
-    protected open fun SideNavigationHeaderContent() {
+    protected open fun ColumnScope.SideNavigationHeaderContent() {
     }
 
     /**
      * Custom footer content to display on the [SideNavigationArrangement] bar
      */
     @Composable
-    @NonRestartableComposable
     @ResponsiveClassComponent(
         classes = [EXPANDED_CONTENT, MEDIUM_CONTENT]
     )
-    protected open fun SideNavigationFooterContent() {
+    protected open fun ColumnScope.SideNavigationFooterContent() {
     }
 
     /**
@@ -198,7 +224,6 @@ abstract class NavigatorScreen<T : NavigatorTab<*>>(
      * @param tab The related tab of the [index]
      */
     @Composable
-    @NonRestartableComposable
     @ResponsiveClassComponent(
         classes = [EXPANDED_CONTENT, MEDIUM_CONTENT]
     )
@@ -237,17 +262,19 @@ abstract class NavigatorScreen<T : NavigatorTab<*>>(
      * Custom [BottomAppBar] displayed on the [MEDIUM_EXPANDED_CONTENT] and [COMPACT_CONTENT] responsive screen classes
      *
      * @param modifier The modifier to apply to the navigation bar
+     * @param navigationBarColor The color to apply to the navigation bars
      * @param backgroundTab The color to apply as background of the tabs
      */
     @Composable
-    @NonRestartableComposable
     @ResponsiveClassComponent(
         classes = [MEDIUM_EXPANDED_CONTENT, COMPACT_CONTENT]
     )
     private fun BottomNavigationArrangement(
         modifier: Modifier,
+        navigationBarColor: Color,
         backgroundTab: Color,
     ) {
+        navigationMode.value = BOTTOM_NAVIGATION
         Box(
             modifier = Modifier
                 .fillMaxSize()
@@ -263,7 +290,8 @@ abstract class NavigatorScreen<T : NavigatorTab<*>>(
             )
             BottomAppBar(
                 modifier = modifier
-                    .align(Alignment.BottomCenter)
+                    .align(Alignment.BottomCenter),
+                containerColor = navigationBarColor
             ) {
                 tabs.forEachIndexed { index, tab ->
                     BottomNavigationItem(
@@ -282,7 +310,6 @@ abstract class NavigatorScreen<T : NavigatorTab<*>>(
      * @param tab The related tab of the [index]
      */
     @Composable
-    @NonRestartableComposable
     @ResponsiveClassComponent(
         classes = [MEDIUM_EXPANDED_CONTENT, COMPACT_CONTENT]
     )
@@ -330,7 +357,6 @@ abstract class NavigatorScreen<T : NavigatorTab<*>>(
      * @param paddingValues The values of the padding to apply to the content
      */
     @Composable
-    @NonRestartableComposable
     private fun ScreenTabContent(
         paddingValues: PaddingValues,
     ) {
@@ -361,12 +387,31 @@ abstract class NavigatorScreen<T : NavigatorTab<*>>(
     protected abstract fun Int.tabContent(): EquinoxNoModelScreen
 
     /**
+     * Method used to check whether the current [navigationMode] is [SIDE_NAVIGATION]
+     *
+     * @return whether the navigation mode is [SIDE_NAVIGATION] as [Boolean]
+     */
+    protected fun isSideNavigationMode(): Boolean {
+        return navigationMode.value == SIDE_NAVIGATION
+    }
+
+    /**
+     * Method used to check whether the current [navigationMode] is [BOTTOM_NAVIGATION]
+     *
+     * @return whether the navigation mode is [BOTTOM_NAVIGATION] as [Boolean]
+     */
+    protected fun isBottomNavigationMode(): Boolean {
+        return navigationMode.value == BOTTOM_NAVIGATION
+    }
+
+    /**
      * Method used to collect or instantiate the states of the screen
      */
     @Composable
     @RequiresSuperCall
     override fun CollectStates() {
         activeNavigationTabIndex = rememberSaveable { mutableStateOf(0) }
+        navigationMode = rememberSaveable { mutableStateOf(BOTTOM_NAVIGATION) }
     }
 
 }

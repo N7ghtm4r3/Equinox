@@ -7,7 +7,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.NonRestartableComposable
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.RectangleShape
@@ -31,7 +30,6 @@ import kotlinx.coroutines.launch
  * @param tabContent The content of the tab
  */
 @Composable
-@NonRestartableComposable
 fun TabSelector(
     modifier: Modifier = Modifier,
     state: TabSelectorState,
@@ -108,7 +106,6 @@ fun TabSelector(
  * @param lastTabShape The shape to use for the last tab of the selector
  */
 @Composable
-@NonRestartableComposable
 private fun SingleChoiceSegmentedButtonRowScope.Tab(
     pagerState: PagerState?,
     state: TabSelectorState,

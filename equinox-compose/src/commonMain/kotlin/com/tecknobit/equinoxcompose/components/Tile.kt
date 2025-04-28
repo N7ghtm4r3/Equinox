@@ -45,7 +45,6 @@ import org.jetbrains.compose.resources.stringResource
  * @param onClick The action to execute when the tile has been clicked
  */
 @Composable
-@NonRestartableComposable
 fun DashedTile(
     modifier: Modifier = Modifier,
     strokeWidth: Float = 5f,
@@ -60,7 +59,7 @@ fun DashedTile(
     iconSize: Dp = 65.dp,
     text: StringResource,
     fontWeight: FontWeight = FontWeight.Bold,
-    textStyle: TextStyle = TextStyle.Default.merge(
+    textStyle: TextStyle = LocalTextStyle.current.merge(
         color = contentColor,
         fontWeight = fontWeight
     ),
@@ -120,7 +119,7 @@ fun DashedTile(
     iconSize: Dp = 65.dp,
     text: String,
     fontWeight: FontWeight = FontWeight.Bold,
-    textStyle: TextStyle = TextStyle.Default.merge(
+    textStyle: TextStyle = LocalTextStyle.current.merge(
         color = contentColor,
         fontWeight = fontWeight
     ),
@@ -167,7 +166,6 @@ fun DashedTile(
  * @param onClick The action to execute when the tile has been clicked
  */
 @Composable
-@NonRestartableComposable
 fun Tile(
     modifier: Modifier = Modifier,
     size: Dp = 115.dp,
@@ -181,7 +179,7 @@ fun Tile(
     iconSize: Dp = 65.dp,
     text: StringResource,
     fontWeight: FontWeight = FontWeight.Bold,
-    textStyle: TextStyle = TextStyle.Default.merge(
+    textStyle: TextStyle = LocalTextStyle.current.merge(
         color = contentColor,
         fontWeight = fontWeight
     ),
@@ -219,7 +217,6 @@ fun Tile(
  * @param onClick The action to execute when the tile has been clicked
  */
 @Composable
-@NonRestartableComposable
 fun Tile(
     modifier: Modifier = Modifier,
     size: Dp = 115.dp,
@@ -233,7 +230,7 @@ fun Tile(
     iconSize: Dp = 65.dp,
     text: String,
     fontWeight: FontWeight = FontWeight.Bold,
-    textStyle: TextStyle = TextStyle.Default.merge(
+    textStyle: TextStyle = LocalTextStyle.current.merge(
         color = contentColor,
         fontWeight = fontWeight
     ),

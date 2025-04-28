@@ -6,7 +6,6 @@ package com.tecknobit.equinoxcompose.components.stepper
  *
  * ```kotlin
  * @Composable
- * @NonRestartableComposable
  * @StepContent(
  *      number = 0,
  *      enabledWhen = "This step is enabled when etc..."

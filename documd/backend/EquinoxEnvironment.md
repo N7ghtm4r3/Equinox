@@ -156,7 +156,7 @@ To configure your backend instance as needed you have to create the `equinox.con
 
 ``` bash 
 resources
-  |-- equinox.config
+  └── equinox.config
 ```
 
 #### Fill the configuration
@@ -364,7 +364,7 @@ public class CustomUsersController extends EquinoxUsersController<CustomUser, Cu
     }
 
     @PatchMapping(
-            path = {"users/{id}/changeCurrency"},
+            path = {"users/{user_id}/changeCurrency"},
             headers = {TOKEN_KEY}
     )
     public String changeCurrency(
@@ -602,10 +602,10 @@ You can create your own resources set to internationalize your backend creating 
 
 ``` bash 
 resources
-  |-- lang
-       |-- custom_messages.properties
-       |-- custom_messages_any_locale.properties
-       |-- ...
+  └── lang
+       └── custom_messages.properties
+       └── custom_messages_any_locale.properties
+       └── ...
 ```
 
 ## Support

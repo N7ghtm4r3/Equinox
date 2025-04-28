@@ -47,7 +47,6 @@ fun AnyComponent() {
 
 ```kotlin
 @Composable
-@NonRestartableComposable
 //not mandatory, but it is better for readability
 @StepContent(
     number = 0,

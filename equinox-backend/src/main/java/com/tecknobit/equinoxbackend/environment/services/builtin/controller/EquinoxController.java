@@ -26,7 +26,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.*;
 
-import static com.tecknobit.equinoxbackend.resourcesutils.ResourcesManager.PROFILES_DIRECTORY;
 import static com.tecknobit.equinoxbackend.resourcesutils.ResourcesManager.RESOURCES_KEY;
 import static com.tecknobit.equinoxcore.helpers.InputsValidator.DEFAULT_LANGUAGE;
 import static com.tecknobit.equinoxcore.network.EquinoxBaseEndpointsSet.BASE_EQUINOX_ENDPOINT;
@@ -416,61 +415,6 @@ abstract public class EquinoxController<T extends EquinoxUser, R extends Equinox
                 );
                 serverProtector.launch(args);
             }
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    /**
-     * Method used to init the {@link #serverProtector} and create the resources directories correctly
-     *
-     * @param storagePath Instance to manage the storage of the server secret
-     * @param saveMessage The message to print when the server secret has been generated,
-     *                     the start of the message is <b>"Note: is not an error, but is an alert!
-     *                     Please you should safely save: server_secret_token_generated"</b>
-     * @param context The launcher {@link Class} where this method has been invoked
-     * @param args Custom arguments to share with {@link SpringApplication} and with the {@link #serverProtector}
-     * @param customSubDirectories The custom subdirectories of the user
-     *
-     * @apiNote the arguments scheme:
-     * <ul>
-     *     <li>
-     *         {@link #serverProtector} ->
-     *         <ul>
-     *          <li>
-     *             <b>rss</b> -> launch your java application with "rss" to recreate the server secret <br>
-     *                       e.g java -jar your_backend.jar rss
-     *             </li>
-     *              <li>
-     *                  <b>dss</b> -> launch your java application with "dss" to delete the current server secret <br>
-     *                       e.g java -jar your_backend.jar dss
-     *              </li>
-     *              <li>
-     *                  <b>dssi</b> -> launch your java application with "dssi" to delete the current server secret and interrupt
-     *                        the current workflow of the server <br>
-     *                        e.g java -jar your_backend.jar dssi
-     *              </li>
-     *          </ul>
-     *     </li>
-     *     <li>
-     *         {@link SpringApplication} -> see the allowed arguments <a href="https://docs.spring.io/spring-boot/docs/current/reference/html/application-properties.html">here</a>
-     *     </li>
-     * </ul>
-     */
-    @Deprecated(forRemoval = true, since = "1.1.0")
-    public static void initEquinoxEnvironment(String storagePath, String saveMessage, Class<?> context, String[] args,
-                                              String... customSubDirectories) {
-        try {
-            if (serverProtector != null)
-                throw new IllegalAccessException("The protector has been already instantiated");
-            serverProtector = new ServerProtector(storagePath, saveMessage);
-            serverProtector.launch(args);
-            EquinoxBackendConfiguration.getInstance().setServerProtectorEnabled(true);
-            List<String> subDirectories = new ArrayList<>(Arrays.stream(customSubDirectories).toList());
-            subDirectories.add(PROFILES_DIRECTORY);
-            resourcesProvider = new ResourcesProvider(RESOURCES_KEY, subDirectories);
-            resourcesProvider.createContainerDirectory();
-            resourcesProvider.createSubDirectories();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

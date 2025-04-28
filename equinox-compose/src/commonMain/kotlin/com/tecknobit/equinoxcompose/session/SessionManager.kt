@@ -5,8 +5,11 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Warning
+import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.contentColorFor
 import androidx.compose.runtime.*
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.TextStyle
@@ -168,9 +171,11 @@ fun setHasBeenDisconnectedValue(
  * Method used to display the correct content based on the current scenario such server offline or
  * device disconnected or no internet connection available
  *
+ * @param modifier The modifier to apply to the uis
  * @param content The content to display in a normal scenario
  * @param viewModel The viewmodel used by the context where this method has been invoked, this is
  * used to stop the refreshing routine when the internet connection is not available by the [NoInternetConnectionUi]
+ * @param loadingUiAppearance The style to apply to the [LoadingItemUI] loading page
  * @param loadingRoutine The routine used to load the data
  * @param initialDelay An initial delay to apply to the [loadingRoutine] before to start
  * @param serverOfflineUiDefaults The style to apply to the [ServerOfflineUi] fallback page
@@ -182,14 +187,20 @@ fun setHasBeenDisconnectedValue(
  */
 @Composable
 fun ManagedContent(
+    modifier: Modifier = Modifier,
     content: @Composable () -> Unit,
     viewModel: EquinoxViewModel,
+    loadingUiAppearance: UiLayoutDefaults = createUiLayoutAppearance(),
     loadingRoutine: (suspend () -> Boolean)? = null,
     initialDelay: Long? = null,
-    serverOfflineUiDefaults: FallbackUiDefaults = createFallbackUiAppearance(),
+    serverOfflineUiDefaults: UiLayoutDefaults = createUiLayoutAppearance(
+        contentColor = MaterialTheme.colorScheme.error
+    ),
     serverOfflineRetryText: StringResource? = null,
     serverOfflineRetryAction: @Composable (() -> Unit)? = null,
-    noInternetConnectionUiDefaults: FallbackUiDefaults = createFallbackUiAppearance(),
+    noInternetConnectionUiDefaults: UiLayoutDefaults = createUiLayoutAppearance(
+        contentColor = MaterialTheme.colorScheme.error
+    ),
     noInternetConnectionRetryText: StringResource? = null,
     noInternetConnectionRetryAction: @Composable (() -> Unit)? = null,
 ) {
@@ -201,6 +212,7 @@ fun ManagedContent(
     ) {
         sessionStatus.value = SERVER_OFFLINE
         ServerOfflineUi(
+            modifier = modifier,
             uiDefaults = serverOfflineUiDefaults,
             retryText = serverOfflineRetryText,
             retryAction = serverOfflineRetryAction
@@ -213,6 +225,7 @@ fun ManagedContent(
     ) {
         sessionStatus.value = NO_INTERNET_CONNECTION
         NoInternetConnectionUi(
+            modifier = modifier,
             uiDefaults = noInternetConnectionUiDefaults,
             viewModel = viewModel,
             retryText = noInternetConnectionRetryText,
@@ -232,9 +245,13 @@ fun ManagedContent(
             viewModel.restartRetriever()
             if (loadingRoutine != null) {
                 LoadingItemUI(
+                    containerModifier = modifier,
                     loadingRoutine = loadingRoutine,
                     initialDelay = initialDelay,
-                    contentLoaded = content
+                    contentLoaded = content,
+                    textStyle = loadingUiAppearance.textStyle,
+                    loadingIndicatorBackground = loadingUiAppearance.containerColor,
+                    themeColor = loadingUiAppearance.contentColor
                 )
             } else
                 content()
@@ -262,6 +279,7 @@ private fun InstantiateSessionInstances() {
 /**
  * Method used to display the content when the server is offline
  *
+ * @param modifier The modifier to apply to the ui
  * @param uiDefaults The style for this fallback page
  * @param retryText The informative text for the user
  * @param retryAction The action to retry the connection to the server
@@ -269,11 +287,13 @@ private fun InstantiateSessionInstances() {
 @Composable
 @NonRestartableComposable
 private fun ServerOfflineUi(
-    uiDefaults: FallbackUiDefaults,
+    modifier: Modifier = Modifier,
+    uiDefaults: UiLayoutDefaults,
     retryText: StringResource?,
     retryAction: @Composable (() -> Unit)?,
 ) {
     ErrorUI(
+        containerModifier = modifier,
         backgroundColor = uiDefaults.containerColor,
         textStyle = uiDefaults.textStyle,
         errorColor = uiDefaults.contentColor,
@@ -295,6 +315,7 @@ private fun ServerOfflineUi(
 /**
  * Method used to display the content when the internet connection missing
  *
+ * @param modifier The modifier to apply to the ui
  * @param viewModel The viewmodel used by the context from the [ManagedContent] method has been invoked, this is
  * used to stop the refreshing routine when the internet connection is not available
  * @param uiDefaults The style for this fallback page
@@ -305,13 +326,15 @@ private fun ServerOfflineUi(
 @Composable
 @NonRestartableComposable
 private fun NoInternetConnectionUi(
+    modifier: Modifier = Modifier,
     viewModel: EquinoxViewModel,
-    uiDefaults: FallbackUiDefaults,
+    uiDefaults: UiLayoutDefaults,
     retryText: StringResource?,
     retryAction: @Composable (() -> Unit)?,
 ) {
     viewModel.suspendRetriever()
     ErrorUI(
+        containerModifier = modifier,
         backgroundColor = uiDefaults.containerColor,
         textStyle = uiDefaults.textStyle,
         errorColor = uiDefaults.contentColor,
@@ -331,7 +354,8 @@ private fun NoInternetConnectionUi(
 }
 
 /**
- * The `FallbackUiDefaults` allows to customize the fallback pages ([ServerOfflineUi] and [NoInternetConnectionUi]) style
+ * The `UiLayoutDefaults` allows to customize the UI pages such [ServerOfflineUi], [NoInternetConnectionUi] and
+ * [LoadingItemUI] style
  *
  * @property textStyle The style to apply to the text
  * @property containerColor The color of the container
@@ -341,28 +365,28 @@ private fun NoInternetConnectionUi(
  *
  * @since 1.1.0
  */
-data class FallbackUiDefaults(
+data class UiLayoutDefaults(
     val textStyle: TextStyle,
     val containerColor: Color,
     val contentColor: Color,
 )
 
 /**
- * Method used to create a customization style for a fallback page
+ * Method used to create a customization style for a UI page
  *
  * @param textStyle The style to apply to the text
  * @param containerColor The color of the container
  * @param contentColor The color of the content
  *
- * @return the customization style for a fallback page as [FallbackUiDefaults]
+ * @return the customization style for a UI page as [UiLayoutDefaults]
  */
 @Composable
-fun createFallbackUiAppearance(
-    textStyle: TextStyle = TextStyle.Default,
+fun createUiLayoutAppearance(
+    textStyle: TextStyle = LocalTextStyle.current,
     containerColor: Color = MaterialTheme.colorScheme.background,
-    contentColor: Color = MaterialTheme.colorScheme.error,
-): FallbackUiDefaults {
-    return FallbackUiDefaults(
+    contentColor: Color = contentColorFor(containerColor),
+): UiLayoutDefaults {
+    return UiLayoutDefaults(
         textStyle = textStyle,
         containerColor = containerColor,
         contentColor = contentColor

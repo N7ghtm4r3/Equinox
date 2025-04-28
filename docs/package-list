@@ -15,8 +15,10 @@ com.tecknobit.equinoxbackend.environment.services.users.controller
 com.tecknobit.equinoxbackend.environment.services.users.entity
 com.tecknobit.equinoxbackend.environment.services.users.repository
 com.tecknobit.equinoxbackend.environment.services.users.service
+com.tecknobit.equinoxbackend.events
 com.tecknobit.equinoxbackend.resourcesutils
 module:equinox-compose
+com.tecknobit.equinoxcompose.annotations
 com.tecknobit.equinoxcompose.components
 com.tecknobit.equinoxcompose.components.quantitypicker
 com.tecknobit.equinoxcompose.components.splittext

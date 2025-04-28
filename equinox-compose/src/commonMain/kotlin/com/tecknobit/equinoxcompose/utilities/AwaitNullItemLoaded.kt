@@ -39,7 +39,6 @@ import androidx.compose.runtime.*
  * @param loadedContent The content to display when the [itemToWait] is not more `null`
  */
 @Composable
-@NonRestartableComposable
 fun <T> awaitNullItemLoaded(
     itemToWait: T?,
     extras: (T) -> Boolean = { true },

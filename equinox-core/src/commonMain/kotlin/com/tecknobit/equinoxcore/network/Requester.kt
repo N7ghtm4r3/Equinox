@@ -3,6 +3,7 @@ package com.tecknobit.equinoxcore.network
 import com.tecknobit.equinoxcore.annotations.Assembler
 import com.tecknobit.equinoxcore.annotations.RequiresSuperCall
 import com.tecknobit.equinoxcore.annotations.Wrapper
+import com.tecknobit.equinoxcore.helpers.TOKEN_KEY
 import com.tecknobit.equinoxcore.json.treatsAsString
 import com.tecknobit.equinoxcore.network.Requester.Companion.RESPONSE_DATA_KEY
 import com.tecknobit.equinoxcore.network.Requester.Companion.RESPONSE_STATUS_KEY
@@ -32,7 +33,9 @@ import kotlin.js.JsName
  * @param userToken The user token
  * @param debugMode Whether the requester is still in development and who is developing needs the log of the requester's
  * workflow, if it is enabled all the details of the requests sent and the errors occurred will be printed in the console
+ * @param requestTimeout Maximum time to wait before a timeout exception is thrown
  * @param connectionTimeout Time to keep alive request then throw the connection refused error
+ * @param socketTimeout Maximum idle time to wait during an I/O operation on a socket
  * @param connectionErrorMessage The error to send when a connection error occurred
  * @param byPassSSLValidation Whether bypass the **SSL** certificates validation, this for example
  * when is a self-signed the certificate USE WITH CAUTION
@@ -44,7 +47,9 @@ abstract class Requester(
     protected var userId: String? = null,
     protected var userToken: String? = null,
     protected var debugMode: Boolean = false,
+    protected val requestTimeout: Long = DEFAULT_REQUEST_TIMEOUT,
     protected val connectionTimeout: Long = DEFAULT_REQUEST_TIMEOUT,
+    protected val socketTimeout: Long = DEFAULT_REQUEST_TIMEOUT,
     @JsName("connection_error_message")
     protected val connectionErrorMessage: String,
     protected val byPassSSLValidation: Boolean = false,
@@ -55,11 +60,19 @@ abstract class Requester(
         /**
          * `USER_IDENTIFIER_KEY` The key for the user <b>"id"</b> field
          */
+        @Deprecated(
+            message = "Moved into CommonKeys",
+            level = DeprecationLevel.ERROR
+        )
         const val USER_IDENTIFIER_KEY = "id"
 
         /**
          * `USER_TOKEN_KEY` The key for the user <b>"token"</b> field
          */
+        @Deprecated(
+            message = "Will be removed in next release",
+            level = DeprecationLevel.ERROR
+        )
         const val USER_TOKEN_KEY = "token"
 
         /**
@@ -243,10 +256,20 @@ abstract class Requester(
     protected var interceptorAction: (() -> Unit)? = null
 
     /**
-     * `ktorClient` the HTTP client used to send the stats and the performance data
+     * `ktorClient` the HTTP client used to make the requests.
+     *
+     * To customize you can do as follows
+     *
+     * ```kotlin
+     * init { // the init block of your own Requester
+     *     ktorClient = HttpClient() // customize as you need
+     * }
+     * ```
      */
-    protected val ktorClient = obtainHttpEngine(
+    protected var ktorClient = obtainHttpEngine(
+        requestTimeout = requestTimeout,
         connectionTimeout = connectionTimeout,
+        socketTimeout = socketTimeout,
         byPassSSLValidation = byPassSSLValidation
     )
 
@@ -576,7 +599,7 @@ abstract class Requester(
         url {
             headers {
                 userToken?.let { token ->
-                    append(USER_TOKEN_KEY, token)
+                    append(TOKEN_KEY, token)
                 }
                 headers.forEach { header ->
                     append(header.key, header.value.toString())
@@ -653,7 +676,7 @@ abstract class Requester(
         if (headers.isNotEmpty()) {
             println("\n-HEADERS")
             userToken?.let {
-                println("$USER_TOKEN_KEY: $userToken")
+                println("$TOKEN_KEY: $userToken")
             }
             headers.forEach { header ->
                 println(header.key + ": " + header.value)

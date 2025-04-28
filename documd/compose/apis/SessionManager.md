@@ -84,8 +84,8 @@ class TestViewModel : EquinoxViewModel() {
   your android application
   ``` bash
   res
-   |-- drawable
-       |-- no_internet.xml
+   └── drawable
+       └── no_internet.xml
   ```
 
   You can download

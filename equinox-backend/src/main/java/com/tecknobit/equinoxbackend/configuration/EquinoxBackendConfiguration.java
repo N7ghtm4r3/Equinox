@@ -120,16 +120,6 @@ public class EquinoxBackendConfiguration {
     }
 
     /**
-     * Method used to set the {@link #serverProtectorEnabled} instance
-     *
-     * @param serverProtectorEnabled Whether the protection by the {@link com.tecknobit.apimanager.apis.ServerProtector}
-     *                               class is requested to protect the server from not authorized accesses
-     */
-    @Deprecated(forRemoval = true, since = "1.1.0")
-    public void setServerProtectorEnabled(boolean serverProtectorEnabled) {
-    }
-
-    /**
      * The {@code ResourcesConfig} represents the configuration used for the static folders of the resources provided by
      * the server
      *

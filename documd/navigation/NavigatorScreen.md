@@ -91,7 +91,6 @@ class HomeScreen : NavigatorScreen<NavigationTab>() {
      * Custom header content to display on the [SideNavigationArrangement] bar
      */
     @Composable
-    @NonRestartableComposable
     @ResponsiveClassComponent(
         classes = [EXPANDED_CONTENT, MEDIUM_CONTENT]
     )
@@ -115,7 +114,6 @@ class HomeScreen : NavigatorScreen<NavigationTab>() {
      * Custom footer content to display on the [SideNavigationArrangement] bar
      */
     @Composable
-    @NonRestartableComposable
     @ResponsiveClassComponent(
         classes = [EXPANDED_CONTENT, MEDIUM_CONTENT]
     )
@@ -142,7 +140,6 @@ class HomeScreen : NavigatorScreen<NavigationTab>() {
      * @param tab The related tab of the [index]
      */
     @Composable
-    @NonRestartableComposable
     @ResponsiveClassComponent(
         classes = [EXPANDED_CONTENT, MEDIUM_CONTENT]
     )
@@ -172,7 +169,6 @@ class HomeScreen : NavigatorScreen<NavigationTab>() {
      * @param tab The related tab of the [index]
      */
     @Composable
-    @NonRestartableComposable
     @ResponsiveClassComponent(
         classes = [EXPANDED_CONTENT, MEDIUM_CONTENT]
     )
@@ -202,7 +198,6 @@ class HomeScreen : NavigatorScreen<NavigationTab>() {
      * @param tab The related tab of the [index]
      */
     @Composable
-    @NonRestartableComposable
     @ResponsiveClassComponent(
         classes = [MEDIUM_EXPANDED_CONTENT, COMPACT_CONTENT]
     )

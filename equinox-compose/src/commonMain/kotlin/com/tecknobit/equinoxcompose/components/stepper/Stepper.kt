@@ -41,7 +41,6 @@ import org.jetbrains.compose.resources.stringResource
  * [remember] function to avoid to recreate the array during the recompositions
  */
 @Composable
-@NonRestartableComposable
 fun Stepper(
     containerModifier: Modifier = Modifier,
     stepperModifier: Modifier = Modifier,
@@ -186,7 +185,6 @@ private fun Step.isEnabled(): Boolean {
  * @param bottomDivider Whether create the bottom divider
  */
 @Composable
-@NonRestartableComposable
 private fun StepAction(
     shape: Shape,
     errorColor: Color,
@@ -274,7 +272,6 @@ private fun StepAction(
  * @param confirmColor The color of the confirm button
  */
 @Composable
-@NonRestartableComposable
 private fun ActionControls(
     expandsStepIcon: ImageVector,
     expanded: MutableState<Boolean>,

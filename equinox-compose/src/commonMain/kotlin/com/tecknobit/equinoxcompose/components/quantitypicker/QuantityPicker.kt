@@ -14,11 +14,11 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Remove
 import androidx.compose.material3.Icon
+import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.ExperimentalComposeApi
-import androidx.compose.runtime.NonRestartableComposable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -36,6 +36,7 @@ import androidx.compose.ui.unit.dp
  * @param state The state of the component
  * @param informativeText The informative text which describes what type of quantity is picked
  * @param informativeTextStyle The style to apply to the [informativeText]
+ * @param onQuantityPicked Callback to invoke when a quantity has been picked
  * @param decrementButtonAppearance The appearance for the [DecrementButton] component
  * @param quantityIndicatorStyle The style to apply to the indicator text of the current quantity picked
  * @param incrementButtonAppearance The appearance for the [IncrementButton] component
@@ -44,16 +45,61 @@ import androidx.compose.ui.unit.dp
  */
 @ExperimentalComposeApi
 @Composable
-@NonRestartableComposable
 fun QuantityPicker(
     modifier: Modifier = Modifier,
     state: QuantityPickerState,
     informativeText: String? = null,
-    informativeTextStyle: TextStyle = TextStyle.Default,
+    informativeTextStyle: TextStyle = LocalTextStyle.current,
+    onQuantityPicked: ((Int) -> Unit)? = null,
     decrementButtonAppearance: QuantityButtonAppearance = quantityButtonAppearance(
         icon = Icons.Default.Remove
     ),
-    quantityIndicatorStyle: TextStyle = TextStyle.Default,
+    quantityIndicatorStyle: TextStyle = LocalTextStyle.current,
+    incrementButtonAppearance: QuantityButtonAppearance = quantityButtonAppearance(
+        icon = Icons.Default.Add
+    ),
+) {
+    QuantityPicker(
+        modifier = modifier,
+        state = state,
+        informativeText = informativeText,
+        informativeTextStyle = informativeTextStyle,
+        onDecrement = onQuantityPicked,
+        decrementButtonAppearance = decrementButtonAppearance,
+        quantityIndicatorStyle = quantityIndicatorStyle,
+        onIncrement = onQuantityPicked,
+        incrementButtonAppearance = incrementButtonAppearance
+    )
+}
+
+/**
+ * Component used to pick a numerical quantity value
+ *
+ * @param modifier The modifier to apply to the component
+ * @param state The state of the component
+ * @param informativeText The informative text which describes what type of quantity is picked
+ * @param informativeTextStyle The style to apply to the [informativeText]
+ * @param onDecrement Callback to invoke when a quantity has been decremented
+ * @param decrementButtonAppearance The appearance for the [DecrementButton] component
+ * @param quantityIndicatorStyle The style to apply to the indicator text of the current quantity picked
+ * @param onIncrement Callback to invoke when a quantity has been incremented
+ * @param incrementButtonAppearance The appearance for the [IncrementButton] component
+ *
+ * @since 1.1.0
+ */
+@ExperimentalComposeApi
+@Composable
+fun QuantityPicker(
+    modifier: Modifier = Modifier,
+    state: QuantityPickerState,
+    informativeText: String? = null,
+    informativeTextStyle: TextStyle = LocalTextStyle.current,
+    onDecrement: ((Int) -> Unit)? = null,
+    decrementButtonAppearance: QuantityButtonAppearance = quantityButtonAppearance(
+        icon = Icons.Default.Remove
+    ),
+    quantityIndicatorStyle: TextStyle = LocalTextStyle.current,
+    onIncrement: ((Int) -> Unit)? = null,
     incrementButtonAppearance: QuantityButtonAppearance = quantityButtonAppearance(
         icon = Icons.Default.Add
     ),
@@ -71,7 +117,8 @@ fun QuantityPicker(
         }
         DecrementButton(
             appearance = decrementButtonAppearance,
-            state = state
+            state = state,
+            onDecrement = onDecrement
         )
         Text(
             text = state.quantityPicked.toString(),
@@ -79,7 +126,8 @@ fun QuantityPicker(
         )
         IncrementButton(
             appearance = incrementButtonAppearance,
-            state = state
+            state = state,
+            onIncrement = onIncrement
         )
     }
 }
@@ -89,23 +137,26 @@ fun QuantityPicker(
  *
  * @param appearance The appearance for the button
  * @param state The state of the component
+ * @param onDecrement Callback to invoke when a quantity has been decremented
  *
  * @since 1.1.0
  */
 @Composable
-@NonRestartableComposable
 private fun DecrementButton(
     appearance: QuantityButtonAppearance,
     state: QuantityPickerState,
+    onDecrement: ((Int) -> Unit)? = null,
 ) {
     QuantityButton(
         appearance = appearance,
         quantityAction = {
             state.simpleDecrement()
+            onDecrement?.invoke(state.quantityPicked)
         },
         longPressQuantityAction = if (state.longPressEnabled) {
             {
                 state.longDecrement()
+                onDecrement?.invoke(state.quantityPicked)
             }
         } else
             null
@@ -117,23 +168,26 @@ private fun DecrementButton(
  *
  * @param appearance The appearance for the button
  * @param state The state of the component
+ * @param onIncrement Callback to invoke when a quantity has been incremented
  *
  * @since 1.1.0
  */
 @Composable
-@NonRestartableComposable
 private fun IncrementButton(
     appearance: QuantityButtonAppearance,
     state: QuantityPickerState,
+    onIncrement: ((Int) -> Unit)? = null,
 ) {
     QuantityButton(
         appearance = appearance,
         quantityAction = {
             state.simpleIncrement()
+            onIncrement?.invoke(state.quantityPicked)
         },
         longPressQuantityAction = if (state.longPressEnabled) {
             {
                 state.longIncrement()
+                onIncrement?.invoke(state.quantityPicked)
             }
         } else
             null
@@ -151,7 +205,6 @@ private fun IncrementButton(
  * @since 1.1.0
  */
 @Composable
-@NonRestartableComposable
 private fun QuantityButton(
     appearance: QuantityButtonAppearance,
     quantityAction: () -> Unit,
