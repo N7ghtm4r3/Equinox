@@ -150,7 +150,7 @@ abstract class NavigatorScreen<T : NavigatorTab<*>>(
                 ) {
                     Column(
                         modifier = Modifier
-                            .weight(2f)
+                            .weight(2.7f)
                             .verticalScroll(rememberScrollState())
                     ) {
                         tabs.forEachIndexed { index, tab ->
