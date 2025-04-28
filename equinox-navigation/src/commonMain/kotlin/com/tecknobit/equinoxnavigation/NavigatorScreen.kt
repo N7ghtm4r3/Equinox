@@ -3,7 +3,9 @@ package com.tecknobit.equinoxnavigation
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -71,6 +73,7 @@ abstract class NavigatorScreen<T : NavigatorTab<*>>(
      * @param sideBarModifier The modifier to apply to the [SideNavigationArrangement] bar
      * @param sideBarWidth The default width of the [SideNavigationArrangement] bar
      * @param bottomBarModifier The modifier to apply to the [BottomNavigationArrangement] bar
+     * @param navigationBarColor The color to apply to the navigation bars
      * @param backgroundTab The color to apply as background of the tabs
      */
     @Composable
@@ -79,6 +82,7 @@ abstract class NavigatorScreen<T : NavigatorTab<*>>(
         sideBarModifier: Modifier = Modifier,
         sideBarWidth: Dp = 185.dp,
         bottomBarModifier: Modifier = Modifier,
+        navigationBarColor: Color = BottomAppBarDefaults.containerColor,
         backgroundTab: Color = MaterialTheme.colorScheme.background,
     ) {
         ResponsiveContent(
@@ -86,6 +90,7 @@ abstract class NavigatorScreen<T : NavigatorTab<*>>(
                 SideNavigationArrangement(
                     modifier = sideBarModifier,
                     sideBarWidth = sideBarWidth,
+                    navigationBarColor = navigationBarColor,
                     backgroundTab = backgroundTab
                 )
             },
@@ -93,18 +98,21 @@ abstract class NavigatorScreen<T : NavigatorTab<*>>(
                 SideNavigationArrangement(
                     modifier = sideBarModifier,
                     sideBarWidth = sideBarWidth,
+                    navigationBarColor = navigationBarColor,
                     backgroundTab = backgroundTab
                 )
             },
             onMediumWidthExpandedHeight = {
                 BottomNavigationArrangement(
                     modifier = bottomBarModifier,
+                    navigationBarColor = navigationBarColor,
                     backgroundTab = backgroundTab
                 )
             },
             onCompactSizeClass = {
                 BottomNavigationArrangement(
                     modifier = bottomBarModifier,
+                    navigationBarColor = navigationBarColor,
                     backgroundTab = backgroundTab
                 )
             }
@@ -116,6 +124,7 @@ abstract class NavigatorScreen<T : NavigatorTab<*>>(
      *
      * @param modifier The modifier to apply to the navigation bar
      * @param sideBarWidth The default width of the navigation bar
+     * @param navigationBarColor The color to apply to the navigation bars
      * @param backgroundTab The color to apply as background of the tabs
      */
     @Composable
@@ -125,30 +134,38 @@ abstract class NavigatorScreen<T : NavigatorTab<*>>(
     private fun SideNavigationArrangement(
         modifier: Modifier,
         sideBarWidth: Dp,
+        navigationBarColor: Color,
         backgroundTab: Color,
     ) {
         Row {
             NavigationRail(
                 modifier = modifier
                     .width(sideBarWidth),
+                containerColor = navigationBarColor,
                 header = { SideNavigationHeaderContent() }
             ) {
-                tabs.forEachIndexed { index, tab ->
-                    SideNavigationItem(
-                        index = index,
-                        tab = tab
-                    )
-                }
                 Column(
                     modifier = Modifier
                         .fillMaxSize()
-                        .padding(
-                            bottom = 16.dp
-                        ),
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.Bottom,
-                    content = { SideNavigationFooterContent() }
-                )
+                        .verticalScroll(rememberScrollState()),
+                ) {
+                    tabs.forEachIndexed { index, tab ->
+                        SideNavigationItem(
+                            index = index,
+                            tab = tab
+                        )
+                    }
+                    Column(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(
+                                vertical = 16.dp
+                            ),
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement.Bottom,
+                        content = { SideNavigationFooterContent() }
+                    )
+                }
             }
             Column(
                 modifier = Modifier
@@ -232,6 +249,7 @@ abstract class NavigatorScreen<T : NavigatorTab<*>>(
      * Custom [BottomAppBar] displayed on the [MEDIUM_EXPANDED_CONTENT] and [COMPACT_CONTENT] responsive screen classes
      *
      * @param modifier The modifier to apply to the navigation bar
+     * @param navigationBarColor The color to apply to the navigation bars
      * @param backgroundTab The color to apply as background of the tabs
      */
     @Composable
@@ -240,6 +258,7 @@ abstract class NavigatorScreen<T : NavigatorTab<*>>(
     )
     private fun BottomNavigationArrangement(
         modifier: Modifier,
+        navigationBarColor: Color,
         backgroundTab: Color,
     ) {
         Box(
@@ -257,7 +276,8 @@ abstract class NavigatorScreen<T : NavigatorTab<*>>(
             )
             BottomAppBar(
                 modifier = modifier
-                    .align(Alignment.BottomCenter)
+                    .align(Alignment.BottomCenter),
+                containerColor = navigationBarColor
             ) {
                 tabs.forEachIndexed { index, tab ->
                     BottomNavigationItem(
