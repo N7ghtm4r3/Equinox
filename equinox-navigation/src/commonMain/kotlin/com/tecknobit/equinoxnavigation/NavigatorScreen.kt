@@ -174,7 +174,7 @@ abstract class NavigatorScreen<T : NavigatorTab<*>>(
     @ResponsiveClassComponent(
         classes = [EXPANDED_CONTENT, MEDIUM_CONTENT]
     )
-    protected open fun SideNavigationHeaderContent() {
+    protected open fun ColumnScope.SideNavigationHeaderContent() {
     }
 
     /**
@@ -184,7 +184,7 @@ abstract class NavigatorScreen<T : NavigatorTab<*>>(
     @ResponsiveClassComponent(
         classes = [EXPANDED_CONTENT, MEDIUM_CONTENT]
     )
-    protected open fun SideNavigationFooterContent() {
+    protected open fun ColumnScope.SideNavigationFooterContent() {
     }
 
     /**
