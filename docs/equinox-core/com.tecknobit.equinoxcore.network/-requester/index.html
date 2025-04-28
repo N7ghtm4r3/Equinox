@@ -1,0 +1,675 @@
+<!doctype html>
+<html class="no-js">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
+    <title>Requester</title>
+<link href="../../../images/logo-icon.svg" rel="icon" type="image/svg">    <script>var pathToRoot = "../../../";</script>
+    <script>document.documentElement.classList.replace("no-js","js");</script>
+    <script>const storage = localStorage.getItem("dokka-dark-mode")
+    if (storage == null) {
+        const osDarkSchemePreferred = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+        if (osDarkSchemePreferred === true) {
+            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+    } else {
+        const savedDarkMode = JSON.parse(storage)
+        if(savedDarkMode === true) {
+            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+    }
+    </script>
+<script type="text/javascript" src="https://unpkg.com/kotlin-playground@1/dist/playground.min.js" async></script>
+<script type="text/javascript" src="../../../scripts/sourceset_dependencies.js" async></script>
+<link href="../../../styles/style.css" rel="Stylesheet">
+<link href="../../../styles/main.css" rel="Stylesheet">
+<link href="../../../styles/prism.css" rel="Stylesheet">
+<link href="../../../styles/logo-styles.css" rel="Stylesheet">
+<link href="../../../styles/font-jb-sans-auto.css" rel="Stylesheet">
+<link href="../../../ui-kit/ui-kit.min.css" rel="Stylesheet">
+<script type="text/javascript" src="../../../scripts/clipboard.js" async></script>
+<script type="text/javascript" src="../../../scripts/navigation-loader.js" async></script>
+<script type="text/javascript" src="../../../scripts/platform-content-handler.js" async></script>
+<script type="text/javascript" src="../../../scripts/main.js" defer></script>
+<script type="text/javascript" src="../../../scripts/prism.js" async></script>
+<script type="text/javascript" src="../../../ui-kit/ui-kit.min.js" defer></script>
+<script type="text/javascript" src="../../../scripts/symbol-parameters-wrapper_deferred.js" defer></script></head>
+<body>
+    <div class="root">
+    <nav class="navigation theme-dark" id="navigation-wrapper">
+<a class="library-name--link" href="../../../index.html">
+                    Equinox
+            </a>        <button class="navigation-controls--btn navigation-controls--btn_toc ui-kit_mobile-only" id="toc-toggle" type="button">Toggle table of contents
+        </button>
+        <div class="navigation-controls--break ui-kit_mobile-only"></div>
+        <div class="library-version" id="library-version">1.1.1
+        </div>
+        <div class="navigation-controls">
+        <div class="filter-section filter-section_loading" id="filter-section">
+                <button class="platform-tag platform-selector common-like" data-active="" data-filter=":equinox-core:dokkaHtmlPartial/commonMain">common</button>
+            <div class="dropdown filter-section--dropdown" data-role="dropdown" id="filter-section-dropdown">
+                <button class="button button_dropdown filter-section--dropdown-toggle" role="combobox" data-role="dropdown-toggle" aria-controls="platform-tags-listbox" aria-haspopup="listbox" aria-expanded="false" aria-label="Toggle source sets"></button>
+                <ul role="listbox" id="platform-tags-listbox" class="dropdown--list" data-role="dropdown-listbox">
+                    <div class="dropdown--header"><span>Platform filter</span>
+                        <button class="button" data-role="dropdown-toggle" aria-label="Close platform filter">
+                            <i class="ui-kit-icon ui-kit-icon_cross"></i>
+                        </button>
+                    </div>
+                        <li role="option" class="dropdown--option platform-selector-option common-like" tabindex="0">
+                            <label class="checkbox">
+                                <input type="checkbox" class="checkbox--input" id=":equinox-core:dokkaHtmlPartial/commonMain" data-filter=":equinox-core:dokkaHtmlPartial/commonMain">
+                                <span class="checkbox--icon"></span>
+                                common
+                            </label>
+                        </li>
+                </ul>
+                <div class="dropdown--overlay"></div>
+            </div>
+        </div>
+            <button class="navigation-controls--btn navigation-controls--btn_theme" id="theme-toggle-button" type="button">Switch theme
+            </button>
+            <div class="navigation-controls--btn navigation-controls--btn_search" id="searchBar" role="button">Search in
+                API
+            </div>
+        </div>
+    </nav>
+        <div id="container">
+            <div class="sidebar" id="leftColumn">
+                <div class="dropdown theme-dark_mobile" data-role="dropdown" id="toc-dropdown">
+                    <ul role="listbox" id="toc-listbox" class="dropdown--list dropdown--list_toc-list" data-role="dropdown-listbox">
+                        <div class="dropdown--header">
+                            <span>
+                                    Equinox
+                            </span>
+                            <button class="button" data-role="dropdown-toggle" aria-label="Close table of contents">
+                                <i class="ui-kit-icon ui-kit-icon_cross"></i>
+                            </button>
+                        </div>
+                        <div class="sidebar--inner" id="sideMenu"></div>
+                    </ul>
+                    <div class="dropdown--overlay"></div>
+                </div>
+            </div>
+            <div id="main">
+<div class="main-content" data-page-type="classlike" id="content" pageids="equinox-core::com.tecknobit.equinoxcore.network/Requester///PointingToDeclaration//-2082165282">
+  <div class="breadcrumbs"><a href="../../index.html">equinox-core</a><span class="delimiter">/</span><a href="../index.html">com.tecknobit.equinoxcore.network</a><span class="delimiter">/</span><span class="current">Requester</span></div>
+  <div class="cover ">
+    <h1 class="cover"><span><span>Requester</span></span></h1>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":equinox-core:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">class </span><a href="index.html">Requester</a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword">var </span>host<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">var </span>userId<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span><span class="token operator"> = </span>null<span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">var </span>userToken<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span><span class="token operator"> = </span>null<span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">var </span>debugMode<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a><span class="token operator"> = </span><span class="token boolean">false</span><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>requestTimeout<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-long/index.html">Long</a><span class="token operator"> = </span>DEFAULT_REQUEST_TIMEOUT<span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>connectionTimeout<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-long/index.html">Long</a><span class="token operator"> = </span>DEFAULT_REQUEST_TIMEOUT<span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>socketTimeout<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-long/index.html">Long</a><span class="token operator"> = </span>DEFAULT_REQUEST_TIMEOUT<span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>connectionErrorMessage<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>byPassSSLValidation<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a><span class="token operator"> = </span><span class="token boolean">false</span></span></span><span class="token punctuation">)</span></div><p class="paragraph">The <strong>Requester</strong> class is useful to communicate with backend based on the <strong>SpringBoot</strong> framework</p><span class="kdoc-tag"><h4 class="">Author</h4><p class="paragraph">N7ghtm4r3 - Tecknobit</p></span><h4 class="">Parameters</h4><div class="table"><div class="table-row" data-filterable-current=":equinox-core:dokkaHtmlPartial/commonMain" data-filterable-set=":equinox-core:dokkaHtmlPartial/commonMain"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><u><span><span>host</span></span></u></div></span></div><div><div class="title"><p class="paragraph">The host address where is running the backend</p></div></div></div></div><div class="table-row" data-filterable-current=":equinox-core:dokkaHtmlPartial/commonMain" data-filterable-set=":equinox-core:dokkaHtmlPartial/commonMain"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><u><span>user</span><wbr><span><span>Id</span></span></u></div></span></div><div><div class="title"><p class="paragraph">The user identifier</p></div></div></div></div><div class="table-row" data-filterable-current=":equinox-core:dokkaHtmlPartial/commonMain" data-filterable-set=":equinox-core:dokkaHtmlPartial/commonMain"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><u><span>user</span><wbr><span><span>Token</span></span></u></div></span></div><div><div class="title"><p class="paragraph">The user token</p></div></div></div></div><div class="table-row" data-filterable-current=":equinox-core:dokkaHtmlPartial/commonMain" data-filterable-set=":equinox-core:dokkaHtmlPartial/commonMain"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><u><span>debug</span><wbr><span><span>Mode</span></span></u></div></span></div><div><div class="title"><p class="paragraph">Whether the requester is still in development and who is developing needs the log of the requester's workflow, if it is enabled all the details of the requests sent and the errors occurred will be printed in the console</p></div></div></div></div><div class="table-row" data-filterable-current=":equinox-core:dokkaHtmlPartial/commonMain" data-filterable-set=":equinox-core:dokkaHtmlPartial/commonMain"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><u><span>request</span><wbr><span><span>Timeout</span></span></u></div></span></div><div><div class="title"><p class="paragraph">Maximum time to wait before a timeout exception is thrown</p></div></div></div></div><div class="table-row" data-filterable-current=":equinox-core:dokkaHtmlPartial/commonMain" data-filterable-set=":equinox-core:dokkaHtmlPartial/commonMain"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><u><span>connection</span><wbr><span><span>Timeout</span></span></u></div></span></div><div><div class="title"><p class="paragraph">Time to keep alive request then throw the connection refused error</p></div></div></div></div><div class="table-row" data-filterable-current=":equinox-core:dokkaHtmlPartial/commonMain" data-filterable-set=":equinox-core:dokkaHtmlPartial/commonMain"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><u><span>socket</span><wbr><span><span>Timeout</span></span></u></div></span></div><div><div class="title"><p class="paragraph">Maximum idle time to wait during an I/O operation on a socket</p></div></div></div></div><div class="table-row" data-filterable-current=":equinox-core:dokkaHtmlPartial/commonMain" data-filterable-set=":equinox-core:dokkaHtmlPartial/commonMain"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><u><span>connection</span><wbr><span>Error</span><wbr><span><span>Message</span></span></u></div></span></div><div><div class="title"><p class="paragraph">The error to send when a connection error occurred</p></div></div></div></div><div class="table-row" data-filterable-current=":equinox-core:dokkaHtmlPartial/commonMain" data-filterable-set=":equinox-core:dokkaHtmlPartial/commonMain"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><u><span>by</span><wbr><span>Pass</span><wbr><span><span>SSLValidation</span></span></u></div></span></div><div><div class="title"><p class="paragraph">Whether bypass the <strong>SSL</strong> certificates validation, this for example when is a self-signed the certificate USE WITH CAUTION</p></div></div></div></div></div></div></div>
+  </div>
+  <div class="tabbedcontent">
+    <div class="tabs-section" tabs-section="tabs-section"><button class="section-tab" data-active="" data-togglable="CONSTRUCTOR,TYPE,PROPERTY,FUNCTION">Members</button></div>
+    <div class="tabs-section-body">
+      <div data-togglable="CONSTRUCTOR">
+        <h2 class="">Constructors</h2>
+        <div class="table"><a data-name="1413442940%2FConstructors%2F-2082165282" anchor-label="Requester" id="1413442940%2FConstructors%2F-2082165282" data-filterable-set=":equinox-core:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-togglable="CONSTRUCTOR" data-filterable-current=":equinox-core:dokkaHtmlPartial/commonMain" data-filterable-set=":equinox-core:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-requester.html"><span><span>Requester</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1413442940%2FConstructors%2F-2082165282"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":equinox-core:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">constructor</span><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">host<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">userId<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span><span class="token operator"> = </span>null<span class="token punctuation">, </span></span><span class="parameter ">userToken<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span><span class="token operator"> = </span>null<span class="token punctuation">, </span></span><span class="parameter ">debugMode<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a><span class="token operator"> = </span><span class="token boolean">false</span><span class="token punctuation">, </span></span><span class="parameter ">requestTimeout<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-long/index.html">Long</a><span class="token operator"> = </span>DEFAULT_REQUEST_TIMEOUT<span class="token punctuation">, </span></span><span class="parameter ">connectionTimeout<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-long/index.html">Long</a><span class="token operator"> = </span>DEFAULT_REQUEST_TIMEOUT<span class="token punctuation">, </span></span><span class="parameter ">socketTimeout<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-long/index.html">Long</a><span class="token operator"> = </span>DEFAULT_REQUEST_TIMEOUT<span class="token punctuation">, </span></span><span class="parameter ">connectionErrorMessage<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">byPassSSLValidation<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a><span class="token operator"> = </span><span class="token boolean">false</span></span></span><span class="token punctuation">)</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div data-togglable="TYPE">
+        <h2 class="">Types</h2>
+        <div class="table"><a data-name="-2075359368%2FClasslikes%2F-2082165282" anchor-label="Companion" id="-2075359368%2FClasslikes%2F-2082165282" data-filterable-set=":equinox-core:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":equinox-core:dokkaHtmlPartial/commonMain" data-filterable-set=":equinox-core:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-companion/index.html"><span><span>Companion</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-2075359368%2FClasslikes%2F-2082165282"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":equinox-core:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">object </span><a href="-companion/index.html">Companion</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div data-togglable="PROPERTY">
+        <h2 class="">Properties</h2>
+        <div class="table"><a data-name="454307924%2FProperties%2F-2082165282" anchor-label="byPassSSLValidation" id="454307924%2FProperties%2F-2082165282" data-filterable-set=":equinox-core:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":equinox-core:dokkaHtmlPartial/commonMain" data-filterable-set=":equinox-core:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="by-pass-s-s-l-validation.html"><span>by</span><wbr><span>Pass</span><wbr><span><span>SSLValidation</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="454307924%2FProperties%2F-2082165282"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":equinox-core:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">protected </span><span class="token keyword">val </span><a href="by-pass-s-s-l-validation.html">byPassSSLValidation</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a><span class="token operator"> = </span><span class="token boolean">false</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-148845172%2FProperties%2F-2082165282" anchor-label="connectionErrorMessage" id="-148845172%2FProperties%2F-2082165282" data-filterable-set=":equinox-core:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":equinox-core:dokkaHtmlPartial/commonMain" data-filterable-set=":equinox-core:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="connection-error-message.html"><span>connection</span><wbr><span>Error</span><wbr><span><span>Message</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-148845172%2FProperties%2F-2082165282"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":equinox-core:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">protected </span><span class="token keyword">val </span><a href="connection-error-message.html">connectionErrorMessage</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-528261394%2FProperties%2F-2082165282" anchor-label="connectionTimeout" id="-528261394%2FProperties%2F-2082165282" data-filterable-set=":equinox-core:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":equinox-core:dokkaHtmlPartial/commonMain" data-filterable-set=":equinox-core:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="connection-timeout.html"><span>connection</span><wbr><span><span>Timeout</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-528261394%2FProperties%2F-2082165282"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":equinox-core:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">protected </span><span class="token keyword">val </span><a href="connection-timeout.html">connectionTimeout</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-long/index.html">Long</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1857865819%2FProperties%2F-2082165282" anchor-label="debugMode" id="1857865819%2FProperties%2F-2082165282" data-filterable-set=":equinox-core:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":equinox-core:dokkaHtmlPartial/commonMain" data-filterable-set=":equinox-core:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="debug-mode.html"><span>debug</span><wbr><span><span>Mode</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1857865819%2FProperties%2F-2082165282"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":equinox-core:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">protected </span><span class="token keyword">var </span><a href="debug-mode.html">debugMode</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="51253281%2FProperties%2F-2082165282" anchor-label="host" id="51253281%2FProperties%2F-2082165282" data-filterable-set=":equinox-core:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":equinox-core:dokkaHtmlPartial/commonMain" data-filterable-set=":equinox-core:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="host.html"><span><span>host</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="51253281%2FProperties%2F-2082165282"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":equinox-core:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">protected </span><span class="token keyword">var </span><a href="host.html">host</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="856133361%2FProperties%2F-2082165282" anchor-label="initHost" id="856133361%2FProperties%2F-2082165282" data-filterable-set=":equinox-core:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":equinox-core:dokkaHtmlPartial/commonMain" data-filterable-set=":equinox-core:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="init-host.html"><span>init</span><wbr><span><span>Host</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="856133361%2FProperties%2F-2082165282"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":equinox-core:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">private </span><span class="token keyword">val </span><a href="init-host.html">initHost</a><span class="token operator">: </span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator"> -&gt; </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-unit/index.html">Unit</a></div><div class="brief "><p class="paragraph">`initHost** Method used to init correctly the <a href="host.html">host</a> value</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="690108886%2FProperties%2F-2082165282" anchor-label="interceptorAction" id="690108886%2FProperties%2F-2082165282" data-filterable-set=":equinox-core:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":equinox-core:dokkaHtmlPartial/commonMain" data-filterable-set=":equinox-core:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="interceptor-action.html"><span>interceptor</span><wbr><span><span>Action</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="690108886%2FProperties%2F-2082165282"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":equinox-core:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">protected </span><span class="token keyword">var </span><a href="interceptor-action.html">interceptorAction</a><span class="token operator">: </span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator"> -&gt; </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-unit/index.html">Unit</a><span class="token operator">?</span></div><div class="brief "><p class="paragraph"><code class="lang-kotlin">interceptorAction</code> The callback of the interceptor to execute when a request has been sent, if not specified is `null** by default and no interceptions will be executed</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="422979506%2FProperties%2F-2082165282" anchor-label="ktorClient" id="422979506%2FProperties%2F-2082165282" data-filterable-set=":equinox-core:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":equinox-core:dokkaHtmlPartial/commonMain" data-filterable-set=":equinox-core:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="ktor-client.html"><span>ktor</span><wbr><span><span>Client</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="422979506%2FProperties%2F-2082165282"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":equinox-core:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">protected </span><span class="token keyword">var </span><a href="ktor-client.html">ktorClient</a><span class="token operator">: </span><span data-unresolved-link="io.ktor.client/HttpClient///PointingToDeclaration/">HttpClient</span></div><div class="brief "><p class="paragraph"><code class="lang-kotlin">ktorClient</code> the HTTP client used to make the requests.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-200820158%2FProperties%2F-2082165282" anchor-label="loggerMutex" id="-200820158%2FProperties%2F-2082165282" data-filterable-set=":equinox-core:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":equinox-core:dokkaHtmlPartial/commonMain" data-filterable-set=":equinox-core:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="logger-mutex.html"><span>logger</span><wbr><span><span>Mutex</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-200820158%2FProperties%2F-2082165282"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":equinox-core:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">private </span><span class="token keyword">val </span><a href="logger-mutex.html">loggerMutex</a><span class="token operator">: </span><span data-unresolved-link="kotlinx.coroutines.sync/Mutex///PointingToDeclaration/">Mutex</span></div><div class="brief "><p class="paragraph"><code class="lang-kotlin">loggerMutex</code> the mutex used to log atomically the log messages if <a href="debug-mode.html">debugMode</a> is <code class="lang-kotlin">true</code></p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="2143959438%2FProperties%2F-2082165282" anchor-label="mustValidateCertificates" id="2143959438%2FProperties%2F-2082165282" data-filterable-set=":equinox-core:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":equinox-core:dokkaHtmlPartial/commonMain" data-filterable-set=":equinox-core:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="must-validate-certificates.html"><span>must</span><wbr><span>Validate</span><wbr><span><span>Certificates</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="2143959438%2FProperties%2F-2082165282"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":equinox-core:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">protected </span><span class="token keyword">var </span><a href="must-validate-certificates.html">mustValidateCertificates</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a></div><div class="brief "><p class="paragraph">`mustValidateCertificates** flag whether the requests must validate the <strong>SSL</strong> certificates, this for example when the SSL is a self-signed certificate</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-786971081%2FProperties%2F-2082165282" anchor-label="requestTimeout" id="-786971081%2FProperties%2F-2082165282" data-filterable-set=":equinox-core:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":equinox-core:dokkaHtmlPartial/commonMain" data-filterable-set=":equinox-core:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="request-timeout.html"><span>request</span><wbr><span><span>Timeout</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-786971081%2FProperties%2F-2082165282"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":equinox-core:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">protected </span><span class="token keyword">val </span><a href="request-timeout.html">requestTimeout</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-long/index.html">Long</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-493828733%2FProperties%2F-2082165282" anchor-label="socketTimeout" id="-493828733%2FProperties%2F-2082165282" data-filterable-set=":equinox-core:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":equinox-core:dokkaHtmlPartial/commonMain" data-filterable-set=":equinox-core:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="socket-timeout.html"><span>socket</span><wbr><span><span>Timeout</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-493828733%2FProperties%2F-2082165282"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":equinox-core:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">protected </span><span class="token keyword">val </span><a href="socket-timeout.html">socketTimeout</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-long/index.html">Long</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1901391293%2FProperties%2F-2082165282" anchor-label="userId" id="-1901391293%2FProperties%2F-2082165282" data-filterable-set=":equinox-core:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":equinox-core:dokkaHtmlPartial/commonMain" data-filterable-set=":equinox-core:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="user-id.html"><span>user</span><wbr><span><span>Id</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1901391293%2FProperties%2F-2082165282"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":equinox-core:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">protected </span><span class="token keyword">var </span><a href="user-id.html">userId</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1342703357%2FProperties%2F-2082165282" anchor-label="userToken" id="-1342703357%2FProperties%2F-2082165282" data-filterable-set=":equinox-core:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":equinox-core:dokkaHtmlPartial/commonMain" data-filterable-set=":equinox-core:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="user-token.html"><span>user</span><wbr><span><span>Token</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1342703357%2FProperties%2F-2082165282"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":equinox-core:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">protected </span><span class="token keyword">var </span><a href="user-token.html">userToken</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div data-togglable="FUNCTION">
+        <h2 class="">Functions</h2>
+        <div class="table"><a data-name="-1343720051%2FFunctions%2F-2082165282" anchor-label="attachInterceptorOnRequest" id="-1343720051%2FFunctions%2F-2082165282" data-filterable-set=":equinox-core:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":equinox-core:dokkaHtmlPartial/commonMain" data-filterable-set=":equinox-core:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="attach-interceptor-on-request.html"><span>attach</span><wbr><span>Interceptor</span><wbr><span>On</span><wbr><span><span>Request</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1343720051%2FFunctions%2F-2082165282"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":equinox-core:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">fun </span><a href="attach-interceptor-on-request.html"><span class="token function">attachInterceptorOnRequest</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">interceptor<span class="token operator">: </span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator"> -&gt; </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-unit/index.html">Unit</a></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Method used to attach a new interceptor to the <a href="index.html">Requester</a> to execute it when a request has been sent</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-21484717%2FFunctions%2F-2082165282" anchor-label="changeHost" id="-21484717%2FFunctions%2F-2082165282" data-filterable-set=":equinox-core:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":equinox-core:dokkaHtmlPartial/commonMain" data-filterable-set=":equinox-core:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="change-host.html"><span>change</span><wbr><span><span>Host</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-21484717%2FFunctions%2F-2082165282"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":equinox-core:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">fun </span><a href="change-host.html"><span class="token function">changeHost</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">host<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Method used to change, during the runtime for example when the session changed, the host address to make the requests</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="128501088%2FFunctions%2F-2082165282" anchor-label="clearSession" id="128501088%2FFunctions%2F-2082165282" data-filterable-set=":equinox-core:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":equinox-core:dokkaHtmlPartial/commonMain" data-filterable-set=":equinox-core:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="clear-session.html"><span>clear</span><wbr><span><span>Session</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="128501088%2FFunctions%2F-2082165282"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":equinox-core:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">fun </span><a href="clear-session.html"><span class="token function">clearSession</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Method used to clear the current session of the requester, for example, after user logged out or changed the auth credentials</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-148845172%2FFunctions%2F-2082165282" anchor-label="connectionErrorMessage" id="-148845172%2FFunctions%2F-2082165282" data-filterable-set=":equinox-core:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":equinox-core:dokkaHtmlPartial/commonMain" data-filterable-set=":equinox-core:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="connection-error-message.html"><span>connection</span><wbr><span>Error</span><wbr><span><span>Message</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-148845172%2FFunctions%2F-2082165282"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":equinox-core:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">protected </span><span class="token keyword">fun </span><a href="connection-error-message.html"><span class="token function">connectionErrorMessage</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><span data-unresolved-link="kotlinx.serialization.json/JsonObject///PointingToDeclaration/">JsonObject</span></div><div class="brief "><p class="paragraph">Method used to set the <a href="-companion/-r-e-s-p-o-n-s-e_-s-t-a-t-u-s_-k-e-y.html">RESPONSE_STATUS_KEY</a> to send when an error during the connection occurred</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="976281248%2FFunctions%2F-2082165282" anchor-label="createPaginationQuery" id="976281248%2FFunctions%2F-2082165282" data-filterable-set=":equinox-core:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":equinox-core:dokkaHtmlPartial/commonMain" data-filterable-set=":equinox-core:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="create-pagination-query.html"><span>create</span><wbr><span>Pagination</span><wbr><span><span>Query</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="976281248%2FFunctions%2F-2082165282"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":equinox-core:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">protected </span><span class="token keyword">fun </span><a href="create-pagination-query.html"><span class="token function">createPaginationQuery</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">page<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter ">pageSize<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><span data-unresolved-link="kotlinx.serialization.json/JsonObject///PointingToDeclaration/">JsonObject</span></div><div class="brief "><p class="paragraph">Method used to create the query with the pagination parameters</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="415907805%2FFunctions%2F-2082165282" anchor-label="execDelete" id="415907805%2FFunctions%2F-2082165282" data-filterable-set=":equinox-core:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":equinox-core:dokkaHtmlPartial/commonMain" data-filterable-set=":equinox-core:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="exec-delete.html"><span>exec</span><wbr><span><span>Delete</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="415907805%2FFunctions%2F-2082165282"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":equinox-core:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">protected </span><span class="token keyword">suspend </span><span class="token keyword">fun </span><a href="exec-delete.html"><span class="token function">execDelete</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">endpoint<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">headers<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/-map/index.html">Map</a><span class="token operator">&lt;</span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-any/index.html">Any</a><span class="token operator">&gt;</span><span class="token operator"> = </span>emptyMap()<span class="token punctuation">, </span></span><span class="parameter ">query<span class="token operator">: </span><span data-unresolved-link="kotlinx.serialization.json/JsonObject///PointingToDeclaration/">JsonObject</span><span class="token operator">?</span><span class="token operator"> = </span>null<span class="token punctuation">, </span></span><span class="parameter ">payload<span class="token operator">: </span><span data-unresolved-link="kotlinx.serialization.json/JsonObject///PointingToDeclaration/">JsonObject</span><span class="token operator">?</span><span class="token operator"> = </span>null</span></span><span class="token punctuation">)</span><span class="token operator">: </span><span data-unresolved-link="kotlinx.serialization.json/JsonObject///PointingToDeclaration/">JsonObject</span></div><div class="brief "><p class="paragraph">Method used to execute a <a href="../-request-method/-d-e-l-e-t-e/index.html">RequestMethod.DELETE</a> request to the backend</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="310119676%2FFunctions%2F-2082165282" anchor-label="execGet" id="310119676%2FFunctions%2F-2082165282" data-filterable-set=":equinox-core:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":equinox-core:dokkaHtmlPartial/commonMain" data-filterable-set=":equinox-core:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="exec-get.html"><span>exec</span><wbr><span><span>Get</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="310119676%2FFunctions%2F-2082165282"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":equinox-core:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">protected </span><span class="token keyword">suspend </span><span class="token keyword">fun </span><a href="exec-get.html"><span class="token function">execGet</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">endpoint<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">headers<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/-map/index.html">Map</a><span class="token operator">&lt;</span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-any/index.html">Any</a><span class="token operator">&gt;</span><span class="token operator"> = </span>emptyMap()<span class="token punctuation">, </span></span><span class="parameter ">query<span class="token operator">: </span><span data-unresolved-link="kotlinx.serialization.json/JsonObject///PointingToDeclaration/">JsonObject</span><span class="token operator">?</span><span class="token operator"> = </span>null</span></span><span class="token punctuation">)</span><span class="token operator">: </span><span data-unresolved-link="kotlinx.serialization.json/JsonObject///PointingToDeclaration/">JsonObject</span></div><div class="brief "><p class="paragraph">Method used to execute a <a href="../-request-method/-g-e-t/index.html">RequestMethod.GET</a> request to the backend</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1791708950%2FFunctions%2F-2082165282" anchor-label="execMultipartRequest" id="-1791708950%2FFunctions%2F-2082165282" data-filterable-set=":equinox-core:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":equinox-core:dokkaHtmlPartial/commonMain" data-filterable-set=":equinox-core:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="exec-multipart-request.html"><span>exec</span><wbr><span>Multipart</span><wbr><span><span>Request</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1791708950%2FFunctions%2F-2082165282"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":equinox-core:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">protected </span><span class="token keyword">suspend </span><span class="token keyword">fun </span><a href="exec-multipart-request.html"><span class="token function">execMultipartRequest</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">endpoint<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">headers<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/-map/index.html">Map</a><span class="token operator">&lt;</span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-any/index.html">Any</a><span class="token operator">&gt;</span><span class="token operator"> = </span>emptyMap()<span class="token punctuation">, </span></span><span class="parameter ">query<span class="token operator">: </span><span data-unresolved-link="kotlinx.serialization.json/JsonObject///PointingToDeclaration/">JsonObject</span><span class="token operator">?</span><span class="token operator"> = </span>null<span class="token punctuation">, </span></span><span class="parameter ">payload<span class="token operator">: </span><span data-unresolved-link="io.ktor.http.content/PartData///PointingToDeclaration/">PartData</span></span></span><span class="token punctuation">)</span><span class="token operator">: </span><span data-unresolved-link="kotlinx.serialization.json/JsonObject///PointingToDeclaration/">JsonObject</span></div><div class="symbol monospace"><span class="token keyword">protected </span><span class="token keyword">suspend </span><span class="token keyword">fun </span><a href="exec-multipart-request.html"><span class="token function">execMultipartRequest</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">endpoint<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">headers<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/-map/index.html">Map</a><span class="token operator">&lt;</span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-any/index.html">Any</a><span class="token operator">&gt;</span><span class="token operator"> = </span>emptyMap()<span class="token punctuation">, </span></span><span class="parameter ">query<span class="token operator">: </span><span data-unresolved-link="kotlinx.serialization.json/JsonObject///PointingToDeclaration/">JsonObject</span><span class="token operator">?</span><span class="token operator"> = </span>null<span class="token punctuation">, </span></span><span class="parameter ">payload<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/-list/index.html">List</a><span class="token operator">&lt;</span><span data-unresolved-link="io.ktor.http.content/PartData///PointingToDeclaration/">PartData</span><span class="token operator">&gt;</span></span></span><span class="token punctuation">)</span><span class="token operator">: </span><span data-unresolved-link="kotlinx.serialization.json/JsonObject///PointingToDeclaration/">JsonObject</span></div><div class="brief "><p class="paragraph">Method used to execute a multipart request to the backend</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1600538759%2FFunctions%2F-2082165282" anchor-label="execPatch" id="-1600538759%2FFunctions%2F-2082165282" data-filterable-set=":equinox-core:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":equinox-core:dokkaHtmlPartial/commonMain" data-filterable-set=":equinox-core:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="exec-patch.html"><span>exec</span><wbr><span><span>Patch</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1600538759%2FFunctions%2F-2082165282"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":equinox-core:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">protected </span><span class="token keyword">suspend </span><span class="token keyword">fun </span><a href="exec-patch.html"><span class="token function">execPatch</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">endpoint<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">headers<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/-map/index.html">Map</a><span class="token operator">&lt;</span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-any/index.html">Any</a><span class="token operator">&gt;</span><span class="token operator"> = </span>emptyMap()<span class="token punctuation">, </span></span><span class="parameter ">query<span class="token operator">: </span><span data-unresolved-link="kotlinx.serialization.json/JsonObject///PointingToDeclaration/">JsonObject</span><span class="token operator">?</span><span class="token operator"> = </span>null<span class="token punctuation">, </span></span><span class="parameter ">payload<span class="token operator">: </span><span data-unresolved-link="kotlinx.serialization.json/JsonObject///PointingToDeclaration/">JsonObject</span><span class="token operator"> = </span>JsonObject(emptyMap())</span></span><span class="token punctuation">)</span><span class="token operator">: </span><span data-unresolved-link="kotlinx.serialization.json/JsonObject///PointingToDeclaration/">JsonObject</span></div><div class="brief "><p class="paragraph">Method used to execute a <a href="../-request-method/-p-a-t-c-h/index.html">RequestMethod.PATCH</a> request to the backend</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1408192133%2FFunctions%2F-2082165282" anchor-label="execPost" id="-1408192133%2FFunctions%2F-2082165282" data-filterable-set=":equinox-core:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":equinox-core:dokkaHtmlPartial/commonMain" data-filterable-set=":equinox-core:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="exec-post.html"><span>exec</span><wbr><span><span>Post</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1408192133%2FFunctions%2F-2082165282"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":equinox-core:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">protected </span><span class="token keyword">suspend </span><span class="token keyword">fun </span><a href="exec-post.html"><span class="token function">execPost</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">endpoint<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">headers<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/-map/index.html">Map</a><span class="token operator">&lt;</span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-any/index.html">Any</a><span class="token operator">&gt;</span><span class="token operator"> = </span>emptyMap()<span class="token punctuation">, </span></span><span class="parameter ">query<span class="token operator">: </span><span data-unresolved-link="kotlinx.serialization.json/JsonObject///PointingToDeclaration/">JsonObject</span><span class="token operator">?</span><span class="token operator"> = </span>null<span class="token punctuation">, </span></span><span class="parameter ">payload<span class="token operator">: </span><span data-unresolved-link="kotlinx.serialization.json/JsonObject///PointingToDeclaration/">JsonObject</span><span class="token operator"> = </span>JsonObject(emptyMap())</span></span><span class="token punctuation">)</span><span class="token operator">: </span><span data-unresolved-link="kotlinx.serialization.json/JsonObject///PointingToDeclaration/">JsonObject</span></div><div class="brief "><p class="paragraph">Method used to execute a <a href="../-request-method/-p-o-s-t/index.html">RequestMethod.POST</a> request to the backend</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1745282432%2FFunctions%2F-2082165282" anchor-label="execPut" id="1745282432%2FFunctions%2F-2082165282" data-filterable-set=":equinox-core:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":equinox-core:dokkaHtmlPartial/commonMain" data-filterable-set=":equinox-core:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="exec-put.html"><span>exec</span><wbr><span><span>Put</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1745282432%2FFunctions%2F-2082165282"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":equinox-core:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">protected </span><span class="token keyword">suspend </span><span class="token keyword">fun </span><a href="exec-put.html"><span class="token function">execPut</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">endpoint<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">headers<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/-map/index.html">Map</a><span class="token operator">&lt;</span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-any/index.html">Any</a><span class="token operator">&gt;</span><span class="token operator"> = </span>emptyMap()<span class="token punctuation">, </span></span><span class="parameter ">query<span class="token operator">: </span><span data-unresolved-link="kotlinx.serialization.json/JsonObject///PointingToDeclaration/">JsonObject</span><span class="token operator">?</span><span class="token operator"> = </span>null<span class="token punctuation">, </span></span><span class="parameter ">payload<span class="token operator">: </span><span data-unresolved-link="kotlinx.serialization.json/JsonObject///PointingToDeclaration/">JsonObject</span><span class="token operator"> = </span>JsonObject(emptyMap())</span></span><span class="token punctuation">)</span><span class="token operator">: </span><span data-unresolved-link="kotlinx.serialization.json/JsonObject///PointingToDeclaration/">JsonObject</span></div><div class="brief "><p class="paragraph">Method used to execute a <a href="../-request-method/-p-u-t/index.html">RequestMethod.PUT</a> request to the backend</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-487916496%2FFunctions%2F-2082165282" anchor-label="execRequest" id="-487916496%2FFunctions%2F-2082165282" data-filterable-set=":equinox-core:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":equinox-core:dokkaHtmlPartial/commonMain" data-filterable-set=":equinox-core:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="exec-request.html"><span>exec</span><wbr><span><span>Request</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-487916496%2FFunctions%2F-2082165282"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":equinox-core:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">private </span><span class="token keyword">suspend </span><span class="token keyword">fun </span><a href="exec-request.html"><span class="token function">execRequest</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">method<span class="token operator">: </span><a href="../-request-method/index.html">RequestMethod</a><span class="token punctuation">, </span></span><span class="parameter ">endpoint<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">headers<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/-map/index.html">Map</a><span class="token operator">&lt;</span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-any/index.html">Any</a><span class="token operator">&gt;</span><span class="token punctuation">, </span></span><span class="parameter ">query<span class="token operator">: </span><span data-unresolved-link="kotlinx.serialization.json/JsonObject///PointingToDeclaration/">JsonObject</span><span class="token operator">?</span><span class="token operator"> = </span>null<span class="token punctuation">, </span></span><span class="parameter ">payload<span class="token operator">: </span><span data-unresolved-link="kotlinx.serialization.json/JsonObject///PointingToDeclaration/">JsonObject</span><span class="token operator">?</span><span class="token operator"> = </span>null</span></span><span class="token punctuation">)</span><span class="token operator">: </span><span data-unresolved-link="kotlinx.serialization.json/JsonObject///PointingToDeclaration/">JsonObject</span></div><div class="brief "><p class="paragraph">Method used to execute a request to the backend</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1348665340%2FFunctions%2F-2082165282" anchor-label="interceptRequest" id="1348665340%2FFunctions%2F-2082165282" data-filterable-set=":equinox-core:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":equinox-core:dokkaHtmlPartial/commonMain" data-filterable-set=":equinox-core:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="intercept-request.html"><span>intercept</span><wbr><span><span>Request</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1348665340%2FFunctions%2F-2082165282"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":equinox-core:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">protected </span><span class="token keyword">fun </span><a href="intercept-request.html"><span class="token function">interceptRequest</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Method used to execute the <a href="interceptor-action.html">interceptorAction</a> if it is specified by the <a href="attach-interceptor-on-request.html">attachInterceptorOnRequest</a> method</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-2060595101%2FFunctions%2F-2082165282" anchor-label="logError" id="-2060595101%2FFunctions%2F-2082165282" data-filterable-set=":equinox-core:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":equinox-core:dokkaHtmlPartial/commonMain" data-filterable-set=":equinox-core:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="log-error.html"><span>log</span><wbr><span><span>Error</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-2060595101%2FFunctions%2F-2082165282"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":equinox-core:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">private </span><span class="token keyword">fun </span><a href="log-error.html"><span class="token function">logError</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">exception<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-exception/index.html">Exception</a></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Method used to print a log of an exception occurred during a request sent if the <a href="debug-mode.html">debugMode</a> is enabled</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-874588900%2FFunctions%2F-2082165282" anchor-label="logHeaders" id="-874588900%2FFunctions%2F-2082165282" data-filterable-set=":equinox-core:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":equinox-core:dokkaHtmlPartial/commonMain" data-filterable-set=":equinox-core:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="log-headers.html"><span>log</span><wbr><span><span>Headers</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-874588900%2FFunctions%2F-2082165282"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":equinox-core:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">private </span><span class="token keyword">fun </span><a href="log-headers.html"><span class="token function">logHeaders</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">headers<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/-map/index.html">Map</a><span class="token operator">&lt;</span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-any/index.html">Any</a><span class="token operator">&gt;</span></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Method used to log the current headers used in the requests</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="2108288606%2FFunctions%2F-2082165282" anchor-label="logQuery" id="2108288606%2FFunctions%2F-2082165282" data-filterable-set=":equinox-core:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":equinox-core:dokkaHtmlPartial/commonMain" data-filterable-set=":equinox-core:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="log-query.html"><span>log</span><wbr><span><span>Query</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="2108288606%2FFunctions%2F-2082165282"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":equinox-core:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">private </span><span class="token keyword">fun </span><a href="log-query.html"><span class="token function">logQuery</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">query<span class="token operator">: </span><span data-unresolved-link="kotlinx.serialization.json/JsonObject///PointingToDeclaration/">JsonObject</span><span class="token operator">?</span></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Method used to log the current query used in the request</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1379774951%2FFunctions%2F-2082165282" anchor-label="logRequestInfo" id="-1379774951%2FFunctions%2F-2082165282" data-filterable-set=":equinox-core:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":equinox-core:dokkaHtmlPartial/commonMain" data-filterable-set=":equinox-core:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="log-request-info.html"><span>log</span><wbr><span>Request</span><wbr><span><span>Info</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1379774951%2FFunctions%2F-2082165282"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":equinox-core:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">private </span><span class="token keyword">suspend </span><span class="token keyword">fun </span><a href="log-request-info.html"><span class="token function">logRequestInfo</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">requestUrl<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">headers<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/-map/index.html">Map</a><span class="token operator">&lt;</span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-any/index.html">Any</a><span class="token operator">&gt;</span><span class="token punctuation">, </span></span><span class="parameter ">query<span class="token operator">: </span><span data-unresolved-link="kotlinx.serialization.json/JsonObject///PointingToDeclaration/">JsonObject</span><span class="token operator">?</span><span class="token punctuation">, </span></span><span class="parameter ">requestPayloadInfo<span class="token operator">: </span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator"> -&gt; </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-unit/index.html">Unit</a><span class="token punctuation">, </span></span><span class="parameter ">response<span class="token operator">: </span><span data-unresolved-link="kotlinx.serialization.json/JsonObject///PointingToDeclaration/">JsonObject</span><span class="token operator">?</span></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Method used to print the details of the request sent if the <a href="debug-mode.html">debugMode</a> is enabled</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-890053445%2FFunctions%2F-2082165282" anchor-label="prepareRequest" id="-890053445%2FFunctions%2F-2082165282" data-filterable-set=":equinox-core:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":equinox-core:dokkaHtmlPartial/commonMain" data-filterable-set=":equinox-core:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="prepare-request.html"><span>prepare</span><wbr><span><span>Request</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-890053445%2FFunctions%2F-2082165282"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":equinox-core:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">private </span><span class="token keyword">fun </span><span data-unresolved-link="io.ktor.client.request/HttpRequestBuilder///PointingToDeclaration/">HttpRequestBuilder</span><span class="token punctuation">.</span><a href="prepare-request.html"><span class="token function">prepareRequest</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">headers<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/-map/index.html">Map</a><span class="token operator">&lt;</span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-any/index.html">Any</a><span class="token operator">&gt;</span><span class="token punctuation">, </span></span><span class="parameter ">contentType<span class="token operator">: </span><span data-unresolved-link="io.ktor.http/ContentType///PointingToDeclaration/">ContentType</span><span class="token operator">?</span><span class="token operator"> = </span>null<span class="token punctuation">, </span></span><span class="parameter ">query<span class="token operator">: </span><span data-unresolved-link="kotlinx.serialization.json/JsonObject///PointingToDeclaration/">JsonObject</span><span class="token operator">?</span><span class="token operator"> = </span>null<span class="token punctuation">, </span></span><span class="parameter ">payload<span class="token operator">: </span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator"> -&gt; </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-unit/index.html">Unit</a><span class="token operator">?</span><span class="token operator"> = </span>null</span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Method used to prepare the details of the request to execute</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="984797306%2FFunctions%2F-2082165282" anchor-label="prettyPrint" id="984797306%2FFunctions%2F-2082165282" data-filterable-set=":equinox-core:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":equinox-core:dokkaHtmlPartial/commonMain" data-filterable-set=":equinox-core:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="pretty-print.html"><span>pretty</span><wbr><span><span>Print</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="984797306%2FFunctions%2F-2082165282"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":equinox-core:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">private </span><span class="token keyword">fun </span><span data-unresolved-link="kotlinx.serialization.json/JsonObject///PointingToDeclaration/">JsonObject</span><span class="token punctuation">.</span><a href="pretty-print.html"><span class="token function">prettyPrint</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Method used to print a <span data-unresolved-link="kotlinx.serialization.json/JsonObject///PointingToDeclaration/">JsonObject</span> request part in pretty format</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1140026523%2FFunctions%2F-2082165282" anchor-label="setUserCredentials" id="-1140026523%2FFunctions%2F-2082165282" data-filterable-set=":equinox-core:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":equinox-core:dokkaHtmlPartial/commonMain" data-filterable-set=":equinox-core:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="set-user-credentials.html"><span>set</span><wbr><span>User</span><wbr><span><span>Credentials</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1140026523%2FFunctions%2F-2082165282"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":equinox-core:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">fun </span><a href="set-user-credentials.html"><span class="token function">setUserCredentials</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">userId<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span><span class="token punctuation">, </span></span><span class="parameter ">userToken<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Method used to set the user credentials used to make the authenticated requests</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    <div class="footer">
+        <a href="#content" id="go-to-top-link" class="footer--button footer--button_go-to-top"></a>
+        <span>© 2025 Copyright</span>
+        <span class="pull-right">
+            <span>Generated by </span>
+            <a class="footer--link footer--link_external" href="https://github.com/Kotlin/dokka">
+                <span>dokka</span>
+            </a>
+        </span>
+    </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
