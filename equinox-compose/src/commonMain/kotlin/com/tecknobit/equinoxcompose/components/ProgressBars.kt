@@ -1,5 +1,9 @@
 package com.tecknobit.equinoxcompose.components
 
+import androidx.compose.animation.core.AnimationSpec
+import androidx.compose.animation.core.EaseInOutSine
+import androidx.compose.animation.core.animateDpAsState
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.MaterialTheme
@@ -16,51 +20,53 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.tecknobit.equinoxcore.annotations.FutureEquinoxApi
 
-@FutureEquinoxApi(
-    releaseVersion = "1.1.1",
-    additionalNotes = """
-        - Allow suspendable currentProgress lambda calculation
-    """
-)
 @Composable
 @ExperimentalComposeUiApi
 fun HorizontalProgressBar(
     containerModifier: Modifier = Modifier,
     progressBarModifier: Modifier = Modifier,
     completionWidth: Dp,
+    currentProgress: suspend () -> Number,
     lineColor: Color = MaterialTheme.colorScheme.primary,
-    currentProgress: () -> Number,
     cap: StrokeCap = StrokeCap.Round,
     strokeWidth: Dp = 4.dp,
     total: Number,
     onCompletion: (() -> Unit)? = null,
-    progressIndicator: @Composable ColumnScope.() -> Unit = {
+    progressIndicator: @Composable ColumnScope.(Number) -> Unit = { currentProgressValue ->
         Text(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(
                     bottom = 5.dp
                 ),
-            text = "$currentProgress/$total",
+            text = "$currentProgressValue/$total",
             maxLines = 1,
             overflow = TextOverflow.Ellipsis,
             textAlign = TextAlign.End
         )
     },
+    animationSpec: AnimationSpec<Dp>? = tween(
+        durationMillis = 400,
+        easing = EaseInOutSine
+    ),
 ) {
+    var currentProgressValue by remember { mutableStateOf<Number>(0) }
+    LaunchedEffect(currentProgressValue) {
+        currentProgressValue = currentProgress()
+    }
     HorizontalProgressBar(
         containerModifier = containerModifier,
         progressBarModifier = progressBarModifier,
         completionWidth = completionWidth,
-        currentProgress = currentProgress.invoke(),
+        currentProgress = currentProgressValue,
         lineColor = lineColor,
         cap = cap,
         strokeWidth = strokeWidth,
         total = total,
         onCompletion = onCompletion,
-        progressIndicator = progressIndicator
+        progressIndicator = { progressIndicator(this, currentProgressValue) },
+        animationSpec = animationSpec
     )
 }
 
@@ -89,6 +95,10 @@ fun HorizontalProgressBar(
             textAlign = TextAlign.End
         )
     },
+    animationSpec: AnimationSpec<Dp>? = tween(
+        durationMillis = 400,
+        easing = EaseInOutSine
+    ),
 ) {
     val density = LocalDensity.current
     var completionRealWidth by remember { mutableStateOf(0.dp) }
@@ -110,6 +120,13 @@ fun HorizontalProgressBar(
                 onCompletion?.invoke()
         }
         progressIndicator()
+        var progressWidth = (progress * currentProgress.toInt())
+        animationSpec?.let {
+            progressWidth = animateDpAsState(
+                targetValue = progressWidth,
+                animationSpec = animationSpec
+            ).value
+        }
         Canvas(
             modifier = progressBarModifier
         ) {
@@ -121,7 +138,7 @@ fun HorizontalProgressBar(
                     y = 0f
                 ),
                 end = Offset(
-                    x = (progress * currentProgress.toInt()).toPx(),
+                    x = progressWidth.toPx(),
                     y = 0f
                 ),
                 strokeWidth = strokeWidth.toPx()
