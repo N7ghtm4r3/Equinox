@@ -146,3 +146,103 @@ fun HorizontalProgressBar(
         }
     }
 }
+
+
+@Composable
+@ExperimentalComposeUiApi
+fun VerticalProgressBar(
+    containerModifier: Modifier = Modifier,
+    progressBarModifier: Modifier = Modifier,
+    completionHeight: Dp,
+    currentProgress: Number,
+    lineColor: Color = MaterialTheme.colorScheme.primary,
+    cap: StrokeCap = StrokeCap.Round,
+    strokeWidth: Dp = 4.dp,
+    total: Number,
+    onCompletion: (() -> Unit)? = null,
+    progressIndicator: @Composable ColumnScope.() -> Unit = {
+        Column(
+            modifier = Modifier
+                .fillMaxHeight()
+                .padding(
+                    start = 5.dp
+                ),
+            verticalArrangement = Arrangement.Bottom
+        ) {
+            Text(
+                text = "$currentProgress/$total",
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
+                textAlign = TextAlign.Center
+            )
+        }
+    },
+    animationSpec: AnimationSpec<Dp>? = tween(
+        durationMillis = 400,
+        easing = EaseInOutSine
+    ),
+) {
+    val density = LocalDensity.current
+    var completionRealHeight by remember { mutableStateOf(0.dp) }
+    Column(
+        modifier = containerModifier
+            .onGloballyPositioned { layoutCoordinates ->
+                val heighPx = layoutCoordinates.size.height
+                completionRealHeight = with(density) {
+                    heighPx.toDp()
+                }
+                if (completionRealHeight > completionHeight)
+                    completionRealHeight = completionHeight
+            }
+            .height(completionHeight)
+    ) {
+        val progress = completionRealHeight / total.toInt()
+        LaunchedEffect(currentProgress) {
+            if (currentProgress == total)
+                onCompletion?.invoke()
+        }
+        var progressHeight = (progress * currentProgress.toInt())
+        animationSpec?.let {
+            progressHeight = animateDpAsState(
+                targetValue = progressHeight,
+                animationSpec = animationSpec
+            ).value
+        }
+        ProgressBarLine(
+            progressBarModifier = progressBarModifier,
+            lineColor = lineColor,
+            cap = cap,
+            endY = progressHeight,
+            strokeWidth = strokeWidth
+        )
+        progressIndicator()
+    }
+}
+
+@Composable
+private fun ProgressBarLine(
+    progressBarModifier: Modifier,
+    lineColor: Color,
+    cap: StrokeCap,
+    endX: Dp = 0.dp,
+    endY: Dp = 0.dp,
+    strokeWidth: Dp,
+) {
+    Canvas(
+        modifier = progressBarModifier
+    ) {
+        drawLine(
+            color = lineColor,
+            cap = cap,
+            start = Offset(
+                x = 0f,
+                y = 0f
+            ),
+            end = Offset(
+                x = endX.toPx(),
+                y = endY.toPx()
+            ),
+            strokeWidth = strokeWidth.toPx()
+        )
+    }
+}
