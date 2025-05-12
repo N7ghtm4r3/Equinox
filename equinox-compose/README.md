@@ -1,6 +1,6 @@
 # Equinox Compose
 
-**v1.1.1**
+**v1.1.2**
 
 ![Static Badge](https://img.shields.io/badge/android-4280511051?link=https%3A%2F%2Fplay.google.com%2Fstore%2Fapps%2Fdetails%3Fid%3Dcom.tecknobit.ametista)
 ![Static Badge](https://img.shields.io/badge/ios-445E91?link=https%3A%2F%2Fimg.shields.io%2Fbadge%2Fandroid-4280511051)
@@ -17,7 +17,7 @@ Utilities for **Compose Multiplatform** applications such components, apis for a
 
 ```gradle
 [versions]
-equinox = "1.1.1"
+equinox = "1.1.2"
 
 [libraries]
 equinox-compose = { module = "io.github.n7ghtm4r3:equinox-compose", version.ref = "equinox" }
@@ -43,10 +43,10 @@ dependencies {
 dependencies {
     
     // implement the compose utilities
-    implementation("io.github.n7ghtm4r3:equinox-compose:1.1.1")
+    implementation("io.github.n7ghtm4r3:equinox-compose:1.1.2")
     
     // implement the core utilities
-    implementation("io.github.n7ghtm4r3:equinox-core:1.1.1")
+    implementation("io.github.n7ghtm4r3:equinox-core:1.1.2")
 }
 ```
 
@@ -56,10 +56,10 @@ dependencies {
 dependencies {
    
     // implement the compose utilities
-    implementation 'io.github.n7ghtm4r3:equinox-compose:1.1.1'
+    implementation 'io.github.n7ghtm4r3:equinox-compose:1.1.2'
     
     // implement the core utilities
-    implementation 'io.github.n7ghtm4r3:equinox-core:1.1.1'
+    implementation 'io.github.n7ghtm4r3:equinox-core:1.1.2'
 }
 ```
 
