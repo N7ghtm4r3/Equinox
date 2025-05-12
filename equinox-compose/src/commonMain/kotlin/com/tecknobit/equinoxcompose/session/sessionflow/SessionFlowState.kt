@@ -28,7 +28,6 @@ fun rememberSessionFlowState(
 
 @ExperimentalComposeApi
 class SessionFlowState internal constructor(
-    internal var viewModel: EquinoxViewModel? = null,
     status: SessionStatus,
 ) {
 
@@ -48,7 +47,15 @@ class SessionFlowState internal constructor(
 
     val currentStatus = mutableStateOf(status)
 
-    fun notifyAsOperational() {
+    private var viewModel: EquinoxViewModel? = null
+
+    fun attachViewModel(
+        viewModel: EquinoxViewModel?,
+    ) {
+        this.viewModel = viewModel
+    }
+
+    fun notifyOperational() {
         whenNetworkAvailable {
             previousStatus = currentStatus.value
             currentStatus.value = OPERATIONAL
@@ -77,12 +84,11 @@ class SessionFlowState internal constructor(
     ) {
         if (currentStatus.value != NO_NETWORK_CONNECTION)
             previousStatus = currentStatus.value
-        if (isConnected) {
+        if (isConnected)
             currentStatus.value = previousStatus
-            viewModel?.restartRetriever()
-        } else {
+        else {
             currentStatus.value = NO_NETWORK_CONNECTION
-
+            viewModel?.suspendRetriever()
         }
     }
 

@@ -78,7 +78,11 @@ fun SessionFlowContainer(
     },
 ) {
     val connectionState = remember { createConnectivity() }
-    state.viewModel = viewModel
+    LaunchedEffect(Unit) {
+        state.attachViewModel(
+            viewModel = viewModel
+        )
+    }
     monitorConnection(
         connectionState = connectionState,
         state = state
