@@ -21,7 +21,7 @@ package com.tecknobit.equinoxcore
  *
  * The duplicate values will be considered as one element, so will be merged
  *
- * @param supportCollection The collection from add the element not present in the original collection
+ * @param supportCollection The collection from add the elements not present in the original collection
  */
 fun <T> MutableCollection<T>.retainAndAdd(
     supportCollection: Collection<T>,
@@ -56,16 +56,20 @@ fun <T> MutableCollection<T>.retainAndAdd(
  * The duplicate values will be considered as one element, so will be merged
  *
  * @param addFrom The starting index from which to add elements from the [supportCollection], following the same constraints
- * @param supportCollection The collection from add the element not present in the original collection
+ * @param supportCollection The collection from add the elements not present in the original collection
  */
 fun <T> MutableList<T>.retainAndAdd(
     addFrom: Int = lastIndex,
     supportCollection: Collection<T>,
 ) {
+    val originalSize = this.size
     val supportCollectionSet = supportCollection.toHashSet()
     retainAll(supportCollectionSet)
     addAll(
-        index = addFrom,
+        index = if (addFrom < 0 || addFrom >= originalSize)
+            0
+        else
+            addFrom,
         elements = supportCollectionSet.filter { supportItem ->
             supportItem !in this
         }
