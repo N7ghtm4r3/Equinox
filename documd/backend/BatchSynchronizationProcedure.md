@@ -10,7 +10,6 @@ batch synchronization need to have
 It is suggested to use `JoinTableSyncBatchItem` as base for the support item, but is not required
 
 ```java
-
 @BatchQueryItem
 public class TeamMemberBatchItem extends JoinTableSyncBatchItem<String, String> {
 
@@ -24,7 +23,6 @@ public class TeamMemberBatchItem extends JoinTableSyncBatchItem<String, String> 
 #### Create the procedure
 
 ```java
-
 @BatchSyncProcedureImpl
 public class TeamMemberBatchSyncProcedure extends BatchSynchronizationProcedure<String, String, TeamMemberBatchItem> {
 
@@ -56,7 +54,7 @@ public class TeamMemberBatchSyncProcedure extends BatchSynchronizationProcedure<
 The inheritance with the `EquinoxItemsHelper` is required to properly provide the `entityManager`
 
 ```java
- import java.util.List;
+import java.util.List;
 
 @Service
 public class TeamsService extends EquinoxItemsHelper {
@@ -90,7 +88,7 @@ fixed constructor, but the owner entity changes related to the service where the
 follows:
 
 ```java
- import java.util.List;
+import java.util.List;
 
 @Service
 public class MembersService extends EquinoxItemsHelper {
@@ -121,10 +119,9 @@ public class MembersService extends EquinoxItemsHelper {
 }
 ```
 
-Then use the converter, if you need to use the converter you have to create a converter for both sides, in the procedure
+Then use the converter in the procedure (if you need to use the converter you have to create a converter for both sides)
 
 ```java
-
 @BatchSyncProcedureImpl
 public class TeamMemberBatchSyncProcedure extends BatchSynchronizationProcedure<String, String, TeamMemberBatchItem> {
 

@@ -16,7 +16,9 @@ import static com.tecknobit.equinoxbackend.environment.services.builtin.service.
  * @param <O> The type of the owner entity
  * @param <D> The type of the owned entity
  * @param <V> The type of the support item used during the synchronization such {@link JoinTableSyncBatchItem}
+ *
  * @author N7ghtm4r3 - Tecknobit
+ *
  * @since 1.0.8
  */
 @Experimental
@@ -95,7 +97,9 @@ public abstract class BatchSynchronizationProcedure<O, D, V> extends EquinoxItem
      * @return the collection used by the procedure as {@link Collection} of {@link V}
      */
     @Deprecated(forRemoval = true)
-    protected abstract Collection<V> loadDataList(Collection<D> rawData);
+    protected Collection<V> loadDataList(Collection<D> rawData) {
+        return null;
+    }
 
     /**
      * Method used to execute the batch synchronization
@@ -204,6 +208,7 @@ public abstract class BatchSynchronizationProcedure<O, D, V> extends EquinoxItem
      * @param <D> The type of the owned entity
      *
      * @author N7ghtm4r3 - Tecknobit
+     *
      * @since 1.0.8
      */
     public interface CurrentDataCallback<D> {
@@ -223,7 +228,9 @@ public abstract class BatchSynchronizationProcedure<O, D, V> extends EquinoxItem
      *
      * @param <D> The type of the owned entity
      * @param <V> The type of the support item used during the synchronization such {@link JoinTableSyncBatchItem}
+     *
      * @author N7ghtm4r3 - Tecknobit
+     *
      * @since 1.1.2
      */
     public interface RawCollectionConverter<D, V> {
