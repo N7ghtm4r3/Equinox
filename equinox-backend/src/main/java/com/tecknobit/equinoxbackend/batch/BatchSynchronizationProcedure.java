@@ -53,6 +53,11 @@ public abstract class BatchSynchronizationProcedure<O, D, V> extends EquinoxItem
     protected CurrentDataCallback<D> currentDataCallback;
 
     /**
+     * {@code converter} used to convert a list of {@link D} entities into the related {@link V} batch support items
+     */
+    protected RawCollectionConverter<D, V> converter;
+
+    /**
      * Constructor to init the sync procedure
      *
      * @param owner         The owner entity in the relationship
@@ -89,6 +94,7 @@ public abstract class BatchSynchronizationProcedure<O, D, V> extends EquinoxItem
      * @param rawData The collection to convert
      * @return the collection used by the procedure as {@link Collection} of {@link V}
      */
+    @Deprecated(forRemoval = true)
     protected abstract Collection<V> loadDataList(Collection<D> rawData);
 
     /**
@@ -169,9 +175,26 @@ public abstract class BatchSynchronizationProcedure<O, D, V> extends EquinoxItem
      *
      * @param currentDataCallback The callback used to retrieve the current data
      */
-
     public void setCurrentDataCallback(CurrentDataCallback<D> currentDataCallback) {
         this.currentDataCallback = currentDataCallback;
+    }
+
+    /**
+     * Method used to get the {@link #converter}
+     *
+     * @return the {@link #converter} as {@link RawCollectionConverter}
+     */
+    public RawCollectionConverter<D, V> getConverter() {
+        return converter;
+    }
+
+    /**
+     * Method to set the {@link #converter} instance
+     *
+     * @param converter The converter instance to use
+     */
+    public void useConverter(RawCollectionConverter<D, V> converter) {
+        this.converter = converter;
     }
 
     /**
@@ -191,6 +214,27 @@ public abstract class BatchSynchronizationProcedure<O, D, V> extends EquinoxItem
          * @return the current data owned by the {@link #owner} entity as {@link Collection} of {@link D}
          */
         Collection<D> retrieveCurrentData();
+
+    }
+
+    /**
+     * The {@code RawCollectionConverter} interface is used to provide a way to convert a list of {@link D} entities into
+     * the related {@link V} batch support items
+     *
+     * @param <D> The type of the owned entity
+     * @param <V> The type of the support item used during the synchronization such {@link JoinTableSyncBatchItem}
+     * @author N7ghtm4r3 - Tecknobit
+     * @since 1.1.2
+     */
+    public interface RawCollectionConverter<D, V> {
+
+        /**
+         * Method used to convert a list of entities into the related batch support items
+         *
+         * @param rawData The collection of {@link D} entities to convert
+         * @return the converted list as {@link Collection} of {@link V}
+         */
+        Collection<V> convert(Collection<D> rawData);
 
     }
 

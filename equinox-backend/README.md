@@ -89,6 +89,9 @@ Add the JitPack repository to your build file
 - <a href="https://github.com/N7ghtm4r3/Equinox/blob/main/documd/backend/FilteredQuery.md">**FilteredQuery**</a> allows
   you to create dynamic queries with filters parameters
 - <a href="https://github.com/N7ghtm4r3/Equinox/blob/main/documd/backend/EquinoxItemsHelper.md">**EquinoxItemsHelper**</a> allows you to execute batch queries such insertion, deletion and synchronization dynamically
+- <a href="https://github.com/N7ghtm4r3/Equinox/blob/main/documd/backend/BatchSynchronizationProcedure.md">*
+  *BatchSynchronizationProcedure**</a> allows you to execute batch queries such insertion, deletion and synchronization
+  dynamically
 - <a href="https://github.com/N7ghtm4r3/Equinox/blob/main/documd/backend/EquinoxEvents.md">**EquinoxEventsEmitter**</a>
   allows you to share and collect events between services
 
