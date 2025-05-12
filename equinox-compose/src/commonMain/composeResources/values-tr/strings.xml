@@ -4,6 +4,6 @@
     <string name="confirm">Onaylayın</string>
     <string name="dismiss">Dağılın</string>
     <string name="server_currently_offline">Sunucu şu anda çevrimdışı</string>
-    <string name="no_internet_connection">İnternet bağlantısı yok</string>
+    <string name="no_network_connection">Ağ bağlantısı yok</string>
     <string name="loading_data">Veri yükleniyor...</string>
 </resources>

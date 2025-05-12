@@ -16,9 +16,9 @@ enum class SessionStatus {
     SERVER_OFFLINE,
 
     /**
-     * `NO_INTERNET_CONNECTION` the status of the session when there is no internet connection
+     * `NO_NETWORK_CONNECTION` the status of the session when there is no network connection
      */
-    NO_INTERNET_CONNECTION,
+    NO_NETWORK_CONNECTION,
 
     /**
      * `USER_DISCONNECTED` the status of the session when the user has been disconnected

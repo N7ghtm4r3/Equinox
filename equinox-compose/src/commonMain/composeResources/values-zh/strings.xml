@@ -4,6 +4,6 @@
     <string name="confirm">确认</string>
     <string name="dismiss">解散</string>
     <string name="server_currently_offline">服务器目前离线</string>
-    <string name="no_internet_connection">无网络连接</string>
+    <string name="no_network_connection">无网络连接</string>
     <string name="loading_data">加载数据...</string>
 </resources>

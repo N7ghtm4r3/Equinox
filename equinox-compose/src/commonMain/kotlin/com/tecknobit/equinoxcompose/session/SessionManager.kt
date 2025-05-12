@@ -16,8 +16,7 @@ import androidx.compose.ui.text.TextStyle
 import com.tecknobit.equinoxcompose.components.ErrorUI
 import com.tecknobit.equinoxcompose.components.LoadingItemUI
 import com.tecknobit.equinoxcompose.resources.Res
-import com.tecknobit.equinoxcompose.resources.no_internet
-import com.tecknobit.equinoxcompose.resources.no_internet_connection
+import com.tecknobit.equinoxcompose.resources.no_network_connection
 import com.tecknobit.equinoxcompose.resources.server_currently_offline
 import com.tecknobit.equinoxcompose.session.SessionStatus.*
 import com.tecknobit.equinoxcompose.viewmodels.EquinoxViewModel
@@ -35,6 +34,10 @@ import org.jetbrains.compose.resources.vectorResource
  * @param noInternetConnectionIcon The icon to use when the internet connection is not available
  * @param hasBeenDisconnectedAction The action to execute when the user has been disconnected
  */
+@Deprecated(
+    message = "This api has been deprecated",
+    level = DeprecationLevel.WARNING
+)
 data class SessionSetup(
     val serverOfflineMessage: StringResource,
     val serverOfflineIcon: ImageVector,
@@ -46,6 +49,14 @@ data class SessionSetup(
 /**
  * List of the possible statuses of the session
  */
+@Deprecated(
+    message = "This api has been deprecated",
+    level = DeprecationLevel.WARNING,
+    replaceWith = ReplaceWith(
+        expression = "Use instead SessionStatus",
+        "com.tecknobit.equinoxcompose.session.sessionflow"
+    )
+)
 enum class SessionStatus {
 
     /**
@@ -59,7 +70,7 @@ enum class SessionStatus {
     SERVER_OFFLINE,
 
     /**
-     * `NO_INTERNET_CONNECTION` the status of the session when there is no internet connection
+     * `NO_NETWORK_CONNECTION` the status of the session when there is no internet connection
      */
     NO_INTERNET_CONNECTION,
 
@@ -106,11 +117,15 @@ private lateinit var hasBeenDisconnected: MutableState<Boolean>
  * @param hasBeenDisconnectedAction The action to execute when the user has been disconnected
  */
 @Composable
+@Deprecated(
+    message = "This api has been deprecated",
+    level = DeprecationLevel.WARNING
+)
 fun setUpSession(
     serverOfflineMessage: StringResource = Res.string.server_currently_offline,
     serverOfflineIcon: ImageVector = Icons.Default.Warning,
-    noInternetConnectionMessage: StringResource = Res.string.no_internet_connection,
-    noInternetConnectionIcon: ImageVector = vectorResource(Res.drawable.no_internet),
+    noInternetConnectionMessage: StringResource = Res.string.no_network_connection,
+    noInternetConnectionIcon: ImageVector = vectorResource(Res.drawable.no_network_connection),
     hasBeenDisconnectedAction: () -> Unit,
 ) {
     setUpSession(
@@ -129,6 +144,10 @@ fun setUpSession(
  *
  * @param sessionSetupValue The setup to use for the current session
  */
+@Deprecated(
+    message = "This api has been deprecated",
+    level = DeprecationLevel.WARNING
+)
 fun setUpSession(
     sessionSetupValue: SessionSetup,
 ) {
@@ -141,6 +160,10 @@ fun setUpSession(
  *
  * @param isServerOfflineValue The value to set
  */
+@Deprecated(
+    message = "This api has been deprecated",
+    level = DeprecationLevel.ERROR
+)
 fun setServerOfflineValue(
     isServerOfflineValue: Boolean,
 ) {
@@ -157,6 +180,14 @@ fun setServerOfflineValue(
  *
  * @param hasBeenDisconnectedValue The value to set
  */
+@Deprecated(
+    message = "This api has been deprecated",
+    level = DeprecationLevel.ERROR,
+    replaceWith = ReplaceWith(
+        expression = "Use instead SessionFlowState.invokeOnUserDisconnected",
+        "com.tecknobit.equinoxcompose.session.sessionflow"
+    )
+)
 fun setHasBeenDisconnectedValue(
     hasBeenDisconnectedValue: Boolean,
 ) {
@@ -186,6 +217,14 @@ fun setHasBeenDisconnectedValue(
  * @param noInternetConnectionRetryAction The action to retry the internet connection scan
  */
 @Composable
+@Deprecated(
+    message = "This api has been deprecated",
+    level = DeprecationLevel.ERROR,
+    replaceWith = ReplaceWith(
+        expression = "Use instead SessionFlowContainer",
+        "com.tecknobit.equinoxcompose.session.sessionflow"
+    )
+)
 fun ManagedContent(
     modifier: Modifier = Modifier,
     content: @Composable () -> Unit,
@@ -261,6 +300,10 @@ fun ManagedContent(
  * Method used to instantiate the session instances to manage the different scenarios
  */
 @Composable
+@Deprecated(
+    message = "This api has been deprecated",
+    level = DeprecationLevel.WARNING
+)
 private fun InstantiateSessionInstances() {
     isServerOffline = remember { mutableStateOf(false) }
     noInternetConnection = remember { mutableStateOf(false) }
@@ -284,6 +327,10 @@ private fun InstantiateSessionInstances() {
  */
 @Composable
 @NonRestartableComposable
+@Deprecated(
+    message = "This api has been deprecated",
+    level = DeprecationLevel.WARNING
+)
 private fun ServerOfflineUi(
     modifier: Modifier = Modifier,
     uiDefaults: UiLayoutDefaults,
@@ -321,6 +368,10 @@ private fun ServerOfflineUi(
  */
 @Composable
 @NonRestartableComposable
+@Deprecated(
+    message = "This api has been deprecated",
+    level = DeprecationLevel.WARNING
+)
 private fun NoInternetConnectionUi(
     modifier: Modifier = Modifier,
     viewModel: EquinoxViewModel,
@@ -359,6 +410,10 @@ private fun NoInternetConnectionUi(
  *
  * @since 1.1.0
  */
+@Deprecated(
+    message = "This api has been deprecated",
+    level = DeprecationLevel.WARNING
+)
 data class UiLayoutDefaults(
     val textStyle: TextStyle,
     val containerColor: Color,
@@ -375,6 +430,10 @@ data class UiLayoutDefaults(
  * @return the customization style for a UI page as [UiLayoutDefaults]
  */
 @Composable
+@Deprecated(
+    message = "This api has been deprecated",
+    level = DeprecationLevel.WARNING
+)
 fun createUiLayoutAppearance(
     textStyle: TextStyle = LocalTextStyle.current,
     containerColor: Color = MaterialTheme.colorScheme.background,
@@ -390,6 +449,10 @@ fun createUiLayoutAppearance(
 /**
  * Method used to disconnect the current user from the session
  */
+@Deprecated(
+    message = "This api has been deprecated",
+    level = DeprecationLevel.WARNING
+)
 private fun hasBeenDisconnectedAction() {
     try {
         sessionSetup.hasBeenDisconnectedAction()
@@ -401,6 +464,10 @@ private fun hasBeenDisconnectedAction() {
 /**
  * Method used to get the current status of the session as [SessionStatus]
  */
+@Deprecated(
+    message = "This api has been deprecated",
+    level = DeprecationLevel.WARNING
+)
 fun getCurrentSessionStatus(): SessionStatus {
     return sessionStatus.value
 }

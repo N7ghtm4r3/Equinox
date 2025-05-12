@@ -18,12 +18,12 @@ import androidx.compose.ui.text.TextStyle
 import com.tecknobit.equinoxcompose.components.ErrorUI
 import com.tecknobit.equinoxcompose.components.LoadingItemUI
 import com.tecknobit.equinoxcompose.resources.Res
-import com.tecknobit.equinoxcompose.resources.no_internet
-import com.tecknobit.equinoxcompose.resources.no_internet_connection
+import com.tecknobit.equinoxcompose.resources.no_network_connection
 import com.tecknobit.equinoxcompose.resources.server_currently_offline
 import com.tecknobit.equinoxcompose.session.createConnectivity
 import com.tecknobit.equinoxcompose.session.sessionflow.SessionFlowState.Companion.onUserDisconnected
 import com.tecknobit.equinoxcompose.session.sessionflow.SessionStatus.*
+import com.tecknobit.equinoxcompose.viewmodels.EquinoxViewModel
 import dev.jordond.connectivity.Connectivity
 import org.jetbrains.compose.resources.vectorResource
 
@@ -32,6 +32,7 @@ import org.jetbrains.compose.resources.vectorResource
 fun SessionFlowContainer(
     modifier: Modifier = Modifier,
     state: SessionFlowState,
+    viewModel: EquinoxViewModel? = null,
     enterTransition: EnterTransition = fadeIn(),
     exitTransition: ExitTransition = fadeOut(),
     initialLoadingRoutineDelay: Long? = null,
@@ -64,11 +65,11 @@ fun SessionFlowContainer(
             retryContent = retryFailedFlowContent
         )
     },
-    onNoInternetConnection: @Composable () -> Unit = {
+    onNoNetworkConnection: @Composable () -> Unit = {
         ErrorUI(
             containerModifier = modifier,
-            errorIcon = vectorResource(Res.drawable.no_internet),
-            errorMessage = Res.string.no_internet_connection,
+            errorIcon = vectorResource(Res.drawable.no_network_connection),
+            errorMessage = Res.string.no_network_connection,
             textStyle = statusTextStyle,
             backgroundColor = statusContainerColor,
             errorColor = fallbackContentColor,
@@ -77,6 +78,7 @@ fun SessionFlowContainer(
     },
 ) {
     val connectionState = remember { createConnectivity() }
+    state.viewModel = viewModel
     monitorConnection(
         connectionState = connectionState,
         state = state
@@ -98,7 +100,7 @@ fun SessionFlowContainer(
             }
 
             SERVER_OFFLINE -> onServerOffline()
-            NO_INTERNET_CONNECTION -> onNoInternetConnection()
+            NO_NETWORK_CONNECTION -> onNoNetworkConnection()
             USER_DISCONNECTED -> {
                 LaunchedEffect(Unit) {
                     onUserDisconnected?.invoke()

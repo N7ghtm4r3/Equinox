@@ -4,6 +4,6 @@
     <string name="confirm">Bevestig</string>
     <string name="dismiss">Ontsla</string>
     <string name="server_currently_offline">Server momenteel offline</string>
-    <string name="no_internet_connection">Geen internetverbinding</string>
+    <string name="no_network_connection">Geen netwerkverbinding</string>
     <string name="loading_data">Gegevens laden...</string>
 </resources>

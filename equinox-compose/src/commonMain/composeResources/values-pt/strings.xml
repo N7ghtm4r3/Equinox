@@ -4,5 +4,5 @@
     <string name="confirm">Confirmar</string>
     <string name="dismiss">Rejeitar</string>
     <string name="server_currently_offline">Servidor atualmente offline</string>
-    <string name="no_internet_connection">Sem ligação à Internet</string>
+    <string name="no_network_connection">Sem conexão de rede</string>
 </resources>

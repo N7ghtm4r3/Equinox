@@ -4,6 +4,6 @@
     <string name="confirm">Confirme</string>
     <string name="dismiss">Desestimar</string>
     <string name="server_currently_offline">Servidor actualmente fuera de línea</string>
-    <string name="no_internet_connection">Sin conexión a Internet</string>
+    <string name="no_network_connection">Sin conexión de red</string>
     <string name="loading_data">Cargando datos...</string>
 </resources>

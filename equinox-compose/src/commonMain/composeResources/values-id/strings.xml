@@ -4,6 +4,6 @@
     <string name="confirm">Konfirmasi</string>
     <string name="dismiss">Bubarkan.</string>
     <string name="server_currently_offline">Server saat ini sedang offline</string>
-    <string name="no_internet_connection">Tidak ada koneksi internet</string>
+    <string name="no_network_connection">Tidak ada koneksi jaringan</string>
     <string name="loading_data">Memuat data...</string>
 </resources>
