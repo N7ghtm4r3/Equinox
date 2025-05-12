@@ -214,7 +214,6 @@ fun ManagedContent(
         ServerOfflineUi(
             modifier = modifier,
             uiDefaults = serverOfflineUiDefaults,
-            retryText = serverOfflineRetryText,
             retryAction = serverOfflineRetryAction
         )
     }
@@ -228,7 +227,6 @@ fun ManagedContent(
             modifier = modifier,
             uiDefaults = noInternetConnectionUiDefaults,
             viewModel = viewModel,
-            retryText = noInternetConnectionRetryText,
             retryAction = noInternetConnectionRetryAction
         )
     }
@@ -289,7 +287,6 @@ private fun InstantiateSessionInstances() {
 private fun ServerOfflineUi(
     modifier: Modifier = Modifier,
     uiDefaults: UiLayoutDefaults,
-    retryText: StringResource?,
     retryAction: @Composable (() -> Unit)?,
 ) {
     ErrorUI(
@@ -307,8 +304,7 @@ private fun ServerOfflineUi(
         } catch (e: Exception) {
             throw Exception("You must setup the session before, this using the setUpSession() method")
         },
-        retryText = retryText,
-        retryAction = retryAction
+        retryContent = retryAction
     )
 }
 
@@ -329,7 +325,6 @@ private fun NoInternetConnectionUi(
     modifier: Modifier = Modifier,
     viewModel: EquinoxViewModel,
     uiDefaults: UiLayoutDefaults,
-    retryText: StringResource?,
     retryAction: @Composable (() -> Unit)?,
 ) {
     viewModel.suspendRetriever()
@@ -348,8 +343,7 @@ private fun NoInternetConnectionUi(
         } catch (e: Exception) {
             throw Exception("You must setup the session before, this using the setUpSession() method")
         },
-        retryText = retryText,
-        retryAction = retryAction
+        retryContent = retryAction
     )
 }
 
