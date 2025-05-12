@@ -1,9 +1,6 @@
 package com.tecknobit.equinoxcompose.components
 
-import androidx.compose.animation.AnimatedContent
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.EnterTransition
-import androidx.compose.animation.ExitTransition
+import androidx.compose.animation.*
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.isSystemInDarkTheme
@@ -92,6 +89,8 @@ fun LoadingItemUI(
             LoadingItemUIContent(
                 loadingRoutine = loadingRoutine,
                 initialDelay = initialDelay,
+                onEnter = animations.onEnter,
+                onExit = animations.onExit,
                 loadingIndicator = loadingIndicator,
                 contentLoaded = contentLoaded
             )
@@ -110,14 +109,18 @@ fun LoadingItemUI(
  * Method used to display the content of the [EmptyListUI]
  *
  * @param loadingRoutine The routine used to load the data
- * @param loadingIndicator The loading indicator to display
  * @param initialDelay An initial delay to apply to the [loadingRoutine] before to start
+ * @param onEnter The [EnterTransition] to use
+ * @param onExit The [ExitTransition] to use
+ * @param loadingIndicator The loading indicator to display
  * @param contentLoaded The content to display when the data have been loaded
  */
 @Composable
 private fun LoadingItemUIContent(
     loadingRoutine: suspend () -> Boolean,
     initialDelay: Long?,
+    onEnter: EnterTransition = fadeIn(),
+    onExit: ExitTransition = fadeOut(),
     loadingIndicator: @Composable () -> Unit,
     contentLoaded: @Composable () -> Unit,
 ) {
@@ -128,13 +131,19 @@ private fun LoadingItemUIContent(
         }
         isLoaded = loadingRoutine()
     }
-    AnimatedContent(
-        targetState = isLoaded
+    AnimatedVisibility(
+        visible = isLoaded,
+        enter = onEnter,
+        exit = onExit
     ) {
-        if (isLoaded)
-            contentLoaded()
-        else
-            loadingIndicator()
+        contentLoaded()
+    }
+    AnimatedVisibility(
+        visible = !isLoaded,
+        enter = onEnter,
+        exit = onExit
+    ) {
+        loadingIndicator()
     }
 }
 
@@ -443,7 +452,6 @@ private fun ErrorUIContent(
  * new item, change search, etc...
  */
 @Composable
-@ExperimentalMultiplatform
 fun EmptyState(
     animations: UIAnimations? = null,
     containerModifier: Modifier = Modifier,
@@ -497,7 +505,6 @@ fun EmptyState(
  * new item, change search, etc...
  */
 @Composable
-@ExperimentalMultiplatform
 fun EmptyState(
     animations: UIAnimations? = null,
     containerModifier: Modifier = Modifier,
@@ -548,7 +555,6 @@ fun EmptyState(
  * new item, change search, etc...
  */
 @Composable
-@ExperimentalMultiplatform
 fun EmptyState(
     animations: UIAnimations? = null,
     containerModifier: Modifier = Modifier,
@@ -602,7 +608,6 @@ fun EmptyState(
  * new item, change search, etc...
  */
 @Composable
-@ExperimentalMultiplatform
 fun EmptyState(
     animations: UIAnimations? = null,
     containerModifier: Modifier = Modifier,
@@ -655,7 +660,6 @@ fun EmptyState(
  * new item, change search, etc...
  */
 @Composable
-@ExperimentalMultiplatform
 fun EmptyState(
     animations: UIAnimations? = null,
     containerModifier: Modifier = Modifier,
@@ -709,7 +713,6 @@ fun EmptyState(
  * new item, change search, etc...
  */
 @Composable
-@ExperimentalMultiplatform
 fun EmptyState(
     animations: UIAnimations? = null,
     containerModifier: Modifier = Modifier,
