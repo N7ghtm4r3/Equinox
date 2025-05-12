@@ -3,7 +3,6 @@ package com.tecknobit.equinoxcompose.session.screens
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.ui.platform.LocalLifecycleOwner
-import androidx.compose.ui.unit.dp
 import androidx.lifecycle.Lifecycle.Event
 import androidx.lifecycle.Lifecycle.Event.*
 import androidx.lifecycle.LifecycleEventObserver
@@ -45,23 +44,6 @@ abstract class EquinoxNoModelScreen(
          * `ON_DISPOSE` occurs when the screen has been disposed
          */
         ON_DISPOSE
-
-    }
-
-    companion object {
-
-        /**
-         * `MAX_CONTAINER_WIDTH` constant value used to give a max dimension to container for the large screens
-         */
-        @Deprecated(
-            message = "Will be removed in the next version",
-            replaceWith = ReplaceWith(
-                expression = "EXPANDED_CONTAINER",
-                "com.tecknobit.equinoxcompose.utilities"
-            ),
-            level = DeprecationLevel.ERROR
-        )
-        val MAX_CONTAINER_WIDTH = 1280.dp
 
     }
 
