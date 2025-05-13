@@ -4,4 +4,9 @@ plugins {
     alias(libs.plugins.vanniktech.mavenPublish) apply false
     alias(libs.plugins.jetbrainsCompose) apply false
     alias(libs.plugins.compose.compiler) apply false
+    alias(libs.plugins.dokka)
+}
+
+tasks.named("dokkaHtmlMultiModule") {
+    dependsOn(":dokkaHtmlMultiModule")
 }

@@ -117,9 +117,8 @@ mavenPublishing {
         version = "1.0.0"
     )
     pom {
-        // TODO: TO SET
-        name.set("Equinox Core")
-        description.set("Core utilities for CMP and Spring technologies")
+        name.set("lazy-pagination-compose-ops")
+        description.set("Integration of the lazy-pagination-compose library with the in-place operations")
         inceptionYear.set("2025")
         url.set("https://github.com/N7ghtm4r3/Equinox")
 
