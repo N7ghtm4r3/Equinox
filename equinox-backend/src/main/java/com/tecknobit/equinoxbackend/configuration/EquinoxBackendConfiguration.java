@@ -249,10 +249,12 @@ public class EquinoxBackendConfiguration {
         /**
          * Method used to get the {@link #saveMessage} instance
          *
+         * @param extra Extra arguments used to format the save message
+         *
          * @return the {@link #saveMessage} instance as {@link String}
          */
-        public String getSaveMessage() {
-            return saveMessage;
+        public String getSaveMessage(Object... extra) {
+            return String.format(saveMessage, extra);
         }
 
     }

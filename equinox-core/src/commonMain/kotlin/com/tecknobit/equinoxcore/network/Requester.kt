@@ -58,24 +58,6 @@ abstract class Requester(
     companion object {
 
         /**
-         * `USER_IDENTIFIER_KEY` The key for the user <b>"id"</b> field
-         */
-        @Deprecated(
-            message = "Moved into CommonKeys",
-            level = DeprecationLevel.ERROR
-        )
-        const val USER_IDENTIFIER_KEY = "id"
-
-        /**
-         * `USER_TOKEN_KEY` The key for the user <b>"token"</b> field
-         */
-        @Deprecated(
-            message = "Will be removed in next release",
-            level = DeprecationLevel.ERROR
-        )
-        const val USER_TOKEN_KEY = "token"
-
-        /**
          * `RESPONSE_STATUS_KEY` The key for the <b>"status"</b> field
          */
         const val RESPONSE_STATUS_KEY: String = "status"

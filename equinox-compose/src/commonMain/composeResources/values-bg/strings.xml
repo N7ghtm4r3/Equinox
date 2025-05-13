@@ -4,6 +4,6 @@
     <string name="confirm">Потвърдете</string>
     <string name="dismiss">Отхвърляне на</string>
     <string name="server_currently_offline">Сървърът в момента е офлайн</string>
-    <string name="no_internet_connection">Няма интернет връзка</string>
+    <string name="no_network_connection">Няма мрежова връзка</string>
     <string name="loading_data">Зареждане на данни...</string>
 </resources>

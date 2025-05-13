@@ -4,6 +4,6 @@
     <string name="confirm">Bekräfta</string>
     <string name="dismiss">Avvisa</string>
     <string name="server_currently_offline">Servern är för närvarande offline</string>
-    <string name="no_internet_connection">Ingen internetanslutning</string>
+    <string name="no_network_connection">Ingen nätverksanslutning</string>
     <string name="loading_data">Laddar data...</string>
 </resources>

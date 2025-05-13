@@ -27,6 +27,7 @@ com.tecknobit.equinoxcompose.components.tabselector
 com.tecknobit.equinoxcompose.network
 com.tecknobit.equinoxcompose.session
 com.tecknobit.equinoxcompose.session.screens
+com.tecknobit.equinoxcompose.session.sessionflow
 com.tecknobit.equinoxcompose.utilities
 com.tecknobit.equinoxcompose.viewmodels
 module:equinox-core
@@ -41,3 +42,5 @@ com.tecknobit.equinoxcore.time
 com.tecknobit.equinoxcore.utilities
 module:equinox-navigation
 com.tecknobit.equinoxnavigation
+module:lazy-pagination-compose-ops
+com.tecknobit.equinoxmisc.lazypaginationcomposeops

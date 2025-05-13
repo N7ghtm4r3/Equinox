@@ -4,6 +4,6 @@
     <string name="confirm">Vahvista</string>
     <string name="dismiss">Dismiss</string>
     <string name="server_currently_offline">Palvelin tällä hetkellä offline</string>
-    <string name="no_internet_connection">Ei internet-yhteyttä</string>
+    <string name="no_network_connection">Ei verkkoyhteyttä</string>
     <string name="loading_data">Tietojen lataaminen...</string>
 </resources>

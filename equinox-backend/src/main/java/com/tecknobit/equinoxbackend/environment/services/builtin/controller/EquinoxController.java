@@ -396,7 +396,44 @@ abstract public class EquinoxController<T extends EquinoxUser, R extends Equinox
      * </ul>
      * @since 1.1.0
      */
+    @Wrapper
     public static void initEquinoxEnvironment(Class<?> context, String[] args) {
+        initEquinoxEnvironment(context, null, args);
+    }
+
+    /**
+     * Method used to init the {@link #serverProtector} and create the resources directories correctly
+     *
+     * @param context The launcher {@link Class} where this method has been invoked
+     * @param saveMessageExtra Extra arguments used to format the save message displayed by the {@link #serverProtector}
+     * @param args    Custom arguments to share with {@link SpringApplication} and with the {@link #serverProtector}
+     * @apiNote the arguments scheme:
+     * <ul>
+     *     <li>
+     *         {@link #serverProtector} ->
+     *         <ul>
+     *          <li>
+     *             <b>rss</b> -> launch your java application with "rss" to recreate the server secret <br>
+     *                       e.g java -jar your_backend.jar rss
+     *             </li>
+     *              <li>
+     *                  <b>dss</b> -> launch your java application with "dss" to delete the current server secret <br>
+     *                       e.g java -jar your_backend.jar dss
+     *              </li>
+     *              <li>
+     *                  <b>dssi</b> -> launch your java application with "dssi" to delete the current server secret and interrupt
+     *                        the current workflow of the server <br>
+     *                        e.g java -jar your_backend.jar dssi
+     *              </li>
+     *          </ul>
+     *     </li>
+     *     <li>
+     *         {@link SpringApplication} -> see the allowed arguments <a href="https://docs.spring.io/spring-boot/docs/current/reference/html/application-properties.html">here</a>
+     *     </li>
+     * </ul>
+     * @since 1.1.2
+     */
+    public static void initEquinoxEnvironment(Class<?> context, Object[] saveMessageExtra, String[] args) {
         try {
             EquinoxBackendConfiguration backendConfiguration = EquinoxBackendConfiguration.getInstance();
             ResourcesConfig resourcesConfig = backendConfiguration.getResourcesConfig();
@@ -411,7 +448,7 @@ abstract public class EquinoxController<T extends EquinoxUser, R extends Equinox
                 ServerProtectorConfig serverProtectorConfig = backendConfiguration.getServerProtectorConfig();
                 serverProtector = new ServerProtector(
                         serverProtectorConfig.getStoragePath(),
-                        serverProtectorConfig.getSaveMessage()
+                        serverProtectorConfig.getSaveMessage(saveMessageExtra)
                 );
                 serverProtector.launch(args);
             }

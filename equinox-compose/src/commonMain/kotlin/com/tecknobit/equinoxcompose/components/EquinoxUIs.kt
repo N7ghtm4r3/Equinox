@@ -1,9 +1,6 @@
 package com.tecknobit.equinoxcompose.components
 
-import androidx.compose.animation.AnimatedContent
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.EnterTransition
-import androidx.compose.animation.ExitTransition
+import androidx.compose.animation.*
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.isSystemInDarkTheme
@@ -13,7 +10,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Error
-import androidx.compose.material3.*
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.LocalTextStyle
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -28,7 +28,6 @@ import androidx.compose.ui.unit.dp
 import com.tecknobit.equinoxcompose.resources.Res
 import com.tecknobit.equinoxcompose.resources.an_error_occurred
 import com.tecknobit.equinoxcompose.resources.loading_data
-import com.tecknobit.equinoxcompose.resources.retry
 import kotlinx.coroutines.delay
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.StringResource
@@ -92,6 +91,8 @@ fun LoadingItemUI(
             LoadingItemUIContent(
                 loadingRoutine = loadingRoutine,
                 initialDelay = initialDelay,
+                onEnter = animations.onEnter,
+                onExit = animations.onExit,
                 loadingIndicator = loadingIndicator,
                 contentLoaded = contentLoaded
             )
@@ -110,14 +111,18 @@ fun LoadingItemUI(
  * Method used to display the content of the [EmptyListUI]
  *
  * @param loadingRoutine The routine used to load the data
- * @param loadingIndicator The loading indicator to display
  * @param initialDelay An initial delay to apply to the [loadingRoutine] before to start
+ * @param onEnter The [EnterTransition] to use
+ * @param onExit The [ExitTransition] to use
+ * @param loadingIndicator The loading indicator to display
  * @param contentLoaded The content to display when the data have been loaded
  */
 @Composable
 private fun LoadingItemUIContent(
     loadingRoutine: suspend () -> Boolean,
     initialDelay: Long?,
+    onEnter: EnterTransition = fadeIn(),
+    onExit: ExitTransition = fadeOut(),
     loadingIndicator: @Composable () -> Unit,
     contentLoaded: @Composable () -> Unit,
 ) {
@@ -128,13 +133,19 @@ private fun LoadingItemUIContent(
         }
         isLoaded = loadingRoutine()
     }
-    AnimatedContent(
-        targetState = isLoaded
+    AnimatedVisibility(
+        visible = isLoaded,
+        enter = onEnter,
+        exit = onExit
     ) {
-        if (isLoaded)
-            contentLoaded()
-        else
-            loadingIndicator()
+        contentLoaded()
+    }
+    AnimatedVisibility(
+        visible = !isLoaded,
+        enter = onEnter,
+        exit = onExit
+    ) {
+        loadingIndicator()
     }
 }
 
@@ -271,8 +282,7 @@ private fun EmptyListUIContent(
  * @param errorIcon The error icon used, as default is used the **Icons.Default.Error**
  * @param errorColor The error color used, as default is used the **MaterialTheme.colorScheme.errorContainer**
  * @param errorMessage The error that occurred or to indicate a generic error
- * @param retryAction The retry action to execute
- * @param retryText The retry message
+ * @param retryContent The content to retry the failed operation
  */
 @Composable
 fun ErrorUI(
@@ -284,8 +294,7 @@ fun ErrorUI(
     errorIcon: ImageVector = Icons.Default.Error,
     errorColor: Color = MaterialTheme.colorScheme.error,
     errorMessage: StringResource = Res.string.an_error_occurred,
-    retryAction: @Composable (() -> Unit)? = null,
-    retryText: StringResource? = Res.string.retry,
+    retryContent: @Composable (() -> Unit)? = null,
 ) {
     ErrorUI(
         containerModifier = containerModifier,
@@ -296,8 +305,7 @@ fun ErrorUI(
         errorIcon = errorIcon,
         errorColor = errorColor,
         errorMessage = stringResource(errorMessage),
-        retryAction = retryAction,
-        retryText = retryText?.let { stringResource(it) }
+        retryContent = retryContent
     )
 }
 
@@ -312,8 +320,7 @@ fun ErrorUI(
  * @param errorIcon The error icon used, as default is used the **Icons.Default.Error**
  * @param errorColor The error color used, as default is used the **MaterialTheme.colorScheme.errorContainer**
  * @param errorMessage The error that occurred or to indicate a generic error
- * @param retryAction The retry action to execute
- * @param retryText The retry message
+ * @param retryContent The content to retry the failed operation
  */
 @Composable
 fun ErrorUI(
@@ -325,8 +332,7 @@ fun ErrorUI(
     errorIcon: ImageVector = Icons.Default.Error,
     errorColor: Color = MaterialTheme.colorScheme.error,
     errorMessage: String,
-    retryAction: @Composable (() -> Unit)? = null,
-    retryText: String? = null,
+    retryContent: @Composable (() -> Unit)? = null,
 ) {
     if (animations != null) {
         AnimatedVisibility(
@@ -342,8 +348,7 @@ fun ErrorUI(
                 errorIcon = errorIcon,
                 errorColor = errorColor,
                 errorMessage = errorMessage,
-                retryAction = retryAction,
-                retryText = retryText
+                retryContent = retryContent
             )
         }
     } else {
@@ -355,8 +360,7 @@ fun ErrorUI(
             errorIcon = errorIcon,
             errorColor = errorColor,
             errorMessage = errorMessage,
-            retryAction = retryAction,
-            retryText = retryText
+            retryContent = retryContent
         )
     }
 }
@@ -371,8 +375,7 @@ fun ErrorUI(
  * @param errorIcon The error icon used, as default is used the **Icons.Default.Error**
  * @param errorColor The error color used, as default is used the **MaterialTheme.colorScheme.errorContainer**
  * @param errorMessage The error that occurred or to indicate a generic error
- * @param retryAction The retry action to execute
- * @param retryText The retry message
+ * @param retryContent The content to retry the failed operation
  */
 @Composable
 private fun ErrorUIContent(
@@ -383,8 +386,7 @@ private fun ErrorUIContent(
     errorIcon: ImageVector = Icons.Default.Error,
     errorColor: Color = MaterialTheme.colorScheme.error,
     errorMessage: String,
-    retryAction: @Composable (() -> Unit)? = null,
-    retryText: String? = null,
+    retryContent: @Composable (() -> Unit)? = null,
 ) {
     Column(
         modifier = containerModifier
@@ -406,20 +408,7 @@ private fun ErrorUIContent(
             text = errorMessage,
             color = errorColor
         )
-        if (retryAction != null && retryText != null) {
-            var retryActionStart by remember { mutableStateOf(false) }
-            TextButton(
-                onClick = { retryActionStart = true }
-            ) {
-                Text(
-                    text = retryText
-                )
-            }
-            if (retryActionStart) {
-                retryAction()
-                retryActionStart = false
-            }
-        }
+        retryContent?.invoke()
     }
 }
 
@@ -443,7 +432,6 @@ private fun ErrorUIContent(
  * new item, change search, etc...
  */
 @Composable
-@ExperimentalMultiplatform
 fun EmptyState(
     animations: UIAnimations? = null,
     containerModifier: Modifier = Modifier,
@@ -497,7 +485,6 @@ fun EmptyState(
  * new item, change search, etc...
  */
 @Composable
-@ExperimentalMultiplatform
 fun EmptyState(
     animations: UIAnimations? = null,
     containerModifier: Modifier = Modifier,
@@ -548,7 +535,6 @@ fun EmptyState(
  * new item, change search, etc...
  */
 @Composable
-@ExperimentalMultiplatform
 fun EmptyState(
     animations: UIAnimations? = null,
     containerModifier: Modifier = Modifier,
@@ -602,7 +588,6 @@ fun EmptyState(
  * new item, change search, etc...
  */
 @Composable
-@ExperimentalMultiplatform
 fun EmptyState(
     animations: UIAnimations? = null,
     containerModifier: Modifier = Modifier,
@@ -655,7 +640,6 @@ fun EmptyState(
  * new item, change search, etc...
  */
 @Composable
-@ExperimentalMultiplatform
 fun EmptyState(
     animations: UIAnimations? = null,
     containerModifier: Modifier = Modifier,
@@ -709,7 +693,6 @@ fun EmptyState(
  * new item, change search, etc...
  */
 @Composable
-@ExperimentalMultiplatform
 fun EmptyState(
     animations: UIAnimations? = null,
     containerModifier: Modifier = Modifier,

@@ -4,6 +4,6 @@
     <string name="confirm">Potwierdzenie</string>
     <string name="dismiss">Odrzucić</string>
     <string name="server_currently_offline">Serwer jest obecnie w trybie offline</string>
-    <string name="no_internet_connection">Brak połączenia z Internetem</string>
+    <string name="no_network_connection">Brak połączenia sieciowego</string>
     <string name="loading_data">Ładowanie danych...</string>
 </resources>

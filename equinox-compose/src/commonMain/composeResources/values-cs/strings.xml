@@ -4,6 +4,6 @@
     <string name="confirm">Potvrďte</string>
     <string name="dismiss">Odmítnout</string>
     <string name="server_currently_offline">Server je momentálně offline</string>
-    <string name="no_internet_connection">Žádné připojení k internetu</string>
+    <string name="no_network_connection">Žádné síťové připojení</string>
     <string name="loading_data">Načítání dat...</string>
 </resources>

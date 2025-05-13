@@ -16,7 +16,9 @@ import static com.tecknobit.equinoxbackend.environment.services.builtin.service.
  * @param <O> The type of the owner entity
  * @param <D> The type of the owned entity
  * @param <V> The type of the support item used during the synchronization such {@link JoinTableSyncBatchItem}
+ *
  * @author N7ghtm4r3 - Tecknobit
+ *
  * @since 1.0.8
  */
 @Experimental
@@ -51,6 +53,11 @@ public abstract class BatchSynchronizationProcedure<O, D, V> extends EquinoxItem
      * {@code currentDataCallback} the callback used to retrieve the current data owned by the {@link #owner} entity
      */
     protected CurrentDataCallback<D> currentDataCallback;
+
+    /**
+     * {@code converter} used to convert a list of {@link D} entities into the related {@link V} batch support items
+     */
+    protected RawCollectionConverter<D, V> converter;
 
     /**
      * Constructor to init the sync procedure
@@ -89,7 +96,10 @@ public abstract class BatchSynchronizationProcedure<O, D, V> extends EquinoxItem
      * @param rawData The collection to convert
      * @return the collection used by the procedure as {@link Collection} of {@link V}
      */
-    protected abstract Collection<V> loadDataList(Collection<D> rawData);
+    @Deprecated(forRemoval = true)
+    protected Collection<V> loadDataList(Collection<D> rawData) {
+        return null;
+    }
 
     /**
      * Method used to execute the batch synchronization
@@ -169,9 +179,26 @@ public abstract class BatchSynchronizationProcedure<O, D, V> extends EquinoxItem
      *
      * @param currentDataCallback The callback used to retrieve the current data
      */
-
     public void setCurrentDataCallback(CurrentDataCallback<D> currentDataCallback) {
         this.currentDataCallback = currentDataCallback;
+    }
+
+    /**
+     * Method used to get the {@link #converter}
+     *
+     * @return the {@link #converter} as {@link RawCollectionConverter}
+     */
+    public RawCollectionConverter<D, V> getConverter() {
+        return converter;
+    }
+
+    /**
+     * Method to set the {@link #converter} instance
+     *
+     * @param converter The converter instance to use
+     */
+    public void useConverter(RawCollectionConverter<D, V> converter) {
+        this.converter = converter;
     }
 
     /**
@@ -181,6 +208,7 @@ public abstract class BatchSynchronizationProcedure<O, D, V> extends EquinoxItem
      * @param <D> The type of the owned entity
      *
      * @author N7ghtm4r3 - Tecknobit
+     *
      * @since 1.0.8
      */
     public interface CurrentDataCallback<D> {
@@ -191,6 +219,29 @@ public abstract class BatchSynchronizationProcedure<O, D, V> extends EquinoxItem
          * @return the current data owned by the {@link #owner} entity as {@link Collection} of {@link D}
          */
         Collection<D> retrieveCurrentData();
+
+    }
+
+    /**
+     * The {@code RawCollectionConverter} interface is used to provide a way to convert a list of {@link D} entities into
+     * the related {@link V} batch support items
+     *
+     * @param <D> The type of the owned entity
+     * @param <V> The type of the support item used during the synchronization such {@link JoinTableSyncBatchItem}
+     *
+     * @author N7ghtm4r3 - Tecknobit
+     *
+     * @since 1.1.2
+     */
+    public interface RawCollectionConverter<D, V> {
+
+        /**
+         * Method used to convert a list of entities into the related batch support items
+         *
+         * @param rawData The collection of {@link D} entities to convert
+         * @return the converted list as {@link Collection} of {@link V}
+         */
+        Collection<V> convert(Collection<D> rawData);
 
     }
 

@@ -21,7 +21,7 @@ package com.tecknobit.equinoxcore
  *
  * The duplicate values will be considered as one element, so will be merged
  *
- * @param supportCollection The collection from add the element not present in the original collection
+ * @param supportCollection The collection from add the elements not present in the original collection
  */
 fun <T> MutableCollection<T>.retainAndAdd(
     supportCollection: Collection<T>,
@@ -56,20 +56,27 @@ fun <T> MutableCollection<T>.retainAndAdd(
  * The duplicate values will be considered as one element, so will be merged
  *
  * @param addFrom The starting index from which to add elements from the [supportCollection], following the same constraints
- * @param supportCollection The collection from add the element not present in the original collection
+ * @param supportCollection The collection from add the elements not present in the original collection
  */
 fun <T> MutableList<T>.retainAndAdd(
-    addFrom: Int = lastIndex,
+    addFrom: Int? = null,
     supportCollection: Collection<T>,
 ) {
     val supportCollectionSet = supportCollection.toHashSet()
     retainAll(supportCollectionSet)
-    addAll(
-        index = addFrom,
-        elements = supportCollectionSet.filter { supportItem ->
-            supportItem !in this
-        }
-    )
+    val collectionSetToAdd = supportCollectionSet.filter { supportItem ->
+        supportItem !in this
+    }
+    if (addFrom != null) {
+        addAll(
+            index = addFrom,
+            elements = collectionSetToAdd
+        )
+    } else {
+        addAll(
+            elements = collectionSetToAdd
+        )
+    }
 }
 
 /**
@@ -103,8 +110,11 @@ fun <T> MutableCollection<T>.mergeIfNotContained(
 /**
  * Method used to add an element to a [MutableCollection] if it is not already contained or remove that element if already
  * contained by the collection. The default behavior of the method is checking the existence in the collection of the
- * element to toggle, but it can be used also to dynamically insert or remove an element from the collection from example
+ * element to toggle, but it can be used also to dynamically insert or remove an element from the collection for example
  * with checkbox selection, button clicking, etc...
+ *
+ * @param element The element to toggle
+ * @param add The predicated used to determine if add or remove the element
  *
  * @return `true` if the element has been added, `false` if the element has been removed
  *

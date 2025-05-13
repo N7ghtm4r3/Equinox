@@ -4,6 +4,6 @@
     <string name="confirm">Confirmați</string>
     <string name="dismiss">Respinge</string>
     <string name="server_currently_offline">Serverul este în prezent offline</string>
-    <string name="no_internet_connection">Fără conexiune la internet</string>
+    <string name="no_network_connection">Fără conexiune la rețea</string>
     <string name="loading_data">Încărcarea datelor...</string>
 </resources>

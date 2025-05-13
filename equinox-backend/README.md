@@ -1,6 +1,6 @@
 # Equinox Backend
 
-**v1.1.1**
+**v1.1.2**
 
 Utilities and apis for the backends based on the **Spring Boot**'s architecture
 
@@ -10,7 +10,7 @@ Utilities and apis for the backends based on the **Spring Boot**'s architecture
 
 ```gradle
 [versions]
-equinox = "1.1.1"
+equinox = "1.1.2"
 
 [libraries]
 equinox-backend = { module = "io.github.n7ghtm4r3:equinox-backend", version.ref = "equinox" }
@@ -47,10 +47,10 @@ Add the JitPack repository to your build file
     dependencies {
        
         // implement the backend utilities
-        implementation 'io.github.n7ghtm4r3:equinox-backend:1.1.1'
+        implementation 'io.github.n7ghtm4r3:equinox-backend:1.1.2'
         
         // implement the core utilities
-        implementation 'io.github.n7ghtm4r3:equinox-core:1.1.1'
+        implementation 'io.github.n7ghtm4r3:equinox-core:1.1.2'
     }
     ```
 
@@ -60,10 +60,10 @@ Add the JitPack repository to your build file
     dependencies {
         
         // implement the backend utilities
-        implementation("io.github.n7ghtm4r3:equinox-backend:1.1.1")
+        implementation("io.github.n7ghtm4r3:equinox-backend:1.1.2")
         
         // implement the core utilities
-        implementation("io.github.n7ghtm4r3:equinox-core:1.1.1")
+        implementation("io.github.n7ghtm4r3:equinox-core:1.1.2")
     }
     ```
 
@@ -85,12 +85,13 @@ Add the JitPack repository to your build file
 - <a href="https://github.com/N7ghtm4r3/Equinox/blob/main/documd/backend/ResourcesProvider.md">**ResourcesProvider**</a>
   allows you to manage the static resources to serve to the clients
 - <a href="https://github.com/N7ghtm4r3/Equinox/blob/main/documd/backend/IndexesCreator.md">**IndexesCreator**</a>
-  allows you to create automatically the the indexes for your own tables of the database
+  allows you to create automatically the indexes for your own tables of the database
 - <a href="https://github.com/N7ghtm4r3/Equinox/blob/main/documd/backend/FilteredQuery.md">**FilteredQuery**</a> allows
   you to create dynamic queries with filters parameters
 - <a href="https://github.com/N7ghtm4r3/Equinox/blob/main/documd/backend/EquinoxItemsHelper.md">**EquinoxItemsHelper**</a> allows you to execute batch queries such insertion, deletion and synchronization dynamically
-- <a href="https://github.com/N7ghtm4r3/Equinox/blob/main/documd/backend/EquinoxEvents.md">**EquinoxEventsEmitter**</a>
-  allows you to share and collect events between services
+- <a href="https://github.com/N7ghtm4r3/Equinox/blob/main/documd/backend/BatchSynchronizationProcedure.md">**BatchSynchronizationProcedure**</a> 
+allows you to create reusable synchronization procedures compacted and cleaned
+- <a href="https://github.com/N7ghtm4r3/Equinox/blob/main/documd/backend/EquinoxEvents.md">**EquinoxEventsEmitter**</a> allows you to share and collect events between services
 
 The other apis will be gradually released
 

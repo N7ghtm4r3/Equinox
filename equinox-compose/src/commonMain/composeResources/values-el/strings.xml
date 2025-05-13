@@ -4,6 +4,6 @@
     <string name="confirm">Επιβεβαίωση</string>
     <string name="dismiss">Απορρίψτε το</string>
     <string name="server_currently_offline">Ο διακομιστής είναι επί του παρόντος εκτός σύνδεσης</string>
-    <string name="no_internet_connection">Δεν υπάρχει σύνδεση στο διαδίκτυο</string>
+    <string name="no_network_connection">Δεν υπάρχει σύνδεση δικτύου</string>
     <string name="loading_data">Φόρτωση δεδομένων...</string>
 </resources>
