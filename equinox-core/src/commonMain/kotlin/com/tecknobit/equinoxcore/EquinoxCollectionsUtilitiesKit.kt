@@ -59,21 +59,24 @@ fun <T> MutableCollection<T>.retainAndAdd(
  * @param supportCollection The collection from add the elements not present in the original collection
  */
 fun <T> MutableList<T>.retainAndAdd(
-    addFrom: Int = lastIndex,
+    addFrom: Int? = null,
     supportCollection: Collection<T>,
 ) {
-    val originalSize = this.size
     val supportCollectionSet = supportCollection.toHashSet()
     retainAll(supportCollectionSet)
-    addAll(
-        index = if (addFrom < 0 || addFrom >= originalSize)
-            0
-        else
-            addFrom,
-        elements = supportCollectionSet.filter { supportItem ->
-            supportItem !in this
-        }
-    )
+    val collectionSetToAdd = supportCollectionSet.filter { supportItem ->
+        supportItem !in this
+    }
+    if (addFrom != null) {
+        addAll(
+            index = addFrom,
+            elements = collectionSetToAdd
+        )
+    } else {
+        addAll(
+            elements = collectionSetToAdd
+        )
+    }
 }
 
 /**

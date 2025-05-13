@@ -23,6 +23,9 @@ kermit = "2.0.5"
 lifecycleViewmodelCompose = "2.8.2"
 material3WindowSizeClass = "1.7.3"
 kmpalette = "3.1.0"
+#equinox-misc
+##lazy-pagination-compose-ops
+lazyPaginationCompose = "1.5.1"
 
 [libraries]
 dokka-base = { module = "org.jetbrains.dokka:dokka-base", version.ref = "dokka" }
@@ -53,6 +56,9 @@ kermit = { module = "co.touchlab:kermit", version.ref = "kermit" }
 lifecycle-viewmodel-compose = { module = "org.jetbrains.androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "lifecycleViewmodelCompose" }
 material3-window-size = { module = "org.jetbrains.compose.material3:material3-window-size-class", version.ref = "material3WindowSizeClass" }
 kmpalette-core = { module = "com.kmpalette:kmpalette-core", version.ref = "kmpalette" }
+#equinox-misc
+##lazy-pagination-compose-ops
+lazy-pagination-compose = { module = "io.github.ahmad-hamwi:lazy-pagination-compose", version.ref = "lazyPaginationCompose" }
 
 [plugins]
 androidLibrary = { id = "com.android.library", version.ref = "agp" }
