@@ -2,6 +2,8 @@ package com.tecknobit.equinoxcompose.session.sessionflow
 
 /**
  * List of the possible statuses of the session
+ *
+ * @since 1.1.2
  */
 enum class SessionStatus {
 

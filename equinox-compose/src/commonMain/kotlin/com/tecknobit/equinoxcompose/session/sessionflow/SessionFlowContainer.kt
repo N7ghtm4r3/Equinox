@@ -27,6 +27,29 @@ import com.tecknobit.equinoxcompose.viewmodels.EquinoxViewModel
 import dev.jordond.connectivity.Connectivity
 import org.jetbrains.compose.resources.vectorResource
 
+/**
+ * Component used to display the correct content based on the [SessionStatus] value
+ *
+ * @param modifier The modifier to apply to the component
+ * @param state The state used to autonomously display the correct content
+ * @param viewModel If passed will be used to autonomously suspend and restart the [com.tecknobit.equinoxcompose.session.Retriever]'s
+ * routine
+ * @param enterTransition The transition to apply when a new content is displayed
+ * @param exitTransition The transition to apply when a content is hidden
+ * @param initialLoadingRoutineDelay Delay to apply to the [loadingRoutine] before starts
+ * @param loadingRoutine Routine used to load the elements displayed in the [content]
+ * @param content The main content displayed when the [SessionStatus] is [OPERATIONAL]
+ * @param statusTextStyle The style to apply to the texts of the callback contents
+ * @param statusContainerColor The color to apply to the background of the callback contents
+ * @param loadingContentColor The color to apply to the loading content
+ * @param loadingIndicator The indicator used during the [loadingRoutine] execution
+ * @param fallbackContentColor The color to apply to the fallback contents
+ * @param retryFailedFlowContent The content displayed to allow the user to retry a failed operation
+ * @param onServerOffline The content displayed when the [SessionStatus] is [SERVER_OFFLINE]
+ * @param onNoNetworkConnection The content displayed when the [SessionStatus] is [NO_NETWORK_CONNECTION]
+ *
+ * @since 1.1.2
+ */
 @Composable
 @ExperimentalComposeApi
 fun SessionFlowContainer(
@@ -114,6 +137,12 @@ fun SessionFlowContainer(
     }
 }
 
+/**
+ * Method used to monitor the network connection status
+ *
+ * @param connectionState The state used to detect the connection status
+ * @param state The state of the [SessionFlowContainer]
+ */
 @Composable
 @Suppress("ComposableNaming")
 private fun monitorConnection(

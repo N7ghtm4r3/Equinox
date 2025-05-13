@@ -162,7 +162,7 @@ fun setUpSession(
  */
 @Deprecated(
     message = "This api has been deprecated",
-    level = DeprecationLevel.ERROR
+    level = DeprecationLevel.WARNING
 )
 fun setServerOfflineValue(
     isServerOfflineValue: Boolean,
@@ -182,7 +182,7 @@ fun setServerOfflineValue(
  */
 @Deprecated(
     message = "This api has been deprecated",
-    level = DeprecationLevel.ERROR,
+    level = DeprecationLevel.WARNING,
     replaceWith = ReplaceWith(
         expression = "Use instead SessionFlowState.invokeOnUserDisconnected",
         "com.tecknobit.equinoxcompose.session.sessionflow"
@@ -219,7 +219,7 @@ fun setHasBeenDisconnectedValue(
 @Composable
 @Deprecated(
     message = "This api has been deprecated",
-    level = DeprecationLevel.ERROR,
+    level = DeprecationLevel.WARNING,
     replaceWith = ReplaceWith(
         expression = "Use instead SessionFlowContainer",
         "com.tecknobit.equinoxcompose.session.sessionflow"

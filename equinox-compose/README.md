@@ -69,7 +69,7 @@ dependencies {
       prebuilt viewmodel to authenticate the user in the system
     - [EquinoxProfileViewModel](src/commonMain/kotlin/com/tecknobit/equinoxcompose/helpers/viewmodels/EquinoxProfileViewModel.kt) ->
       prebuilt viewmodel to manage the user account settings and preferences
-- [SessionManager](../documd/compose/apis/SessionManager.md)
+- [SessionManager](../documd/compose/apis/SessionManager.md) (DEPRECATED)
 - [EquinoxScreens](../documd/compose/apis/EquinoxScreens.md)
 - [EquinoxWindowKit](../documd/compose/apis/EquinoxWindowKit.md)
 
@@ -91,6 +91,7 @@ The other apis will be gradually released
 - [QuantityPicker](../documd/compose/components/quantitypicker/QuantityPicker.md)
 - [BadgeText](../documd/compose/components/badgetext/BadgeText.md)
 - [ProgressBars](../documd/compose/components/progressbars/ProgressBars.md)
+- [SessionFlowContainer](../documd/compose/components/sessionflowcontainer/SessionFlowContainer.md)
 
 The others components will be gradually released
 
