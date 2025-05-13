@@ -110,8 +110,11 @@ fun <T> MutableCollection<T>.mergeIfNotContained(
 /**
  * Method used to add an element to a [MutableCollection] if it is not already contained or remove that element if already
  * contained by the collection. The default behavior of the method is checking the existence in the collection of the
- * element to toggle, but it can be used also to dynamically insert or remove an element from the collection from example
+ * element to toggle, but it can be used also to dynamically insert or remove an element from the collection for example
  * with checkbox selection, button clicking, etc...
+ *
+ * @param element The element to toggle
+ * @param add The predicated used to determine if add or remove the element
  *
  * @return `true` if the element has been added, `false` if the element has been removed
  *
