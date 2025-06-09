@@ -3,6 +3,7 @@ import com.vanniktech.maven.publish.KotlinMultiplatform
 import com.vanniktech.maven.publish.SonatypeHost
 import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import org.jetbrains.kotlin.gradle.targets.js.nodejs.NodeJsRootExtension
 
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
@@ -103,6 +104,8 @@ kotlin {
 
     jvmToolchain(18)
 }
+
+rootProject.the<NodeJsRootExtension>().versions.webpackDevServer.version = "5.2.1"
 
 mavenPublishing {
     configure(
