@@ -294,6 +294,31 @@ abstract public class EquinoxController<T extends EquinoxUser, R extends Equinox
     }
 
     /**
+     * Wrapper method used to assemble a {@link #failedResponse(String)} with the {@link #NOT_AUTHORIZED_OR_WRONG_DETAILS_MESSAGE}
+     * message
+     *
+     * @return the error response as {@link String}
+     * @since 1.1.3
+     */
+    @Wrapper
+    @Assembler
+    protected String notAuthorizedOrWrongDetailsResponse() {
+        return failedResponse(NOT_AUTHORIZED_OR_WRONG_DETAILS_MESSAGE);
+    }
+
+    /**
+     * Wrapper method used to assemble a {@link #failedResponse(String)} with the {@link #WRONG_PROCEDURE_MESSAGE} message
+     *
+     * @return the error response as {@link String}
+     * @since 1.1.3
+     */
+    @Wrapper
+    @Assembler
+    protected String wrongProcedureResponse() {
+        return failedResponse(WRONG_PROCEDURE_MESSAGE);
+    }
+
+    /**
      * Method used to get the payload for a failed response
      *
      * @param errorKey The key of the error

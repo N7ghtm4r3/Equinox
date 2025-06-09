@@ -64,7 +64,7 @@ public class EquinoxUsersController<T extends EquinoxUser, R extends EquinoxUser
         loadJsonHelper(payload);
         setSessionLocale(jsonHelper.getString(LANGUAGE_KEY, DEFAULT_LANGUAGE));
         if (configuration.serverProtectorEnabled() && !serverProtector.serverSecretMatches(jsonHelper.getString(SERVER_SECRET_KEY)))
-            return failedResponse(NOT_AUTHORIZED_OR_WRONG_DETAILS_MESSAGE);
+            return notAuthorizedOrWrongDetailsResponse();
         String name = jsonHelper.getString(NAME_KEY);
         String surname = jsonHelper.getString(SURNAME_KEY);
         String email = jsonHelper.getString(EMAIL_KEY);
@@ -96,7 +96,7 @@ public class EquinoxUsersController<T extends EquinoxUser, R extends EquinoxUser
                     .put(PROFILE_PIC_KEY, DEFAULT_PROFILE_PIC)
             );
         } catch (Exception e) {
-            return failedResponse(WRONG_PROCEDURE_MESSAGE);
+            return wrongProcedureResponse();
         }
     }
 
@@ -192,11 +192,11 @@ public class EquinoxUsersController<T extends EquinoxUser, R extends EquinoxUser
         try {
             T user = usersService.signInUser(email.toLowerCase(), password, custom);
             if (user == null)
-                return failedResponse(NOT_AUTHORIZED_OR_WRONG_DETAILS_MESSAGE);
+                return notAuthorizedOrWrongDetailsResponse();
             setSessionLocale(DEFAULT_LANGUAGE);
             return successResponse(assembleSignInSuccessResponse(user));
         } catch (Exception e) {
-            return failedResponse(WRONG_PROCEDURE_MESSAGE);
+            return wrongProcedureResponse();
         }
     }
 
@@ -307,7 +307,7 @@ public class EquinoxUsersController<T extends EquinoxUser, R extends EquinoxUser
             @RequestHeader(TOKEN_KEY) String token
     ) {
         if (!isMe(userId, token))
-            return failedResponse(NOT_AUTHORIZED_OR_WRONG_DETAILS_MESSAGE);
+            return notAuthorizedOrWrongDetailsResponse();
         return successResponse(usersService.getDynamicAccountData(userId));
     }
 
@@ -332,16 +332,16 @@ public class EquinoxUsersController<T extends EquinoxUser, R extends EquinoxUser
             @RequestParam(PROFILE_PIC_KEY) MultipartFile profilePic
     ) {
         if (!isMe(userId, token))
-            return failedResponse(NOT_AUTHORIZED_OR_WRONG_DETAILS_MESSAGE);
+            return notAuthorizedOrWrongDetailsResponse();
         if (profilePic.isEmpty())
-            return failedResponse(WRONG_PROCEDURE_MESSAGE);
+            return wrongProcedureResponse();
         JSONObject response = new JSONObject();
         try {
             String profilePicUrl = usersService.changeProfilePic(profilePic, userId);
             response.put(PROFILE_PIC_KEY, profilePicUrl);
             return successResponse(response);
         } catch (Exception e) {
-            return failedResponse(WRONG_PROCEDURE_MESSAGE);
+            return wrongProcedureResponse();
         }
     }
 
@@ -373,7 +373,7 @@ public class EquinoxUsersController<T extends EquinoxUser, R extends EquinoxUser
             @RequestBody Map<String, String> payload
     ) {
         if (!isMe(userId, token))
-            return failedResponse(NOT_AUTHORIZED_OR_WRONG_DETAILS_MESSAGE);
+            return notAuthorizedOrWrongDetailsResponse();
         loadJsonHelper(payload);
         String email = jsonHelper.getString(EMAIL_KEY);
         if (!Companion.isEmailValid(email))
@@ -382,7 +382,7 @@ public class EquinoxUsersController<T extends EquinoxUser, R extends EquinoxUser
             usersService.changeEmail(email, userId);
             return successResponse();
         } catch (Exception e) {
-            return failedResponse(WRONG_PROCEDURE_MESSAGE);
+            return wrongProcedureResponse();
         }
     }
 
@@ -414,7 +414,7 @@ public class EquinoxUsersController<T extends EquinoxUser, R extends EquinoxUser
             @RequestBody Map<String, String> payload
     ) {
         if (!isMe(userId, token))
-            return failedResponse(NOT_AUTHORIZED_OR_WRONG_DETAILS_MESSAGE);
+            return notAuthorizedOrWrongDetailsResponse();
         loadJsonHelper(payload);
         String password = jsonHelper.getString(PASSWORD_KEY);
         if (!Companion.isPasswordValid(password))
@@ -423,7 +423,7 @@ public class EquinoxUsersController<T extends EquinoxUser, R extends EquinoxUser
             usersService.changePassword(password, userId);
             return successResponse();
         } catch (Exception e) {
-            return failedResponse(WRONG_PROCEDURE_MESSAGE);
+            return wrongProcedureResponse();
         }
     }
 
@@ -455,7 +455,7 @@ public class EquinoxUsersController<T extends EquinoxUser, R extends EquinoxUser
             @RequestBody Map<String, String> payload
     ) {
         if (!isMe(userId, token))
-            return failedResponse(NOT_AUTHORIZED_OR_WRONG_DETAILS_MESSAGE);
+            return notAuthorizedOrWrongDetailsResponse();
         loadJsonHelper(payload);
         String language = jsonHelper.getString(LANGUAGE_KEY);
         if (!Companion.isLanguageValid(language))
@@ -464,7 +464,7 @@ public class EquinoxUsersController<T extends EquinoxUser, R extends EquinoxUser
             usersService.changeLanguage(language, userId);
             return successResponse();
         } catch (Exception e) {
-            return failedResponse(WRONG_PROCEDURE_MESSAGE);
+            return wrongProcedureResponse();
         }
     }
 
@@ -487,7 +487,7 @@ public class EquinoxUsersController<T extends EquinoxUser, R extends EquinoxUser
             @RequestHeader(TOKEN_KEY) String token
     ) {
         if (!isMe(userId, token))
-            return failedResponse(NOT_AUTHORIZED_OR_WRONG_DETAILS_MESSAGE);
+            return notAuthorizedOrWrongDetailsResponse();
         usersService.deleteUser(userId);
         return successResponse();
     }
