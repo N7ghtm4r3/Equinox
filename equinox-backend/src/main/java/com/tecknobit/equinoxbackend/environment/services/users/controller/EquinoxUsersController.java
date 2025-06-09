@@ -38,8 +38,17 @@ public class EquinoxUsersController<T extends EquinoxUser, R extends EquinoxUser
     /**
      * {@code usersService} helper to manage the users database operations
      */
+    protected final H usersService;
+
+    /**
+     * Constructor to init the controller
+     *
+     * @param usersService The helper to manage the users database operations
+     */
     @Autowired
-    protected H usersService;
+    public EquinoxUsersController(H usersService) {
+        this.usersService = usersService;
+    }
 
     /**
      * Method used to sign up in the <b>Equinox's system</b>

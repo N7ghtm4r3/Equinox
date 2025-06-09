@@ -84,8 +84,7 @@ public class EquinoxUsersService<T extends EquinoxUser, R extends EquinoxUsersRe
     /**
      * {@code usersRepository} instance for the users repository
      */
-    @Autowired
-    protected R usersRepository;
+    protected final R usersRepository;
 
     /**
      * {@code discriminatorValue} value of the discriminator to use to save the users in the related table
@@ -93,9 +92,13 @@ public class EquinoxUsersService<T extends EquinoxUser, R extends EquinoxUsersRe
     protected String discriminatorValue;
 
     /**
-     * Constructor to init the {@link EquinoxUsersService} controller <br>
+     * Constructor to init the {@link EquinoxUsersService} service
+     *
+     * @param usersRepository The instance for the users repository
      */
-    public EquinoxUsersService() {
+    @Autowired
+    public EquinoxUsersService(R usersRepository) {
+        this.usersRepository = usersRepository;
         try {
             discriminatorValue = ((Class<T>) ((ParameterizedType) getClass().getGenericSuperclass())
                     .getActualTypeArguments()[0]).getSimpleName();
@@ -107,11 +110,11 @@ public class EquinoxUsersService<T extends EquinoxUser, R extends EquinoxUsersRe
     /**
      * Method used to sign up a new user in the system
      *
-     * @param id:       the identifier of the user
-     * @param token:    the token of the user
-     * @param name:     the name of the user
-     * @param surname:  the surname of the user
-     * @param email:    the email of the user
+     * @param id The identifier of the user
+     * @param token The token of the user
+     * @param name The name of the user
+     * @param surname The surname of the user
+     * @param email The email of the user
      * @param password The password of the user
      * @param language The language of the user
      * @param custom The custom parameters to add in the default query
