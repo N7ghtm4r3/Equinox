@@ -5,7 +5,6 @@ import androidx.compose.runtime.MutableState
 import androidx.lifecycle.viewModelScope
 import com.tecknobit.equinoxcompose.network.EquinoxRequester
 import com.tecknobit.equinoxcompose.session.EquinoxLocalUser
-import com.tecknobit.equinoxcompose.utilities.getCurrentLocaleLanguage
 import com.tecknobit.equinoxcore.annotations.RequiresSuperCall
 import com.tecknobit.equinoxcore.annotations.Structure
 import com.tecknobit.equinoxcore.helpers.*
@@ -185,7 +184,7 @@ abstract class EquinoxAuthViewModel(
      * @return a supported language for the user as [String]
      */
     private fun getValidUserLanguage(): String {
-        val currentLanguageTag: String = getCurrentLocaleLanguage().substring(0, 2)
+        val currentLanguageTag: String = localUser.language
         if (SUPPORTED_LANGUAGES[currentLanguageTag] == null)
             return DEFAULT_LANGUAGE
         return currentLanguageTag

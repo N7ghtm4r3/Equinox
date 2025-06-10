@@ -72,13 +72,14 @@ open class InputsValidator {
         /**
          * `SUPPORTED_LANGUAGES` list of the supported languages
          */
-        val SUPPORTED_LANGUAGES: HashMap<String, String> = HashMap()
-
-        init {
-            SUPPORTED_LANGUAGES["it"] = "Italiano"
-            SUPPORTED_LANGUAGES["en"] = "English"
-            SUPPORTED_LANGUAGES["fr"] = "Francais"
-            SUPPORTED_LANGUAGES["es"] = "Espanol"
+        @JvmStatic
+        val SUPPORTED_LANGUAGES: HashMap<String, String> by lazy {
+            hashMapOf(
+                "it" to "Italiano",
+                "en" to "English",
+                "fr" to "Francais",
+                "es" to "Espanol"
+            )
         }
 
         /**

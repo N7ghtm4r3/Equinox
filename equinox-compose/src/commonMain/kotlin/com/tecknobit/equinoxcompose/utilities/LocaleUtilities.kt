@@ -5,4 +5,12 @@ package com.tecknobit.equinoxcompose.utilities
  *
  * @return the current locale language set as [String]
  */
+@Deprecated(
+    message = "Useless API",
+    level = DeprecationLevel.ERROR,
+    replaceWith = ReplaceWith(
+        expression = "Locale.current",
+        "androidx.compose.ui.text.intl.Locale"
+    )
+)
 expect fun getCurrentLocaleLanguage(): String
