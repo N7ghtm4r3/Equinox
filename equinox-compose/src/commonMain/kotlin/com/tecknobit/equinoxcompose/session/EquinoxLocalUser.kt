@@ -243,6 +243,7 @@ open class EquinoxLocalUser(
      */
     @RequiresSuperCall
     protected open fun initLocalUser() {
+        val currentLocaleLanguage = Locale.current.language
         hostAddress = getNullSafePreference(HOST_ADDRESS_KEY)
         userId = getPreference(IDENTIFIER_KEY)
         userToken = getPreference(TOKEN_KEY)
@@ -253,7 +254,10 @@ open class EquinoxLocalUser(
         password = getNullSafePreference(PASSWORD_KEY)
         language = getNullSafePreference(
             key = LANGUAGE_KEY,
-            defPrefValue = SUPPORTED_LANGUAGES[Locale.current.language] ?: DEFAULT_LANGUAGE
+            defPrefValue = if (SUPPORTED_LANGUAGES.containsKey(currentLocaleLanguage))
+                currentLocaleLanguage
+            else
+                DEFAULT_LANGUAGE
         )
         theme = ApplicationTheme.getInstance(getPreference(THEME_KEY))
     }
