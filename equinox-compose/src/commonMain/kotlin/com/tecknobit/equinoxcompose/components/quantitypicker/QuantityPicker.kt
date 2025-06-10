@@ -13,10 +13,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Remove
-import androidx.compose.material3.Icon
-import androidx.compose.material3.LocalTextStyle
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.ExperimentalComposeApi
 import androidx.compose.ui.Alignment
@@ -58,6 +55,7 @@ fun QuantityPicker(
     incrementButtonAppearance: QuantityButtonAppearance = quantityButtonAppearance(
         icon = Icons.Default.Add
     ),
+    enabled: Boolean = true,
 ) {
     QuantityPicker(
         modifier = modifier,
@@ -68,7 +66,8 @@ fun QuantityPicker(
         decrementButtonAppearance = decrementButtonAppearance,
         quantityIndicatorStyle = quantityIndicatorStyle,
         onIncrement = onQuantityPicked,
-        incrementButtonAppearance = incrementButtonAppearance
+        incrementButtonAppearance = incrementButtonAppearance,
+        enabled = enabled
     )
 }
 
@@ -103,6 +102,7 @@ fun QuantityPicker(
     incrementButtonAppearance: QuantityButtonAppearance = quantityButtonAppearance(
         icon = Icons.Default.Add
     ),
+    enabled: Boolean = true,
 ) {
     Row(
         modifier = modifier,
@@ -118,7 +118,8 @@ fun QuantityPicker(
         DecrementButton(
             appearance = decrementButtonAppearance,
             state = state,
-            onDecrement = onDecrement
+            onDecrement = onDecrement,
+            enabled = enabled
         )
         Text(
             text = state.quantityPicked.toString(),
@@ -127,7 +128,8 @@ fun QuantityPicker(
         IncrementButton(
             appearance = incrementButtonAppearance,
             state = state,
-            onIncrement = onIncrement
+            onIncrement = onIncrement,
+            enabled = enabled
         )
     }
 }
@@ -146,6 +148,7 @@ private fun DecrementButton(
     appearance: QuantityButtonAppearance,
     state: QuantityPickerState,
     onDecrement: ((Int) -> Unit)? = null,
+    enabled: Boolean,
 ) {
     QuantityButton(
         appearance = appearance,
@@ -159,7 +162,8 @@ private fun DecrementButton(
                 onDecrement?.invoke(state.quantityPicked)
             }
         } else
-            null
+            null,
+        enabled = enabled
     )
 }
 
@@ -177,6 +181,7 @@ private fun IncrementButton(
     appearance: QuantityButtonAppearance,
     state: QuantityPickerState,
     onIncrement: ((Int) -> Unit)? = null,
+    enabled: Boolean,
 ) {
     QuantityButton(
         appearance = appearance,
@@ -190,7 +195,8 @@ private fun IncrementButton(
                 onIncrement?.invoke(state.quantityPicked)
             }
         } else
-            null
+            null,
+        enabled = enabled
     )
 }
 
@@ -209,23 +215,38 @@ private fun QuantityButton(
     appearance: QuantityButtonAppearance,
     quantityAction: () -> Unit,
     longPressQuantityAction: (() -> Unit)? = null,
+    enabled: Boolean,
 ) {
+    val background = appearance.background
     Box(
         modifier = appearance.modifier
             .size(appearance.size)
             .clip(appearance.shape)
-            .background(appearance.background)
+            .background(
+                color = background.copy(
+                    alpha = if (enabled)
+                        1f
+                    else
+                        0.12f
+                )
+            )
             .combinedClickable(
+                enabled = enabled,
                 onClick = quantityAction,
                 onDoubleClick = longPressQuantityAction,
                 onLongClick = longPressQuantityAction
             ),
-        contentAlignment = Alignment.Center
+        contentAlignment = Alignment.Center,
     ) {
         Icon(
             imageVector = appearance.icon,
             contentDescription = null,
-            tint = MaterialTheme.colorScheme.onPrimary
+            tint = contentColorFor(background).copy(
+                alpha = if (enabled)
+                    1f
+                else
+                    0.38f
+            )
         )
     }
 }
@@ -243,6 +264,9 @@ private fun QuantityButton(
  *
  * @since 1.1.0
  */
+@Deprecated(
+    message = ""
+)
 data class QuantityButtonAppearance(
     val modifier: Modifier = Modifier,
     val shape: Shape = CircleShape,
@@ -262,6 +286,9 @@ data class QuantityButtonAppearance(
  *
  * @return the customization style for a button as [QuantityButtonAppearance]
  */
+@Deprecated(
+    message = ""
+)
 @Composable
 fun quantityButtonAppearance(
     modifier: Modifier = Modifier,
