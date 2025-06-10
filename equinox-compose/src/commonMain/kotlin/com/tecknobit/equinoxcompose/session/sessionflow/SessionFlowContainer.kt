@@ -30,6 +30,7 @@ import org.jetbrains.compose.resources.vectorResource
 /**
  * Component used to display the correct content based on the [SessionStatus] value
  *
+ * @param triggers The triggers to use to automatically reinvoke the [loadingRoutine]
  * @param modifier The modifier to apply to the component
  * @param state The state used to autonomously display the correct content
  * @param viewModel If passed will be used to autonomously suspend and restart the [com.tecknobit.equinoxcompose.session.Retriever]'s

@@ -82,6 +82,10 @@ class SessionFlowState internal constructor(
      */
     private var viewModel: EquinoxViewModel? = null
 
+    /**
+     * `loadingRoutineTrigger` trigger used to automatically invoke the
+     * [com.tecknobit.equinoxcompose.session.sessionflow.SessionFlowContainer]'s loading routine
+     */
     @ExperimentalComposeApi
     internal val loadingRoutineTrigger: MutableLongState = mutableLongStateOf(TimeFormatter.currentTimestamp())
 
@@ -147,6 +151,10 @@ class SessionFlowState internal constructor(
         }
     }
 
+    /**
+     * Method used to update the value of the [loadingRoutineTrigger] to automatically invoke the
+     * [com.tecknobit.equinoxcompose.session.sessionflow.SessionFlowContainer]'s loading routine
+     */
     @ExperimentalComposeApi
     fun reload() {
         loadingRoutineTrigger.value = TimeFormatter.currentTimestamp()

@@ -37,7 +37,7 @@ import org.jetbrains.compose.resources.stringResource
 /**
  * Method used to display a layout when a list of values is empty
  *
- * @param triggers The triggers to use to reinvoke the [loadingRoutine] automatically
+ * @param triggers The triggers to use to automatically reinvoke the [loadingRoutine]
  * @param containerModifier The modifier to apply to the container column
  * @param animations The set of the animations to use to animate the layout
  * @param textStyle The style to apply to the text
@@ -120,7 +120,7 @@ fun LoadingItemUI(
  * @param onExit The [ExitTransition] to use
  * @param loadingIndicator The loading indicator to display
  * @param contentLoaded The content to display when the data have been loaded
- * @param triggers The triggers to use to reinvoke the [loadingRoutine] automatically
+ * @param triggers The triggers to use to automatically reinvoke the [loadingRoutine]
  */
 @Composable
 private fun LoadingItemUIContent(
