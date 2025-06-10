@@ -61,7 +61,8 @@ public class EquinoxUsersController<T extends EquinoxUser, R extends EquinoxUser
      *                                  "name" : "the name of the user" -> [String],
      *                                  "surname": "the surname of the user" -> [String],
      *                                  "email": "the email of the user" -> [String],
-     *                                  "password": "the password of the user" -> [String]
+     *                                  "password": "the password of the user" -> [String],
+     *                                  "language": "the language of the user" -> [String]
      *                              }
      *                      }
      *                 </pre>
@@ -180,7 +181,8 @@ public class EquinoxUsersController<T extends EquinoxUser, R extends EquinoxUser
      *                      {@code
      *                              {
      *                                  "email": "the email of the user", -> [String]
-     *                                  "password": "the password of the user" -> [String]
+     *                                  "password": "the password of the user" -> [String],
+     *                                  "language": "the language of the user" -> [String]
      *                              }
      *                      }
      *                 </pre>

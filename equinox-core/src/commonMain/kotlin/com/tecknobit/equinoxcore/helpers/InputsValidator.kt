@@ -70,15 +70,15 @@ open class InputsValidator {
         protected val urlValidator = Regex(URL_REGEX)
 
         /**
-         * `LANGUAGES_SUPPORTED` list of the supported languages
+         * `SUPPORTED_LANGUAGES` list of the supported languages
          */
-        val LANGUAGES_SUPPORTED: HashMap<String, String> = HashMap()
+        val SUPPORTED_LANGUAGES: HashMap<String, String> = HashMap()
 
         init {
-            LANGUAGES_SUPPORTED["it"] = "Italiano"
-            LANGUAGES_SUPPORTED["en"] = "English"
-            LANGUAGES_SUPPORTED["fr"] = "Francais"
-            LANGUAGES_SUPPORTED["es"] = "Espanol"
+            SUPPORTED_LANGUAGES["it"] = "Italiano"
+            SUPPORTED_LANGUAGES["en"] = "English"
+            SUPPORTED_LANGUAGES["fr"] = "Francais"
+            SUPPORTED_LANGUAGES["es"] = "Espanol"
         }
 
         /**
@@ -194,8 +194,8 @@ open class InputsValidator {
         fun isLanguageValid(
             language: String?,
         ): Boolean {
-            return language != null && (LANGUAGES_SUPPORTED.containsKey(language) ||
-                    LANGUAGES_SUPPORTED.containsValue(language))
+            return language != null && (SUPPORTED_LANGUAGES.containsKey(language) ||
+                    SUPPORTED_LANGUAGES.containsValue(language))
         }
 
         /**

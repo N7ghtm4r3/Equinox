@@ -10,7 +10,7 @@ import com.tecknobit.equinoxcore.annotations.RequiresSuperCall
 import com.tecknobit.equinoxcore.annotations.Structure
 import com.tecknobit.equinoxcore.helpers.*
 import com.tecknobit.equinoxcore.helpers.InputsValidator.Companion.DEFAULT_LANGUAGE
-import com.tecknobit.equinoxcore.helpers.InputsValidator.Companion.LANGUAGES_SUPPORTED
+import com.tecknobit.equinoxcore.helpers.InputsValidator.Companion.SUPPORTED_LANGUAGES
 import com.tecknobit.equinoxcore.helpers.InputsValidator.Companion.isEmailValid
 import com.tecknobit.equinoxcore.helpers.InputsValidator.Companion.isHostValid
 import com.tecknobit.equinoxcore.helpers.InputsValidator.Companion.isNameValid
@@ -172,7 +172,7 @@ abstract class EquinoxAuthViewModel(
      */
     protected fun getUserLanguage(): String {
         val currentLanguageTag = getValidUserLanguage()
-        val language = LANGUAGES_SUPPORTED[currentLanguageTag]
+        val language = SUPPORTED_LANGUAGES[currentLanguageTag]
         return if (language == null)
             DEFAULT_LANGUAGE
         else
@@ -186,7 +186,7 @@ abstract class EquinoxAuthViewModel(
      */
     private fun getValidUserLanguage(): String {
         val currentLanguageTag: String = getCurrentLocaleLanguage().substring(0, 2)
-        if (LANGUAGES_SUPPORTED[currentLanguageTag] == null)
+        if (SUPPORTED_LANGUAGES[currentLanguageTag] == null)
             return DEFAULT_LANGUAGE
         return currentLanguageTag
     }
