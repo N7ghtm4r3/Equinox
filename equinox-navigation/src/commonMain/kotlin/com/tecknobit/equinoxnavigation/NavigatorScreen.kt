@@ -242,6 +242,7 @@ abstract class NavigatorScreen<T : NavigatorTab<*>>(
                 topEnd = 10.dp,
                 bottomEnd = 10.dp
             ),
+            colors = sideNavigationItemColors(),
             icon = {
                 Icon(
                     imageVector = tab.icon,
@@ -256,6 +257,11 @@ abstract class NavigatorScreen<T : NavigatorTab<*>>(
                 )
             }
         )
+    }
+
+    @Composable
+    protected open fun sideNavigationItemColors(): NavigationDrawerItemColors {
+        return NavigationDrawerItemDefaults.colors()
     }
 
     /**
@@ -326,6 +332,7 @@ abstract class NavigatorScreen<T : NavigatorTab<*>>(
                     contentDescription = tab.contentDescription
                 )
             },
+            colors = bottomNavigationItemColors(),
             label = {
                 Text(
                     text = tab.prepareTitle(),
@@ -334,6 +341,11 @@ abstract class NavigatorScreen<T : NavigatorTab<*>>(
                 )
             }
         )
+    }
+
+    @Composable
+    protected open fun bottomNavigationItemColors(): NavigationBarItemColors {
+        return NavigationBarItemDefaults.colors()
     }
 
     /**
