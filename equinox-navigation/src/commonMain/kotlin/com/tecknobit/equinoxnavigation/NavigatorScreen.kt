@@ -259,6 +259,11 @@ abstract class NavigatorScreen<T : NavigatorTab<*>>(
         )
     }
 
+    /**
+     * Method used to customize the colors of the [SideNavigationItem] component
+     *
+     * @return the color to apply to the navigation item as [NavigationDrawerItemColors]
+     */
     @Composable
     protected open fun sideNavigationItemColors(): NavigationDrawerItemColors {
         return NavigationDrawerItemDefaults.colors()
@@ -343,6 +348,11 @@ abstract class NavigatorScreen<T : NavigatorTab<*>>(
         )
     }
 
+    /**
+     * Method used to customize the colors of the [BottomNavigationItem] component
+     *
+     * @return the color to apply to the navigation item as [NavigationBarItemColors]
+     */
     @Composable
     protected open fun bottomNavigationItemColors(): NavigationBarItemColors {
         return NavigationBarItemDefaults.colors()
