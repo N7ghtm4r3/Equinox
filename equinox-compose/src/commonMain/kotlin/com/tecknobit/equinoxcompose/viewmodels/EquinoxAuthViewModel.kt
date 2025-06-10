@@ -9,7 +9,6 @@ import com.tecknobit.equinoxcore.annotations.RequiresSuperCall
 import com.tecknobit.equinoxcore.annotations.Structure
 import com.tecknobit.equinoxcore.helpers.*
 import com.tecknobit.equinoxcore.helpers.InputsValidator.Companion.DEFAULT_LANGUAGE
-import com.tecknobit.equinoxcore.helpers.InputsValidator.Companion.SUPPORTED_LANGUAGES
 import com.tecknobit.equinoxcore.helpers.InputsValidator.Companion.isEmailValid
 import com.tecknobit.equinoxcore.helpers.InputsValidator.Companion.isHostValid
 import com.tecknobit.equinoxcore.helpers.InputsValidator.Companion.isNameValid
@@ -135,7 +134,7 @@ abstract class EquinoxAuthViewModel(
     ) {
         if (signUpFormIsValid()) {
             viewModelScope.launch {
-                val language = getUserLanguage()
+                val language = localUser.language
                 requester.changeHost(host.value)
                 requester.sendRequest(
                     request = {
@@ -162,32 +161,6 @@ abstract class EquinoxAuthViewModel(
                 )
             }
         }
-    }
-
-    /**
-     * Method used to get the current user language
-     *
-     * @return the user language as [String]
-     */
-    protected fun getUserLanguage(): String {
-        val currentLanguageTag = getValidUserLanguage()
-        val language = SUPPORTED_LANGUAGES[currentLanguageTag]
-        return if (language == null)
-            DEFAULT_LANGUAGE
-        else
-            currentLanguageTag
-    }
-
-    /**
-     * Method used to get a supported language for the user
-     *
-     * @return a supported language for the user as [String]
-     */
-    private fun getValidUserLanguage(): String {
-        val currentLanguageTag: String = localUser.language
-        if (SUPPORTED_LANGUAGES[currentLanguageTag] == null)
-            return DEFAULT_LANGUAGE
-        return currentLanguageTag
     }
 
     /**
@@ -263,6 +236,7 @@ abstract class EquinoxAuthViewModel(
                         requester.signIn(
                             email = email.value,
                             password = password.value,
+                            language = localUser.language,
                             custom = getSignInCustomParameters()
                         )
                     },
