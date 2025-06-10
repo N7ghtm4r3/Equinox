@@ -1,6 +1,7 @@
 package com.tecknobit.equinoxcompose.components
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
@@ -58,6 +59,7 @@ import androidx.compose.ui.unit.dp
  * @param badgeColor The color of the badge
  * @param badgeText The text displayed on the badge
  * @param textColor The color of the text based on the [contentColorFor] of the current [badgeColor]
+ * @param onClick The callback to invoke when badge clicked
  */
 @Composable
 @NonRestartableComposable
@@ -85,6 +87,7 @@ fun BadgeText(
     badgeColor: Color,
     badgeText: String,
     textColor: Color = contentColorFor(badgeColor),
+    onClick: (() -> Unit)? = null,
 ) {
     Box(
         modifier = Modifier
@@ -97,6 +100,10 @@ fun BadgeText(
         Text(
             modifier = modifier
                 .clip(shape)
+                .clickable(
+                    enabled = onClick != null,
+                    onClick = { onClick?.invoke() }
+                )
                 .background(badgeColor)
                 .padding(padding),
             text = badgeText,
