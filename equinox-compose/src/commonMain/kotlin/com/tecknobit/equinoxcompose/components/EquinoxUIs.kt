@@ -37,6 +37,7 @@ import org.jetbrains.compose.resources.stringResource
 /**
  * Method used to display a layout when a list of values is empty
  *
+ * @param triggers The triggers to use to reinvoke the [loadingRoutine] automatically
  * @param containerModifier The modifier to apply to the container column
  * @param animations The set of the animations to use to animate the layout
  * @param textStyle The style to apply to the text
@@ -49,6 +50,7 @@ import org.jetbrains.compose.resources.stringResource
  */
 @Composable
 fun LoadingItemUI(
+    vararg triggers: Any?,
     containerModifier: Modifier = Modifier,
     animations: UIAnimations? = null,
     textStyle: TextStyle = LocalTextStyle.current,
@@ -94,7 +96,8 @@ fun LoadingItemUI(
                 onEnter = animations.onEnter,
                 onExit = animations.onExit,
                 loadingIndicator = loadingIndicator,
-                contentLoaded = contentLoaded
+                contentLoaded = contentLoaded,
+                triggers = triggers
             )
         }
     } else {
@@ -102,7 +105,8 @@ fun LoadingItemUI(
             loadingRoutine = loadingRoutine,
             initialDelay = initialDelay,
             loadingIndicator = loadingIndicator,
-            contentLoaded = contentLoaded
+            contentLoaded = contentLoaded,
+            triggers = triggers
         )
     }
 }
@@ -116,6 +120,7 @@ fun LoadingItemUI(
  * @param onExit The [ExitTransition] to use
  * @param loadingIndicator The loading indicator to display
  * @param contentLoaded The content to display when the data have been loaded
+ * @param triggers The triggers to use to reinvoke the [loadingRoutine] automatically
  */
 @Composable
 private fun LoadingItemUIContent(
@@ -125,9 +130,11 @@ private fun LoadingItemUIContent(
     onExit: ExitTransition = fadeOut(),
     loadingIndicator: @Composable () -> Unit,
     contentLoaded: @Composable () -> Unit,
+    vararg triggers: Any?,
 ) {
     var isLoaded by remember { mutableStateOf(false) }
-    LaunchedEffect(Unit) {
+    LaunchedEffect(triggers) {
+        isLoaded = false
         initialDelay?.let {
             delay(initialDelay)
         }

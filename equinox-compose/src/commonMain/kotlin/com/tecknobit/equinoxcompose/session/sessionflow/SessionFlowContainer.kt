@@ -53,6 +53,7 @@ import org.jetbrains.compose.resources.vectorResource
 @Composable
 @ExperimentalComposeApi
 fun SessionFlowContainer(
+    vararg triggers: Any?,
     modifier: Modifier = Modifier,
     state: SessionFlowState,
     viewModel: EquinoxViewModel? = null,
@@ -66,13 +67,14 @@ fun SessionFlowContainer(
     loadingContentColor: Color = contentColorFor(statusContainerColor),
     loadingIndicator: @Composable () -> Unit = {
         LoadingItemUI(
+            state.loadingRoutineTrigger.value, triggers,
             containerModifier = modifier,
             initialDelay = initialLoadingRoutineDelay,
             loadingRoutine = loadingRoutine!!,
             contentLoaded = content,
             loadingIndicatorBackground = statusContainerColor,
             themeColor = loadingContentColor,
-            textStyle = statusTextStyle
+            textStyle = statusTextStyle,
         )
     },
     fallbackContentColor: Color = MaterialTheme.colorScheme.error,

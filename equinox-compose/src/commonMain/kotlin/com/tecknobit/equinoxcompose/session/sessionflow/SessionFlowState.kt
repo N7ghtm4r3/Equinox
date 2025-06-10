@@ -1,13 +1,12 @@
 package com.tecknobit.equinoxcompose.session.sessionflow
 
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.ExperimentalComposeApi
-import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.Saver
 import androidx.compose.runtime.saveable.SaverScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import com.tecknobit.equinoxcompose.session.sessionflow.SessionStatus.*
 import com.tecknobit.equinoxcompose.viewmodels.EquinoxViewModel
+import com.tecknobit.equinoxcore.time.TimeFormatter
 
 /**
  * Method used to create and remember during the recompositions the state for the [SessionFlowContainer] component
@@ -83,6 +82,9 @@ class SessionFlowState internal constructor(
      */
     private var viewModel: EquinoxViewModel? = null
 
+    @ExperimentalComposeApi
+    internal val loadingRoutineTrigger: MutableLongState = mutableLongStateOf(TimeFormatter.currentTimestamp())
+
     /**
      * Method used to attach the viewmodel to the state
      *
@@ -143,6 +145,11 @@ class SessionFlowState internal constructor(
             currentStatus.value = NO_NETWORK_CONNECTION
             viewModel?.suspendRetriever()
         }
+    }
+
+    @ExperimentalComposeApi
+    fun reload() {
+        loadingRoutineTrigger.value = TimeFormatter.currentTimestamp()
     }
 
     /**
