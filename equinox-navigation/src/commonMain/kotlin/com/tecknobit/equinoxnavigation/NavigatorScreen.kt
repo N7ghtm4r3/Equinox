@@ -21,6 +21,7 @@ import com.tecknobit.equinoxcompose.utilities.ResponsiveClass.*
 import com.tecknobit.equinoxcompose.utilities.ResponsiveClassComponent
 import com.tecknobit.equinoxcompose.utilities.ResponsiveContent
 import com.tecknobit.equinoxcore.annotations.RequiresSuperCall
+import com.tecknobit.equinoxcore.annotations.Returner
 import com.tecknobit.equinoxcore.annotations.Structure
 import com.tecknobit.equinoxnavigation.NavigationMode.BOTTOM_NAVIGATION
 import com.tecknobit.equinoxnavigation.NavigationMode.SIDE_NAVIGATION
@@ -51,6 +52,30 @@ abstract class NavigatorScreen<T : NavigatorTab<*>>(
 ) : EquinoxNoModelScreen(
     loggerEnabled = loggerEnabled
 ) {
+
+    companion object {
+
+        /**
+         *`DefaultSideNavigationContentPadding` the padding values to apply when the navigation is side-arranged
+         */
+        val DefaultSideNavigationContentPadding = PaddingValues(
+            top = 35.dp,
+            start = 35.dp,
+            end = 35.dp,
+            bottom = 16.dp
+        )
+
+        /**
+         *`DefaultBottomNavigationContentPadding` the padding values to apply when the navigation is bottom-arranged
+         */
+        val DefaultBottomNavigationContentPadding = PaddingValues(
+            top = 25.dp,
+            start = 16.dp,
+            end = 16.dp,
+            bottom = 96.dp
+        )
+
+    }
 
     /**
      *`activeNavigationTabIndex` the index of the current [NavigatorTab] displayed
@@ -186,15 +211,20 @@ abstract class NavigatorScreen<T : NavigatorTab<*>>(
                     .background(backgroundTab)
             ) {
                 ScreenTabContent(
-                    paddingValues = PaddingValues(
-                        top = 35.dp,
-                        start = 35.dp,
-                        end = 35.dp,
-                        bottom = 16.dp
-                    )
+                    paddingValues = sideNavigationContentPadding()
                 )
             }
         }
+    }
+
+    /**
+     * Method used to customize the padding values to apply when the navigation is side-arranged
+     *
+     * @return the padding values to apply as [PaddingValues]
+     */
+    @Returner
+    protected open fun sideNavigationContentPadding(): PaddingValues {
+        return DefaultSideNavigationContentPadding
     }
 
     /**
@@ -264,6 +294,7 @@ abstract class NavigatorScreen<T : NavigatorTab<*>>(
      *
      * @return the color to apply to the navigation item as [NavigationDrawerItemColors]
      */
+    @Returner
     @Composable
     protected open fun sideNavigationItemColors(): NavigationDrawerItemColors {
         return NavigationDrawerItemDefaults.colors()
@@ -292,12 +323,7 @@ abstract class NavigatorScreen<T : NavigatorTab<*>>(
                 .background(backgroundTab)
         ) {
             ScreenTabContent(
-                paddingValues = PaddingValues(
-                    top = 25.dp,
-                    start = 16.dp,
-                    end = 16.dp,
-                    bottom = 96.dp
-                )
+                paddingValues = bottomNavigationContentPadding()
             )
             BottomAppBar(
                 modifier = modifier
@@ -312,6 +338,16 @@ abstract class NavigatorScreen<T : NavigatorTab<*>>(
                 }
             }
         }
+    }
+
+    /**
+     * Method used to customize the padding values to apply when the navigation is bottom-arranged
+     *
+     * @return the padding values to apply as [PaddingValues]
+     */
+    @Returner
+    protected open fun bottomNavigationContentPadding(): PaddingValues {
+        return DefaultBottomNavigationContentPadding
     }
 
     /**
@@ -353,6 +389,7 @@ abstract class NavigatorScreen<T : NavigatorTab<*>>(
      *
      * @return the color to apply to the navigation item as [NavigationBarItemColors]
      */
+    @Returner
     @Composable
     protected open fun bottomNavigationItemColors(): NavigationBarItemColors {
         return NavigationBarItemDefaults.colors()
