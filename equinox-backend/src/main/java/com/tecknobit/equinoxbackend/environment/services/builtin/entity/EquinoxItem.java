@@ -33,6 +33,7 @@ public abstract class EquinoxItem {
      * {@code timeFormatter} the formatter used to format the timestamp values
      */
     @Transient
+    @Deprecated(forRemoval = true)
     protected final TimeFormatter timeFormatter = TimeFormatter.getInstance();
 
     /**

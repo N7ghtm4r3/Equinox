@@ -30,6 +30,7 @@ import org.jetbrains.compose.resources.vectorResource
 /**
  * Component used to display the correct content based on the [SessionStatus] value
  *
+ * @param triggers The triggers to use to automatically reinvoke the [loadingRoutine]
  * @param modifier The modifier to apply to the component
  * @param state The state used to autonomously display the correct content
  * @param viewModel If passed will be used to autonomously suspend and restart the [com.tecknobit.equinoxcompose.session.Retriever]'s
@@ -53,6 +54,7 @@ import org.jetbrains.compose.resources.vectorResource
 @Composable
 @ExperimentalComposeApi
 fun SessionFlowContainer(
+    vararg triggers: Any?,
     modifier: Modifier = Modifier,
     state: SessionFlowState,
     viewModel: EquinoxViewModel? = null,
@@ -66,13 +68,14 @@ fun SessionFlowContainer(
     loadingContentColor: Color = contentColorFor(statusContainerColor),
     loadingIndicator: @Composable () -> Unit = {
         LoadingItemUI(
+            state.loadingRoutineTrigger.value, triggers,
             containerModifier = modifier,
             initialDelay = initialLoadingRoutineDelay,
             loadingRoutine = loadingRoutine!!,
             contentLoaded = content,
             loadingIndicatorBackground = statusContainerColor,
             themeColor = loadingContentColor,
-            textStyle = statusTextStyle
+            textStyle = statusTextStyle,
         )
     },
     fallbackContentColor: Color = MaterialTheme.colorScheme.error,

@@ -21,8 +21,17 @@ public abstract class EquinoxEventsEmitter<T extends Enum<?>> {
     /**
      * {@code ApplicationEventPublisher} the publisher used to emit the events
      */
+    private final ApplicationEventPublisher publisher;
+
+    /**
+     * Constructor to init the emitter
+     *
+     * @param publisher The publisher used to emit the events
+     */
     @Autowired
-    private ApplicationEventPublisher publisher;
+    protected EquinoxEventsEmitter(ApplicationEventPublisher publisher) {
+        this.publisher = publisher;
+    }
 
     /**
      * Method used to emit the event

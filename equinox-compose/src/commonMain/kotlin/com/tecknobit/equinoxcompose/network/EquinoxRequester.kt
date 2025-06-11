@@ -175,6 +175,7 @@ abstract class EquinoxRequester(
      *
      * @param email The email of the user
      * @param password The password of the user
+     * @param language The language of the user
      * @param custom The custom parameters added in a customization of the equinox user to execute a customized sign-in
      *
      * @return the result of the request as [JsonObject]
@@ -184,11 +185,13 @@ abstract class EquinoxRequester(
     open suspend fun signIn(
         email: String,
         password: String,
+        language: String,
         vararg custom: Any?,
     ): JsonObject {
         val payload = getSignInPayload(
             email = email,
             password = password,
+            language = language,
             custom = custom
         )
         return execPost(
@@ -217,6 +220,7 @@ abstract class EquinoxRequester(
      *
      * @param email The email of the user
      * @param password The password of the user
+     * @param language The language of the user
      * @param custom The custom parameters added in a customization of the equinox user to execute a customized sign-in
      *
      * @return the payload for the request as [JsonObject]
@@ -226,11 +230,19 @@ abstract class EquinoxRequester(
     protected open fun getSignInPayload(
         email: String,
         password: String,
+        language: String,
         vararg custom: Any?,
     ): JsonObject {
         val payload = buildJsonObject {
             put(EMAIL_KEY, email)
             put(PASSWORD_KEY, password)
+            put(
+                key = LANGUAGE_KEY,
+                value = if (!isLanguageValid(language))
+                    DEFAULT_LANGUAGE
+                else
+                    language
+            )
         }
         return payload
     }

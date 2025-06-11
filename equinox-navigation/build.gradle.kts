@@ -3,6 +3,7 @@ import com.vanniktech.maven.publish.KotlinMultiplatform
 import com.vanniktech.maven.publish.SonatypeHost
 import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import org.jetbrains.kotlin.gradle.targets.js.nodejs.NodeJsRootExtension
 
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
@@ -14,7 +15,7 @@ plugins {
 }
 
 group = "com.tecknobit.equinoxnavigation"
-version = "1.0.1"
+version = "1.0.2"
 
 repositories {
     google()
@@ -101,6 +102,8 @@ kotlin {
     jvmToolchain(18)
 }
 
+rootProject.the<NodeJsRootExtension>().versions.webpackDevServer.version = "5.2.1"
+
 mavenPublishing {
     configure(
         platform = KotlinMultiplatform(
@@ -111,7 +114,7 @@ mavenPublishing {
     coordinates(
         groupId = "io.github.n7ghtm4r3",
         artifactId = "equinox-navigation",
-        version = "1.0.1"
+        version = "1.0.2"
     )
     pom {
         name.set("Equinox Navigation")

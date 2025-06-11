@@ -1,14 +1,16 @@
 package com.tecknobit.equinoxcompose.session
 
+import androidx.compose.ui.text.intl.Locale
 import com.tecknobit.equinoxcompose.session.EquinoxLocalUser.ApplicationTheme.Auto
 import com.tecknobit.equinoxcore.annotations.RequiresSuperCall
 import com.tecknobit.equinoxcore.annotations.Structure
 import com.tecknobit.equinoxcore.helpers.*
+import com.tecknobit.equinoxcore.helpers.InputsValidator.Companion.DEFAULT_LANGUAGE
+import com.tecknobit.equinoxcore.helpers.InputsValidator.Companion.SUPPORTED_LANGUAGES
 import com.tecknobit.equinoxcore.json.treatsAsString
 import com.tecknobit.kmprefs.KMPrefs
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.jsonPrimitive
-
 
 /**
  * The `EquinoxLocalUser` class is useful to represent a user in the client application
@@ -232,6 +234,7 @@ open class EquinoxLocalUser(
         get() = "$name $surname"
 
     init {
+        @Suppress("ImplicitThis")
         initLocalUser()
     }
 
@@ -240,6 +243,7 @@ open class EquinoxLocalUser(
      */
     @RequiresSuperCall
     protected open fun initLocalUser() {
+        val currentLocaleLanguage = Locale.current.language
         hostAddress = getNullSafePreference(HOST_ADDRESS_KEY)
         userId = getPreference(IDENTIFIER_KEY)
         userToken = getPreference(TOKEN_KEY)
@@ -248,7 +252,13 @@ open class EquinoxLocalUser(
         surname = getNullSafePreference(SURNAME_KEY)
         email = getNullSafePreference(EMAIL_KEY)
         password = getNullSafePreference(PASSWORD_KEY)
-        language = getNullSafePreference(LANGUAGE_KEY)
+        language = getNullSafePreference(
+            key = LANGUAGE_KEY,
+            defPrefValue = if (SUPPORTED_LANGUAGES.containsKey(currentLocaleLanguage))
+                currentLocaleLanguage
+            else
+                DEFAULT_LANGUAGE
+        )
         theme = ApplicationTheme.getInstance(getPreference(THEME_KEY))
     }
 
@@ -359,29 +369,36 @@ open class EquinoxLocalUser(
     /**
      * Method used to get a stored preference
      *
-     * @param key: the key of the preference to get
+     * @param key The key of the preference to get
+     * @param defPrefValue Default value of the preference if not stored yet
+     *
      * @return the preference stored as nullable [String]
      */
     protected fun getPreference(
         key: String,
+        defPrefValue: String? = null,
     ): String? {
         return preferencesManager.retrieveString(
-            key = key
+            key = key,
+            defValue = defPrefValue
         )
     }
 
     /**
      * Method used to get a stored preference
      *
-     * @param key: the key of the preference to get
+     * @param key The key of the preference to get
+     * @param defPrefValue Default value of the preference if not stored yet
      * @return the preference stored as null-safe [String]
      */
     protected fun getNullSafePreference(
         key: String,
+        defPrefValue: String = "",
     ): String {
-        return getPreference(
-            key = key
-        ) ?: ""
+        return preferencesManager.retrieveString(
+            key = key,
+            defValue = defPrefValue
+        )!!
     }
 
     /**

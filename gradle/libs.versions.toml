@@ -3,29 +3,29 @@ agp = "8.5.2"
 kmprefs = "1.0.1"
 kotlin = "2.1.20"
 android-minSdk = "24"
-android-compileSdk = "34"
+android-compileSdk = "35"
 dokka = "2.0.0"
 kotlinxDatetime = "0.6.2"
 kotlinxSerializationJson = "1.8.1"
-ktor = "3.1.0"
+ktor = "3.1.3"
 #equinox-backend
 jacksonDatabind = "2.18.2"
 springBoot = "3.2.3"
 kotlinxCoroutinesCore = "1.10.2"
 apimanager = "2.2.4"
-json = "20250107"
+json = "20250517"
 #equinox-core
 startupRuntime = "1.2.0"
 #equinox-compose & equinox-navigation
-compose = "1.8.0"
-connectivity = "1.2.0"
+compose = "1.8.1"
+connectivity = "2.1.0"
 kermit = "2.0.5"
 lifecycleViewmodelCompose = "2.8.2"
 material3WindowSizeClass = "1.7.3"
 kmpalette = "3.1.0"
 #equinox-misc
 ##lazy-pagination-compose-ops
-lazyPaginationCompose = "1.5.1"
+lazyPaginationCompose = "1.7.0"
 
 [libraries]
 dokka-base = { module = "org.jetbrains.dokka:dokka-base", version.ref = "dokka" }

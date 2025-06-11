@@ -26,12 +26,12 @@ class TestScreen : EquinoxNoModelScreen() {
             QuantityPicker(
                 state = state,
                 informativeText = "Informative text", // not mandatory
-                decrementButtonAppearance = quantityButtonAppearance(
+                decrementButtonColors = QuantityPickerDefaults.colors(
                     ...
-            ), // customize the decrement button appearance
-            incrementButtonAppearance = quantityButtonAppearance(
+            ), // customize the decrement button colors
+            incrementButtonColors = QuantityPickerDefaults.colors(
                 ...
-            ) // customize the increment button appearance
+            ) // customize the increment button colors
             )
         }
     }

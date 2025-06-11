@@ -58,7 +58,7 @@ fun rememberQuantityPickerState(
  */
 class QuantityPickerState internal constructor(
     val initialQuantity: Int = 0,
-    val currentQuantity: Int = initialQuantity,
+    internal val currentQuantity: Int = initialQuantity,
     val minQuantity: Int = Int.MIN_VALUE,
     val maxQuantity: Int = Int.MAX_VALUE,
     val longPressQuantity: Int? = null,

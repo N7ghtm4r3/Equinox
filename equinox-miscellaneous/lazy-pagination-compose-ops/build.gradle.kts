@@ -3,6 +3,7 @@ import com.vanniktech.maven.publish.KotlinMultiplatform
 import com.vanniktech.maven.publish.SonatypeHost
 import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import org.jetbrains.kotlin.gradle.targets.js.nodejs.NodeJsRootExtension
 
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
@@ -14,7 +15,7 @@ plugins {
 }
 
 group = "com.tecknobit.equinoxmisc.lazypaginationcomposeops"
-version = "1.0.0"
+version = "1.0.1"
 
 repositories {
     google()
@@ -104,6 +105,8 @@ kotlin {
     jvmToolchain(18)
 }
 
+rootProject.the<NodeJsRootExtension>().versions.webpackDevServer.version = "5.2.1"
+
 mavenPublishing {
     configure(
         platform = KotlinMultiplatform(
@@ -114,7 +117,7 @@ mavenPublishing {
     coordinates(
         groupId = "io.github.n7ghtm4r3",
         artifactId = "equinoxmisc-lazy-pagination-compose-ops",
-        version = "1.0.0"
+        version = "1.0.1"
     )
     pom {
         name.set("lazy-pagination-compose-ops")

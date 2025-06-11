@@ -3,6 +3,7 @@ package com.tecknobit.equinoxbackend.environment.services.users.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.tecknobit.apimanager.annotations.Returner;
+import com.tecknobit.equinoxbackend.annotations.EmptyConstructor;
 import com.tecknobit.equinoxbackend.environment.services.builtin.entity.EquinoxItem;
 import jakarta.persistence.Column;
 import jakarta.persistence.DiscriminatorColumn;
@@ -97,6 +98,7 @@ public class EquinoxUser extends EquinoxItem {
      *
      * @apiNote empty constructor required
      */
+    @EmptyConstructor
     public EquinoxUser() {
         this(null, null, null, null, null, null, null);
     }

@@ -1,8 +1,5 @@
-@file:OptIn(ExperimentalFoundationApi::class)
-
 package com.tecknobit.equinoxcompose.components.quantitypicker
 
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Arrangement
@@ -28,6 +25,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import com.tecknobit.equinoxcompose.components.quantitypicker.QuantityPickerDefaults.QuantityPickerColors
 
 /**
  * Component used to pick a numerical quantity value
@@ -36,10 +34,15 @@ import androidx.compose.ui.unit.dp
  * @param state The state of the component
  * @param informativeText The informative text which describes what type of quantity is picked
  * @param informativeTextStyle The style to apply to the [informativeText]
+ * @param indicatorsSize The size of the indicators buttons must have
+ * @param indicatorsShape The shape of the indicators buttons must have
  * @param onQuantityPicked Callback to invoke when a quantity has been picked
- * @param decrementButtonAppearance The appearance for the [DecrementButton] component
+ * @param decrementButtonColors The colors to apply to the decrement button
+ * @param decrementIcon The icon of the decrement button
  * @param quantityIndicatorStyle The style to apply to the indicator text of the current quantity picked
- * @param incrementButtonAppearance The appearance for the [IncrementButton] component
+ * @param incrementButtonColors The colors to apply to the increment button
+ * @param incrementIcon The icon of the increment button
+ * @param enabled Whether the picker is enabled to pick quantities
  *
  * @since 1.1.0
  */
@@ -50,25 +53,31 @@ fun QuantityPicker(
     state: QuantityPickerState,
     informativeText: String? = null,
     informativeTextStyle: TextStyle = LocalTextStyle.current,
+    indicatorsSize: Dp = QuantityPickerDefaults.IndicatorButtonSize,
+    indicatorsShape: Shape = QuantityPickerDefaults.IndicatorButtonShape,
     onQuantityPicked: ((Int) -> Unit)? = null,
-    decrementButtonAppearance: QuantityButtonAppearance = quantityButtonAppearance(
-        icon = Icons.Default.Remove
-    ),
+    decrementButtonColors: QuantityPickerColors = QuantityPickerDefaults.colors(),
+    decrementIcon: ImageVector = Icons.Default.Remove,
     quantityIndicatorStyle: TextStyle = LocalTextStyle.current,
-    incrementButtonAppearance: QuantityButtonAppearance = quantityButtonAppearance(
-        icon = Icons.Default.Add
-    ),
+    incrementButtonColors: QuantityPickerColors = QuantityPickerDefaults.colors(),
+    incrementIcon: ImageVector = Icons.Default.Add,
+    enabled: Boolean = true,
 ) {
     QuantityPicker(
         modifier = modifier,
         state = state,
         informativeText = informativeText,
         informativeTextStyle = informativeTextStyle,
+        indicatorsSize = indicatorsSize,
+        indicatorsShape = indicatorsShape,
+        decrementButtonColors = decrementButtonColors,
+        decrementIcon = decrementIcon,
         onDecrement = onQuantityPicked,
-        decrementButtonAppearance = decrementButtonAppearance,
         quantityIndicatorStyle = quantityIndicatorStyle,
+        incrementButtonColors = incrementButtonColors,
+        incrementIcon = incrementIcon,
         onIncrement = onQuantityPicked,
-        incrementButtonAppearance = incrementButtonAppearance
+        enabled = enabled
     )
 }
 
@@ -79,11 +88,16 @@ fun QuantityPicker(
  * @param state The state of the component
  * @param informativeText The informative text which describes what type of quantity is picked
  * @param informativeTextStyle The style to apply to the [informativeText]
+ * @param indicatorsSize The size of the indicators buttons must have
+ * @param indicatorsShape The shape of the indicators buttons must have
+ * @param decrementButtonColors The colors to apply to the decrement button
+ * @param decrementIcon The icon of the decrement button
  * @param onDecrement Callback to invoke when a quantity has been decremented
- * @param decrementButtonAppearance The appearance for the [DecrementButton] component
  * @param quantityIndicatorStyle The style to apply to the indicator text of the current quantity picked
+ * @param incrementButtonColors The colors to apply to the increment button
+ * @param incrementIcon The icon of the increment button
  * @param onIncrement Callback to invoke when a quantity has been incremented
- * @param incrementButtonAppearance The appearance for the [IncrementButton] component
+ * @param enabled Whether the picker is enabled to pick quantities
  *
  * @since 1.1.0
  */
@@ -94,15 +108,16 @@ fun QuantityPicker(
     state: QuantityPickerState,
     informativeText: String? = null,
     informativeTextStyle: TextStyle = LocalTextStyle.current,
+    indicatorsSize: Dp = QuantityPickerDefaults.IndicatorButtonSize,
+    indicatorsShape: Shape = QuantityPickerDefaults.IndicatorButtonShape,
+    decrementButtonColors: QuantityPickerColors = QuantityPickerDefaults.colors(),
+    decrementIcon: ImageVector = Icons.Default.Remove,
     onDecrement: ((Int) -> Unit)? = null,
-    decrementButtonAppearance: QuantityButtonAppearance = quantityButtonAppearance(
-        icon = Icons.Default.Remove
-    ),
     quantityIndicatorStyle: TextStyle = LocalTextStyle.current,
+    incrementButtonColors: QuantityPickerColors = QuantityPickerDefaults.colors(),
+    incrementIcon: ImageVector = Icons.Default.Add,
     onIncrement: ((Int) -> Unit)? = null,
-    incrementButtonAppearance: QuantityButtonAppearance = quantityButtonAppearance(
-        icon = Icons.Default.Add
-    ),
+    enabled: Boolean = true,
 ) {
     Row(
         modifier = modifier,
@@ -116,18 +131,26 @@ fun QuantityPicker(
             )
         }
         DecrementButton(
-            appearance = decrementButtonAppearance,
+            colors = decrementButtonColors,
+            size = indicatorsSize,
+            shape = indicatorsShape,
+            icon = decrementIcon,
             state = state,
-            onDecrement = onDecrement
+            onDecrement = onDecrement,
+            enabled = enabled
         )
         Text(
             text = state.quantityPicked.toString(),
             style = quantityIndicatorStyle
         )
         IncrementButton(
-            appearance = incrementButtonAppearance,
+            colors = incrementButtonColors,
+            size = indicatorsSize,
+            shape = indicatorsShape,
+            icon = incrementIcon,
             state = state,
-            onIncrement = onIncrement
+            onIncrement = onIncrement,
+            enabled = enabled
         )
     }
 }
@@ -135,20 +158,31 @@ fun QuantityPicker(
 /**
  * Custom [QuantityButton] used to decrement the quantity value picked by the [QuantityPicker]
  *
- * @param appearance The appearance for the button
+ * @param colors The colors to apply to the button
+ * @param size The size of the button
+ * @param shape The shape of the button
+ * @param icon The icon of the button
  * @param state The state of the component
  * @param onDecrement Callback to invoke when a quantity has been decremented
+ * @param enabled Whether the button is enabled to decrement quantities
  *
  * @since 1.1.0
  */
 @Composable
 private fun DecrementButton(
-    appearance: QuantityButtonAppearance,
+    colors: QuantityPickerColors,
+    size: Dp,
+    shape: Shape,
+    icon: ImageVector,
     state: QuantityPickerState,
     onDecrement: ((Int) -> Unit)? = null,
+    enabled: Boolean,
 ) {
     QuantityButton(
-        appearance = appearance,
+        colors = colors,
+        size = size,
+        shape = shape,
+        icon = icon,
         quantityAction = {
             state.simpleDecrement()
             onDecrement?.invoke(state.quantityPicked)
@@ -159,27 +193,39 @@ private fun DecrementButton(
                 onDecrement?.invoke(state.quantityPicked)
             }
         } else
-            null
+            null,
+        enabled = enabled
     )
 }
 
 /**
  * Custom [QuantityButton] used to increment the quantity value picked by the [QuantityPicker]
  *
- * @param appearance The appearance for the button
+ * @param colors The colors to apply to the button
+ * @param size The size of the button
+ * @param shape The shape of the button
+ * @param icon The icon of the button
  * @param state The state of the component
  * @param onIncrement Callback to invoke when a quantity has been incremented
+ * @param enabled Whether the button is enabled to increment quantities
  *
  * @since 1.1.0
  */
 @Composable
 private fun IncrementButton(
-    appearance: QuantityButtonAppearance,
+    colors: QuantityPickerColors,
+    size: Dp,
+    shape: Shape,
+    icon: ImageVector,
     state: QuantityPickerState,
     onIncrement: ((Int) -> Unit)? = null,
+    enabled: Boolean,
 ) {
     QuantityButton(
-        appearance = appearance,
+        colors = colors,
+        size = size,
+        shape = shape,
+        icon = icon,
         quantityAction = {
             state.simpleIncrement()
             onIncrement?.invoke(state.quantityPicked)
@@ -190,42 +236,60 @@ private fun IncrementButton(
                 onIncrement?.invoke(state.quantityPicked)
             }
         } else
-            null
+            null,
+        enabled = enabled
     )
 }
 
 /**
  * Custom [Box] used to handle the quantity value picked by the [QuantityPicker]
  *
- * @param appearance The appearance for the button
+ * @param colors The colors to apply to the button
+ * @param size The size of the button
+ * @param shape The shape of the button
+ * @param icon The icon of the button
  * @param quantityAction The callback action invoked to decrement or increment the quantity picked
  * @param longPressQuantityAction The callback action invoked after the button has been double-clicked or long pressed
  * the button
+ * @param enabled Whether the button is enabled to perform any quantity actions
  *
  * @since 1.1.0
  */
 @Composable
 private fun QuantityButton(
-    appearance: QuantityButtonAppearance,
+    colors: QuantityPickerColors,
+    size: Dp,
+    shape: Shape,
+    icon: ImageVector,
     quantityAction: () -> Unit,
     longPressQuantityAction: (() -> Unit)? = null,
+    enabled: Boolean,
 ) {
     Box(
-        modifier = appearance.modifier
-            .size(appearance.size)
-            .clip(appearance.shape)
-            .background(appearance.background)
+        modifier = Modifier
+            .size(size)
+            .clip(shape)
+            .background(
+                color = if (enabled)
+                    colors.containerColor
+                else
+                    colors.disabledContainerColor
+            )
             .combinedClickable(
+                enabled = enabled,
                 onClick = quantityAction,
                 onDoubleClick = longPressQuantityAction,
                 onLongClick = longPressQuantityAction
             ),
-        contentAlignment = Alignment.Center
+        contentAlignment = Alignment.Center,
     ) {
         Icon(
-            imageVector = appearance.icon,
+            imageVector = icon,
             contentDescription = null,
-            tint = MaterialTheme.colorScheme.onPrimary
+            tint = if (enabled)
+                colors.iconColor
+            else
+                colors.disabledIconColor
         )
     }
 }
@@ -243,6 +307,14 @@ private fun QuantityButton(
  *
  * @since 1.1.0
  */
+@Deprecated(
+    message = "This way to customize the appearance has been replaced with QuantityPickerDefaults.colors instead",
+    level = DeprecationLevel.WARNING,
+    replaceWith = ReplaceWith(
+        expression = "QuantityPickerDefaults.colors",
+        "com.tecknobit.equinoxcompose.components.quantitypicker.QuantityPickerDefaults"
+    )
+)
 data class QuantityButtonAppearance(
     val modifier: Modifier = Modifier,
     val shape: Shape = CircleShape,
@@ -262,6 +334,14 @@ data class QuantityButtonAppearance(
  *
  * @return the customization style for a button as [QuantityButtonAppearance]
  */
+@Deprecated(
+    message = "This way to customize the appearance has been replaced with QuantityPickerDefaults.colors instead",
+    level = DeprecationLevel.ERROR,
+    replaceWith = ReplaceWith(
+        expression = "QuantityPickerDefaults.colors",
+        "com.tecknobit.equinoxcompose.components.quantitypicker.QuantityPickerDefaults"
+    )
+)
 @Composable
 fun quantityButtonAppearance(
     modifier: Modifier = Modifier,
