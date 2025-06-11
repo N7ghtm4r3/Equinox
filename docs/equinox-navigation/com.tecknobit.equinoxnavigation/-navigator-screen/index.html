@@ -1,0 +1,705 @@
+<!doctype html>
+<html class="no-js">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
+    <title>NavigatorScreen</title>
+<link href="../../../images/logo-icon.svg" rel="icon" type="image/svg">    <script>var pathToRoot = "../../../";</script>
+    <script>document.documentElement.classList.replace("no-js","js");</script>
+    <script>const storage = localStorage.getItem("dokka-dark-mode")
+    if (storage == null) {
+        const osDarkSchemePreferred = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+        if (osDarkSchemePreferred === true) {
+            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+    } else {
+        const savedDarkMode = JSON.parse(storage)
+        if(savedDarkMode === true) {
+            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+    }
+    </script>
+<script type="text/javascript" src="https://unpkg.com/kotlin-playground@1/dist/playground.min.js" async></script>
+<script type="text/javascript" src="../../../scripts/sourceset_dependencies.js" async></script>
+<link href="../../../styles/style.css" rel="Stylesheet">
+<link href="../../../styles/main.css" rel="Stylesheet">
+<link href="../../../styles/prism.css" rel="Stylesheet">
+<link href="../../../styles/logo-styles.css" rel="Stylesheet">
+<link href="../../../styles/font-jb-sans-auto.css" rel="Stylesheet">
+<link href="../../../ui-kit/ui-kit.min.css" rel="Stylesheet">
+<script type="text/javascript" src="../../../scripts/clipboard.js" async></script>
+<script type="text/javascript" src="../../../scripts/navigation-loader.js" async></script>
+<script type="text/javascript" src="../../../scripts/platform-content-handler.js" async></script>
+<script type="text/javascript" src="../../../scripts/main.js" defer></script>
+<script type="text/javascript" src="../../../scripts/prism.js" async></script>
+<script type="text/javascript" src="../../../ui-kit/ui-kit.min.js" defer></script>
+<script type="text/javascript" src="../../../scripts/symbol-parameters-wrapper_deferred.js" defer></script></head>
+<body>
+    <div class="root">
+    <nav class="navigation theme-dark" id="navigation-wrapper">
+<a class="library-name--link" href="../../../index.html">
+                    Equinox
+            </a>        <button class="navigation-controls--btn navigation-controls--btn_toc ui-kit_mobile-only" id="toc-toggle" type="button">Toggle table of contents
+        </button>
+        <div class="navigation-controls--break ui-kit_mobile-only"></div>
+        <div class="library-version" id="library-version">1.1.3
+        </div>
+        <div class="navigation-controls">
+        <div class="filter-section filter-section_loading" id="filter-section">
+                <button class="platform-tag platform-selector common-like" data-active="" data-filter=":equinox-navigation:dokkaHtmlPartial/commonMain">common</button>
+            <div class="dropdown filter-section--dropdown" data-role="dropdown" id="filter-section-dropdown">
+                <button class="button button_dropdown filter-section--dropdown-toggle" role="combobox" data-role="dropdown-toggle" aria-controls="platform-tags-listbox" aria-haspopup="listbox" aria-expanded="false" aria-label="Toggle source sets"></button>
+                <ul role="listbox" id="platform-tags-listbox" class="dropdown--list" data-role="dropdown-listbox">
+                    <div class="dropdown--header"><span>Platform filter</span>
+                        <button class="button" data-role="dropdown-toggle" aria-label="Close platform filter">
+                            <i class="ui-kit-icon ui-kit-icon_cross"></i>
+                        </button>
+                    </div>
+                        <li role="option" class="dropdown--option platform-selector-option common-like" tabindex="0">
+                            <label class="checkbox">
+                                <input type="checkbox" class="checkbox--input" id=":equinox-navigation:dokkaHtmlPartial/commonMain" data-filter=":equinox-navigation:dokkaHtmlPartial/commonMain">
+                                <span class="checkbox--icon"></span>
+                                common
+                            </label>
+                        </li>
+                </ul>
+                <div class="dropdown--overlay"></div>
+            </div>
+        </div>
+            <button class="navigation-controls--btn navigation-controls--btn_theme" id="theme-toggle-button" type="button">Switch theme
+            </button>
+            <div class="navigation-controls--btn navigation-controls--btn_search" id="searchBar" role="button">Search in
+                API
+            </div>
+        </div>
+    </nav>
+        <div id="container">
+            <div class="sidebar" id="leftColumn">
+                <div class="dropdown theme-dark_mobile" data-role="dropdown" id="toc-dropdown">
+                    <ul role="listbox" id="toc-listbox" class="dropdown--list dropdown--list_toc-list" data-role="dropdown-listbox">
+                        <div class="dropdown--header">
+                            <span>
+                                    Equinox
+                            </span>
+                            <button class="button" data-role="dropdown-toggle" aria-label="Close table of contents">
+                                <i class="ui-kit-icon ui-kit-icon_cross"></i>
+                            </button>
+                        </div>
+                        <div class="sidebar--inner" id="sideMenu"></div>
+                    </ul>
+                    <div class="dropdown--overlay"></div>
+                </div>
+            </div>
+            <div id="main">
+<div class="main-content" data-page-type="classlike" id="content" pageids="equinox-navigation::com.tecknobit.equinoxnavigation/NavigatorScreen///PointingToDeclaration//-1426925879">
+  <div class="breadcrumbs"><a href="../../index.html">equinox-navigation</a><span class="delimiter">/</span><a href="../index.html">com.tecknobit.equinoxnavigation</a><span class="delimiter">/</span><span class="current">NavigatorScreen</span></div>
+  <div class="cover ">
+    <h1 class="cover"><span>Navigator</span><wbr><span><span>Screen</span></span></h1>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":equinox-navigation:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">class </span><a href="index.html">NavigatorScreen</a><span class="token operator">&lt;</span><a href="index.html">T</a><span class="token operator"> : </span><a href="../-navigator-tab/index.html">NavigatorTab</a><span class="token operator">&lt;</span><span class="token operator">*</span><span class="token operator">&gt;</span><span class="token operator">&gt;</span><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">loggerEnabled<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a><span class="token operator"> = </span><span class="token boolean">true</span></span></span><span class="token punctuation">)</span> : <a href="../../../equinox-compose/com.tecknobit.equinoxcompose.session.screens/-equinox-no-model-screen/index.html">EquinoxNoModelScreen</a></div><p class="paragraph">The <code class="lang-kotlin">NavigatorScreen</code> provides a responsive navigation system that dynamically adjusts the navigation bars and content of each screen based on the current <a href="../../../equinox-compose/com.tecknobit.equinoxcompose.utilities/-responsive-class/index.html">com.tecknobit.equinoxcompose.utilities.ResponsiveClass</a></p><p class="paragraph">Related documentation: <a href="https://github.com/N7ghtm4r3/Equinox/blob/main/documd/navigation/NavigatorScreen.md">NavigatorScreen.md</a></p><span class="kdoc-tag"><h4 class="">Author</h4><p class="paragraph">N7ghtm4r3 - Tecknobit</p></span><span class="kdoc-tag"><h4 class="">Since</h4><p class="paragraph">1.0.0</p></span><h4 class="">Parameters</h4><div class="table"><div class="table-row" data-filterable-current=":equinox-navigation:dokkaHtmlPartial/commonMain" data-filterable-set=":equinox-navigation:dokkaHtmlPartial/commonMain"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><u><span><span>T</span></span></u></div></span></div><div><div class="title"><p class="paragraph">The type of the <a href="../-navigator-tab/index.html">NavigatorTab</a> used by the navigator</p></div></div></div></div></div><h4 class="">See also</h4><div class="table"><div class="table-row" data-filterable-current=":equinox-navigation:dokkaHtmlPartial/commonMain" data-filterable-set=":equinox-navigation:dokkaHtmlPartial/commonMain"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="../../../equinox-compose/com.tecknobit.equinoxcompose.session.screens/-equinox-no-model-screen/index.html"><span>Equinox</span><wbr><span>No</span><wbr><span>Model</span><wbr><span><span>Screen</span></span></a></div></span></div><div></div></div></div></div></div></div>
+  </div>
+  <div class="tabbedcontent">
+    <div class="tabs-section" tabs-section="tabs-section"><button class="section-tab" data-active="" data-togglable="CONSTRUCTOR,TYPE,PROPERTY,FUNCTION">Members</button></div>
+    <div class="tabs-section-body">
+      <div data-togglable="CONSTRUCTOR">
+        <h2 class="">Constructors</h2>
+        <div class="table"><a data-name="-526200201%2FConstructors%2F-1426925879" anchor-label="NavigatorScreen" id="-526200201%2FConstructors%2F-1426925879" data-filterable-set=":equinox-navigation:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-togglable="CONSTRUCTOR" data-filterable-current=":equinox-navigation:dokkaHtmlPartial/commonMain" data-filterable-set=":equinox-navigation:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-navigator-screen.html"><span>Navigator</span><wbr><span><span>Screen</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-526200201%2FConstructors%2F-1426925879"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":equinox-navigation:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">constructor</span><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">loggerEnabled<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a><span class="token operator"> = </span><span class="token boolean">true</span></span></span><span class="token punctuation">)</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div data-togglable="TYPE">
+        <h2 class="">Types</h2>
+        <div class="table"><a data-name="-730261988%2FClasslikes%2F-1426925879" anchor-label="Companion" id="-730261988%2FClasslikes%2F-1426925879" data-filterable-set=":equinox-navigation:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":equinox-navigation:dokkaHtmlPartial/commonMain" data-filterable-set=":equinox-navigation:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-companion/index.html"><span><span>Companion</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-730261988%2FClasslikes%2F-1426925879"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":equinox-navigation:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">object </span><a href="-companion/index.html">Companion</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div data-togglable="PROPERTY">
+        <h2 class="">Properties</h2>
+        <div class="table"><a data-name="-1097000594%2FProperties%2F-1426925879" anchor-label="activeNavigationTabIndex" id="-1097000594%2FProperties%2F-1426925879" data-filterable-set=":equinox-navigation:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":equinox-navigation:dokkaHtmlPartial/commonMain" data-filterable-set=":equinox-navigation:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="active-navigation-tab-index.html"><span>active</span><wbr><span>Navigation</span><wbr><span>Tab</span><wbr><span><span>Index</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1097000594%2FProperties%2F-1426925879"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":equinox-navigation:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">protected </span><span class="token keyword">lateinit </span><span class="token keyword">var </span><a href="active-navigation-tab-index.html">activeNavigationTabIndex</a><span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/androidx/compose/runtime/MutableState.html">MutableState</a><span class="token operator">&lt;</span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a><span class="token operator">&gt;</span></div><div class="brief "><p class="paragraph"><code class="lang-kotlin">activeNavigationTabIndex</code> the index of the current <a href="../-navigator-tab/index.html">NavigatorTab</a> displayed</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="134869139%2FProperties%2F-1426925879" anchor-label="loggerEnabled" id="134869139%2FProperties%2F-1426925879" data-filterable-set=":equinox-navigation:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":equinox-navigation:dokkaHtmlPartial/commonMain" data-filterable-set=":equinox-navigation:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="index.html#134869139%2FProperties%2F-1426925879"><span>logger</span><wbr><span><span>Enabled</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="134869139%2FProperties%2F-1426925879"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":equinox-navigation:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">private </span><span class="token keyword">val </span><a href="index.html#134869139%2FProperties%2F-1426925879">loggerEnabled</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-866004050%2FProperties%2F-1426925879" anchor-label="navigationMode" id="-866004050%2FProperties%2F-1426925879" data-filterable-set=":equinox-navigation:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":equinox-navigation:dokkaHtmlPartial/commonMain" data-filterable-set=":equinox-navigation:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="navigation-mode.html"><span>navigation</span><wbr><span><span>Mode</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-866004050%2FProperties%2F-1426925879"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":equinox-navigation:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">private </span><span class="token keyword">lateinit </span><span class="token keyword">var </span><a href="navigation-mode.html">navigationMode</a><span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/androidx/compose/runtime/MutableState.html">MutableState</a><span class="token operator">&lt;</span><a href="../-navigation-mode/index.html">NavigationMode</a><span class="token operator">&gt;</span></div><div class="brief "><p class="paragraph"><code class="lang-kotlin">navigationMode</code> current navigation mode adopted by the navigator</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-604452377%2FProperties%2F-1426925879" anchor-label="tabs" id="-604452377%2FProperties%2F-1426925879" data-filterable-set=":equinox-navigation:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":equinox-navigation:dokkaHtmlPartial/commonMain" data-filterable-set=":equinox-navigation:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="tabs.html"><span><span>tabs</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-604452377%2FProperties%2F-1426925879"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":equinox-navigation:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">protected </span><span class="token keyword">val </span><a href="tabs.html">tabs</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-array/index.html">Array</a><span class="token operator">&lt;</span><a href="index.html">T</a><span class="token operator">&gt;</span></div><div class="brief "><p class="paragraph"><code class="lang-kotlin">tabs</code> the reachable destinations tabs</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div data-togglable="FUNCTION">
+        <h2 class="">Functions</h2>
+        <div class="table"><a data-name="862444405%2FFunctions%2F-1426925879" anchor-label="ArrangeScreenContent" id="862444405%2FFunctions%2F-1426925879" data-filterable-set=":equinox-navigation:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":equinox-navigation:dokkaHtmlPartial/commonMain" data-filterable-set=":equinox-navigation:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="index.html#862444405%2FFunctions%2F-1426925879"><span>Arrange</span><wbr><span>Screen</span><wbr><span><span>Content</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="862444405%2FFunctions%2F-1426925879"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":equinox-navigation:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">protected </span><span class="token keyword">abstract </span><span class="token keyword">fun </span><a href="index.html#862444405%2FFunctions%2F-1426925879"><span class="token function">ArrangeScreenContent</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1392223622%2FFunctions%2F-1426925879" anchor-label="BottomNavigationArrangement" id="-1392223622%2FFunctions%2F-1426925879" data-filterable-set=":equinox-navigation:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":equinox-navigation:dokkaHtmlPartial/commonMain" data-filterable-set=":equinox-navigation:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-bottom-navigation-arrangement.html"><span>Bottom</span><wbr><span>Navigation</span><wbr><span><span>Arrangement</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1392223622%2FFunctions%2F-1426925879"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":equinox-navigation:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><a href="https://developer.android.com/reference/kotlin/androidx/compose/runtime/Composable.html"><span class="token annotation builtin">Composable</span></a></div></div><span class="token keyword">private </span><span class="token keyword">fun </span><a href="-bottom-navigation-arrangement.html"><span class="token function">BottomNavigationArrangement</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">modifier<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/androidx/compose/ui/Modifier.html">Modifier</a><span class="token punctuation">, </span></span><span class="parameter ">navigationBarColor<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/androidx/compose/ui/graphics/Color.html">Color</a><span class="token punctuation">, </span></span><span class="parameter ">backgroundTab<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/androidx/compose/ui/graphics/Color.html">Color</a></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Custom <a href="https://developer.android.com/reference/kotlin/androidx/compose/material3/package-summary.html">BottomAppBar</a> displayed on the <a href="../../../equinox-compose/com.tecknobit.equinoxcompose.utilities/-responsive-class/-m-e-d-i-u-m_-e-x-p-a-n-d-e-d_-c-o-n-t-e-n-t/index.html">MEDIUM_EXPANDED_CONTENT</a> and <a href="../../../equinox-compose/com.tecknobit.equinoxcompose.utilities/-responsive-class/-c-o-m-p-a-c-t_-c-o-n-t-e-n-t/index.html">COMPACT_CONTENT</a> responsive screen classes</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-200021074%2FFunctions%2F-1426925879" anchor-label="bottomNavigationContentPadding" id="-200021074%2FFunctions%2F-1426925879" data-filterable-set=":equinox-navigation:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":equinox-navigation:dokkaHtmlPartial/commonMain" data-filterable-set=":equinox-navigation:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="bottom-navigation-content-padding.html"><span>bottom</span><wbr><span>Navigation</span><wbr><span>Content</span><wbr><span><span>Padding</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-200021074%2FFunctions%2F-1426925879"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":equinox-navigation:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">protected </span><span class="token keyword">open </span><span class="token keyword">fun </span><a href="bottom-navigation-content-padding.html"><span class="token function">bottomNavigationContentPadding</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/androidx/compose/foundation/layout/PaddingValues.html">PaddingValues</a></div><div class="brief "><p class="paragraph">Method used to customize the padding values to apply when the navigation is bottom-arranged</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1255520805%2FFunctions%2F-1426925879" anchor-label="BottomNavigationItem" id="1255520805%2FFunctions%2F-1426925879" data-filterable-set=":equinox-navigation:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":equinox-navigation:dokkaHtmlPartial/commonMain" data-filterable-set=":equinox-navigation:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-bottom-navigation-item.html"><span>Bottom</span><wbr><span>Navigation</span><wbr><span><span>Item</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1255520805%2FFunctions%2F-1426925879"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":equinox-navigation:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><a href="https://developer.android.com/reference/kotlin/androidx/compose/runtime/Composable.html"><span class="token annotation builtin">Composable</span></a></div></div><span class="token keyword">protected </span><span class="token keyword">open </span><span class="token keyword">fun </span><a href="https://developer.android.com/reference/kotlin/androidx/compose/foundation/layout/RowScope.html">RowScope</a><span class="token punctuation">.</span><a href="-bottom-navigation-item.html"><span class="token function">BottomNavigationItem</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">index<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter ">tab<span class="token operator">: </span><a href="index.html">T</a></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">The navigation item of the <a href="-bottom-navigation-item.html">BottomNavigationItem</a> bar</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1829980797%2FFunctions%2F-1426925879" anchor-label="bottomNavigationItemColors" id="-1829980797%2FFunctions%2F-1426925879" data-filterable-set=":equinox-navigation:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":equinox-navigation:dokkaHtmlPartial/commonMain" data-filterable-set=":equinox-navigation:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="bottom-navigation-item-colors.html"><span>bottom</span><wbr><span>Navigation</span><wbr><span>Item</span><wbr><span><span>Colors</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1829980797%2FFunctions%2F-1426925879"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":equinox-navigation:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><a href="https://developer.android.com/reference/kotlin/androidx/compose/runtime/Composable.html"><span class="token annotation builtin">Composable</span></a></div></div><span class="token keyword">protected </span><span class="token keyword">open </span><span class="token keyword">fun </span><a href="bottom-navigation-item-colors.html"><span class="token function">bottomNavigationItemColors</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/androidx/compose/material3/NavigationBarItemColors.html">NavigationBarItemColors</a></div><div class="brief "><p class="paragraph">Method used to customize the colors of the <a href="-bottom-navigation-item.html">BottomNavigationItem</a> component</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1346834775%2FFunctions%2F-1426925879" anchor-label="CollectStates" id="-1346834775%2FFunctions%2F-1426925879" data-filterable-set=":equinox-navigation:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":equinox-navigation:dokkaHtmlPartial/commonMain" data-filterable-set=":equinox-navigation:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-collect-states.html"><span>Collect</span><wbr><span><span>States</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1346834775%2FFunctions%2F-1426925879"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":equinox-navigation:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><a href="https://developer.android.com/reference/kotlin/androidx/compose/runtime/Composable.html"><span class="token annotation builtin">Composable</span></a></div></div><span class="token keyword">protected </span><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">fun </span><a href="-collect-states.html"><span class="token function">CollectStates</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Method used to collect or instantiate the states of the screen</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1592676472%2FFunctions%2F-1426925879" anchor-label="CollectStatesAfterLoading" id="1592676472%2FFunctions%2F-1426925879" data-filterable-set=":equinox-navigation:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":equinox-navigation:dokkaHtmlPartial/commonMain" data-filterable-set=":equinox-navigation:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="index.html#1592676472%2FFunctions%2F-1426925879"><span>Collect</span><wbr><span>States</span><wbr><span>After</span><wbr><span><span>Loading</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1592676472%2FFunctions%2F-1426925879"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":equinox-navigation:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">protected </span><span class="token keyword">open </span><span class="token keyword">fun </span><a href="index.html#1592676472%2FFunctions%2F-1426925879"><span class="token function">CollectStatesAfterLoading</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-2111758855%2FFunctions%2F-1426925879" anchor-label="isBottomNavigationMode" id="-2111758855%2FFunctions%2F-1426925879" data-filterable-set=":equinox-navigation:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":equinox-navigation:dokkaHtmlPartial/commonMain" data-filterable-set=":equinox-navigation:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="is-bottom-navigation-mode.html"><span>is</span><wbr><span>Bottom</span><wbr><span>Navigation</span><wbr><span><span>Mode</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-2111758855%2FFunctions%2F-1426925879"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":equinox-navigation:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">protected </span><span class="token keyword">fun </span><a href="is-bottom-navigation-mode.html"><span class="token function">isBottomNavigationMode</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a></div><div class="brief "><p class="paragraph">Method used to check whether the current <a href="navigation-mode.html">navigationMode</a> is <a href="../-navigation-mode/-b-o-t-t-o-m_-n-a-v-i-g-a-t-i-o-n/index.html">BOTTOM_NAVIGATION</a></p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="704151757%2FFunctions%2F-1426925879" anchor-label="isSideNavigationMode" id="704151757%2FFunctions%2F-1426925879" data-filterable-set=":equinox-navigation:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":equinox-navigation:dokkaHtmlPartial/commonMain" data-filterable-set=":equinox-navigation:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="is-side-navigation-mode.html"><span>is</span><wbr><span>Side</span><wbr><span>Navigation</span><wbr><span><span>Mode</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="704151757%2FFunctions%2F-1426925879"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":equinox-navigation:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">protected </span><span class="token keyword">fun </span><a href="is-side-navigation-mode.html"><span class="token function">isSideNavigationMode</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a></div><div class="brief "><p class="paragraph">Method used to check whether the current <a href="navigation-mode.html">navigationMode</a> is <a href="../-navigation-mode/-s-i-d-e_-n-a-v-i-g-a-t-i-o-n/index.html">SIDE_NAVIGATION</a></p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="115113405%2FFunctions%2F-1426925879" anchor-label="LifecycleManager" id="115113405%2FFunctions%2F-1426925879" data-filterable-set=":equinox-navigation:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":equinox-navigation:dokkaHtmlPartial/commonMain" data-filterable-set=":equinox-navigation:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="index.html#115113405%2FFunctions%2F-1426925879"><span>Lifecycle</span><wbr><span><span>Manager</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="115113405%2FFunctions%2F-1426925879"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":equinox-navigation:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">protected </span><span class="token keyword">fun </span><a href="index.html#115113405%2FFunctions%2F-1426925879"><span class="token function">LifecycleManager</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">lifecycleOwner<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/androidx/lifecycle/LifecycleOwner.html">LifecycleOwner</a></span></span><span class="token punctuation">)</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-510320117%2FFunctions%2F-1426925879" anchor-label="logScreenEvent" id="-510320117%2FFunctions%2F-1426925879" data-filterable-set=":equinox-navigation:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":equinox-navigation:dokkaHtmlPartial/commonMain" data-filterable-set=":equinox-navigation:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="index.html#1433678079%2FFunctions%2F-1426925879"><span>log</span><wbr><span>Screen</span><wbr><span><span>Event</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-510320117%2FFunctions%2F-1426925879"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":equinox-navigation:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">protected </span><span class="token keyword">fun </span><a href="index.html#1433678079%2FFunctions%2F-1426925879"><span class="token function">logScreenEvent</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">event<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/androidx/lifecycle/Lifecycle.Event.html">Lifecycle.Event</a></span></span><span class="token punctuation">)</span></div><div class="symbol monospace"><span class="token keyword">protected </span><span class="token keyword">fun </span><a href="index.html#1384655768%2FFunctions%2F-1426925879"><span class="token function">logScreenEvent</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">event<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a></span></span><span class="token punctuation">)</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1790886441%2FFunctions%2F-1426925879" anchor-label="NavigationContent" id="1790886441%2FFunctions%2F-1426925879" data-filterable-set=":equinox-navigation:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":equinox-navigation:dokkaHtmlPartial/commonMain" data-filterable-set=":equinox-navigation:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-navigation-content.html"><span>Navigation</span><wbr><span><span>Content</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1790886441%2FFunctions%2F-1426925879"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":equinox-navigation:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><a href="https://developer.android.com/reference/kotlin/androidx/compose/runtime/Composable.html"><span class="token annotation builtin">Composable</span></a></div></div><span class="token keyword">protected </span><span class="token keyword">fun </span><a href="-navigation-content.html"><span class="token function">NavigationContent</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">sideBarModifier<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/androidx/compose/ui/Modifier.html">Modifier</a><span class="token operator"> = </span>Modifier<span class="token punctuation">, </span></span><span class="parameter ">sideBarWidth<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/androidx/compose/ui/unit/Dp.html">Dp</a><span class="token operator"> = </span>185.dp<span class="token punctuation">, </span></span><span class="parameter ">bottomBarModifier<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/androidx/compose/ui/Modifier.html">Modifier</a><span class="token operator"> = </span>Modifier<span class="token punctuation">, </span></span><span class="parameter ">navigationBarColor<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/androidx/compose/ui/graphics/Color.html">Color</a><span class="token operator"> = </span>BottomAppBarDefaults.containerColor<span class="token punctuation">, </span></span><span class="parameter ">backgroundTab<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/androidx/compose/ui/graphics/Color.html">Color</a><span class="token operator"> = </span>MaterialTheme.colorScheme.background</span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Responsive navigation system based on the current <a href="../../../equinox-compose/com.tecknobit.equinoxcompose.utilities/-responsive-class/index.html">com.tecknobit.equinoxcompose.utilities.ResponsiveClass</a></p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1768101427%2FFunctions%2F-1426925879" anchor-label="navigationTabs" id="1768101427%2FFunctions%2F-1426925879" data-filterable-set=":equinox-navigation:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":equinox-navigation:dokkaHtmlPartial/commonMain" data-filterable-set=":equinox-navigation:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="navigation-tabs.html"><span>navigation</span><wbr><span><span>Tabs</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1768101427%2FFunctions%2F-1426925879"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":equinox-navigation:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">protected </span><span class="token keyword">abstract </span><span class="token keyword">fun </span><a href="navigation-tabs.html"><span class="token function">navigationTabs</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-array/index.html">Array</a><span class="token operator">&lt;</span><a href="index.html">T</a><span class="token operator">&gt;</span></div><div class="brief "><p class="paragraph">Method used to retrieve the tabs to assign to the <a href="tabs.html">tabs</a> array</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="426078999%2FFunctions%2F-1426925879" anchor-label="onAny" id="426078999%2FFunctions%2F-1426925879" data-filterable-set=":equinox-navigation:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":equinox-navigation:dokkaHtmlPartial/commonMain" data-filterable-set=":equinox-navigation:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="index.html#426078999%2FFunctions%2F-1426925879"><span>on</span><wbr><span><span>Any</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="426078999%2FFunctions%2F-1426925879"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":equinox-navigation:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">protected </span><span class="token keyword">open </span><span class="token keyword">fun </span><a href="index.html#426078999%2FFunctions%2F-1426925879"><span class="token function">onAny</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1503661893%2FFunctions%2F-1426925879" anchor-label="onCreate" id="-1503661893%2FFunctions%2F-1426925879" data-filterable-set=":equinox-navigation:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":equinox-navigation:dokkaHtmlPartial/commonMain" data-filterable-set=":equinox-navigation:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="index.html#-1503661893%2FFunctions%2F-1426925879"><span>on</span><wbr><span><span>Create</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1503661893%2FFunctions%2F-1426925879"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":equinox-navigation:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">protected </span><span class="token keyword">open </span><span class="token keyword">fun </span><a href="index.html#-1503661893%2FFunctions%2F-1426925879"><span class="token function">onCreate</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="2086094281%2FFunctions%2F-1426925879" anchor-label="onDestroy" id="2086094281%2FFunctions%2F-1426925879" data-filterable-set=":equinox-navigation:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":equinox-navigation:dokkaHtmlPartial/commonMain" data-filterable-set=":equinox-navigation:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="index.html#2086094281%2FFunctions%2F-1426925879"><span>on</span><wbr><span><span>Destroy</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="2086094281%2FFunctions%2F-1426925879"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":equinox-navigation:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">protected </span><span class="token keyword">open </span><span class="token keyword">fun </span><a href="index.html#2086094281%2FFunctions%2F-1426925879"><span class="token function">onDestroy</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="412189508%2FFunctions%2F-1426925879" anchor-label="onDispose" id="412189508%2FFunctions%2F-1426925879" data-filterable-set=":equinox-navigation:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":equinox-navigation:dokkaHtmlPartial/commonMain" data-filterable-set=":equinox-navigation:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="index.html#412189508%2FFunctions%2F-1426925879"><span>on</span><wbr><span><span>Dispose</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="412189508%2FFunctions%2F-1426925879"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":equinox-navigation:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">protected </span><span class="token keyword">open </span><span class="token keyword">fun </span><a href="index.html#412189508%2FFunctions%2F-1426925879"><span class="token function">onDispose</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="669745575%2FFunctions%2F-1426925879" anchor-label="onInit" id="669745575%2FFunctions%2F-1426925879" data-filterable-set=":equinox-navigation:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":equinox-navigation:dokkaHtmlPartial/commonMain" data-filterable-set=":equinox-navigation:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="index.html#669745575%2FFunctions%2F-1426925879"><span>on</span><wbr><span><span>Init</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="669745575%2FFunctions%2F-1426925879"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":equinox-navigation:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">protected </span><span class="token keyword">open </span><span class="token keyword">fun </span><a href="index.html#669745575%2FFunctions%2F-1426925879"><span class="token function">onInit</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="354593997%2FFunctions%2F-1426925879" anchor-label="onPause" id="354593997%2FFunctions%2F-1426925879" data-filterable-set=":equinox-navigation:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":equinox-navigation:dokkaHtmlPartial/commonMain" data-filterable-set=":equinox-navigation:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="index.html#354593997%2FFunctions%2F-1426925879"><span>on</span><wbr><span><span>Pause</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="354593997%2FFunctions%2F-1426925879"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":equinox-navigation:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">protected </span><span class="token keyword">open </span><span class="token keyword">fun </span><a href="index.html#354593997%2FFunctions%2F-1426925879"><span class="token function">onPause</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1488622250%2FFunctions%2F-1426925879" anchor-label="onResume" id="1488622250%2FFunctions%2F-1426925879" data-filterable-set=":equinox-navigation:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":equinox-navigation:dokkaHtmlPartial/commonMain" data-filterable-set=":equinox-navigation:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="index.html#1488622250%2FFunctions%2F-1426925879"><span>on</span><wbr><span><span>Resume</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1488622250%2FFunctions%2F-1426925879"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":equinox-navigation:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">protected </span><span class="token keyword">open </span><span class="token keyword">fun </span><a href="index.html#1488622250%2FFunctions%2F-1426925879"><span class="token function">onResume</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="976019425%2FFunctions%2F-1426925879" anchor-label="onStart" id="976019425%2FFunctions%2F-1426925879" data-filterable-set=":equinox-navigation:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":equinox-navigation:dokkaHtmlPartial/commonMain" data-filterable-set=":equinox-navigation:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="index.html#976019425%2FFunctions%2F-1426925879"><span>on</span><wbr><span><span>Start</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="976019425%2FFunctions%2F-1426925879"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":equinox-navigation:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">protected </span><span class="token keyword">open </span><span class="token keyword">fun </span><a href="index.html#976019425%2FFunctions%2F-1426925879"><span class="token function">onStart</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1166953739%2FFunctions%2F-1426925879" anchor-label="onStop" id="-1166953739%2FFunctions%2F-1426925879" data-filterable-set=":equinox-navigation:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":equinox-navigation:dokkaHtmlPartial/commonMain" data-filterable-set=":equinox-navigation:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="index.html#-1166953739%2FFunctions%2F-1426925879"><span>on</span><wbr><span><span>Stop</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1166953739%2FFunctions%2F-1426925879"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":equinox-navigation:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">protected </span><span class="token keyword">open </span><span class="token keyword">fun </span><a href="index.html#-1166953739%2FFunctions%2F-1426925879"><span class="token function">onStop</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1117543213%2FFunctions%2F-1426925879" anchor-label="prepareTitle" id="1117543213%2FFunctions%2F-1426925879" data-filterable-set=":equinox-navigation:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":equinox-navigation:dokkaHtmlPartial/commonMain" data-filterable-set=":equinox-navigation:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="prepare-title.html"><span>prepare</span><wbr><span><span>Title</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1117543213%2FFunctions%2F-1426925879"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":equinox-navigation:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><a href="https://developer.android.com/reference/kotlin/androidx/compose/runtime/Composable.html"><span class="token annotation builtin">Composable</span></a></div></div><span class="token keyword">protected </span><span class="token keyword">open </span><span class="token keyword">fun </span><a href="../-navigator-tab/index.html">NavigatorTab</a><span class="token operator">&lt;</span><span class="token operator">*</span><span class="token operator">&gt;</span><span class="token punctuation">.</span><a href="prepare-title.html"><span class="token function">prepareTitle</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a></div><div class="brief "><p class="paragraph">Method used to prepare the title for the <a href="-side-navigation-item.html">SideNavigationItem</a> and the <a href="-bottom-navigation-item.html">BottomNavigationItem</a> based on the <a href="../-navigator-tab/index.html">NavigatorTab</a> used by the navigator</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1703304948%2FFunctions%2F-1426925879" anchor-label="ScreenTabContent" id="-1703304948%2FFunctions%2F-1426925879" data-filterable-set=":equinox-navigation:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":equinox-navigation:dokkaHtmlPartial/commonMain" data-filterable-set=":equinox-navigation:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-screen-tab-content.html"><span>Screen</span><wbr><span>Tab</span><wbr><span><span>Content</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1703304948%2FFunctions%2F-1426925879"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":equinox-navigation:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><a href="https://developer.android.com/reference/kotlin/androidx/compose/runtime/Composable.html"><span class="token annotation builtin">Composable</span></a></div></div><span class="token keyword">private </span><span class="token keyword">fun </span><a href="-screen-tab-content.html"><span class="token function">ScreenTabContent</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">paddingValues<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/androidx/compose/foundation/layout/PaddingValues.html">PaddingValues</a></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">The content of the tab</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1505272232%2FFunctions%2F-1426925879" anchor-label="ShowContent" id="1505272232%2FFunctions%2F-1426925879" data-filterable-set=":equinox-navigation:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":equinox-navigation:dokkaHtmlPartial/commonMain" data-filterable-set=":equinox-navigation:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="index.html#1505272232%2FFunctions%2F-1426925879"><span>Show</span><wbr><span><span>Content</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1505272232%2FFunctions%2F-1426925879"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":equinox-navigation:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">fun </span><a href="index.html#1505272232%2FFunctions%2F-1426925879"><span class="token function">ShowContent</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1210424940%2FFunctions%2F-1426925879" anchor-label="SideNavigationArrangement" id="1210424940%2FFunctions%2F-1426925879" data-filterable-set=":equinox-navigation:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":equinox-navigation:dokkaHtmlPartial/commonMain" data-filterable-set=":equinox-navigation:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-side-navigation-arrangement.html"><span>Side</span><wbr><span>Navigation</span><wbr><span><span>Arrangement</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1210424940%2FFunctions%2F-1426925879"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":equinox-navigation:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><a href="https://developer.android.com/reference/kotlin/androidx/compose/runtime/Composable.html"><span class="token annotation builtin">Composable</span></a></div></div><span class="token keyword">private </span><span class="token keyword">fun </span><a href="-side-navigation-arrangement.html"><span class="token function">SideNavigationArrangement</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">modifier<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/androidx/compose/ui/Modifier.html">Modifier</a><span class="token punctuation">, </span></span><span class="parameter ">sideBarWidth<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/androidx/compose/ui/unit/Dp.html">Dp</a><span class="token punctuation">, </span></span><span class="parameter ">navigationBarColor<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/androidx/compose/ui/graphics/Color.html">Color</a><span class="token punctuation">, </span></span><span class="parameter ">backgroundTab<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/androidx/compose/ui/graphics/Color.html">Color</a></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Custom <a href="https://developer.android.com/reference/kotlin/androidx/compose/material3/package-summary.html">NavigationRail</a> displayed on the <a href="../../../equinox-compose/com.tecknobit.equinoxcompose.utilities/-responsive-class/-e-x-p-a-n-d-e-d_-c-o-n-t-e-n-t/index.html">EXPANDED_CONTENT</a> and <a href="../../../equinox-compose/com.tecknobit.equinoxcompose.utilities/-responsive-class/-m-e-d-i-u-m_-c-o-n-t-e-n-t/index.html">MEDIUM_CONTENT</a> responsive screen classes</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="86306818%2FFunctions%2F-1426925879" anchor-label="sideNavigationContentPadding" id="86306818%2FFunctions%2F-1426925879" data-filterable-set=":equinox-navigation:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":equinox-navigation:dokkaHtmlPartial/commonMain" data-filterable-set=":equinox-navigation:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="side-navigation-content-padding.html"><span>side</span><wbr><span>Navigation</span><wbr><span>Content</span><wbr><span><span>Padding</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="86306818%2FFunctions%2F-1426925879"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":equinox-navigation:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">protected </span><span class="token keyword">open </span><span class="token keyword">fun </span><a href="side-navigation-content-padding.html"><span class="token function">sideNavigationContentPadding</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/androidx/compose/foundation/layout/PaddingValues.html">PaddingValues</a></div><div class="brief "><p class="paragraph">Method used to customize the padding values to apply when the navigation is side-arranged</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1229750986%2FFunctions%2F-1426925879" anchor-label="SideNavigationFooterContent" id="-1229750986%2FFunctions%2F-1426925879" data-filterable-set=":equinox-navigation:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":equinox-navigation:dokkaHtmlPartial/commonMain" data-filterable-set=":equinox-navigation:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-side-navigation-footer-content.html"><span>Side</span><wbr><span>Navigation</span><wbr><span>Footer</span><wbr><span><span>Content</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1229750986%2FFunctions%2F-1426925879"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":equinox-navigation:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><a href="https://developer.android.com/reference/kotlin/androidx/compose/runtime/Composable.html"><span class="token annotation builtin">Composable</span></a></div></div><span class="token keyword">protected </span><span class="token keyword">open </span><span class="token keyword">fun </span><a href="https://developer.android.com/reference/kotlin/androidx/compose/foundation/layout/ColumnScope.html">ColumnScope</a><span class="token punctuation">.</span><a href="-side-navigation-footer-content.html"><span class="token function">SideNavigationFooterContent</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Custom footer content to display on the <a href="-side-navigation-arrangement.html">SideNavigationArrangement</a> bar</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="647137960%2FFunctions%2F-1426925879" anchor-label="SideNavigationHeaderContent" id="647137960%2FFunctions%2F-1426925879" data-filterable-set=":equinox-navigation:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":equinox-navigation:dokkaHtmlPartial/commonMain" data-filterable-set=":equinox-navigation:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-side-navigation-header-content.html"><span>Side</span><wbr><span>Navigation</span><wbr><span>Header</span><wbr><span><span>Content</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="647137960%2FFunctions%2F-1426925879"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":equinox-navigation:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><a href="https://developer.android.com/reference/kotlin/androidx/compose/runtime/Composable.html"><span class="token annotation builtin">Composable</span></a></div></div><span class="token keyword">protected </span><span class="token keyword">open </span><span class="token keyword">fun </span><a href="https://developer.android.com/reference/kotlin/androidx/compose/foundation/layout/ColumnScope.html">ColumnScope</a><span class="token punctuation">.</span><a href="-side-navigation-header-content.html"><span class="token function">SideNavigationHeaderContent</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Custom header content to display on the <a href="-side-navigation-arrangement.html">SideNavigationArrangement</a> bar</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1118032097%2FFunctions%2F-1426925879" anchor-label="SideNavigationItem" id="-1118032097%2FFunctions%2F-1426925879" data-filterable-set=":equinox-navigation:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":equinox-navigation:dokkaHtmlPartial/commonMain" data-filterable-set=":equinox-navigation:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-side-navigation-item.html"><span>Side</span><wbr><span>Navigation</span><wbr><span><span>Item</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1118032097%2FFunctions%2F-1426925879"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":equinox-navigation:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><a href="https://developer.android.com/reference/kotlin/androidx/compose/runtime/Composable.html"><span class="token annotation builtin">Composable</span></a></div></div><span class="token keyword">protected </span><span class="token keyword">open </span><span class="token keyword">fun </span><a href="-side-navigation-item.html"><span class="token function">SideNavigationItem</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">index<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter ">tab<span class="token operator">: </span><a href="index.html">T</a></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">The navigation item of the <a href="-side-navigation-arrangement.html">SideNavigationArrangement</a> bar</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="942998487%2FFunctions%2F-1426925879" anchor-label="sideNavigationItemColors" id="942998487%2FFunctions%2F-1426925879" data-filterable-set=":equinox-navigation:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":equinox-navigation:dokkaHtmlPartial/commonMain" data-filterable-set=":equinox-navigation:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="side-navigation-item-colors.html"><span>side</span><wbr><span>Navigation</span><wbr><span>Item</span><wbr><span><span>Colors</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="942998487%2FFunctions%2F-1426925879"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":equinox-navigation:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><a href="https://developer.android.com/reference/kotlin/androidx/compose/runtime/Composable.html"><span class="token annotation builtin">Composable</span></a></div></div><span class="token keyword">protected </span><span class="token keyword">open </span><span class="token keyword">fun </span><a href="side-navigation-item-colors.html"><span class="token function">sideNavigationItemColors</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/androidx/compose/material3/NavigationDrawerItemColors.html">NavigationDrawerItemColors</a></div><div class="brief "><p class="paragraph">Method used to customize the colors of the <a href="-side-navigation-item.html">SideNavigationItem</a> component</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="584313507%2FFunctions%2F-1426925879" anchor-label="tabContent" id="584313507%2FFunctions%2F-1426925879" data-filterable-set=":equinox-navigation:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":equinox-navigation:dokkaHtmlPartial/commonMain" data-filterable-set=":equinox-navigation:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="tab-content.html"><span>tab</span><wbr><span><span>Content</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="584313507%2FFunctions%2F-1426925879"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":equinox-navigation:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">protected </span><span class="token keyword">abstract </span><span class="token keyword">fun </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">.</span><a href="tab-content.html"><span class="token function">tabContent</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../../../equinox-compose/com.tecknobit.equinoxcompose.session.screens/-equinox-no-model-screen/index.html">EquinoxNoModelScreen</a></div><div class="brief "><p class="paragraph">Method used to instantiate the related screen based on the current <a href="active-navigation-tab-index.html">activeNavigationTabIndex</a></p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    <div class="footer">
+        <a href="#content" id="go-to-top-link" class="footer--button footer--button_go-to-top"></a>
+        <span>© 2025 Copyright</span>
+        <span class="pull-right">
+            <span>Generated by </span>
+            <a class="footer--link footer--link_external" href="https://github.com/Kotlin/dokka">
+                <span>dokka</span>
+            </a>
+        </span>
+    </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
