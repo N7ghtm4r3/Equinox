@@ -35,7 +35,7 @@ fun rememberSessionFlowState(
 /**
  * The `SessionFlowState` class is useful to handle the [SessionFlowContainer] component lifecycle
  *
- * @property status The current status of the session handled by the component
+ * @param status The current status of the session handled by the component
  *
  * @author N7ghtm4r3 - Tecknobit
  *
