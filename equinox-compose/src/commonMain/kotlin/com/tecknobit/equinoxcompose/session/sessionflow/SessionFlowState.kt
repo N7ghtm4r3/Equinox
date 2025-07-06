@@ -154,9 +154,14 @@ class SessionFlowState internal constructor(
     /**
      * Method used to update the value of the [loadingRoutineTrigger] to automatically invoke the
      * [com.tecknobit.equinoxcompose.session.sessionflow.SessionFlowContainer]'s loading routine
+     *
+     * @param onReload Callback to invoke when [loadingRoutineTrigger] has been updated
      */
     @ExperimentalComposeApi
-    fun reload() {
+    fun reload(
+        onReload: (() -> Unit)? = null,
+    ) {
+        onReload?.invoke()
         loadingRoutineTrigger.value = TimeFormatter.currentTimestamp()
     }
 
