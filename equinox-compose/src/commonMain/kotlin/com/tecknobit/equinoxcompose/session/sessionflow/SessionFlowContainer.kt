@@ -93,6 +93,7 @@ fun SessionFlowContainer(
             retryContent = retryFailedFlowContent
         )
     },
+    onCustomError: @Composable ((Any) -> Unit)? = null,
     onNoNetworkConnection: @Composable () -> Unit = {
         ErrorUI(
             containerModifier = modifier,
@@ -133,8 +134,10 @@ fun SessionFlowContainer(
                 else
                     content()
             }
-
             SERVER_OFFLINE -> onServerOffline()
+            CUSTOM -> {
+                onCustomError?.invoke(state.customErrorExtra)
+            }
             NO_NETWORK_CONNECTION -> onNoNetworkConnection()
             USER_DISCONNECTED -> {
                 LaunchedEffect(Unit) {

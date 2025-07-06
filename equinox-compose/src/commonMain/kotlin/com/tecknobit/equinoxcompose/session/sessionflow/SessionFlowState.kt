@@ -87,6 +87,8 @@ class SessionFlowState internal constructor(
      */
     private var onReconnection: (() -> Unit)? = null
 
+    internal lateinit var customErrorExtra: Any
+
     /**
      * `loadingRoutineTrigger` trigger used to automatically invoke the
      * [com.tecknobit.equinoxcompose.session.sessionflow.SessionFlowContainer]'s loading routine
@@ -146,6 +148,25 @@ class SessionFlowState internal constructor(
             currentStatus.value = SERVER_OFFLINE
             viewModel?.suspendRetriever()
         }
+    }
+
+    fun notifyCustomError(
+        errorExtra: Any,
+    ) {
+        whenNetworkAvailable {
+            customErrorExtra = errorExtra
+            previousStatus = currentStatus.value
+            currentStatus.value = CUSTOM
+            viewModel?.suspendRetriever()
+        }
+    }
+
+    private fun setCurrentStatusAndSuspend(
+        status: SessionStatus,
+    ) {
+        previousStatus = currentStatus.value
+        currentStatus.value = status
+        viewModel?.suspendRetriever()
     }
 
     /**

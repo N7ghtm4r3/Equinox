@@ -25,6 +25,8 @@ enum class SessionStatus {
     /**
      * `USER_DISCONNECTED` the status of the session when the user has been disconnected
      */
-    USER_DISCONNECTED
+    USER_DISCONNECTED,
+
+    CUSTOM
 
 }
