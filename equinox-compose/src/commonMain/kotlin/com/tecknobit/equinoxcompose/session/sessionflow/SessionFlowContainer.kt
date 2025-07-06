@@ -35,6 +35,7 @@ import org.jetbrains.compose.resources.vectorResource
  * @param state The state used to autonomously display the correct content
  * @param viewModel If passed will be used to autonomously suspend and restart the [com.tecknobit.equinoxcompose.session.Retriever]'s
  * routine
+ * @param onReconnection An optional callback to invoke after the connection has been reestablished
  * @param enterTransition The transition to apply when a new content is displayed
  * @param exitTransition The transition to apply when a content is hidden
  * @param initialLoadingRoutineDelay Delay to apply to the [loadingRoutine] before starts
@@ -58,6 +59,7 @@ fun SessionFlowContainer(
     modifier: Modifier = Modifier,
     state: SessionFlowState,
     viewModel: EquinoxViewModel? = null,
+    onReconnection: (() -> Unit)? = null,
     enterTransition: EnterTransition = fadeIn(),
     exitTransition: ExitTransition = fadeOut(),
     initialLoadingRoutineDelay: Long? = null,
@@ -107,6 +109,9 @@ fun SessionFlowContainer(
     LaunchedEffect(Unit) {
         state.attachViewModel(
             viewModel = viewModel
+        )
+        state.performOnReconnection(
+            onReconnection = onReconnection
         )
     }
     monitorConnection(

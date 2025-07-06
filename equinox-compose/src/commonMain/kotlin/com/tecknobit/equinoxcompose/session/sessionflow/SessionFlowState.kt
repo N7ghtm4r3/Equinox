@@ -83,6 +83,11 @@ class SessionFlowState internal constructor(
     private var viewModel: EquinoxViewModel? = null
 
     /**
+     * `onReconnection` optional callback to invoke after the connection has been reestablished
+     */
+    private var onReconnection: (() -> Unit)? = null
+
+    /**
      * `loadingRoutineTrigger` trigger used to automatically invoke the
      * [com.tecknobit.equinoxcompose.session.sessionflow.SessionFlowContainer]'s loading routine
      */
@@ -98,6 +103,16 @@ class SessionFlowState internal constructor(
         viewModel: EquinoxViewModel?,
     ) {
         this.viewModel = viewModel
+    }
+
+    /**
+     * Method to set an optional callback to invoke after the connection has been reestablished
+     * @param onReconnection Optional callback to invoke after the connection has been reestablished
+     */
+    fun performOnReconnection(
+        onReconnection: (() -> Unit)?,
+    ) {
+        this.onReconnection = onReconnection
     }
 
     /**
@@ -143,9 +158,13 @@ class SessionFlowState internal constructor(
     ) {
         if (currentStatus.value != NO_NETWORK_CONNECTION)
             previousStatus = currentStatus.value
-        if (isConnected)
+        if (isConnected) {
+            if (currentStatus.value == NO_NETWORK_CONNECTION) {
+                viewModel?.restartRetriever()
+                onReconnection?.invoke()
+            }
             currentStatus.value = previousStatus
-        else {
+        } else {
             currentStatus.value = NO_NETWORK_CONNECTION
             viewModel?.suspendRetriever()
         }
