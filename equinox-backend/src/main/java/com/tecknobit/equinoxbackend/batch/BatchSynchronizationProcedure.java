@@ -3,7 +3,6 @@ package com.tecknobit.equinoxbackend.batch;
 import com.tecknobit.equinoxbackend.environment.services.builtin.service.EquinoxItemsHelper;
 import com.tecknobit.equinoxcore.annotations.Wrapper;
 import jakarta.persistence.EntityManager;
-import jdk.jfr.Experimental;
 
 import java.util.Collection;
 
@@ -21,7 +20,6 @@ import static com.tecknobit.equinoxbackend.environment.services.builtin.service.
  *
  * @since 1.0.8
  */
-@Experimental
 public abstract class BatchSynchronizationProcedure<O, D, V> extends EquinoxItemsHelper {
 
     /**
@@ -89,17 +87,6 @@ public abstract class BatchSynchronizationProcedure<O, D, V> extends EquinoxItem
      * @return the batch query used by the procedure as {@link BatchQuery}
      */
     protected abstract BatchQuery<V> createBatchQuery();
-
-    /**
-     * Method used to loads and convert a raw collection of data to the collection used by the procedure
-     *
-     * @param rawData The collection to convert
-     * @return the collection used by the procedure as {@link Collection} of {@link V}
-     */
-    @Deprecated(forRemoval = true)
-    protected Collection<V> loadDataList(Collection<D> rawData) {
-        return null;
-    }
 
     /**
      * Method used to execute the batch synchronization
