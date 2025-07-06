@@ -1,3 +1,5 @@
+@file:OptIn(ExperimentalTime::class)
+
 package com.tecknobit.equinoxcore.time
 
 import com.tecknobit.equinoxcore.annotations.Wrapper
@@ -5,6 +7,9 @@ import com.tecknobit.equinoxcore.time.TimeFormatter.dateAndTimeParsing
 import kotlinx.datetime.*
 import kotlinx.datetime.format.FormatStringsInDatetimeFormats
 import kotlinx.datetime.format.byUnicodePattern
+import kotlin.time.Clock
+import kotlin.time.ExperimentalTime
+import kotlin.time.Instant
 
 /**
  * The `TimeFormatter` object handles temporal values and provides easy access to custom formats for display or further use
@@ -399,7 +404,7 @@ object TimeFormatter {
      * @throws IllegalArgumentException when the second date is lesser than the first value
      */
     @Wrapper
-    fun Long.daysUntilNow(): Int {
+    fun Long.daysUntilNow(): Long {
         return daysUntil(
             untilDate = Clock.System.now().toEpochMilliseconds()
         )
@@ -416,7 +421,7 @@ object TimeFormatter {
      */
     fun Long.daysUntil(
         untilDate: Long,
-    ): Int {
+    ): Long {
         return computeUntilGap(
             baseDate = this,
             untilDate = untilDate,
@@ -432,7 +437,7 @@ object TimeFormatter {
      * @throws IllegalArgumentException when the second date is lesser than the first value
      */
     @Wrapper
-    fun Long.weeksUntilNow(): Int {
+    fun Long.weeksUntilNow(): Long {
         return weeksUntil(
             untilDate = Clock.System.now().toEpochMilliseconds()
         )
@@ -449,7 +454,7 @@ object TimeFormatter {
      */
     fun Long.weeksUntil(
         untilDate: Long,
-    ): Int {
+    ): Long {
         return computeUntilGap(
             baseDate = this,
             untilDate = untilDate,
@@ -465,7 +470,7 @@ object TimeFormatter {
      * @throws IllegalArgumentException when the second date is lesser than the first value
      */
     @Wrapper
-    fun Long.monthsUntilNow(): Int {
+    fun Long.monthsUntilNow(): Long {
         return monthsUntil(
             untilDate = Clock.System.now().toEpochMilliseconds()
         )
@@ -482,7 +487,7 @@ object TimeFormatter {
      */
     fun Long.monthsUntil(
         untilDate: Long,
-    ): Int {
+    ): Long {
         return computeUntilGap(
             baseDate = this,
             untilDate = untilDate,
@@ -498,7 +503,7 @@ object TimeFormatter {
      * @throws IllegalArgumentException when the second date is lesser than the first value
      */
     @Wrapper
-    fun Long.quartersUntilNow(): Int {
+    fun Long.quartersUntilNow(): Long {
         return quartersUntil(
             untilDate = Clock.System.now().toEpochMilliseconds()
         )
@@ -515,7 +520,7 @@ object TimeFormatter {
      */
     fun Long.quartersUntil(
         untilDate: Long,
-    ): Int {
+    ): Long {
         return computeUntilGap(
             baseDate = this,
             untilDate = untilDate,
@@ -531,7 +536,7 @@ object TimeFormatter {
      * @throws IllegalArgumentException when the second date is lesser than the first value
      */
     @Wrapper
-    fun Long.yearsUntilNow(): Int {
+    fun Long.yearsUntilNow(): Long {
         return yearsUntil(
             untilDate = Clock.System.now().toEpochMilliseconds()
         )
@@ -548,7 +553,7 @@ object TimeFormatter {
      */
     fun Long.yearsUntil(
         untilDate: Long,
-    ): Int {
+    ): Long {
         return computeUntilGap(
             baseDate = this,
             untilDate = untilDate,
@@ -564,7 +569,7 @@ object TimeFormatter {
      * @throws IllegalArgumentException when the second date is lesser than the first value
      */
     @Wrapper
-    fun Long.centuriesUntilNow(): Int {
+    fun Long.centuriesUntilNow(): Long {
         return centuriesUntil(
             untilDate = Clock.System.now().toEpochMilliseconds()
         )
@@ -581,7 +586,7 @@ object TimeFormatter {
      */
     fun Long.centuriesUntil(
         untilDate: Long,
-    ): Int {
+    ): Long {
         return computeUntilGap(
             baseDate = this,
             untilDate = untilDate,
@@ -604,7 +609,7 @@ object TimeFormatter {
         baseDate: Long,
         untilDate: Long,
         untilGap: DateTimeUnit.DateBased,
-    ): Int {
+    ): Long {
         if (untilDate < baseDate)
             throw IllegalArgumentException("The second date must be greater than the first one")
         val firstDate = baseDate.toLocalDate()
