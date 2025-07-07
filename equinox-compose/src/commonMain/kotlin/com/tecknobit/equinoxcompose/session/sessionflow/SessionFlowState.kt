@@ -6,6 +6,7 @@ import androidx.compose.runtime.saveable.SaverScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import com.tecknobit.equinoxcompose.session.sessionflow.SessionStatus.*
 import com.tecknobit.equinoxcompose.viewmodels.EquinoxViewModel
+import com.tecknobit.equinoxcore.annotations.Wrapper
 import com.tecknobit.equinoxcore.time.TimeFormatter
 
 /**
@@ -35,7 +36,7 @@ fun rememberSessionFlowState(
 /**
  * The `SessionFlowState` class is useful to handle the [SessionFlowContainer] component lifecycle
  *
- * @property status The current status of the session handled by the component
+ * @param status The current status of the session handled by the component
  *
  * @author N7ghtm4r3 - Tecknobit
  *
@@ -83,6 +84,16 @@ class SessionFlowState internal constructor(
     private var viewModel: EquinoxViewModel? = null
 
     /**
+     * `onReconnection` optional callback to invoke after the connection has been reestablished
+     */
+    private var onReconnection: (() -> Unit)? = null
+
+    /**
+     * `customErrorExtra` the latest extra value set related to custom error used to display the specific content
+     */
+    internal lateinit var customErrorExtra: Any
+
+    /**
      * `loadingRoutineTrigger` trigger used to automatically invoke the
      * [com.tecknobit.equinoxcompose.session.sessionflow.SessionFlowContainer]'s loading routine
      */
@@ -101,12 +112,39 @@ class SessionFlowState internal constructor(
     }
 
     /**
+     * Method to set an optional callback to invoke after the connection has been reestablished
+     * @param onReconnection Optional callback to invoke after the connection has been reestablished
+     */
+    fun performOnReconnection(
+        onReconnection: (() -> Unit)?,
+    ) {
+        this.onReconnection = onReconnection
+    }
+
+    /**
      * Method used to notify the [OPERATIONAL] session status
      */
+    @Wrapper
     fun notifyOperational() {
+        setAndRestart(
+            status = OPERATIONAL
+        )
+    }
+
+    /**
+     * Method used to set a status and optionally restart the [EquinoxViewModel]'s routine
+     *
+     * @param status The status to set
+     * @param onSet The callback to invoke when the status has been set
+     */
+    private fun setAndRestart(
+        status: SessionStatus,
+        onSet: (() -> Unit)? = null,
+    ) {
         whenNetworkAvailable {
+            onSet?.invoke()
             previousStatus = currentStatus.value
-            currentStatus.value = OPERATIONAL
+            currentStatus.value = status
             viewModel?.restartRetriever()
         }
     }
@@ -114,21 +152,57 @@ class SessionFlowState internal constructor(
     /**
      * Method used to notify the [USER_DISCONNECTED] session status
      */
+    @Wrapper
     fun notifyUserDisconnected() {
-        whenNetworkAvailable {
-            previousStatus = currentStatus.value
-            currentStatus.value = USER_DISCONNECTED
-            viewModel?.suspendRetriever()
-        }
+        setAndSuspend(
+            status = USER_DISCONNECTED
+        )
     }
 
     /**
      * Method used to notify the [SERVER_OFFLINE] session status
      */
+    @Wrapper
     fun notifyServerOffline() {
+        setAndSuspend(
+            status = SERVER_OFFLINE
+        )
+    }
+
+    /**
+     * Method used to notify the [CUSTOM] session status
+     *
+     * @param errorExtra Extra value related to custom error used to display the specific content
+     *
+     * @since 1.1.4
+     */
+    @Wrapper
+    @ExperimentalComposeApi
+    fun notifyCustomError(
+        errorExtra: Any,
+    ) {
+        setAndSuspend(
+            status = CUSTOM,
+            onSet = {
+                customErrorExtra = errorExtra
+            }
+        )
+    }
+
+    /**
+     * Method used to set a status and optionally suspend the [EquinoxViewModel]'s routine
+     *
+     * @param status The status to set
+     * @param onSet The callback to invoke when the status has been set
+     */
+    private fun setAndSuspend(
+        status: SessionStatus,
+        onSet: (() -> Unit)? = null,
+    ) {
         whenNetworkAvailable {
+            onSet?.invoke()
             previousStatus = currentStatus.value
-            currentStatus.value = SERVER_OFFLINE
+            currentStatus.value = status
             viewModel?.suspendRetriever()
         }
     }
@@ -143,9 +217,13 @@ class SessionFlowState internal constructor(
     ) {
         if (currentStatus.value != NO_NETWORK_CONNECTION)
             previousStatus = currentStatus.value
-        if (isConnected)
+        if (isConnected) {
+            if (currentStatus.value == NO_NETWORK_CONNECTION) {
+                viewModel?.restartRetriever()
+                onReconnection?.invoke()
+            }
             currentStatus.value = previousStatus
-        else {
+        } else {
             currentStatus.value = NO_NETWORK_CONNECTION
             viewModel?.suspendRetriever()
         }
@@ -154,9 +232,14 @@ class SessionFlowState internal constructor(
     /**
      * Method used to update the value of the [loadingRoutineTrigger] to automatically invoke the
      * [com.tecknobit.equinoxcompose.session.sessionflow.SessionFlowContainer]'s loading routine
+     *
+     * @param onReload Callback to invoke when [loadingRoutineTrigger] has been updated
      */
     @ExperimentalComposeApi
-    fun reload() {
+    fun reload(
+        onReload: (() -> Unit)? = null,
+    ) {
+        onReload?.invoke()
         loadingRoutineTrigger.value = TimeFormatter.currentTimestamp()
     }
 

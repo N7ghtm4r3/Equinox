@@ -6,20 +6,17 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Remove
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LocalTextStyle
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.ExperimentalComposeApi
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.TextStyle
@@ -292,69 +289,4 @@ private fun QuantityButton(
                 colors.disabledIconColor
         )
     }
-}
-
-/**
- * The `QuantityButtonAppearance` allows to customize the appearance of the [QuantityButton]
- *
- * @property modifier The modifier to apply to the button
- * @property shape The shape of the button
- * @property size The size of the button
- * @property background The background of the button
- * @property icon The representative icon of the button
- *
- * @author N7ghtm4r3
- *
- * @since 1.1.0
- */
-@Deprecated(
-    message = "This way to customize the appearance has been replaced with QuantityPickerDefaults.colors instead",
-    level = DeprecationLevel.WARNING,
-    replaceWith = ReplaceWith(
-        expression = "QuantityPickerDefaults.colors",
-        "com.tecknobit.equinoxcompose.components.quantitypicker.QuantityPickerDefaults"
-    )
-)
-data class QuantityButtonAppearance(
-    val modifier: Modifier = Modifier,
-    val shape: Shape = CircleShape,
-    val size: Dp = 30.dp,
-    val background: Color,
-    val icon: ImageVector,
-)
-
-/**
- * Method used to create a customization style for a [QuantityButton]
- *
- * @param modifier The modifier to apply to the button
- * @param shape The shape of the button
- * @param size The size of the button
- * @param background The background of the button
- * @param icon The representative icon of the button
- *
- * @return the customization style for a button as [QuantityButtonAppearance]
- */
-@Deprecated(
-    message = "This way to customize the appearance has been replaced with QuantityPickerDefaults.colors instead",
-    level = DeprecationLevel.ERROR,
-    replaceWith = ReplaceWith(
-        expression = "QuantityPickerDefaults.colors",
-        "com.tecknobit.equinoxcompose.components.quantitypicker.QuantityPickerDefaults"
-    )
-)
-@Composable
-fun quantityButtonAppearance(
-    modifier: Modifier = Modifier,
-    shape: Shape = CircleShape,
-    size: Dp = 30.dp,
-    background: Color = MaterialTheme.colorScheme.primary,
-    icon: ImageVector,
-): QuantityButtonAppearance {
-    return QuantityButtonAppearance(
-        modifier = modifier,
-        shape = shape,
-        size = size,
-        background = background,
-        icon = icon
-    )
 }

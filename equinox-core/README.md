@@ -18,7 +18,7 @@ Core utilities for **Compose Multiplatform** and **Spring** technologies
 
 ```gradle
 [versions]
-equinox = "1.1.3"
+equinox = "1.1.4"
 
 [libraries]
 equinox-core = { module = "io.github.n7ghtm4r3:equinox-core", version.ref = "equinox" }
@@ -36,7 +36,7 @@ dependencies {
 
 ```gradle
 dependencies {
-    implementation("io.github.n7ghtm4r3:equinox-core:1.1.3")
+    implementation("io.github.n7ghtm4r3:equinox-core:1.1.4")
 }
 ```
 
@@ -44,7 +44,7 @@ dependencies {
 
 ```gradle
 dependencies {
-    implementation 'io.github.n7ghtm4r3:equinox-core:1.1.3'
+    implementation 'io.github.n7ghtm4r3:equinox-core:1.1.4'
 }
 ```
 

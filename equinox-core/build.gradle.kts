@@ -4,7 +4,8 @@ import com.vanniktech.maven.publish.KotlinMultiplatform
 import com.vanniktech.maven.publish.SonatypeHost
 import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
-import org.jetbrains.kotlin.gradle.targets.js.nodejs.NodeJsRootExtension
+import org.jetbrains.kotlin.gradle.targets.wasm.nodejs.WasmNodeJsRootExtension
+
 
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
@@ -14,7 +15,7 @@ plugins {
 }
 
 group = "com.tecknobit.equinoxcore"
-version = "1.1.3"
+version = "1.1.4"
 
 repositories {
     google()
@@ -106,7 +107,7 @@ kotlin {
     jvmToolchain(18)
 }
 
-rootProject.the<NodeJsRootExtension>().versions.webpackDevServer.version = "5.2.1"
+rootProject.the<WasmNodeJsRootExtension>().versions.webpackDevServer.version = "5.2.2"
 
 mavenPublishing {
     configure(
@@ -118,7 +119,7 @@ mavenPublishing {
     coordinates(
         groupId = "io.github.n7ghtm4r3",
         artifactId = "equinox-core",
-        version = "1.1.3"
+        version = "1.1.4"
     )
     pom {
         name.set("Equinox Core")

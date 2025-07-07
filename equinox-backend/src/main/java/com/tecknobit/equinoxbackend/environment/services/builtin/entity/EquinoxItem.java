@@ -2,7 +2,6 @@ package com.tecknobit.equinoxbackend.environment.services.builtin.entity;
 
 import com.tecknobit.apimanager.annotations.Structure;
 import com.tecknobit.apimanager.formatters.JsonHelper;
-import com.tecknobit.apimanager.formatters.TimeFormatter;
 import com.tecknobit.equinoxcore.annotations.Wrapper;
 import jakarta.persistence.Column;
 import jakarta.persistence.Id;
@@ -28,13 +27,6 @@ public abstract class EquinoxItem {
      * {@code DISCRIMINATOR_VALUE_KEY} the key for the <b>"dtype"</b> field
      */
     public static final String DISCRIMINATOR_VALUE_KEY = "dtype";
-
-    /**
-     * {@code timeFormatter} the formatter used to format the timestamp values
-     */
-    @Transient
-    @Deprecated(forRemoval = true)
-    protected final TimeFormatter timeFormatter = TimeFormatter.getInstance();
 
     /**
      * {@code id} identifier of the item

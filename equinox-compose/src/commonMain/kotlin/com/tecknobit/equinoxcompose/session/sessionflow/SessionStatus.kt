@@ -1,5 +1,7 @@
 package com.tecknobit.equinoxcompose.session.sessionflow
 
+import androidx.compose.runtime.ExperimentalComposeApi
+
 /**
  * List of the possible statuses of the session
  *
@@ -25,6 +27,14 @@ enum class SessionStatus {
     /**
      * `USER_DISCONNECTED` the status of the session when the user has been disconnected
      */
-    USER_DISCONNECTED
+    USER_DISCONNECTED,
+
+    /**
+     * `CUSTOM` status that allows to customize the notification of error or any custom status as needed
+     *
+     * @since 1.1.4
+     */
+    @ExperimentalComposeApi
+    CUSTOM
 
 }

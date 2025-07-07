@@ -35,6 +35,7 @@ import org.jetbrains.compose.resources.vectorResource
  * @param state The state used to autonomously display the correct content
  * @param viewModel If passed will be used to autonomously suspend and restart the [com.tecknobit.equinoxcompose.session.Retriever]'s
  * routine
+ * @param onReconnection An optional callback to invoke after the connection has been reestablished
  * @param enterTransition The transition to apply when a new content is displayed
  * @param exitTransition The transition to apply when a content is hidden
  * @param initialLoadingRoutineDelay Delay to apply to the [loadingRoutine] before starts
@@ -47,6 +48,8 @@ import org.jetbrains.compose.resources.vectorResource
  * @param fallbackContentColor The color to apply to the fallback contents
  * @param retryFailedFlowContent The content displayed to allow the user to retry a failed operation
  * @param onServerOffline The content displayed when the [SessionStatus] is [SERVER_OFFLINE]
+ * @param onCustomError The content displayed when the [SessionStatus] is [CUSTOM] and is specially related to the extra
+ * value of the error
  * @param onNoNetworkConnection The content displayed when the [SessionStatus] is [NO_NETWORK_CONNECTION]
  *
  * @since 1.1.2
@@ -58,6 +61,7 @@ fun SessionFlowContainer(
     modifier: Modifier = Modifier,
     state: SessionFlowState,
     viewModel: EquinoxViewModel? = null,
+    onReconnection: (() -> Unit)? = null,
     enterTransition: EnterTransition = fadeIn(),
     exitTransition: ExitTransition = fadeOut(),
     initialLoadingRoutineDelay: Long? = null,
@@ -91,6 +95,7 @@ fun SessionFlowContainer(
             retryContent = retryFailedFlowContent
         )
     },
+    onCustomError: @Composable ((Any) -> Unit)? = null,
     onNoNetworkConnection: @Composable () -> Unit = {
         ErrorUI(
             containerModifier = modifier,
@@ -107,6 +112,9 @@ fun SessionFlowContainer(
     LaunchedEffect(Unit) {
         state.attachViewModel(
             viewModel = viewModel
+        )
+        state.performOnReconnection(
+            onReconnection = onReconnection
         )
     }
     monitorConnection(
@@ -128,8 +136,10 @@ fun SessionFlowContainer(
                 else
                     content()
             }
-
             SERVER_OFFLINE -> onServerOffline()
+            CUSTOM -> {
+                onCustomError?.invoke(state.customErrorExtra)
+            }
             NO_NETWORK_CONNECTION -> onNoNetworkConnection()
             USER_DISCONNECTED -> {
                 LaunchedEffect(Unit) {
