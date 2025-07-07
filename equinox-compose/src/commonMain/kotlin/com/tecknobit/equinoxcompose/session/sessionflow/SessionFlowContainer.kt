@@ -48,6 +48,8 @@ import org.jetbrains.compose.resources.vectorResource
  * @param fallbackContentColor The color to apply to the fallback contents
  * @param retryFailedFlowContent The content displayed to allow the user to retry a failed operation
  * @param onServerOffline The content displayed when the [SessionStatus] is [SERVER_OFFLINE]
+ * @param onCustomError The content displayed when the [SessionStatus] is [CUSTOM] and is specially related to the extra
+ * value of the error
  * @param onNoNetworkConnection The content displayed when the [SessionStatus] is [NO_NETWORK_CONNECTION]
  *
  * @since 1.1.2

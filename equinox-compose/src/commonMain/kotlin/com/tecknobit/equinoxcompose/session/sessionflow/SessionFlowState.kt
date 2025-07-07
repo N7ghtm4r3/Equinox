@@ -6,6 +6,7 @@ import androidx.compose.runtime.saveable.SaverScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import com.tecknobit.equinoxcompose.session.sessionflow.SessionStatus.*
 import com.tecknobit.equinoxcompose.viewmodels.EquinoxViewModel
+import com.tecknobit.equinoxcore.annotations.Wrapper
 import com.tecknobit.equinoxcore.time.TimeFormatter
 
 /**
@@ -87,6 +88,9 @@ class SessionFlowState internal constructor(
      */
     private var onReconnection: (() -> Unit)? = null
 
+    /**
+     * `customErrorExtra` the latest extra value set related to custom error used to display the specific content
+     */
     internal lateinit var customErrorExtra: Any
 
     /**
@@ -120,10 +124,27 @@ class SessionFlowState internal constructor(
     /**
      * Method used to notify the [OPERATIONAL] session status
      */
+    @Wrapper
     fun notifyOperational() {
+        setAndRestart(
+            status = OPERATIONAL
+        )
+    }
+
+    /**
+     * Method used to set a status and optionally restart the [EquinoxViewModel]'s routine
+     *
+     * @param status The status to set
+     * @param onSet The callback to invoke when the status has been set
+     */
+    private fun setAndRestart(
+        status: SessionStatus,
+        onSet: (() -> Unit)? = null,
+    ) {
         whenNetworkAvailable {
+            onSet?.invoke()
             previousStatus = currentStatus.value
-            currentStatus.value = OPERATIONAL
+            currentStatus.value = status
             viewModel?.restartRetriever()
         }
     }
@@ -131,42 +152,59 @@ class SessionFlowState internal constructor(
     /**
      * Method used to notify the [USER_DISCONNECTED] session status
      */
+    @Wrapper
     fun notifyUserDisconnected() {
-        whenNetworkAvailable {
-            previousStatus = currentStatus.value
-            currentStatus.value = USER_DISCONNECTED
-            viewModel?.suspendRetriever()
-        }
+        setAndSuspend(
+            status = USER_DISCONNECTED
+        )
     }
 
     /**
      * Method used to notify the [SERVER_OFFLINE] session status
      */
+    @Wrapper
     fun notifyServerOffline() {
-        whenNetworkAvailable {
-            previousStatus = currentStatus.value
-            currentStatus.value = SERVER_OFFLINE
-            viewModel?.suspendRetriever()
-        }
+        setAndSuspend(
+            status = SERVER_OFFLINE
+        )
     }
 
+    /**
+     * Method used to notify the [CUSTOM] session status
+     *
+     * @param errorExtra Extra value related to custom error used to display the specific content
+     *
+     * @since 1.1.4
+     */
+    @Wrapper
+    @ExperimentalComposeApi
     fun notifyCustomError(
         errorExtra: Any,
     ) {
-        whenNetworkAvailable {
-            customErrorExtra = errorExtra
-            previousStatus = currentStatus.value
-            currentStatus.value = CUSTOM
-            viewModel?.suspendRetriever()
-        }
+        setAndSuspend(
+            status = CUSTOM,
+            onSet = {
+                customErrorExtra = errorExtra
+            }
+        )
     }
 
-    private fun setCurrentStatusAndSuspend(
+    /**
+     * Method used to set a status and optionally suspend the [EquinoxViewModel]'s routine
+     *
+     * @param status The status to set
+     * @param onSet The callback to invoke when the status has been set
+     */
+    private fun setAndSuspend(
         status: SessionStatus,
+        onSet: (() -> Unit)? = null,
     ) {
-        previousStatus = currentStatus.value
-        currentStatus.value = status
-        viewModel?.suspendRetriever()
+        whenNetworkAvailable {
+            onSet?.invoke()
+            previousStatus = currentStatus.value
+            currentStatus.value = status
+            viewModel?.suspendRetriever()
+        }
     }
 
     /**
