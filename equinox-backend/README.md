@@ -10,10 +10,11 @@ Utilities and apis for the backends based on the **Spring Boot**'s architecture
 
 ```gradle
 [versions]
-equinox = "1.1.4"
+equinox-backend = "1.1.4"
+equinox = "1.1.5"
 
 [libraries]
-equinox-backend = { module = "io.github.n7ghtm4r3:equinox-backend", version.ref = "equinox" }
+equinox-backend = { module = "io.github.n7ghtm4r3:equinox-backend", version.ref = "equinox-backend" }
 equinox-core = { module = "io.github.n7ghtm4r3:equinox-core", version.ref = "equinox" }
 ```
 
@@ -50,7 +51,7 @@ Add the JitPack repository to your build file
         implementation 'io.github.n7ghtm4r3:equinox-backend:1.1.4'
         
         // implement the core utilities
-        implementation 'io.github.n7ghtm4r3:equinox-core:1.1.4'
+        implementation 'io.github.n7ghtm4r3:equinox-core:1.1.5'
     }
     ```
 
@@ -63,7 +64,7 @@ Add the JitPack repository to your build file
         implementation("io.github.n7ghtm4r3:equinox-backend:1.1.4")
         
         // implement the core utilities
-        implementation("io.github.n7ghtm4r3:equinox-core:1.1.4")
+        implementation("io.github.n7ghtm4r3:equinox-core:1.1.5")
     }
     ```
 

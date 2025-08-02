@@ -18,8 +18,8 @@ navigation in the **Compose Multiplatform applications**
 
 ```gradle
 [versions]
-equinox = "1.1.4"
-equinox-navigation = "1.0.2"
+equinox = "1.1.5"
+equinox-navigation = "1.0.3"
 
 [libraries]
 equinox-compose = { module = "io.github.n7ghtm4r3:equinox-compose", version.ref = "equinox" }
@@ -49,13 +49,13 @@ dependencies {
 dependencies {
     
     // implement the compose utilities
-    implementation("io.github.n7ghtm4r3:equinox-compose:1.1.4")
+    implementation("io.github.n7ghtm4r3:equinox-compose:1.1.5")
     
     // implement the core utilities
-    implementation("io.github.n7ghtm4r3:equinox-core:1.1.4")
+    implementation("io.github.n7ghtm4r3:equinox-core:1.1.5")
     
     // implement the navigation utilities
-    implementation("io.github.n7ghtm4r3:equinox-navigation:1.0.2")
+    implementation("io.github.n7ghtm4r3:equinox-navigation:1.0.3")
 }
 ```
 
@@ -65,13 +65,13 @@ dependencies {
 dependencies {
    
     // implement the compose utilities
-    implementation 'io.github.n7ghtm4r3:equinox-compose:1.1.4'
+    implementation 'io.github.n7ghtm4r3:equinox-compose:1.1.5'
     
     // implement the core utilities
-    implementation 'io.github.n7ghtm4r3:equinox-core:1.1.4'
+    implementation 'io.github.n7ghtm4r3:equinox-core:1.1.5'
     
     // implement the navigation utilities
-    implementation 'io.github.n7ghtm4r3:equinox-navigation:1.0.2'
+    implementation 'io.github.n7ghtm4r3:equinox-navigation:1.0.3'
 }
 ```
 
