@@ -1,4 +1,4 @@
-package com.tecknobit.equinoxcore
+package com.tecknobit.equinoxcore.util
 
 /**
  * Method split in two phases used to first remove all the items from the main collection that are not present in the
@@ -23,14 +23,6 @@ package com.tecknobit.equinoxcore
  *
  * @param supportCollection The collection from add the elements not present in the original collection
  */
-@Deprecated(
-    message = "To use the API from the util package",
-    replaceWith = ReplaceWith(
-        expression = "retainAndAdd",
-        "com.tecknobit.equinoxcore.util"
-    ),
-    level = DeprecationLevel.WARNING
-)
 fun <T> MutableCollection<T>.retainAndAdd(
     supportCollection: Collection<T>,
 ) {
@@ -66,14 +58,6 @@ fun <T> MutableCollection<T>.retainAndAdd(
  * @param addFrom The starting index from which to add elements from the [supportCollection], following the same constraints
  * @param supportCollection The collection from add the elements not present in the original collection
  */
-@Deprecated(
-    message = "To use the API from the util package",
-    replaceWith = ReplaceWith(
-        expression = "retainAndAdd",
-        "com.tecknobit.equinoxcore.util"
-    ),
-    level = DeprecationLevel.WARNING
-)
 fun <T> MutableList<T>.retainAndAdd(
     addFrom: Int? = null,
     supportCollection: Collection<T>,
@@ -113,14 +97,6 @@ fun <T> MutableList<T>.retainAndAdd(
  *
  * The duplicate values will be considered as one element, so will be merged
  */
-@Deprecated(
-    message = "To use the API from the util package",
-    replaceWith = ReplaceWith(
-        expression = "mergeIfNotContained",
-        "com.tecknobit.equinoxcore.util"
-    ),
-    level = DeprecationLevel.WARNING
-)
 fun <T> MutableCollection<T>.mergeIfNotContained(
     collectionToMerge: Collection<T>,
 ) {
@@ -165,14 +141,6 @@ fun <T> MutableCollection<T>.mergeIfNotContained(
  * println(mainCollection) // the result printed will be 2, 3, 4
  * ```
  */
-@Deprecated(
-    message = "To use the API from the util package",
-    replaceWith = ReplaceWith(
-        expression = "toggle",
-        "com.tecknobit.equinoxcore.util"
-    ),
-    level = DeprecationLevel.WARNING
-)
 fun <T> MutableCollection<T>.toggle(
     element: T,
     add: Boolean = !contains(element),
