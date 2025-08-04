@@ -28,6 +28,8 @@ private val DefaultIconSize = 24.0.dp
  * @param infoText The informative text about what the icon represents, it is used also as `contentDescription`
  * @param tint The tint to be applied to [imageVector]. If [Color.Unspecified] is provided, then no tint
  * is applied
+ *
+ * @since 1.1.5
  */
 @Composable
 @ExperimentalMaterial3Api
@@ -67,6 +69,8 @@ fun InformativeIcon(
  * @param infoText The informative text about what the icon represents, it is used also as `contentDescription`
  * @param tint The tint to be applied to [bitmap]. If [Color.Unspecified] is provided, then no tint is
  * applied
+ *
+ * @since 1.1.5
  */
 @Composable
 @ExperimentalMaterial3Api
@@ -106,6 +110,8 @@ fun InformativeIcon(
  * @param infoText The informative text about what the icon represents, it is used also as `contentDescription`
  * @param tint The tint to be applied to [painter]. If [Color.Unspecified] is provided, then no tint is
  * applied
+ *
+ * @since 1.1.5
  */
 @Composable
 @ExperimentalMaterial3Api
@@ -144,6 +150,8 @@ fun InformativeIcon(
  * @param infoText The informative text about what the icon represents, it is used also as `contentDescription`
  * @param tint The tint to be applied to [painter]. If [Color.Unspecified] is provided, then no tint is
  * applied
+ *
+ * @since 1.1.5
  */
 @Composable
 @ExperimentalMaterial3Api
@@ -177,6 +185,8 @@ fun InformativeIcon(
  * @param infoTextBackgroundColor The color to apply to the background of the [infoText]
  * @param infoText The informative text about what the icon represents
  * @param iconContent The icon content to wrap and to display
+ *
+ * @since 1.1.5
  */
 @Composable
 @ExperimentalMaterial3Api
