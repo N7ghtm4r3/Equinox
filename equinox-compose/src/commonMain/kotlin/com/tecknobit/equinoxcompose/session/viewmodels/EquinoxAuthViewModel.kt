@@ -1,11 +1,10 @@
-package com.tecknobit.equinoxcompose.viewmodels
+package com.tecknobit.equinoxcompose.session.viewmodels
 
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.MutableState
 import androidx.lifecycle.viewModelScope
 import com.tecknobit.equinoxcompose.network.EquinoxRequester
 import com.tecknobit.equinoxcompose.session.EquinoxLocalUser
-import com.tecknobit.equinoxcompose.session.viewmodels.EquinoxViewModel
 import com.tecknobit.equinoxcore.annotations.RequiresSuperCall
 import com.tecknobit.equinoxcore.annotations.Structure
 import com.tecknobit.equinoxcore.helpers.*
@@ -35,14 +34,6 @@ import kotlinx.serialization.json.jsonPrimitive
  * @see EquinoxViewModel
  */
 @Structure
-@Deprecated(
-    level = DeprecationLevel.ERROR,
-    message = "The package has been moved under session package",
-    replaceWith = ReplaceWith(
-        expression = "To replace with the session one",
-        "com.tecknobit.equinoxcompose.session.viewmodels"
-    )
-)
 abstract class EquinoxAuthViewModel(
     snackbarHostState: SnackbarHostState,
     private val requester: EquinoxRequester,
@@ -179,7 +170,7 @@ abstract class EquinoxAuthViewModel(
      * [getSignUpValuesKeys()](https://github.com/N7ghtm4r3/Equinox/blob/main/src/main/java/com/tecknobit/equinox/environment/helpers/services/EquinoxUsersHelper.java#L133)
      * method
      *
-     * 
+     *
      */
     protected open fun getSignUpCustomParameters(): Array<out Any?> {
         return emptyArray()

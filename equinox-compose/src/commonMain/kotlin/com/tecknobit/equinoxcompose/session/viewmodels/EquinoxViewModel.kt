@@ -1,4 +1,4 @@
-package com.tecknobit.equinoxcompose.viewmodels
+package com.tecknobit.equinoxcompose.session.viewmodels
 
 import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHost
@@ -29,14 +29,6 @@ import kotlin.reflect.KClass
  *
  */
 @Structure
-@Deprecated(
-    level = DeprecationLevel.ERROR,
-    message = "The package has been moved under session package",
-    replaceWith = ReplaceWith(
-        expression = "To replace with the session one",
-        "com.tecknobit.equinoxcompose.session.viewmodels"
-    )
-)
 abstract class EquinoxViewModel(
     val snackbarHostState: SnackbarHostState? = null,
 ) : ViewModel(), Retriever.RetrieverWrapper {

@@ -23,7 +23,7 @@ import com.tecknobit.equinoxcompose.resources.server_currently_offline
 import com.tecknobit.equinoxcompose.session.createConnectivity
 import com.tecknobit.equinoxcompose.session.sessionflow.SessionFlowState.Companion.onUserDisconnected
 import com.tecknobit.equinoxcompose.session.sessionflow.SessionStatus.*
-import com.tecknobit.equinoxcompose.viewmodels.EquinoxViewModel
+import com.tecknobit.equinoxcompose.session.viewmodels.EquinoxViewModel
 import dev.jordond.connectivity.Connectivity
 import org.jetbrains.compose.resources.vectorResource
 

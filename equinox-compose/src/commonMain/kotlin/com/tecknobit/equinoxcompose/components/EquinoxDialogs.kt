@@ -16,7 +16,7 @@ import androidx.compose.ui.window.DialogProperties
 import com.tecknobit.equinoxcompose.resources.Res
 import com.tecknobit.equinoxcompose.resources.confirm
 import com.tecknobit.equinoxcompose.resources.dismiss
-import com.tecknobit.equinoxcompose.viewmodels.EquinoxViewModel
+import com.tecknobit.equinoxcompose.session.viewmodels.EquinoxViewModel
 import com.tecknobit.equinoxcore.annotations.Wrapper
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
