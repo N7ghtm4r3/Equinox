@@ -91,6 +91,7 @@ The other apis will be gradually released
 - [BadgeText](../documd/compose/components/badgetext/BadgeText.md)
 - [ProgressBars](../documd/compose/components/progressbars/ProgressBars.md)
 - [SessionFlowContainer](../documd/compose/components/sessionflowcontainer/SessionFlowContainer.md)
+- [InformativeIcon](../documd/compose/components/informativeicon/InformativeIcon.md)
 
 The others components will be gradually released
 
