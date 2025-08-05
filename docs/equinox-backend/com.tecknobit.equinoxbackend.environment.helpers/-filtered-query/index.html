@@ -1,0 +1,296 @@
+<!doctype html>
+<html class="no-js">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
+    <title>FilteredQuery</title>
+<link href="../../../images/logo-icon.svg" rel="icon" type="image/svg">    <script>var pathToRoot = "../../../";</script>
+    <script>document.documentElement.classList.replace("no-js","js");</script>
+    <script>const storage = localStorage.getItem("dokka-dark-mode")
+    if (storage == null) {
+        const osDarkSchemePreferred = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+        if (osDarkSchemePreferred === true) {
+            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+    } else {
+        const savedDarkMode = JSON.parse(storage)
+        if(savedDarkMode === true) {
+            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+    }
+    </script>
+<script type="text/javascript" src="https://unpkg.com/kotlin-playground@1/dist/playground.min.js" async></script>
+<script type="text/javascript" src="../../../scripts/sourceset_dependencies.js" async></script>
+<link href="../../../styles/style.css" rel="Stylesheet">
+<link href="../../../styles/main.css" rel="Stylesheet">
+<link href="../../../styles/prism.css" rel="Stylesheet">
+<link href="../../../styles/logo-styles.css" rel="Stylesheet">
+<link href="../../../styles/font-jb-sans-auto.css" rel="Stylesheet">
+<link href="../../../ui-kit/ui-kit.min.css" rel="Stylesheet">
+<script type="text/javascript" src="../../../scripts/clipboard.js" async></script>
+<script type="text/javascript" src="../../../scripts/navigation-loader.js" async></script>
+<script type="text/javascript" src="../../../scripts/platform-content-handler.js" async></script>
+<script type="text/javascript" src="../../../scripts/main.js" defer></script>
+<script type="text/javascript" src="../../../scripts/prism.js" async></script>
+<script type="text/javascript" src="../../../ui-kit/ui-kit.min.js" defer></script>
+<script type="text/javascript" src="../../../scripts/symbol-parameters-wrapper_deferred.js" defer></script></head>
+<body>
+    <div class="root">
+    <nav class="navigation theme-dark" id="navigation-wrapper">
+<a class="library-name--link" href="../../../index.html">
+                    Equinox
+            </a>        <button class="navigation-controls--btn navigation-controls--btn_toc ui-kit_mobile-only" id="toc-toggle" type="button">Toggle table of contents
+        </button>
+        <div class="navigation-controls--break ui-kit_mobile-only"></div>
+        <div class="library-version" id="library-version">1.1.5
+        </div>
+        <div class="navigation-controls">
+        <div class="filter-section filter-section_loading" id="filter-section">
+                <button class="platform-tag platform-selector jvm-like" data-active="" data-filter=":equinox-backend:dokkaHtmlPartial/main">jvm</button>
+            <div class="dropdown filter-section--dropdown" data-role="dropdown" id="filter-section-dropdown">
+                <button class="button button_dropdown filter-section--dropdown-toggle" role="combobox" data-role="dropdown-toggle" aria-controls="platform-tags-listbox" aria-haspopup="listbox" aria-expanded="false" aria-label="Toggle source sets"></button>
+                <ul role="listbox" id="platform-tags-listbox" class="dropdown--list" data-role="dropdown-listbox">
+                    <div class="dropdown--header"><span>Platform filter</span>
+                        <button class="button" data-role="dropdown-toggle" aria-label="Close platform filter">
+                            <i class="ui-kit-icon ui-kit-icon_cross"></i>
+                        </button>
+                    </div>
+                        <li role="option" class="dropdown--option platform-selector-option jvm-like" tabindex="0">
+                            <label class="checkbox">
+                                <input type="checkbox" class="checkbox--input" id=":equinox-backend:dokkaHtmlPartial/main" data-filter=":equinox-backend:dokkaHtmlPartial/main">
+                                <span class="checkbox--icon"></span>
+                                jvm
+                            </label>
+                        </li>
+                </ul>
+                <div class="dropdown--overlay"></div>
+            </div>
+        </div>
+            <button class="navigation-controls--btn navigation-controls--btn_theme" id="theme-toggle-button" type="button">Switch theme
+            </button>
+            <div class="navigation-controls--btn navigation-controls--btn_search" id="searchBar" role="button">Search in
+                API
+            </div>
+        </div>
+    </nav>
+        <div id="container">
+            <div class="sidebar" id="leftColumn">
+                <div class="dropdown theme-dark_mobile" data-role="dropdown" id="toc-dropdown">
+                    <ul role="listbox" id="toc-listbox" class="dropdown--list dropdown--list_toc-list" data-role="dropdown-listbox">
+                        <div class="dropdown--header">
+                            <span>
+                                    Equinox
+                            </span>
+                            <button class="button" data-role="dropdown-toggle" aria-label="Close table of contents">
+                                <i class="ui-kit-icon ui-kit-icon_cross"></i>
+                            </button>
+                        </div>
+                        <div class="sidebar--inner" id="sideMenu"></div>
+                    </ul>
+                    <div class="dropdown--overlay"></div>
+                </div>
+            </div>
+            <div id="main">
+<div class="main-content" data-page-type="classlike" id="content" pageids="equinox-backend::com.tecknobit.equinoxbackend.environment.helpers/FilteredQuery///PointingToDeclaration//-1152277508">
+  <div class="breadcrumbs"><a href="../../index.html">equinox-backend</a><span class="delimiter">/</span><a href="../index.html">com.tecknobit.equinoxbackend.environment.helpers</a><span class="delimiter">/</span><span class="current">FilteredQuery</span></div>
+  <div class="cover ">
+    <h1 class="cover"><span>Filtered</span><wbr><span><span>Query</span></span></h1>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":equinox-backend:dokkaHtmlPartial/main"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">class </span><a href="index.html">FilteredQuery</a><span class="token operator">&lt;</span><a href="index.html">T</a><span class="token operator">&gt;</span></div><p class="paragraph">The <code class="lang-kotlin">FilteredQuery&lt;T&gt;</code> class is an abstract helper designed to facilitate the dynamic creation and execution of filtered queries using JPA Criteria API. It is structured to simplify filtering, querying, and pagination of entities from a database while allowing custom predicates to be added dynamically by subclasses</p><span class="kdoc-tag"><h4 class="">Author</h4><p class="paragraph">Tecknobit - N7ghtm4r3</p></span><span class="kdoc-tag"><h4 class="">Since</h4><p class="paragraph">1.0.5</p></span><h4 class="">Parameters</h4><div class="table"><div class="table-row" data-filterable-current=":equinox-backend:dokkaHtmlPartial/main" data-filterable-set=":equinox-backend:dokkaHtmlPartial/main"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><u><span><span>&lt;T&gt;</span></span></u></div></span></div><div><div class="title"><p class="paragraph">Type of the entities to retrieve</p></div></div></div></div></div></div></div>
+  </div>
+  <div class="tabbedcontent">
+    <div class="tabs-section" tabs-section="tabs-section"><button class="section-tab" data-active="" data-togglable="CONSTRUCTOR,TYPE,PROPERTY,FUNCTION">Members</button></div>
+    <div class="tabs-section-body">
+      <div data-togglable="CONSTRUCTOR">
+        <h2 class="">Constructors</h2>
+        <div class="table"><a data-name="-710956898%2FConstructors%2F-1152277508" anchor-label="FilteredQuery" id="-710956898%2FConstructors%2F-1152277508" data-filterable-set=":equinox-backend:dokkaHtmlPartial/main"></a>
+          <div class="table-row" data-togglable="CONSTRUCTOR" data-filterable-current=":equinox-backend:dokkaHtmlPartial/main" data-filterable-set=":equinox-backend:dokkaHtmlPartial/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-filtered-query.html"><span>Filtered</span><wbr><span><span>Query</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-710956898%2FConstructors%2F-1152277508"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":equinox-backend:dokkaHtmlPartial/main"><div class="symbol monospace"><span class="token keyword">constructor</span><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">entityType<span class="token operator">: </span><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html">Class</a><span class="token operator">&lt;</span><a href="index.html">T</a><span class="token operator">&gt;</span><span class="token punctuation">, </span></span><span class="parameter ">entityManager<span class="token operator">: </span><span data-unresolved-link="jakarta.persistence/EntityManager///PointingToDeclaration/">EntityManager</span><span class="token punctuation">, </span></span><span class="parameter ">rawFilters<span class="token operator">: </span><a href="https://docs.oracle.com/javase/8/docs/api/java/util/Set.html">Set</a><span class="token operator">&lt;</span><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html">String</a><span class="token operator">&gt;</span></span></span><span class="token punctuation">)</span></div><div class="brief ">Constructor to init the <a href="index.html">FilteredQuery</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div data-togglable="PROPERTY">
+        <h2 class="">Properties</h2>
+        <div class="table"><a data-name="1878793357%2FProperties%2F-1152277508" anchor-label="criteriaBuilder" id="1878793357%2FProperties%2F-1152277508" data-filterable-set=":equinox-backend:dokkaHtmlPartial/main"></a>
+          <div class="table-row" data-filterable-current=":equinox-backend:dokkaHtmlPartial/main" data-filterable-set=":equinox-backend:dokkaHtmlPartial/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="criteria-builder.html"><span>criteria</span><wbr><span><span>Builder</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1878793357%2FProperties%2F-1152277508"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":equinox-backend:dokkaHtmlPartial/main"><div class="symbol monospace"><span class="token keyword">protected </span><span class="token keyword">val </span><a href="criteria-builder.html">criteriaBuilder</a><span class="token operator">: </span><span data-unresolved-link="jakarta.persistence.criteria/CriteriaBuilder///PointingToDeclaration/">CriteriaBuilder</span></div><div class="brief "><code class="lang-kotlin">criteriaBuilder</code> the builder to add the criteria to filter the query</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1946516543%2FProperties%2F-1152277508" anchor-label="entityManager" id="1946516543%2FProperties%2F-1152277508" data-filterable-set=":equinox-backend:dokkaHtmlPartial/main"></a>
+          <div class="table-row" data-filterable-current=":equinox-backend:dokkaHtmlPartial/main" data-filterable-set=":equinox-backend:dokkaHtmlPartial/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="entity-manager.html"><span>entity</span><wbr><span><span>Manager</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1946516543%2FProperties%2F-1152277508"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":equinox-backend:dokkaHtmlPartial/main"><div class="symbol monospace"><span class="token keyword">protected </span><span class="token keyword">val </span><a href="entity-manager.html">entityManager</a><span class="token operator">: </span><span data-unresolved-link="jakarta.persistence/EntityManager///PointingToDeclaration/">EntityManager</span></div><div class="brief "><code class="lang-kotlin">entityManager</code> manage the entities</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1657656939%2FProperties%2F-1152277508" anchor-label="predicates" id="-1657656939%2FProperties%2F-1152277508" data-filterable-set=":equinox-backend:dokkaHtmlPartial/main"></a>
+          <div class="table-row" data-filterable-current=":equinox-backend:dokkaHtmlPartial/main" data-filterable-set=":equinox-backend:dokkaHtmlPartial/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="predicates.html"><span><span>predicates</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1657656939%2FProperties%2F-1152277508"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":equinox-backend:dokkaHtmlPartial/main"><div class="symbol monospace"><span class="token keyword">protected </span><span class="token keyword">val </span><a href="predicates.html">predicates</a><span class="token operator">: </span><a href="https://docs.oracle.com/javase/8/docs/api/java/util/ArrayList.html">ArrayList</a><span class="token operator">&lt;</span><span data-unresolved-link="jakarta.persistence.criteria/Predicate///PointingToDeclaration/">Predicate</span><span class="token operator">&gt;</span></div><div class="brief "><code class="lang-kotlin">predicates</code> the list of predicates to apply to the query</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1185941377%2FProperties%2F-1152277508" anchor-label="query" id="1185941377%2FProperties%2F-1152277508" data-filterable-set=":equinox-backend:dokkaHtmlPartial/main"></a>
+          <div class="table-row" data-filterable-current=":equinox-backend:dokkaHtmlPartial/main" data-filterable-set=":equinox-backend:dokkaHtmlPartial/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="query.html"><span><span>query</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1185941377%2FProperties%2F-1152277508"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":equinox-backend:dokkaHtmlPartial/main"><div class="symbol monospace"><span class="token keyword">protected </span><span class="token keyword">val </span><a href="query.html">query</a><span class="token operator">: </span><span data-unresolved-link="jakarta.persistence.criteria/CriteriaQuery///PointingToDeclaration/">CriteriaQuery</span><span class="token operator">&lt;</span><a href="index.html">T</a><span class="token operator">&gt;</span></div><div class="brief "><code class="lang-kotlin">query</code> the criteria prepared query to execute</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="589940830%2FProperties%2F-1152277508" anchor-label="rawFilters" id="589940830%2FProperties%2F-1152277508" data-filterable-set=":equinox-backend:dokkaHtmlPartial/main"></a>
+          <div class="table-row" data-filterable-current=":equinox-backend:dokkaHtmlPartial/main" data-filterable-set=":equinox-backend:dokkaHtmlPartial/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="raw-filters.html"><span>raw</span><wbr><span><span>Filters</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="589940830%2FProperties%2F-1152277508"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":equinox-backend:dokkaHtmlPartial/main"><div class="symbol monospace"><span class="token keyword">protected </span><span class="token keyword">val </span><a href="raw-filters.html">rawFilters</a><span class="token operator">: </span><a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/CopyOnWriteArraySet.html">CopyOnWriteArraySet</a><span class="token operator">&lt;</span><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html">String</a><span class="token operator">&gt;</span></div><div class="brief "><code class="lang-kotlin">rawFilters</code> the filters all together in raw format</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-726378481%2FProperties%2F-1152277508" anchor-label="root" id="-726378481%2FProperties%2F-1152277508" data-filterable-set=":equinox-backend:dokkaHtmlPartial/main"></a>
+          <div class="table-row" data-filterable-current=":equinox-backend:dokkaHtmlPartial/main" data-filterable-set=":equinox-backend:dokkaHtmlPartial/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="root.html"><span><span>root</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-726378481%2FProperties%2F-1152277508"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":equinox-backend:dokkaHtmlPartial/main"><div class="symbol monospace"><span class="token keyword">protected </span><span class="token keyword">val </span><a href="root.html">root</a><span class="token operator">: </span><span data-unresolved-link="jakarta.persistence.criteria/Root///PointingToDeclaration/">Root</span><span class="token operator">&lt;</span><a href="index.html">T</a><span class="token operator">&gt;</span></div><div class="brief "><code class="lang-kotlin">root</code> the root table</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div data-togglable="FUNCTION">
+        <h2 class="">Functions</h2>
+        <div class="table"><a data-name="591627695%2FFunctions%2F-1152277508" anchor-label="extractFiltersByPattern" id="591627695%2FFunctions%2F-1152277508" data-filterable-set=":equinox-backend:dokkaHtmlPartial/main"></a>
+          <div class="table-row" data-filterable-current=":equinox-backend:dokkaHtmlPartial/main" data-filterable-set=":equinox-backend:dokkaHtmlPartial/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="extract-filters-by-pattern.html"><span>extract</span><wbr><span>Filters</span><wbr><span>By</span><wbr><span><span>Pattern</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="591627695%2FFunctions%2F-1152277508"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":equinox-backend:dokkaHtmlPartial/main"><div class="symbol monospace"><span class="token keyword">protected </span><span class="token keyword">open </span><span class="token keyword">fun </span><a href="extract-filters-by-pattern.html"><span class="token function">extractFiltersByPattern</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">pattern<span class="token operator">: </span><a href="https://docs.oracle.com/javase/8/docs/api/java/util/regex/Pattern.html">Pattern</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://docs.oracle.com/javase/8/docs/api/java/util/HashSet.html">HashSet</a><span class="token operator">&lt;</span><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html">String</a><span class="token operator">&gt;</span></div><div class="brief ">Method used to extract from the <a href="raw-filters.html">rawFilters</a> the specific set of filters</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="577297170%2FFunctions%2F-1152277508" anchor-label="fillPredicates" id="577297170%2FFunctions%2F-1152277508" data-filterable-set=":equinox-backend:dokkaHtmlPartial/main"></a>
+          <div class="table-row" data-filterable-current=":equinox-backend:dokkaHtmlPartial/main" data-filterable-set=":equinox-backend:dokkaHtmlPartial/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="fill-predicates.html"><span>fill</span><wbr><span><span>Predicates</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="577297170%2FFunctions%2F-1152277508"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":equinox-backend:dokkaHtmlPartial/main"><div class="symbol monospace"><span class="token keyword">protected </span><span class="token keyword">abstract </span><span class="token keyword">fun </span><a href="fill-predicates.html"><span class="token function">fillPredicates</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span></div><div class="brief ">Wrapper method to fill all the predicates dynamically</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1572834646%2FFunctions%2F-1152277508" anchor-label="getEntities" id="1572834646%2FFunctions%2F-1152277508" data-filterable-set=":equinox-backend:dokkaHtmlPartial/main"></a>
+          <div class="table-row" data-filterable-current=":equinox-backend:dokkaHtmlPartial/main" data-filterable-set=":equinox-backend:dokkaHtmlPartial/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="get-entities.html"><span>get</span><wbr><span><span>Entities</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1572834646%2FFunctions%2F-1152277508"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":equinox-backend:dokkaHtmlPartial/main"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">fun </span><a href="get-entities.html"><span class="token function">getEntities</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://docs.oracle.com/javase/8/docs/api/java/util/List.html">List</a><span class="token operator">&lt;</span><a href="index.html">T</a><span class="token operator">&gt;</span></div><div class="brief ">Method used to get the entities executing the query</div><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">fun </span><a href="get-entities.html"><span class="token function">getEntities</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">pageable<span class="token operator">: </span><span data-unresolved-link="org.springframework.data.domain/Pageable///PointingToDeclaration/">Pageable</span></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://docs.oracle.com/javase/8/docs/api/java/util/List.html">List</a><span class="token operator">&lt;</span><a href="index.html">T</a><span class="token operator">&gt;</span></div><div class="brief ">Method used to get the paginated entities executing the query</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="631533008%2FFunctions%2F-1152277508" anchor-label="prepareQuery" id="631533008%2FFunctions%2F-1152277508" data-filterable-set=":equinox-backend:dokkaHtmlPartial/main"></a>
+          <div class="table-row" data-filterable-current=":equinox-backend:dokkaHtmlPartial/main" data-filterable-set=":equinox-backend:dokkaHtmlPartial/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="prepare-query.html"><span>prepare</span><wbr><span><span>Query</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="631533008%2FFunctions%2F-1152277508"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":equinox-backend:dokkaHtmlPartial/main"><div class="symbol monospace"><span class="token keyword">private </span><span class="token keyword">open </span><span class="token keyword">fun </span><a href="prepare-query.html"><span class="token function">prepareQuery</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span></div><div class="brief ">Method used to prepare the query adding the predicates</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    <div class="footer">
+        <a href="#content" id="go-to-top-link" class="footer--button footer--button_go-to-top"></a>
+        <span>© 2025 Copyright</span>
+        <span class="pull-right">
+            <span>Generated by </span>
+            <a class="footer--link footer--link_external" href="https://github.com/Kotlin/dokka">
+                <span>dokka</span>
+            </a>
+        </span>
+    </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

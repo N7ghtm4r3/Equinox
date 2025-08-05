@@ -1,0 +1,266 @@
+<!doctype html>
+<html class="no-js">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
+    <title>QuantityPickerDefaults</title>
+<link href="../../../images/logo-icon.svg" rel="icon" type="image/svg">    <script>var pathToRoot = "../../../";</script>
+    <script>document.documentElement.classList.replace("no-js","js");</script>
+    <script>const storage = localStorage.getItem("dokka-dark-mode")
+    if (storage == null) {
+        const osDarkSchemePreferred = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+        if (osDarkSchemePreferred === true) {
+            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+    } else {
+        const savedDarkMode = JSON.parse(storage)
+        if(savedDarkMode === true) {
+            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+    }
+    </script>
+<script type="text/javascript" src="https://unpkg.com/kotlin-playground@1/dist/playground.min.js" async></script>
+<script type="text/javascript" src="../../../scripts/sourceset_dependencies.js" async></script>
+<link href="../../../styles/style.css" rel="Stylesheet">
+<link href="../../../styles/main.css" rel="Stylesheet">
+<link href="../../../styles/prism.css" rel="Stylesheet">
+<link href="../../../styles/logo-styles.css" rel="Stylesheet">
+<link href="../../../styles/font-jb-sans-auto.css" rel="Stylesheet">
+<link href="../../../ui-kit/ui-kit.min.css" rel="Stylesheet">
+<script type="text/javascript" src="../../../scripts/clipboard.js" async></script>
+<script type="text/javascript" src="../../../scripts/navigation-loader.js" async></script>
+<script type="text/javascript" src="../../../scripts/platform-content-handler.js" async></script>
+<script type="text/javascript" src="../../../scripts/main.js" defer></script>
+<script type="text/javascript" src="../../../scripts/prism.js" async></script>
+<script type="text/javascript" src="../../../ui-kit/ui-kit.min.js" defer></script>
+<script type="text/javascript" src="../../../scripts/symbol-parameters-wrapper_deferred.js" defer></script></head>
+<body>
+    <div class="root">
+    <nav class="navigation theme-dark" id="navigation-wrapper">
+<a class="library-name--link" href="../../../index.html">
+                    Equinox
+            </a>        <button class="navigation-controls--btn navigation-controls--btn_toc ui-kit_mobile-only" id="toc-toggle" type="button">Toggle table of contents
+        </button>
+        <div class="navigation-controls--break ui-kit_mobile-only"></div>
+        <div class="library-version" id="library-version">1.1.5
+        </div>
+        <div class="navigation-controls">
+        <div class="filter-section filter-section_loading" id="filter-section">
+                <button class="platform-tag platform-selector common-like" data-active="" data-filter=":equinox-compose:dokkaHtmlPartial/commonMain">common</button>
+            <div class="dropdown filter-section--dropdown" data-role="dropdown" id="filter-section-dropdown">
+                <button class="button button_dropdown filter-section--dropdown-toggle" role="combobox" data-role="dropdown-toggle" aria-controls="platform-tags-listbox" aria-haspopup="listbox" aria-expanded="false" aria-label="Toggle source sets"></button>
+                <ul role="listbox" id="platform-tags-listbox" class="dropdown--list" data-role="dropdown-listbox">
+                    <div class="dropdown--header"><span>Platform filter</span>
+                        <button class="button" data-role="dropdown-toggle" aria-label="Close platform filter">
+                            <i class="ui-kit-icon ui-kit-icon_cross"></i>
+                        </button>
+                    </div>
+                        <li role="option" class="dropdown--option platform-selector-option common-like" tabindex="0">
+                            <label class="checkbox">
+                                <input type="checkbox" class="checkbox--input" id=":equinox-compose:dokkaHtmlPartial/commonMain" data-filter=":equinox-compose:dokkaHtmlPartial/commonMain">
+                                <span class="checkbox--icon"></span>
+                                common
+                            </label>
+                        </li>
+                </ul>
+                <div class="dropdown--overlay"></div>
+            </div>
+        </div>
+            <button class="navigation-controls--btn navigation-controls--btn_theme" id="theme-toggle-button" type="button">Switch theme
+            </button>
+            <div class="navigation-controls--btn navigation-controls--btn_search" id="searchBar" role="button">Search in
+                API
+            </div>
+        </div>
+    </nav>
+        <div id="container">
+            <div class="sidebar" id="leftColumn">
+                <div class="dropdown theme-dark_mobile" data-role="dropdown" id="toc-dropdown">
+                    <ul role="listbox" id="toc-listbox" class="dropdown--list dropdown--list_toc-list" data-role="dropdown-listbox">
+                        <div class="dropdown--header">
+                            <span>
+                                    Equinox
+                            </span>
+                            <button class="button" data-role="dropdown-toggle" aria-label="Close table of contents">
+                                <i class="ui-kit-icon ui-kit-icon_cross"></i>
+                            </button>
+                        </div>
+                        <div class="sidebar--inner" id="sideMenu"></div>
+                    </ul>
+                    <div class="dropdown--overlay"></div>
+                </div>
+            </div>
+            <div id="main">
+<div class="main-content" data-page-type="classlike" id="content" pageids="equinox-compose::com.tecknobit.equinoxcompose.components.quantitypicker/QuantityPickerDefaults///PointingToDeclaration//-714918263">
+  <div class="breadcrumbs"><a href="../../index.html">equinox-compose</a><span class="delimiter">/</span><a href="../index.html">com.tecknobit.equinoxcompose.components.quantitypicker</a><span class="delimiter">/</span><span class="current">QuantityPickerDefaults</span></div>
+  <div class="cover ">
+    <h1 class="cover"><span>Quantity</span><wbr><span>Picker</span><wbr><span><span>Defaults</span></span></h1>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":equinox-compose:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">object </span><a href="index.html">QuantityPickerDefaults</a></div><p class="paragraph">The <code class="lang-kotlin">QuantityPickerDefaults</code> object contains the default properties for the <a href="../-quantity-picker.html">QuantityPicker</a> component</p><span class="kdoc-tag"><h4 class="">Author</h4><p class="paragraph">N7ghtm4r3 - Tecknobit</p></span><span class="kdoc-tag"><h4 class="">Since</h4><p class="paragraph">1.1.3</p></span></div></div>
+  </div>
+  <div class="tabbedcontent">
+    <div class="tabs-section" tabs-section="tabs-section"><button class="section-tab" data-active="" data-togglable="CONSTRUCTOR,TYPE,PROPERTY,FUNCTION">Members</button></div>
+    <div class="tabs-section-body">
+      <div data-togglable="TYPE">
+        <h2 class="">Types</h2>
+        <div class="table"><a data-name="478196398%2FClasslikes%2F-714918263" anchor-label="QuantityPickerColors" id="478196398%2FClasslikes%2F-714918263" data-filterable-set=":equinox-compose:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":equinox-compose:dokkaHtmlPartial/commonMain" data-filterable-set=":equinox-compose:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-quantity-picker-colors/index.html"><span>Quantity</span><wbr><span>Picker</span><wbr><span><span>Colors</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="478196398%2FClasslikes%2F-714918263"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":equinox-compose:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">data </span><span class="token keyword">class </span><a href="-quantity-picker-colors/index.html">QuantityPickerColors</a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword">val </span>containerColor<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/androidx/compose/ui/graphics/Color.html">Color</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>iconColor<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/androidx/compose/ui/graphics/Color.html">Color</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>disabledContainerColor<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/androidx/compose/ui/graphics/Color.html">Color</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>disabledIconColor<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/androidx/compose/ui/graphics/Color.html">Color</a></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">The <code class="lang-kotlin">QuantityPickerColors</code> data class allows to customize the colors of the picker</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div data-togglable="PROPERTY">
+        <h2 class="">Properties</h2>
+        <div class="table"><a data-name="-708196320%2FProperties%2F-714918263" anchor-label="ContainerColor" id="-708196320%2FProperties%2F-714918263" data-filterable-set=":equinox-compose:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":equinox-compose:dokkaHtmlPartial/commonMain" data-filterable-set=":equinox-compose:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-container-color.html"><span>Container</span><wbr><span><span>Color</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-708196320%2FProperties%2F-714918263"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":equinox-compose:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@get:</span><a href="https://developer.android.com/reference/kotlin/androidx/compose/runtime/Composable.html"><span class="token annotation builtin">Composable</span></a></div></div><span class="token keyword">private </span><span class="token keyword">val </span><a href="-container-color.html">ContainerColor</a><span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/androidx/compose/ui/graphics/Color.html">Color</a></div><div class="brief "><p class="paragraph"><code class="lang-kotlin">ContainerColor</code> the default color of the container of an indicator button</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1059202199%2FProperties%2F-714918263" anchor-label="DisabledContainerAlpha" id="-1059202199%2FProperties%2F-714918263" data-filterable-set=":equinox-compose:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":equinox-compose:dokkaHtmlPartial/commonMain" data-filterable-set=":equinox-compose:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-disabled-container-alpha.html"><span>Disabled</span><wbr><span>Container</span><wbr><span><span>Alpha</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1059202199%2FProperties%2F-714918263"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":equinox-compose:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">private </span><span class="token keyword">const </span><span class="token keyword">val </span><a href="-disabled-container-alpha.html">DisabledContainerAlpha</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-float/index.html">Float</a><span class="token operator"> = </span><span class="token constant">0.12f</span></div><div class="brief "><p class="paragraph"><code class="lang-kotlin">DisabledContainerAlpha</code> the constant value for the opacity to apply to the indicators container when the <a href="../-quantity-picker.html">QuantityPicker</a> is disabled</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="730381572%2FProperties%2F-714918263" anchor-label="DisabledContainerColor" id="730381572%2FProperties%2F-714918263" data-filterable-set=":equinox-compose:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":equinox-compose:dokkaHtmlPartial/commonMain" data-filterable-set=":equinox-compose:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-disabled-container-color.html"><span>Disabled</span><wbr><span>Container</span><wbr><span><span>Color</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="730381572%2FProperties%2F-714918263"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":equinox-compose:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@get:</span><a href="https://developer.android.com/reference/kotlin/androidx/compose/runtime/Composable.html"><span class="token annotation builtin">Composable</span></a></div></div><span class="token keyword">private </span><span class="token keyword">val </span><a href="-disabled-container-color.html">DisabledContainerColor</a><span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/androidx/compose/ui/graphics/Color.html">Color</a></div><div class="brief "><p class="paragraph"><code class="lang-kotlin">DisabledContainerColor</code> the default color of the container of an indicator button when the picker is disabled</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="538371823%2FProperties%2F-714918263" anchor-label="DisabledIconAlpha" id="538371823%2FProperties%2F-714918263" data-filterable-set=":equinox-compose:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":equinox-compose:dokkaHtmlPartial/commonMain" data-filterable-set=":equinox-compose:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-disabled-icon-alpha.html"><span>Disabled</span><wbr><span>Icon</span><wbr><span><span>Alpha</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="538371823%2FProperties%2F-714918263"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":equinox-compose:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">private </span><span class="token keyword">const </span><span class="token keyword">val </span><a href="-disabled-icon-alpha.html">DisabledIconAlpha</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-float/index.html">Float</a><span class="token operator"> = </span><span class="token constant">0.38f</span></div><div class="brief "><p class="paragraph"><code class="lang-kotlin">DisabledIconAlpha</code> the constant value for the opacity to apply to the icons of the indicators when the <a href="../-quantity-picker.html">QuantityPicker</a> is disabled</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1967011702%2FProperties%2F-714918263" anchor-label="DisabledIconColor" id="-1967011702%2FProperties%2F-714918263" data-filterable-set=":equinox-compose:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":equinox-compose:dokkaHtmlPartial/commonMain" data-filterable-set=":equinox-compose:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-disabled-icon-color.html"><span>Disabled</span><wbr><span>Icon</span><wbr><span><span>Color</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1967011702%2FProperties%2F-714918263"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":equinox-compose:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@get:</span><a href="https://developer.android.com/reference/kotlin/androidx/compose/runtime/Composable.html"><span class="token annotation builtin">Composable</span></a></div></div><span class="token keyword">private </span><span class="token keyword">val </span><a href="-disabled-icon-color.html">DisabledIconColor</a><span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/androidx/compose/ui/graphics/Color.html">Color</a></div><div class="brief "><p class="paragraph"><code class="lang-kotlin">DisabledIconColor</code> the default color of the icon of an indicator button when the picker is disabled</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1400785022%2FProperties%2F-714918263" anchor-label="IndicatorButtonShape" id="-1400785022%2FProperties%2F-714918263" data-filterable-set=":equinox-compose:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":equinox-compose:dokkaHtmlPartial/commonMain" data-filterable-set=":equinox-compose:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-indicator-button-shape.html"><span>Indicator</span><wbr><span>Button</span><wbr><span><span>Shape</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1400785022%2FProperties%2F-714918263"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":equinox-compose:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">val </span><a href="-indicator-button-shape.html">IndicatorButtonShape</a><span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/androidx/compose/foundation/shape/RoundedCornerShape.html">RoundedCornerShape</a></div><div class="brief "><p class="paragraph"><code class="lang-kotlin">IndicatorButtonShape</code> the default shape for an indicator button</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1472215510%2FProperties%2F-714918263" anchor-label="IndicatorButtonSize" id="1472215510%2FProperties%2F-714918263" data-filterable-set=":equinox-compose:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":equinox-compose:dokkaHtmlPartial/commonMain" data-filterable-set=":equinox-compose:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-indicator-button-size.html"><span>Indicator</span><wbr><span>Button</span><wbr><span><span>Size</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1472215510%2FProperties%2F-714918263"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":equinox-compose:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">val </span><a href="-indicator-button-size.html">IndicatorButtonSize</a><span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/androidx/compose/ui/unit/Dp.html">Dp</a></div><div class="brief "><p class="paragraph"><code class="lang-kotlin">IndicatorButtonSize</code> the default size for an indicator button</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div data-togglable="FUNCTION">
+        <h2 class="">Functions</h2>
+        <div class="table"><a data-name="-1837431251%2FFunctions%2F-714918263" anchor-label="colors" id="-1837431251%2FFunctions%2F-714918263" data-filterable-set=":equinox-compose:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":equinox-compose:dokkaHtmlPartial/commonMain" data-filterable-set=":equinox-compose:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="colors.html"><span><span>colors</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1837431251%2FFunctions%2F-714918263"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":equinox-compose:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><a href="https://developer.android.com/reference/kotlin/androidx/compose/runtime/Composable.html"><span class="token annotation builtin">Composable</span></a></div></div><span class="token keyword">fun </span><a href="colors.html"><span class="token function">colors</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">containerColor<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/androidx/compose/ui/graphics/Color.html">Color</a><span class="token operator"> = </span>ContainerColor<span class="token punctuation">, </span></span><span class="parameter ">iconColor<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/androidx/compose/ui/graphics/Color.html">Color</a><span class="token operator"> = </span>MaterialTheme.colorScheme.onPrimary<span class="token punctuation">, </span></span><span class="parameter ">disabledContainerColor<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/androidx/compose/ui/graphics/Color.html">Color</a><span class="token operator"> = </span>DisabledContainerColor<span class="token punctuation">, </span></span><span class="parameter ">disabledIconColor<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/androidx/compose/ui/graphics/Color.html">Color</a><span class="token operator"> = </span>DisabledIconColor</span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="-quantity-picker-colors/index.html">QuantityPickerDefaults.QuantityPickerColors</a></div><div class="brief "><p class="paragraph">Method used to customize the picker colors</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    <div class="footer">
+        <a href="#content" id="go-to-top-link" class="footer--button footer--button_go-to-top"></a>
+        <span>© 2025 Copyright</span>
+        <span class="pull-right">
+            <span>Generated by </span>
+            <a class="footer--link footer--link_external" href="https://github.com/Kotlin/dokka">
+                <span>dokka</span>
+            </a>
+        </span>
+    </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
