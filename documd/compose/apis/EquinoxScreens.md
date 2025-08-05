@@ -145,7 +145,18 @@ fun App() {
 }
 ```
 
+## Avoid multiple instantiations
 
+To avoid instantiating a screen multiple times, you can use the following method to remember a screen instance across
+recompositions
+
+```kotlin
+@Composable
+fun App() {
+    val screen = equinoxScreen { TestScreen() }
+    screen.ShowContent()
+}
+```
 
 ## Support
 
