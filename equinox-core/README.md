@@ -1,6 +1,6 @@
 # Equinox Core
 
-**v1.1.4**
+**v1.1.5**
 
 ![Static Badge](https://img.shields.io/badge/android-4280511051?link=https%3A%2F%2Fplay.google.com%2Fstore%2Fapps%2Fdetails%3Fid%3Dcom.tecknobit.ametista)
 ![Static Badge](https://img.shields.io/badge/ios-445E91?link=https%3A%2F%2Fimg.shields.io%2Fbadge%2Fandroid-4280511051)
@@ -18,7 +18,7 @@ Core utilities for **Compose Multiplatform** and **Spring** technologies
 
 ```gradle
 [versions]
-equinox = "1.1.4"
+equinox = "1.1.5"
 
 [libraries]
 equinox-core = { module = "io.github.n7ghtm4r3:equinox-core", version.ref = "equinox" }
@@ -36,7 +36,7 @@ dependencies {
 
 ```gradle
 dependencies {
-    implementation("io.github.n7ghtm4r3:equinox-core:1.1.4")
+    implementation("io.github.n7ghtm4r3:equinox-core:1.1.5")
 }
 ```
 
@@ -44,7 +44,7 @@ dependencies {
 
 ```gradle
 dependencies {
-    implementation 'io.github.n7ghtm4r3:equinox-core:1.1.4'
+    implementation 'io.github.n7ghtm4r3:equinox-core:1.1.5'
 }
 ```
 

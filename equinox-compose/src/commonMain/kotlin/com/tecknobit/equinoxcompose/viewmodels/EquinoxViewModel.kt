@@ -29,6 +29,14 @@ import kotlin.reflect.KClass
  *
  */
 @Structure
+@Deprecated(
+    level = DeprecationLevel.ERROR,
+    message = "The package has been moved under session package",
+    replaceWith = ReplaceWith(
+        expression = "To replace with the session one",
+        "com.tecknobit.equinoxcompose.session.viewmodels"
+    )
+)
 abstract class EquinoxViewModel(
     val snackbarHostState: SnackbarHostState? = null,
 ) : ViewModel(), Retriever.RetrieverWrapper {

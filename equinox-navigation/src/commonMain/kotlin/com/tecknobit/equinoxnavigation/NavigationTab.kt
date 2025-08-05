@@ -7,7 +7,7 @@ import org.jetbrains.compose.resources.StringResource
  * The `NavigatorTab` interface allows to customize the tabs the [NavigatorScreen] have to use to handle the navigation
  * inside the application
  *
- * @param T The type for the [title] property
+ * @param T The type for the text properties
  *
  * @author N7ghtm4r3 - Tecknobit
  *
@@ -28,7 +28,7 @@ interface NavigatorTab<T> {
     /**
      *`contentDescription` the content description for the accessibility
      */
-    val contentDescription: String
+    val contentDescription: T
 
 }
 
@@ -38,7 +38,8 @@ interface NavigatorTab<T> {
  *
  * @param title The title of the tab
  * @param icon The representative icon of the tab
- * @param contentDescription The content description for the accessibility
+ * @param contentDescription The content description for the accessibility, if not specified will be used the [title]
+ * value
  *
  * @author N7ghtm4r3 - Tecknobit
  *
@@ -49,7 +50,7 @@ interface NavigatorTab<T> {
 data class NavigationTab(
     override val title: String,
     override val icon: ImageVector,
-    override val contentDescription: String,
+    override val contentDescription: String = title,
 ) : NavigatorTab<String>
 
 /**
@@ -69,5 +70,5 @@ data class NavigationTab(
 data class I18nNavigationTab(
     override val title: StringResource,
     override val icon: ImageVector,
-    override val contentDescription: String,
+    override val contentDescription: StringResource = title,
 ) : NavigatorTab<StringResource>

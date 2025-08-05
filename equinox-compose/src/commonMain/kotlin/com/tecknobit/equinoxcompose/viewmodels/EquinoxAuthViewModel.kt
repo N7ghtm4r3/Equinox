@@ -5,6 +5,7 @@ import androidx.compose.runtime.MutableState
 import androidx.lifecycle.viewModelScope
 import com.tecknobit.equinoxcompose.network.EquinoxRequester
 import com.tecknobit.equinoxcompose.session.EquinoxLocalUser
+import com.tecknobit.equinoxcompose.session.viewmodels.EquinoxViewModel
 import com.tecknobit.equinoxcore.annotations.RequiresSuperCall
 import com.tecknobit.equinoxcore.annotations.Structure
 import com.tecknobit.equinoxcore.helpers.*
@@ -34,6 +35,14 @@ import kotlinx.serialization.json.jsonPrimitive
  * @see EquinoxViewModel
  */
 @Structure
+@Deprecated(
+    level = DeprecationLevel.ERROR,
+    message = "The package has been moved under session package",
+    replaceWith = ReplaceWith(
+        expression = "To replace with the session one",
+        "com.tecknobit.equinoxcompose.session.viewmodels"
+    )
+)
 abstract class EquinoxAuthViewModel(
     snackbarHostState: SnackbarHostState,
     private val requester: EquinoxRequester,

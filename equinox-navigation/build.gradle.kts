@@ -16,7 +16,7 @@ plugins {
 }
 
 group = "com.tecknobit.equinoxnavigation"
-version = "1.0.2"
+version = "1.0.3"
 
 repositories {
     google()
@@ -115,7 +115,7 @@ mavenPublishing {
     coordinates(
         groupId = "io.github.n7ghtm4r3",
         artifactId = "equinox-navigation",
-        version = "1.0.2"
+        version = "1.0.3"
     )
     pom {
         name.set("Equinox Navigation")

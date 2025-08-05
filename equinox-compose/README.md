@@ -17,7 +17,7 @@ Utilities for **Compose Multiplatform** applications such components, apis for a
 
 ```gradle
 [versions]
-equinox = "1.1.4"
+equinox = "1.1.5"
 
 [libraries]
 equinox-compose = { module = "io.github.n7ghtm4r3:equinox-compose", version.ref = "equinox" }
@@ -43,10 +43,10 @@ dependencies {
 dependencies {
     
     // implement the compose utilities
-    implementation("io.github.n7ghtm4r3:equinox-compose:1.1.4")
+    implementation("io.github.n7ghtm4r3:equinox-compose:1.1.5")
     
     // implement the core utilities
-    implementation("io.github.n7ghtm4r3:equinox-core:1.1.4")
+    implementation("io.github.n7ghtm4r3:equinox-core:1.1.5")
 }
 ```
 
@@ -56,10 +56,10 @@ dependencies {
 dependencies {
    
     // implement the compose utilities
-    implementation 'io.github.n7ghtm4r3:equinox-compose:1.1.4'
+    implementation 'io.github.n7ghtm4r3:equinox-compose:1.1.5'
     
     // implement the core utilities
-    implementation 'io.github.n7ghtm4r3:equinox-core:1.1.4'
+    implementation 'io.github.n7ghtm4r3:equinox-core:1.1.5'
 }
 ```
 
@@ -69,7 +69,6 @@ dependencies {
       prebuilt viewmodel to authenticate the user in the system
     - [EquinoxProfileViewModel](src/commonMain/kotlin/com/tecknobit/equinoxcompose/helpers/viewmodels/EquinoxProfileViewModel.kt) ->
       prebuilt viewmodel to manage the user account settings and preferences
-- [SessionManager](../documd/compose/apis/SessionManager.md) (DEPRECATED)
 - [EquinoxScreens](../documd/compose/apis/EquinoxScreens.md)
 - [EquinoxWindowKit](../documd/compose/apis/EquinoxWindowKit.md)
 
@@ -92,6 +91,7 @@ The other apis will be gradually released
 - [BadgeText](../documd/compose/components/badgetext/BadgeText.md)
 - [ProgressBars](../documd/compose/components/progressbars/ProgressBars.md)
 - [SessionFlowContainer](../documd/compose/components/sessionflowcontainer/SessionFlowContainer.md)
+- [InformativeIcon](../documd/compose/components/informativeicon/InformativeIcon.md)
 
 The others components will be gradually released
 

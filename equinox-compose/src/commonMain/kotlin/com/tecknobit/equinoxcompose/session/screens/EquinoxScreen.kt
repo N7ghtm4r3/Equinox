@@ -1,6 +1,6 @@
 package com.tecknobit.equinoxcompose.session.screens
 
-import com.tecknobit.equinoxcompose.viewmodels.EquinoxViewModel
+import com.tecknobit.equinoxcompose.session.viewmodels.EquinoxViewModel
 import com.tecknobit.equinoxcore.annotations.Structure
 
 /**

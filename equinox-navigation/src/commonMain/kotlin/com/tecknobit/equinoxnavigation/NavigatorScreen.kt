@@ -1,3 +1,5 @@
+@file:OptIn(ExperimentalStdlibApi::class)
+
 package com.tecknobit.equinoxnavigation
 
 import androidx.compose.animation.AnimatedContent
@@ -7,7 +9,10 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.ExperimentalComposeApi
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -16,6 +21,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.tecknobit.equinoxcompose.session.screens.EquinoxNoModelScreen
+import com.tecknobit.equinoxcompose.session.screens.equinoxScreen
 import com.tecknobit.equinoxcompose.utilities.LayoutCoordinator
 import com.tecknobit.equinoxcompose.utilities.ResponsiveClass.*
 import com.tecknobit.equinoxcompose.utilities.ResponsiveClassComponent
@@ -276,12 +282,12 @@ abstract class NavigatorScreen<T : NavigatorTab<*>>(
             icon = {
                 Icon(
                     imageVector = tab.icon,
-                    contentDescription = tab.contentDescription
+                    contentDescription = tab.resolveContentDescription()
                 )
             },
             label = {
                 Text(
-                    text = tab.prepareTitle(),
+                    text = tab.resolveTitle(),
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis
                 )
@@ -370,13 +376,13 @@ abstract class NavigatorScreen<T : NavigatorTab<*>>(
             icon = {
                 Icon(
                     imageVector = tab.icon,
-                    contentDescription = tab.contentDescription
+                    contentDescription = tab.resolveContentDescription()
                 )
             },
             colors = bottomNavigationItemColors(),
             label = {
                 Text(
-                    text = tab.prepareTitle(),
+                    text = tab.resolveTitle(),
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis
                 )
@@ -396,17 +402,36 @@ abstract class NavigatorScreen<T : NavigatorTab<*>>(
     }
 
     /**
-     * Method used to prepare the title for the [SideNavigationItem] and the [BottomNavigationItem] based on
-     * the [NavigatorTab] used by the navigator
+     * Method used to resolve the [NavigationTab.title] value to display on the [SideNavigationItem] or
+     * [BottomNavigationItem] based on the [NavigatorTab] used by the navigator
      *
      * @return the title for the tab as [String]
+     *
+     * @since 1.0.3
      */
     @Composable
-    protected open fun NavigatorTab<*>.prepareTitle(): String {
+    protected open fun NavigatorTab<*>.resolveTitle(): String {
         return when (this) {
             is NavigationTab -> title
             is I18nNavigationTab -> stringResource(title)
             else -> title.toString()
+        }
+    }
+
+    /**
+     * Method used to resolve the [NavigationTab.contentDescription] value to display on the [SideNavigationItem] or
+     * [BottomNavigationItem] based on the [NavigatorTab] used by the navigator
+     *
+     * @return the title for the tab as [String]
+     *
+     * @since 1.0.3
+     */
+    @Composable
+    protected open fun NavigatorTab<*>.resolveContentDescription(): String {
+        return when (this) {
+            is NavigationTab -> contentDescription
+            is I18nNavigationTab -> stringResource(contentDescription)
+            else -> contentDescription.toString()
         }
     }
 
@@ -428,11 +453,8 @@ abstract class NavigatorScreen<T : NavigatorTab<*>>(
                 AnimatedContent(
                     targetState = activeNavigationTabIndex.value
                 ) { activeIndex ->
-                    var screenTab by remember { mutableStateOf<EquinoxNoModelScreen?>(null) }
-                    LaunchedEffect(Unit) {
-                        screenTab = activeIndex.tabContent()
-                    }
-                    screenTab?.ShowContent()
+                    val tab = equinoxScreen { activeIndex.tabContent() }
+                    tab.ShowContent()
                 }
             }
         }

@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.tecknobit.equinoxcompose.network.EquinoxRequester
 import com.tecknobit.equinoxcompose.session.EquinoxLocalUser
 import com.tecknobit.equinoxcompose.session.EquinoxLocalUser.ApplicationTheme
+import com.tecknobit.equinoxcompose.session.viewmodels.EquinoxViewModel
 import com.tecknobit.equinoxcore.helpers.InputsValidator.Companion.isEmailValid
 import com.tecknobit.equinoxcore.helpers.InputsValidator.Companion.isPasswordValid
 import com.tecknobit.equinoxcore.helpers.PROFILE_PIC_KEY
@@ -27,6 +28,14 @@ import kotlinx.serialization.json.jsonPrimitive
  * @see com.tecknobit.equinoxcompose.session.Retriever.RetrieverWrapper
  * @see EquinoxViewModel
  */
+@Deprecated(
+    level = DeprecationLevel.ERROR,
+    message = "The package has been moved under session package",
+    replaceWith = ReplaceWith(
+        expression = "To replace with the session one",
+        "com.tecknobit.equinoxcompose.session.viewmodels"
+    )
+)
 open class EquinoxProfileViewModel(
     snackbarHostState: SnackbarHostState,
     private val requester: EquinoxRequester,
