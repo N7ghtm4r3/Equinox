@@ -10,6 +10,8 @@ import androidx.compose.runtime.remember
  * @param T The type of the screen to create and remember
  *
  * @return the screen's instance as [T]
+ *
+ * @since 1.1.5
  */
 @Composable
 @ExperimentalStdlibApi
