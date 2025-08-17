@@ -1,7 +1,7 @@
 # NavigatorScreen
 
 Built-in responsive navigation system fully customizable as needed based on
-the [EquinoxScreens.md](../compose/apis/EquinoxScreens.md)
+the [EquinoxScreens.md](../compose/APIs/EquinoxScreens.md)
 apis. The `NavigatorScreen` follows
 the [Template Method pattern](https://en.wikipedia.org/wiki/Template_method_pattern#:~:text=The%20template%20method%20is%20a,class%20as%20the%20template%20method)
 to be flexible and fully customizable

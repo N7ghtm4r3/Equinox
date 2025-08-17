@@ -31,5 +31,12 @@ markdown_extensions:
 plugins:
   - search
 
+extra:
+  social:
+    - icon: material/email
+      link: mailto:infotecknobitcompany@gmail.com
+    - icon: material/bug
+      link: https://github.com/N7ghtm4r3/Equinox/issues/new
+
 copyright: |
   &copy; 2025 <a href="" target="_blank">N7ghtm4r3 - Tecknobit</a>
