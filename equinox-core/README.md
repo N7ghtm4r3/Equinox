@@ -16,7 +16,7 @@ Core utilities for **Compose Multiplatform** and **Spring** technologies
 
 - `libs.version.toml`
 
-```gradle
+```toml
 [versions]
 equinox = "1.1.5"
 

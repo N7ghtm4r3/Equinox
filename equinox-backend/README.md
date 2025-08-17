@@ -1,14 +1,14 @@
 # Equinox Backend
 
-**v1.1.3**
+**v1.1.4**
 
-Utilities and apis for the backends based on the **Spring Boot**'s architecture
+Utilities and apis for the backends based on the **Spring Boot**'s framework
 
 ## Implementation
 
 ### Version catalog
 
-```gradle
+```toml
 [versions]
 equinox-backend = "1.1.4"
 equinox = "1.1.5"

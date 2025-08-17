@@ -15,7 +15,7 @@ Utilities for **Compose Multiplatform** applications such components, apis for a
 
 - `libs.version.toml`
 
-```gradle
+```toml
 [versions]
 equinox = "1.1.5"
 

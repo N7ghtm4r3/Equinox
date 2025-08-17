@@ -16,7 +16,7 @@ navigation in the **Compose Multiplatform applications**
 
 - `libs.version.toml`
 
-```gradle
+```toml
 [versions]
 equinox = "1.1.5"
 equinox-navigation = "1.0.3"

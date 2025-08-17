@@ -19,7 +19,7 @@ operations such `addInPlace, removeInPlace`, etc...
 
 - `libs.version.toml`
 
-```gradle
+```toml
 [versions]
 lazyPaginationCompose = "1.7.0"
 lazyPaginationComposeOps = "1.0.1"

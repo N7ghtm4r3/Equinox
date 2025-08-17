@@ -30,3 +30,6 @@ markdown_extensions:
 
 plugins:
   - search
+
+copyright: |
+  &copy; 2025 <a href="" target="_blank">N7ghtm4r3 - Tecknobit</a>

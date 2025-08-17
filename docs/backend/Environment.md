@@ -1,5 +1,3 @@
-## EquinoxEnvironment
-
 This is a group of classes to create a SpringBoot's environment based on the Equinox system.
 
 The base environment gives a base set of classes:
@@ -14,16 +12,16 @@ The base environment gives a base set of classes:
 - [EquinoxItem](https://github.com/N7ghtm4r3/Equinox/blob/main/src/main/java/com/tecknobit/equinox/environment/models/EquinoxItem.java) ->
   base class for the items used by an Equinox backend based
 - User utilities set
-  - [EquinoxUser](https://github.com/N7ghtm4r3/Equinox/blob/main/equinox-backend/src/main/java/com/tecknobit/equinoxbackend/environment/models/EquinoxUser.java) ->
-  standard Equinox's user
-  - [EquinoxLocalUser](https://github.com/N7ghtm4r3/Equinox/blob/main/equinox-backend/src/main/java/com/tecknobit/equinoxbackend/environment/models/EquinoxLocalUser.java) ->
-  local user helper, useful to manage the local session of a user in the clients applications
-  - [EquinoxUsersController](https://github.com/N7ghtm4r3/Equinox/blob/main/equinox-backend/src/main/java/com/tecknobit/equinoxbackend/environment/services/users/controller/EquinoxUsersController.java) ->
-  controller to manage the operations on the **EquinoxUser**
-  - [EquinoxUsersHelper](https://github.com/N7ghtm4r3/Equinox/blob/main/equinox-backend/src/main/java/com/tecknobit/equinoxbackend/environment/services/users/service/EquinoxUsersHelper.java) ->
-  helper used by the **EquinoxUsersController** to interact with the database
-  - [EquinoxUsersRepository](https://github.com/N7ghtm4r3/Equinox/blob/main/equinox-backend/src/main/java/com/tecknobit/equinoxbackend/environment/services/users/repository/EquinoxUsersRepository.java) ->
-  the **JpaRepository** to make the related queries to the database
+    - [EquinoxUser](https://github.com/N7ghtm4r3/Equinox/blob/main/equinox-backend/src/main/java/com/tecknobit/equinoxbackend/environment/models/EquinoxUser.java) ->
+      standard Equinox's user
+    - [EquinoxLocalUser](https://github.com/N7ghtm4r3/Equinox/blob/main/equinox-backend/src/main/java/com/tecknobit/equinoxbackend/environment/models/EquinoxLocalUser.java) ->
+      local user helper, useful to manage the local session of a user in the clients applications
+    - [EquinoxUsersController](https://github.com/N7ghtm4r3/Equinox/blob/main/equinox-backend/src/main/java/com/tecknobit/equinoxbackend/environment/services/users/controller/EquinoxUsersController.java) ->
+      controller to manage the operations on the **EquinoxUser**
+    - [EquinoxUsersHelper](https://github.com/N7ghtm4r3/Equinox/blob/main/equinox-backend/src/main/java/com/tecknobit/equinoxbackend/environment/services/users/service/EquinoxUsersHelper.java) ->
+      helper used by the **EquinoxUsersController** to interact with the database
+    - [EquinoxUsersRepository](https://github.com/N7ghtm4r3/Equinox/blob/main/equinox-backend/src/main/java/com/tecknobit/equinoxbackend/environment/services/users/repository/EquinoxUsersRepository.java) ->
+      the **JpaRepository** to make the related queries to the database
 - [EquinoxRequester](https://github.com/N7ghtm4r3/Equinox/blob/main/equinox-backend/src/main/kotlin/com/tecknobit/equinoxbackend/environment/helpers/EquinoxRequester.kt) ->
   the requester helper with the **EquinoxUser** requests pre-implemented to execute the operations on the user
 - [InputsValidator](https://github.com/N7ghtm4r3/Equinox/blob/main/equinox-core/src/commonMain/kotlin/com/tecknobit/equinoxcore/helpers/InputsValidator.kt) ->
@@ -267,7 +265,8 @@ each classes, but it does not affect to the previous queries implemented for the
 
 ### Create the dedicated JpaRepository
 
-You need to create the dedicated repository to work with your custom user, so, you can extend the **EquinoxUsersRepository**
+You need to create the dedicated repository to work with your custom user, so, you can extend the *
+*EquinoxUsersRepository**
 interface and add the custom additional queries. The interface will be as the following:
 
 ```java
@@ -607,33 +606,3 @@ resources
        └── custom_messages_any_locale.properties
        └── ...
 ```
-
-## Support
-
-If you need help using the library or encounter any problems or bugs, please contact us via the following links:
-
-- Support via <a href="mailto:infotecknobitcompany@gmail.com">email</a>
-- Support via <a href="https://github.com/N7ghtm4r3/Equinox/issues/new">GitHub</a>
-
-Thank you for your help!
-
-## Badges
-
-[![](https://img.shields.io/badge/Google_Play-414141?style=for-the-badge&logo=google-play&logoColor=white)](https://play.google.com/store/apps/developer?id=Tecknobit)
-
-[![](https://img.shields.io/badge/Spring_Boot-F2F4F9?style=for-the-badge&logo=spring-boot)](https://spring.io/projects/spring-boot) [![](https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=java&logoColor=white)](https://www.oracle.com/java/)
-
-## Donations
-
-If you want support project and developer
-
-| Crypto                                                                                              | Address                                          | Network  |
-|-----------------------------------------------------------------------------------------------------|--------------------------------------------------|----------|
-| ![](https://img.shields.io/badge/Bitcoin-000000?style=for-the-badge&logo=bitcoin&logoColor=white)   | **3H3jyCzcRmnxroHthuXh22GXXSmizin2yp**           | Bitcoin  |
-| ![](https://img.shields.io/badge/Ethereum-3C3C3D?style=for-the-badge&logo=Ethereum&logoColor=white) | **0x1b45bc41efeb3ed655b078f95086f25fc83345c4**   | Ethereum |
-| ![](https://img.shields.io/badge/Solana-000?style=for-the-badge&logo=Solana&logoColor=9945FF)       | **AtPjUnxYFHw3a6Si9HinQtyPTqsdbfdKX3dJ1xiDjbrL** | Solana   |
-
-If you want support project and developer
-with <a href="https://www.paypal.com/donate/?hosted_button_id=5QMN5UQH7LDT4">PayPal</a>
-
-Copyright © 2025 Tecknobit
