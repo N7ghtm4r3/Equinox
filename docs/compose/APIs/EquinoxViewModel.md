@@ -1,6 +1,6 @@
 ## EquinoxViewModel
 
-### Usage/Examples
+### Usage
 
 #### TestViewModel
 

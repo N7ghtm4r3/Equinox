@@ -7,7 +7,7 @@
 ![Static Badge](https://img.shields.io/badge/desktop-006874?link=https%3A%2F%2Fimg.shields.io%2Fbadge%2Fandroid-4280511051)
 ![Static Badge](https://img.shields.io/badge/wasmjs-834C74?link=https%3A%2F%2Fimg.shields.io%2Fbadge%2Fandroid-4280511051)
 
-Responsive navigation systems based on the [EquinoxScreens.md](../compose/APIs/EquinoxScreens.md) APIs to handle the
+Responsive navigation systems based on the [EquinoxScreens](../compose/APIs/EquinoxScreens.md) APIs to handle the
 navigation in **Compose Multiplatform applications**
 
 ## Implementation

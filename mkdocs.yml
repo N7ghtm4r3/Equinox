@@ -8,22 +8,34 @@ repo_name: Equinox
 repo_url: https://github.com/N7ghtm4r3/Equinox
 site_author: Manuel Maurizio
 
+extra_css:
+  - stylesheets/extra.css
+
 theme:
   name: material
   palette:
-    primary: deep purple
-  theme:
-    language: en
-    features:
-      - search.suggest
-      - search.highlight
-      - search.share
+    primary: deep-purple
+  language: en
+  features:
+    - search.suggest
+    - search.highlight
+    - search.share
+    - content.tabs.link
+    - content.code.copy
 
 markdown_extensions:
   - pymdownx.highlight:
       anchor_linenums: true
       line_spans: __span
       pygments_lang_class: true
+  - pymdownx.tabbed:
+      alternate_style: true
+      slugify: !!python/object/apply:pymdownx.slugs.slugify
+        kwds:
+          case: lower
+  # TODO CHECKOUT TO DISPLAY NOTES TIPS AND OTHER
+  - admonition
+  - pymdownx.details
   - pymdownx.inlinehilite
   - pymdownx.snippets
   - pymdownx.superfences

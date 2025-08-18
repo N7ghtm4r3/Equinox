@@ -31,7 +31,7 @@ The base environment gives a base set of classes:
   the [EquinoxItem](https://github.com/N7ghtm4r3/Equinox/blob/main/equinox-backend/src/main/java/com/tecknobit/equinoxbackend/environment/models/EquinoxItem.java)
   such batch queries execution
 
-### Usage/Examples
+### Usage
 
 To correctly launch the base environment _out-of-the-box_ you can simply follow the following snippet of code
 representing the main of a  **SpringApplication**:

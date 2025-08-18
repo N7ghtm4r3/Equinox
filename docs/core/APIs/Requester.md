@@ -1,6 +1,6 @@
 ## Requester
 
-### Usage/Examples
+### Usage
 
 #### Create your Requester
 

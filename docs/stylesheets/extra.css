@@ -1,0 +1,7 @@
+:root {
+  --deep-purple: #7E56C2;
+}
+
+.js .md-typeset .tabbed-labels:before {
+  background-color: var(--deep-purple);
+}

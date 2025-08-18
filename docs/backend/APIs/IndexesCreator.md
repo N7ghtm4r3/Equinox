@@ -1,6 +1,6 @@
 ## IndexesCreator
 
-### Usage/Examples
+### Usage
 
 ```java
 

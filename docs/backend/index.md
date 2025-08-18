@@ -2,7 +2,7 @@
 
 **v1.1.4**
 
-Utilities and apis for the backends based on the **Spring Boot**'s framework
+Utilities and apis for the backends based on the **Spring Boot** framework
 
 ## Implementation
 
