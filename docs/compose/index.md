@@ -67,7 +67,7 @@ dependencies {
 
 - [EquinoxViewModel](APIs/EquinoxViewModel.md) provides:
     - **EquinoxAuthViewModel** is a prebuilt viewmodel to authenticate the user in the system
-    - **EquinoxProfileViewModel** is as prebuilt viewmodel to manage the user account settings and preferences
+  - **EquinoxProfileViewModel** is a prebuilt viewmodel to manage the user account settings and preferences
 - [EquinoxScreens](APIs/EquinoxScreens.md)
 - [EquinoxWindowKit](APIs/EquinoxWindowKit.md)
 
@@ -78,18 +78,18 @@ The other apis will be gradually released
 - [EquinoxDialogs](src/commonMain/kotlin/com/tecknobit/equinoxcompose/components/EquinoxDialogs.kt)
 - [EquinoxInputs](src/commonMain/kotlin/com/tecknobit/equinoxcompose/components/EquinoxInputs.kt)
 - [EquinoxUIs](src/commonMain/kotlin/com/tecknobit/equinoxcompose/components/EquinoxUIs.kt)
-- [TextDivider](../documd/compose/components/textdivider/TextDivider.md)
-- [Tile](../documd/compose/components/tile/Tile.md)
-- [SplitText](../documd/compose/components/splittext/SplitText.md)
-- [ExpandableText](../documd/compose/components/expandabletext/ExpandableText.md)
-- [TabSelector](../documd/compose/components/tabselector/TabSelector.md)
-- [ChameleonText](../documd/compose/components/chameleontext/ChameleonText.md)
-- [Stepper](../documd/compose/components/stepper/Stepper.md)
-- [DebouncedInputs](../documd/compose/components/debouncefields/DebouncedInputs.md)
-- [QuantityPicker](../documd/compose/components/quantitypicker/QuantityPicker.md)
-- [BadgeText](../documd/compose/components/badgetext/BadgeText.md)
-- [ProgressBars](../documd/compose/components/progressbars/ProgressBars.md)
-- [SessionFlowContainer](../documd/compose/components/sessionflowcontainer/SessionFlowContainer.md)
-- [InformativeIcon](../documd/compose/components/informativeicon/InformativeIcon.md)
+- [TextDivider](components/textdivider/TextDivider.md)
+- [Tile](components/tile/Tile.md)
+- [SplitText](components/splittext/SplitText.md)
+- [ExpandableText](components/expandabletext/ExpandableText.md)
+- [TabSelector](components/tabselector/TabSelector.md)
+- [ChameleonText](components/chameleontext/ChameleonText.md)
+- [Stepper](components/stepper/Stepper.md)
+- [DebouncedInputs](components/debouncefields/DebouncedInputs.md)
+- [QuantityPicker](components/quantitypicker/QuantityPicker.md)
+- [BadgeText](components/badgetext/BadgeText.md)
+- [ProgressBars](components/progressbars/ProgressBars.md)
+- [SessionFlowContainer](components/sessionflowcontainer/SessionFlowContainer.md)
+- [InformativeIcon](components/informativeicon/InformativeIcon.md)
 
 The others components will be gradually released
