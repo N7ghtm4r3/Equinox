@@ -5,3 +5,7 @@
 .js .md-typeset .tabbed-labels:before {
   background-color: var(--deep-purple);
 }
+
+.md-typeset .tabbed-set {
+  border: 0.5px solid lightgray;
+}
