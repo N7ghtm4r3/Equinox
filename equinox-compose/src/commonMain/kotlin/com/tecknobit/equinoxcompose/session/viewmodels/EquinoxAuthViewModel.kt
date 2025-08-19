@@ -167,7 +167,7 @@ abstract class EquinoxAuthViewModel(
      * Method used to get the list of the custom parameters to use in the [signUp] request
      *
      * The order of the custom parameters must be the same of that specified in your customization of the
-     * [getSignUpValuesKeys()](https://github.com/N7ghtm4r3/Equinox/blob/main/src/main/java/com/tecknobit/equinox/environment/helpers/services/EquinoxUsersHelper.java#L133)
+     * [getSignUpValuesKeys()](https://github.com/N7ghtm4r3/Equinox/blob/main/equinox-backend/src/main/java/com/tecknobit/equinoxbackend/environment/services/users/service/EquinoxUsersService.java#L142)
      * method
      *
      *
@@ -261,7 +261,7 @@ abstract class EquinoxAuthViewModel(
      * Method used to get the list of the custom parameters to use in the [signIn] request.
      *
      * The order of the custom parameters must be the same of that specified in your customization of the
-     * [getSignUpValuesKeys()](https://github.com/N7ghtm4r3/Equinox/blob/main/src/main/java/com/tecknobit/equinox/environment/helpers/services/EquinoxUsersHelper.java#L133)
+     * [getSignUpValuesKeys()](https://github.com/N7ghtm4r3/Equinox/blob/main/src/main/java/com/tecknobit/equinox/environment/helpers/services/EquinoxUsersService.java#L133)
      * method
      *
      **/

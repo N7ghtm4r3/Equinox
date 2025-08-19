@@ -229,7 +229,7 @@ With simple object such `String`, `int`, `double`, etc... you can use the method
 
 With complex object such custom classes, etc... you can use the method as follows:
 
-<h6>Custom object example</h6>
+###### Custom object example
 
 === "Java"
 
@@ -299,7 +299,7 @@ With complex object such custom classes, etc... you can use the method as follow
     }
     ```
 
-<h6>Map the custom object with the data to use during the synchronization</h6>
+###### Map the custom object with the data to use during the synchronization
 
 - Using `ComplexBatchItem` interface
 
@@ -410,7 +410,7 @@ With complex object such custom classes, etc... you can use the method as follow
     )
     ```
 
-<h6>Execute the synchronization</h6>
+###### Execute the synchronization
 
 To execute the synchronization with the complex objects the procedure is the same for
 the [simple objects](#simple-objects), but you can just use the logic of your custom complex object to create the
@@ -446,7 +446,7 @@ With simple object such `String`, `int`, `double`, etc... you can use the method
 
 With complex objects such custom classes, etc... you can use the method as follows:
 
-<h6>Custom object example</h6>
+###### Custom object example
 
 === "Java"
 
@@ -516,7 +516,7 @@ With complex objects such custom classes, etc... you can use the method as follo
     }
     ```
 
-<h6>Map the custom object with the data to use during the deletion</h6>
+###### Map the custom object with the data to use during the deletion
 
 - Using `ComplexBatchItem` interface
 
@@ -607,7 +607,7 @@ With complex objects such custom classes, etc... you can use the method as follo
     }
     ```
 
-<h6>Execute the batch delete</h6>
+###### Execute the batch delete
 
 === "Java"
 

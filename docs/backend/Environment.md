@@ -129,8 +129,8 @@ To correctly use this environment you need to use the following base **gradle co
 
 ### Out-of-the-Box Launch
 
-To launch the out-of-the-box environment, simply follow the snippet below showing the main method of a *
-*SpringApplication**
+To launch the out-of-the-box environment, simply follow the snippet below showing the main method of a
+**SpringApplication**
 
 === "Java"
 
@@ -331,395 +331,721 @@ You can copy and fill the below `JSON` as you need:
 }
 ```
 
-### Customize the **EquinoxUser**
+### EquinoxUser customization
 
-In this example, you will add a `currency` field to your user and include the corresponding update request
-To add the custom field you need to extend your custom users from the base **EquinoxUser**, the class will be as
-the following:
+In this example, will be added the `currency` field to the custom user and will be included the related update request.
 
-```java
-package other.packages
+#### Creating a CustomUser
 
-...
+To add the custom field you need to extend the **EquinoxUser** class as follows:
 
-import com.tecknobit.equinoxbackend.environment.services.users.entity.EquinoxUser;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import org.json.JSONObject;
+=== "Java"
 
-@Entity
-public class CustomUser extends EquinoxUser {
+    ```java
+    package other.packages
+    
+    import com.tecknobit.equinoxbackend.environment.services.users.entity.EquinoxUser;
+    import jakarta.persistence.Column;
+    import jakarta.persistence.Entity;
+    import org.json.JSONObject;
+    
+    @Entity
+    public class CustomUser extends EquinoxUser {
+    
+        @Column
+        private final String currency;
+        
+        public CustomUser(String id, String token, String name, String surname, String email, String password, String language,
+                          String currency) {
+            super(id, token, name, surname, email, password, language);
+            this.currency = currency;
+        }
+        
+        public CustomUser(String id, String token, String name, String surname, String email, String password, String profilePic,
+                          String language, ApplicationTheme theme, String currency) {
+            super(id, token, name, surname, email, password, profilePic, language, theme);
+            this.currency = currency;
+        }
 
-  @Column
-  private final String currency;
-
-  public CustomUser(String currency) {
-    this.currency = currency;
-  }
-
-  public CustomUser(String id, String token, String name, String surname, String email, String password, String language,
-                    String currency) {
-    super(id, token, name, surname, email, password, language);
-    this.currency = currency;
-  }
-
-  public CustomUser(String id, String token, String name, String surname, String email, String password, String profilePic,
-                    String language, ApplicationTheme theme, String currency) {
-    super(id, token, name, surname, email, password, profilePic, language, theme);
-    this.currency = currency;
-  }
-
-  public CustomUser(JSONObject jUser, String currency) {
-    super(jUser);
-    this.currency = currency;
-  }
-
-  public String getCurrency() {
-    return currency;
-  }
-
-}
-```
-
-Will be created a single `users` table in the database with the `dtype` field to use as discriminator value to
-distinguish
-each classes, but it does not affect to the previous queries implemented for the **EquinoxUser** class
-
-### Create the dedicated JpaRepository
-
-You need to create the dedicated repository to work with your custom user, so, you can extend the *
-*EquinoxUsersRepository**
-interface and add the custom additional queries. The interface will be as the following:
-
-```java
-package other.packages
-
-...
-
-import com.tecknobit.equinoxbackend.environment.services.users.repository.EquinoxUsersRepository;
-import jakarta.transaction.Transactional;
-import org.springframework.context.annotation.Primary;
-import org.springframework.data.jpa.repository.Modifying;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
-import org.springframework.stereotype.Repository;
-import org.springframework.stereotype.Service;
-
-import static com.tecknobit.equinoxbackend.environment.services.builtin.entity.EquinoxItem.IDENTIFIER_KEY;
-import static com.tecknobit.equinoxbackend.environment.services.users.entity.EquinoxUser.USERS_KEY;
-
-@Repository
-public interface CustomUsersRepository extends EquinoxUsersRepository<CustomUser> {
-
-  @Modifying(clearAutomatically = true)
-  @Transactional
-  @Query(
-          value = "UPDATE " + USERS_KEY + " SET " + "currency" + "=:" + "currency" + " WHERE "
-                  + IDENTIFIER_KEY + "=:" + IDENTIFIER_KEY,
-          nativeQuery = true
-  )
-  void changeCurrency(
-          @Param("currency") String newCurrency,
-          @Param(IDENTIFIER_KEY) String id
-  );
-
-}
-```
-
-### Create the dedicated helper
-
-You need to create the dedicated helper to execute the dedicated operations for your custom user, so, you can extend the
-**EquinoxUsersHelper** class and add the custom additional methods. The helper will be as the following:
-
-```java
-package other.packages
-
-...
-
-import com.tecknobit.equinoxbackend.environment.services.users.service.EquinoxUsersService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Primary;
-import org.springframework.stereotype.Service;
-
-@Service
-public class CustomUsersHelper extends EquinoxUsersHelper<CustomUser, CustomUsersRepository> {
-
-    public void changeCurrency(String newCurrency, String userId) {
-        usersRepository.changeCurrency(newCurrency, userId);
+        public String getCurrency() {
+            return currency;
+        }
+    
     }
+    ```
 
-}
-```
+=== "Kotlin"
 
-### Create the dedicated controller
+    ```kotlin
+    package other.packages
 
-You need to create the dedicated controller to execute the dedicated requests for your custom user, so, you can extend
-the
-**EquinoxUsersController** class and add the custom additional methods. The controller will be as the following:
+    import com.tecknobit.equinoxbackend.environment.services.users.entity.EquinoxUser
+    import jakarta.persistence.Column
+    import jakarta.persistence.Entity
+    
+    @Entity
+    class CustomUser : EquinoxUser {
+    
+        @Column
+        val currency: String
+    
+        constructor(
+            id: String,
+            token: String,
+            name: String,
+            surname: String,
+            email: String,
+            password: String,
+            language: String,
+            currency: String
+        ) : super(id, token, name, surname, email, password, language) {
+            this.currency = currency
+        }
+    
+        constructor(
+            id: String,
+            token: String,
+            name: String,
+            surname: String,
+            email: String,
+            password: String,
+            profilePic: String,
+            language: String,
+            theme: ApplicationTheme,
+            currency: String
+        ) : super(id, token, name, surname, email, password, profilePic, language, theme) {
+            this.currency = currency
+        }
 
-```java
-package other.packages
-
-...
-
-import com.tecknobit.equinoxbackend.environment.services.users.controller.EquinoxUsersController;
-import org.json.JSONObject;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.Map;
-
-@RestController
-public class CustomUsersController extends EquinoxUsersController<CustomUser, CustomUsersRepository, CustomUsersHelper> {
-
-    // you can override an implemented method to customize the response as you necessities
-    @Override
-    public String changeEmail(
-            String id,
-            String token,
-            Map<String, String> payload
-    ) {
-        String response = super.changeEmail(id, token, payload);
-        JSONObject customResponse = new JSONObject(response);
-        customResponse.put("currency", "currency_value");
-        return customResponse.toString();
     }
+    ```
 
-    @PatchMapping(
-            path = {"users/{user_id}/changeCurrency"},
-            headers = {TOKEN_KEY}
-    )
-    public String changeCurrency(
-            @PathVariable("id") String id,
-            @RequestHeader("token") String token,
-            @RequestBody Map<String, String> payload
-    ) {
-        if (isMe(id, token)) {
-            usersHelper.changeCurrency(payload.get("currency"), id);
-            return successResponse();
-        } else
-            return failedResponse(NOT_AUTHORIZED_OR_WRONG_DETAILS_MESSAGE);
+A single `users` table will be created in the database, with the `dtype` field used as a discriminator to distinguish
+between different classes.
+This does not affect the existing queries implemented for the **EquinoxUser** class
+
+#### Creating the dedicated repository
+
+To handle the database operations of your custom user, you have to create the dedicated repository extending the
+[EquinoxUsersRepository](https://github.com/N7ghtm4r3/Equinox/blob/main/equinox-backend/src/main/java/com/tecknobit/equinoxbackend/environment/services/users/repository/EquinoxUsersRepository.java)
+as follows:
+
+=== "Java"
+
+    ```java
+    package other.packages
+            
+    import com.tecknobit.equinoxbackend.environment.services.users.repository.EquinoxUsersRepository;
+    import jakarta.transaction.Transactional;
+    import org.springframework.context.annotation.Primary;
+    import org.springframework.data.jpa.repository.Modifying;
+    import org.springframework.data.jpa.repository.Query;
+    import org.springframework.data.repository.query.Param;
+    import org.springframework.stereotype.Repository;
+    import org.springframework.stereotype.Service;
+    
+    import static com.tecknobit.equinoxbackend.environment.services.builtin.entity.EquinoxItem.IDENTIFIER_KEY;
+    import static com.tecknobit.equinoxbackend.environment.services.users.entity.EquinoxUser.USERS_KEY;
+    
+    @Repository
+    public interface CustomUsersRepository extends EquinoxUsersRepository<CustomUser> {
+    
+          @Modifying(clearAutomatically = true)
+          @Transactional
+          @Query(
+                  value = "UPDATE " + USERS_KEY + " SET " + "currency" + "=:" + "currency" + " WHERE "
+                          + IDENTIFIER_KEY + "=:" + IDENTIFIER_KEY,
+                  nativeQuery = true
+          )
+          void changeCurrency(
+                  @Param("currency") String newCurrency,
+                  @Param(IDENTIFIER_KEY) String id
+          );
+    
     }
+    ```
 
-}
-```
+=== "Kotlin"
+
+    ```kotlin
+    package other.packages
+
+    import com.tecknobit.equinoxbackend.environment.services.users.repository.EquinoxUsersRepository
+    import jakarta.transaction.Transactional
+    import org.springframework.data.jpa.repository.Modifying
+    import org.springframework.data.jpa.repository.Query
+    import org.springframework.data.repository.query.Param
+    import org.springframework.stereotype.Repository
+    import com.tecknobit.equinoxbackend.environment.services.builtin.entity.EquinoxItem.IDENTIFIER_KEY
+    import com.tecknobit.equinoxbackend.environment.services.users.entity.EquinoxUser.USERS_KEY
+    
+    @Repository
+    interface CustomUsersRepository : EquinoxUsersRepository<CustomUser> {
+    
+        @Modifying(clearAutomatically = true)
+        @Transactional
+        @Query(
+            value = "UPDATE $USERS_KEY SET currency =: currency WHERE $IDENTIFIER_KEY =: $IDENTIFIER_KEY",
+            nativeQuery = true
+        )
+        fun changeCurrency(
+            @Param("currency") newCurrency: String,
+            @Param(IDENTIFIER_KEY) id: String
+        )
+
+    }
+    ```
+
+#### Creating the dedicated service
+
+To handle the requests of your custom user, you have to create the dedicated service extending the
+[EquinoxUsersService](https://github.com/N7ghtm4r3/Equinox/blob/main/equinox-backend/src/main/java/com/tecknobit/equinoxbackend/environment/services/users/service/EquinoxUsersService.java)
+as follows:
+
+=== "Java"
+
+    ```java
+    package other.packages
+    
+    import com.tecknobit.equinoxbackend.environment.services.users.service.EquinoxUsersService;
+    import org.springframework.beans.factory.annotation.Autowired;
+    import org.springframework.context.annotation.Primary;
+    import org.springframework.stereotype.Service;
+    
+    @Service
+    public class CustomUsersService extends EquinoxUsersService<CustomUser, CustomUsersRepository> {
+    
+        public void changeCurrency(String newCurrency, String userId) {
+            usersRepository.changeCurrency(newCurrency, userId);
+        }
+    
+    }
+    ```
+
+=== "Kotlin"
+
+    ```kotlin
+    package other.packages
+
+    import com.tecknobit.equinoxbackend.environment.services.users.service.EquinoxUsersService
+    import org.springframework.stereotype.Service
+    
+    @Service
+    class CustomUsersService : EquinoxUsersService<CustomUser, CustomUsersRepository>() {
+    
+        fun changeCurrency(
+            newCurrency: String,
+            userId: String
+        ) {
+            usersRepository.changeCurrency(
+                newCurrency,
+                userId
+            )
+        }
+    
+    }
+    ```
+
+#### Creating the dedicated controller
+
+To perform and handle the requests of your custom user, you have to create the dedicated service extending the
+[EquinoxUsersService](https://github.com/N7ghtm4r3/Equinox/blob/main/equinox-backend/src/main/java/com/tecknobit/equinoxbackend/environment/services/users/service/EquinoxUsersService.java)
+as follows:
+
+=== "Java"
+
+    ```java
+    package other.packages
+    
+    import com.tecknobit.equinoxbackend.environment.services.users.controller.EquinoxUsersController;
+    import org.json.JSONObject;
+    import org.springframework.web.bind.annotation.*;
+    
+    import java.util.Map;
+    
+    @RestController
+    public class CustomUsersController extends EquinoxUsersController<CustomUser, CustomUsersRepository, CustomUsersService> {
+    
+        // you can override an implemented method to customize the response as you necessities
+        @Override
+        public String changeEmail(
+                String id,
+                String token,
+                Map<String, String> payload
+        ) {
+            String response = super.changeEmail(id, token, payload);
+            JSONObject customResponse = new JSONObject(response);
+            customResponse.put("currency", "currency_value");
+            return customResponse.toString();
+        }
+    
+        @PatchMapping(
+                path = {"users/{user_id}/changeCurrency"},
+                headers = {TOKEN_KEY}
+        )
+        public String changeCurrency(
+                @PathVariable("id") String id,
+                @RequestHeader("token") String token,
+                @RequestBody Map<String, String> payload
+        ) {
+            if (isMe(id, token)) {
+                usersHelper.changeCurrency(payload.get("currency"), id);
+                return successResponse();
+            } else
+                return notAuthorizedOrWrongDetailsResponse();
+        }
+    
+    }
+    ```
+
+=== "Kotlin"
+
+    ```java
+    package other.packages
+
+    import com.tecknobit.equinoxbackend.environment.services.users.controller.EquinoxUsersController
+    import org.json.JSONObject
+    import org.springframework.web.bind.annotation.*
+    
+    @RestController
+    class CustomUsersController : EquinoxUsersController<CustomUser, CustomUsersRepository, CustomUsersService>() {
+    
+        // you can override an implemented method to customize the response as you necessities
+        override fun changeEmail(
+            id: String,
+            token: String,
+            payload: Map<String, String>
+        ): String {
+            val response = super.changeEmail(id, token, payload)
+            val customResponse = JSONObject(response)
+            customResponse.put("currency", "currency_value")
+            return customResponse.toString()
+        }
+    
+        @PatchMapping(
+            path = ["users/{user_id}/changeCurrency"],
+            headers = [TOKEN_KEY]
+        )
+        fun changeCurrency(
+            @PathVariable("id") id: String,
+            @RequestHeader("token") token: String,
+            @RequestBody payload: Map<String, String>
+        ): String {
+            return if (isMe(id, token)) {
+                usersHelper.changeCurrency(
+                    payload["currency"] ?: "",
+                    id
+                )
+                successResponse()
+            } else
+                notAuthorizedOrWrongDetailsResponse()
+        }
+    
+    }
+    ```
 
 You can also create your own default controller
-as [DefaultEquinoxController](https://github.com/N7ghtm4r3/Equinox/blob/main/src/main/java/com/tecknobit/equinox/environment/controllers/DefaultEquinoxController.java)
-with your own CustomUser instead:
+as [DefaultEquinoxController](https://github.com/N7ghtm4r3/Equinox/blob/main/equinox-backend/src/main/java/com/tecknobit/equinoxbackend/environment/services/DefaultEquinoxController.java)
+with your own [CustomUser](#creating-a-customUser) instead:
 
-```java
-public abstract class DefaultMyOwnController extends EquinoxController<CustomUser, CustomUsersRepository, CustomUsersHelper> {
-}
-```
+=== "Java"
 
-### Custom sign-up
-
-To execute a custom sign-up operation you must follow these steps to perform it correctly
-
-#### Override getSignUpKeys() method
-
-To create the correct insertion query with your custom parameters of the [CustomUser](#customize-the-equinoxuser) you
-have to override the below method, and you have to add the keys of the custom properties you want to insert with the
-sign-up
-operation
-
-```java
-package other.packages
-
-...
-
-import com.tecknobit.equinoxbackend.environment.services.users.service.EquinoxUsersService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Primary;
-import org.springframework.stereotype.Service;
-
-@Service
-public class CustomUsersHelper extends EquinoxUsersHelper<CustomUser, CustomUsersRepository> {
-
-    @Override
-    protected List<String> getSignUpKeys() {
-      ArrayList<String> custom = new ArrayList<>(super.getSignUpKeys());
-        custom.add("currency");
-        return custom;
+    ```java
+    public abstract class MyOwnDefaultController extends EquinoxController<CustomUser, CustomUsersRepository, CustomUsersService> {
     }
+    ```
 
-}
-```
+=== "Kotlin"
 
-#### Get from the payload the custom parameters
-
-Now you need to get your custom parameters from the sign-up request, to do it you must override the below method from
-the
-[CustomUsersController](#create-the-dedicated-controller):
-
-```java
-package other.packages
-
-...
-
-import com.tecknobit.equinoxbackend.environment.services.users.controller.EquinoxUsersController;
-import org.json.JSONObject;
-import org.springframework.web.bind.annotation.*;
-
-@RestController
-public class CustomUsersController extends EquinoxUsersController<CustomUser, CustomUsersRepository, CustomUsersHelper> {
-
-    @Override
-    @CustomParametersOrder(order = {"currency"}) // optional
-    protected Object[] getSignUpCustomParams() {
-        return new Object[]{jsonHelper.getString("currency", null), /* other parameters */};
+    ```kotlin
+    abstract class MyOwnDefaultController : EquinoxController<CustomUser, CustomUsersRepository, CustomUsersService>() {
     }
+    ```
 
-}
-```
+#### Custom sign-up
 
-#### Custom parameters validation
+Follow this guide to correctly perform a custom sign-up operation
 
-You can also validate your custom parameters if needed:
+###### Override the getSignUpKeys() method
 
-```java
-package other.packages
+To create the correct sign-up query with your custom parameters for the [CustomUser](#creating-a-customuser),
+override the method below and include the keys of any custom properties you want to insert during the sign-up operation
 
-...
+=== "Java"
 
-import com.tecknobit.equinoxbackend.environment.services.users.controller.EquinoxUsersController;
-import org.json.JSONObject;
-import org.springframework.web.bind.annotation.*;
-
-@RestController
-public class CustomUsersController extends EquinoxUsersController<CustomUser, CustomUsersRepository, CustomUsersHelper> {
-
-    @Override
-    @CustomParametersOrder(order = {"currency"}) // optional
-    protected String validateSignUp(String name, String surname, String email, String password, String language, Object... custom) {
-        String validation = super.validateSignUp(name, surname, email, password, language, custom);
-        if (validation != null)
-            return validation;
-        if (custom[0] == null)
-            return "wrong_currency_key";
-        return null;
+    ```java
+    package other.packages
+    
+    import com.tecknobit.equinoxbackend.environment.services.users.service.EquinoxUsersService;
+    import org.springframework.beans.factory.annotation.Autowired;
+    import org.springframework.context.annotation.Primary;
+    import org.springframework.stereotype.Service;
+    
+    @Service
+    public class CustomUsersService extends EquinoxUsersService<CustomUser, CustomUsersRepository> {
+    
+        @Override
+        protected List<String> getSignUpKeys() {
+            ArrayList<String> custom = new ArrayList<>(super.getSignUpKeys());
+            custom.add("currency");
+            return custom;
+        }
+    
     }
+    ```
 
-}
-```
+=== "Kotlin"
 
-### Custom sign-in
+    ```kotlin
+    package other.packages
 
-To execute a custom sign-in operation you must follow these steps to perform it correctly
-
-#### Override validateSignIn() method
-
-To execute the sign-in validation with your custom parameters of the [CustomUser](#customize-the-equinoxuser) you
-have to override the below method, and perform the custom checks to validate the sign-in operation
-
-```java
-package other.packages
-
-...
-
-import com.tecknobit.equinoxbackend.environment.services.users.service.EquinoxUsersService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Primary;
-import org.springframework.stereotype.Service;
-
-@Service
-public class CustomUsersHelper extends EquinoxUsersHelper<CustomUser, CustomUsersRepository> {
-
-    @Override
-    @CustomParametersOrder(order = {"currency"}) // optional
-    protected boolean validateSignIn(CustomUser user, String password, Object... custom) throws NoSuchAlgorithmException {
-        return super.validateSignIn(user, password, custom) && user.getCurrency().equals(custom[0]);
+    import com.tecknobit.equinoxbackend.environment.services.users.service.EquinoxUsersService
+    import org.springframework.stereotype.Service
+    
+    @Service
+    class CustomUsersService : EquinoxUsersService<CustomUser, CustomUsersRepository>() {
+    
+        override fun getSignUpKeys(): List<String> {
+            val custom = ArrayList(super.getSignUpKeys())
+            custom.add("currency")
+            return custom
+        }
+    
     }
+    ```
 
-}
-```
+###### Retrive the custom parameters from the payload
 
-#### Get from the payload the custom parameters
+Next, retrieve the custom parameters from the sign-up request by overriding the method below in the
+[CustomUsersController](#creating-the-dedicated-controller)
 
-Now you need to get your custom parameters from the sign-in request, to do it you must override the below method from
-the
-[CustomUsersController](#create-the-dedicated-controller):
+=== "Java"
 
-```java
-package other.packages
-
-...
-
-import com.tecknobit.equinoxbackend.environment.services.users.controller.EquinoxUsersController;
-import org.json.JSONObject;
-import org.springframework.web.bind.annotation.*;
-
-@RestController
-public class CustomUsersController extends EquinoxUsersController<CustomUser, CustomUsersRepository, CustomUsersHelper> {
-
-    @Override
-    @CustomParametersOrder(order = {"currency"}) // optional
-    protected Object[] getSignInCustomParams() {
-        return new Object[]{jsonHelper.getString("currency", null)};
+    ```java
+    package other.packages
+            
+    import com.tecknobit.equinoxbackend.environment.services.users.controller.EquinoxUsersController;
+    import org.json.JSONObject;
+    import org.springframework.web.bind.annotation.*;
+    
+    @RestController
+    public class CustomUsersController extends EquinoxUsersController<CustomUser, CustomUsersRepository, CustomUsersService> {
+    
+        @Override
+        @CustomParametersOrder(order = {"currency"}) // optional annotation
+        protected Object[] getSignUpCustomParams() {
+            return new Object[]{jsonHelper.getString("currency", null), /* other parameters */};
+        }
+    
     }
+    ```
 
-}
-```
+=== "Kotlin"
 
-#### Custom parameters validation
+    ```kotlin
+    package other.packages
 
-You can also validate your custom parameters if needed:
-
-```java
-package other.packages
-
-...
-
-import com.tecknobit.equinoxbackend.environment.services.users.controller.EquinoxUsersController;
-import org.json.JSONObject;
-import org.springframework.web.bind.annotation.*;
-
-@RestController
-public class CustomUsersController extends EquinoxUsersController<CustomUser, CustomUsersRepository, CustomUsersHelper> {
-
-    @Override
-    @CustomParametersOrder(order = {"currency"}) // optional
-    protected String validateSignIn(String email, String password, String language, Object... custom) {
-        String validation = super.validateSignIn(email, password, language, custom);
-        if (validation != null)
-            return validation;
-        if (custom[0] == null)
-            return "wrong_currency_key";
-        return null;
+    import com.tecknobit.equinoxbackend.environment.services.users.controller.EquinoxUsersController
+    import org.json.JSONObject
+    import org.springframework.web.bind.annotation.RestController
+    
+    @RestController
+    class CustomUsersController : EquinoxUsersController<CustomUser, CustomUsersRepository, CustomUsersService>() {
+    
+        @CustomParametersOrder(order = ["currency"]) // optional annotation
+        override fun getSignUpCustomParams(): Array<Any?> {
+            return arrayOf(
+                jsonHelper.getString("currency",null)
+                // other parameters
+            )
+        }
+    
     }
+    ```
 
-}
-```
+###### Custom parameters validation
 
-#### Customize the sign-in response
+You can also validate your custom parameters if needed by overriding the **validateSignUp** method from
+[CustomUsersController](#creating-the-dedicated-controller) as follows:
 
-If you need to add your custom parameters to the sign-in response you can do that overriding the below method:
+=== "Java"
 
-```java
-package other.packages
-
-...
-
-import com.tecknobit.equinoxbackend.environment.services.users.controller.EquinoxUsersController;
-import org.json.JSONObject;
-import org.springframework.web.bind.annotation.*;
-
-@RestController
-public class CustomUsersController extends EquinoxUsersController<CustomUser, CustomUsersRepository, CustomUsersHelper> {
-
-    @Override
-    protected JSONObject assembleSignInSuccessResponse(CustomUser user) {
-        JSONObject response = super.assembleSignInSuccessResponse(user);
-        response.put("currency", user.getCurrency());
-        return response;
+    ```java
+    package other.packages
+    
+    import com.tecknobit.equinoxbackend.environment.services.users.controller.EquinoxUsersController;
+    import org.json.JSONObject;
+    import org.springframework.web.bind.annotation.*;
+    
+    @RestController
+    public class CustomUsersController extends EquinoxUsersController<CustomUser, CustomUsersRepository, CustomUsersService> {
+    
+        @Override
+        @CustomParametersOrder(order = {"currency"}) // optional annotation
+        protected String validateSignUp(String name, String surname, String email, String password, 
+                                        String language, Object... custom) {
+            String validation = super.validateSignUp(name, surname, email, password, language, custom);
+            if (validation != null)
+                return validation;
+            if (custom[0] == null)
+                return "wrong_currency_key";
+            return null;
+        }
+    
     }
+    ```
 
-}
-```
+=== "Kotlin"
 
-### Custom messages resource bundle
+    ```kotlin
+    package other.packages
 
-You can create your own resources set to internationalize your backend creating the set as follows:
+    import com.tecknobit.equinoxbackend.environment.services.users.controller.EquinoxUsersController
+    import org.springframework.web.bind.annotation.RestController
+    
+    @RestController
+    class CustomUsersController : EquinoxUsersController<CustomUser, CustomUsersRepository, CustomUsersService>() {
+    
+        @CustomParametersOrder(order = ["currency"]) // optional annotation
+        override fun validateSignUp(
+            name: String,
+            surname: String,
+            email: String,
+            password: String,
+            language: String,
+            vararg custom: Any?
+        ): String? {
+            val validation = super.validateSignUp(
+                name,
+                surname,
+                email,
+                password,
+                language,
+                *custom
+            )
+            if (validation != null) 
+                return validation
+            if (custom[0] == null) 
+                return "wrong_currency_key"
+            return null
+        }
+    
+    }
+    ```
+
+#### Custom sign-in
+
+Follow this guide to correctly perform a custom sign-in operation
+
+###### Override the getSignInKeys() method
+
+To create the correct sign-in query with your custom parameters for the [CustomUser](#creating-a-customuser),
+override the method below and include the keys of any custom properties you want to use during the sign-in operation
+
+=== "Java"
+
+    ```java
+    package other.packages
+    
+    import com.tecknobit.equinoxbackend.environment.services.users.service.EquinoxUsersService;
+    import org.springframework.beans.factory.annotation.Autowired;
+    import org.springframework.context.annotation.Primary;
+    import org.springframework.stereotype.Service;
+    
+    @Service
+    public class CustomUsersService extends EquinoxUsersService<CustomUser, CustomUsersRepository> {
+    
+        @Override
+        protected List<String> getSignInKeys() {
+            ArrayList<String> custom = new ArrayList<>(super.getSignInKeys());
+            custom.add("currency");
+            return custom;
+        }
+    
+    }
+    ```
+
+=== "Kotlin"
+
+    ```kotlin
+    package other.packages
+
+    import com.tecknobit.equinoxbackend.environment.services.users.service.EquinoxUsersService
+    import org.springframework.stereotype.Service
+    
+    @Service
+    class CustomUsersService : EquinoxUsersService<CustomUser, CustomUsersRepository>() {
+    
+        override fun getSignInKeys(): List<String> {
+            val custom = ArrayList(super.getSignInKeys())
+            custom.add("currency")
+            return custom
+        }
+    
+    }
+    ```
+
+###### Retrive the custom parameters from the payload
+
+Next, retrieve the custom parameters from the sign-in request by overriding the method below in the
+[CustomUsersController](#creating-the-dedicated-controller)
+
+=== "Java"
+
+    ```java
+    package other.packages
+
+    import com.tecknobit.equinoxbackend.environment.services.users.controller.EquinoxUsersController;
+    import org.json.JSONObject;
+    import org.springframework.web.bind.annotation.*;
+    
+    @RestController
+    public class CustomUsersController extends EquinoxUsersController<CustomUser, CustomUsersRepository, CustomUsersService> {
+    
+        @Override
+        @CustomParametersOrder(order = {"currency"}) // optional annotation
+        protected Object[] getSignInCustomParams() {
+            return new Object[]{jsonHelper.getString("currency", null)};
+        }
+    
+    }
+    ```
+
+=== "Kotlin"
+
+    ```kotlin
+    package other.packages
+
+    import com.tecknobit.equinoxbackend.environment.services.users.controller.EquinoxUsersController
+    import org.springframework.web.bind.annotation.RestController
+    
+    @RestController
+    class CustomUsersController : EquinoxUsersController<CustomUser, CustomUsersRepository, CustomUsersService>() {
+    
+        @CustomParametersOrder(order = ["currency"]) // optional annotation
+        override fun getSignInCustomParams(): Array<Any?> {
+            return arrayOf(jsonHelper.getString("currency", null))
+        }
+    
+    }
+    ```
+
+###### Custom parameters validation
+
+You can also validate your custom parameters if needed by overriding the **validateSignIn** method from
+[CustomUsersController](#creating-the-dedicated-controller) as follows:
+
+=== "Java"
+
+    ```java
+    package other.packages
+            
+    import com.tecknobit.equinoxbackend.environment.services.users.controller.EquinoxUsersController;
+    import org.json.JSONObject;
+    import org.springframework.web.bind.annotation.*;
+    
+    @RestController
+    public class CustomUsersController extends EquinoxUsersController<CustomUser, CustomUsersRepository, CustomUsersService> {
+    
+        @Override
+        @CustomParametersOrder(order = {"currency"}) // optional annotation
+        protected String validateSignIn(String email, String password, String language, Object... custom) {
+            String validation = super.validateSignIn(email, password, language, custom);
+            if (validation != null)
+                return validation;
+            if (custom[0] == null)
+                return "wrong_currency_key";
+            return null;
+        }
+    
+    }
+    ```
+
+=== "Kotlin"
+
+    ```kotlin
+    package other.packages
+
+    import com.tecknobit.equinoxbackend.environment.services.users.controller.EquinoxUsersController
+    import org.springframework.web.bind.annotation.RestController
+    
+    @RestController
+    class CustomUsersController : EquinoxUsersController<CustomUser, CustomUsersRepository, CustomUsersService>() {
+    
+        @CustomParametersOrder(order = ["currency"]) // optional annotation
+        override fun validateSignIn(
+            email: String,
+            password: String,
+            language: String,
+            vararg custom: Any?
+        ): String? {
+            val validation = super.validateSignIn(email, password, language, *custom)
+            if (validation != null) 
+                return validation
+            if (custom.isEmpty() || custom[0] == null) 
+                return "wrong_currency_key"
+            return null
+        }
+    
+    }
+    ```
+
+###### Customize the sign-in response
+
+You can also customize to the sign-in response adding your custom parameters overriding the below method as follows:
+
+=== "Java"
+
+    ```java
+    package other.packages
+    
+    import com.tecknobit.equinoxbackend.environment.services.users.controller.EquinoxUsersController;
+    import org.json.JSONObject;
+    import org.springframework.web.bind.annotation.*;
+    import com.tecknobit.equinoxcore.annotations.Assembler;
+    
+    @RestController
+    public class CustomUsersController extends EquinoxUsersController<CustomUser, CustomUsersRepository, CustomUsersService> {
+        
+        @Override
+        @Assembler // optional annotation
+        protected JSONObject assembleSignInSuccessResponse(CustomUser user) {
+            JSONObject response = super.assembleSignInSuccessResponse(user);
+            response.put("currency", user.getCurrency());
+            return response;
+        }
+    
+    }
+    ```
+
+=== "Kotlin"
+
+    ```kotlin
+    package other.packages
+
+    import com.tecknobit.equinoxbackend.environment.services.users.controller.EquinoxUsersController
+    import org.json.JSONObject
+    import org.springframework.web.bind.annotation.RestController
+    import com.tecknobit.equinoxcore.annotations.Assembler
+    
+    @RestController
+    class CustomUsersController : EquinoxUsersController<CustomUser, CustomUsersRepository, CustomUsersService>() {
+    
+        @Assembler // optional annotation
+        override fun assembleSignInSuccessResponse(
+            user: CustomUser
+        ): JSONObject {
+            val response = super.assembleSignInSuccessResponse(user)
+            response.put("currency", user.currency)
+            return response
+        }
+    
+    }
+    ```
+
+### Customizing the messages resource bundle
+
+You can create your own resource set to internationalize your backend by defining it as follows:
 
 ``` bash 
 resources
