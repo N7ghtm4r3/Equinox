@@ -2,7 +2,7 @@ Provides an easy way to handle the static resources used by the backend such ima
 
 ## Usage
 
-### Initialize the provider
+### Initialize The Provider
 
 === "Java"
 
@@ -22,7 +22,7 @@ Provides an easy way to handle the static resources used by the backend such ima
     )
     ```
 
-### Create the directories
+### Create Directories
 
 Before is required to create the container directory which will contain other directories:
 
@@ -52,7 +52,7 @@ Then can be created the subdirectories:
     resourcesProvider.createSubDirectories()
     ```
 
-<h4>Final structure</h4>
+Final structure:
 
 ``` bash
 containerFolder_1

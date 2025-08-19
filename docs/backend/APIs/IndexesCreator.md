@@ -1,59 +1,107 @@
-## IndexesCreator
+This API makes it easy to create various types of indexes for any table in your database
 
-### Usage
+## Usage
 
-```java
+### Create Your Own IndexesCreator Instance
 
-@Component // this annotation is required to enable the Spring Boot's mapping
-public class CustomFullTextIndexCreator extends IndexesCreator {
+You need to create your own `IndexesCreator` instance and annotate is as `@Component`:
 
-    // create your custom fields used to create the index
-    private final List<String> INDEX_FIELDS = List.of("a", "b");
+=== "Java"
 
-    @Override
-    @PostConstruct // this annotation is required to enable automatically its invocation by Spring Boot
-    public void createIndexes() {
-        // invoke your custom methods to create your own indexes
-        createCustomFullTextIndex();
+    ```java
+    @Component // this annotation is required to enable the Spring Boot's mapping
+    public class CustomFullTextIndexCreator extends IndexesCreator {
+    
     }
+    ```
 
-    @Wrapper // not mandatory, but suggested for a better readability
-    private void createCustomFullTextIndex() {
-        // create your own custom index
-        createFullTextIndex("table", "index_name", INDEX_FIELDS);
+=== "Kotlin"
+
+    ```kotlin
+    @Component // this annotation is required to enable the Spring Boot's mapping
+    class CustomFullTextIndexCreator : IndexesCreator {
+    
     }
+    ```
 
-}
-```
+### Declare Index Fields
 
-The other apis will be gradually released
+To create the index you have to declare which column of the table made up that index
 
-## Support
+=== "Java"
 
-If you need help using the library or encounter any problems or bugs, please contact us via the following links:
+    ```java
+    public class CustomFullTextIndexCreator extends IndexesCreator {
 
-- Support via <a href="mailto:infotecknobitcompany@gmail.com">email</a>
-- Support via <a href="https://github.com/N7ghtm4r3/Equinox/issues/new">GitHub</a>
+        private final List<String> INDEX_FIELDS = List.of("a", "b");
+    
+    }
+    ```
 
-Thank you for your help!
+=== "Kotlin"
 
-## Badges
+    ```kotlin
+    @Component
+    class CustomFullTextIndexCreator : IndexesCreator {
+    
+        private val INDEX_FIELDS: List<String> = listOf("a", "b")
 
-[![](https://img.shields.io/badge/Google_Play-414141?style=for-the-badge&logo=google-play&logoColor=white)](https://play.google.com/store/apps/developer?id=Tecknobit)
+    }
+    ```
 
-[![](https://img.shields.io/badge/Spring_Boot-F2F4F9?style=for-the-badge&logo=spring-boot)](https://spring.io/projects/spring-boot) [![](https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=java&logoColor=white)](https://www.oracle.com/java/)
+### Create The Indexes
 
-## Donations
+Override the `createIndexes` method and invoke either the provided methods from `IndexesCreator` or your own custom
+methods
+to create indexes
 
-If you want support project and developer
+=== "Java"
 
-| Crypto                                                                                              | Address                                          | Network  |
-|-----------------------------------------------------------------------------------------------------|--------------------------------------------------|----------|
-| ![](https://img.shields.io/badge/Bitcoin-000000?style=for-the-badge&logo=bitcoin&logoColor=white)   | **3H3jyCzcRmnxroHthuXh22GXXSmizin2yp**           | Bitcoin  |
-| ![](https://img.shields.io/badge/Ethereum-3C3C3D?style=for-the-badge&logo=Ethereum&logoColor=white) | **0x1b45bc41efeb3ed655b078f95086f25fc83345c4**   | Ethereum |
-| ![](https://img.shields.io/badge/Solana-000?style=for-the-badge&logo=Solana&logoColor=9945FF)       | **AtPjUnxYFHw3a6Si9HinQtyPTqsdbfdKX3dJ1xiDjbrL** | Solana   |
+    ```java
+    public class CustomFullTextIndexCreator extends IndexesCreator {
 
-If you want support project and developer
-with <a href="https://www.paypal.com/donate/?hosted_button_id=5QMN5UQH7LDT4">PayPal</a>
+        private final List<String> INDEX_FIELDS = List.of("a", "b");
 
-Copyright © 2025 Tecknobit
+        @Override
+        @PostConstruct // this annotation is required to enable automatically its invocation by Spring Boot
+        public void createIndexes() {
+            // invoke your custom methods to create your own indexes
+            createCustomFullTextIndex();
+        }
+
+        @Wrapper // not mandatory, but suggested for a better readability
+        private void createCustomFullTextIndex() {
+            // create your own custom index
+            createFullTextIndex("table", "index_name", INDEX_FIELDS);
+        }
+    
+    }
+    ```
+
+=== "Kotlin"
+
+    ```kotlin
+    @Component
+    class CustomFullTextIndexCreator : IndexesCreator {
+    
+        private val INDEX_FIELDS: List<String> = listOf("a", "b")
+
+        @PostConstruct // this annotation is required to enable automatically its invocation by Spring Boot
+        override fun createIndexes() {
+            // invoke your custom methods to create your own indexes
+            createCustomFullTextIndex()
+        }
+
+        @Wrapper // not mandatory, but suggested for a better readability
+        private fun createCustomFullTextIndex() {
+            // create your own custom index
+            createFullTextIndex("table", "index_name", INDEX_FIELDS)
+        }            
+
+    }
+    ```
+
+## Provided Indexes Methods
+
+- Use the `createFullTextIndex` method to create a [Full Text Search](https://en.wikipedia.org/wiki/Full-text_search)
+  index
