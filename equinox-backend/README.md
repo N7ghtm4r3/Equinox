@@ -24,7 +24,7 @@ Add the JitPack repository to your build file
 
 - Add it in your root build.gradle at the end of repositories
 
-    ```gradle
+    ```groovy
     repositories {
         ...
         maven { url 'https://jitpack.io' }
@@ -34,7 +34,7 @@ Add the JitPack repository to your build file
 
   #### Gradle (Kotlin)
 
-    ```gradle
+    ```kotlin
     repositories {
         ...
         maven("https://jitpack.io")
@@ -44,7 +44,7 @@ Add the JitPack repository to your build file
 
 - Add the dependency
 
-    ```gradle
+    ```groovy
     dependencies {
        
         // implement the backend utilities
@@ -57,7 +57,7 @@ Add the JitPack repository to your build file
 
   #### Gradle (Kotlin)
 
-    ```gradle
+    ```kotlin
     dependencies {
         
         // implement the backend utilities
@@ -70,7 +70,7 @@ Add the JitPack repository to your build file
 
   #### Gradle (version catalog)
 
-    ```gradle
+    ```kotlin
     dependencies {
     
         // implement the backend utilities

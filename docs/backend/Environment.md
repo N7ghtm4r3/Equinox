@@ -1,156 +1,309 @@
-This is a group of classes to create a SpringBoot's environment based on the Equinox system.
+## Summary
 
-The base environment gives a base set of classes:
+This group of classes is useful for creating a Spring Boot environment based on the Equinox system.
+The base environment provides a core set of classes to manage users, controllers, and database operations.
 
-- [EquinoxBaseEndpointsSet](https://github.com/N7ghtm4r3/Equinox/blob/main/equinox-backend/src/main/java/com/tecknobit/equinoxbackend/environment/helpers/EquinoxBaseEndpointsSet.java) ->
-  set of endpoints already created for the **EquinoxUsersController** methods
-- [EquinoxController](https://github.com/N7ghtm4r3/Equinox/blob/main/equinox-backend/src/main/java/com/tecknobit/equinoxbackend/environment/services/builtin/controller/EquinoxController.java) ->
-  to manage the other **RestController** of the backend
-- [DefaultEquinoxController](https://github.com/N7ghtm4r3/Equinox/blob/main/equinox-backend/src/main/java/com/tecknobit/equinoxbackend/environment/services/DefaultEquinoxController.java) ->
-  to manage the other **RestController** of the backend with the default usage of
-  the [EquinoxUser](https://github.com/N7ghtm4r3/Equinox/blob/main/src/main/java/com/tecknobit/equinox/environment/models/EquinoxUser.java)
-- [EquinoxItem](https://github.com/N7ghtm4r3/Equinox/blob/main/src/main/java/com/tecknobit/equinox/environment/models/EquinoxItem.java) ->
-  base class for the items used by an Equinox backend based
-- User utilities set
-    - [EquinoxUser](https://github.com/N7ghtm4r3/Equinox/blob/main/equinox-backend/src/main/java/com/tecknobit/equinoxbackend/environment/models/EquinoxUser.java) ->
-      standard Equinox's user
-    - [EquinoxLocalUser](https://github.com/N7ghtm4r3/Equinox/blob/main/equinox-backend/src/main/java/com/tecknobit/equinoxbackend/environment/models/EquinoxLocalUser.java) ->
-      local user helper, useful to manage the local session of a user in the clients applications
-    - [EquinoxUsersController](https://github.com/N7ghtm4r3/Equinox/blob/main/equinox-backend/src/main/java/com/tecknobit/equinoxbackend/environment/services/users/controller/EquinoxUsersController.java) ->
-      controller to manage the operations on the **EquinoxUser**
-    - [EquinoxUsersHelper](https://github.com/N7ghtm4r3/Equinox/blob/main/equinox-backend/src/main/java/com/tecknobit/equinoxbackend/environment/services/users/service/EquinoxUsersHelper.java) ->
-      helper used by the **EquinoxUsersController** to interact with the database
-    - [EquinoxUsersRepository](https://github.com/N7ghtm4r3/Equinox/blob/main/equinox-backend/src/main/java/com/tecknobit/equinoxbackend/environment/services/users/repository/EquinoxUsersRepository.java) ->
-      the **JpaRepository** to make the related queries to the database
-- [EquinoxRequester](https://github.com/N7ghtm4r3/Equinox/blob/main/equinox-backend/src/main/kotlin/com/tecknobit/equinoxbackend/environment/helpers/EquinoxRequester.kt) ->
-  the requester helper with the **EquinoxUser** requests pre-implemented to execute the operations on the user
-- [InputsValidator](https://github.com/N7ghtm4r3/Equinox/blob/main/equinox-core/src/commonMain/kotlin/com/tecknobit/equinoxcore/helpers/InputsValidator.kt) ->
-  utility class to validate the inputs, gives a set of the method to validate the **EquinoxUser** details
-- [EquinoxItemsHelper](https://github.com/N7ghtm4r3/Equinox/blob/main/equinox-backend/src/main/java/com/tecknobit/equinoxbackend/environment/services/builtin/service/EquinoxItemsHelper.java) ->
-  helper for manage the database operations of
-  the [EquinoxItem](https://github.com/N7ghtm4r3/Equinox/blob/main/equinox-backend/src/main/java/com/tecknobit/equinoxbackend/environment/models/EquinoxItem.java)
-  such batch queries execution
+### Main Classes
 
-### Usage
+- [EquinoxBaseEndpointsSet](https://github.com/N7ghtm4r3/Equinox/blob/main/equinox-core/src/commonMain/kotlin/com/tecknobit/equinoxcore/network/EquinoxBaseEndpointsSet.kt)  
+  A set of pre-defined endpoints for EquinoxUsersController endpoints
 
-To correctly launch the base environment _out-of-the-box_ you can simply follow the following snippet of code
-representing the main of a  **SpringApplication**:
+- [EquinoxController](https://github.com/N7ghtm4r3/Equinox/blob/main/equinox-backend/src/main/java/com/tecknobit/equinoxbackend/environment/services/builtin/controller/EquinoxController.java)  
+  Manages other RestControllers in the backend
 
-```java
-package other.packages
+- [DefaultEquinoxController](https://github.com/N7ghtm4r3/Equinox/blob/main/equinox-backend/src/main/java/com/tecknobit/equinoxbackend/environment/services/DefaultEquinoxController.java)  
+  Manages other RestControllers with default usage of
+  the [EquinoxUser](https://github.com/N7ghtm4r3/Equinox/blob/main/equinox-backend/src/main/java/com/tecknobit/equinoxbackend/environment/services/users/entity/EquinoxUser.java)
+  class
 
-...
+- [EquinoxItem](https://github.com/N7ghtm4r3/Equinox/blob/main/equinox-backend/src/main/java/com/tecknobit/equinoxbackend/environment/services/builtin/entity/EquinoxItem.java)  
+  Base class for items used by an Equinox backend
 
-import com.tecknobit.equinoxbackend.environment.services.builtin.controller.EquinoxController;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.domain.EntityScan;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.PropertySource;
-import org.springframework.context.annotation.PropertySources;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+### User Utilities
 
-@EnableAutoConfiguration
-@EnableJpaRepositories(
-        value = {"com.tecknobit.*" /* REQUIRED */, "other.packages..."}
-)
-@EntityScan(
-        value = {"com.tecknobit.*" /* REQUIRED */, "other.packages..."}
-)
-@ComponentScan(
-        value = {"com.tecknobit.*" /* REQUIRED */, "other.packages...",
-                "com.tecknobit.equinoxbackend.environment.configuration" /* REQUIRED TO USE THE PROVIDED MESSAGES BUNDLE*/}
-)
-@SpringBootApplication
-public class Launcher {
+- [EquinoxUser](https://github.com/N7ghtm4r3/Equinox/blob/main/equinox-backend/src/main/java/com/tecknobit/equinoxbackend/environment/services/users/entity/EquinoxUser.java)  
+  Standard Equinox user class
 
-  public static void main(String[] args) {
-    EquinoxController.initEquinoxEnvironment(
-            Launcher.class,
-            args
-    );
-    // ... your code ...
-    // then normally launch your SpringBoot's application
-    SpringApplication.run(Launcher.class, args);
-  }
+- [EquinoxLocalUser](https://github.com/N7ghtm4r3/Equinox/blob/main/equinox-compose/src/commonMain/kotlin/com/tecknobit/equinoxcompose/session/EquinoxLocalUser.kt)  
+  Helper for managing a local user session in client applications
 
-  // to check the current mapped endpoints you can use this method
-  // this also to check if any inherited controllers from EquinoxController you have created are mapped correctly
-  @EventListener
-  public void handleContextRefresh(ContextRefreshedEvent event) {
-    ApplicationContext applicationContext = event.getApplicationContext();
-    RequestMappingHandlerMapping requestMappingHandlerMapping = applicationContext
-            .getBean("requestMappingHandlerMapping", RequestMappingHandlerMapping.class);
-    Map<RequestMappingInfo, HandlerMethod> map = requestMappingHandlerMapping.getHandlerMethods();
-    System.out.println("----------- CURRENT ENDPOINTS MAPPED -----------");
-    map.forEach((key, value) -> System.out.println("| " + key + value));
-    System.out.println("--------------------------------------------");
-  }
+- [EquinoxUsersController](https://github.com/N7ghtm4r3/Equinox/blob/main/equinox-backend/src/main/java/com/tecknobit/equinoxbackend/environment/services/users/controller/EquinoxUsersController.java)  
+  Controller for operations on EquinoxUser objects
 
-}
-```
+- [EquinoxUsersService](https://github.com/N7ghtm4r3/Equinox/blob/main/equinox-backend/src/main/java/com/tecknobit/equinoxbackend/environment/services/users/service/EquinoxUsersService.java)  
+  Helper used by EquinoxUsersController to interact with the database
 
-> [!NOTE]  
-> The REQUIRED annotations are necessary to correctly launch automatically the **EquinoxUsersController** and its
-> related
-> workflow, so if you don't want to use that controller you can simply remove them, and it will not automatically start
+- [EquinoxUsersRepository](https://github.com/N7ghtm4r3/Equinox/blob/main/equinox-backend/src/main/java/com/tecknobit/equinoxbackend/environment/services/users/repository/EquinoxUsersRepository.java)  
+  JpaRepository for executing user-related database queries
 
-## Gradle configuration
+### Other Utilities
 
-You need to use this gradle configuration to correctly use this environment
+- [EquinoxRequester](https://github.com/N7ghtm4r3/Equinox/blob/main/equinox-backend/src/main/kotlin/com/tecknobit/equinoxbackend/environment/helpers/EquinoxRequester.kt)  
+  Request helper with
+  pre-implemented [EquinoxUser](https://github.com/N7ghtm4r3/Equinox/blob/main/equinox-backend/src/main/java/com/tecknobit/equinoxbackend/environment/services/users/entity/EquinoxUser.java)
+  requests
 
-```gradle
-plugins {
-    id("java")
-    id("org.springframework.boot") version "3.2.3"
-}
+- [InputsValidator](https://github.com/N7ghtm4r3/Equinox/blob/main/equinox-core/src/commonMain/kotlin/com/tecknobit/equinoxcore/helpers/InputsValidator.kt)  
+  Utility class for input validation,
+  including [EquinoxUser](https://github.com/N7ghtm4r3/Equinox/blob/main/equinox-backend/src/main/java/com/tecknobit/equinoxbackend/environment/services/users/entity/EquinoxUser.java)
+  details
 
-apply(plugin = "io.spring.dependency-management")
+- [EquinoxItemsHelper](https://github.com/N7ghtm4r3/Equinox/blob/main/equinox-backend/src/main/java/com/tecknobit/equinoxbackend/environment/services/builtin/service/EquinoxItemsHelper.java)  
+  Helper for database operations
+  on [EquinoxItem](https://github.com/N7ghtm4r3/Equinox/blob/main/equinox-backend/src/main/java/com/tecknobit/equinoxbackend/environment/services/builtin/entity/EquinoxItem.java),
+  including batch queries
 
-...
+## Usage
 
-repositories {
-    mavenCentral()
-    maven("https://jitpack.io")
-    maven("https://repo.clojars.org")
-}
+### Gradle configuration
 
-dependencies {
+To correctly use this environment you need to use the following base **gradle configuration**
 
-    ...
-    implementation("org.springframework.boot:spring-boot-starter-web:3.2.3")
-    implementation("org.springframework.boot:spring-boot-starter-data-jpa:3.2.3")
-    implementation("com.fasterxml.jackson.core:jackson-databind:2.15.4")
-    implementation("mysql:mysql-connector-java:8.0.33")
-    implementation("com.github.N7ghtm4r3:APIManager:2.2.4")
-    implementation("org.json:json:20250517")
+=== "Gradle"
 
-    // implement the backend utilities
-    implementation("io.github.n7ghtm4r3:equinox-backend:1.1.4")
+    ```groovy
+    plugins {
+        id 'java'
+        id 'org.springframework.boot' version '3.2.3'
+    }
     
-    // implement the core utilities
-    implementation("io.github.n7ghtm4r3:equinox-core:1.1.5")
-
-    ...
-
-}
-
-...
+    apply plugin: 'io.spring.dependency-management'
     
-```
+    repositories {
+        mavenCentral()
+        maven { url 'https://jitpack.io' }
+        maven { url 'https://repo.clojars.org' }
+    }
+    
+    dependencies {
+        implementation 'org.springframework.boot:spring-boot-starter-web:3.2.3'
+        implementation 'org.springframework.boot:spring-boot-starter-data-jpa:3.2.3'
+        implementation 'com.fasterxml.jackson.core:jackson-databind:2.15.4'
+        implementation 'mysql:mysql-connector-java:8.0.33'
+        implementation 'com.github.N7ghtm4r3:APIManager:2.2.4'
+        implementation 'org.json:json:20250517'
+    
+        // implement the backend utilities
+        implementation 'io.github.n7ghtm4r3:equinox-backend:1.1.4'
+    
+        // implement the core utilities
+        implementation 'io.github.n7ghtm4r3:equinox-core:1.1.5'
 
-## Customization and inheritance
+        ...
+    }
+    ```
 
-If you need to customize any classes of the base environment you need to follow this guide to make it works correctly
-after your own customization, in this example you need to add the **currency** field to your user and add also the
-related
-change request.
+=== "Gradle (Kotlin)"
 
-### Configure your backend
+    ```kotlin
+    plugins {
+        id("java")
+        id("org.springframework.boot") version "3.2.3"
+    }
+    
+    apply(plugin = "io.spring.dependency-management")
+
+    repositories {
+        mavenCentral()
+        maven("https://jitpack.io")
+        maven("https://repo.clojars.org")
+    }
+    
+    dependencies {
+        implementation("org.springframework.boot:spring-boot-starter-web:3.2.3")
+        implementation("org.springframework.boot:spring-boot-starter-data-jpa:3.2.3")
+        implementation("com.fasterxml.jackson.core:jackson-databind:2.15.4")
+        implementation("mysql:mysql-connector-java:8.0.33")
+        implementation("com.github.N7ghtm4r3:APIManager:2.2.4")
+        implementation("org.json:json:20250517")
+    
+        // implement the backend utilities
+        implementation("io.github.n7ghtm4r3:equinox-backend:1.1.4")
+        
+        // implement the core utilities
+        implementation("io.github.n7ghtm4r3:equinox-core:1.1.5")
+    
+        ...
+    }
+    ```
+
+### Out-of-the-Box Launch
+
+To launch the out-of-the-box environment, simply follow the snippet below showing the main method of a *
+*SpringApplication**
+
+=== "Java"
+
+    ```java
+    package other.packages;
+
+    import com.tecknobit.equinoxbackend.environment.services.builtin.controller.EquinoxController;
+    import org.springframework.boot.SpringApplication;
+    import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+    import org.springframework.boot.autoconfigure.SpringBootApplication;
+    import org.springframework.boot.autoconfigure.domain.EntityScan;
+    import org.springframework.context.ApplicationContext;
+    import org.springframework.context.annotation.ComponentScan;
+    import org.springframework.context.event.ContextRefreshedEvent;
+    import org.springframework.context.event.EventListener;
+    import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+    import org.springframework.web.method.HandlerMethod;
+    import org.springframework.web.servlet.mvc.method.RequestMappingInfo;
+    import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
+    
+    import java.util.Map;
+    
+    @EnableAutoConfiguration
+    @EnableJpaRepositories(
+        value = {"com.tecknobit.*" /* REQUIRED */, "other.packages..."}
+    )
+    @EntityScan(
+        value = {"com.tecknobit.*" /* REQUIRED */, "other.packages..."}
+    )
+    @ComponentScan(
+        value = {
+            "com.tecknobit.*" /* REQUIRED */,
+            "other.packages...",
+            "com.tecknobit.equinoxbackend.environment.configuration" /* REQUIRED TO USE THE PROVIDED MESSAGES BUNDLE */
+        }
+    )
+    @SpringBootApplication
+    public class Launcher {
+    
+        public static void main(String[] args) {
+            EquinoxController.initEquinoxEnvironment(Launcher.class, args);
+            // ... your code ...
+            // then normally launch your SpringBoot's application
+            SpringApplication.run(Launcher.class, args);
+        }
+    
+    }
+    ```
+
+=== "Kotlin"
+
+    ```kotlin
+    package other.packages
+
+    import com.tecknobit.equinoxbackend.environment.services.builtin.controller.EquinoxController
+    import org.springframework.boot.SpringApplication
+    import org.springframework.boot.autoconfigure.SpringBootApplication
+    import org.springframework.boot.autoconfigure.domain.EntityScan
+    import org.springframework.context.ApplicationContext
+    import org.springframework.context.event.ContextRefreshedEvent
+    import org.springframework.context.event.EventListener
+    import org.springframework.context.annotation.ComponentScan
+    import org.springframework.data.jpa.repository.config.EnableJpaRepositories
+    import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping
+    import org.springframework.web.servlet.mvc.method.RequestMappingInfo
+    import org.springframework.web.method.HandlerMethod
+    
+    @EnableJpaRepositories(
+        value = ["com.tecknobit.*" /* REQUIRED */, "other.packages..."]
+    )
+    @EntityScan(
+        value = ["com.tecknobit.*" /* REQUIRED */, "other.packages..."]
+    )
+    @ComponentScan(
+        value = [
+            "com.tecknobit.*" /* REQUIRED */,
+            "other.packages...",
+            "com.tecknobit.equinoxbackend.environment.configuration" /* REQUIRED TO USE THE PROVIDED MESSAGES BUNDLE */
+        ]
+    )
+    @SpringBootApplication
+    class Launcher {
+    
+        companion object {
+            @JvmStatic
+            fun main(args: Array<String>) {
+                EquinoxController.initEquinoxEnvironment(
+                    Launcher::class.java,
+                    args
+                )
+                // ... your code ...
+                // then normally launch your SpringBoot's application
+                SpringApplication.run(Launcher::class.java, *args)
+            }
+        }
+
+    }
+    ```
+
+!!! note
+
+     The REQUIRED annotations are necessary to correctly launch automatically the **EquinoxUsersController** and its
+     related workflow, so if you don't want to use that controller you can simply remove them, and it will not automatically start
+
+#### Inspect the current mapped endpoints
+
+To easily inspect the currently mapped endpoints, you can use the following method, which also verifies whether any
+inherited controllers from **EquinoxController** are mapped correctly
+
+=== "Java"
+
+    ```java
+    @EventListener
+    public void handleContextRefresh(ContextRefreshedEvent event) {
+        ApplicationContext applicationContext = event.getApplicationContext();
+        RequestMappingHandlerMapping requestMappingHandlerMapping =
+                applicationContext.getBean("requestMappingHandlerMapping", RequestMappingHandlerMapping.class);
+
+        Map<RequestMappingInfo, HandlerMethod> map = requestMappingHandlerMapping.getHandlerMethods();
+
+        System.out.println("----------- CURRENT ENDPOINTS MAPPED -----------");
+        map.forEach((key, value) -> System.out.println("| " + key + " " + value));
+        System.out.println("--------------------------------------------");
+    }
+    ```
+
+=== "Kotlin"
+
+    ```kotlin
+    @EventListener
+    fun handleContextRefresh(event: ContextRefreshedEvent) {
+        val applicationContext: ApplicationContext = event.applicationContext
+        val requestMappingHandlerMapping = applicationContext
+            .getBean("requestMappingHandlerMapping", RequestMappingHandlerMapping::class.java)
+        val map: Map<RequestMappingInfo, HandlerMethod> = requestMappingHandlerMapping.handlerMethods
+        println("----------- CURRENT ENDPOINTS MAPPED -----------")
+        map.forEach { key, value -> println("| $key $value") }
+        println("--------------------------------------------")
+    }
+    ```
+
+#### Launching the backend without a database
+
+If your architecture does not require a database you can exclude it as follows:
+
+=== "Java"
+
+    ```java
+    @SpringBootApplication
+    @EnableAutoConfiguration(
+        exclude = {DataSourceAutoConfiguration.class, HibernateJpaAutoConfiguration.class}
+    )
+    ```
+
+=== "Kotlin"
+
+    ```kotlin
+    @SpringBootApplication
+    @EnableAutoConfiguration(
+        exclude = [DataSourceAutoConfiguration.class, HibernateJpaAutoConfiguration.class]
+    )
+    ```
+
+## Extending the environment
+
+Follow this guide to customize any classes of the base environment and ensure your changes function as expected
+
+### Additional Backend Setup
 
 #### Create the config file
 
-To configure your backend instance as needed you have to create the `equinox.config` file and place it as below:
+To add extra configuration to your backend instance, create an `equinox.config` file and place it in the following
+location:
 
 ``` bash 
 resources
@@ -164,54 +317,23 @@ You can copy and fill the below `JSON` as you need:
 ```json
 {
   // omit this to disable the server protector usage
-  server_protector: {
-    storage_path: "storage_path_of_the_protector",
-    save_message: "save_message_value"
+  "server_protector": {
+    "storage_path": "storage_path_of_the_protector",
+    "save_message": "save_message_value"
   },
-  resources: {
-    resources_folder: true,
+  "resources": {
+    "resources_folder": true,
     // false to avoid to create the resources folder 
-    subdirectories: [
+    "subdirectories": [
       // list of subdirectories to create inside the resources folder, omit to avoid the creation
     ]
   }
 }
 ```
 
-### Backend with no database needed
-
-If your architecture does not include a database usage you exclude it as following:
-
-```java
-package other.packages
-
-...
-
-import com.tecknobit.equinoxbackend.environment.services.builtin.controller.EquinoxController;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.domain.EntityScan;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.PropertySource;
-import org.springframework.context.annotation.PropertySources;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
-
-@EnableAutoConfiguration(
-        exclude = {DataSourceAutoConfiguration.class, HibernateJpaAutoConfiguration.class}
-)
-@ComponentScan(
-        value = "com.tecknobit.equinoxbackend.environment.configuration" /* REQUIRED TO USE THE PROVIDED MESSAGES BUNDLE*/
-)
-// others basic  SpringBoot's annotations
-public class Launcher {
-
-  // Rest of the Launcher class ...
-
-}
-```
-
 ### Customize the **EquinoxUser**
 
+In this example, you will add a `currency` field to your user and include the corresponding update request
 To add the custom field you need to extend your custom users from the base **EquinoxUser**, the class will be as
 the following:
 

@@ -26,7 +26,7 @@ equinox-core = { module = "io.github.n7ghtm4r3:equinox-core", version.ref = "equ
 
 - `build.gradle.kts`
 
-```gradle
+```kotlin
 dependencies {
     implementation(libs.equinox.core)
 }
@@ -34,7 +34,7 @@ dependencies {
 
 ### Gradle (Kotlin)
 
-```gradle
+```kotlin
 dependencies {
     implementation("io.github.n7ghtm4r3:equinox-core:1.1.5")
 }
@@ -42,7 +42,7 @@ dependencies {
 
 ### Gradle Groovy
 
-```gradle
+```groovy
 dependencies {
     implementation 'io.github.n7ghtm4r3:equinox-core:1.1.5'
 }

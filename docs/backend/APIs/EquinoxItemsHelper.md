@@ -116,7 +116,7 @@ procedure using the [BatchSynchronizationProcedure](BatchSynchronizationProcedur
 
 #### Simple objects
 
-With simple object such `String`, `int`, `double`, etc... you can use the method as following:
+With simple object such `String`, `int`, `double`, etc... you can use the method as follows:
 
 === "Java"
 
@@ -227,7 +227,7 @@ With simple object such `String`, `int`, `double`, etc... you can use the method
 
 #### Complex objects
 
-With complex object such custom classes, etc... you can use the method as following:
+With complex object such custom classes, etc... you can use the method as follows:
 
 <h6>Custom object example</h6>
 
@@ -422,7 +422,7 @@ Use the `batchDelete` method to delete in batch the data
 
 #### Simple objects
 
-With simple object such `String`, `int`, `double`, etc... you can use the method as following:
+With simple object such `String`, `int`, `double`, etc... you can use the method as follows:
 
 === "Java"
 

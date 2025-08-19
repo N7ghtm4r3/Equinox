@@ -24,7 +24,7 @@ Add the JitPack repository to your build file
 
 - Add it in your root build.gradle at the end of repositories
 
-    ```gradle
+    ```groovy
     repositories {
         ...
         maven { url 'https://jitpack.io' }
@@ -34,7 +34,7 @@ Add the JitPack repository to your build file
 
     <h4> Gradle (Kotlin) </h4>
 
-    ```gradle
+    ```kotlin
     repositories {
         ...
         maven("https://jitpack.io")
@@ -44,7 +44,7 @@ Add the JitPack repository to your build file
 
 - Add the dependency
 
-    ```gradle
+    ```groovy
     dependencies {
        
         // implement the backend utilities
@@ -57,7 +57,7 @@ Add the JitPack repository to your build file
 
     <h4> Gradle (Kotlin) </h4>
 
-    ```gradle
+    ```kotlin
     dependencies {
         
         // implement the backend utilities
@@ -70,7 +70,7 @@ Add the JitPack repository to your build file
 
     <h4> Gradle (version catalog) </h4>
 
-    ```gradle
+    ```kotlin
     dependencies {
     
         // implement the backend utilities
@@ -83,17 +83,23 @@ Add the JitPack repository to your build file
 
 ## APIs available
 
-- [ResourcesProvider](APIs/ResourcesProvider.md) allows you to manage the static resources to serve to the clients
-- [IndexesCreator](APIs/IndexesCreator.md) allows you to create automatically the indexes for your own tables of the
-  database
-- [FilteredQuery](APIs/FilteredQuery.md) allows you to create dynamic queries with filters parameters
-- [EquinoxItemsHelper](APIs/EquinoxItemsHelper.md)  allows you to execute batch queries such insertion, deletion and
-  synchronization dynamically
-- [BatchSynchronizationProcedure](APIs/BatchSynchronizationProcedure.md) allows you to create reusable synchronization
-  procedures compacted and cleaned
-- [EquinoxEvents](APIs/EquinoxEvents.md) allows you to share and collect events between services
+- [ResourcesProvider](APIs/ResourcesProvider.md)  
+  Manages static resources to serve to client applications
 
-The other apis will be gradually released
+- [IndexesCreator](APIs/IndexesCreator.md)  
+  Automatically creates indexes for custom database tables
+
+- [FilteredQuery](APIs/FilteredQuery.md)  
+  Builds dynamic queries with filter parameters leverages regex expressions
+
+- [EquinoxItemsHelper](APIs/EquinoxItemsHelper.md)  
+  Executes batch database operations such as insertion, deletion, and synchronization
+
+- [BatchSynchronizationProcedure](APIs/BatchSynchronizationProcedure.md)  
+  Defines reusable and compacted synchronization procedures
+
+- [EquinoxEvents](APIs/EquinoxEvents.md)  
+  Facilitates event sharing and collection between backend services
 
 ## Basic environment available
 

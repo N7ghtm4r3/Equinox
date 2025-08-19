@@ -29,7 +29,7 @@ equinox-navigation = { module = "io.github.n7ghtm4r3:equinox-navigation", versio
 
 - `build.gradle.kts`
 
-```gradle
+```kotlin
 dependencies {
 
     // implement the compose utilities
@@ -45,7 +45,7 @@ dependencies {
 
 ### Gradle (Kotlin)
 
-```gradle
+```kotlin
 dependencies {
     
     // implement the compose utilities
@@ -61,7 +61,7 @@ dependencies {
 
 ### Gradle Groovy
 
-```gradle
+```groovy
 dependencies {
    
     // implement the compose utilities

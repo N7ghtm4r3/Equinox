@@ -31,7 +31,7 @@ lazy-pagination-compose-ops = { module = "io.github.n7ghtm4r3:equinoxmisc-lazy-p
 
 - `build.gradle.kts`
 
-```gradle
+```kotlin
 dependencies {
     implementation(libs.lazy.pagination.compose)
     implementation(libs.lazy.pagination.compose.ops)
@@ -40,7 +40,7 @@ dependencies {
 
 ### Gradle (Kotlin)
 
-```gradle
+```kotlin
 dependencies {
     implementation("io.github.ahmad-hamwi:lazy-pagination-compose:1.7.0")
     implementation("io.github.n7ghtm4r3:equinoxmisc-lazy-pagination-compose-ops:1.0.1")
@@ -49,7 +49,7 @@ dependencies {
 
 ### Gradle Groovy
 
-```gradle
+```groovy
 dependencies {
     implementation 'io.github.ahmad-hamwi:lazy-pagination-compose:1.7.0'
     implementation 'io.github.n7ghtm4r3:equinoxmisc-lazy-pagination-compose-ops:1.0.1'

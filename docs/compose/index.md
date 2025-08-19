@@ -26,7 +26,7 @@ equinox-core = { module = "io.github.n7ghtm4r3:equinox-core", version.ref = "equ
 
 - `build.gradle.kts`
 
-```gradle
+```kotlin
 dependencies {
 
     // implement the compose utilities
@@ -39,7 +39,7 @@ dependencies {
 
 ### Gradle (Kotlin)
 
-```gradle
+```kotlin
 dependencies {
     
     // implement the compose utilities
@@ -52,7 +52,7 @@ dependencies {
 
 ### Gradle Groovy
 
-```gradle
+```groovy
 dependencies {
    
     // implement the compose utilities
