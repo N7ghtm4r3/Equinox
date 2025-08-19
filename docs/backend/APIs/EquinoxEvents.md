@@ -166,15 +166,27 @@ You can create your own emitter to customize or for a better readability
 
 You can create your own collector to customize or for a better readability
 
-```java
+=== "Java"
 
-@FunctionalInterface // not mandatory, but suggested
-public interface TestEventsCollector extends EquinoxEventsCollector<TestEvent, TestApplicationEvent> {
+    ```java
+    @FunctionalInterface // not mandatory, but suggested
+    public interface TestEventsCollector extends EquinoxEventsCollector<TestEvent, TestApplicationEvent> {
+    
+        // your custom implementation
+    
+    }
+    ```
 
-    // your custom implementation
+=== "Kotlin"
 
-}
-```
+    ```kotlin
+    @FunctionalInterface // not mandatory, but suggested
+    interface TestEventsCollector : EquinoxEventsCollector<TestEvent, TestApplicationEvent> {
+    
+        // your custom implementation
+    
+    }
+    ```
 
 !!! tip
 
@@ -195,68 +207,129 @@ public interface TestEventsCollector extends EquinoxEventsCollector<TestEvent, T
 
 You can wire the emitter with a service or multiple services to emit the events
 
-```java
+=== "Java"
 
-@Service
-public class EventsService {
-
-    @Autowired // wire the emitter
-    private TestEventsEmitter eventsEmitter;
-
-    // any service method
-    public void triggerEmitter() {
-        // choose from your set the event to emit
-        TestEvent type = EVENT_ONE;
-
-        // create a not required callback to execute after the event emitted is performed
-        EquinoxEventsCollector.OnEventConsumed onEventConsumed = new EquinoxEventsCollector.OnEventConsumed() {
-            @Override
-            public void perform(Object... extra) {
-                // perform extra action after the event has been consumed
-            }
-        };
-
-        // create the event
-        TestApplicationEvent event = new TestApplicationEvent(this, type, onEventConsumed, /*add extra arguments if needed*/);
-
-        // emit the event
-        eventsEmitter.emitEvent(event);
-
+    ```java
+    @Service
+    public class EventsService {
+    
+        @Autowired // wire the emitter
+        private TestEventsEmitter eventsEmitter;
+    
+        // any service method
+        public void triggerEmitter() {
+            // choose from your set the event to emit
+            TestEvent type = EVENT_ONE;
+    
+            // create a not required callback to execute after the event emitted is performed
+            EquinoxEventsCollector.OnEventConsumed onEventConsumed = new EquinoxEventsCollector.OnEventConsumed() {
+                @Override
+                public void perform(Object... extra) {
+                    // perform extra action after the event has been consumed
+                }
+            };
+    
+            // create the event
+            TestApplicationEvent event = new TestApplicationEvent(this, type, onEventConsumed, /*add extra arguments if needed*/);
+    
+            // emit the event
+            eventsEmitter.emitEvent(event);
+    
+        }
+    
     }
+    ```
 
-}
-```
+=== "Kotlin"
+
+    ```kotlin
+    @Service
+    class EventsService {
+    
+        @Autowired // wire the emitter
+        private lateinit var eventsEmitter: TestEventsEmitter
+    
+        // any service method
+        fun triggerEmitter() {
+            // choose from your set the event to emit
+            val type: TestEvent = TestEvent.EVENT_ONE
+    
+            // create a not required callback to execute after the event emitted is performed
+            val onEventConsumed = object : EquinoxEventsCollector.OnEventConsumed {
+                override fun perform(vararg extra: Any) {
+                    // perform extra action after the event has been consumed
+                }
+            }
+    
+            // create the event
+            val event = TestApplicationEvent(this, type, onEventConsumed /*, add extra arguments if needed */)
+    
+            // emit the event
+            eventsEmitter.emitEvent(event)
+        }
+    }
+    ```
 
 ### Collect the emitted events
 
 You can create multiple collectors implementing the `EquinoxEventsCollector` interface
 
-```java
+=== "Java"
 
-@Service
-public class AnyService implements TestEventsCollector {
-
-    @Override
-    public void onEventCollected(TestApplicationEvent event) {
-        // get the extra arguments from the event
-        Object[] extra = event.getExtra();
-
-        // handle the specific type of the event collected
-        switch (event.getEventType()) {
-            case EVENT_ONE -> {
-                System.out.println("EVENT_ONE collected!");
-
-                // perform the OnEventConsumed if needed
-                event.performOnEventConsumed();
+    ```java
+    @Service
+    public class AnyService implements TestEventsCollector {
+    
+        @Override
+        public void onEventCollected(TestApplicationEvent event) {
+            // get the extra arguments from the event
+            Object[] extra = event.getExtra();
+    
+            // handle the specific type of the event collected
+            switch (event.getEventType()) {
+                case EVENT_ONE -> {
+                    System.out.println("EVENT_ONE collected!");
+    
+                    // perform the OnEventConsumed if needed
+                    event.performOnEventConsumed();
+                }
+                case EVENT_TWO -> {
+                    System.out.println("EVENT_TWO collected!");
+    
+                    // perform the OnEventConsumed if needed
+                    event.performOnEventConsumed();
+                }
             }
-            case EVENT_TWO -> {
-                System.out.println("EVENT_TWO collected!");
+        }
+    
+    }
+    ```
 
-                // perform the OnEventConsumed if needed
-                event.performOnEventConsumed();
+=== "Kotlin"
+
+    ```kotlin
+    @Service
+    class AnyService : TestEventsCollector {
+    
+        override fun onEventCollected(event: TestApplicationEvent) {
+            // get the extra arguments from the event
+            val extra: Array<Any> = event.extra
+    
+            // handle the specific type of the event collected
+            when (event.eventType) {
+                TestEvent.EVENT_ONE -> {
+                    println("EVENT_ONE collected!")
+    
+                    // perform the OnEventConsumed if needed
+                    event.performOnEventConsumed()
+                }
+                TestEvent.EVENT_TWO -> {
+                    println("EVENT_TWO collected!")
+    
+                    // perform the OnEventConsumed if needed
+                    event.performOnEventConsumed()
+                }
             }
         }
     }
-
-}
-```
+    ```
