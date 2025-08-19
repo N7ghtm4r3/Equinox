@@ -2,7 +2,7 @@ This API makes it easy to create various types of indexes for any table in your 
 
 ## Usage
 
-### Create Your Own IndexesCreator Instance
+### Create your own IndexesCreator instance
 
 You need to create your own `IndexesCreator` instance and annotate is as `@Component`:
 
@@ -24,36 +24,63 @@ You need to create your own `IndexesCreator` instance and annotate is as `@Compo
     }
     ```
 
-### Declare Index Fields
+### Declare index fields
 
 To create the index you have to declare which column of the table made up that index
 
 === "Java"
 
     ```java
-    public class CustomFullTextIndexCreator extends IndexesCreator {
+    private final List<String> INDEX_FIELDS = List.of("a", "b");
+    ```
 
-        private final List<String> INDEX_FIELDS = List.of("a", "b");
-    
+=== "Kotlin"
+
+    ```kotlin
+    private val INDEX_FIELDS: List<String> = listOf("a", "b")
+    ```
+
+### Create the indexes
+
+Override the `createIndexes` method and invoke either the provided methods from `IndexesCreator` or your own custom
+methods to create indexes
+
+=== "Java"
+
+    ```java
+    @Override
+    @PostConstruct // this annotation is required to enable automatically its invocation by Spring Boot
+    public void createIndexes() {
+        // invoke your custom methods to create your own indexes
+        createCustomFullTextIndex();
+    }
+
+    @Wrapper // not mandatory, but suggested for a better readability
+    private void createCustomFullTextIndex() {
+        // create your own custom index
+        createFullTextIndex("table", "index_name", INDEX_FIELDS);
     }
     ```
 
 === "Kotlin"
 
     ```kotlin
-    @Component
-    class CustomFullTextIndexCreator : IndexesCreator {
-    
-        private val INDEX_FIELDS: List<String> = listOf("a", "b")
-
+    @PostConstruct // this annotation is required to enable automatically its invocation by Spring Boot
+    override fun createIndexes() {
+        // invoke your custom methods to create your own indexes
+        createCustomFullTextIndex()
     }
+
+    @Wrapper // not mandatory, but suggested for a better readability
+    private fun createCustomFullTextIndex() {
+        // create your own custom index
+        createFullTextIndex("table", "index_name", INDEX_FIELDS)
+    } 
     ```
 
-### Create The Indexes
+## Overview
 
-Override the `createIndexes` method and invoke either the provided methods from `IndexesCreator` or your own custom
-methods
-to create indexes
+The completed implementation is the following:
 
 === "Java"
 
@@ -101,7 +128,8 @@ to create indexes
     }
     ```
 
-## Provided Indexes Methods
+## Provided indexes methods
 
-- Use the `createFullTextIndex` method to create a [Full Text Search](https://en.wikipedia.org/wiki/Full-text_search)
+- Use the `createFullTextIndex` method to create
+  a [Full Text Search](https://www.geeksforgeeks.org/sql/mysql-full-text-search/)
   index

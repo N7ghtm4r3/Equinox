@@ -2,7 +2,7 @@ Provides an easy way to handle the static resources used by the backend such ima
 
 ## Usage
 
-### Initialize The Provider
+### Initialize the provider
 
 === "Java"
 
@@ -22,7 +22,7 @@ Provides an easy way to handle the static resources used by the backend such ima
     )
     ```
 
-### Create Directories
+### Create directories
 
 Before is required to create the container directory which will contain other directories:
 
