@@ -155,7 +155,7 @@ You can create your own emitter to customize or for a better readability
 
     ```kotlin
     @Service // required annotation
-    class TestEventsEmitter : EquinoxEventsEmitter<TestEvent> {
+    class TestEventsEmitter : EquinoxEventsEmitter<TestEvent>() {
     
         // your custom implementation
     
@@ -234,7 +234,6 @@ You can wire the emitter with a service or multiple services to emit the events
     
             // emit the event
             eventsEmitter.emitEvent(event);
-    
         }
     
     }
@@ -267,6 +266,7 @@ You can wire the emitter with a service or multiple services to emit the events
             // emit the event
             eventsEmitter.emitEvent(event)
         }
+
     }
     ```
 
@@ -331,5 +331,6 @@ You can create multiple collectors implementing the `EquinoxEventsCollector` int
                 }
             }
         }
+
     }
     ```

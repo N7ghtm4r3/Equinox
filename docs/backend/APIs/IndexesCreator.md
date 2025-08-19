@@ -19,7 +19,7 @@ You need to create your own `IndexesCreator` instance and annotate is as `@Compo
 
     ```kotlin
     @Component // this annotation is required to enable the Spring Boot's mapping
-    class CustomFullTextIndexCreator : IndexesCreator {
+    class CustomFullTextIndexCreator : IndexesCreator() {
     
     }
     ```
@@ -109,7 +109,7 @@ The completed implementation is the following:
 
     ```kotlin
     @Component
-    class CustomFullTextIndexCreator : IndexesCreator {
+    class CustomFullTextIndexCreator : IndexesCreator() {
     
         private val INDEX_FIELDS: List<String> = listOf("a", "b")
 

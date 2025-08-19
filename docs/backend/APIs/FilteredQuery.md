@@ -108,7 +108,7 @@ Pass the `MODEL_PATTERN` to the provided `extractFiltersByPattern` method to ext
     }
     ```
 
-<h4>Add the filters extracted</h4>
+<h4>Add the extracted filters</h4>
 
 Create a predicate with the extracted filter and add to the inherited `predicates` to correctly perform the query
 
@@ -184,6 +184,7 @@ You can execute the filtered query from a service as follows:
             )
             return carsQuery.entities // Execute the query and return the results
         }
+
     }
     ```
 
