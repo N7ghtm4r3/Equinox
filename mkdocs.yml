@@ -36,6 +36,7 @@ theme:
     - search.share
     - content.tabs.link
     - content.code.copy
+    - navigation.footer
 
 markdown_extensions:
   - pymdownx.highlight:

@@ -7,7 +7,7 @@
 ![Static Badge](https://img.shields.io/badge/desktop-006874?link=https%3A%2F%2Fimg.shields.io%2Fbadge%2Fandroid-4280511051)
 ![Static Badge](https://img.shields.io/badge/wasmjs-834C74?link=https%3A%2F%2Fimg.shields.io%2Fbadge%2Fandroid-4280511051)
 
-Utilities for **Compose Multiplatform** applications such components, apis for all supported platforms
+Utilities for **Compose Multiplatform** applications such components, APIs for all supported platforms
 
 ## Implementation
 
@@ -71,8 +71,6 @@ dependencies {
 - [EquinoxScreens](APIs/EquinoxScreens.md)
 - [EquinoxWindowKit](APIs/EquinoxWindowKit.md)
 
-The other apis will be gradually released
-
 ## Components available
 
 - [EquinoxDialogs](src/commonMain/kotlin/com/tecknobit/equinoxcompose/components/EquinoxDialogs.kt)
@@ -91,5 +89,3 @@ The other apis will be gradually released
 - [ProgressBars](components/progressbars/ProgressBars.md)
 - [SessionFlowContainer](components/sessionflowcontainer/SessionFlowContainer.md)
 - [InformativeIcon](components/informativeicon/InformativeIcon.md)
-
-The others components will be gradually released
