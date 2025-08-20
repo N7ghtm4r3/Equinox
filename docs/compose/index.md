@@ -66,8 +66,10 @@ dependencies {
 ## APIs available
 
 - [EquinoxViewModel](APIs/EquinoxViewModel.md) provides:
-    - **EquinoxAuthViewModel** is a prebuilt viewmodel to authenticate the user in the system
-  - **EquinoxProfileViewModel** is a prebuilt viewmodel to manage the user account settings and preferences
+    - **EquinoxAuthViewModel**
+        - Prebuilt viewmodel to authenticate the user in the system
+    - **EquinoxProfileViewModel**
+        - Prebuilt viewmodel to manage the user account settings and preferences
 - [EquinoxScreens](APIs/EquinoxScreens.md)
 - [EquinoxWindowKit](APIs/EquinoxWindowKit.md)
 
