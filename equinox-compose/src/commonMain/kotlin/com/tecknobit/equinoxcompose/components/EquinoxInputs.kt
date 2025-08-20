@@ -97,23 +97,14 @@ private val defaultOnValueChange: (
  * @param prefix the optional prefix to be displayed before the input text in the text field
  * @param suffix the optional suffix to be displayed after the input text in the text field
  * @param supportingText the optional supporting text to be displayed below the text field
- * @param isError indicates if the text field's current value is in error. If set to true, the
- *   label, bottom indicator and trailing icon by default will be displayed in error color
  * @param visualTransformation transforms the visual representation of the input [value] For
  *   example, you can use
  *   [PasswordVisualTransformation][androidx.compose.ui.text.input.PasswordVisualTransformation] to
  *   create a password text field. By default, no visual transformation is applied.
- * @param keyboardOptions software keyboard options that contains configuration such as
- *   [KeyboardType] and [ImeAction].
- * @param keyboardActions when the input service emits an IME action, the corresponding callback is
- *   called. Note that this IME action may be different from what you specified in
- *   [KeyboardOptions.imeAction].
  * @param singleLine when `true`, this text field becomes a single horizontally scrolling text field
  *   instead of wrapping onto multiple lines. The keyboard will be informed to not show the return
  *   key as the [ImeAction]. Note that [maxLines] parameter will be ignored as the maxLines
  *   attribute will be automatically set to 1.
- * @param maxLines the maximum height in terms of maximum number of visible lines. It is required
- *   that 1 <= [minLines] <= [maxLines]. This parameter is ignored when [singleLine] is true.
  * @param minLines the minimum height in terms of minimum number of visible lines. It is required
  *   that 1 <= [minLines] <= [maxLines]. This parameter is ignored when [singleLine] is true.
  * @param interactionSource an optional hoisted [MutableInteractionSource] for observing and

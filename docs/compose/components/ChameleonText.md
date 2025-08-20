@@ -56,7 +56,7 @@ class TestScreen : EquinoxScreen<EquinoxViewModel>() {
 
 ## Customization
 
-Check out the table below to apply your customizations to the text component:
+Check out the table below to apply your customizations to the component:
 
 | Property         | Description                                                                                                                                                                                                                                            |
 |------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
