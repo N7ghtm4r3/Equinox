@@ -1,22 +1,92 @@
-# Equinox screens
+These APIs are used to create screens with lifecycle management similar to Android activities
 
-These APIs are useful to create screens with a lifecycle management similar to the Android's activities
+## Lifecycle handled methods
 
-## Integration
+- **onInit** invoked when the screen has been instantiated
+- **onCreate** invoked when the screen has been created
+- **onStart** invoked when the screen has been started
+- **onResume** invoked when the screen has been resumed
+- **onPause** invoked when the screen has been paused
+- **onStop** invoked when the screen has been stopped
+- **onDestroy** invoked when the screen has been destroyed
+- **onAny** invoked when in the screen has occurred any of the possible events
 
-### With related ViewModel
+## Implementation
 
-Create a concrete custom screen with the custom specifications you need and pass as parameter its viewmodel.
+### EquinoxNoModelScreen
 
-In the lifecycle methods will be automatically managed the `retrieving` of the `viewModel`, but you can override
-them and implement your logic to manage that routine
+Create a concrete custom screen with custom specifications you need without having a support viewModel
 
 ```kotlin
-class TestScreen : EquinoxScreen<TestViewModel>( // related viewmodel of TestScreen
+class TestScreen : EquinoxNoModelScreen(
+    loggerEnabled = true, // whether the logger is enabled
+) {
+
+    init {
+        onInit()
+    }
+
+    // place the content to display in the screen
+    @Composable
+    override fun ArrangeScreenContent() {
+        Scaffold {
+            Column(
+                modifier = Modifier
+                    .fillMaxSize(),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center
+            ) {
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                ) {
+                    TextDivider(
+                        text = "text",
+                        textStyle = TextStyle(
+                            fontSize = 40.sp
+                        )
+                    )
+                }
+            }
+        }
+    }
+
+    override fun onInit() {
+        super.onInit()
+        // your on init logic
+    }
+
+    override fun onStart() {
+        super.onStart()
+        // your on start logic
+    }
+
+    override fun onStop() {
+        super.onStop()
+        // your on stop logic
+    }
+
+    // where the states of the screen can be collected or instantiated
+    @Composable
+    override fun CollectStates() {
+        // collect your states
+    }
+
+}
+```
+
+### EquinoxScreen
+
+Create a concrete custom screen with custom specifications you need and then create the related `viewModel`.
+In the lifecycle methods will be automatically handled the lifecycle of the [Retriever](Retriever.md) attached to the
+**viewModel**, but you can override them and then implement your own logic
+
+```kotlin
+class TestScreen : EquinoxScreen<TestViewModel>( // specific the viewModel
     loggerEnabled = true, // whether the logger is enabled
     viewModel = TestViewModel(
         snackbarHostState = SnackbarHostState()
-    ) // its related viewmodel
+    ) // instantiate the viewModel
 ) {
 
     private lateinit var time: State<String>
@@ -25,6 +95,7 @@ class TestScreen : EquinoxScreen<TestViewModel>( // related viewmodel of TestScr
         onInit()
     }
 
+    // place the content to display in the screen
     @Composable
     override fun ArrangeScreenContent() {
         Scaffold(
@@ -53,7 +124,7 @@ class TestScreen : EquinoxScreen<TestViewModel>( // related viewmodel of TestScr
 
     override fun onInit() {
         super.onInit()
-        // your on init content
+        // your on init logic
     }
 
     override fun onStart() {
@@ -72,70 +143,9 @@ class TestScreen : EquinoxScreen<TestViewModel>( // related viewmodel of TestScr
 }
 ```
 
-### With no related ViewModel
-
-Create a concrete custom screen with the custom specifications you need without having a support viewmodel
-
-```kotlin
-class TestScreen : EquinoxNoModelScreen(
-    loggerEnabled = true, // whether the logger is enabled
-) {
-
-    init {
-        onInit()
-    }
-
-    @Composable
-    override fun ArrangeScreenContent() {
-        Scaffold {
-            Column(
-                modifier = Modifier
-                    .fillMaxSize(),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center
-            ) {
-                Column(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                ) {
-                    TextDivider(
-                        text = "text",
-                        textStyle = TextStyle(
-                            fontSize = 40.sp
-                        )
-                    )
-                }
-            }
-        }
-    }
-
-    override fun onInit() {
-        super.onInit()
-        // your on init content
-    }
-
-    override fun onStart() {
-        super.onStart()
-        // your on start content
-    }
-
-    override fun onStop() {
-        super.onStop()
-        // your on stop content
-    }
-
-    // where the states of the screen can be collected or instantiated
-    @Composable
-    override fun CollectStates() {
-        // collect your states
-    }
-
-}
-```
-
 ### Display the screen
 
-For example from the `App` function you can show the screen created before:
+For example from the `App` function you can show the created screen as follows:
 
 ```kotlin
 @Composable
@@ -145,7 +155,7 @@ fun App() {
 }
 ```
 
-## Avoid multiple instantiations
+#### Avoid multiple instantiations
 
 To avoid instantiating a screen multiple times, you can use the following method to remember a screen instance across
 recompositions
@@ -158,38 +168,31 @@ fun App() {
 }
 ```
 
-## Support
+## Additional usage
 
-If you need help using the library or encounter any problems or bugs, please contact us via the following links:
+### CollectStatesAfterLoading method
 
-- Support via <a href="mailto:infotecknobitcompany@gmail.com">email</a>
-- Support via <a href="https://github.com/N7ghtm4r3/Equinox/issues/new">GitHub</a>
+You can use the `CollectStatesAfterLoading` method to collect states after a loading phase.  
+This method can be invoked in an arbitrary way whenever needed. Next an example of its usage:
 
-Thank you for your help!
+```kotlin
+@Composable
+override fun ArrangeScreenContent() {
+    LoadingItemUI(
+        loadingRoutine = {
+            // your loading routine
+        },
+        contentLoaded = {
+            // invoke this method
+            CollectStatesAfterLoading()
+            // rest of the content
+        }
+    )
+}
 
-## Badges
-
-[![](https://img.shields.io/badge/Google_Play-414141?style=for-the-badge&logo=google-play&logoColor=white)](https://play.google.com/store/apps/developer?id=Tecknobit)
-[![Twitter](https://img.shields.io/badge/Twitter-1DA1F2?style=for-the-badge&logo=twitter&logoColor=white)](https://twitter.com/tecknobit)
-
-[![](https://img.shields.io/badge/Spring_Boot-F2F4F9?style=for-the-badge&logo=spring-boot)](https://spring.io/projects/spring-boot)
-[![](https://img.shields.io/badge/Jetpack%2Compose-4285F4.svg?style=for-the-badge&logo=Jetpack-Compose&logoColor=white)](https://www.jetbrains.com/lp/compose-multiplatform/)
-
-[![](https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=java&logoColor=white)](https://www.oracle.com/java/)
-[![](https://img.shields.io/badge/Kotlin-B125EA?style=for-the-badge&logo=kotlin&logoColor=white)](https://kotlinlang.org/)
-
-## Donations
-
-If you want support project and developer
-
-| Crypto                                                                                              | Address                                          | Network  |
-|-----------------------------------------------------------------------------------------------------|--------------------------------------------------|----------|
-| ![](https://img.shields.io/badge/Bitcoin-000000?style=for-the-badge&logo=bitcoin&logoColor=white)   | 3H3jyCzcRmnxroHthuXh22GXXSmizin2yp               | Bitcoin  |
-| ![](https://img.shields.io/badge/Ethereum-3C3C3D?style=for-the-badge&logo=Ethereum&logoColor=white) | 0x1b45bc41efeb3ed655b078f95086f25fc83345c4       | Ethereum |
-| ![](https://img.shields.io/badge/Solana-000?style=for-the-badge&logo=Solana&logoColor=9945FF)       | **AtPjUnxYFHw3a6Si9HinQtyPTqsdbfdKX3dJ1xiDjbrL** | Solana   |
-
-If you want support project and developer
-with <a href="https://www.paypal.com/donate/?hosted_button_id=5QMN5UQH7LDT4">PayPal</a>
-
-Copyright © 2025 Tecknobit
-
+// override and customize it with your logic
+@Composable
+override fun CollectStatesAfterLoading() {
+    // initialize your states depending of the loaded value
+}
+```
