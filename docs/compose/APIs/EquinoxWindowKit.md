@@ -6,32 +6,17 @@ current [window-size-class](https://www.jetbrains.com/help/kotlin-multiplatform-
 
 ### Responsive classes
 
-- **`EXPANDED_CONTENT`** represents the content to be displayed on a device
-  that belongs to an expanded width class and an expanded height class
-
-- **`EXPANDED_MEDIUM_CONTENT`** represents the content to be displayed on a device
-  that belongs to an expanded width class and a medium height class
-
-- **`EXPANDED_COMPACT_CONTENT`** represents the content to be displayed on a device
-  that belongs to an expanded width class and a compact height class
-
-- **`MEDIUM_CONTENT`** represents the content to be displayed on a device
-  that belongs to a medium width class and a medium height class
-
-- **`MEDIUM_EXPANDED_CONTENT`** represents the content to be displayed on a device
-  that belongs to a medium width class and an expanded height class
-
-- **`MEDIUM_COMPACT_CONTENT`** represents the content to be displayed on a device
-  that belongs to a medium width class and a compact height class
-
-- **`COMPACT_CONTENT`** represents the content to be displayed on a device
-  that belongs to a compact width class and a compact height class
-
-- **`COMPACT_EXPANDED_CONTENT`** represents the content to be displayed on a device
-  that belongs to a compact width class and an expanded height class
-
-- **`COMPACT_MEDIUM_CONTENT`** represents the content to be displayed on a device
-  that belongs to a compact width class and a medium height class
+| Class                      | Description                                                                                                             |
+|----------------------------|-------------------------------------------------------------------------------------------------------------------------|
+| `EXPANDED_CONTENT`         | Represents the content to be displayed on a device that belongs to an expanded width class and an expanded height class |
+| `EXPANDED_MEDIUM_CONTENT`  | Represents the content to be displayed on a device that belongs to an expanded width class and a medium height class    |
+| `EXPANDED_COMPACT_CONTENT` | Represents the content to be displayed on a device that belongs to an expanded width class and a compact height class   |
+| `MEDIUM_CONTENT`           | Represents the content to be displayed on a device that belongs to a medium width class and a medium height class       |
+| `MEDIUM_EXPANDED_CONTENT`  | Represents the content to be displayed on a device that belongs to a medium width class and an expanded height class    |
+| `MEDIUM_COMPACT_CONTENT`   | Represents the content to be displayed on a device that belongs to a medium width class and a compact height class      |
+| `COMPACT_CONTENT`          | Represents the content to be displayed on a device that belongs to a compact width class and a compact height class     |
+| `COMPACT_EXPANDED_CONTENT` | Represents the content to be displayed on a device that belongs to a compact width class and an expanded height class   |
+| `COMPACT_MEDIUM_CONTENT`   | Represents the content to be displayed on a device that belongs to a compact width class and a medium height class      |
 
 ### Annotations
 

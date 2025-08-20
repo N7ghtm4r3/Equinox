@@ -48,15 +48,17 @@ markdown_extensions:
       slugify: !!python/object/apply:pymdownx.slugs.slugify
         kwds:
           case: lower
-  # TODO CHECKOUT TO DISPLAY NOTES TIPS AND OTHER
   - admonition
   - pymdownx.details
   - pymdownx.inlinehilite
   - pymdownx.snippets
   - pymdownx.superfences
+  - attr_list
+  - md_in_html
 
 plugins:
   - search
+  - glightbox
 
 extra:
   social:

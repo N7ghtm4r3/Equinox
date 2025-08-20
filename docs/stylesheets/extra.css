@@ -9,3 +9,13 @@
 .md-typeset .tabbed-set {
   border: 0.5px solid lightgray;
 }
+
+img.shadow {
+  border-radius: 12px;
+  box-shadow: var(--md-shadow-z1);
+}
+
+img.mobile-appearance {
+    max-width: 300px;
+    max-height: 700px;
+}
