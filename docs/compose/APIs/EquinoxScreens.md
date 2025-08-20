@@ -3,12 +3,19 @@ These APIs are used to create screens with lifecycle management similar to Andro
 ## Lifecycle handled methods
 
 - **onInit** invoked when the screen has been instantiated
+
 - **onCreate** invoked when the screen has been created
+
 - **onStart** invoked when the screen has been started
+
 - **onResume** invoked when the screen has been resumed
+
 - **onPause** invoked when the screen has been paused
+
 - **onStop** invoked when the screen has been stopped
+
 - **onDestroy** invoked when the screen has been destroyed
+
 - **onAny** invoked when in the screen has occurred any of the possible events
 
 ## Implementation
@@ -143,6 +150,8 @@ class TestScreen : EquinoxScreen<TestViewModel>( // specific the viewModel
 }
 ```
 
+## Usage
+
 ### Display the screen
 
 For example from the `App` function you can show the created screen as follows:
@@ -155,7 +164,7 @@ fun App() {
 }
 ```
 
-#### Avoid multiple instantiations
+### Avoid multiple instantiations
 
 To avoid instantiating a screen multiple times, you can use the following method to remember a screen instance across
 recompositions
