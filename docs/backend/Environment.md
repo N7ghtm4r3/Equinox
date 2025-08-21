@@ -646,7 +646,7 @@ as follows:
 
 You can also create your own default controller
 as [DefaultEquinoxController](https://github.com/N7ghtm4r3/Equinox/blob/main/equinox-backend/src/main/java/com/tecknobit/equinoxbackend/environment/services/DefaultEquinoxController.java)
-with your own [CustomUser](#creating-a-customUser) instead:
+with your own [CustomUser](#creating-a-customuser) instead:
 
 === "Java"
 

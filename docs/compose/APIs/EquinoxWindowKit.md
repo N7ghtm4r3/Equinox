@@ -33,9 +33,8 @@ current [window-size-class](https://www.jetbrains.com/help/kotlin-multiplatform-
   `Compact` class
 
 - **ResponsiveClassComponent** useful to indicate the components which are shown on those devices which
-  belong to the specified classes. This annotation can include both the **WindowWidthSizeClass** and *
-  *WindowHeightSizeClass**
-  categorizations
+  belong to the specified classes. This annotation can include both the **WindowWidthSizeClass** and 
+  **WindowHeightSizeClass** categorizations
 
 ### Responsive methods
 

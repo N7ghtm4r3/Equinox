@@ -97,18 +97,20 @@ dependencies {
       Allows to display a customizable badge in your UI
 
 ??? inputs "Inputs"
-    - [EquinoxInputs](../../equinox-compose/src/commonMain/kotlin/com/tecknobit/equinoxcompose/components/EquinoxInputs.kt)  
-      Wrapper components of the official components provided by `Material`
+    - [EquinoxInputs](https://github.com/N7ghtm4r3/Equinox/blob/main/equinox-compose/src/commonMain/kotlin/com/tecknobit/equinoxcompose/components/EquinoxInputs.kt)  
+      Wrapper components of the official `TextField` and `OutlinedTextField` provided by `Material` which provides same 
+      extra features such input validation or `onValue` callback behavior defined by default
     
     - [DebouncedInputs](components/DebouncedInputs.md)  
       Allow to implement a debounce routine handled when the user stop to typing in the inputs fields
 
 ??? feedback "Feedback & Status"
-    - [EquinoxDialogs](../../equinox-compose/src/commonMain/kotlin/com/tecknobit/equinoxcompose/components/EquinoxDialogs.kt)  
-      Wrapper components of the official components provided by `Material`
+    - [EquinoxDialogs](https://github.com/N7ghtm4r3/Equinox/blob/main/equinox-compose/src/commonMain/kotlin/com/tecknobit/equinoxcompose/components/EquinoxDialogs.kt)  
+      Wrapper components of the official `AlertDialog` provided by `Material` with the [EquinoxViewModel](APIs/EquinoxViewModel.md)
+      lifecycle handling
 
-    - [EquinoxUIs](../../equinox-compose/src/commonMain/kotlin/com/tecknobit/equinoxcompose/components/EquinoxUIs.kt)[EquinoxUIs](src/commonMain/kotlin/com/tecknobit/equinoxcompose/components/EquinoxUIs.kt)   
-      Wrapper components of the official components provided by `Material`
+    - [EquinoxUIs](https://github.com/N7ghtm4r3/Equinox/blob/main/equinox-compose/src/commonMain/kotlin/com/tecknobit/equinoxcompose/components/EquinoxUIs.kt)   
+      Are prebuilt UIs to display a representative scenario like errors, loadings, etc
     
     - [ProgressBars](components/ProgressBars.md)  
       Allow to display progress values on bars
