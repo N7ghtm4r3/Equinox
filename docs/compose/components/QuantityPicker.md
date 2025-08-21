@@ -58,14 +58,14 @@ Check out the table below to apply your customizations to the component:
 
 ## Appearance
 
-#### Mobile
+### Mobile
 
 <video class="shadow mobile-appearance" controls>
   <source src="../assets/videos/quantitypicker/quantitypicker-mobile.webm" type="video/webm">
   Cannot play the video
 </video>
 
-#### Desktop & Web
+### Desktop & Web
 
 <video class="shadow" controls>
   <source src="../assets/videos/quantitypicker/quantitypicker-desktop.mp4" type="video/mp4">
