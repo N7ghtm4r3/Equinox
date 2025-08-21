@@ -50,11 +50,11 @@ dependencies {
 
 ## APIs available
 
-- [Timeformatter](../documd/core/Timeformatter.md) allows you to format the temporal values and calculate temporal gap
-- [Requester](../documd/core/Requester.md) allows you to communicate with your backends providing the basic methods to
+- [Timeformatter](../documd/core/Timeformatter.md) allows to format the temporal values and calculate temporal gap
+- [Requester](../documd/core/Requester.md) allows to communicate with your backends providing the basic methods to
   build
   your own customized requester following the **Equinox**'s philosophy
-- [Retriever](../documd/core/Retriever.md) allows you to handle repetitive retrieving routines and execute them in
+- [Retriever](../documd/core/Retriever.md) allows to handle repetitive retrieving routines and execute them in
   background
 
 ## Support

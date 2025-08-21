@@ -50,9 +50,9 @@ dependencies {
 
 ## APIs available
 
-- [Timeformatter](APIs/Timeformatter.md) allows you to format the temporal values and calculate temporal gap
-- [Requester](APIs/Requester.md) allows you to communicate with your backends providing the basic methods to
+- [Timeformatter](APIs/Timeformatter.md) allows to format the temporal values and calculate temporal gap
+- [Requester](APIs/Requester.md) allows to communicate with your backends providing the basic methods to
   build
   your own customized requester following the **Equinox**'s philosophy
-- [Retriever](APIs/Retriever.md) allows you to handle repetitive retrieving routines and execute them in
+- [Retriever](APIs/Retriever.md) allows to handle repetitive retrieving routines and execute them in
   background

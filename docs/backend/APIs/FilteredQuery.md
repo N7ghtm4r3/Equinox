@@ -1,4 +1,4 @@
-This API allows you to create dynamic queries with filter parameters
+This API allows to create dynamic queries with filter parameters
 leveraging [regex expressions](https://www.geeksforgeeks.org/dsa/write-regular-expressions/).
 
 Under the hood, it uses the **CriteriaBuilder** API, making it particularly useful for building complex queries with

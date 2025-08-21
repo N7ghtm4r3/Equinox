@@ -1,4 +1,4 @@
-This component allows you to display a customizable badge in your UI.
+This component allows to display a customizable badge in your UI.
 It is useful for showing labels, states or tags in a visually distinct way
 
 ## Usage

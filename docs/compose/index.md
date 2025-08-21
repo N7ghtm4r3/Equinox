@@ -72,24 +72,77 @@ dependencies {
     - **EquinoxProfileViewModel**  
       Prebuilt viewmodel to manage the user account settings and preferences
 
-- [EquinoxScreens](APIs/EquinoxScreens.md)
-- [EquinoxWindowKit](APIs/EquinoxWindowKit.md)
+- [EquinoxScreens](APIs/EquinoxScreens.md)  
+  APIs used to create screens with lifecycle management similar to Android activities
+
+- [EquinoxWindowKit](APIs/EquinoxWindowKit.md)  
+  APIs useful to handle the responsive layouts
 
 ## Components available
 
-- [EquinoxDialogs](src/commonMain/kotlin/com/tecknobit/equinoxcompose/components/EquinoxDialogs.kt)
-- [EquinoxInputs](src/commonMain/kotlin/com/tecknobit/equinoxcompose/components/EquinoxInputs.kt)
-- [EquinoxUIs](src/commonMain/kotlin/com/tecknobit/equinoxcompose/components/EquinoxUIs.kt)
-- [TextDivider](components/textdivider/TextDivider.md)
-- [Tile](components/tile/Tile.md)
-- [SplitText](components/splittext/SplitText.md)
-- [ExpandableText](components/expandabletext/ExpandableText.md)
-- [TabSelector](components/tabselector/TabSelector.md)
-- [ChameleonText](components/chameleontext/ChameleonText.md)
-- [Stepper](components/stepper/Stepper.md)
-- [DebouncedInputs](components/debouncefields/DebouncedInputs.md)
-- [QuantityPicker](components/quantitypicker/QuantityPicker.md)
-- [BadgeText](components/badgetext/BadgeText.md)
-- [ProgressBars](components/progressbars/ProgressBars.md)
-- [SessionFlowContainer](components/sessionflowcontainer/SessionFlowContainer.md)
-- [InformativeIcon](components/informativeicon/InformativeIcon.md)
+??? texts "Texts"
+    - [TextDivider](components/TextDivider.md)  
+    Allows to divide sections with a representative text
+
+    - [SplitText](components/splittext/SplitText.md)  
+      Allows the user to insert a split text such OTP codes, PIN or any other texts of this type
+    
+    - [ExpandableText](components/expandabletext/ExpandableText.md)  
+      Allows to dynamically display a long expanded text initially collapsed
+    
+    - [ChameleonText](components/chameleontext/ChameleonText.md)  
+      Allows to change the text color dynamically based on the background of the container where the text is above
+     
+    - [BadgeText](components/BadgeText.md)  
+      Allows to display a customizable badge in your UI
+
+??? abstract "Inputs"
+    - [EquinoxInputs](src/commonMain/kotlin/com/tecknobit/equinoxcompose/components/EquinoxInputs.kt)  
+      a
+    
+    - [DebouncedInputs](components/DebouncedInputs.md)  
+      A
+
+??? info "Feedback & Status"
+    - [EquinoxDialogs](src/commonMain/kotlin/com/tecknobit/equinoxcompose/components/EquinoxDialogs.kt)  
+      A
+
+    - [EquinoxUIs](src/commonMain/kotlin/com/tecknobit/equinoxcompose/components/EquinoxUIs.kt)  
+      A
+    
+    - [ProgressBars](components/ProgressBars.md)  
+      A
+
+    - [InformativeIcon](components/InformativeIcon.md)  
+      A
+
+
+??? interactive "Interactive"
+
+    - [TabSelector](components/TabSelector.md)  
+      Custom tab selector allows to select the tab to display
+    
+    - [Tile](components/Tile.md)  
+      Allows users to quickly understand options and interact with them and can group related actions or information
+
+    - [Stepper](components/Stepper.md)  
+      Allows to create a dynamic interaction with the user dividing for example a long procedure such item
+      creation, customization, etc... in different specific steps where the user can interact
+
+    - [QuantityPicker](components/QuantityPicker.md)  
+        A
+
+??? interactive "Containers"
+
+    - [SessionFlowContainer](components/SessionFlowContainer.md)  
+      A       
+    
+    - [Tile](components/Tile.md)  
+      Allows users to quickly understand options and interact with them and can group related actions or information
+
+    - [Stepper](components/Stepper.md)  
+      Allows to create a dynamic interaction with the user dividing for example a long procedure such item
+      creation, customization, etc... in different specific steps where the user can interact
+
+    - [QuantityPicker](components/QuantityPicker.md)  
+        A

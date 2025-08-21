@@ -5,7 +5,7 @@
 Initializes the `AppContext` during the application's startup phase using AndroidX's `Initializer` interface.
 
 This class is responsible for setting up the `AppContext` by providing the application-wide `Context` early
-in the app's lifecycle. It is designed to work with AndroidX's `App Startup` library, which allows you to
+in the app's lifecycle. It is designed to work with AndroidX's `App Startup` library, which allows to
 initialize components as soon as the app starts, without having to modify the `Application` class
 
 ### Implementation
