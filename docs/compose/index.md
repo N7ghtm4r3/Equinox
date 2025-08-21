@@ -84,38 +84,37 @@ dependencies {
     - [TextDivider](components/TextDivider.md)  
     Allows to divide sections with a representative text
 
-    - [SplitText](components/splittext/SplitText.md)  
+    - [SplitText](components/SplitText.md)  
       Allows the user to insert a split text such OTP codes, PIN or any other texts of this type
     
-    - [ExpandableText](components/expandabletext/ExpandableText.md)  
+    - [ExpandableText](components/ExpandableText.md)  
       Allows to dynamically display a long expanded text initially collapsed
     
-    - [ChameleonText](components/chameleontext/ChameleonText.md)  
+    - [ChameleonText](components/ChameleonText.md)  
       Allows to change the text color dynamically based on the background of the container where the text is above
      
     - [BadgeText](components/BadgeText.md)  
       Allows to display a customizable badge in your UI
 
-??? abstract "Inputs"
-    - [EquinoxInputs](src/commonMain/kotlin/com/tecknobit/equinoxcompose/components/EquinoxInputs.kt)  
-      a
+??? inputs "Inputs"
+    - [EquinoxInputs](../../equinox-compose/src/commonMain/kotlin/com/tecknobit/equinoxcompose/components/EquinoxInputs.kt)  
+      Wrapper components of the official components provided by `Material`
     
     - [DebouncedInputs](components/DebouncedInputs.md)  
-      A
+      Allow to implement a debounce routine handled when the user stop to typing in the inputs fields
 
-??? info "Feedback & Status"
-    - [EquinoxDialogs](src/commonMain/kotlin/com/tecknobit/equinoxcompose/components/EquinoxDialogs.kt)  
-      A
+??? feedback "Feedback & Status"
+    - [EquinoxDialogs](../../equinox-compose/src/commonMain/kotlin/com/tecknobit/equinoxcompose/components/EquinoxDialogs.kt)  
+      Wrapper components of the official components provided by `Material`
 
-    - [EquinoxUIs](src/commonMain/kotlin/com/tecknobit/equinoxcompose/components/EquinoxUIs.kt)  
-      A
+    - [EquinoxUIs](../../equinox-compose/src/commonMain/kotlin/com/tecknobit/equinoxcompose/components/EquinoxUIs.kt)[EquinoxUIs](src/commonMain/kotlin/com/tecknobit/equinoxcompose/components/EquinoxUIs.kt)   
+      Wrapper components of the official components provided by `Material`
     
     - [ProgressBars](components/ProgressBars.md)  
-      A
+      Allow to display progress values on bars
 
     - [InformativeIcon](components/InformativeIcon.md)  
-      A
-
+      Provides the possibility to display an informative text when the user interact with an icon
 
 ??? interactive "Interactive"
 
@@ -130,19 +129,9 @@ dependencies {
       creation, customization, etc... in different specific steps where the user can interact
 
     - [QuantityPicker](components/QuantityPicker.md)  
-        A
+      Allows to pick a numerical quantity value
 
-??? interactive "Containers"
+??? containers "Containers"
 
     - [SessionFlowContainer](components/SessionFlowContainer.md)  
-      A       
-    
-    - [Tile](components/Tile.md)  
-      Allows users to quickly understand options and interact with them and can group related actions or information
-
-    - [Stepper](components/Stepper.md)  
-      Allows to create a dynamic interaction with the user dividing for example a long procedure such item
-      creation, customization, etc... in different specific steps where the user can interact
-
-    - [QuantityPicker](components/QuantityPicker.md)  
-        A
+      Allows to dynamically display the correct content based on the session status

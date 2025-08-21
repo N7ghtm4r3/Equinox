@@ -1,4 +1,4 @@
-Components used to display progress values on bars
+These components allow to display progress values on bars
 
 ## HorizontalProgressBar
 
