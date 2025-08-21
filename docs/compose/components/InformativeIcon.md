@@ -52,7 +52,7 @@ Check out the table below to apply your customizations to the component:
 ### Mobile
 
 <video class="shadow mobile-appearance" controls>
-  <source src="../assets/videos/informativeicon/informativeicon-mobile.webm" type="video/mp4">
+  <source src="../assets/videos/informativeicon/informativeicon-mobile.webm" type="video/webm">
   Cannot play the video
 </video>
 
