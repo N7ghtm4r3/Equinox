@@ -18,7 +18,7 @@
   /* == APIs admonition == */
   --md-admonition-icon--batch: url('data:image/svg+xml;charset=utf-8,<svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-building-warehouse"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M3 21v-13l9 -4l9 4v13" /><path d="M13 13h4v8h-10v-6h6" /><path d="M13 21v-9a1 1 0 0 0 -1 -1h-2a1 1 0 0 0 -1 1v3" /></svg>');
   --md-admonition-icon--database: url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>database-outline</title><path d="M12 3C7.58 3 4 4.79 4 7V17C4 19.21 7.59 21 12 21S20 19.21 20 17V7C20 4.79 16.42 3 12 3M18 17C18 17.5 15.87 19 12 19S6 17.5 6 17V14.77C7.61 15.55 9.72 16 12 16S16.39 15.55 18 14.77V17M18 12.45C16.7 13.4 14.42 14 12 14C9.58 14 7.3 13.4 6 12.45V9.64C7.47 10.47 9.61 11 12 11C14.39 11 16.53 10.47 18 9.64V12.45M12 9C8.13 9 6 7.5 6 7S8.13 5 12 5C15.87 5 18 6.5 18 7S15.87 9 12 9Z" /></svg>');
-  --md-admonition-icon--resources: url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>folder-open-outline</title><path d="M6.1,10L4,18V8H21A2,2 0 0,0 19,6H12L10,4H4A2,2 0 0,0 2,6V18A2,2 0 0,0 4,20H19C19.9,20 20.7,19.4 20.9,18.5L23.2,10H6.1M19,18H6L7.6,12H20.6L19,18Z" /></svg>');
+  --md-admonition-icon--api-miscellaneous: url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>folder-open-outline</title><path d="M6.1,10L4,18V8H21A2,2 0 0,0 19,6H12L10,4H4A2,2 0 0,0 2,6V18A2,2 0 0,0 4,20H19C19.9,20 20.7,19.4 20.9,18.5L23.2,10H6.1M19,18H6L7.6,12H20.6L19,18Z" /></svg>');
 
 
   /* == Components admonition == */
@@ -53,32 +53,32 @@
 /* = Custom admonitions = */
 
 /* == APIs admonitions == */
-.md-typeset details.resources,
+.md-typeset details.api-miscellaneous,
 .md-typeset details.database,
 .md-typeset details.batch {
   border-color: var(--md-admonition-color--api);
 }
 
-.md-typeset .resources > summary,
+.md-typeset .api-miscellaneous > summary,
 .md-typeset .database > summary,
 .md-typeset .batch > summary {
   background-color: var(--md-admonition-background--api);
 }
 
-.md-typeset .resources > ul a,
+.md-typeset .api-miscellaneous > ul a,
 .md-typeset .database > ul a,
 .md-typeset .batch > ul a {
   color: var(--md-admonition-color--api);
 }
 
-.md-typeset .resources > ul a:active,
+.md-typeset .api-miscellaneous > ul a:active,
 .md-typeset .database > ul a:active,
 .md-typeset .batch > ul a:active  {
   color: var(--md-admonition-shadow--a-hover);
 }
 
-.md-typeset .resources > .admonition-title::before,
-.md-typeset .resources > summary::after,
+.md-typeset .api-miscellaneous > .admonition-title::before,
+.md-typeset .api-miscellaneous > summary::after,
 .md-typeset .database > .admonition-title::before,
 .md-typeset .database > summary::after,
 .md-typeset .batch > .admonition-title::before,
@@ -86,8 +86,8 @@
   color: var(--md-admonition-color--api);
 }
 
-.md-typeset .admonition.resources:focus-within,
-.md-typeset details.resources:focus-within,
+.md-typeset .admonition.api-miscellaneous:focus-within,
+.md-typeset details.api-miscellaneous:focus-within,
 .md-typeset .admonition.database:focus-within,
 .md-typeset details.database:focus-within,
 .md-typeset .admonition.batch:focus-within,
@@ -95,9 +95,9 @@
   box-shadow: 0 0 0 .2rem var(--md-admonition-shadow--api);
 }
 
-.md-typeset .resources > summary::before {
-  -webkit-mask-image: var(--md-admonition-icon--resources);
-  mask-image: var(--md-admonition-icon--resources);
+.md-typeset .api-miscellaneous > summary::before {
+  -webkit-mask-image: var(--md-admonition-icon--api-miscellaneous);
+  mask-image: var(--md-admonition-icon--api-miscellaneous);
 }
 
 .md-typeset .database > summary::before {
@@ -110,7 +110,7 @@
   mask-image: var(--md-admonition-icon--batch);
 }
 
-.md-typeset .resources > summary::before,
+.md-typeset .api-miscellaneous > summary::before,
 .md-typeset .database > summary::before,
 .md-typeset .batch > summary::before {
   background-color: var(--md-admonition-color--api);

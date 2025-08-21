@@ -97,12 +97,12 @@ Add the JitPack repository to your build file
       - [FilteredQuery](APIs/FilteredQuery.md)  
         Builds dynamic queries with filter parameters leverages regex expressions
 
-??? resources "Resources"
+??? api-miscellaneous "Miscellaneous"
      - [ResourcesProvider](APIs/ResourcesProvider.md)  
        Manages static resources to serve to client applications
 
-- [EquinoxEvents](APIs/EquinoxEvents.md)  
-  Facilitates event sharing and collection between backend services
+     - [EquinoxEvents](APIs/EquinoxEvents.md)  
+       Facilitates event sharing and collection between backend services
 
 ## Basic environment available
 
