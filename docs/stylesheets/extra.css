@@ -2,12 +2,26 @@
   /* Primary color */
   --deep-purple: #7E56C2;
 
-  /* Category admonition*/
-  --md-admonition-color--category: #7E56C2;
-  --md-admonition-background--category: #7E56C222;
-  --md-admonition-shadow--category: #7E56C21A;
+  /* = APIs admonition = */
+   --md-admonition-color--api: #FF9800;
+   --md-admonition-background--api: #FF980022;
+   --md-admonition-shadow--api: #FF98001A;
+   --md-admonition-shadow--a-hover: #e68a00;
 
-  /* Icons admonition*/
+  /* = Components admonition = */
+  --md-admonition-color--component: #7E56C2;
+  --md-admonition-background--component: #7E56C222;
+  --md-admonition-shadow--component: #7E56C21A;
+
+  /* = Icons admonition = */
+  
+  /* == APIs admonition == */
+  --md-admonition-icon--batch: url('data:image/svg+xml;charset=utf-8,<svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-building-warehouse"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M3 21v-13l9 -4l9 4v13" /><path d="M13 13h4v8h-10v-6h6" /><path d="M13 21v-9a1 1 0 0 0 -1 -1h-2a1 1 0 0 0 -1 1v3" /></svg>');
+  --md-admonition-icon--database: url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>database-outline</title><path d="M12 3C7.58 3 4 4.79 4 7V17C4 19.21 7.59 21 12 21S20 19.21 20 17V7C20 4.79 16.42 3 12 3M18 17C18 17.5 15.87 19 12 19S6 17.5 6 17V14.77C7.61 15.55 9.72 16 12 16S16.39 15.55 18 14.77V17M18 12.45C16.7 13.4 14.42 14 12 14C9.58 14 7.3 13.4 6 12.45V9.64C7.47 10.47 9.61 11 12 11C14.39 11 16.53 10.47 18 9.64V12.45M12 9C8.13 9 6 7.5 6 7S8.13 5 12 5C15.87 5 18 6.5 18 7S15.87 9 12 9Z" /></svg>');
+  --md-admonition-icon--resources: url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>folder-open-outline</title><path d="M6.1,10L4,18V8H21A2,2 0 0,0 19,6H12L10,4H4A2,2 0 0,0 2,6V18A2,2 0 0,0 4,20H19C19.9,20 20.7,19.4 20.9,18.5L23.2,10H6.1M19,18H6L7.6,12H20.6L19,18Z" /></svg>');
+
+
+  /* == Components admonition == */
   --md-admonition-icon--texts: url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>format-text</title><path d="M18.5,4L19.66,8.35L18.7,8.61C18.25,7.74 17.79,6.87 17.26,6.43C16.73,6 16.11,6 15.5,6H13V16.5C13,17 13,17.5 13.33,17.75C13.67,18 14.33,18 15,18V19H9V18C9.67,18 10.33,18 10.67,17.75C11,17.5 11,17 11,16.5V6H8.5C7.89,6 7.27,6 6.74,6.43C6.21,6.87 5.75,7.74 5.3,8.61L4.34,8.35L5.5,4H18.5Z" /></svg>');
   --md-admonition-icon--inputs: url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>form-textbox</title><path d="M17,7H22V17H17V19A1,1 0 0,0 18,20H20V22H17.5C16.95,22 16,21.55 16,21C16,21.55 15.05,22 14.5,22H12V20H14A1,1 0 0,0 15,19V5A1,1 0 0,0 14,4H12V2H14.5C15.05,2 16,2.45 16,3C16,2.45 16.95,2 17.5,2H20V4H18A1,1 0 0,0 17,5V7M2,7H13V9H4V15H13V17H2V7M20,15V9H17V15H20Z" /></svg>');
   --md-admonition-icon--feedback: url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>comment-outline</title><path d="M9,22A1,1 0 0,1 8,21V18H4A2,2 0 0,1 2,16V4C2,2.89 2.9,2 4,2H20A2,2 0 0,1 22,4V16A2,2 0 0,1 20,18H13.9L10.2,21.71C10,21.9 9.75,22 9.5,22V22H9M10,16V19.08L13.08,16H20V4H4V16H10Z" /></svg>');
@@ -38,12 +52,77 @@
 
 /* = Custom admonitions = */
 
+/* == APIs admonitions == */
+.md-typeset details.resources,
+.md-typeset details.database,
+.md-typeset details.batch {
+  border-color: var(--md-admonition-color--api);
+}
+
+.md-typeset .resources > summary,
+.md-typeset .database > summary,
+.md-typeset .batch > summary {
+  background-color: var(--md-admonition-background--api);
+}
+
+.md-typeset .resources > ul a,
+.md-typeset .database > ul a,
+.md-typeset .batch > ul a {
+  color: var(--md-admonition-color--api);
+}
+
+.md-typeset .resources > ul a:active,
+.md-typeset .database > ul a:active,
+.md-typeset .batch > ul a:active  {
+  color: var(--md-admonition-shadow--a-hover);
+}
+
+.md-typeset .resources > .admonition-title::before,
+.md-typeset .resources > summary::after,
+.md-typeset .database > .admonition-title::before,
+.md-typeset .database > summary::after,
+.md-typeset .batch > .admonition-title::before,
+.md-typeset .batch > summary::after {
+  color: var(--md-admonition-color--api);
+}
+
+.md-typeset .admonition.resources:focus-within,
+.md-typeset details.resources:focus-within,
+.md-typeset .admonition.database:focus-within,
+.md-typeset details.database:focus-within,
+.md-typeset .admonition.batch:focus-within,
+.md-typeset details.batch:focus-within {
+  box-shadow: 0 0 0 .2rem var(--md-admonition-shadow--api);
+}
+
+.md-typeset .resources > summary::before {
+  -webkit-mask-image: var(--md-admonition-icon--resources);
+  mask-image: var(--md-admonition-icon--resources);
+}
+
+.md-typeset .database > summary::before {
+  -webkit-mask-image: var(--md-admonition-icon--database);
+  mask-image: var(--md-admonition-icon--database);
+}
+
+.md-typeset .batch > summary::before {
+  -webkit-mask-image: var(--md-admonition-icon--batch);
+  mask-image: var(--md-admonition-icon--batch);
+}
+
+.md-typeset .resources > summary::before,
+.md-typeset .database > summary::before,
+.md-typeset .batch > summary::before {
+  background-color: var(--md-admonition-color--api);
+}
+
+/* == Components admonitions == */
 .md-typeset details.texts,
 .md-typeset details.inputs,
 .md-typeset details.feedback,
 .md-typeset details.interactive,
 .md-typeset details.containers {
-  border-color: var(--md-admonition-color--category);
+  border-color: var(--md-admonition-color--component);
 }
 
 .md-typeset .texts > .admonition-title,
@@ -56,7 +135,7 @@
 .md-typeset .interactive > summary,
 .md-typeset .containers > .admonition-title,
 .md-typeset .containers > summary {
-  background-color: var(--md-admonition-background--category);
+  background-color: var(--md-admonition-background--component);
 }
 
 .md-typeset .texts > .admonition-title::before,
@@ -69,7 +148,7 @@
 .md-typeset .interactive > summary::after,
 .md-typeset .containers > .admonition-title::before,
 .md-typeset .containers > summary::after {
-  color: var(--md-admonition-color--category);
+  color: var(--md-admonition-color--component);
 }
 
 .md-typeset .admonition.texts:focus-within,
@@ -82,7 +161,7 @@
 .md-typeset details.interactive:focus-within,
 .md-typeset .admonition.containers:focus-within,
 .md-typeset details.containers:focus-within {
-  box-shadow: 0 0 0 .2rem var(--md-admonition-shadow--category);
+  box-shadow: 0 0 0 .2rem var(--md-admonition-shadow--component);
 }
 
 .md-typeset .texts > summary::before {
@@ -115,5 +194,5 @@
 .md-typeset .feedback > summary::before,
 .md-typeset .interactive > summary::before,
 .md-typeset .containers > summary::before {
-  background-color: var(--md-admonition-color--category);
+  background-color: var(--md-admonition-color--component);
 }

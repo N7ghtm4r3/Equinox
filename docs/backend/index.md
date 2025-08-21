@@ -83,20 +83,23 @@ Add the JitPack repository to your build file
 
 ## APIs available
 
-- [ResourcesProvider](APIs/ResourcesProvider.md)  
-  Manages static resources to serve to client applications
+??? batch "Batch"
+      - [EquinoxItemsHelper](APIs/EquinoxItemsHelper.md)  
+        Executes batch database operations such as insertion, deletion, and synchronization
+    
+      - [BatchSynchronizationProcedure](APIs/BatchSynchronizationProcedure.md)  
+        Defines reusable and compacted synchronization procedures
 
-- [IndexesCreator](APIs/IndexesCreator.md)  
-  Automatically creates indexes for custom database tables
+??? database "Database"
+      - [IndexesCreator](APIs/IndexesCreator.md)  
+        Automatically creates indexes for custom database tables
 
-- [FilteredQuery](APIs/FilteredQuery.md)  
-  Builds dynamic queries with filter parameters leverages regex expressions
+      - [FilteredQuery](APIs/FilteredQuery.md)  
+        Builds dynamic queries with filter parameters leverages regex expressions
 
-- [EquinoxItemsHelper](APIs/EquinoxItemsHelper.md)  
-  Executes batch database operations such as insertion, deletion, and synchronization
-
-- [BatchSynchronizationProcedure](APIs/BatchSynchronizationProcedure.md)  
-  Defines reusable and compacted synchronization procedures
+??? resources "Resources"
+     - [ResourcesProvider](APIs/ResourcesProvider.md)  
+       Manages static resources to serve to client applications
 
 - [EquinoxEvents](APIs/EquinoxEvents.md)  
   Facilitates event sharing and collection between backend services
