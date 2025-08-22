@@ -18,7 +18,7 @@ This API handles temporal values and provides easy access to custom formats for 
 
     ```java
     String currentTimestamp = TimeFormatter.INSTANCE.formatNowAsString(
-        defaultPattern // custom pattern if needed
+        TimeFormatter.COMPLETE_EUROPEAN_DATE_PATTERN // default pattern
     );
     ```
 
@@ -36,9 +36,10 @@ This API handles temporal values and provides easy access to custom formats for 
 
     ```java
     String january6 = TimeFormatter.INSTANCE.toDateString(
-        1736198062000L, 
-        defaultPattern // custom pattern if needed
-    ); // will be 06/01/2025 21:14:22
+        1736198062000L,
+        null, // default invalid time Value
+        TimeFormatter.COMPLETE_EUROPEAN_DATE_PATTERN // default pattern
+    );
     ```
 
 #### Format a string date value as Long
@@ -56,7 +57,8 @@ This API handles temporal values and provides easy access to custom formats for 
     ```java
     long january6 = TimeFormatter.INSTANCE.toTimestamp(
         "06/01/2025 21:14:22",
-        defaultPattern // custom pattern if needed
+        null, // default invalid time Value
+        TimeFormatter.COMPLETE_EUROPEAN_DATE_PATTERN // default pattern
     ); // will be 1736198062000
     ```
 
@@ -75,7 +77,7 @@ val daysGap = genuary6.daysUntil(
 )
 ```
 
-## Supported temporal gap
+#### Supported temporal gap
 
 | **Type**       | **Description**                |
 |----------------|--------------------------------|
