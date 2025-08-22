@@ -10,8 +10,7 @@
 **v1.0.1**
 
 Integration of the [lazy-pagination-compose](https://github.com/Ahmad-Hamwi/lazy-pagination-compose) library with the
-`in-place`
-operations such `addInPlace, removeInPlace`, etc...
+[in-place operations ](#usage)
 
 ## Implementation
 
@@ -55,3 +54,16 @@ dependencies {
     implementation 'io.github.n7ghtm4r3:equinoxmisc-lazy-pagination-compose-ops:1.0.1'
 }
 ```
+
+## Usage
+
+| Method                | Description                                                                                                                                                                                                                                                                                             |
+|-----------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `addInPlace`          | Add in-place a new item to the current `PaginationState.allItems` list                                                                                                                                                                                                                                  |
+| `addAllInPlace`       | Add in-place a collection of items to the current `PaginationState.allItems` list                                                                                                                                                                                                                       |
+| `removeInPlace`       | Remove in-place an item from the current `PaginationState.allItems` list                                                                                                                                                                                                                                |
+| `removeAllInPlace`    | Remove in-place a collection of items from the current `PaginationState.allItems` list                                                                                                                                                                                                                  |
+| `updateInPlace`       | Update in-place the current `PaginationState.allItems` list                                                                                                                                                                                                                                             |
+| `retainAndAllInPlace` | Split in two phases: first remove all the items from the current `PaginationState.allItems` that are not present in the `items` collection, then add all the items present in the same items collection but not in the main one. Duplicate values are considered as one element, so they will be merged |
+| `mergeIfNotContained` | Merge items from the `items` collection that are not present in the `PaginationState.allItems`. Duplicate values are considered as one element, so they will be merged                                                                                                                                  |
+| `toggle`              | Add in-place an item to the current `PaginationState.allItems` if it is not already contained, or remove it if already contained. Can be used to dynamically insert or remove an element from the collection, e.g., with checkbox selection or button clicking                                          |
