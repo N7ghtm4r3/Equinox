@@ -41,3 +41,5 @@ bin/
 gradle.properties
 local.properties
 .kotlin
+
+.cache

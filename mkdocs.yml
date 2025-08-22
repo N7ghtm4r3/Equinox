@@ -1,0 +1,72 @@
+# yaml-language-server: $schema=https://squidfunk.github.io/mkdocs-material/schema.json
+
+site_name: Equinox
+site_description: Equinox framework documentation
+site_url: https://io.github.n7ghtm4r3/Equinox
+
+repo_name: Equinox
+repo_url: https://github.com/N7ghtm4r3/Equinox
+site_author: Manuel Maurizio
+
+extra_css:
+  - stylesheets/extra.css
+
+theme:
+  name: material
+  custom_dir: overrides
+  palette:
+    - scheme: default
+      primary: deep-purple
+      toggle:
+        icon: material/brightness-4
+        name: Switch to dark mode
+    - scheme: slate
+      primary: deep-purple
+      toggle:
+        icon: material/brightness-7
+        name: Switch to light mode
+  code:
+    highlight_theme:
+      default: material
+      dark: material
+  language: en
+
+  features:
+    - search.suggest
+    - search.highlight
+    - search.share
+    - content.tabs.link
+    - content.code.copy
+    - navigation.footer
+
+markdown_extensions:
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.tabbed:
+      alternate_style: true
+      slugify: !!python/object/apply:pymdownx.slugs.slugify
+        kwds:
+          case: lower
+  - admonition
+  - pymdownx.details
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences
+  - attr_list
+  - md_in_html
+
+plugins:
+  - search
+  - glightbox
+
+extra:
+  social:
+    - icon: material/email
+      link: mailto:infotecknobitcompany@gmail.com
+    - icon: material/bug
+      link: https://github.com/N7ghtm4r3/Equinox/issues/new
+
+copyright: |
+  &copy; 2025 <a href="https://github.com/N7ghtm4r3" target="new">N7ghtm4r3 - Tecknobit</a>

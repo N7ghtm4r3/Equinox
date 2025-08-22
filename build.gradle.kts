@@ -31,7 +31,7 @@ subprojects {
 }
 
 tasks.withType<DokkaMultiModuleTask> {
-    outputDirectory.set(layout.projectDirectory.dir("docs"))
+    outputDirectory.set(layout.projectDirectory.dir("doks"))
     pluginConfiguration<DokkaBase, DokkaBaseConfiguration> {
         version = "1.1.5"
         footerMessage = "(c) 2025 Tecknobit"

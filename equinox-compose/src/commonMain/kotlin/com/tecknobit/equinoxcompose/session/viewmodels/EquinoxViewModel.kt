@@ -16,8 +16,8 @@ import org.jetbrains.compose.resources.getString
 import kotlin.reflect.KClass
 
 /**
- * The `EquinoxViewModel` class is the support class used by the related activities to communicate
- * with the backend and to execute the refreshing routines to update the UI data
+ * The `EquinoxViewModel` class is the support class used by the related screen to delegate the user interactions
+ * to communicate for example with the backend or to execute the retrieval routines to update the UI data
  *
  * Related documentation: [EquinoxViewModel](https://github.com/N7ghtm4r3/Equinox/blob/main/documd/compose/apis/EquinoxViewModel.md)
  *

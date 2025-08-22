@@ -1,6 +1,6 @@
 # Equinox Compose
 
-**v1.1.3**
+**v1.1.5**
 
 ![Static Badge](https://img.shields.io/badge/android-4280511051?link=https%3A%2F%2Fplay.google.com%2Fstore%2Fapps%2Fdetails%3Fid%3Dcom.tecknobit.ametista)
 ![Static Badge](https://img.shields.io/badge/ios-445E91?link=https%3A%2F%2Fimg.shields.io%2Fbadge%2Fandroid-4280511051)
@@ -15,7 +15,7 @@ Utilities for **Compose Multiplatform** applications such components, apis for a
 
 - `libs.version.toml`
 
-```gradle
+```toml
 [versions]
 equinox = "1.1.5"
 
@@ -26,7 +26,7 @@ equinox-core = { module = "io.github.n7ghtm4r3:equinox-core", version.ref = "equ
 
 - `build.gradle.kts`
 
-```gradle
+```kotlin
 dependencies {
 
     // implement the compose utilities
@@ -39,7 +39,7 @@ dependencies {
 
 ### Gradle (Kotlin)
 
-```gradle
+```kotlin
 dependencies {
     
     // implement the compose utilities
@@ -52,7 +52,7 @@ dependencies {
 
 ### Gradle Groovy
 
-```gradle
+```groovy
 dependencies {
    
     // implement the compose utilities

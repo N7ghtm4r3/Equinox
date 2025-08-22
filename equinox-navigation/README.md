@@ -1,6 +1,6 @@
 # Equinox Navigation
 
-**v1.0.2**
+**v1.0.3**
 
 ![Static Badge](https://img.shields.io/badge/android-4280511051?link=https%3A%2F%2Fplay.google.com%2Fstore%2Fapps%2Fdetails%3Fid%3Dcom.tecknobit.ametista)
 ![Static Badge](https://img.shields.io/badge/ios-445E91?link=https%3A%2F%2Fimg.shields.io%2Fbadge%2Fandroid-4280511051)
@@ -8,7 +8,7 @@
 ![Static Badge](https://img.shields.io/badge/wasmjs-834C74?link=https%3A%2F%2Fimg.shields.io%2Fbadge%2Fandroid-4280511051)
 
 Responsive navigation systems based on the [EquinoxScreens](documd/compose/apis/EquinoxScreens.md) apis to handle the
-navigation in the **Compose Multiplatform applications**
+navigation in **Compose Multiplatform applications**
 
 ## Implementation
 
@@ -16,7 +16,7 @@ navigation in the **Compose Multiplatform applications**
 
 - `libs.version.toml`
 
-```gradle
+```toml
 [versions]
 equinox = "1.1.5"
 equinox-navigation = "1.0.3"
@@ -29,7 +29,7 @@ equinox-navigation = { module = "io.github.n7ghtm4r3:equinox-navigation", versio
 
 - `build.gradle.kts`
 
-```gradle
+```kotlin
 dependencies {
 
     // implement the compose utilities
@@ -45,7 +45,7 @@ dependencies {
 
 ### Gradle (Kotlin)
 
-```gradle
+```kotlin
 dependencies {
     
     // implement the compose utilities
@@ -61,7 +61,7 @@ dependencies {
 
 ### Gradle Groovy
 
-```gradle
+```groovy
 dependencies {
    
     // implement the compose utilities
@@ -77,8 +77,8 @@ dependencies {
 
 ## APIs available
 
-- [NavigatorScreen](../documd/navigation/NavigatorScreen.md) -> Built-in responsive navigation system fully customizable
-  as needed
+- [NavigatorScreen](../docs/navigation/APIs/NavigatorScreen.md) is a built-in responsive navigation system fully
+  customizable as needed
 
 The other apis will be gradually released
 
