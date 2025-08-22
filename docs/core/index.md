@@ -63,7 +63,7 @@ dependencies {
   your own customized requester following the **Equinox**'s philosophy
 
 - [PaginatedResponse](APIs/common/PaginatedResponse.md)  
-  Allows paginating backend responses based on **Equinox**, making data retrieval easier for clients
+  Allows paginating backend responses making data retrieval easier for clients
 
 ### Android
 

@@ -1,94 +1,149 @@
-This API allows to send API requests with your clients providing the basic methods to build
-your own customized requester following the **Equinox**'s philosophy. It is based on top of [Ktor](https://ktor.io/) to
-cover all the available platforms
+This API allows the pagination of backend responses, making data retrieval easier for clients.  
+It leverages the [kotlinx serialization library](https://github.com/Kotlin/kotlinx.serialization/tree/master)
+to efficiently serialize data and enable flexible communication between client and server
 
-## Implementation
+## Usage
 
-Extending the `Requester` can be created a tailored instance to use following your requirements
+In this example will be shown a backend based on **Spring Boot** and a **Compose Multiplatform** client application which
+retrieves the data using a [Requester](Requester.md)
 
-```kotlin
-class YourRequester(
-    host: String,
-    userId: String? = null,
-    userToken: String? = null,
-    connectionErrorMessage: String,
-    enableCertificatesValidation: Boolean = false
-): Requester( // extends the Requester to inherit the base methods
-    host = host,
-    userId = userId,
-    userToken = userToken,
-    connectionErrorMessage = connectionErrorMessage,
-    enableCertificatesValidation = enableCertificatesValidation
-) {
+### Backend side
 
-    // add the posssibility to send a custom GET request
-    suspend fun sendYourRequest(): JsonObject {
-        return execGet(
-            endpoint = "yourEndpoint"
-        )
+#### Creating the entity class
+
+This class will be used by the backend to store the data related to the `Dummy` class, but will be used also to return 
+the paginated data
+
+```java
+@Entity
+public class Dummy extends EquinoxItem  {
+
+    @Column
+    private final String name;
+
+    public Dummy(String id, String name) {
+        super(id);
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
     }
 
 }
 ```
 
-## Usage
+#### Creating the service
 
-### Initialize Requester instance
+This is just an example of a possible service implementation, take a closer look just to the `getDummies` method
+
+```java
+@Service
+public class DummyService  {
+
+    @Autowired
+    private final DummiesRepository dummiesRepository;
+
+    public DummyService(DummiesRepository dummiesRepository) {
+        this.dummiesRepository = dummiesRepository;
+    }
+
+    public PaginatedResponse<Dummy> getDummies(int page, int pageSize) {
+
+        // count the total values
+        long total = dummiesRepository.count();
+
+        // create the pageable to use in the query
+        Pageable pageable = PageRequest.of(page, pageSize);
+
+        // a query example
+        List<Dummy> dummies = dummiesRepository.getDummies(pageable);
+
+        // return the paginated data
+        return new PaginatedResponse<>(
+                dummies,
+                page, // if not specified default is 0
+                pageSize, // if not specified default is 10
+                total
+        );
+
+    }
+
+}
+```
+
+The data retrieved from the database will be directly paginated for the requested list of Dummy, making it ready to be 
+read by the client through the same API
+
+### Client side
+
+#### kotlinx-serialization implementation
+
+To automatically serialize and then retrieve the data from the API, you have to implement the `kotlinx-serialization` library
+and the related plugin as follows:
+
+###### Plugin
 
 ```kotlin
-val requester = YourRequester(
-    host = "host",
-    userId = "userId",
-    userToken = "userToken",
-    connectionErrorMessage = "connectionErrorMessage",
-    enableCertificatesValidation = true / false
+plugins {
+    kotlin("plugin.serialization") version "latest-version"
+}
+```
+
+###### Library
+
+```kotlin
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation "org.jetbrains.kotlinx:kotlinx-serialization-json:latest-version"
+}
+```
+
+Check out the [official repository](https://github.com/Kotlin/kotlinx.serialization/tree/master) to find more information
+or the latest version available
+
+#### Creating the data class
+
+This class will be used by the client to use the information retrieved from the backend
+
+```kotlin
+@Serializable // required annotation
+data class Dummy(
+    val id: String,
+    val name: String
 )
 ```
 
-### Send requests
+#### Usage
 
-To improve performance and follow best practices, the core request methods are marked as `suspend` by default, leaving 
-their execution to be handled with `coroutines` such `viewModelScope` or similar
-
-#### Normal request
-
-Send a normal request and handle its response as follows:
+Using, for example, a `Requester` instance we can request and then retrieve the paginated response of our 
+[Dummy class](#creating-the-data-class) as follows:
 
 ```kotlin
-requester.sendRequest(
-    request = { sendYourRequest() },
-    onSuccess = {
-        // handle a successful request
-    },
-    onFailure = {
-        // handle a failed request
-    },
-    onConnectionError = {
-        // handle a connection error
+fun dummyRequest() {
+    viewModelScope.launch {
+        requester.sendPaginatedRequest(
+            request = {
+                getDummies(
+                    page = page, // if not specified default is 0
+                    page = pageSize, // if not specified default is 10
+                )
+            },
+            serialiazer = Dummy.serializer(), // required
+            onSuccess = { page ->
+                // use the serialized page from the response
+                println(page.data) // list of paged Dummy
+            },
+            onFailure = {
+                // handle a failed request
+            },
+            onConnectionError = {
+                // handle a connection error
+            }
+        )
     }
-)
-```
-
-#### Paginated request
-
-Leveraging the 
-
-```kotlin
-// send a request with a paginated formatted response
-requester.sendPaginatedRequest(
-    request = {
-        sendYourRequest()
-    },
-    serialiazr = Home.serializer(),
-    onSuccess = { page ->
-        // use the page formatted from the response
-        println(page.data) // list of homes instantiated with the supplier lambda function
-    },
-    onFailure = {
-        // manage a failed request
-    },
-    onConnectionError = {
-        // manage a connection error
-    }
-)
+}
 ```
