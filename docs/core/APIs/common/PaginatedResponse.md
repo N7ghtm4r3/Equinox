@@ -71,24 +71,24 @@ requester.sendRequest(
 
 #### Paginated request
 
-Leveraging the [PaginatedResponse](PaginatedResponse.md) API the `Requester` allows to send a paginated request and format the 
-response according to the `PaginatedResponse` layout providing, when the request successful, an instance with the paginated data.
-This requires using the [kotlinx library](https://github.com/Kotlin/kotlinx.serialization/tree/master) to correctly work. 
-The paginated request can be sent as follows:
+Leveraging the 
 
 ```kotlin
+// send a request with a paginated formatted response
 requester.sendPaginatedRequest(
-    request = { sendYourPaginatedRequest() },
-    serialiazer = Home.serializer(), // required
+    request = {
+        sendYourRequest()
+    },
+    serialiazr = Home.serializer(),
     onSuccess = { page ->
-        // use the serialized page from the response
-        println(page.data) // list of paged data
+        // use the page formatted from the response
+        println(page.data) // list of homes instantiated with the supplier lambda function
     },
     onFailure = {
-        // handle a failed request
+        // manage a failed request
     },
     onConnectionError = {
-        // handle a connection error
+        // manage a connection error
     }
 )
 ```

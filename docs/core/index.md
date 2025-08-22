@@ -56,7 +56,7 @@ dependencies {
   Allows to format the temporal values and calculate temporal gap
 
 - [Requester](APIs/common/Requester.md)  
-  Allows to communicate with your backends providing the basic methods to build
+  Allows to send API requests with your clients providing the basic methods to build
   your own customized requester following the **Equinox**'s philosophy
 
 - [Retriever](APIs/common/Retriever.md)  
