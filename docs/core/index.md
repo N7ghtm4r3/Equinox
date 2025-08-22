@@ -50,9 +50,22 @@ dependencies {
 
 ## APIs available
 
-- [Timeformatter](APIs/Timeformatter.md) allows to format the temporal values and calculate temporal gap
-- [Requester](APIs/Requester.md) allows to communicate with your backends providing the basic methods to
-  build
+### Common
+
+- [Timeformatter](APIs/common/Timeformatter.md)  
+  Allows to format the temporal values and calculate temporal gap
+
+- [Requester](APIs/common/Requester.md)  
+  Allows to communicate with your backends providing the basic methods to build
   your own customized requester following the **Equinox**'s philosophy
-- [Retriever](APIs/Retriever.md) allows to handle repetitive retrieving routines and execute them in
-  background
+
+- [Retriever](APIs/common/Retriever.md)  
+  Allows to handle repetitive retrieving routines and execute them in background
+
+### Android
+
+- [AppContextInitializer](APIs/android/AppContextInitializer.md)  
+  Initializes the `AppContext` during the application's startup phase using AndroidX's `Initializer` interface
+
+- [ContextActivityProvider](APIs/android/ContextActivityProvider.md)  
+  A singleton object that helps to maintain a weak reference to the current activity

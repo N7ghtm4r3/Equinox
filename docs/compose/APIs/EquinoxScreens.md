@@ -85,7 +85,7 @@ class TestScreen : EquinoxNoModelScreen(
 ### EquinoxScreen
 
 Create a concrete custom screen with custom specifications you need and then create the related `viewModel`.
-In the lifecycle methods will be automatically handled the lifecycle of the [Retriever](../../core/APIs/Retriever.md)
+In the lifecycle methods will be automatically handled the lifecycle of the [Retriever](../../core/APIs/common/Retriever.md)
 attached to the
 **viewModel**, but you can override them and then implement your own logic
 
