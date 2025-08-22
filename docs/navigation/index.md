@@ -77,6 +77,5 @@ dependencies {
 
 ## APIs available
 
-- [NavigatorScreen](APIs/NavigatorScreen.md) is a built-in responsive navigation system fully customizable as needed
-
-The other apis will be gradually released
+- [NavigatorScreen](APIs/NavigatorScreen.md)   
+  Built-in responsive navigation system fully customizable
