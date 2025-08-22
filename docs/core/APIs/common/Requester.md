@@ -38,8 +38,8 @@ class YourRequester(
 ```kotlin
 val requester = YourRequester(
     host = "host",
-    userId = "userId",
-    userToken = "userToken",
+    userId = "userId", // null when for example user not logged in
+    userToken = "userToken", // null when for example user not logged in
     connectionErrorMessage = "connectionErrorMessage",
     enableCertificatesValidation = true / false
 )

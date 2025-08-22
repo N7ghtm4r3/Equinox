@@ -55,12 +55,15 @@ dependencies {
 - [Timeformatter](APIs/common/Timeformatter.md)  
   Allows to format the temporal values and calculate temporal gap
 
+- [Retriever](APIs/common/Retriever.md)  
+  Allows to handle repetitive retrieval routines and execute them on background via coroutines
+
 - [Requester](APIs/common/Requester.md)  
   Allows to send API requests with your clients providing the basic methods to build
   your own customized requester following the **Equinox**'s philosophy
 
-- [Retriever](APIs/common/Retriever.md)  
-  Allows to handle repetitive retrieving routines and execute them in background
+- [PaginatedResponse](APIs/common/PaginatedResponse.md)  
+  Allows paginating backend responses based on **Equinox**, making data retrieval easier for clients
 
 ### Android
 
