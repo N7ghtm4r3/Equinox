@@ -48,14 +48,9 @@ dependencies {
 }
 ```
 
-## APIs available
+## Documentation
 
-- [Timeformatter](../docs/core/APIs/common/Timeformatter.md) allows to format the temporal values and calculate temporal gap
-- [Requester](../docs/core/APIs/common/Requester.md) allows to communicate with your backends providing the basic methods to
-  build
-  your own customized requester following the **Equinox**'s philosophy
-- [Retriever.md](../docs/core/APIs/common/Retriever.md) allows to handle repetitive retrieving routines and execute them in
-  background
+Check out the module documentation [here!](https://n7ghtm4r3.github.io/Equinox/core)
 
 ## Support
 
