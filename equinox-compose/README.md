@@ -63,37 +63,9 @@ dependencies {
 }
 ```
 
-## APIs available
-- [EquinoxViewModel](../documd/compose/apis/EquinoxViewModel.md)
-    - [EquinoxAuthViewModel](src/commonMain/kotlin/com/tecknobit/equinoxcompose/helpers/viewmodels/EquinoxAuthViewModel.kt) ->
-      prebuilt viewmodel to authenticate the user in the system
-    - [EquinoxProfileViewModel](src/commonMain/kotlin/com/tecknobit/equinoxcompose/helpers/viewmodels/EquinoxProfileViewModel.kt) ->
-      prebuilt viewmodel to manage the user account settings and preferences
-- [EquinoxScreens](../documd/compose/apis/EquinoxScreens.md)
-- [EquinoxWindowKit](../documd/compose/apis/EquinoxWindowKit.md)
+## Documentation
 
-The other apis will be gradually released
-
-## Components available
-
-- [EquinoxDialogs](src/commonMain/kotlin/com/tecknobit/equinoxcompose/components/EquinoxDialogs.kt)
-- [EquinoxInputs](src/commonMain/kotlin/com/tecknobit/equinoxcompose/components/EquinoxInputs.kt)
-- [EquinoxUIs](src/commonMain/kotlin/com/tecknobit/equinoxcompose/components/EquinoxUIs.kt)
-- [TextDivider](../documd/compose/components/textdivider/TextDivider.md)
-- [Tile](../documd/compose/components/tile/Tile.md)
-- [SplitText](../documd/compose/components/splittext/SplitText.md)
-- [ExpandableText](../documd/compose/components/expandabletext/ExpandableText.md)
-- [TabSelector](../documd/compose/components/tabselector/TabSelector.md)
-- [ChameleonText](../documd/compose/components/chameleontext/ChameleonText.md)
-- [Stepper](../documd/compose/components/stepper/Stepper.md)
-- [DebouncedInputs](../documd/compose/components/debouncefields/DebouncedInputs.md)
-- [QuantityPicker](../documd/compose/components/quantitypicker/QuantityPicker.md)
-- [BadgeText](../documd/compose/components/badgetext/BadgeText.md)
-- [ProgressBars](../documd/compose/components/progressbars/ProgressBars.md)
-- [SessionFlowContainer](../documd/compose/components/sessionflowcontainer/SessionFlowContainer.md)
-- [InformativeIcon](../documd/compose/components/informativeicon/InformativeIcon.md)
-
-The others components will be gradually released
+Check out the module documentation [here!](https://n7ghtm4r3.github.io/Equinox/compose)
 
 ## Support
 
