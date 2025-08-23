@@ -56,6 +56,10 @@ dependencies {
 }
 ```
 
+## Documentation
+
+Check out the module documentation [here!](https://n7ghtm4r3.github.io/Equinox/miscellaneous/modules/lazy-pagination-compose-ops/)
+
 ## Support
 
 If you need help using the library or encounter any problems or bugs, please contact us via the following links:
