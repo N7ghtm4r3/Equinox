@@ -80,46 +80,10 @@ Add the JitPack repository to your build file
         implementation(libs.equinox.core)
     }
     ```
+    
+## Documentation
 
-## APIs available
-
-- <a href="https://github.com/N7ghtm4r3/Equinox/blob/main/documd/backend/ResourcesProvider.md">**ResourcesProvider**</a>
-  allows to manage the static resources to serve to the clients
-- <a href="https://github.com/N7ghtm4r3/Equinox/blob/main/documd/backend/IndexesCreator.md">**IndexesCreator**</a>
-  allows to create automatically the indexes for your own tables of the database
-- <a href="https://github.com/N7ghtm4r3/Equinox/blob/main/documd/backend/FilteredQuery.md">**FilteredQuery**</a> allows
-  you to create dynamic queries with filters parameters
-- <a href="https://github.com/N7ghtm4r3/Equinox/blob/main/documd/backend/EquinoxItemsHelper.md">**EquinoxItemsHelper**</a> allows to execute batch queries such insertion, deletion and synchronization dynamically
-- <a href="https://github.com/N7ghtm4r3/Equinox/blob/main/documd/backend/BatchSynchronizationProcedure.md">**BatchSynchronizationProcedure**</a> 
-allows to create reusable synchronization procedures compacted and cleaned
-- <a href="https://github.com/N7ghtm4r3/Equinox/blob/main/documd/backend/EquinoxEvents.md">**EquinoxEventsEmitter**</a> allows to share and collect events between services
-
-The other apis will be gradually released
-
-## Basic environment available
-
-Equinox gives a basic _out-of-the-box_ environment to directly create a **SpringApplication** following the Equinox
-implementation philosophy
-to automatically manage some recurring operations such the users related requests or the inputs validation. You can take
-a
-look [here](https://github.com/N7ghtm4r3/Equinox/blob/main/documd/backend/EquinoxEnvironment.md) to check how it works
-and how
-to implement it on your own backend
-
-## Configure your backend
-
-To configure your backend as you need you can follow this [guide](../documd/backend/Configurations.md) to directly copy
-the `@Component` classes you need and implement them in your backend instance, personal advice is put them in a folder
-named `configuration` for clean implementation and better readability as follows:
-
- ``` bash
-  com.your.package
-   └── configuration
-       └── config_class
-       └── config_class
-       └── config_class
-       └── ...
-  ```
+Check out the module documentation [here!](https://n7ghtm4r3.github.io/Equinox/backend)
 
 ## Support
 
