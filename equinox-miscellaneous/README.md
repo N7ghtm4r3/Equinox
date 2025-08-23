@@ -6,8 +6,6 @@ A collection of external library integrations and extensions developed in accord
 
 - [lazy-pagination-compose-ops](lazy-pagination-compose-ops/README.md)
 
-The others dedicated modules will be gradually released
-
 ## Support
 
 If you need help using the library or encounter any problems or bugs, please contact us via the following links:
