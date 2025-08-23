@@ -12,6 +12,9 @@ Framework for integrating **Spring Boot** backends with **Compose Multiplatform*
 | **[equinox-miscellaneous](equinox-miscellaneous/README.md)** | Miscellaneous of integrations or extensions of external libraries             | Integrate or extend external libraries according to the Equinox architecture                          | N/A                                                                                                                       |
 |    **[equinox-navigation](equinox-navigation/README.md)**    | Utilities to handle the navigation in a **Compose Multiplatform application** | Responsive navigation systems based on the [EquinoxScreens](docs/compose/APIs/EquinoxScreens.md) APIs | ![Maven Central](https://img.shields.io/maven-central/v/io.github.n7ghtm4r3/equinox-navigation.svg?label=Maven%20Central) |
 
+## Documentation 
+
+Check out the framework documentation [here!](https://n7ghtm4r3.github.io/Equinox/)
 
 ## Support
 
