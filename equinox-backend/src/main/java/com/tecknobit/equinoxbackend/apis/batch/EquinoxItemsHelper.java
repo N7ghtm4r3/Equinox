@@ -14,6 +14,7 @@ import java.util.Collection;
 import java.util.List;
 
 import static com.tecknobit.equinoxbackend.apis.batch.EquinoxItemsHelper.InsertCommand.INSERT_IGNORE_INTO;
+import static com.tecknobit.equinoxbackend.apis.database.SQLConstants.*;
 
 /**
  * The {@code EquinoxItemsHelper} class is useful to manage all the {@link EquinoxItem} database operations
@@ -205,51 +206,6 @@ public abstract class EquinoxItemsHelper {
     }
 
     /**
-     * {@code SINGLE_QUOTE} single quote character
-     */
-    public static final String SINGLE_QUOTE = "'";
-
-    /**
-     * {@code OPENED_ROUND_BRACKET} opened round bracket character
-     */
-    public static final String OPENED_ROUND_BRACKET = "(";
-
-    /**
-     * {@code CLOSED_ROUND_BRACKET} closed round bracket character
-     */
-    public static final String CLOSED_ROUND_BRACKET = ")";
-
-    /**
-     * {@code COMMA} comma character
-     */
-    public static final String COMMA = ",";
-
-    /**
-     * {@code QUESTION_MARK} question mark character
-     */
-    public static final String QUESTION_MARK = "?";
-
-    /**
-     * {@code VALUES} values query part
-     */
-    public static final String _VALUES_ = " VALUES ";
-
-    /**
-     * {@code DELETE_FROM_} delete from query command
-     */
-    public static final String DELETE_FROM_ = "DELETE FROM ";
-
-    /**
-     * {@code WHERE} where query part
-     */
-    public static final String _WHERE_ = " WHERE ";
-
-    /**
-     * {@code IN_CLAUSE} in clause query part
-     */
-    private static final String _IN_CLAUSE_ = " IN ";
-
-    /**
      * {@code entityManager} entity manager helper
      */
     @PersistenceContext
@@ -428,7 +384,7 @@ public abstract class EquinoxItemsHelper {
      * @param start The starter character
      * @param values The values to format
      * @param formatter The character to use as formatter, if <b>null</b> will be used the values of the list as formatter
-     * @param isToClose Whether the part formatted is to close with the {@link #CLOSED_ROUND_BRACKET} character
+     * @param isToClose Whether the part formatted is to close with the {@link CLOSED_ROUND_BRACKET} character
      *
      * @return the list of values formatted as {@link String}
      */
