@@ -1,4 +1,4 @@
-package com.tecknobit.equinoxbackend.environment.services.builtin.service;
+package com.tecknobit.equinoxbackend.apis.batch;
 
 import com.tecknobit.equinoxbackend.annotations.BatchQueryItem;
 import com.tecknobit.equinoxbackend.environment.services.builtin.entity.EquinoxItem;
@@ -13,14 +13,13 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
-import static com.tecknobit.equinoxbackend.environment.services.builtin.service.EquinoxItemsHelper.InsertCommand.INSERT_IGNORE_INTO;
+import static com.tecknobit.equinoxbackend.apis.batch.EquinoxItemsHelper.InsertCommand.INSERT_IGNORE_INTO;
 
 /**
  * The {@code EquinoxItemsHelper} class is useful to manage all the {@link EquinoxItem} database operations
  *
  * @author N7ghtm4r3 - Tecknobit
  */
-@Deprecated(forRemoval = true, since = "MOVED INTO apis.batch PACKAGE")
 @Transactional
 public abstract class EquinoxItemsHelper {
 

@@ -1,11 +1,12 @@
-package com.tecknobit.equinoxbackend.events;
+package com.tecknobit.equinoxbackend.apis.events;
 
-import com.tecknobit.equinoxbackend.events.EquinoxEventsCollector.OnEventConsumed;
 import com.tecknobit.equinoxcore.annotations.Wrapper;
 import jdk.jfr.Experimental;
 import org.springframework.context.ApplicationEvent;
 
 import java.time.Clock;
+
+import static com.tecknobit.equinoxbackend.apis.events.EquinoxEventsCollector.OnEventConsumed;
 
 /**
  * The {@code EquinoxApplicationEvent} is the class used to share the information of an event emitted by the
@@ -16,7 +17,6 @@ import java.time.Clock;
  * @author N7ghtm4r3 - Tecknobit
  * @since 1.1.1
  */
-@Deprecated(forRemoval = true, since = "MOVED INTO apis.events PACKAGE")
 @Experimental
 public abstract class EquinoxApplicationEvent<T extends Enum<?>> extends ApplicationEvent {
 

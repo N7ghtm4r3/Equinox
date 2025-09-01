@@ -1,4 +1,4 @@
-package com.tecknobit.equinoxbackend.events;
+package com.tecknobit.equinoxbackend.apis.events;
 
 import jdk.jfr.Experimental;
 import org.springframework.context.event.EventListener;
@@ -12,7 +12,6 @@ import org.springframework.context.event.EventListener;
  * @author N7ghtm4r3 - Tecknobit
  * @since 1.1.1
  */
-@Deprecated(forRemoval = true, since = "MOVED INTO apis.events PACKAGE")
 @Experimental
 @FunctionalInterface
 public interface EquinoxEventsCollector<T extends Enum<?>, E extends EquinoxApplicationEvent<T>> {

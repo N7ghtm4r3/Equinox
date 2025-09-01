@@ -1,4 +1,4 @@
-package com.tecknobit.equinoxbackend.batch;
+package com.tecknobit.equinoxbackend.apis.batch;
 
 import com.tecknobit.equinoxbackend.environment.services.builtin.service.EquinoxItemsHelper;
 import com.tecknobit.equinoxcore.annotations.Wrapper;
@@ -20,7 +20,6 @@ import static com.tecknobit.equinoxbackend.environment.services.builtin.service.
  *
  * @since 1.0.8
  */
-@Deprecated(forRemoval = true, since = "MOVED INTO apis.batch PACKAGE")
 public abstract class BatchSynchronizationProcedure<O, D, V> extends EquinoxItemsHelper {
 
     /**

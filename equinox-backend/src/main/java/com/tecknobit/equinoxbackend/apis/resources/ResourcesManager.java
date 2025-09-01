@@ -1,4 +1,4 @@
-package com.tecknobit.equinoxbackend.resourcesutils;
+package com.tecknobit.equinoxbackend.apis.resources;
 
 
 import com.tecknobit.apimanager.annotations.Wrapper;
@@ -16,7 +16,6 @@ import java.util.Objects;
  * @author N7ghtm4r3 - Tecknobit
  * @since 1.0.1
  */
-@Deprecated(forRemoval = true, since = "MOVED INTO apis.resources PACKAGE")
 public interface ResourcesManager {
 
     /**

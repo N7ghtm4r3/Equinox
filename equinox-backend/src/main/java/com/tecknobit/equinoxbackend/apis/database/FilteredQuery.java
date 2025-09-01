@@ -1,4 +1,4 @@
-package com.tecknobit.equinoxbackend.environment.helpers;
+package com.tecknobit.equinoxbackend.apis.database;
 
 import com.tecknobit.equinoxcore.annotations.Structure;
 import com.tecknobit.equinoxcore.annotations.Wrapper;
@@ -27,7 +27,6 @@ import java.util.regex.Pattern;
  * @author Tecknobit - N7ghtm4r3
  * @since 1.0.5
  */
-@Deprecated(forRemoval = true, since = "MOVED INTO apis.database PACKAGE")
 @Structure
 public abstract class FilteredQuery<T> {
 

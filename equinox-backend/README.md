@@ -1,6 +1,6 @@
 # Equinox Backend
 
-**v1.1.4**
+**v1.1.5**
 
 Utilities and apis for the backends based on the **Spring Boot** framework
 
