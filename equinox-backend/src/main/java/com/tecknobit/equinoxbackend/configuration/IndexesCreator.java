@@ -13,7 +13,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
-import static com.tecknobit.equinoxbackend.environment.services.builtin.service.EquinoxItemsHelper.*;
+import static com.tecknobit.equinoxbackend.apis.batch.EquinoxItemsHelper.*;
 
 /**
  * The {@code IndexesCreator} class is useful to create custom indexes in the tables made up the database of the system.

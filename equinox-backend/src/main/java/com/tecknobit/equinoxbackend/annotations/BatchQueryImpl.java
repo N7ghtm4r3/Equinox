@@ -9,7 +9,7 @@ import static java.lang.annotation.ElementType.TYPE;
 
 /**
  * The {@code BatchQueryImpl} annotation is useful to indicate an implementation of a
- * {@link com.tecknobit.equinoxbackend.environment.services.builtin.service.EquinoxItemsHelper.BatchQuery}
+ * {@link com.tecknobit.equinoxbackend.apis.batch.EquinoxItemsHelper.BatchQuery}
  *
  * <pre>
  * {@code

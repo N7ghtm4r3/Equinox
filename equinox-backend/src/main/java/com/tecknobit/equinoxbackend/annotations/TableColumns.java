@@ -9,7 +9,7 @@ import static java.lang.annotation.ElementType.METHOD;
 /**
  * The {@code TableColumns} annotation is useful to indicate the columns of a table and which order those columns have
  * in that table. It is particularly useful for those method which have to handling queries, for example the
- * {@link com.tecknobit.equinoxbackend.environment.services.builtin.service.EquinoxItemsHelper.BatchQuery} methods
+ * {@link com.tecknobit.equinoxbackend.apis.batch.EquinoxItemsHelper.BatchQuery} methods
  *
  * <pre>
  *     {@code

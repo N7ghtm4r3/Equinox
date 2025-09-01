@@ -1,7 +1,7 @@
 package com.tecknobit.equinoxbackend.batch;
 
 import com.tecknobit.equinoxbackend.annotations.BatchQueryItem;
-import com.tecknobit.equinoxbackend.environment.services.builtin.service.EquinoxItemsHelper;
+import com.tecknobit.equinoxbackend.apis.batch.EquinoxItemsHelper;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
