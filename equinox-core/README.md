@@ -18,7 +18,7 @@ Core utilities for **Compose Multiplatform** and **Spring** technologies
 
 ```toml
 [versions]
-equinox = "1.1.5"
+equinox = "1.1.6"
 
 [libraries]
 equinox-core = { module = "io.github.n7ghtm4r3:equinox-core", version.ref = "equinox" }
@@ -36,7 +36,7 @@ dependencies {
 
 ```kotlin
 dependencies {
-    implementation("io.github.n7ghtm4r3:equinox-core:1.1.5")
+    implementation("io.github.n7ghtm4r3:equinox-core:1.1.6")
 }
 ```
 
@@ -44,7 +44,7 @@ dependencies {
 
 ```groovy
 dependencies {
-    implementation 'io.github.n7ghtm4r3:equinox-core:1.1.5'
+    implementation 'io.github.n7ghtm4r3:equinox-core:1.1.6'
 }
 ```
 
