@@ -14,7 +14,7 @@ import kotlin.annotation.AnnotationTarget.CLASS
  * is intended to be part of an inheritance hierarchy where subclasses should follow a
  * consistent structure and can override or extend its behavior.
  *
- * Usage Example:
+ * #### Usage example
  * ```kotlin
  * @Structure
  * open class Vehicle {

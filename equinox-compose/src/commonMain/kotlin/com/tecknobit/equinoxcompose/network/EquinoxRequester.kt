@@ -115,7 +115,7 @@ abstract class EquinoxRequester(
     /**
      * Method used to create the payload for the [signUp] request.
      *
-     * #### Usage example:
+     * Usage Example::
      *
      * ```kotlin
      * @CustomParametersOrder(order = ["currency"]) // optional
@@ -203,7 +203,7 @@ abstract class EquinoxRequester(
     /**
      * Method used to create the payload for the [signIn] request.
      *
-     * #### Usage example:
+     * Usage Example::
      *
      * ```kotlin
      * @CustomParametersOrder(order = ["currency"])

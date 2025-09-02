@@ -6,7 +6,7 @@ import kotlin.annotation.AnnotationTarget.*
  * The `FutureEquinoxApi` annotation is useful to indicate an experimental api implemented in an external project outside
  * `Equinox` that can be potentially implemented in the official library
  *
- * Usage Example:
+ * #### Usage example
  * ```kotlin
  * @FutureEquinoxApi(
  *     protoBehavior = """

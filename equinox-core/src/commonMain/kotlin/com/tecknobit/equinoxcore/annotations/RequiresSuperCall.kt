@@ -11,7 +11,7 @@ import kotlin.annotation.AnnotationTarget.*
  * This annotation is useful for enforcing that subclasses do not neglect to invoke
  * their super class method, thereby maintaining the expected functionality and state
  *
- * Usage Example:
+ * #### Usage example
  * ```kotlin
  * open class Vehicle {
  *

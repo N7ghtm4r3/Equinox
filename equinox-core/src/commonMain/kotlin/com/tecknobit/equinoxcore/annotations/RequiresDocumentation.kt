@@ -7,7 +7,7 @@ import kotlin.annotation.AnnotationTarget.*
  * still needs to be documented. This annotation serves as a reminder to complete the documentation
  * before publishing or using the code
  *
- * Usage Example:
+ * #### Usage example
  * ```kotlin
  * @RequiresDocumentation
  * fun newApi() {

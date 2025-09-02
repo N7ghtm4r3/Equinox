@@ -7,7 +7,7 @@ import kotlin.annotation.AnnotationTarget.FUNCTION
  * The `@Validator` annotation is applied to those methods which are used to check the validity of an input, and it is
  * useful to provide additional information about the annotated method such the validity case of the input checked
  *
- * Example usage:
+ * #### Usage example
  * ```kotlin
  * @Validator(
  *     validWhen = "The input is valid when is not null" // not mandatory
