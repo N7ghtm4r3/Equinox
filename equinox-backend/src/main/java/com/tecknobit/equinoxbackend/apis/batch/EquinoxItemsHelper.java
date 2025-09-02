@@ -1,6 +1,7 @@
 package com.tecknobit.equinoxbackend.apis.batch;
 
 import com.tecknobit.equinoxbackend.annotations.BatchQueryItem;
+import com.tecknobit.equinoxbackend.apis.database.SQLConstants;
 import com.tecknobit.equinoxbackend.environment.services.builtin.entity.EquinoxItem;
 import com.tecknobit.equinoxcore.annotations.Wrapper;
 import jakarta.persistence.EntityManager;
@@ -384,7 +385,7 @@ public abstract class EquinoxItemsHelper {
      * @param start The starter character
      * @param values The values to format
      * @param formatter The character to use as formatter, if <b>null</b> will be used the values of the list as formatter
-     * @param isToClose Whether the part formatted is to close with the {@link CLOSED_ROUND_BRACKET} character
+     * @param isToClose Whether the part formatted is to close with the {@link SQLConstants#CLOSED_ROUND_BRACKET} character
      *
      * @return the list of values formatted as {@link String}
      */

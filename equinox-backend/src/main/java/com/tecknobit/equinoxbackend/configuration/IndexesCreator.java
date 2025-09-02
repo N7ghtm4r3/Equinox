@@ -1,5 +1,6 @@
 package com.tecknobit.equinoxbackend.configuration;
 
+import com.tecknobit.equinoxbackend.apis.database.SQLConstants;
 import com.tecknobit.equinoxcore.annotations.Assembler;
 import com.tecknobit.equinoxcore.annotations.Wrapper;
 import jakarta.persistence.EntityManager;
@@ -28,26 +29,31 @@ public abstract class IndexesCreator {
     /**
      * {@code ALTER_TABLE_} query command
      */
+    @Deprecated(forRemoval = true, since = "MOVED INTO apis.database.SQLConstants PACKAGE")
     public static final String ALTER_TABLE_ = "ALTER TABLE ";
 
     /**
      * {@code SHOW_INDEX_FROM_} query command
      */
+    @Deprecated(forRemoval = true, since = "MOVED INTO apis.database.SQLConstants PACKAGE")
     public static final String SHOW_INDEX_FROM_ = "SHOW INDEX FROM ";
 
     /**
      * {@code _ADD_FULLTEXT_INDEX_} query command
      */
+    @Deprecated(forRemoval = true, since = "MOVED INTO apis.database.SQLConstants PACKAGE")
     public static final String _ADD_FULLTEXT_INDEX_ = " ADD FULLTEXT INDEX %s (";
 
     /**
      * {@code _IN_NATURAL_LANGUAGE_MODE} the mode applied to the FTS (full text search)
      */
+    @Deprecated(forRemoval = true, since = "MOVED INTO apis.database.SQLConstants PACKAGE")
     public static final String _IN_NATURAL_LANGUAGE_MODE = " IN NATURAL LANGUAGE MODE";
 
     /**
      * {@code _IN_BOOLEAN_MODE} the mode applied to the FTS (full text search)
      */
+    @Deprecated(forRemoval = true, since = "MOVED INTO apis.database.SQLConstants PACKAGE")
     public static final String _IN_BOOLEAN_MODE = " IN BOOLEAN MODE";
 
     /**
@@ -77,7 +83,7 @@ public abstract class IndexesCreator {
      */
     @Wrapper
     protected void createFullTextIndex(String table, String indexName, List<String> fields) {
-        createIndex(table, indexName, _ADD_FULLTEXT_INDEX_, fields);
+        createIndex(table, indexName, SQLConstants._ADD_FULLTEXT_INDEX_, fields);
     }
 
     /**
@@ -89,7 +95,7 @@ public abstract class IndexesCreator {
      * @param fields    The field used to create the index
      */
     protected void createIndex(String table, String indexName, String indexType, List<String> fields) {
-        String showQuery = SHOW_INDEX_FROM_ + table + _WHERE_ + _KEY_NAME + indexName + SINGLE_QUOTE;
+        String showQuery = SQLConstants.SHOW_INDEX_FROM_ + table + _WHERE_ + _KEY_NAME + indexName + SINGLE_QUOTE;
         Session session = entityManager.unwrap(Session.class);
         session.doWork(connection -> {
             try (Statement statement = connection.createStatement()) {
@@ -113,7 +119,7 @@ public abstract class IndexesCreator {
      */
     @Assembler
     protected String assembleCreateIndexQuery(String table, String indexType, String indexName, List<String> fields) {
-        StringBuilder query = new StringBuilder(ALTER_TABLE_ + table);
+        StringBuilder query = new StringBuilder(SQLConstants.ALTER_TABLE_ + table);
         query.append(String.format(indexType, indexName));
         int fieldsNumber = fields.size();
         int lastIndex = fieldsNumber - 1;
@@ -174,7 +180,7 @@ public abstract class IndexesCreator {
 
     /**
      * Method used to append the escape characters like leading and trailing characters to each keyword for the
-     * {@link #formatFullTextKeywords(Collection, String, String, boolean)} method for the {@link #_IN_BOOLEAN_MODE}
+     * {@link #formatFullTextKeywords(Collection, String, String, boolean)} method for the {@link SQLConstants#_IN_BOOLEAN_MODE}
      * full text search
      *
      * @param keywords          The keywords used in the full text search

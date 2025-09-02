@@ -57,6 +57,31 @@ public class SQLConstants {
     public static final String _IN_CLAUSE_ = " IN ";
 
     /**
+     * {@code ALTER_TABLE_} query command
+     */
+    public static final String ALTER_TABLE_ = "ALTER TABLE ";
+
+    /**
+     * {@code SHOW_INDEX_FROM_} query command
+     */
+    public static final String SHOW_INDEX_FROM_ = "SHOW INDEX FROM ";
+
+    /**
+     * {@code _ADD_FULLTEXT_INDEX_} query command
+     */
+    public static final String _ADD_FULLTEXT_INDEX_ = " ADD FULLTEXT INDEX %s (";
+
+    /**
+     * {@code _IN_NATURAL_LANGUAGE_MODE} the mode applied to the FTS (full text search)
+     */
+    public static final String _IN_NATURAL_LANGUAGE_MODE = " IN NATURAL LANGUAGE MODE";
+
+    /**
+     * {@code _IN_BOOLEAN_MODE} the mode applied to the FTS (full text search)
+     */
+    public static final String _IN_BOOLEAN_MODE = " IN BOOLEAN MODE";
+
+    /**
      * Private constructor to avoid instantiation
      */
     private SQLConstants() {}
