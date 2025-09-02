@@ -5,6 +5,7 @@ import com.tecknobit.equinoxbackend.environment.services.builtin.controller.Equi
 import com.tecknobit.equinoxbackend.environment.services.users.entity.EquinoxUser;
 import com.tecknobit.equinoxbackend.environment.services.users.repository.EquinoxUsersRepository;
 import com.tecknobit.equinoxbackend.environment.services.users.service.EquinoxUsersService;
+import com.tecknobit.equinoxcore.helpers.InputsValidator;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -15,7 +16,6 @@ import java.util.Map;
 import static com.tecknobit.apimanager.apis.APIRequest.RequestMethod.*;
 import static com.tecknobit.apimanager.apis.ServerProtector.SERVER_SECRET_KEY;
 import static com.tecknobit.equinoxcore.helpers.CommonKeysKt.*;
-import static com.tecknobit.equinoxcore.helpers.InputsValidator.Companion;
 import static com.tecknobit.equinoxcore.helpers.InputsValidator.DEFAULT_LANGUAGE;
 import static com.tecknobit.equinoxcore.network.EquinoxBaseEndpointsSet.*;
 
@@ -160,15 +160,15 @@ public class EquinoxUsersController<T extends EquinoxUser, R extends EquinoxUser
      */
     protected String validateSignUp(String name, String surname, String email, String password, String language,
                                     Object... custom) {
-        if (!Companion.isNameValid(name))
+        if (!InputsValidator.isNameValid(name))
             return WRONG_NAME_MESSAGE;
-        if (!Companion.isSurnameValid(surname))
+        if (!InputsValidator.isSurnameValid(surname))
             return WRONG_SURNAME_MESSAGE;
-        if (!Companion.isEmailValid(email))
+        if (!InputsValidator.isEmailValid(email))
             return WRONG_EMAIL_MESSAGE;
-        if (!Companion.isPasswordValid(password))
+        if (!InputsValidator.isPasswordValid(password))
             return WRONG_PASSWORD_MESSAGE;
-        if (!Companion.isLanguageValid(language))
+        if (!InputsValidator.isLanguageValid(language))
             return WRONG_LANGUAGE_MESSAGE;
         return null;
     }
@@ -260,11 +260,11 @@ public class EquinoxUsersController<T extends EquinoxUser, R extends EquinoxUser
      * </pre>
      */
     protected String validateSignIn(String email, String password, String language, Object... custom) {
-        if (!Companion.isEmailValid(email))
+        if (!InputsValidator.isEmailValid(email))
             return WRONG_EMAIL_MESSAGE;
-        if (!Companion.isPasswordValid(password))
+        if (!InputsValidator.isPasswordValid(password))
             return WRONG_PASSWORD_MESSAGE;
-        if (!Companion.isLanguageValid(language))
+        if (!InputsValidator.isLanguageValid(language))
             return WRONG_LANGUAGE_MESSAGE;
         return null;
     }
@@ -387,7 +387,7 @@ public class EquinoxUsersController<T extends EquinoxUser, R extends EquinoxUser
             return notAuthorizedOrWrongDetailsResponse();
         loadJsonHelper(payload);
         String email = jsonHelper.getString(EMAIL_KEY);
-        if (!Companion.isEmailValid(email))
+        if (!InputsValidator.isEmailValid(email))
             return failedResponse(WRONG_EMAIL_MESSAGE);
         try {
             usersService.changeEmail(email, userId);
@@ -428,7 +428,7 @@ public class EquinoxUsersController<T extends EquinoxUser, R extends EquinoxUser
             return notAuthorizedOrWrongDetailsResponse();
         loadJsonHelper(payload);
         String password = jsonHelper.getString(PASSWORD_KEY);
-        if (!Companion.isPasswordValid(password))
+        if (!InputsValidator.isPasswordValid(password))
             return failedResponse(WRONG_PASSWORD_MESSAGE);
         try {
             usersService.changePassword(password, userId);
@@ -469,7 +469,7 @@ public class EquinoxUsersController<T extends EquinoxUser, R extends EquinoxUser
             return notAuthorizedOrWrongDetailsResponse();
         loadJsonHelper(payload);
         String language = jsonHelper.getString(LANGUAGE_KEY);
-        if (!Companion.isLanguageValid(language))
+        if (!InputsValidator.isLanguageValid(language))
             return failedResponse(WRONG_LANGUAGE_MESSAGE);
         try {
             usersService.changeLanguage(language, userId);

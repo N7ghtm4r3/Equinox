@@ -17,7 +17,7 @@ This API handles temporal values and provides easy access to custom formats for 
 === "Java"
 
     ```java
-    String currentTimestamp = TimeFormatter.INSTANCE.formatNowAsString(
+    String currentTimestamp = TimeFormatter.formatNowAsString(
         TimeFormatter.COMPLETE_EUROPEAN_DATE_PATTERN // default pattern
     );
     ```
@@ -35,7 +35,7 @@ This API handles temporal values and provides easy access to custom formats for 
 === "Java"
 
     ```java
-    String january6 = TimeFormatter.INSTANCE.toDateString(
+    String january6 = TimeFormatter.toDateString(
         1736198062000L,
         null, // default invalid time Value
         TimeFormatter.COMPLETE_EUROPEAN_DATE_PATTERN // default pattern
@@ -55,7 +55,7 @@ This API handles temporal values and provides easy access to custom formats for 
 === "Java"
 
     ```java
-    long january6 = TimeFormatter.INSTANCE.toTimestamp(
+    long january6 = TimeFormatter.toTimestamp(
         "06/01/2025 21:14:22",
         null, // default invalid time Value
         TimeFormatter.COMPLETE_EUROPEAN_DATE_PATTERN // default pattern

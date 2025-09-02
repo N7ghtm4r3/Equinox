@@ -7,6 +7,7 @@ import com.tecknobit.equinoxcore.time.TimeFormatter.dateAndTimeParsing
 import kotlinx.datetime.*
 import kotlinx.datetime.format.FormatStringsInDatetimeFormats
 import kotlinx.datetime.format.byUnicodePattern
+import kotlin.jvm.JvmStatic
 import kotlin.time.Clock
 import kotlin.time.ExperimentalTime
 import kotlin.time.Instant
@@ -98,17 +99,20 @@ object TimeFormatter {
     /**
      * `defaultPattern` the default pattern used by the [TimeFormatter] if no custom one is specified
      */
+    @JvmStatic
     var defaultPattern: String = COMPLETE_EUROPEAN_DATE_PATTERN
 
     /**
      * `invalidTimeDefValue` the default value returned when an error occurred during the formatting
      */
+    @JvmStatic
     var invalidTimeDefValue: Long = -1
 
     /**
      * `invalidTimeStringDefValue` the default value returned when an error occurred during the formatting of a [String]
      * value
      */
+    @JvmStatic
     var invalidTimeStringDefValue: String? = null
 
     /**
@@ -116,6 +120,7 @@ object TimeFormatter {
      *
      * @return current timestamp as [Long]
      */
+    @JvmStatic
     fun currentTimestamp(): Long {
         return Clock.System.now().toEpochMilliseconds()
     }
@@ -127,6 +132,7 @@ object TimeFormatter {
      *
      * @return the millis value as [String]
      */
+    @JvmStatic
     fun formatNowAsString(
         pattern: String = defaultPattern,
     ): String {
@@ -144,6 +150,7 @@ object TimeFormatter {
      *
      * @return the formatted long value as [String]
      */
+    @JvmStatic
     @OptIn(FormatStringsInDatetimeFormats::class)
     fun Long.toDateString(
         invalidTimeDefValue: String? = null,
@@ -168,6 +175,7 @@ object TimeFormatter {
      *
      * @return the formatted string value as [Long]
      */
+    @JvmStatic
     fun String.toTimestamp(
         invalidTimeDefValue: Long? = null,
         pattern: String = defaultPattern,
@@ -195,6 +203,7 @@ object TimeFormatter {
      * @return the formatted string value as [Long]
      */
     @OptIn(FormatStringsInDatetimeFormats::class)
+    @JvmStatic
     private fun String.dateAndTimeParsing(
         pattern: String,
     ): Long {
@@ -227,7 +236,7 @@ object TimeFormatter {
             LocalDateTime(
                 year = localDate.year,
                 month = localDate.month,
-                dayOfMonth = localDate.dayOfMonth,
+                day = localDate.day,
                 hour = 0,
                 minute = 0
             ).toInstant(TimeZone.currentSystemDefault()).toEpochMilliseconds()
@@ -244,6 +253,7 @@ object TimeFormatter {
      * @throws IllegalArgumentException when the second date is lesser than the first value
      */
     @Wrapper
+    @JvmStatic
     fun Long.nanosecondsUntilNow(): Long {
         return nanosecondsUntil(
             untilDate = Clock.System.now().toEpochMilliseconds()
@@ -259,6 +269,7 @@ object TimeFormatter {
      *
      * @throws IllegalArgumentException when the [untilDate] is lesser than the first value
      */
+    @JvmStatic
     fun Long.nanosecondsUntil(
         untilDate: Long,
     ): Long {
@@ -276,6 +287,7 @@ object TimeFormatter {
      * @throws IllegalArgumentException when the second date is lesser than the first value
      */
     @Wrapper
+    @JvmStatic
     fun Long.millisecondsUntilNow(): Long {
         return millisecondsUntil(
             untilDate = Clock.System.now().toEpochMilliseconds()
@@ -291,6 +303,7 @@ object TimeFormatter {
      *
      * @throws IllegalArgumentException when the [untilDate] is lesser than the first value
      */
+    @JvmStatic
     fun Long.millisecondsUntil(
         untilDate: Long,
     ): Long {
@@ -307,6 +320,7 @@ object TimeFormatter {
      * @throws IllegalArgumentException when the second date is lesser than the first value
      */
     @Wrapper
+    @JvmStatic
     fun Long.secondsUntilNow(): Int {
         return secondsUntil(
             untilDate = Clock.System.now().toEpochMilliseconds()
@@ -322,6 +336,7 @@ object TimeFormatter {
      *
      * @throws IllegalArgumentException when the [untilDate] is lesser than the first value
      */
+    @JvmStatic
     fun Long.secondsUntil(
         untilDate: Long,
     ): Int {
@@ -339,6 +354,7 @@ object TimeFormatter {
      * @throws IllegalArgumentException when the second date is lesser than the first value
      */
     @Wrapper
+    @JvmStatic
     fun Long.minutesUntilNow(): Int {
         return minutesUntil(
             untilDate = Clock.System.now().toEpochMilliseconds()
@@ -354,6 +370,7 @@ object TimeFormatter {
      *
      * @throws IllegalArgumentException when the [untilDate] is lesser than the first value
      */
+    @JvmStatic
     fun Long.minutesUntil(
         untilDate: Long,
     ): Int {
@@ -372,6 +389,7 @@ object TimeFormatter {
      *
      */
     @Wrapper
+    @JvmStatic
     fun Long.hoursUntilNow(): Int {
         return hoursUntil(
             untilDate = Clock.System.now().toEpochMilliseconds()
@@ -387,6 +405,7 @@ object TimeFormatter {
      *
      * @throws IllegalArgumentException when the [untilDate] is lesser than the first value
      */
+    @JvmStatic
     fun Long.hoursUntil(
         untilDate: Long,
     ): Int {
@@ -404,6 +423,7 @@ object TimeFormatter {
      * @throws IllegalArgumentException when the second date is lesser than the first value
      */
     @Wrapper
+    @JvmStatic
     fun Long.daysUntilNow(): Long {
         return daysUntil(
             untilDate = Clock.System.now().toEpochMilliseconds()
@@ -419,6 +439,7 @@ object TimeFormatter {
      *
      * @throws IllegalArgumentException when the [untilDate] is lesser than the first value
      */
+    @JvmStatic
     fun Long.daysUntil(
         untilDate: Long,
     ): Long {
@@ -437,6 +458,7 @@ object TimeFormatter {
      * @throws IllegalArgumentException when the second date is lesser than the first value
      */
     @Wrapper
+    @JvmStatic
     fun Long.weeksUntilNow(): Long {
         return weeksUntil(
             untilDate = Clock.System.now().toEpochMilliseconds()
@@ -452,6 +474,7 @@ object TimeFormatter {
      *
      * @throws IllegalArgumentException when the [untilDate] is lesser than the first value
      */
+    @JvmStatic
     fun Long.weeksUntil(
         untilDate: Long,
     ): Long {
@@ -470,6 +493,7 @@ object TimeFormatter {
      * @throws IllegalArgumentException when the second date is lesser than the first value
      */
     @Wrapper
+    @JvmStatic
     fun Long.monthsUntilNow(): Long {
         return monthsUntil(
             untilDate = Clock.System.now().toEpochMilliseconds()
@@ -485,6 +509,7 @@ object TimeFormatter {
      *
      * @throws IllegalArgumentException when the [untilDate] is lesser than the first value
      */
+    @JvmStatic
     fun Long.monthsUntil(
         untilDate: Long,
     ): Long {
@@ -503,6 +528,7 @@ object TimeFormatter {
      * @throws IllegalArgumentException when the second date is lesser than the first value
      */
     @Wrapper
+    @JvmStatic
     fun Long.quartersUntilNow(): Long {
         return quartersUntil(
             untilDate = Clock.System.now().toEpochMilliseconds()
@@ -518,6 +544,7 @@ object TimeFormatter {
      *
      * @throws IllegalArgumentException when the [untilDate] is lesser than the first value
      */
+    @JvmStatic
     fun Long.quartersUntil(
         untilDate: Long,
     ): Long {
@@ -536,6 +563,7 @@ object TimeFormatter {
      * @throws IllegalArgumentException when the second date is lesser than the first value
      */
     @Wrapper
+    @JvmStatic
     fun Long.yearsUntilNow(): Long {
         return yearsUntil(
             untilDate = Clock.System.now().toEpochMilliseconds()
@@ -551,6 +579,7 @@ object TimeFormatter {
      *
      * @throws IllegalArgumentException when the [untilDate] is lesser than the first value
      */
+    @JvmStatic
     fun Long.yearsUntil(
         untilDate: Long,
     ): Long {
@@ -569,6 +598,7 @@ object TimeFormatter {
      * @throws IllegalArgumentException when the second date is lesser than the first value
      */
     @Wrapper
+    @JvmStatic
     fun Long.centuriesUntilNow(): Long {
         return centuriesUntil(
             untilDate = Clock.System.now().toEpochMilliseconds()
@@ -584,6 +614,7 @@ object TimeFormatter {
      *
      * @throws IllegalArgumentException when the [untilDate] is lesser than the first value
      */
+    @JvmStatic
     fun Long.centuriesUntil(
         untilDate: Long,
     ): Long {
@@ -626,6 +657,7 @@ object TimeFormatter {
      *
      * @return the local date value as [LocalDate]
      */
+    @JvmStatic
     fun Long.toLocalDate(): LocalDate {
         return this.toLocalDateTime().date
     }
@@ -635,6 +667,7 @@ object TimeFormatter {
      *
      * @return the local date value as [LocalDateTime]
      */
+    @JvmStatic
     fun Long.toLocalDateTime(): LocalDateTime {
         return Instant.fromEpochMilliseconds(this)
             .toLocalDateTime(TimeZone.currentSystemDefault())
@@ -645,6 +678,7 @@ object TimeFormatter {
      *
      * @return the local date time value in nanoseconds as [Long]
      */
+    @JvmStatic
     fun LocalDateTime.toNanos(): Long {
         return this.toMillis() * MILLIS_GAP_CONVERSION_RATE
     }
@@ -654,6 +688,7 @@ object TimeFormatter {
      *
      * @return the local date time value in seconds as [Long]
      */
+    @JvmStatic
     fun LocalDateTime.toSeconds(): Long {
         return this.toMillis() / MILLIS_GAP_CONVERSION_RATE
     }
@@ -663,6 +698,7 @@ object TimeFormatter {
      *
      * @return the local date time value in milliseconds as [Long]
      */
+    @JvmStatic
     fun LocalDateTime.toMillis(): Long {
         return this.toInstant(TimeZone.currentSystemDefault())
             .toEpochMilliseconds()
