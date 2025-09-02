@@ -1,5 +1,6 @@
 package com.tecknobit.equinoxbackend.apis.events;
 
+import com.tecknobit.equinoxbackend.annotations.EventsNotifier;
 import jdk.jfr.Experimental;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
@@ -11,9 +12,15 @@ import org.springframework.stereotype.Component;
  * It is based on top of the {@link ApplicationEventPublisher} API
  *
  * @param <T> The type of the event to emit
+ *
  * @author N7ghtm4r3 - Tecknobit
+ *
+ * @see EventsNotifier
+ * @see Component
+ *
  * @since 1.1.1
  */
+@EventsNotifier
 @Component
 @Experimental
 public abstract class EquinoxEventsEmitter<T extends Enum<?>> {

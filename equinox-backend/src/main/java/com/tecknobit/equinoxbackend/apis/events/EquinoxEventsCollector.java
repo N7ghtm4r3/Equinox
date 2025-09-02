@@ -1,5 +1,6 @@
 package com.tecknobit.equinoxbackend.apis.events;
 
+import com.tecknobit.equinoxbackend.annotations.EventsHandler;
 import jdk.jfr.Experimental;
 import org.springframework.context.event.EventListener;
 
@@ -9,9 +10,14 @@ import org.springframework.context.event.EventListener;
  *
  * @param <T> The type of the event emitted
  * @param <E> The type of the custom application event to handle
+ *
  * @author N7ghtm4r3 - Tecknobit
+ *
+ * @see EventsHandler
+ *
  * @since 1.1.1
  */
+@EventsHandler
 @Experimental
 @FunctionalInterface
 public interface EquinoxEventsCollector<T extends Enum<?>, E extends EquinoxApplicationEvent<T>> {
