@@ -147,6 +147,7 @@ object TimeFormatter {
      *
      * @param invalidTimeDefValue The default value to specify an invalid temporal value not to be formatted
      * @param pattern The pattern to use to format the long value
+     * @param timeZone The time zone used to convert the date and time values
      *
      * @return the formatted long value as [String]
      */
@@ -155,13 +156,16 @@ object TimeFormatter {
     fun Long.toDateString(
         invalidTimeDefValue: String? = null,
         pattern: String = defaultPattern,
+        timeZone: TimeZone = TimeZone.currentSystemDefault()
     ): String {
         invalidTimeDefValue?.let { defValue ->
             if (this == this@TimeFormatter.invalidTimeDefValue)
                 return defValue
         }
         val instant = Instant.fromEpochMilliseconds(this)
-        val localDateTime = instant.toLocalDateTime(TimeZone.currentSystemDefault())
+        val localDateTime = instant.toLocalDateTime(
+            timeZone = timeZone
+        )
         return LocalDateTime.Format {
             byUnicodePattern(pattern)
         }.format(localDateTime)
@@ -199,6 +203,7 @@ object TimeFormatter {
      * Method used to format a [String] value which contains both date and time related values
      *
      * @param pattern The pattern to use to format the string value
+     * @param timeZone The time zone used to convert the date and time values
      *
      * @return the formatted string value as [Long]
      */
@@ -206,12 +211,15 @@ object TimeFormatter {
     @JvmStatic
     private fun String.dateAndTimeParsing(
         pattern: String,
+        timeZone: TimeZone = TimeZone.currentSystemDefault()
     ): Long {
         val parser = LocalDateTime.Format {
             byUnicodePattern(pattern)
         }
         return try {
-            parser.parse(this).toInstant(TimeZone.currentSystemDefault()).toEpochMilliseconds()
+            parser.parse(this).toInstant(
+                timeZone = timeZone
+            ).toEpochMilliseconds()
         } catch (e: Exception) {
             invalidTimeDefValue
         }
@@ -221,12 +229,14 @@ object TimeFormatter {
      * Method used to format a [String] value which contains just date related values
      *
      * @param pattern The pattern to use to format the string value
+     * @param timeZone The time zone used to convert the date and time values
      *
      * @return the formatted string value as [Long]
      */
     @OptIn(FormatStringsInDatetimeFormats::class)
     private fun String.dateParsing(
         pattern: String,
+        timeZone: TimeZone = TimeZone.currentSystemDefault()
     ): Long {
         val parser = LocalDate.Format {
             byUnicodePattern(pattern)
@@ -239,7 +249,9 @@ object TimeFormatter {
                 day = localDate.day,
                 hour = 0,
                 minute = 0
-            ).toInstant(TimeZone.currentSystemDefault()).toEpochMilliseconds()
+            ).toInstant(
+                timeZone = timeZone
+            ).toEpochMilliseconds()
         } catch (e: Exception) {
             invalidTimeDefValue
         }
@@ -655,53 +667,80 @@ object TimeFormatter {
     /**
      * Method used to transform a [Long] value into the corresponding [LocalDate]
      *
+     * @param timeZone The time zone used to convert the date and time values
+     *
      * @return the local date value as [LocalDate]
      */
     @JvmStatic
-    fun Long.toLocalDate(): LocalDate {
+    fun Long.toLocalDate(
+        timeZone: TimeZone = TimeZone.currentSystemDefault()
+    ): LocalDate {
         return this.toLocalDateTime().date
     }
 
     /**
      * Method used to transform a [Long] value into the corresponding [LocalDateTime]
      *
+     * @param timeZone The time zone used to convert the date and time values
+     *
      * @return the local date value as [LocalDateTime]
      */
     @JvmStatic
-    fun Long.toLocalDateTime(): LocalDateTime {
+    fun Long.toLocalDateTime(
+        timeZone: TimeZone = TimeZone.currentSystemDefault()
+    ): LocalDateTime {
         return Instant.fromEpochMilliseconds(this)
-            .toLocalDateTime(TimeZone.currentSystemDefault())
+            .toLocalDateTime(
+                timeZone = timeZone
+            )
     }
 
     /**
      * Method used to transform a [LocalDateTime] value into the corresponding nanoseconds value
      *
+     * @param timeZone The time zone used to convert the date and time values
+     *
      * @return the local date time value in nanoseconds as [Long]
      */
     @JvmStatic
-    fun LocalDateTime.toNanos(): Long {
-        return this.toMillis() * MILLIS_GAP_CONVERSION_RATE
+    fun LocalDateTime.toNanos(
+        timeZone: TimeZone = TimeZone.currentSystemDefault()
+    ): Long {
+        return this.toMillis(
+            timeZone = timeZone
+        ) * MILLIS_GAP_CONVERSION_RATE
     }
 
     /**
      * Method used to transform a [LocalDateTime] value into the corresponding seconds value
      *
+     * @param timeZone The time zone used to convert the date and time values
+     *
      * @return the local date time value in seconds as [Long]
      */
     @JvmStatic
-    fun LocalDateTime.toSeconds(): Long {
-        return this.toMillis() / MILLIS_GAP_CONVERSION_RATE
+    fun LocalDateTime.toSeconds(
+        timeZone: TimeZone = TimeZone.currentSystemDefault()
+    ): Long {
+        return this.toMillis(
+            timeZone = timeZone
+        ) / MILLIS_GAP_CONVERSION_RATE
     }
 
     /**
      * Method used to transform a [LocalDateTime] value into the corresponding milliseconds value
      *
+     * @param timeZone The time zone used to convert the date and time values
+     *
      * @return the local date time value in milliseconds as [Long]
      */
     @JvmStatic
-    fun LocalDateTime.toMillis(): Long {
-        return this.toInstant(TimeZone.currentSystemDefault())
-            .toEpochMilliseconds()
+    fun LocalDateTime.toMillis(
+        timeZone: TimeZone = TimeZone.currentSystemDefault()
+    ): Long {
+        return this.toInstant(
+            timeZone = timeZone
+        ).toEpochMilliseconds()
     }
 
 }
