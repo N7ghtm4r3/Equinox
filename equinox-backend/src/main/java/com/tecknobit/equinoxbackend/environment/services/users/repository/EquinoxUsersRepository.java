@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import static com.tecknobit.equinoxbackend.apis.database.SQLConstants._WHERE_;
 import static com.tecknobit.equinoxcore.helpers.CommonKeysKt.*;
 
 /**
@@ -31,7 +32,7 @@ public interface EquinoxUsersRepository<T extends EquinoxUser> extends JpaReposi
      * @return the user, if exists, as {@link EquinoxUser}
      */
     @Query(
-            value = "SELECT * FROM " + USERS_KEY + " WHERE " + EMAIL_KEY + "=:" + EMAIL_KEY,
+            value = "SELECT * FROM " + USERS_KEY + _WHERE_ + EMAIL_KEY + "=:" + EMAIL_KEY,
             nativeQuery = true
     )
     T findUserByEmail(
@@ -47,8 +48,8 @@ public interface EquinoxUsersRepository<T extends EquinoxUser> extends JpaReposi
     @Modifying(clearAutomatically = true)
     @Transactional
     @Query(
-            value = "UPDATE " + USERS_KEY + " SET " + PROFILE_PIC_KEY + "=:" + PROFILE_PIC_KEY + " WHERE "
-                    + IDENTIFIER_KEY + "=:" + IDENTIFIER_KEY,
+            value = "UPDATE " + USERS_KEY + " SET " + PROFILE_PIC_KEY + "=:" + PROFILE_PIC_KEY +
+                    _WHERE_ + IDENTIFIER_KEY + "=:" + IDENTIFIER_KEY,
             nativeQuery = true
     )
     void changeProfilePic(
@@ -65,8 +66,8 @@ public interface EquinoxUsersRepository<T extends EquinoxUser> extends JpaReposi
     @Modifying(clearAutomatically = true)
     @Transactional
     @Query(
-            value = "UPDATE " + USERS_KEY + " SET " + EMAIL_KEY + "=:" + EMAIL_KEY + " WHERE "
-                    + IDENTIFIER_KEY + "=:" + IDENTIFIER_KEY,
+            value = "UPDATE " + USERS_KEY + " SET " + EMAIL_KEY + "=:" + EMAIL_KEY +
+                    _WHERE_ + IDENTIFIER_KEY + "=:" + IDENTIFIER_KEY,
             nativeQuery = true
     )
     void changeEmail(
@@ -83,8 +84,8 @@ public interface EquinoxUsersRepository<T extends EquinoxUser> extends JpaReposi
     @Modifying(clearAutomatically = true)
     @Transactional
     @Query(
-            value = "UPDATE " + USERS_KEY + " SET " + PASSWORD_KEY + "=:" + PASSWORD_KEY + " WHERE "
-                    + IDENTIFIER_KEY + "=:" + IDENTIFIER_KEY,
+            value = "UPDATE " + USERS_KEY + " SET " + PASSWORD_KEY + "=:" + PASSWORD_KEY +
+                    _WHERE_ + IDENTIFIER_KEY + "=:" + IDENTIFIER_KEY,
             nativeQuery = true
     )
     void changePassword(
@@ -101,8 +102,8 @@ public interface EquinoxUsersRepository<T extends EquinoxUser> extends JpaReposi
     @Modifying(clearAutomatically = true)
     @Transactional
     @Query(
-            value = "UPDATE " + USERS_KEY + " SET " + LANGUAGE_KEY + "=:" + LANGUAGE_KEY + " WHERE "
-                    + IDENTIFIER_KEY + "=:" + IDENTIFIER_KEY,
+            value = "UPDATE " + USERS_KEY + " SET " + LANGUAGE_KEY + "=:" + LANGUAGE_KEY +
+                    _WHERE_ + IDENTIFIER_KEY + "=:" + IDENTIFIER_KEY,
             nativeQuery = true
     )
     void changeLanguage(

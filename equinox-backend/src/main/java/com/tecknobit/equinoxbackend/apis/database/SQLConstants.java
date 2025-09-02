@@ -1,6 +1,14 @@
 package com.tecknobit.equinoxbackend.apis.database;
 
-// TODO: 01/09/2025 TO DOCU 1.1.5 AND AWARE ABOUT THE CONVETION OF USING _ 
+/**
+ * The {@code SQLConstants} class is a container for the constants used in the {@code SQL} queries. <br>
+ * The naming convention for those constants which are part of query such where, values, etc... is:
+ * The underscore character ({@code _}) stands for {@code whitespace}, so the {@link #_WHERE_} constant value is: " WHERE "
+ *
+ * @author N7ghtm4r3 - Tecknobit
+ *
+ * @since 1.1.5
+ */
 public class SQLConstants {
 
     /**
@@ -47,7 +55,10 @@ public class SQLConstants {
      * {@code IN_CLAUSE} in clause query part
      */
     public static final String _IN_CLAUSE_ = " IN ";
-    
+
+    /**
+     * Private constructor to avoid instantiation
+     */
     private SQLConstants() {}
     
 }
