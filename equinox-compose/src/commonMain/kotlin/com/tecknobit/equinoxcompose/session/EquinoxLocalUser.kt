@@ -1,7 +1,14 @@
+@file:OptIn(ExperimentalComposeRuntimeApi::class)
+
 package com.tecknobit.equinoxcompose.session
 
+import androidx.compose.runtime.ExperimentalComposeRuntimeApi
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.State
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.text.intl.Locale
 import com.tecknobit.equinoxcompose.session.EquinoxLocalUser.ApplicationTheme.Auto
+import com.tecknobit.equinoxcore.annotations.RequiresDocumentation
 import com.tecknobit.equinoxcore.annotations.RequiresSuperCall
 import com.tecknobit.equinoxcore.annotations.Structure
 import com.tecknobit.equinoxcore.helpers.*
@@ -19,8 +26,12 @@ import kotlinx.serialization.json.jsonPrimitive
  * @since 1.0.6
  */
 @Structure
+@RequiresDocumentation(
+    additionalNotes = "Add 1.1.6"
+)
 open class EquinoxLocalUser(
     localStoragePath: String,
+    observableKeys: Set<String> = emptySet()
 ) {
 
     /**
@@ -71,6 +82,13 @@ open class EquinoxLocalUser(
      */
     protected val preferencesManager = KMPrefs(
         path = localStoragePath
+    )
+
+    @RequiresDocumentation(
+        additionalNotes = "Add 1.1.6"
+    )
+    protected val stateStore = EquinoxLocalUserStateStore(
+        allowedKeys = observableKeys
     )
 
     /**
@@ -176,20 +194,6 @@ open class EquinoxLocalUser(
         }
 
     /**
-     * `password` the password of the user
-     */
-    var password: String = ""
-        set(value) {
-            if (field != value) {
-                setPreference(
-                    key = PASSWORD_KEY,
-                    value = value
-                )
-                field = value
-            }
-        }
-
-    /**
      * `language` the language of the user
      */
     var language: String = ""
@@ -211,7 +215,7 @@ open class EquinoxLocalUser(
             if (field != value) {
                 setPreference(
                     key = THEME_KEY,
-                    value = value.name
+                    value = value
                 )
                 field = value
             }
@@ -251,7 +255,6 @@ open class EquinoxLocalUser(
         name = getNullSafePreference(NAME_KEY)
         surname = getNullSafePreference(SURNAME_KEY)
         email = getNullSafePreference(EMAIL_KEY)
-        password = getNullSafePreference(PASSWORD_KEY)
         language = getNullSafePreference(
             key = LANGUAGE_KEY,
             defPrefValue = if (SUPPORTED_LANGUAGES.containsKey(currentLocaleLanguage))
@@ -311,7 +314,6 @@ open class EquinoxLocalUser(
         name: String,
         surname: String,
         email: String,
-        password: String,
         language: String,
         response: JsonObject,
         vararg custom: Any?,
@@ -323,7 +325,6 @@ open class EquinoxLocalUser(
         this.name = name
         this.surname = surname
         this.email = email
-        this.password = password
         this.language = language
         this.theme = Auto
     }
@@ -354,16 +355,21 @@ open class EquinoxLocalUser(
      * @param value: the value of the preference
      */
     @OptIn(ExperimentalUnsignedTypes::class)
-    protected fun setPreference(
+    protected fun <T> setPreference(
         key: String,
-        value: String?,
+        value: T?,
     ) {
-        if (!preferencesManager.valueMatchesTo(key, value)) {
+        val preferenceValue = value.toString()
+        if (!preferencesManager.valueMatchesTo(key, preferenceValue)) {
             preferencesManager.storeString(
                 key = key,
-                value = value
+                value = preferenceValue
             )
         }
+        stateStore.storeOrUpdate(
+            key = key,
+            property = value
+        )
     }
 
     /**
@@ -378,10 +384,11 @@ open class EquinoxLocalUser(
         key: String,
         defPrefValue: String? = null,
     ): String? {
-        return preferencesManager.retrieveString(
+        val storedPreference = preferencesManager.retrieveString(
             key = key,
             defValue = defPrefValue
         )
+        return storedPreference
     }
 
     /**
@@ -424,6 +431,50 @@ open class EquinoxLocalUser(
             )
         }
         initLocalUser()
+    }
+
+    @Suppress("UNCHECKED_CAST")
+    @ExperimentalComposeRuntimeApi
+    @RequiresDocumentation(
+        additionalNotes = "Add 1.1.6"
+    )
+    fun <T> observe(
+        key: String
+    ) : State<T> {
+        val observable: State<T>? = stateStore.retrieve(key) as State<T>?
+        require(observable != null) { "Cannot observe a null property" }
+        return observable
+    }
+
+    @RequiresDocumentation(
+        additionalNotes = "Add 1.1.6"
+    )
+    @ExperimentalComposeRuntimeApi
+    protected class EquinoxLocalUserStateStore(
+        private val allowedKeys: Set<String> = emptySet()
+    ) {
+
+        private val stateStore: MutableMap<String, MutableState<Any?>> = mutableMapOf()
+
+        fun <T> storeOrUpdate(
+            key: String,
+            property: T?
+        ) {
+            if(!allowedKeys.contains(key))
+                return
+            val storedProperty = stateStore.getOrPut(
+                key = key,
+                defaultValue = { mutableStateOf(property) }
+            )
+            storedProperty.value = property
+        }
+
+        fun retrieve(
+            key: String
+        ) : State<Any?>? {
+            return stateStore[key]
+        }
+
     }
 
 }

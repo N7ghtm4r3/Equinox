@@ -46,11 +46,6 @@ open class EquinoxProfileViewModel(
     lateinit var email: MutableState<String>
 
     /**
-     * `password` the password of the user
-     */
-    lateinit var password: MutableState<String>
-
-    /**
      * `language` the language of the user
      */
     lateinit var language: MutableState<String>
@@ -168,8 +163,6 @@ open class EquinoxProfileViewModel(
                     )
                 },
                 onSuccess = {
-                    localUser.password = newPassword.value
-                    password.value = newPassword.value
                     onChange?.invoke()
                 },
                 onFailure = onFailure
