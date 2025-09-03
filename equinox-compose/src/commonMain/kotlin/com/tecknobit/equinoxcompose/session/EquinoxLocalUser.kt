@@ -2,10 +2,7 @@
 
 package com.tecknobit.equinoxcompose.session
 
-import androidx.compose.runtime.ExperimentalComposeRuntimeApi
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.State
-import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.*
 import androidx.compose.ui.text.intl.Locale
 import com.tecknobit.equinoxcompose.session.EquinoxLocalUser.ApplicationTheme.Auto
 import com.tecknobit.equinoxcore.annotations.RequiresDocumentation
@@ -91,6 +88,9 @@ open class EquinoxLocalUser(
         allowedKeys = observableKeys
     )
 
+
+    // TODO: USE THE SETTER FIELD AS theme SO REMOVE EXTRA CHECK
+    
     /**
      * `hostAddress` the host address which the user communicate
      */
@@ -212,13 +212,11 @@ open class EquinoxLocalUser(
      */
     var theme: ApplicationTheme = Auto
         set(value) {
-            if (field != value) {
-                setPreference(
-                    key = THEME_KEY,
-                    value = value
-                )
-                field = value
-            }
+            setPreference(
+                key = THEME_KEY,
+                value = value
+            )
+            field = value
         }
 
     val isAuthenticated: Boolean
@@ -268,14 +266,13 @@ open class EquinoxLocalUser(
     /**
      * Method used to insert and initialize a new local user.
      *
-     * @param hostAddress The host address with which the user communicates.
-     * @param name The name of the user.
-     * @param surname The surname of the user.
-     * @param email The email address of the user.
-     * @param password The password of the user.
-     * @param language The preferred language of the user.
-     * @param response The payload response received from an authentication request.
-     * @param custom Custom parameters added during the customization of the equinox user.
+     * @param hostAddress The host address with which the user communicates
+     * @param name The name of the user
+     * @param surname The surname of the user
+     * @param email The email address of the user
+     * @param language The preferred language of the user
+     * @param response The payload response received from an authentication request
+     * @param custom Custom parameters added during the customization of the equinox user
      *
      * ## Example workflow:
      *
@@ -360,13 +357,13 @@ open class EquinoxLocalUser(
         value: T?,
     ) {
         val preferenceValue = value.toString()
-        if (!preferencesManager.valueMatchesTo(key, preferenceValue)) {
+        if(!preferencesManager.valueMatchesTo(key, preferenceValue)) {
             preferencesManager.storeString(
                 key = key,
                 value = preferenceValue
             )
         }
-        stateStore.storeOrUpdate(
+        stateStore.store(
             key = key,
             property = value
         )
@@ -433,15 +430,16 @@ open class EquinoxLocalUser(
         initLocalUser()
     }
 
-    @Suppress("UNCHECKED_CAST")
-    @ExperimentalComposeRuntimeApi
     @RequiresDocumentation(
         additionalNotes = "Add 1.1.6"
     )
+    @ExperimentalComposeRuntimeApi
+    @Composable
     fun <T> observe(
         key: String
     ) : State<T> {
-        val observable: State<T>? = stateStore.retrieve(key) as State<T>?
+        @Suppress("UNCHECKED_CAST")
+        val observable: State<T>? = remember { stateStore.retrieve(key) as State<T>? }
         require(observable != null) { "Cannot observe a null property" }
         return observable
     }
@@ -456,7 +454,7 @@ open class EquinoxLocalUser(
 
         private val stateStore: MutableMap<String, MutableState<Any?>> = mutableMapOf()
 
-        fun <T> storeOrUpdate(
+        fun <T> store(
             key: String,
             property: T?
         ) {

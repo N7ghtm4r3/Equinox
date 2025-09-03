@@ -162,9 +162,7 @@ open class EquinoxProfileViewModel(
                         newPassword = newPassword.value
                     )
                 },
-                onSuccess = {
-                    onChange?.invoke()
-                },
+                onSuccess = { onChange?.invoke() },
                 onFailure = onFailure
             )
         }
