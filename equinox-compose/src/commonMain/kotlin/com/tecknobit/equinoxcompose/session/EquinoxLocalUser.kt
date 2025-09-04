@@ -5,7 +5,6 @@ package com.tecknobit.equinoxcompose.session
 import androidx.compose.runtime.*
 import androidx.compose.ui.text.intl.Locale
 import com.tecknobit.equinoxcompose.session.EquinoxLocalUser.ApplicationTheme.Auto
-import com.tecknobit.equinoxcore.annotations.RequiresDocumentation
 import com.tecknobit.equinoxcore.annotations.RequiresSuperCall
 import com.tecknobit.equinoxcore.annotations.Structure
 import com.tecknobit.equinoxcore.helpers.*
@@ -19,13 +18,13 @@ import kotlinx.serialization.json.jsonPrimitive
 /**
  * The `EquinoxLocalUser` class is useful to represent a user in the client application
  *
+ * @param localStoragePath The path where store the local session details of the user
+ * @param observableKeys The keys related to the properties to make observable during the runtime and react to their changes
+ *
  * @author N7ghtm4r3 - Tecknobit
  * @since 1.0.6
  */
 @Structure
-@RequiresDocumentation(
-    additionalNotes = "Add 1.1.6"
-)
 open class EquinoxLocalUser(
     localStoragePath: String,
     observableKeys: Set<String> = emptySet()
@@ -81,28 +80,25 @@ open class EquinoxLocalUser(
         path = localStoragePath
     )
 
-    @RequiresDocumentation(
-        additionalNotes = "Add 1.1.6"
-    )
-    protected val stateStore = EquinoxLocalUserStateStore(
+    /**
+     * `stateStore` the state store instance used to dynamically keep in memory the observable properties of the local user
+     *
+     * @since 1.1.6
+     */
+    protected val stateStore: EquinoxLocalUserStateStore = EquinoxLocalUserStateStore(
         allowedKeys = observableKeys
     )
-
-
-    // TODO: USE THE SETTER FIELD AS theme SO REMOVE EXTRA CHECK
     
     /**
      * `hostAddress` the host address which the user communicate
      */
     var hostAddress: String = ""
         set(value) {
-            if (field != value) {
-                setPreference(
-                    key = HOST_ADDRESS_KEY,
-                    value = value
-                )
-                field = value
-            }
+            setPreference(
+                key = HOST_ADDRESS_KEY,
+                value = value
+            )
+            field = value
         }
 
     /**
@@ -110,13 +106,11 @@ open class EquinoxLocalUser(
      */
     var userId: String? = null
         set(value) {
-            if (field != value) {
-                setPreference(
-                    key = IDENTIFIER_KEY,
-                    value = value
-                )
-                field = value
-            }
+            setPreference(
+                key = IDENTIFIER_KEY,
+                value = value
+            )
+            field = value
         }
 
     /**
@@ -124,13 +118,11 @@ open class EquinoxLocalUser(
      */
     var userToken: String? = null
         set(value) {
-            if (field != value) {
-                setPreference(
-                    key = TOKEN_KEY,
-                    value = value
-                )
-                field = value
-            }
+            setPreference(
+                key = TOKEN_KEY,
+                value = value
+            )
+            field = value
         }
 
     /**
@@ -138,17 +130,18 @@ open class EquinoxLocalUser(
      */
     var profilePic: String = ""
         set(value) {
-            if (field != value) {
-                val profilePicLocal = if (value.startsWith(hostAddress))
+            val profilePicLocal = if (field != value) {
+                if (value.startsWith(hostAddress))
                     value
                 else
                     "$hostAddress/$value"
-                setPreference(
-                    key = PROFILE_PIC_KEY,
-                    value = profilePicLocal
-                )
-                field = profilePicLocal
-            }
+            } else
+                value
+            setPreference(
+                key = PROFILE_PIC_KEY,
+                value = profilePicLocal
+            )
+            field = profilePicLocal
         }
 
     /**
@@ -156,13 +149,11 @@ open class EquinoxLocalUser(
      */
     var name: String = ""
         set(value) {
-            if (field != value) {
-                setPreference(
-                    key = NAME_KEY,
-                    value = value
-                )
-                field = value
-            }
+            setPreference(
+                key = NAME_KEY,
+                value = value
+            )
+            field = value
         }
 
     /**
@@ -170,13 +161,11 @@ open class EquinoxLocalUser(
      */
     var surname: String = ""
         set(value) {
-            if (field != value) {
-                setPreference(
-                    key = SURNAME_KEY,
-                    value = value
-                )
-                field = value
-            }
+            setPreference(
+                key = SURNAME_KEY,
+                value = value
+            )
+            field = value
         }
 
     /**
@@ -184,13 +173,11 @@ open class EquinoxLocalUser(
      */
     var email: String = ""
         set(value) {
-            if (field != value) {
-                setPreference(
-                    key = EMAIL_KEY,
-                    value = value
-                )
-                field = value
-            }
+            setPreference(
+                key = EMAIL_KEY,
+                value = value
+            )
+            field = value
         }
 
     /**
@@ -198,13 +185,11 @@ open class EquinoxLocalUser(
      */
     var language: String = ""
         set(value) {
-            if (field != value) {
-                setPreference(
-                    key = LANGUAGE_KEY,
-                    value = value
-                )
-                field = value
-            }
+            setPreference(
+                key = LANGUAGE_KEY,
+                value = value
+            )
+            field = value
         }
 
     /**
@@ -274,8 +259,8 @@ open class EquinoxLocalUser(
      * @param response The payload response received from an authentication request
      * @param custom Custom parameters added during the customization of the equinox user
      *
-     * ## Example workflow:
-     *
+     * ## Example workflow
+     * TODO: TO REMOVE AND MOVE INTO MARKDOWN DOCU PAGE
      * ```kotlin
      * class CustomLocalUser : EquinoxLocalUser() {
      *
@@ -293,12 +278,11 @@ open class EquinoxLocalUser(
      *         name: String,
      *         surname: String,
      *         email: String,
-     *         password: String,
      *         language: String,
      *         response: JsonHelper,
      *         vararg custom: Any
      *     ) {
-     *         super.insertNewUser(hostAddress, name, surname, email, password, language, response)
+     *         super.insertNewUser(hostAddress, name, surname, email, language, response)
      *         currency = custom[0].toString()
      *     }
      *
@@ -430,9 +414,19 @@ open class EquinoxLocalUser(
         initLocalUser()
     }
 
-    @RequiresDocumentation(
-        additionalNotes = "Add 1.1.6"
-    )
+    /**
+     * Method used to observe a property of the local user
+     *
+     * @param key The associated key to the property to observe
+     *
+     * @param T The type of the property to observe
+     *
+     * @return the observable property as [State] of [T]
+     *
+     * @throws IllegalArgumentException when the requested property is not stored by the [stateStore]
+     *
+     * @since 1.1.6
+     */
     @ExperimentalComposeRuntimeApi
     @Composable
     fun <T> observe(
@@ -444,16 +438,33 @@ open class EquinoxLocalUser(
         return observable
     }
 
-    @RequiresDocumentation(
-        additionalNotes = "Add 1.1.6"
-    )
+    /**
+     * The `EquinoxLocalUserStateStore` class allows to dynamically store properties that need to be observable in order
+     * to properly react to changes
+     *
+     * @property allowedKeys The keys which are allowed to be stored
+     *
+     * @author N7ghtm4r3 - Tecknobit
+     *
+     * @since 1.1.6
+     */
     @ExperimentalComposeRuntimeApi
     protected class EquinoxLocalUserStateStore(
         private val allowedKeys: Set<String> = emptySet()
     ) {
 
+        /**
+         * `stateStore` container map of the observable properties
+         */
         private val stateStore: MutableMap<String, MutableState<Any?>> = mutableMapOf()
 
+        /**
+         * Method used to store an observable property whether its key is present in the [allowedKeys], otherwise the storing
+         * will be skipped. When the property has been previously stored will be updated its value
+         *
+         * @param key The key of the observable property to store
+         * @param property The value of the observable property to store
+         */
         fun <T> store(
             key: String,
             property: T?
@@ -467,6 +478,13 @@ open class EquinoxLocalUser(
             storedProperty.value = property
         }
 
+        /**
+         * Method used to retrieve an observable property from the [stateStore] map
+         *
+         * @param key The key of the observable property to retrieve
+         *
+         * @return the observable property as nullable [State] of nullable [Any]
+         */
         fun retrieve(
             key: String
         ) : State<Any?>? {
