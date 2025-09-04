@@ -140,3 +140,8 @@ dependencies {
 
     - [SessionFlowContainer](components/SessionFlowContainer.md)  
       Allows to dynamically display the correct content based on the session status
+
+## Annotations available
+
+This module provides a set of annotations that can be used to improve code readability and maintainability.
+You can explore them [here](Annotations/DestinationScreen.md)
