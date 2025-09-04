@@ -128,3 +128,8 @@ com.your.package
    └── config_class
    └── ...
 ```
+
+## Annotations available
+
+This module provides a set of annotations that can be used to improve code readability and maintainability.
+You can explore them [here](Annotations/BatchQueryImpl.md)
