@@ -97,6 +97,9 @@ Add the JitPack repository to your build file
       - [FilteredQuery](APIs/FilteredQuery.md)  
         Builds dynamic queries with filter parameters leverages regex expressions
 
+      - [SQLConstants](APIs/SQLConstants.md)  
+        Collection of constants used in the SQL context
+
 ??? api-miscellaneous "Miscellaneous"
      - [ResourcesProvider](APIs/ResourcesProvider.md)  
        Manages static resources to serve to client applications

@@ -3,7 +3,7 @@ package com.tecknobit.equinoxbackend.apis.database;
 /**
  * The {@code SQLConstants} class is a container for the constants used in the {@code SQL} queries. <br>
  * The naming convention for those constants which are part of query such where, values, etc... is:
- * The underscore character ({@code _}) stands for {@code whitespace}, so the {@link #_WHERE_} constant value is: " WHERE "
+ * the underscore character ({@code _}) stands for {@code whitespace}, so the {@link #_WHERE_} constant value is: " WHERE "
  *
  * @author N7ghtm4r3 - Tecknobit
  *
@@ -69,7 +69,7 @@ public class SQLConstants {
     /**
      * {@code _ADD_FULLTEXT_INDEX_} query command
      */
-    public static final String _ADD_FULLTEXT_INDEX_ = " ADD FULLTEXT INDEX %s (";
+    public static final String _ADD_FULLTEXT_INDEX_ = " ADD FULLTEXT INDEX %s ( ";
 
     /**
      * {@code _IN_NATURAL_LANGUAGE_MODE} the mode applied to the FTS (full text search)
