@@ -257,37 +257,7 @@ open class EquinoxLocalUser(
      * @param email The email address of the user
      * @param language The preferred language of the user
      * @param response The payload response received from an authentication request
-     * @param custom Custom parameters added during the customization of the equinox user
-     *
-     * ## Example workflow
-     * TODO: TO REMOVE AND MOVE INTO MARKDOWN DOCU PAGE
-     * ```kotlin
-     * class CustomLocalUser : EquinoxLocalUser() {
-     *
-     *     var currency: String? = null
-     *          set(value) {
-     *             setPreference(
-     *                 key = "currency",
-     *                 value = value
-     *             )
-     *             field = value
-     *         }
-     *
-     *     fun insertNewUser(
-     *         hostAddress: String,
-     *         name: String,
-     *         surname: String,
-     *         email: String,
-     *         language: String,
-     *         response: JsonHelper,
-     *         vararg custom: Any
-     *     ) {
-     *         super.insertNewUser(hostAddress, name, surname, email, language, response)
-     *         currency = custom[0].toString()
-     *     }
-     *
-     * }
-     * ```
+     * @param custom Custom parameters added during the customization of the equinox use
      */
     @RequiresSuperCall
     open fun insertNewUser(

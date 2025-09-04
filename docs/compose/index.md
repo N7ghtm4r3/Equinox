@@ -78,6 +78,9 @@ dependencies {
 - [EquinoxWindowKit](APIs/EquinoxWindowKit.md)  
   APIs useful to handle the responsive layouts
 
+- [EquinoxLocalUser](../compose/APIs/EquinoxLocalUser.md)  
+  Helper for managing a local user session in client applications
+
 ## Components available
 
 ??? texts "Texts"
