@@ -72,3 +72,8 @@ dependencies {
 
 - [ContextActivityProvider](APIs/android/ContextActivityProvider.md)  
   A singleton object that helps to maintain a weak reference to the current activity
+
+## Annotations available
+
+This module provides a set of annotations that can be used to improve code readability and maintainability.
+You can explore them [here](Annotations/Assembler.md)

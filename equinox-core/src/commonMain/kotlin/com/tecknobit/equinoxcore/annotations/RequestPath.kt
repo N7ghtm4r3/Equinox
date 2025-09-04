@@ -3,12 +3,10 @@ package com.tecknobit.equinoxcore.annotations
 import com.tecknobit.equinoxcore.network.RequestMethod
 
 /**
- * Annotation that defines the request path and its parameters for API requests.
- *
  * The `@RequestPath` annotation is used to make the request path, path parameters, query parameters,
  * and body parameters more readable and easier to manage in API request methods. It supports multiple
  * types of parameters including path, query, and body parameters, helping to organize the API request
- * construction in a more structured and understandable way.
+ * construction in a more structured and understandable way
  *
  * @author N7ghtm4r3 - Tecknobit
  */
