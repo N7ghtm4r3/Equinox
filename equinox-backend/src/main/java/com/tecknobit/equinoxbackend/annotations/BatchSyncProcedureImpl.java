@@ -8,7 +8,7 @@ package com.tecknobit.equinoxbackend.annotations;
  * {@code
  * @BatchSyncProcedureImpl(
  *  // not mandatory
- *   description= """
+ *   description = """
  *          Informative description about the behavior of the implemented procedure"
  *         """ // suggested text block
  * )

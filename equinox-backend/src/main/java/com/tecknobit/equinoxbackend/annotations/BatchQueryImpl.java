@@ -18,7 +18,7 @@ import static java.lang.annotation.ElementType.TYPE;
  *
  * @BatchQueryImpl(
  *  // not mandatory
- *   description= """
+ *   description = """
  *          Informative description about the behavior of the implemented batch query"
  *         """ // suggested text block
  * )

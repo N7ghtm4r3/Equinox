@@ -7,7 +7,7 @@ This annotation is useful to indicate an implementation of [BatchQuery](../APIs/
     ```java
     @BatchQueryImpl(
         // not mandatory
-        description= """
+        description = """
             Informative description about the behavior of the implemented batch query"
         """ // suggested text block
     )

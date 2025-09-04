@@ -14,8 +14,7 @@ import static java.lang.annotation.ElementType.TYPE;
  *
  * <pre>
  * {@code
- * @EventsHandler // not mandatory, but suggested
- * @FunctionalInterface // not mandatory, but suggested
+ * @EventsHandler
  * public interface TestEventsCollector extends EquinoxEventsCollector<TestEvent, TestApplicationEvent> {
  *
  *     // your custom implementation

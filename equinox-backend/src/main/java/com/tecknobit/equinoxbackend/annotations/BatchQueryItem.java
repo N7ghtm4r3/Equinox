@@ -15,7 +15,7 @@ import static java.lang.annotation.ElementType.TYPE;
  * {@code
  * @BatchQueryItem(
  *  // not mandatory
- *   description= """
+ *   description = """
  *          Informative description about the scope of the this item, such the operation where is used what data are
  *          manipulated, etc...
  *          """ // suggested text block

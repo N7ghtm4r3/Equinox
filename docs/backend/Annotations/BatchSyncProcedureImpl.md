@@ -7,7 +7,7 @@ This annotation is useful to annotation is useful to indicate an implementation 
     ```java
     @BatchSyncProcedureImpl(
         // not mandatory
-        description= """
+        description = """
             Informative description about the behavior of the implemented procedure"
             """ // suggested text block
     )
