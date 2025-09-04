@@ -2,15 +2,15 @@ package com.tecknobit.equinoxbackend.configuration;
 
 import com.tecknobit.apimanager.apis.ResourcesUtils;
 import com.tecknobit.apimanager.formatters.JsonHelper;
+import com.tecknobit.equinoxbackend.apis.resources.ResourcesManager;
 import com.tecknobit.equinoxbackend.environment.services.builtin.controller.EquinoxController;
-import com.tecknobit.equinoxbackend.resourcesutils.ResourcesManager;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import static com.tecknobit.equinoxbackend.resourcesutils.ResourcesManager.RESOURCES_KEY;
+import static com.tecknobit.equinoxbackend.apis.resources.ResourcesManager.RESOURCES_KEY;
 
 /**
  * The {@code EquinoxBackendConfiguration} contains the current configuration used for an Equinox's

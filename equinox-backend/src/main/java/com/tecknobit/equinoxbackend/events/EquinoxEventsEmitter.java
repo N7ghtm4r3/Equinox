@@ -14,6 +14,7 @@ import org.springframework.stereotype.Component;
  * @author N7ghtm4r3 - Tecknobit
  * @since 1.1.1
  */
+@Deprecated(forRemoval = true, since = "MOVED INTO apis.events PACKAGE")
 @Component
 @Experimental
 public abstract class EquinoxEventsEmitter<T extends Enum<?>> {

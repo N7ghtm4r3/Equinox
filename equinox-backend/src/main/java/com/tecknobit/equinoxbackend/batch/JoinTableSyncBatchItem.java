@@ -1,7 +1,7 @@
 package com.tecknobit.equinoxbackend.batch;
 
 import com.tecknobit.equinoxbackend.annotations.BatchQueryItem;
-import com.tecknobit.equinoxbackend.environment.services.builtin.service.EquinoxItemsHelper;
+import com.tecknobit.equinoxbackend.apis.batch.EquinoxItemsHelper;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -16,6 +16,7 @@ import java.util.List;
  * @author N7ghtm4r3 - Tecknobit
  * @since 1.0.8
  */
+@Deprecated(forRemoval = true, since = "MOVED INTO apis.batch PACKAGE")
 @BatchQueryItem
 public class JoinTableSyncBatchItem<O, D> implements EquinoxItemsHelper.ComplexBatchItem {
 

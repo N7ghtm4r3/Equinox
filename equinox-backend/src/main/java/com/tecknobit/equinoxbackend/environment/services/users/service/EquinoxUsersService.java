@@ -1,10 +1,10 @@
 package com.tecknobit.equinoxbackend.environment.services.users.service;
 
 import com.tecknobit.apimanager.apis.APIRequest;
-import com.tecknobit.equinoxbackend.environment.services.builtin.service.EquinoxItemsHelper;
+import com.tecknobit.equinoxbackend.apis.batch.EquinoxItemsHelper;
+import com.tecknobit.equinoxbackend.apis.resources.ResourcesManager;
 import com.tecknobit.equinoxbackend.environment.services.users.entity.EquinoxUser;
 import com.tecknobit.equinoxbackend.environment.services.users.repository.EquinoxUsersRepository;
-import com.tecknobit.equinoxbackend.resourcesutils.ResourcesManager;
 import jakarta.persistence.Query;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -20,6 +20,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import static com.tecknobit.apimanager.apis.APIRequest.SHA256_ALGORITHM;
+import static com.tecknobit.equinoxbackend.apis.database.SQLConstants.*;
 import static com.tecknobit.equinoxbackend.environment.services.users.entity.EquinoxUser.DISCRIMINATOR_VALUE_KEY;
 import static com.tecknobit.equinoxcore.helpers.CommonKeysKt.*;
 import static java.lang.System.currentTimeMillis;
@@ -148,7 +149,7 @@ public class EquinoxUsersService<T extends EquinoxUser, R extends EquinoxUsersRe
      *
      * @param queryBuilder The builder of the query to execute
      * @param list The list to arrange
-     * @param escape: whether the values of the list must be escaped with the {@link #SINGLE_QUOTE} character
+     * @param escape: whether the values of the list must be escaped with the {@link com.tecknobit.equinoxbackend.apis.database.SQLConstants.SINGLE_QUOTE} character
      *
      * @param <E> Type of the element in the list
      */

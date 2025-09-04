@@ -20,6 +20,7 @@ import static com.tecknobit.equinoxbackend.environment.services.builtin.service.
  *
  * @author N7ghtm4r3 - Tecknobit
  */
+@Deprecated(forRemoval = true, since = "MOVED INTO apis.batch PACKAGE")
 @Transactional
 public abstract class EquinoxItemsHelper {
 
@@ -207,46 +208,55 @@ public abstract class EquinoxItemsHelper {
     /**
      * {@code SINGLE_QUOTE} single quote character
      */
+    @Deprecated(forRemoval = true, since = "MOVED INTO apis.database.SQLConstants PACKAGE")
     public static final String SINGLE_QUOTE = "'";
 
     /**
      * {@code OPENED_ROUND_BRACKET} opened round bracket character
      */
+    @Deprecated(forRemoval = true, since = "MOVED INTO apis.database.SQLConstants PACKAGE")
     public static final String OPENED_ROUND_BRACKET = "(";
 
     /**
      * {@code CLOSED_ROUND_BRACKET} closed round bracket character
      */
+    @Deprecated(forRemoval = true, since = "MOVED INTO apis.database.SQLConstants PACKAGE")
     public static final String CLOSED_ROUND_BRACKET = ")";
 
     /**
      * {@code COMMA} comma character
      */
+    @Deprecated(forRemoval = true, since = "MOVED INTO apis.database.SQLConstants PACKAGE")
     public static final String COMMA = ",";
 
     /**
      * {@code QUESTION_MARK} question mark character
      */
+    @Deprecated(forRemoval = true, since = "MOVED INTO apis.database.SQLConstants PACKAGE")
     public static final String QUESTION_MARK = "?";
 
     /**
      * {@code VALUES} values query part
      */
+    @Deprecated(forRemoval = true, since = "MOVED INTO apis.database.SQLConstants PACKAGE")
     public static final String _VALUES_ = " VALUES ";
 
     /**
      * {@code DELETE_FROM_} delete from query command
      */
+    @Deprecated(forRemoval = true, since = "MOVED INTO apis.database.SQLConstants PACKAGE")
     public static final String DELETE_FROM_ = "DELETE FROM ";
 
     /**
      * {@code WHERE} where query part
      */
+    @Deprecated(forRemoval = true, since = "MOVED INTO apis.database.SQLConstants PACKAGE")
     public static final String _WHERE_ = " WHERE ";
 
     /**
      * {@code IN_CLAUSE} in clause query part
      */
+    @Deprecated(forRemoval = true, since = "MOVED INTO apis.database.SQLConstants PACKAGE")
     private static final String _IN_CLAUSE_ = " IN ";
 
     /**

@@ -143,6 +143,7 @@ You can create your own emitter to customize or for a better readability
 === "Java"
 
     ```java
+    @EventsNotifier // not mandatory, but suggested
     @Service // required annotation
     public class TestEventsEmitter extends EquinoxEventsEmitter<TestEvent> {
     
@@ -154,6 +155,7 @@ You can create your own emitter to customize or for a better readability
 === "Kotlin"
 
     ```kotlin
+    @EventsNotifier // not mandatory, but suggested
     @Service // required annotation
     class TestEventsEmitter : EquinoxEventsEmitter<TestEvent>() {
     
@@ -169,6 +171,7 @@ You can create your own collector to customize or for a better readability
 === "Java"
 
     ```java
+    @EventsHandler // not mandatory, but suggested
     @FunctionalInterface // not mandatory, but suggested
     public interface TestEventsCollector extends EquinoxEventsCollector<TestEvent, TestApplicationEvent> {
     
@@ -180,6 +183,7 @@ You can create your own collector to customize or for a better readability
 === "Kotlin"
 
     ```kotlin
+    @EventsHandler // not mandatory, but suggested
     @FunctionalInterface // not mandatory, but suggested
     interface TestEventsCollector : EquinoxEventsCollector<TestEvent, TestApplicationEvent> {
     

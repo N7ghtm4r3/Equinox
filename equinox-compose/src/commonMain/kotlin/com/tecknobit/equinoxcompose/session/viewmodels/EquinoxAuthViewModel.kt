@@ -321,7 +321,6 @@ abstract class EquinoxAuthViewModel(
             name,
             surname,
             email.value,
-            password.value,
             language,
             response,
             custom

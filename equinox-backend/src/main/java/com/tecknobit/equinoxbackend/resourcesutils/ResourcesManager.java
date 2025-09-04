@@ -16,6 +16,7 @@ import java.util.Objects;
  * @author N7ghtm4r3 - Tecknobit
  * @since 1.0.1
  */
+@Deprecated(forRemoval = true, since = "MOVED INTO apis.resources PACKAGE")
 public interface ResourcesManager {
 
     /**

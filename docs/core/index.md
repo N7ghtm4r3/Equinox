@@ -1,6 +1,6 @@
 # Overview
 
-**v1.1.5**
+**v1.1.6**
 
 ![Static Badge](https://img.shields.io/badge/android-4280511051?link=https%3A%2F%2Fplay.google.com%2Fstore%2Fapps%2Fdetails%3Fid%3Dcom.tecknobit.ametista)
 ![Static Badge](https://img.shields.io/badge/ios-445E91?link=https%3A%2F%2Fimg.shields.io%2Fbadge%2Fandroid-4280511051)
@@ -18,7 +18,7 @@ Core utilities for **Compose Multiplatform** and **Spring** technologies
 
 ```toml
 [versions]
-equinox = "1.1.5"
+equinox = "1.1.6"
 
 [libraries]
 equinox-core = { module = "io.github.n7ghtm4r3:equinox-core", version.ref = "equinox" }
@@ -36,7 +36,7 @@ dependencies {
 
 ```kotlin
 dependencies {
-    implementation("io.github.n7ghtm4r3:equinox-core:1.1.5")
+    implementation("io.github.n7ghtm4r3:equinox-core:1.1.6")
 }
 ```
 
@@ -44,7 +44,7 @@ dependencies {
 
 ```groovy
 dependencies {
-    implementation 'io.github.n7ghtm4r3:equinox-core:1.1.5'
+    implementation 'io.github.n7ghtm4r3:equinox-core:1.1.6'
 }
 ```
 
@@ -72,3 +72,8 @@ dependencies {
 
 - [ContextActivityProvider](APIs/android/ContextActivityProvider.md)  
   A singleton object that helps to maintain a weak reference to the current activity
+
+## Annotations available
+
+This module provides a set of annotations that can be used to improve code readability and maintainability.
+You can explore them [here](Annotations/Assembler.md)

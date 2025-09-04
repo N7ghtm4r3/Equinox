@@ -24,7 +24,7 @@ The base environment provides a core set of classes to manage users, controllers
 - [EquinoxUser](https://github.com/N7ghtm4r3/Equinox/blob/main/equinox-backend/src/main/java/com/tecknobit/equinoxbackend/environment/services/users/entity/EquinoxUser.java)  
   Standard Equinox user class
 
-- [EquinoxLocalUser](https://github.com/N7ghtm4r3/Equinox/blob/main/equinox-compose/src/commonMain/kotlin/com/tecknobit/equinoxcompose/session/EquinoxLocalUser.kt)  
+- [EquinoxLocalUser](../compose/APIs/EquinoxLocalUser.md)  
   Helper for managing a local user session in client applications
 
 - [EquinoxUsersController](https://github.com/N7ghtm4r3/Equinox/blob/main/equinox-backend/src/main/java/com/tecknobit/equinoxbackend/environment/services/users/controller/EquinoxUsersController.java)  
@@ -84,10 +84,10 @@ To correctly use this environment you need to use the following base **gradle co
         implementation 'org.json:json:20250517'
     
         // implement the backend utilities
-        implementation 'io.github.n7ghtm4r3:equinox-backend:1.1.4'
+        implementation 'io.github.n7ghtm4r3:equinox-backend:1.1.5'
     
         // implement the core utilities
-        implementation 'io.github.n7ghtm4r3:equinox-core:1.1.5'
+        implementation 'io.github.n7ghtm4r3:equinox-core:1.1.6'
 
         ...
     }
@@ -118,10 +118,10 @@ To correctly use this environment you need to use the following base **gradle co
         implementation("org.json:json:20250517")
     
         // implement the backend utilities
-        implementation("io.github.n7ghtm4r3:equinox-backend:1.1.4")
+        implementation("io.github.n7ghtm4r3:equinox-backend:1.1.5")
         
         // implement the core utilities
-        implementation("io.github.n7ghtm4r3:equinox-core:1.1.5")
+        implementation("io.github.n7ghtm4r3:equinox-core:1.1.6")
     
         ...
     }

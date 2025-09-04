@@ -46,27 +46,23 @@ open class InputsValidator {
         /**
          * `EMAIL_REGEX` regular expression to validate the emails value
          */
-        @JvmStatic
-        protected val EMAIL_REGEX =
+        protected const val EMAIL_REGEX =
             "^(?![.])(?!.*\\.\\.{2})[A-Za-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[A-Za-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[A-Za-z0-9-]+\\.)+[A-Za-z]{2,}$"
 
         /**
          * `URL_REGEX` regular expression to validate the urls value
          */
-        @JvmStatic
-        protected val URL_REGEX =
+        protected const val URL_REGEX =
             "^[a-zA-Z][a-zA-Z0-9+.-]*://(([a-zA-Z0-9\\-]+\\.)+[a-zA-Z]{2,6}|\\d{1,3}(?:\\.\\d{1,3}){3})(?::\\d{1,5})?(/\\S*)?(\\?(\\S*))?(#(\\S*))?$"
 
         /**
          * `emailValidator` helper to validate the emails values
          */
-        @JvmStatic
         protected val emailValidator = Regex(EMAIL_REGEX)
 
         /**
          * `urlValidator` helper to validate the urls values
          */
-        @JvmStatic
         protected val urlValidator = Regex(URL_REGEX)
 
         /**
@@ -88,6 +84,7 @@ open class InputsValidator {
          * @param host The host value to check the validity
          * @return whether the host is valid or not as `boolean`
          */
+        @JvmStatic
         @Validator(
             validWhen = "The host is considered valid when is not null and is a valid host address"
         )
@@ -103,7 +100,10 @@ open class InputsValidator {
          * @param serverSecret The name value to check the validity
          * @return whether the server secret is valid or not as `boolean`
          */
-        @Validator(validWhen = "The server secret is considered valid when is not null and is not empty")
+        @JvmStatic
+        @Validator(
+            validWhen = "The server secret is considered valid when is not null and is not empty"
+        )
         fun isServerSecretValid(
             serverSecret: String?,
         ): Boolean {
@@ -116,6 +116,7 @@ open class InputsValidator {
          * @param name The name value to check the validity
          * @return whether the name is valid or not as `boolean`
          */
+        @JvmStatic
         @Validator(
             validWhen = """
                 The name is considered valid when is not null and is not empty and its length in the validity range
@@ -134,6 +135,7 @@ open class InputsValidator {
          * @param surname The surname value to check the validity
          * @return whether the surname is valid or not as `boolean`
          */
+        @JvmStatic
         @Validator(
             validWhen = """
                 The surname is considered valid when is not null and is not empty and its length in the validity range
@@ -152,6 +154,7 @@ open class InputsValidator {
          * @param email The password value to check the validity
          * @return whether the email is valid or not as `boolean`
          */
+        @JvmStatic
         @Validator(
             validWhen = """
                 The email is considered valid when is not null and is not empty and its length in the validity range
@@ -170,6 +173,7 @@ open class InputsValidator {
          * @param password The password value to check the validity
          * @return whether the password is valid or not as `boolean`
          */
+        @JvmStatic
         @Validator(
             validWhen = """
                 The password is considered valid when is not null and is not empty and its length in the validity range
@@ -191,7 +195,10 @@ open class InputsValidator {
          * @param language The language value to check the validity
          * @return whether the language is valid or not as `boolean`
          */
-        @Validator(validWhen = "The language is considered valid when is not null and is not empty and is a supported language")
+        @JvmStatic
+        @Validator(
+            validWhen = "The language is considered valid when is not null and is not empty and is a supported language"
+        )
         fun isLanguageValid(
             language: String?,
         ): Boolean {
@@ -205,8 +212,9 @@ open class InputsValidator {
          * @param input The input value to check the validity
          * @return whether the input is valid or not as `boolean`
          */
-        @JvmStatic
-        @Validator(validWhen = "The input is considered valid when is not null and is not empty")
+        @Validator(
+            validWhen = "The input is considered valid when is not null and is not empty"
+        )
         protected fun isInputValid(
             input: String?,
         ): Boolean {

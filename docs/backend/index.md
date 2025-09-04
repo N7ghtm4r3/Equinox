@@ -1,6 +1,6 @@
 # Overview
 
-**v1.1.4**
+**v1.1.5**
 
 Utilities and apis for the backends based on the **Spring Boot** framework
 
@@ -10,8 +10,8 @@ Utilities and apis for the backends based on the **Spring Boot** framework
 
 ```toml
 [versions]
-equinox-backend = "1.1.4"
-equinox = "1.1.5"
+equinox-backend = "1.1.5"
+equinox = "1.1.6"
 
 [libraries]
 equinox-backend = { module = "io.github.n7ghtm4r3:equinox-backend", version.ref = "equinox-backend" }
@@ -48,10 +48,10 @@ Add the JitPack repository to your build file
     dependencies {
        
         // implement the backend utilities
-        implementation 'io.github.n7ghtm4r3:equinox-backend:1.1.4'
+        implementation 'io.github.n7ghtm4r3:equinox-backend:1.1.5'
         
         // implement the core utilities
-        implementation 'io.github.n7ghtm4r3:equinox-core:1.1.5'
+        implementation 'io.github.n7ghtm4r3:equinox-core:1.1.6'
     }
     ```
 
@@ -61,10 +61,10 @@ Add the JitPack repository to your build file
     dependencies {
         
         // implement the backend utilities
-        implementation("io.github.n7ghtm4r3:equinox-backend:1.1.4")
+        implementation("io.github.n7ghtm4r3:equinox-backend:1.1.5")
         
         // implement the core utilities
-        implementation("io.github.n7ghtm4r3:equinox-core:1.1.5")
+        implementation("io.github.n7ghtm4r3:equinox-core:1.1.6")
     }
     ```
 
@@ -97,6 +97,9 @@ Add the JitPack repository to your build file
       - [FilteredQuery](APIs/FilteredQuery.md)  
         Builds dynamic queries with filter parameters leverages regex expressions
 
+      - [SQLConstants](APIs/SQLConstants.md)  
+        Collection of constants used in the SQL context
+
 ??? api-miscellaneous "Miscellaneous"
      - [ResourcesProvider](APIs/ResourcesProvider.md)  
        Manages static resources to serve to client applications
@@ -125,3 +128,8 @@ com.your.package
    └── config_class
    └── ...
 ```
+
+## Annotations available
+
+This module provides a set of annotations that can be used to improve code readability and maintainability.
+You can explore them [here](Annotations/BatchQueryImpl.md)

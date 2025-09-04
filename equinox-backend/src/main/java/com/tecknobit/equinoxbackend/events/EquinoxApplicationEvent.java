@@ -16,6 +16,7 @@ import java.time.Clock;
  * @author N7ghtm4r3 - Tecknobit
  * @since 1.1.1
  */
+@Deprecated(forRemoval = true, since = "MOVED INTO apis.events PACKAGE")
 @Experimental
 public abstract class EquinoxApplicationEvent<T extends Enum<?>> extends ApplicationEvent {
 

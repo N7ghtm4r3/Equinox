@@ -32,7 +32,7 @@ package com.tecknobit.equinoxcore.annotations
  *          "size" = "size"
  *      }"
  *    )
- *    private assembleTyresPayload() : JsonObject {
+ *    private fun assembleTyresPayload() : JsonObject {
  *      // return the assembled payload
  *    }
  *

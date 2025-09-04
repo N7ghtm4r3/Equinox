@@ -7,7 +7,7 @@ import kotlin.annotation.AnnotationTarget.*
  * [com.tecknobit.equinoxcompose.session.screens.EquinoxNoModelScreen]
  * or [com.tecknobit.equinoxcompose.session.screens.EquinoxScreen] that specializes in a smaller part of the entire screen
  *
- * Usage Example:
+ * #### Usage example
  * ```kotlin
  * class TestScreen : EquinoxScreen<EquinoxViewModel>() {
  *

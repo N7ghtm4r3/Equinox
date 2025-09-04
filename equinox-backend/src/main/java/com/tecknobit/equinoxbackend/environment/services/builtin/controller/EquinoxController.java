@@ -2,13 +2,13 @@ package com.tecknobit.equinoxbackend.environment.services.builtin.controller;
 
 import com.tecknobit.apimanager.apis.ServerProtector;
 import com.tecknobit.apimanager.formatters.JsonHelper;
+import com.tecknobit.equinoxbackend.apis.resources.ResourcesProvider;
 import com.tecknobit.equinoxbackend.configuration.EquinoxBackendConfiguration;
 import com.tecknobit.equinoxbackend.configuration.EquinoxBackendConfiguration.ResourcesConfig;
 import com.tecknobit.equinoxbackend.configuration.EquinoxBackendConfiguration.ServerProtectorConfig;
 import com.tecknobit.equinoxbackend.environment.services.users.entity.EquinoxUser;
 import com.tecknobit.equinoxbackend.environment.services.users.repository.EquinoxUsersRepository;
 import com.tecknobit.equinoxbackend.environment.services.users.service.EquinoxUsersService;
-import com.tecknobit.equinoxbackend.resourcesutils.ResourcesProvider;
 import com.tecknobit.equinoxcore.annotations.Assembler;
 import com.tecknobit.equinoxcore.annotations.Returner;
 import com.tecknobit.equinoxcore.annotations.Validator;
@@ -26,7 +26,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.*;
 
-import static com.tecknobit.equinoxbackend.resourcesutils.ResourcesManager.RESOURCES_KEY;
+import static com.tecknobit.equinoxbackend.apis.resources.ResourcesManager.RESOURCES_KEY;
 import static com.tecknobit.equinoxcore.helpers.InputsValidator.DEFAULT_LANGUAGE;
 import static com.tecknobit.equinoxcore.network.EquinoxBaseEndpointsSet.BASE_EQUINOX_ENDPOINT;
 import static com.tecknobit.equinoxcore.network.Requester.RESPONSE_DATA_KEY;
