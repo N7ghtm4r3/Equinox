@@ -34,7 +34,7 @@ sourceSets {
             android:exported="false"
             tools:node="merge">
         <meta-data
-                android:name="com.tecknobit.equinoxcore.utilities.context.AppContextInitializer"
+                android:name="com.tecknobit.equinoxcore.utilities.AppContextInitializer"
                 android:value="androidx.startup"/>
     </provider>
 
