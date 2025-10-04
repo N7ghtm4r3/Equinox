@@ -28,7 +28,6 @@ Add the JitPack repository to your build file
     repositories {
         ...
         maven { url 'https://jitpack.io' }
-        maven { url 'https://repo.clojars.org' }
     }
     ```
 
@@ -38,7 +37,6 @@ Add the JitPack repository to your build file
     repositories {
         ...
         maven("https://jitpack.io")
-        maven("https://repo.clojars.org")
     }
     ```
 
