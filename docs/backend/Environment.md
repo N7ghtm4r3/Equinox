@@ -72,7 +72,6 @@ To correctly use this environment you need to use the following base **gradle co
     repositories {
         mavenCentral()
         maven { url 'https://jitpack.io' }
-        maven { url 'https://repo.clojars.org' }
     }
     
     dependencies {
@@ -106,7 +105,6 @@ To correctly use this environment you need to use the following base **gradle co
     repositories {
         mavenCentral()
         maven("https://jitpack.io")
-        maven("https://repo.clojars.org")
     }
     
     dependencies {
