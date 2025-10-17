@@ -27,36 +27,6 @@ import static com.tecknobit.equinoxbackend.apis.database.SQLConstants.*;
 public abstract class IndexesCreator {
 
     /**
-     * {@code ALTER_TABLE_} query command
-     */
-    @Deprecated(forRemoval = true, since = "MOVED INTO apis.database.SQLConstants PACKAGE")
-    public static final String ALTER_TABLE_ = "ALTER TABLE ";
-
-    /**
-     * {@code SHOW_INDEX_FROM_} query command
-     */
-    @Deprecated(forRemoval = true, since = "MOVED INTO apis.database.SQLConstants PACKAGE")
-    public static final String SHOW_INDEX_FROM_ = "SHOW INDEX FROM ";
-
-    /**
-     * {@code _ADD_FULLTEXT_INDEX_} query command
-     */
-    @Deprecated(forRemoval = true, since = "MOVED INTO apis.database.SQLConstants PACKAGE")
-    public static final String _ADD_FULLTEXT_INDEX_ = " ADD FULLTEXT INDEX %s (";
-
-    /**
-     * {@code _IN_NATURAL_LANGUAGE_MODE} the mode applied to the FTS (full text search)
-     */
-    @Deprecated(forRemoval = true, since = "MOVED INTO apis.database.SQLConstants PACKAGE")
-    public static final String _IN_NATURAL_LANGUAGE_MODE = " IN NATURAL LANGUAGE MODE";
-
-    /**
-     * {@code _IN_BOOLEAN_MODE} the mode applied to the FTS (full text search)
-     */
-    @Deprecated(forRemoval = true, since = "MOVED INTO apis.database.SQLConstants PACKAGE")
-    public static final String _IN_BOOLEAN_MODE = " IN BOOLEAN MODE";
-
-    /**
      * {@code _KEY_NAME} query part
      */
     protected static final String _KEY_NAME = "Key_name='";

@@ -15,7 +15,7 @@ plugins {
 }
 
 group = "com.tecknobit.equinoxcore"
-version = "1.1.6"
+version = "1.1.7"
 
 repositories {
     google()
@@ -54,8 +54,7 @@ kotlin {
         binaries.executable()
         browser {
             webpackTask {
-                dependencies {
-                }
+            
             }
         }
     }
@@ -119,7 +118,7 @@ mavenPublishing {
     coordinates(
         groupId = "io.github.n7ghtm4r3",
         artifactId = "equinox-core",
-        version = "1.1.6"
+        version = "1.1.7"
     )
     pom {
         name.set("Equinox Core")

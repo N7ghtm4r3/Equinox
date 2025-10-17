@@ -55,8 +55,7 @@ kotlin {
         binaries.executable()
         browser {
             webpackTask {
-                dependencies {
-                }
+
             }
         }
     }
