@@ -30,7 +30,7 @@ internal expect fun resolveScreenEventMessage(
  * @return the message to log with an additional timestamp as [String]
  */
 @Assembler
-internal inline fun timestampedLoggerMessage(
+internal fun timestampedLoggerMessage(
     event: String
 ): String {
     val now =  TimeFormatter.formatNowAsString(
@@ -50,7 +50,7 @@ internal inline fun timestampedLoggerMessage(
  * @return the default message to log as [String]
  */
 @Returner
-internal inline fun defaultLoggerMessage(
+internal fun defaultLoggerMessage(
     event: String
 ): String {
     return DEFAULT_LOGGER_MESSAGE.replace("%s", event)

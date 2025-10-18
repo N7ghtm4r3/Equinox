@@ -2,11 +2,11 @@ package com.tecknobit.equinoxcompose.session.screens
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
-import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.lifecycle.Lifecycle.Event
 import androidx.lifecycle.Lifecycle.Event.*
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.compose.LocalLifecycleOwner
 import co.touchlab.kermit.Logger
 import com.tecknobit.equinoxcompose.session.screens.EquinoxNoModelScreen.EquinoxScreenEvent.ON_DISPOSE
 import com.tecknobit.equinoxcompose.session.screens.EquinoxNoModelScreen.EquinoxScreenEvent.ON_INIT
