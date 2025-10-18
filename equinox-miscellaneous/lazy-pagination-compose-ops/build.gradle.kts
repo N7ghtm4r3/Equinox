@@ -22,7 +22,6 @@ repositories {
 }
 
 kotlin {
-
     jvm {
         compilations.all {
             this@jvm.compilerOptions {

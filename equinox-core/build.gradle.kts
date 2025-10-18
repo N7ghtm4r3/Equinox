@@ -50,6 +50,7 @@ kotlin {
             isStatic = true
         }
     }
+
     @OptIn(ExperimentalWasmDsl::class)
     wasmJs {
         binaries.executable()

@@ -310,12 +310,13 @@ open class EquinoxLocalUser(
         value: T?,
     ) {
         val preferenceValue = value.toString()
-        if(!preferencesManager.valueMatchesTo(key, preferenceValue)) {
-            preferencesManager.storeString(
-                key = key,
-                value = preferenceValue
-            )
-        }
+        // FIXME: TO ADAPT TO THE KMPrefs 1.1.0
+//        if(!preferencesManager.valueMatchesTo(key, preferenceValue)) {
+//            preferencesManager.storeString(
+//                key = key,
+//                value = preferenceValue
+//            )
+//        }
         stateStore.store(
             key = key,
             property = value
@@ -334,11 +335,14 @@ open class EquinoxLocalUser(
         key: String,
         defPrefValue: String? = null,
     ): String? {
-        val storedPreference = preferencesManager.retrieveString(
+        // FIXME: TO ADAPT TO THE KMPrefs 1.1.0
+        /*val storedPreference = preferencesManager.retrieveString(
             key = key,
             defValue = defPrefValue
-        )
-        return storedPreference
+        )*/
+        // return storedPreference
+        // TODO: TO REMOVE
+        return ""
     }
 
     /**
@@ -352,10 +356,13 @@ open class EquinoxLocalUser(
         key: String,
         defPrefValue: String = "",
     ): String {
-        return preferencesManager.retrieveString(
+        // FIXME: TO ADAPT TO THE KMPrefs 1.1.0
+        /*return preferencesManager.retrieveString(
             key = key,
             defValue = defPrefValue
-        )!!
+        )!!*/
+        // TODO: TO REMOVE
+        return ""
     }
 
     /**

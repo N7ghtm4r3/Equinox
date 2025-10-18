@@ -1,6 +1,6 @@
 # Equinox Navigation
 
-**v1.0.3**
+**v1.0.4**
 
 ![Static Badge](https://img.shields.io/badge/android-4280511051?link=https%3A%2F%2Fplay.google.com%2Fstore%2Fapps%2Fdetails%3Fid%3Dcom.tecknobit.ametista)
 ![Static Badge](https://img.shields.io/badge/ios-445E91?link=https%3A%2F%2Fimg.shields.io%2Fbadge%2Fandroid-4280511051)
@@ -19,7 +19,7 @@ navigation in **Compose Multiplatform applications**
 ```toml
 [versions]
 equinox = "1.1.7"
-equinox-navigation = "1.0.3"
+equinox-navigation = "1.0.4"
 
 [libraries]
 equinox-compose = { module = "io.github.n7ghtm4r3:equinox-compose", version.ref = "equinox" }
@@ -55,7 +55,7 @@ dependencies {
     implementation("io.github.n7ghtm4r3:equinox-core:1.1.7")
     
     // implement the navigation utilities
-    implementation("io.github.n7ghtm4r3:equinox-navigation:1.0.3")
+    implementation("io.github.n7ghtm4r3:equinox-navigation:1.0.4")
 }
 ```
 
@@ -71,7 +71,7 @@ dependencies {
     implementation 'io.github.n7ghtm4r3:equinox-core:1.1.7'
     
     // implement the navigation utilities
-    implementation 'io.github.n7ghtm4r3:equinox-navigation:1.0.3'
+    implementation 'io.github.n7ghtm4r3:equinox-navigation:1.0.4'
 }
 ```
 
