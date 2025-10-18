@@ -1,7 +1,4 @@
-
-import com.vanniktech.maven.publish.JavadocJar
 import com.vanniktech.maven.publish.KotlinMultiplatform
-
 import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.targets.wasm.nodejs.WasmNodeJsRootExtension
@@ -128,7 +125,8 @@ rootProject.the<WasmNodeJsRootExtension>().versions.webpackDevServer.version = "
 mavenPublishing {
     configure(
         KotlinMultiplatform(
-            javadocJar = JavadocJar.Dokka("dokkaHtml"),
+            // TODO: TO UNCOMMENT WHEN PUBLISH
+// javadocJar = JavadocJar.Dokka("dokkaHtml"),
             sourcesJar = true,
             androidVariantsToPublish = listOf("release"),
         )

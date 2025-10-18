@@ -1,5 +1,4 @@
 
-import com.vanniktech.maven.publish.JavadocJar
 import com.vanniktech.maven.publish.KotlinJvm
 
 plugins {
@@ -33,7 +32,8 @@ dependencies {
 mavenPublishing {
     configure(
         platform = KotlinJvm(
-            javadocJar = JavadocJar.Dokka("dokkaHtml"),
+            // TODO: TO UNCOMMENT WHEN PUBLISH
+// javadocJar = JavadocJar.Dokka("dokkaHtml"),
             sourcesJar = true
         )
     )
