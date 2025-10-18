@@ -221,7 +221,9 @@ abstract class EquinoxNoModelScreen(
         if (loggerEnabled) {
             Logger.i(
                 tag = this::class.simpleName!!,
-                messageString = "Current status -> $event"
+                messageString = resolveScreenEventMessage(
+                    event = event
+                )
             )
         }
     }

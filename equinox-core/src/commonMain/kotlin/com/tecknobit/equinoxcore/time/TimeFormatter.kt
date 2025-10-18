@@ -52,16 +52,6 @@ object TimeFormatter {
     const val EUROPEAN_DATE_PATTERN = "dd/MM/yyyy"
 
     /**
-     * `COMPLETE_ISO_8601_DATE_PATTERN` the complete date pattern standardised from the `ISO 8601`
-     */
-    const val COMPLETE_ISO_8601_DATE_PATTERN = "yyyy/MM/dd HH:mm:ss"
-
-    /**
-     * `ISO_8601_DATE_PATTERN` the date pattern standardised from the `ISO 8601`
-     */
-    const val ISO_8601_DATE_PATTERN = "yyyy/MM/dd"
-
-    /**
      * `COMPLETE_AMERICAN_DATE_PATTERN` the complete date pattern used in the american zone
      */
     const val COMPLETE_AMERICAN_DATE_PATTERN = "MM/dd/yyyy HH:mm:ss"
@@ -95,6 +85,20 @@ object TimeFormatter {
      * `H24_HOURS_MINUTES_PATTERN` the pattern with hours (24 format) and minutes
      */
     const val H24_HOURS_MINUTES_PATTERN = "HH:mm"
+
+    /**
+     * `ISO_LOCAL_DATE_TIME` ISO 8601 compliant local date-time pattern (no timezone)
+     *
+     * @since 1.1.7
+     */
+    const val ISO_LOCAL_DATE_TIME_PATTERN = "yyyy-MM-dd HH:mm:ss.SSS"
+
+    /**
+     * `ISO_LOCAL_DATE_PATTERN` ISO 8601 compliant date pattern (date only)
+     *
+     * @since 1.1.7
+     */
+    const val ISO_LOCAL_DATE_PATTERN = "yyyy-MM-dd"
 
     /**
      * `defaultPattern` the default pattern used by the [TimeFormatter] if no custom one is specified
