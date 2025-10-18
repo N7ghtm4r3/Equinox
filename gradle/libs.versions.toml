@@ -7,7 +7,7 @@ android-compileSdk = "36"
 dokka = "2.0.0"
 kotlinxDatetime = "0.7.1"
 kotlinxSerializationJson = "1.9.0"
-ktor = "3.2.3"
+ktor = "3.3.1"
 #equinox-backend
 jacksonDatabind = "2.18.2"
 springBoot = "3.2.3"
@@ -17,7 +17,7 @@ json = "20250517"
 #equinox-core
 startupRuntime = "1.2.0"
 #equinox-compose & equinox-navigation
-compose = "1.9.0"
+compose = "1.9.1"
 connectivity = "2.3.0"
 kermit = "2.0.8"
 lifecycleViewmodelCompose = "2.9.5"
