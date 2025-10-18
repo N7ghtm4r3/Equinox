@@ -1,18 +1,17 @@
 package com.tecknobit.equinoxcompose.components
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.NonRestartableComposable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.drawBehind
+import androidx.compose.ui.draw.drawWithContent
 import androidx.compose.ui.geometry.CornerRadius
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.PathEffect
 import androidx.compose.ui.graphics.Shape
@@ -125,29 +124,72 @@ fun DashedTile(
     ),
     onClick: () -> Unit,
 ) {
-    Tile(
-        modifier = modifier
-            .drawBehind {
-                drawRoundRect(
-                    color = containerColor,
-                    style = Stroke(
-                        width = strokeWidth,
-                        pathEffect = PathEffect.dashPathEffect(intervals, phase)
-                    ),
-                    cornerRadius = CornerRadius(cornerRadius.toPx())
-                )
-            },
-        size = size,
-        containerColor = Color.Transparent,
-        elevation = elevation,
-        contentColor = containerColor,
-        icon = icon,
-        iconSize = iconSize,
-        text = text,
-        textStyle = textStyle,
-        onClick = onClick
-    )
+    Box(
+        modifier = Modifier
+            .size(size)
+            .aspectRatio(1f)
+            .dashedBorder(
+                strokeWidth = strokeWidth,
+                containerColor = containerColor,
+                intervals = intervals,
+                phase = phase,
+                cornerRadius = cornerRadius
+            ),
+        contentAlignment = Alignment.Center
+    ) {
+        Tile(
+            modifier = modifier
+                .fillMaxSize(),
+            size = size,
+            containerColor = Color.Transparent,
+            elevation = elevation,
+            contentColor = containerColor,
+            icon = icon,
+            iconSize = iconSize,
+            text = text,
+            textStyle = textStyle,
+            onClick = onClick
+        )
+    }
 }
+
+/**
+ * Modifier method used to apply dashed borders to the [DashedTile] component
+ *
+ * @param strokeWidth The stroke width to apply as dashed effect
+ * @param intervals The number of the interval from each part of the line
+ * @param phase The pixel offset for the intervals
+ * @param cornerRadius The radius of the tile
+ * @param containerColor The colors scheme to apply to the tile
+ *
+ * @return the modifier to apply to the component as [Modifier]
+ */
+private inline fun Modifier.dashedBorder(
+    strokeWidth: Float,
+    containerColor: Color,
+    intervals: FloatArray,
+    phase: Float,
+    cornerRadius: Dp,
+) : Modifier = drawWithContent {
+        drawContent()
+        val halfStroke = strokeWidth / 2
+        drawRoundRect(
+            color = containerColor,
+            style = Stroke(
+                width = strokeWidth,
+                pathEffect = PathEffect.dashPathEffect(intervals, phase)
+            ),
+            cornerRadius = CornerRadius(cornerRadius.toPx()),
+            topLeft = Offset(
+                x = halfStroke,
+                y = halfStroke
+            ),
+            size = Size(
+                width = this.size.width - strokeWidth,
+                height = this.size.height - strokeWidth
+            )
+        )
+    }
 
 /**
  * Tile component useful to execute action when clicked
@@ -238,7 +280,8 @@ fun Tile(
 ) {
     Card(
         modifier = modifier
-            .size(size),
+            .size(size)
+            .aspectRatio(1f),
         shape = shape,
         colors = CardDefaults.cardColors(
             containerColor = containerColor
