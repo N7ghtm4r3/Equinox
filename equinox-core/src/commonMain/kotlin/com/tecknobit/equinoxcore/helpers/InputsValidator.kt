@@ -219,7 +219,7 @@ open class InputsValidator {
         protected fun isInputValid(
             input: String?,
         ): Boolean {
-            return !input.isNullOrEmpty()
+            return !input.isNullOrBlank()
         }
 
     }
