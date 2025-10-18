@@ -87,7 +87,6 @@ override fun ArrangeScreenContent() {
 General overview about how the implementation should look like
 
 ```kotlin
-@OptIn(ExperimentalComposeApi::class)
 class HomeScreen : NavigatorScreen<NavigationTab>() {
 
     /**
@@ -153,7 +152,6 @@ override the specific methods to apply the customizations
 Overriding the `SideNavigationHeaderContent` method you can place a header content
 
 ```kotlin
-@OptIn(ExperimentalComposeApi::class)
 class HomeScreen : NavigatorScreen<NavigationTab>() {
 
     /**
@@ -175,7 +173,6 @@ class HomeScreen : NavigatorScreen<NavigationTab>() {
 Overriding the `SideNavigationHeaderContent` method you can place a footer content
 
 ```kotlin
-@OptIn(ExperimentalComposeApi::class)
 class HomeScreen : NavigatorScreen<NavigationTab>() {
 
     /**
@@ -197,7 +194,6 @@ class HomeScreen : NavigatorScreen<NavigationTab>() {
 Overriding the `SideNavigationItem` method you can customize the navigation item displayed on the sidebar
 
 ```kotlin
-@OptIn(ExperimentalComposeApi::class)
 class HomeScreen : NavigatorScreen<NavigationTab>() {
 
     /**
@@ -225,7 +221,6 @@ class HomeScreen : NavigatorScreen<NavigationTab>() {
 Overriding the `BottomNavigationItem` method you can customize the navigation item displayed on the bottom bar
 
 ```kotlin
-@OptIn(ExperimentalComposeApi::class)
 class HomeScreen : NavigatorScreen<NavigationTab>() {
 
     /**

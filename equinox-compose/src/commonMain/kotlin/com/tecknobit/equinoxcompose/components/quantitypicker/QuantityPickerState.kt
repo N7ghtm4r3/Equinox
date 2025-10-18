@@ -1,7 +1,6 @@
 package com.tecknobit.equinoxcompose.components.quantitypicker
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.ExperimentalComposeApi
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.Saver
 import androidx.compose.runtime.saveable.SaverScope
@@ -20,7 +19,6 @@ import com.tecknobit.equinoxcore.annotations.Wrapper
  * @return the state as [QuantityPickerState]
  */
 @Composable
-@ExperimentalComposeApi
 fun rememberQuantityPickerState(
     initialQuantity: Int = 0,
     minQuantity: Int = Int.MIN_VALUE,

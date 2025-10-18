@@ -14,7 +14,6 @@ import androidx.compose.runtime.remember
  * @since 1.1.5
  */
 @Composable
-@ExperimentalStdlibApi
 inline fun <T : EquinoxNoModelScreen> equinoxScreen(
     crossinline factory: () -> T,
 ): T {

@@ -1,7 +1,6 @@
 package com.tecknobit.equinoxbackend.apis.events;
 
 import com.tecknobit.equinoxbackend.annotations.EventsHandler;
-import jdk.jfr.Experimental;
 import org.springframework.context.event.EventListener;
 
 /**
@@ -18,7 +17,6 @@ import org.springframework.context.event.EventListener;
  * @since 1.1.1
  */
 @EventsHandler
-@Experimental
 @FunctionalInterface
 public interface EquinoxEventsCollector<T extends Enum<?>, E extends EquinoxApplicationEvent<T>> {
 
@@ -38,7 +36,6 @@ public interface EquinoxEventsCollector<T extends Enum<?>, E extends EquinoxAppl
      *
      * @since 1.1.1
      */
-    @Experimental
     interface OnEventConsumed {
 
         /**

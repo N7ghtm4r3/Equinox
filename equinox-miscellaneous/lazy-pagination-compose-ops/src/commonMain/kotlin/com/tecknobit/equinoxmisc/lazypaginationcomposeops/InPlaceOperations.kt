@@ -1,8 +1,8 @@
 package com.tecknobit.equinoxmisc.lazypaginationcomposeops
 
-import com.tecknobit.equinoxcore.mergeIfNotContained
-import com.tecknobit.equinoxcore.retainAndAdd
-import com.tecknobit.equinoxcore.toggle
+import com.tecknobit.equinoxcore.util.mergeIfNotContained
+import com.tecknobit.equinoxcore.util.retainAndAdd
+import com.tecknobit.equinoxcore.util.toggle
 import io.github.ahmad_hamwi.compose.pagination.ExperimentalPaginationApi
 import io.github.ahmad_hamwi.compose.pagination.PaginationState
 
@@ -100,7 +100,6 @@ fun <KEY, T> PaginationState<KEY, T>.removeAllInPlace(
  * @param updateCondition The predicate to use to find the items to update
  * @param updateAction The update action which update an item in the list
  */
-@ExperimentalPaginationApi
 fun <KEY, T> PaginationState<KEY, T>.updateInPlace(
     updateCondition: (T) -> Boolean,
     updateAction: (T) -> Unit,

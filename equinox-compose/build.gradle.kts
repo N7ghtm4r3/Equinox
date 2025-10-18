@@ -62,12 +62,6 @@ kotlin {
     }
 
     sourceSets {
-        all {
-            languageSettings {
-                optIn("org.jetbrains.compose.resources.ExperimentalResourceApi")
-            }
-        }
-
         val commonMain by getting {
             dependencies {
                 implementation(compose.components.resources)

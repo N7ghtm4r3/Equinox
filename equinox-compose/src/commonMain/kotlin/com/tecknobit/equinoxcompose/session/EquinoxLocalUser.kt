@@ -305,7 +305,6 @@ open class EquinoxLocalUser(
      * @param key:   the key of the preference
      * @param value: the value of the preference
      */
-    @OptIn(ExperimentalUnsignedTypes::class)
     protected fun <T> setPreference(
         key: String,
         value: T?,

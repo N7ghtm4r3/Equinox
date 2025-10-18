@@ -52,7 +52,6 @@ private const val MACOS = "Mac"
  * @since 1.1.5
  */
 @Wrapper
-@ExperimentalStdlibApi
 fun getApplicationRoamingDataDirectoryPath(): String = getApplicationRoamingDataDirectory().absolutePath
 
 /**
@@ -70,7 +69,6 @@ fun getApplicationRoamingDataDirectoryPath(): String = getApplicationRoamingData
  *
  * @since 1.1.5
  */
-@ExperimentalStdlibApi
 fun getApplicationRoamingDataDirectory(): File {
     return retrieveOSDirectory(
         onWindows = { System.getenv(APPDATA) },
@@ -95,8 +93,7 @@ fun getApplicationRoamingDataDirectory(): File {
  * @since 1.1.5
  */
 @Wrapper
-@ExperimentalStdlibApi
-fun getApplicationLocalDataDirectoryPath() = getApplicationLocalDataDirectory().absolutePath
+fun getApplicationLocalDataDirectoryPath(): String = getApplicationLocalDataDirectory().absolutePath
 
 /**
  * Method used to get the `application local data` directory.
@@ -113,7 +110,6 @@ fun getApplicationLocalDataDirectoryPath() = getApplicationLocalDataDirectory().
  *
  * @since 1.1.5
  */
-@ExperimentalStdlibApi
 fun getApplicationLocalDataDirectory(): File {
     return retrieveOSDirectory(
         onWindows = { System.getenv(LOCALAPPDATA) },
@@ -138,7 +134,6 @@ fun getApplicationLocalDataDirectory(): File {
  * @since 1.1.5
  */
 @Wrapper
-@ExperimentalStdlibApi
 fun getConfigurationDirectoryPath(): String = getConfigurationDirectory().absolutePath
 
 /**
@@ -156,7 +151,6 @@ fun getConfigurationDirectoryPath(): String = getConfigurationDirectory().absolu
  *
  * @since 1.1.5
  */
-@ExperimentalStdlibApi
 fun getConfigurationDirectory(): File {
     return retrieveOSDirectory(
         onWindows = { System.getenv(APPDATA) },
@@ -181,7 +175,6 @@ fun getConfigurationDirectory(): File {
  * @since 1.1.5
  */
 @Wrapper
-@ExperimentalStdlibApi
 fun getCacheDirectoryPath(): String = getCacheDirectory().absolutePath
 
 /**
@@ -199,7 +192,6 @@ fun getCacheDirectoryPath(): String = getCacheDirectory().absolutePath
  *
  * @since 1.1.5
  */
-@ExperimentalStdlibApi
 fun getCacheDirectory(): File {
     return retrieveOSDirectory(
         onWindows = { File(System.getenv(LOCALAPPDATA), "Cache").absolutePath },
@@ -224,7 +216,6 @@ fun getCacheDirectory(): File {
  * @since 1.1.5
  */
 @Wrapper
-@ExperimentalStdlibApi
 fun getTempDirectoryPath(): String = getTempDirectory().absolutePath
 
 /**
@@ -242,7 +233,6 @@ fun getTempDirectoryPath(): String = getTempDirectory().absolutePath
  *
  * @since 1.1.5
  */
-@ExperimentalStdlibApi
 fun getTempDirectory(): File {
     val tempDirectory = File(System.getProperty("java.io.tmpdir"))
     return tempDirectory
@@ -262,7 +252,6 @@ fun getTempDirectory(): File {
  *
  * @since 1.1.5
  */
-@ExperimentalStdlibApi
 private fun retrieveOSDirectory(
     onWindows: (String) -> String?,
     onMacOs: (String) -> String?,
@@ -290,7 +279,6 @@ private fun retrieveOSDirectory(
  *
  * @since 1.1.5
  */
-@ExperimentalStdlibApi
 fun whenIsRunningOn(
     windows: () -> Unit,
     macOs: () -> Unit,
@@ -311,7 +299,6 @@ fun whenIsRunningOn(
  *
  * @since 1.1.5
  */
-@ExperimentalStdlibApi
 fun isRunningOn(): OperatingSystem {
     val currentOs = System.getProperty(OS_NAME_PROPERTY)
     return when {

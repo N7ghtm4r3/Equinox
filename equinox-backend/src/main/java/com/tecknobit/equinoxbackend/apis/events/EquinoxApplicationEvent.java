@@ -1,7 +1,6 @@
 package com.tecknobit.equinoxbackend.apis.events;
 
 import com.tecknobit.equinoxcore.annotations.Wrapper;
-import jdk.jfr.Experimental;
 import org.springframework.context.ApplicationEvent;
 
 import java.time.Clock;
@@ -17,7 +16,6 @@ import static com.tecknobit.equinoxbackend.apis.events.EquinoxEventsCollector.On
  * @author N7ghtm4r3 - Tecknobit
  * @since 1.1.1
  */
-@Experimental
 public abstract class EquinoxApplicationEvent<T extends Enum<?>> extends ApplicationEvent {
 
     /**

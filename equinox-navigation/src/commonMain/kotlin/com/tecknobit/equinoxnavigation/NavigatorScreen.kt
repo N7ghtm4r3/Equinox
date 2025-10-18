@@ -1,5 +1,3 @@
-@file:OptIn(ExperimentalStdlibApi::class)
-
 package com.tecknobit.equinoxnavigation
 
 import androidx.compose.animation.AnimatedContent
@@ -10,7 +8,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.ExperimentalComposeApi
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -52,7 +49,6 @@ import org.jetbrains.compose.resources.stringResource
  *
  */
 @Structure
-@ExperimentalComposeApi
 abstract class NavigatorScreen<T : NavigatorTab<*>>(
     loggerEnabled: Boolean = true,
 ) : EquinoxNoModelScreen(

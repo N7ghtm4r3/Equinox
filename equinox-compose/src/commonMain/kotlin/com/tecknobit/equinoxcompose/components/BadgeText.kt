@@ -12,7 +12,6 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.contentColorFor
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.NonRestartableComposable
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
@@ -63,7 +62,6 @@ import androidx.compose.ui.unit.dp
  */
 @Composable
 @NonRestartableComposable
-@ExperimentalComposeUiApi
 fun BadgeText(
     modifier: Modifier = Modifier,
     shape: Shape = RoundedCornerShape(

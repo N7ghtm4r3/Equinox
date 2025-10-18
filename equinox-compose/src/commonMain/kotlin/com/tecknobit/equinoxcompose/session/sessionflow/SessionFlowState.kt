@@ -1,6 +1,9 @@
 package com.tecknobit.equinoxcompose.session.sessionflow
 
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableLongState
+import androidx.compose.runtime.mutableLongStateOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.Saver
 import androidx.compose.runtime.saveable.SaverScope
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -17,7 +20,6 @@ import com.tecknobit.equinoxcore.time.TimeFormatter
  * @return the state as [SessionFlowState]
  */
 @Composable
-@ExperimentalComposeApi
 fun rememberSessionFlowState(
     initialStatus: SessionStatus = OPERATIONAL,
 ): SessionFlowState {
@@ -42,7 +44,6 @@ fun rememberSessionFlowState(
  *
  * @since 1.1.2
  */
-@ExperimentalComposeApi
 class SessionFlowState internal constructor(
     status: SessionStatus,
 ) {
@@ -97,7 +98,6 @@ class SessionFlowState internal constructor(
      * `loadingRoutineTrigger` trigger used to automatically invoke the
      * [com.tecknobit.equinoxcompose.session.sessionflow.SessionFlowContainer]'s loading routine
      */
-    @ExperimentalComposeApi
     internal val loadingRoutineTrigger: MutableLongState = mutableLongStateOf(TimeFormatter.currentTimestamp())
 
     /**
@@ -177,7 +177,6 @@ class SessionFlowState internal constructor(
      * @since 1.1.4
      */
     @Wrapper
-    @ExperimentalComposeApi
     fun notifyCustomError(
         errorExtra: Any,
     ) {
@@ -235,7 +234,6 @@ class SessionFlowState internal constructor(
      *
      * @param onReload Callback to invoke when [loadingRoutineTrigger] has been updated
      */
-    @ExperimentalComposeApi
     fun reload(
         onReload: (() -> Unit)? = null,
     ) {
@@ -267,7 +265,6 @@ class SessionFlowState internal constructor(
  *
  * @since 1.1.2
  */
-@ExperimentalComposeApi
 internal object SessionFlowSaver : Saver<SessionFlowState, SessionStatus> {
 
     /**
