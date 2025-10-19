@@ -33,7 +33,7 @@ actual fun copyOnClipboard(
  * @return the string as nullable [NSData]
  */
 @Returner
-private inline fun String.toNSData(): NSData? {
+private fun String.toNSData(): NSData? {
     return NSString.create(
         string = this
     ).dataUsingEncoding(

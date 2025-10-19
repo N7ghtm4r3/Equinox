@@ -164,7 +164,7 @@ fun DashedTile(
  *
  * @return the modifier to apply to the component as [Modifier]
  */
-private inline fun Modifier.dashedBorder(
+private fun Modifier.dashedBorder(
     strokeWidth: Float,
     containerColor: Color,
     intervals: FloatArray,
