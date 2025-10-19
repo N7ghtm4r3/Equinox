@@ -111,12 +111,14 @@ as follows:
 @RequiresSuperCall
 override fun insertNewUser(
     hostAddress: String,
+    userId: String,
+    userToken: String,
+    profilePic: String,
     name: String,
     surname: String,
     email: String,
     language: String,
-    response: JsonHelper,
-    vararg custom: Any
+    vararg custom: Any?
 ) {
     // required to store and assign the standard properties
     super.insertNewUser(hostAddress, name, surname, email, language, response)
@@ -137,12 +139,14 @@ either using `*customParametersArray` or simply `customParametersArray`. When th
 @RequiresSuperCall
 override fun insertNewUser(
     hostAddress: String,
+    userId: String,
+    userToken: String,
+    profilePic: String,
     name: String,
     surname: String,
     email: String,
     language: String,
-    response: JsonHelper,
-    vararg custom: Any
+    vararg custom: Any?
 ) {
     // required to store and assign the standard properties
     super.insertNewUser(hostAddress, name, surname, email, language, response)
