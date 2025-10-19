@@ -8,12 +8,10 @@ import com.tecknobit.equinoxcompose.session.EquinoxLocalUser.ApplicationTheme.Au
 import com.tecknobit.equinoxcore.annotations.RequiresSuperCall
 import com.tecknobit.equinoxcore.annotations.Structure
 import com.tecknobit.equinoxcore.helpers.*
-import com.tecknobit.equinoxcore.helpers.InputsValidator.Companion.DEFAULT_LANGUAGE
-import com.tecknobit.equinoxcore.helpers.InputsValidator.Companion.SUPPORTED_LANGUAGES
 import com.tecknobit.equinoxcore.json.treatsAsString
 import com.tecknobit.kmprefs.KMPrefs
+import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.JsonObject
-import kotlinx.serialization.json.jsonPrimitive
 
 /**
  * The `EquinoxLocalUser` class is useful to represent a user in the client application
@@ -24,15 +22,19 @@ import kotlinx.serialization.json.jsonPrimitive
  * @author N7ghtm4r3 - Tecknobit
  * @since 1.0.6
  */
+// TODO: TO DOCU ABOUT THE localStoragePath MUST BE SAFEGUARDED AND NON INSERT HARDCODED
+
 @Structure
 open class EquinoxLocalUser(
     localStoragePath: String,
-    observableKeys: Set<String> = emptySet()
+    protected val observableKeys: Set<String> = emptySet(),
+    protected val sensitiveKeys: Set<String> = setOf(HOST_ADDRESS_KEY, IDENTIFIER_KEY, TOKEN_KEY),
 ) {
 
     /**
      * `ApplicationTheme` list of the available theming for the client applications
      */
+    @Serializable
     enum class ApplicationTheme {
 
         /**
@@ -94,10 +96,10 @@ open class EquinoxLocalUser(
      */
     var hostAddress: String = ""
         set(value) {
-            setPreference(
+            /*savePreference(
                 key = HOST_ADDRESS_KEY,
                 value = value
-            )
+            )*/
             field = value
         }
 
@@ -106,7 +108,7 @@ open class EquinoxLocalUser(
      */
     var userId: String? = null
         set(value) {
-            setPreference(
+            savePreference(
                 key = IDENTIFIER_KEY,
                 value = value
             )
@@ -118,7 +120,7 @@ open class EquinoxLocalUser(
      */
     var userToken: String? = null
         set(value) {
-            setPreference(
+            savePreference(
                 key = TOKEN_KEY,
                 value = value
             )
@@ -137,7 +139,7 @@ open class EquinoxLocalUser(
                     "$hostAddress/$value"
             } else
                 value
-            setPreference(
+            savePreference(
                 key = PROFILE_PIC_KEY,
                 value = profilePicLocal
             )
@@ -149,7 +151,7 @@ open class EquinoxLocalUser(
      */
     var name: String = ""
         set(value) {
-            setPreference(
+            savePreference(
                 key = NAME_KEY,
                 value = value
             )
@@ -161,7 +163,7 @@ open class EquinoxLocalUser(
      */
     var surname: String = ""
         set(value) {
-            setPreference(
+            savePreference(
                 key = SURNAME_KEY,
                 value = value
             )
@@ -173,7 +175,7 @@ open class EquinoxLocalUser(
      */
     var email: String = ""
         set(value) {
-            setPreference(
+            savePreference(
                 key = EMAIL_KEY,
                 value = value
             )
@@ -185,7 +187,7 @@ open class EquinoxLocalUser(
      */
     var language: String = ""
         set(value) {
-            setPreference(
+            savePreference(
                 key = LANGUAGE_KEY,
                 value = value
             )
@@ -197,7 +199,7 @@ open class EquinoxLocalUser(
      */
     var theme: ApplicationTheme = Auto
         set(value) {
-            setPreference(
+            savePreference(
                 key = THEME_KEY,
                 value = value
             )
@@ -231,48 +233,53 @@ open class EquinoxLocalUser(
     @RequiresSuperCall
     protected open fun initLocalUser() {
         val currentLocaleLanguage = Locale.current.language
-        hostAddress = getNullSafePreference(HOST_ADDRESS_KEY)
-        userId = getPreference(IDENTIFIER_KEY)
-        userToken = getPreference(TOKEN_KEY)
-        profilePic = getNullSafePreference(PROFILE_PIC_KEY)
-        name = getNullSafePreference(NAME_KEY)
-        surname = getNullSafePreference(SURNAME_KEY)
-        email = getNullSafePreference(EMAIL_KEY)
-        language = getNullSafePreference(
-            key = LANGUAGE_KEY,
-            defPrefValue = if (SUPPORTED_LANGUAGES.containsKey(currentLocaleLanguage))
-                currentLocaleLanguage
-            else
-                DEFAULT_LANGUAGE
+
+        setNullSafePreference<String>(
+            key = HOST_ADDRESS_KEY,
+            defPrefValue = "",
+            prefInit = { hostAddress ->
+                this.hostAddress = hostAddress
+            }
         )
-        theme = ApplicationTheme.getInstance(getPreference(THEME_KEY))
+
+//        hostAddress = getNullSafePreference(HOST_ADDRESS_KEY)
+//        userId = setPreference(IDENTIFIER_KEY)
+//        userToken = setPreference(TOKEN_KEY)
+//        profilePic = getNullSafePreference(PROFILE_PIC_KEY)
+//        name = getNullSafePreference(NAME_KEY)
+//        surname = getNullSafePreference(SURNAME_KEY)
+//        email = getNullSafePreference(EMAIL_KEY)
+//        language = getNullSafePreference(
+//            key = LANGUAGE_KEY,
+//            defPrefValue = if (SUPPORTED_LANGUAGES.containsKey(currentLocaleLanguage))
+//                currentLocaleLanguage
+//            else
+//                DEFAULT_LANGUAGE
+//        )
+//        theme = ApplicationTheme.getInstance(setPreference(THEME_KEY))
     }
 
-    /**
-     * Method used to insert and initialize a new local user.
-     *
-     * @param hostAddress The host address with which the user communicates
-     * @param name The name of the user
-     * @param surname The surname of the user
-     * @param email The email address of the user
-     * @param language The preferred language of the user
-     * @param response The payload response received from an authentication request
-     * @param custom Custom parameters added during the customization of the equinox use
-     */
+    // TODO: TO DOCU SINCE  1.1.7
     @RequiresSuperCall
     open fun insertNewUser(
         hostAddress: String,
+        userId: String,
+        userToken: String,
+        profilePic: String,
         name: String,
         surname: String,
         email: String,
         language: String,
-        response: JsonObject,
         vararg custom: Any?,
     ) {
         this.hostAddress = hostAddress
-        userId = response[USER_IDENTIFIER_KEY]!!.jsonPrimitive.content
-        userToken = response[TOKEN_KEY]!!.jsonPrimitive.content
-        profilePic = response[PROFILE_PIC_KEY]!!.jsonPrimitive.content
+        savePreference(
+            key = HOST_ADDRESS_KEY,
+            value = hostAddress
+        )
+        this.userId = userId
+        this.userToken = userToken
+        this.profilePic = profilePic
         this.name = name
         this.surname = surname
         this.email = email
@@ -299,70 +306,50 @@ open class EquinoxLocalUser(
         return (this[indexArray] as Array<*>)[itemPosition] as T
     }
 
-    /**
-     * Method used to store and set a preference
-     *
-     * @param key:   the key of the preference
-     * @param value: the value of the preference
-     */
-    protected fun <T> setPreference(
+    // TODO: TO DOCU SINCE  1.1.7
+    protected inline fun <reified T> savePreference(
         key: String,
         value: T?,
+        isSensitive: Boolean = sensitiveKeys.contains(key),
     ) {
-        val preferenceValue = value.toString()
-        // FIXME: TO ADAPT TO THE KMPrefs 1.1.0
-//        if(!preferencesManager.valueMatchesTo(key, preferenceValue)) {
-//            preferencesManager.storeString(
-//                key = key,
-//                value = preferenceValue
-//            )
-//        }
+        preferencesManager.store(
+            key = key,
+            value = value,
+            isSensitive = isSensitive
+        )
         stateStore.store(
             key = key,
             property = value
         )
     }
 
-    /**
-     * Method used to get a stored preference
-     *
-     * @param key The key of the preference to get
-     * @param defPrefValue Default value of the preference if not stored yet
-     *
-     * @return the preference stored as nullable [String]
-     */
-    protected fun getPreference(
+    // TODO: TO DOCU SINCE  1.1.7
+    protected inline fun <reified T> setPreference(
         key: String,
-        defPrefValue: String? = null,
-    ): String? {
-        // FIXME: TO ADAPT TO THE KMPrefs 1.1.0
-        /*val storedPreference = preferencesManager.retrieveString(
+        defPrefValue: T? = null,
+        isSensitive: Boolean = sensitiveKeys.contains(key),
+        crossinline prefInit: (T?) -> Unit,
+    ){
+        preferencesManager.consumeRetrieval(
             key = key,
-            defValue = defPrefValue
-        )*/
-        // return storedPreference
-        // TODO: TO REMOVE
-        return ""
+            defValue = defPrefValue,
+            isSensitive = isSensitive,
+            consume = prefInit
+        )
     }
 
-    /**
-     * Method used to get a stored preference
-     *
-     * @param key The key of the preference to get
-     * @param defPrefValue Default value of the preference if not stored yet
-     * @return the preference stored as null-safe [String]
-     */
-    protected fun getNullSafePreference(
+    protected inline fun <reified T> setNullSafePreference(
         key: String,
-        defPrefValue: String = "",
-    ): String {
-        // FIXME: TO ADAPT TO THE KMPrefs 1.1.0
-        /*return preferencesManager.retrieveString(
+        defPrefValue: T,
+        isSensitive: Boolean = sensitiveKeys.contains(key),
+        crossinline prefInit: (T) -> Unit,
+    ){
+        preferencesManager.consumeRetrieval(
             key = key,
-            defValue = defPrefValue
-        )!!*/
-        // TODO: TO REMOVE
-        return ""
+            defValue = defPrefValue,
+            isSensitive = isSensitive,
+            consume = { prefInit(it!!) }
+        )
     }
 
     /**
@@ -382,9 +369,9 @@ open class EquinoxLocalUser(
         dynamicData: JsonObject,
     ) {
         dynamicData.entries.forEach { entry ->
-            setPreference(
-                entry.key,
-                entry.value.treatsAsString()
+            savePreference(
+                key = entry.key,
+                value = entry.value.treatsAsString()
             )
         }
         initLocalUser()

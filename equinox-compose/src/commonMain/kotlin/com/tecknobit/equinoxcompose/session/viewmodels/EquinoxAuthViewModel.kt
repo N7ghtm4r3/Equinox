@@ -15,6 +15,7 @@ import com.tecknobit.equinoxcore.helpers.InputsValidator.Companion.isNameValid
 import com.tecknobit.equinoxcore.helpers.InputsValidator.Companion.isPasswordValid
 import com.tecknobit.equinoxcore.helpers.InputsValidator.Companion.isServerSecretValid
 import com.tecknobit.equinoxcore.helpers.InputsValidator.Companion.isSurnameValid
+import com.tecknobit.equinoxcore.json.treatsAsString
 import com.tecknobit.equinoxcore.network.Requester.Companion.toResponseData
 import com.tecknobit.equinoxcore.network.sendRequest
 import kotlinx.coroutines.launch
@@ -312,17 +313,21 @@ abstract class EquinoxAuthViewModel(
         language: String,
         vararg custom: Any?,
     ) {
+        val userId = response[USER_IDENTIFIER_KEY].treatsAsString()
+        val userToken = response[TOKEN_KEY].treatsAsString()
         requester.setUserCredentials(
-            userId = response[USER_IDENTIFIER_KEY]!!.jsonPrimitive.content,
-            userToken = response[TOKEN_KEY]!!.jsonPrimitive.content
+            userId = userId,
+            userToken = userToken
         )
         localUser.insertNewUser(
-            host.value,
-            name,
-            surname,
-            email.value,
-            language,
-            response,
+            hostAddress = host.value,
+            userId = userId,
+            userToken = userToken,
+            profilePic = response[PROFILE_PIC_KEY].treatsAsString(),
+            name = name,
+            surname = surname,
+            email = email.value,
+            language = language,
             custom
         )
     }
