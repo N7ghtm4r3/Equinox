@@ -20,14 +20,15 @@ import kotlinx.serialization.json.JsonObject
 /**
  * The `EquinoxLocalUser` class is useful to represent a user in the client application
  *
- * @param localStoragePath The path where store the local session details of the user
+ * @param localStoragePath The path where store the local session details of the user.
+ * It is suggested to not hardcode it directly, but for example create a property in `gradle.properties` file or
+ * similar and `do not share` in public repos
  * @param observableKeys The keys related to the properties to make observable during the runtime and react to their changes
+ * @param sensitiveKeys The keys related to the properties considered sensitive that require to be safeguarded
  *
  * @author N7ghtm4r3 - Tecknobit
  * @since 1.0.6
  */
-// TODO: TO DOCU ABOUT THE localStoragePath MUST BE SAFEGUARDED AND NON INSERT HARDCODED
-
 @Structure
 open class EquinoxLocalUser(
     localStoragePath: String,
@@ -85,6 +86,22 @@ open class EquinoxLocalUser(
 
     companion object {
 
+        /**
+         * `DEFAULT_SENSITIVE_KEYS` set of keys related to the properties considered sensitive that require to be
+         * safeguarded.
+         *
+         * To add custom keys or change the default properties you can do as follows:
+         *
+         * ```kotlin
+         * val mySensitiveKeys = buildSet {
+         *      addAll(DEFAULT_SENSITIVE_KEYS) // omit if is not required to include default set
+         *      ...
+         *      add(your_key)
+         * }
+         * ```
+         *
+         * @since 1.1.7
+         */
         val DEFAULT_SENSITIVE_KEYS: Set<String> = setOf(HOST_ADDRESS_KEY, IDENTIFIER_KEY, TOKEN_KEY)
 
     }
@@ -109,55 +126,55 @@ open class EquinoxLocalUser(
      * `hostAddress` the host address which the user communicate
      */
     var hostAddress: String = ""
-        private set
+        protected set
 
     /**
      * `userId` the identifier of the user
      */
     var userId: String? = null
-        private set
+        protected set
 
     /**
      * `userToken` the token of the user
      */
     var userToken: String? = null
-        private set
+        protected set
 
     /**
      * `profilePic` the profile pick of the user
      */
     var profilePic: String = ""
-        private set
+        protected set
 
     /**
      * `name` the name of the user
      */
     var name: String = ""
-        private set
+        protected set
 
     /**
      * `surname` the surname of the user
      */
     var surname: String = ""
-        private set
+        protected set
 
     /**
      * `email` the email of the user
      */
     var email: String = ""
-        private set
+        protected set
 
     /**
      * `language` the language of the user
      */
     var language: String = ""
-        private set
+        protected set
 
     /**
      * `theme` the theme of the user
      */
     var theme: ApplicationTheme = Auto
-        private set
+        protected set
 
     val isAuthenticated: Boolean
         /**
@@ -258,7 +275,19 @@ open class EquinoxLocalUser(
         )
     }
 
-    // TODO: TO DOCU SINCE  1.1.7
+    /**
+     * Method used to insert a new user and save locally his/her properties
+     *
+     * @param hostAddress The host address with which the user communicates
+     * @param userId The identifier of the user
+     * @param userToken The token of the user
+     * @param profilePic The profile picture of the user
+     * @param name The name of the user
+     * @param surname The surname of the user
+     * @param email The email of the user
+     * @param language The language of the user
+     * @param custom The custom parameters added during the customization of the [EquinoxLocalUser]
+     */
     @RequiresSuperCall
     open fun insertNewUser(
         hostAddress: String,
@@ -300,6 +329,13 @@ open class EquinoxLocalUser(
         )
     }
 
+    /**
+     * Method to initialize the [hostAddress] property and locally save its value with the [savePreference] method
+     *
+     * @param hostAddress The host address with which the user communicates
+     * 
+     * @since 1.1.7
+     */
     fun initHostAddress(
         hostAddress: String
     ) {
@@ -310,6 +346,13 @@ open class EquinoxLocalUser(
         )
     }
 
+    /**
+     * Method to initialize the [userId] property and locally save its value with the [savePreference] method
+     * 
+     * @param userId The identifier of the user
+     *
+     * @since 1.1.7
+     */
     fun initUserId(
         userId: String
     ) {
@@ -320,6 +363,13 @@ open class EquinoxLocalUser(
         )
     }
 
+    /**
+     * Method to initialize the [userToken] property and locally save its value with the [savePreference] method
+     *
+     * @param userToken The token of the user
+     *
+     * @since 1.1.7
+     */
     fun initUserToken(
         userToken: String
     ) {
@@ -330,6 +380,13 @@ open class EquinoxLocalUser(
         )
     }
 
+    /**
+     * Method to initialize the [profilePic] property and locally save its value with the [savePreference] method
+     *
+     * @param profilePic The profile picture of the user
+     *
+     * @since 1.1.7
+     */
     fun initProfilePic(
         profilePic: String
     ) {
@@ -342,6 +399,15 @@ open class EquinoxLocalUser(
         )
     }
 
+    /**
+     * Method used to resolve the [profilePic] value to save whether is needed to append the [hostAddress] value
+     * 
+     * @param rawProfilePic The value of the profile pic to resolve
+     * 
+     * @return the value of the profile pic to save as [String]
+     * 
+     * @since 1.1.7
+     */
     @Returner
     protected fun resolveProfilePicValue(
         rawProfilePic: String
@@ -352,6 +418,13 @@ open class EquinoxLocalUser(
             "$hostAddress/$rawProfilePic"
     }
 
+    /**
+     * Method to initialize the [name] property and locally save its value with the [savePreference] method
+     *
+     * @param name The name of the user
+     *
+     * @since 1.1.7
+     */
     fun initName(
         name: String
     ) {
@@ -362,6 +435,13 @@ open class EquinoxLocalUser(
         )
     }
 
+    /**
+     * Method to initialize the [surname] property and locally save its value with the [savePreference] method
+     *
+     * @param surname The surname of the user
+     *
+     * @since 1.1.7
+     */
     fun initSurname(
         surname: String
     ) {
@@ -372,6 +452,13 @@ open class EquinoxLocalUser(
         )
     }
 
+    /**
+     * Method to initialize the [email] property and locally save its value with the [savePreference] method
+     *
+     * @param hostAddress The host address with which the user communicates
+     *
+     * @since 1.1.7
+     */
     fun initEmail(
         email: String
     ) {
@@ -382,6 +469,13 @@ open class EquinoxLocalUser(
         )
     }
 
+    /**
+     * Method to initialize the [language] property and locally save its value with the [savePreference] method
+     *
+     * @param language The language of the user
+     *
+     * @since 1.1.7
+     */
     fun initLanguage(
         language: String
     ) {
@@ -392,6 +486,13 @@ open class EquinoxLocalUser(
         )
     }
 
+    /**
+     * Method to initialize the [theme] property and locally save its value with the [savePreference] method
+     *
+     * @param theme The theme chosen by the user 
+     *
+     * @since 1.1.7
+     */
     fun initTheme(
         theme: ApplicationTheme
     ) {
@@ -402,7 +503,20 @@ open class EquinoxLocalUser(
         )
     }
 
-    // TODO: TO DOCU SINCE  1.1.7
+    /**
+     * Method to locally save a preference. 
+     * 
+     * If the [key] is present in the [sensitiveKeys] set, before saving it, will be encrypted.
+     * Similar to the [sensitiveKeys], if the [key] is present in the [observableKeys] set will be handled by the 
+     * [EquinoxLocalUserStateStore]
+     * 
+     * @param key The representative key of a preference
+     * @param value The value of the preference to save
+     * 
+     * @param T The type of the preference to save
+     * 
+     * @since 1.1.7
+     */
     protected inline fun <reified T> savePreference(
         key: String,
         value: T?,
@@ -418,13 +532,25 @@ open class EquinoxLocalUser(
         )
     }
 
-    // TODO: TO DOCU SINCE  1.1.7
+    /**
+     * Method to locally retrieve a `non-nullable` preference and to initialize the related property
+     *
+     * If the [key] is present in the [sensitiveKeys] set, before initialize the property, will be decrypted
+     *
+     * @param key The representative key of a preference
+     * @param defPrefValue The default value to use if the real one is not saved yet
+     * @param prefInit The initialization routine to perform to use the retrieved value and to use it to initialize a property
+     *
+     * @param T The type of the preference to retrieve
+     * 
+     * @since 1.1.7
+     */
     @Wrapper
     protected inline fun <reified T> setNullSafePreference(
         key: String,
         defPrefValue: T,
         crossinline prefInit: (T) -> Unit,
-    ){
+    ) {
         setPreference(
             key = key,
             defPrefValue = defPrefValue,
@@ -432,7 +558,19 @@ open class EquinoxLocalUser(
         )
     }
 
-    // TODO: TO DOCU SINCE  1.1.7
+    /**
+     * Method to locally retrieve a preference and to initialize the related property
+     *
+     * If the [key] is present in the [sensitiveKeys] set, before initialize the property, will be decrypted
+     *
+     * @param key The representative key of a preference
+     * @param defPrefValue The default value to use if the real one is not saved yet
+     * @param prefInit The initialization routine to perform to use the retrieved value and to use it to initialize a property
+     *
+     * @param T The type of the preference to retrieve
+     *
+     * @since 1.1.7
+     */
     protected inline fun <reified T> setPreference(
         key: String,
         defPrefValue: T? = null,
