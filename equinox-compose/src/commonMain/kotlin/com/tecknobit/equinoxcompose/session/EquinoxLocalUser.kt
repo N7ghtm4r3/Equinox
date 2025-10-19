@@ -158,7 +158,12 @@ open class EquinoxLocalUser(
 
     init {
         @Suppress("ImplicitThis")
-        initLocalUser()
+        try {
+            initLocalUser()
+        } catch (e: Exception) {
+            preferencesManager.clearAll()
+            throw e
+        }
     }
 
     /**
@@ -343,7 +348,8 @@ open class EquinoxLocalUser(
         defPrefValue: T? = null,
         isSensitive: Boolean = sensitiveKeys.contains(key),
         crossinline prefInit: (T?) -> Unit,
-    ){
+    ) {
+        // TODO: TO REMOVE THIS TRY-CATCH IN FUTURE RELEASES
         preferencesManager.consumeRetrieval(
             key = key,
             defValue = defPrefValue,
