@@ -28,6 +28,11 @@ val localUser = EquinoxLocalUser(
 )
 ```
 
+!!! Warning
+
+    It is suggested to not hardcode the `localStoragePath` value directly, but for example create a property in 
+    `gradle.properties` file or similar and `do not share` in public repos
+
 The lifecycle of the local user starts when the `insertNewUser` is invoked, that method locally store and then assign the 
 values of each property:
 
@@ -37,9 +42,13 @@ localUser.insertNewUser(
 )
 ```
 
+!!! Note
+
+    The `insertNewUser` method is designed to be invoked when the user signed in or signed up into the application
+
 #### Updating existing properties
 
-The API provides a way to dynamically update those properties which have been updated outside this local session, for example
+This API provides a way to dynamically update those properties which have been updated outside this local session, for example
 on another device with the same local user, this can be done as follows:
 
 ```kotlin
@@ -60,35 +69,40 @@ localUser.clear()
 
 ### Custom property integration
 
-To store a property value locally, the standard approach is to create a setter for the property and, before assigning the 
-value to the corresponding variable, call a method to save that value locally. 
-For example, the theme property is managed as follows:
+To integrate a custom property, additional to the provided properties, the standard approach is the following one:
 
-```kotlin
-var theme: ApplicationTheme = Auto
-    set(value) {
-        setPreference(
-            key = THEME_KEY,
-            value = value
-        )
-        field = value
-    }
-```
-
-A custom property could be integrated as follows:
+#### Declaring the property
 
 ```kotlin
 var currency: String? = null
-    set(value) {
-        setPreference(
-            key = "currency", 
-            value = value
-        )
-        field = value
-    }
 ```
 
-### Adapt the insertNewUser method
+#### Creating the initialization method
+
+It is suggested naming the method which initialize custom properties with the `init` prefix and the name of the property 
+as the suffix:
+
+```kotlin
+ fun initCurrency(
+    currency: String?
+) { 
+    // initialize the property 
+    this.currency = currency
+    // locally save the property
+    savePreference(
+        key = CURRENCY_KEY,
+        value = currency
+    )
+}
+```
+
+The structure of the method is suggested to have a compact initialization of the property and a locally saving of the preference
+
+!!! Note
+
+    This method can be used to update the value of the property and the related local value currently saved
+
+#### Adapting the insertNewUser method
 
 To store and assign the custom property the `insertNewUser` must be adapted to use that custom property, this can be done
 as follows:
@@ -105,8 +119,13 @@ override fun insertNewUser(
     vararg custom: Any
 ) {
     // required to store and assign the standard properties
-    super.insertNewUser(hostAddress, name, surname, email, language, response) 
-    currency = custom[0].toString() // value of the custom property
+    super.insertNewUser(hostAddress, name, surname, email, language, response)
+    // value of the custom property
+    val currencyFromCustomArray = custom[0].toString()
+    // initialize and save the preference
+    initCurrency(
+        currency = currencyFromCustomArray
+    )
 }
 ```
 
@@ -127,8 +146,13 @@ override fun insertNewUser(
 ) {
     // required to store and assign the standard properties
     super.insertNewUser(hostAddress, name, surname, email, language, response)
-    currency = custom.extractsCustomValue(
+    // value of the custom property
+    val currencyFromCustomArray = custom.extractsCustomValue(
         itemPosition = 0
+    )
+    // initialize and save the preference
+    initCurrency(
+        currency = currencyFromCustomArray
     )
 }
 ```
@@ -146,11 +170,17 @@ from the `localStoragePath`, the value of the custom property:
 override fun initLocalUser() {
     // required to assign the standard properties
     super.initLocalUser()
-    currency = getPreference( // or getNullSafePreference
-        key = "currency"
+    setPreference<String>( // or setNullSafePreference
+        key = CURRENCY_KEY,
+        prefInit = { currency ->
+            this.currency = currency
+        }
     )
 }
 ```
+
+The only suggested way to correctly retrieve and initialize the properties with the retrieved values is using those two 
+methods because handle the decryption of the data when needed
 
 ## Recompose on changes
 
@@ -204,3 +234,51 @@ private fun resolveTheme(): Boolean {
 ```
 
 Every time the value of the `localUserTheme` changes the UI will recompose
+
+## Sensitive data 
+
+`EquinoxLocalUser` API provides a way to safeguard the sensitive data and correctly use those data decrypted thankful to
+[Kassaforte](https://github.com/N7ghtm4r3/Kassaforte) library
+
+### Declare the sensitive keys
+
+Can be defined a set of keys related to the properties to consider as sensitive properties:
+
+#### Full override
+
+By default, the properties considered sensitive are contained in the `DEFAULT_SENSITIVE_KEYS` set which contains the `host_address`,
+`id` and `token` keys
+
+A full override allows to not consider those properties as sensitive data
+
+```kotlin
+val localUser = EquinoxLocalUser(
+    localStoragePath = "local store path",
+    sensitiveKeys = setOf("custom_key_one", "custom_key_two")
+)
+```
+
+!!! Warning
+
+    This type of override is discouraged due the sensitivity of the data considered sensitive by default
+
+#### Partial override
+
+This type of override allows to keep the `DEFAULT_SENSITIVE_KEYS` set and add custom keys of the properties to
+consider sensitive based on the context of the developing application:
+
+```kotlin
+val localUser = EquinoxLocalUser(
+    localStoragePath = "local store path",
+    sensitiveKeys = buildSet {
+        addAll(DEFAULT_SENSITIVE_KEYS) // keep default keys
+        add(CURRENCY_KEY) // add custom keys
+    }
+)
+```
+
+!!! Danger
+
+    Removing a property from the `sensitiveKeys` set once a release has been already published, will cause the incorrect 
+    handling of the encryption and decryption of the preference indicated by that key, and it will cause an application
+    crash. Pay attention when a similar scenario is to be handled
