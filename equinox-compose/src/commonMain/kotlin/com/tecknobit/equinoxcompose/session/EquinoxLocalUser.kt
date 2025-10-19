@@ -406,12 +406,11 @@ open class EquinoxLocalUser(
     protected inline fun <reified T> savePreference(
         key: String,
         value: T?,
-        isSensitive: Boolean = sensitiveKeys.contains(key),
     ) {
         preferencesManager.store(
             key = key,
             value = value,
-            isSensitive = isSensitive
+            isSensitive = sensitiveKeys.contains(key)
         )
         stateStore.store(
             key = key,
@@ -424,13 +423,11 @@ open class EquinoxLocalUser(
     protected inline fun <reified T> setNullSafePreference(
         key: String,
         defPrefValue: T,
-        isSensitive: Boolean = sensitiveKeys.contains(key),
         crossinline prefInit: (T) -> Unit,
     ){
         setPreference(
             key = key,
             defPrefValue = defPrefValue,
-            isSensitive = isSensitive,
             prefInit = { prefInit(it!!) }
         )
     }
@@ -439,13 +436,12 @@ open class EquinoxLocalUser(
     protected inline fun <reified T> setPreference(
         key: String,
         defPrefValue: T? = null,
-        isSensitive: Boolean = sensitiveKeys.contains(key),
         crossinline prefInit: (T?) -> Unit,
     ) {
         preferencesManager.consumeRetrieval(
             key = key,
             defValue = defPrefValue,
-            isSensitive = isSensitive,
+            isSensitive = sensitiveKeys.contains(key),
             consume = { retrieval ->
                 prefInit(retrieval)
                 stateStore.store(
