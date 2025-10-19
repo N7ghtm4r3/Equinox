@@ -20,7 +20,6 @@ import com.tecknobit.equinoxcore.network.Requester.Companion.toResponseData
 import com.tecknobit.equinoxcore.network.sendRequest
 import kotlinx.coroutines.launch
 import kotlinx.serialization.json.JsonObject
-import kotlinx.serialization.json.jsonPrimitive
 
 /**
  * The **EquinoxAuthViewModel** class is the support class used to execute the authentication requests to the backend
@@ -245,9 +244,9 @@ abstract class EquinoxAuthViewModel(
                         val data = response.toResponseData()
                         val jLanguage = data[LANGUAGE_KEY]
                         launchApp(
-                            name = data[NAME_KEY]!!.jsonPrimitive.content,
-                            surname = data[SURNAME_KEY]!!.jsonPrimitive.content,
-                            language = jLanguage?.jsonPrimitive?.content ?: DEFAULT_LANGUAGE,
+                            name = data[NAME_KEY].treatsAsString(),
+                            surname = data[SURNAME_KEY].treatsAsString(),
+                            language = jLanguage?.treatsAsString() ?: DEFAULT_LANGUAGE,
                             response = data,
                             custom = getSignInCustomParameters()
                         )

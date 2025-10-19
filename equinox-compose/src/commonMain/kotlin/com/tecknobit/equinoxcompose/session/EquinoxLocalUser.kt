@@ -32,7 +32,7 @@ import kotlinx.serialization.json.JsonObject
 open class EquinoxLocalUser(
     localStoragePath: String,
     protected val observableKeys: Set<String> = emptySet(),
-    protected val sensitiveKeys: Set<String> = setOf(HOST_ADDRESS_KEY, IDENTIFIER_KEY, TOKEN_KEY),
+    protected val sensitiveKeys: Set<String> = DEFAULT_SENSITIVE_KEYS,
 ) {
 
     /**
@@ -64,6 +64,10 @@ open class EquinoxLocalUser(
              * @param theme The name of the theme to get
              * @return the theme instance as [ApplicationTheme]
              */
+            @Deprecated(
+                message = "Will be removed",
+                level = DeprecationLevel.ERROR
+            )
             fun getInstance(
                 theme: String?,
             ): ApplicationTheme {
@@ -76,6 +80,12 @@ open class EquinoxLocalUser(
             }
 
         }
+
+    }
+
+    companion object {
+
+        val DEFAULT_SENSITIVE_KEYS: Set<String> = setOf(HOST_ADDRESS_KEY, IDENTIFIER_KEY, TOKEN_KEY)
 
     }
 
@@ -99,46 +109,55 @@ open class EquinoxLocalUser(
      * `hostAddress` the host address which the user communicate
      */
     var hostAddress: String = ""
+        private set
 
     /**
      * `userId` the identifier of the user
      */
     var userId: String? = null
+        private set
 
     /**
      * `userToken` the token of the user
      */
     var userToken: String? = null
+        private set
 
     /**
      * `profilePic` the profile pick of the user
      */
     var profilePic: String = ""
+        private set
 
     /**
      * `name` the name of the user
      */
     var name: String = ""
+        private set
 
     /**
      * `surname` the surname of the user
      */
     var surname: String = ""
+        private set
 
     /**
      * `email` the email of the user
      */
     var email: String = ""
+        private set
 
     /**
      * `language` the language of the user
      */
     var language: String = ""
+        private set
 
     /**
      * `theme` the theme of the user
      */
     var theme: ApplicationTheme = Auto
+        private set
 
     val isAuthenticated: Boolean
         /**
@@ -158,6 +177,7 @@ open class EquinoxLocalUser(
 
     init {
         @Suppress("ImplicitThis")
+        // TODO: TO REMOVE THIS TRY-CATCH IN FUTURE RELEASES
         try {
             initLocalUser()
         } catch (e: Exception) {
@@ -229,10 +249,11 @@ open class EquinoxLocalUser(
                 this.language = language
             }
         )
-        setPreference<String>(
+        setNullSafePreference(
             key = THEME_KEY,
+            defPrefValue = Auto,
             prefInit = { theme ->
-                this.theme = ApplicationTheme.getInstance(theme)
+                this.theme = theme
             }
         )
     }
@@ -250,52 +271,74 @@ open class EquinoxLocalUser(
         language: String,
         vararg custom: Any?,
     ) {
+        initHostAddress(
+            hostAddress = hostAddress
+        )
+        initUserId(
+            userId = userId
+        )
+        initUserToken(
+            userToken = userToken
+        )
+        initProfilePic(
+            profilePic = profilePic
+        )
+        initName(
+            name = name
+        )
+        initSurname(
+            surname = surname
+        )
+        initEmail(
+            email = email
+        )
+        initLanguage(
+            language = language
+        )
+        initTheme(
+            theme = Auto
+        )
+    }
+
+    fun initHostAddress(
+        hostAddress: String
+    ) {
         this.hostAddress = hostAddress
         savePreference(
             key = HOST_ADDRESS_KEY,
             value = hostAddress
         )
+    }
+
+    fun initUserId(
+        userId: String
+    ) {
         this.userId = userId
         savePreference(
             key = IDENTIFIER_KEY,
             value = userId
         )
+    }
+
+    fun initUserToken(
+        userToken: String
+    ) {
         this.userToken = userToken
         savePreference(
             key = TOKEN_KEY,
             value = userToken
         )
+    }
+
+    fun initProfilePic(
+        profilePic: String
+    ) {
         this.profilePic = resolveProfilePicValue(
             rawProfilePic = profilePic
         )
         savePreference(
             key = PROFILE_PIC_KEY,
             value = this.profilePic
-        )
-        this.name = name
-        savePreference(
-            key = NAME_KEY,
-            value = name
-        )
-        this.surname = surname
-        savePreference(
-            key = SURNAME_KEY,
-            value = surname
-        )
-        this.email = email
-        savePreference(
-            key = EMAIL_KEY,
-            value = email
-        )
-        this.language = language
-        savePreference(
-            key = LANGUAGE_KEY,
-            value = language
-        )
-        this.theme = Auto
-        savePreference(
-            key = THEME_KEY,
-            value = theme
         )
     }
 
@@ -307,6 +350,56 @@ open class EquinoxLocalUser(
             rawProfilePic
         else
             "$hostAddress/$rawProfilePic"
+    }
+
+    fun initName(
+        name: String
+    ) {
+        this.name = name
+        savePreference(
+            key = NAME_KEY,
+            value = name
+        )
+    }
+
+    fun initSurname(
+        surname: String
+    ) {
+        this.surname = surname
+        savePreference(
+            key = SURNAME_KEY,
+            value = surname
+        )
+    }
+
+    fun initEmail(
+        email: String
+    ) {
+        this.email = email
+        savePreference(
+            key = EMAIL_KEY,
+            value = email
+        )
+    }
+
+    fun initLanguage(
+        language: String
+    ) {
+        this.language = language
+        savePreference(
+            key = LANGUAGE_KEY,
+            value = language
+        )
+    }
+
+    fun initTheme(
+        theme: ApplicationTheme
+    ) {
+        this.theme = Auto
+        savePreference(
+            key = THEME_KEY,
+            value = theme
+        )
     }
 
     // TODO: TO DOCU SINCE  1.1.7
@@ -349,12 +442,17 @@ open class EquinoxLocalUser(
         isSensitive: Boolean = sensitiveKeys.contains(key),
         crossinline prefInit: (T?) -> Unit,
     ) {
-        // TODO: TO REMOVE THIS TRY-CATCH IN FUTURE RELEASES
         preferencesManager.consumeRetrieval(
             key = key,
             defValue = defPrefValue,
             isSensitive = isSensitive,
-            consume = prefInit
+            consume = { retrieval ->
+                prefInit(retrieval)
+                stateStore.store(
+                    key = key,
+                    property = retrieval
+                )
+            }
         )
     }
 
