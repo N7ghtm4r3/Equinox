@@ -6,8 +6,12 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.text.intl.Locale
 import com.tecknobit.equinoxcompose.session.EquinoxLocalUser.ApplicationTheme.Auto
 import com.tecknobit.equinoxcore.annotations.RequiresSuperCall
+import com.tecknobit.equinoxcore.annotations.Returner
 import com.tecknobit.equinoxcore.annotations.Structure
+import com.tecknobit.equinoxcore.annotations.Wrapper
 import com.tecknobit.equinoxcore.helpers.*
+import com.tecknobit.equinoxcore.helpers.InputsValidator.Companion.DEFAULT_LANGUAGE
+import com.tecknobit.equinoxcore.helpers.InputsValidator.Companion.SUPPORTED_LANGUAGES
 import com.tecknobit.equinoxcore.json.treatsAsString
 import com.tecknobit.kmprefs.KMPrefs
 import kotlinx.serialization.Serializable
@@ -95,116 +99,46 @@ open class EquinoxLocalUser(
      * `hostAddress` the host address which the user communicate
      */
     var hostAddress: String = ""
-        set(value) {
-            /*savePreference(
-                key = HOST_ADDRESS_KEY,
-                value = value
-            )*/
-            field = value
-        }
 
     /**
      * `userId` the identifier of the user
      */
     var userId: String? = null
-        set(value) {
-            savePreference(
-                key = IDENTIFIER_KEY,
-                value = value
-            )
-            field = value
-        }
 
     /**
      * `userToken` the token of the user
      */
     var userToken: String? = null
-        set(value) {
-            savePreference(
-                key = TOKEN_KEY,
-                value = value
-            )
-            field = value
-        }
 
     /**
      * `profilePic` the profile pick of the user
      */
     var profilePic: String = ""
-        set(value) {
-            val profilePicLocal = if (field != value) {
-                if (value.startsWith(hostAddress))
-                    value
-                else
-                    "$hostAddress/$value"
-            } else
-                value
-            savePreference(
-                key = PROFILE_PIC_KEY,
-                value = profilePicLocal
-            )
-            field = profilePicLocal
-        }
 
     /**
      * `name` the name of the user
      */
     var name: String = ""
-        set(value) {
-            savePreference(
-                key = NAME_KEY,
-                value = value
-            )
-            field = value
-        }
 
     /**
      * `surname` the surname of the user
      */
     var surname: String = ""
-        set(value) {
-            savePreference(
-                key = SURNAME_KEY,
-                value = value
-            )
-            field = value
-        }
 
     /**
      * `email` the email of the user
      */
     var email: String = ""
-        set(value) {
-            savePreference(
-                key = EMAIL_KEY,
-                value = value
-            )
-            field = value
-        }
 
     /**
      * `language` the language of the user
      */
     var language: String = ""
-        set(value) {
-            savePreference(
-                key = LANGUAGE_KEY,
-                value = value
-            )
-            field = value
-        }
 
     /**
      * `theme` the theme of the user
      */
     var theme: ApplicationTheme = Auto
-        set(value) {
-            savePreference(
-                key = THEME_KEY,
-                value = value
-            )
-            field = value
-        }
 
     val isAuthenticated: Boolean
         /**
@@ -232,8 +166,6 @@ open class EquinoxLocalUser(
      */
     @RequiresSuperCall
     protected open fun initLocalUser() {
-        val currentLocaleLanguage = Locale.current.language
-
         setNullSafePreference<String>(
             key = HOST_ADDRESS_KEY,
             defPrefValue = "",
@@ -241,22 +173,63 @@ open class EquinoxLocalUser(
                 this.hostAddress = hostAddress
             }
         )
-
-//        hostAddress = getNullSafePreference(HOST_ADDRESS_KEY)
-//        userId = setPreference(IDENTIFIER_KEY)
-//        userToken = setPreference(TOKEN_KEY)
-//        profilePic = getNullSafePreference(PROFILE_PIC_KEY)
-//        name = getNullSafePreference(NAME_KEY)
-//        surname = getNullSafePreference(SURNAME_KEY)
-//        email = getNullSafePreference(EMAIL_KEY)
-//        language = getNullSafePreference(
-//            key = LANGUAGE_KEY,
-//            defPrefValue = if (SUPPORTED_LANGUAGES.containsKey(currentLocaleLanguage))
-//                currentLocaleLanguage
-//            else
-//                DEFAULT_LANGUAGE
-//        )
-//        theme = ApplicationTheme.getInstance(setPreference(THEME_KEY))
+        setPreference<String>(
+            key = IDENTIFIER_KEY,
+            prefInit = { userId ->
+                this.userId = userId
+            }
+        )
+        setPreference<String>(
+            key = TOKEN_KEY,
+            prefInit = { userToken ->
+                this.userToken = userToken
+            }
+        )
+        setNullSafePreference<String>(
+            key = PROFILE_PIC_KEY,
+            defPrefValue = "",
+            prefInit = { profilePic ->
+                this.profilePic = profilePic
+            }
+        )
+        setNullSafePreference<String>(
+            key = NAME_KEY,
+            defPrefValue = "",
+            prefInit = { name ->
+                this.name = name
+            }
+        )
+        setNullSafePreference<String>(
+            key = SURNAME_KEY,
+            defPrefValue = "",
+            prefInit = { surname ->
+                this.surname = surname
+            }
+        )
+        setNullSafePreference<String>(
+            key = EMAIL_KEY,
+            defPrefValue = "",
+            prefInit = { email ->
+                this.email = email
+            }
+        )
+        val currentLocaleLanguage = Locale.current.language
+        setNullSafePreference<String>(
+            key = LANGUAGE_KEY,
+            defPrefValue = if (SUPPORTED_LANGUAGES.containsKey(currentLocaleLanguage))
+                currentLocaleLanguage
+            else
+                DEFAULT_LANGUAGE,
+            prefInit = { language ->
+                this.language = language
+            }
+        )
+        setPreference<String>(
+            key = THEME_KEY,
+            prefInit = { theme ->
+                this.theme = ApplicationTheme.getInstance(theme)
+            }
+        )
     }
 
     // TODO: TO DOCU SINCE  1.1.7
@@ -278,32 +251,57 @@ open class EquinoxLocalUser(
             value = hostAddress
         )
         this.userId = userId
+        savePreference(
+            key = IDENTIFIER_KEY,
+            value = userId
+        )
         this.userToken = userToken
-        this.profilePic = profilePic
+        savePreference(
+            key = TOKEN_KEY,
+            value = userToken
+        )
+        this.profilePic = resolveProfilePicValue(
+            rawProfilePic = profilePic
+        )
+        savePreference(
+            key = PROFILE_PIC_KEY,
+            value = this.profilePic
+        )
         this.name = name
+        savePreference(
+            key = NAME_KEY,
+            value = name
+        )
         this.surname = surname
+        savePreference(
+            key = SURNAME_KEY,
+            value = surname
+        )
         this.email = email
+        savePreference(
+            key = EMAIL_KEY,
+            value = email
+        )
         this.language = language
+        savePreference(
+            key = LANGUAGE_KEY,
+            value = language
+        )
         this.theme = Auto
+        savePreference(
+            key = THEME_KEY,
+            value = theme
+        )
     }
 
-    /**
-     * Method used to extract a specific value from the custom parameter of the [insertNewUser] method.
-     *
-     * This method is particularly useful in cases where values are passed as varargs,
-     * since Kotlin wraps them inside an array
-     *
-     * @param indexArray The index of the array from retrieve the custom value
-     * @param itemPosition The index of the item inside the created array
-     *
-     * @return the custom value as [T]
-     */
-    @Suppress("UNCHECKED_CAST")
-    protected fun <T> Array<out Any?>.extractsCustomValue(
-        indexArray: Int = 0,
-        itemPosition: Int,
-    ): T {
-        return (this[indexArray] as Array<*>)[itemPosition] as T
+    @Returner
+    protected fun resolveProfilePicValue(
+        rawProfilePic: String
+    ) : String {
+        return if (rawProfilePic.startsWith(hostAddress))
+            rawProfilePic
+        else
+            "$hostAddress/$rawProfilePic"
     }
 
     // TODO: TO DOCU SINCE  1.1.7
@@ -324,6 +322,22 @@ open class EquinoxLocalUser(
     }
 
     // TODO: TO DOCU SINCE  1.1.7
+    @Wrapper
+    protected inline fun <reified T> setNullSafePreference(
+        key: String,
+        defPrefValue: T,
+        isSensitive: Boolean = sensitiveKeys.contains(key),
+        crossinline prefInit: (T) -> Unit,
+    ){
+        setPreference(
+            key = key,
+            defPrefValue = defPrefValue,
+            isSensitive = isSensitive,
+            prefInit = { prefInit(it!!) }
+        )
+    }
+
+    // TODO: TO DOCU SINCE  1.1.7
     protected inline fun <reified T> setPreference(
         key: String,
         defPrefValue: T? = null,
@@ -338,18 +352,23 @@ open class EquinoxLocalUser(
         )
     }
 
-    protected inline fun <reified T> setNullSafePreference(
-        key: String,
-        defPrefValue: T,
-        isSensitive: Boolean = sensitiveKeys.contains(key),
-        crossinline prefInit: (T) -> Unit,
-    ){
-        preferencesManager.consumeRetrieval(
-            key = key,
-            defValue = defPrefValue,
-            isSensitive = isSensitive,
-            consume = { prefInit(it!!) }
-        )
+    /**
+     * Method used to extract a specific value from the custom parameter of the [insertNewUser] method.
+     *
+     * This method is particularly useful in cases where values are passed as varargs,
+     * since Kotlin wraps them inside an array
+     *
+     * @param indexArray The index of the array from retrieve the custom value
+     * @param itemPosition The index of the item inside the created array
+     *
+     * @return the custom value as [T]
+     */
+    @Suppress("UNCHECKED_CAST")
+    protected fun <T> Array<out Any?>.extractsCustomValue(
+        indexArray: Int = 0,
+        itemPosition: Int,
+    ): T {
+        return (this[indexArray] as Array<*>)[itemPosition] as T
     }
 
     /**
