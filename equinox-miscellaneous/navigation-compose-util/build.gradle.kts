@@ -1,3 +1,4 @@
+import com.vanniktech.maven.publish.JavadocJar
 import com.vanniktech.maven.publish.KotlinMultiplatform
 import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
@@ -112,8 +113,7 @@ rootProject.the<WasmNodeJsRootExtension>().versions.webpackDevServer.version = "
 mavenPublishing {
     configure(
         platform = KotlinMultiplatform(
-            // TODO: TO UNCOMMENT WHEN PUBLISH
-// javadocJar = JavadocJar.Dokka("dokkaHtml"),
+            javadocJar = JavadocJar.Dokka("dokkaHtml"),
             sourcesJar = true
         )
     )
@@ -124,8 +124,7 @@ mavenPublishing {
     )
     pom {
         name.set("navigation-compose-util")
-        // TODO: TO SET
-        description.set("Integration of the lazy-pagination-compose library with the in-place operations")
+        description.set("Useful utilities to simplify the sharing of the data between the destinations during the navigation with Navigation Compose library")
         inceptionYear.set("2025")
         url.set("https://github.com/N7ghtm4r3/Equinox")
 
