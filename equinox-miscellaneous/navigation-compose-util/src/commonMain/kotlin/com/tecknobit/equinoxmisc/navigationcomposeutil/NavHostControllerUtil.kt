@@ -203,3 +203,42 @@ fun NavHostController.getAllDestinationNavData(): Map<String, Any?> {
     }
     return navData
 }
+
+/**
+ * Method used to clear all the navigation data attached to the last destination before the [NavHostController] performing
+ * [NavHostController.popBackStack]
+ *
+ * @return list of removed items as [List] of [*]
+ */
+@ExperimentalStdlibApi
+fun NavHostController.clearLastDestinationAllNavData() : List<*> {
+    val savedKeys = currentBackStackEntry?.savedStateHandle?.keys().orEmpty()
+    return clearLastDestinationNavData(
+        *savedKeys.toTypedArray()
+    )
+}
+
+/**
+ * Method used to clear the navigation data, specified by the [keys], attached to the last destination before the
+ * [NavHostController] performing [NavHostController.popBackStack]
+ *
+ * @param keys The keys of the attached data to remove
+ *
+ * @return list of removed items as [List] of [*]
+ */
+@ExperimentalStdlibApi
+fun NavHostController.clearLastDestinationNavData(
+    vararg keys: String
+) : List<*> {
+    val savedStateHandle = currentBackStackEntry?.savedStateHandle
+    val removedItems = mutableListOf<Any?>()
+    savedStateHandle?.let {
+        keys.forEach { key ->
+            val removedItem = savedStateHandle.remove<Any?>(
+                key = key
+            )
+            removedItems.add(removedItem)
+        }
+    }
+    return removedItems
+}

@@ -55,11 +55,9 @@ dependencies {
 }
 ```
 
-## NavHostController util
+## Usage
 
-### Usage
-
-#### Navigating with data
+### Navigating with data
 
 With the `navWithData` method is possible to navigate to destinations and attach data that those destinations will use when 
 visible (on **top** of the stack)
@@ -81,12 +79,12 @@ navigator.navWithData(
     In this example the destination has the `String` type, but this method has been overloaded 
     with all the supported types by the original Jetbrains API such as `NavUri`, `NavDeepLinkRequest`, etc...
 
-#### Retrieving navigation data
+### Retrieving navigation data
 
-The library provides two API to retrieve the navigation data attached to the current destination: `getDestinationNavData`
+The library provides two APIs to retrieve the navigation data attached to the current destination: `getDestinationNavData`
 and `getAllDestinationNavData`
 
-###### getDestinationNavData
+#### getDestinationNavData
 
 ```kotlin
 @Composable
@@ -121,7 +119,7 @@ fun App() {
 }
 ```
 
-###### getAllDestinationNavData
+#### getAllDestinationNavData
 
 ```kotlin
 @Composable
@@ -152,6 +150,79 @@ fun App() {
 
     The `all destination data` means just to the data shared with the visible destination
 
-## SavedStateHandle util
+### Removing navigation data
 
-### Usage
+The library provides two APIs to remove the navigation data attached to the last destination shown before the 
+`NavHostController` performed the `popBackStack`: `clearLastDestinationNavData` and `clearLastDestinationAllNavData`
+
+!!! Note
+
+    Both of these methods must be invoked from the destination which navigated to the destination owner of the 
+    data to clear, for example `Splashscreen` navigates to `Home`, the navigation data have to be cleaned from the 
+    `Splashscreen` destination
+
+
+#### clearLastDestinationNavData
+
+```kotlin
+@Composable
+fun App() {
+    // an instance of the NavHostController
+    val navigator: NavHostController = rememberNavController()
+    NavHost(
+        navController = navigator,
+        startDestination = "Splashscreen"
+    ) {
+        composable(
+            route = "Splashscreen"
+        ) {
+            LaunchedEffect(Unit) {
+                val removedItems = navigator.clearLastDestinationNavData(
+                    key_one, key_two
+                )
+                // will be removed just the data specified by the specified keys
+            }
+            
+            val splashscreen = equinoxScreen { Splashscreen() }
+            splashscreen.ShowContent()
+        }
+        composable(
+            route = "Home"
+        ) {
+            // home content
+        }
+    }
+}
+```
+
+#### clearLastDestinationAllNavData
+
+```kotlin
+@Composable
+fun App() {
+    // an instance of the NavHostController
+    val navigator: NavHostController = rememberNavController()
+    NavHost(
+        navController = navigator,
+        startDestination = "Splashscreen"
+    ) {
+        composable(
+            route = "Splashscreen"
+        ) {
+
+            LaunchedEffect(Unit) {
+                val removedItems = navigator.clearLastDestinationAllNavData()
+                // will be removed all the navigation data attached to the destination
+            }
+            
+            val splashscreen = equinoxScreen { Splashscreen() }
+            splashscreen.ShowContent()
+        }
+        composable(
+            route = "Home"
+        ) {
+            // home content
+        }
+    }
+}
+```
