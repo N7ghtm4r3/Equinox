@@ -5,6 +5,7 @@ A collection of external library integrations and extensions developed in accord
 ## Modules available
 
 - [lazy-pagination-compose-ops](lazy-pagination-compose-ops/README.md)
+- [navigation-compose-util](navigation-compose-util/README.md)
 
 ## Support
 

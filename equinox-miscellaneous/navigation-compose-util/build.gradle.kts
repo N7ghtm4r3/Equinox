@@ -72,7 +72,7 @@ kotlin {
                 implementation(compose.foundation)
                 implementation(compose.material3)
                 implementation(project(":equinox-core"))
-                implementation("org.jetbrains.androidx.navigation:navigation-compose:2.9.1")
+                implementation(libs.navigation.compose)
             }
         }
 
@@ -91,6 +91,8 @@ kotlin {
             iosX64Main.dependsOn(this)
             iosArm64Main.dependsOn(this)
             iosSimulatorArm64Main.dependsOn(this)
+            macosX64Main.dependsOn(this)
+            macosArm64Main.dependsOn(this)
             dependencies {
             }
         }
