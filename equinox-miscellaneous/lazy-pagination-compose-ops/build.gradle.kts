@@ -1,6 +1,5 @@
 import com.vanniktech.maven.publish.JavadocJar
 import com.vanniktech.maven.publish.KotlinMultiplatform
-
 import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.targets.wasm.nodejs.WasmNodeJsRootExtension
@@ -16,7 +15,7 @@ plugins {
 }
 
 group = "com.tecknobit.equinoxmisc.lazypaginationcomposeops"
-version = "1.0.1"
+version = "1.0.2"
 
 repositories {
     google()
@@ -24,7 +23,6 @@ repositories {
 }
 
 kotlin {
-
     jvm {
         compilations.all {
             this@jvm.compilerOptions {
@@ -55,8 +53,7 @@ kotlin {
         binaries.executable()
         browser {
             webpackTask {
-                dependencies {
-                }
+
             }
         }
     }
@@ -118,7 +115,7 @@ mavenPublishing {
     coordinates(
         groupId = "io.github.n7ghtm4r3",
         artifactId = "equinoxmisc-lazy-pagination-compose-ops",
-        version = "1.0.1"
+        version = "1.0.2"
     )
     pom {
         name.set("lazy-pagination-compose-ops")

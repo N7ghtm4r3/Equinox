@@ -1,15 +1,16 @@
 [versions]
-agp = "8.11.0"
-kmprefs = "1.0.1"
-kotlin = "2.2.10"
+agp = "8.12.3"
+kmprefs = "1.1.0"
+kotlin = "2.2.20"
 android-minSdk = "24"
 android-compileSdk = "36"
 dokka = "2.0.0"
 kotlinxDatetime = "0.7.1"
 kotlinxSerializationJson = "1.9.0"
-ktor = "3.2.3"
+ktor = "3.3.1"
 #equinox-backend
 jacksonDatabind = "2.18.2"
+navigationCompose = "2.9.1"
 springBoot = "3.2.3"
 kotlinxCoroutinesCore = "1.10.2"
 apimanager = "2.2.4"
@@ -17,19 +18,19 @@ json = "20250517"
 #equinox-core
 startupRuntime = "1.2.0"
 #equinox-compose & equinox-navigation
-compose = "1.8.2"
-connectivity = "2.2.0"
+compose = "1.9.1"
+connectivity = "2.3.0"
 kermit = "2.0.8"
-lifecycleViewmodelCompose = "2.9.3"
-material3WindowSizeClass = "1.8.2"
+lifecycleViewmodelCompose = "2.9.5"
+material3WindowSizeClass = "1.9.0"
 kmpalette = "3.1.0"
 #equinox-misc
 ##lazy-pagination-compose-ops
-lazyPaginationCompose = "1.7.0"
+lazyPaginationCompose = "1.7.1"
 
 [libraries]
 dokka-base = { module = "org.jetbrains.dokka:dokka-base", version.ref = "dokka" }
-kmprefs = { module = "io.github.n7ghtm4r3:KMPrefs", version.ref = "kmprefs" }
+kmprefs = { module = "io.github.n7ghtm4r3:kmprefs", version.ref = "kmprefs" }
 kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlinxDatetime" }
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinxSerializationJson" }
 ktor-client-cio = { module = "io.ktor:ktor-client-cio", version.ref = "ktor" }
@@ -37,6 +38,8 @@ ktor-client-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }
 ktor-client-js = { module = "io.ktor:ktor-client-js", version.ref = "ktor" }
 ktor-client-okhttp = { module = "io.ktor:ktor-client-okhttp", version.ref = "ktor" }
 #equinox-backend
+lifecycle-runtime-compose = { module = "org.jetbrains.androidx.lifecycle:lifecycle-runtime-compose", version.ref = "lifecycleViewmodelCompose" }
+navigation-compose = { module = "org.jetbrains.androidx.navigation:navigation-compose", version.ref = "navigationCompose" }
 spring-boot-starter-data-jpa = { module = "org.springframework.boot:spring-boot-starter-data-jpa", version.ref = "springBoot" }
 boot-spring-boot-starter-web = { module = "org.springframework.boot:spring-boot-starter-web", version.ref = "springBoot" }
 jackson-databind = { module = "com.fasterxml.jackson.core:jackson-databind", version.ref = "jacksonDatabind" }

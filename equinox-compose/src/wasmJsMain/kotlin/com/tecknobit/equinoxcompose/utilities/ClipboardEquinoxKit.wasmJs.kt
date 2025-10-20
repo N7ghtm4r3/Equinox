@@ -1,3 +1,5 @@
+@file:OptIn(ExperimentalWasmJsInterop::class)
+
 package com.tecknobit.equinoxcompose.utilities
 
 import kotlinx.browser.window

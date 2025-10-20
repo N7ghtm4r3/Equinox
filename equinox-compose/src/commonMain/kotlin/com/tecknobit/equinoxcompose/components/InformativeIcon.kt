@@ -198,7 +198,9 @@ private fun InformativeIconImpl(
 ) {
     TooltipBox(
         state = rememberTooltipState(),
-        positionProvider = TooltipDefaults.rememberPlainTooltipPositionProvider(),
+        positionProvider = TooltipDefaults.rememberTooltipPositionProvider(
+            positioning = TooltipAnchorPosition.Above
+        ),
         tooltip = {
             PlainTooltip(
                 contentColor = infoTextColor,

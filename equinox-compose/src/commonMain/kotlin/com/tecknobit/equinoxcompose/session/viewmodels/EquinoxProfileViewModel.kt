@@ -9,11 +9,11 @@ import com.tecknobit.equinoxcompose.session.EquinoxLocalUser.ApplicationTheme
 import com.tecknobit.equinoxcore.helpers.InputsValidator.Companion.isEmailValid
 import com.tecknobit.equinoxcore.helpers.InputsValidator.Companion.isPasswordValid
 import com.tecknobit.equinoxcore.helpers.PROFILE_PIC_KEY
+import com.tecknobit.equinoxcore.json.treatsAsString
 import com.tecknobit.equinoxcore.network.Requester.Companion.toResponseData
 import com.tecknobit.equinoxcore.network.sendRequest
 import kotlinx.coroutines.launch
 import kotlinx.serialization.json.JsonObject
-import kotlinx.serialization.json.jsonPrimitive
 
 /**
  * The **EquinoxProfileViewModel** class is the support class used to change the user account settings or preferences
@@ -97,8 +97,11 @@ open class EquinoxProfileViewModel(
                         profilePicBytes = profilePicBytes
                     )
                 },
-                onSuccess = { response ->
-                    localUser.profilePic = response.toResponseData()[PROFILE_PIC_KEY]!!.jsonPrimitive.content
+                onSuccess = {
+                    val response = it.toResponseData()
+                    localUser.initProfilePic(
+                        profilePic = response[PROFILE_PIC_KEY].treatsAsString()
+                    )
                     profilePic.value = localUser.profilePic
                 },
                 onFailure = onFailure
@@ -130,7 +133,9 @@ open class EquinoxProfileViewModel(
                     )
                 },
                 onSuccess = {
-                    localUser.email = newEmail.value
+                    localUser.initEmail(
+                        email = newEmail.value
+                    )
                     email.value = newEmail.value
                     onChange?.invoke()
                 },
@@ -188,7 +193,9 @@ open class EquinoxProfileViewModel(
                     )
                 },
                 onSuccess = {
-                    localUser.language = language.value
+                    localUser.initLanguage(
+                        language = language.value
+                    )
                     onChange?.invoke()
                 },
                 onFailure = onFailure
@@ -204,7 +211,9 @@ open class EquinoxProfileViewModel(
     open fun changeTheme(
         onChange: (() -> Unit)? = null,
     ) {
-        localUser.theme = theme.value
+        localUser.initTheme(
+            theme = theme.value
+        )
         onChange?.invoke()
     }
 

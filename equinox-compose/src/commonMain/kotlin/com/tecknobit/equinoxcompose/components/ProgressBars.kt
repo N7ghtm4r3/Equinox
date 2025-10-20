@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
@@ -36,9 +35,10 @@ import androidx.compose.ui.unit.dp
  * @param onCompletion Callback invoked when the [currentProgress] reaches the [total] value
  * @param progressIndicator The content used to display the progress
  * @param animationSpec Custom animations to apply to the progress line when it changes
+ *
+ * @since 1.1.1
  */
 @Composable
-@ExperimentalComposeUiApi
 fun HorizontalProgressBar(
     containerModifier: Modifier = Modifier,
     progressBarModifier: Modifier = Modifier,
@@ -100,9 +100,10 @@ fun HorizontalProgressBar(
  * @param onCompletion Callback invoked when the [currentProgress] reaches the [total] value
  * @param progressIndicator The content used to display the progress
  * @param animationSpec Custom animations to apply to the progress line when it changes
+ *
+ * @since 1.1.1
  */
 @Composable
-@ExperimentalComposeUiApi
 fun HorizontalProgressBar(
     containerModifier: Modifier = Modifier,
     progressBarModifier: Modifier = Modifier,
@@ -181,9 +182,10 @@ fun HorizontalProgressBar(
  * @param onCompletion Callback invoked when the [currentProgress] reaches the [total] value
  * @param progressIndicator The content used to display the progress
  * @param animationSpec Custom animations to apply to the progress line when it changes
+ *
+ * @since 1.1.1
  */
 @Composable
-@ExperimentalComposeUiApi
 fun VerticalProgressBar(
     containerModifier: Modifier = Modifier,
     progressBarModifier: Modifier = Modifier,
@@ -267,9 +269,10 @@ private fun computeCurrentProgressValue(
  * @param onCompletion Callback invoked when the [currentProgress] reaches the [total] value
  * @param progressIndicator The content used to display the progress
  * @param animationSpec Custom animations to apply to the progress line when it changes
+ *
+ * @since 1.1.1
  */
 @Composable
-@ExperimentalComposeUiApi
 fun VerticalProgressBar(
     containerModifier: Modifier = Modifier,
     progressBarModifier: Modifier = Modifier,

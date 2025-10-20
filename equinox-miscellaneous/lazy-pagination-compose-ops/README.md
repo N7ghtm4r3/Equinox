@@ -21,8 +21,8 @@ operations such `addInPlace, removeInPlace`, etc...
 
 ```toml
 [versions]
-lazyPaginationCompose = "1.7.0"
-lazyPaginationComposeOps = "1.0.1"
+lazyPaginationCompose = "1.7.1"
+lazyPaginationComposeOps = "1.0.2"
 
 [libraries]
 lazy-pagination-compose = { module = "io.github.ahmad-hamwi:lazy-pagination-compose", version.ref = "lazyPaginationCompose" }
@@ -42,8 +42,8 @@ dependencies {
 
 ```kotlin
 dependencies {
-    implementation("io.github.ahmad-hamwi:lazy-pagination-compose:1.7.0")
-    implementation("io.github.n7ghtm4r3:equinoxmisc-lazy-pagination-compose-ops:1.0.1")
+    implementation("io.github.ahmad-hamwi:lazy-pagination-compose:1.7.1")
+    implementation("io.github.n7ghtm4r3:equinoxmisc-lazy-pagination-compose-ops:1.0.2")
 }
 ```
 
@@ -51,8 +51,8 @@ dependencies {
 
 ```groovy
 dependencies {
-    implementation 'io.github.ahmad-hamwi:lazy-pagination-compose:1.7.0'
-    implementation 'io.github.n7ghtm4r3:equinoxmisc-lazy-pagination-compose-ops:1.0.1'
+    implementation 'io.github.ahmad-hamwi:lazy-pagination-compose:1.7.1'
+    implementation 'io.github.n7ghtm4r3:equinoxmisc-lazy-pagination-compose-ops:1.0.2'
 }
 ```
 

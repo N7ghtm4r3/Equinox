@@ -83,10 +83,10 @@ To correctly use this environment you need to use the following base **gradle co
         implementation 'org.json:json:20250517'
     
         // implement the backend utilities
-        implementation 'io.github.n7ghtm4r3:equinox-backend:1.1.5'
+        implementation 'io.github.n7ghtm4r3:equinox-backend:1.1.6'
     
         // implement the core utilities
-        implementation 'io.github.n7ghtm4r3:equinox-core:1.1.6'
+        implementation 'io.github.n7ghtm4r3:equinox-core:1.1.7'
 
         ...
     }
@@ -116,10 +116,10 @@ To correctly use this environment you need to use the following base **gradle co
         implementation("org.json:json:20250517")
     
         // implement the backend utilities
-        implementation("io.github.n7ghtm4r3:equinox-backend:1.1.5")
+        implementation("io.github.n7ghtm4r3:equinox-backend:1.1.6")
         
         // implement the core utilities
-        implementation("io.github.n7ghtm4r3:equinox-core:1.1.6")
+        implementation("io.github.n7ghtm4r3:equinox-core:1.1.7")
     
         ...
     }

@@ -15,11 +15,11 @@ import com.tecknobit.equinoxcore.helpers.InputsValidator.Companion.isNameValid
 import com.tecknobit.equinoxcore.helpers.InputsValidator.Companion.isPasswordValid
 import com.tecknobit.equinoxcore.helpers.InputsValidator.Companion.isServerSecretValid
 import com.tecknobit.equinoxcore.helpers.InputsValidator.Companion.isSurnameValid
+import com.tecknobit.equinoxcore.json.treatsAsString
 import com.tecknobit.equinoxcore.network.Requester.Companion.toResponseData
 import com.tecknobit.equinoxcore.network.sendRequest
 import kotlinx.coroutines.launch
 import kotlinx.serialization.json.JsonObject
-import kotlinx.serialization.json.jsonPrimitive
 
 /**
  * The **EquinoxAuthViewModel** class is the support class used to execute the authentication requests to the backend
@@ -244,9 +244,9 @@ abstract class EquinoxAuthViewModel(
                         val data = response.toResponseData()
                         val jLanguage = data[LANGUAGE_KEY]
                         launchApp(
-                            name = data[NAME_KEY]!!.jsonPrimitive.content,
-                            surname = data[SURNAME_KEY]!!.jsonPrimitive.content,
-                            language = jLanguage?.jsonPrimitive?.content ?: DEFAULT_LANGUAGE,
+                            name = data[NAME_KEY].treatsAsString(),
+                            surname = data[SURNAME_KEY].treatsAsString(),
+                            language = jLanguage?.treatsAsString() ?: DEFAULT_LANGUAGE,
                             response = data,
                             custom = getSignInCustomParameters()
                         )
@@ -312,17 +312,21 @@ abstract class EquinoxAuthViewModel(
         language: String,
         vararg custom: Any?,
     ) {
+        val userId = response[USER_IDENTIFIER_KEY].treatsAsString()
+        val userToken = response[TOKEN_KEY].treatsAsString()
         requester.setUserCredentials(
-            userId = response[USER_IDENTIFIER_KEY]!!.jsonPrimitive.content,
-            userToken = response[TOKEN_KEY]!!.jsonPrimitive.content
+            userId = userId,
+            userToken = userToken
         )
         localUser.insertNewUser(
-            host.value,
-            name,
-            surname,
-            email.value,
-            language,
-            response,
+            hostAddress = host.value,
+            userId = userId,
+            userToken = userToken,
+            profilePic = response[PROFILE_PIC_KEY].treatsAsString(),
+            name = name,
+            surname = surname,
+            email = email.value,
+            language = language,
             custom
         )
     }

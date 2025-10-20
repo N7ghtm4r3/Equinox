@@ -212,13 +212,14 @@ open class InputsValidator {
          * @param input The input value to check the validity
          * @return whether the input is valid or not as `boolean`
          */
+        @JvmStatic
         @Validator(
             validWhen = "The input is considered valid when is not null and is not empty"
         )
         protected fun isInputValid(
             input: String?,
         ): Boolean {
-            return !input.isNullOrEmpty()
+            return !input.isNullOrBlank()
         }
 
     }

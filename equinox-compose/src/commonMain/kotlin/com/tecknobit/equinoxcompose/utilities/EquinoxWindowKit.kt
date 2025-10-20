@@ -11,7 +11,6 @@ import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass.Companion.Expanded
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass.Companion.Medium
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.ExperimentalComposeApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -476,7 +475,6 @@ val COMPACT_CONTAINER = 390.dp
  * @return the max width value as [Dp]
  */
 @Composable
-@ExperimentalComposeApi
 fun responsiveContainerWidth(
     expandedContainerWidth: Dp = EXPANDED_CONTAINER,
     expandedWidthMediumHeightContainer: Dp = EXPANDED_WIDHT_MEDIUM_HEIGHT_CONTAINER,
@@ -535,7 +533,6 @@ fun responsiveContainerWidth(
  * @return the additive modifier property as [Modifier]
  */
 @Composable
-@ExperimentalComposeApi
 fun Modifier.responsiveMaxWidth(
     expandedContainerWidth: Dp = EXPANDED_CONTAINER,
     expandedWidthMediumHeightContainer: Dp = EXPANDED_WIDHT_MEDIUM_HEIGHT_CONTAINER,

@@ -5,7 +5,6 @@ package com.tecknobit.equinoxcore.enums
  *
  * @since 1.1.5
  */
-@ExperimentalStdlibApi
 enum class OperatingSystem {
 
     /**

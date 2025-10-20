@@ -1,7 +1,5 @@
 package com.tecknobit.equinoxcompose.session.sessionflow
 
-import androidx.compose.runtime.ExperimentalComposeApi
-
 /**
  * List of the possible statuses of the session
  *
@@ -34,7 +32,6 @@ enum class SessionStatus {
      *
      * @since 1.1.4
      */
-    @ExperimentalComposeApi
     CUSTOM
 
 }

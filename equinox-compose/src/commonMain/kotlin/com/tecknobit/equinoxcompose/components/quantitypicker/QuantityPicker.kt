@@ -13,7 +13,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.ExperimentalComposeApi
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -43,7 +42,6 @@ import com.tecknobit.equinoxcompose.components.quantitypicker.QuantityPickerDefa
  *
  * @since 1.1.0
  */
-@ExperimentalComposeApi
 @Composable
 fun QuantityPicker(
     modifier: Modifier = Modifier,
@@ -98,7 +96,6 @@ fun QuantityPicker(
  *
  * @since 1.1.0
  */
-@ExperimentalComposeApi
 @Composable
 fun QuantityPicker(
     modifier: Modifier = Modifier,
