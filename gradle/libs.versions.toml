@@ -1,7 +1,7 @@
 [versions]
 agp = "8.12.3"
 kmprefs = "1.1.0"
-kotlin = "2.2.20"
+kotlin = "2.2.21"
 android-minSdk = "24"
 android-compileSdk = "36"
 dokka = "2.0.0"
@@ -18,10 +18,10 @@ json = "20250517"
 #equinox-core
 startupRuntime = "1.2.0"
 #equinox-compose & equinox-navigation
-compose = "1.9.1"
+compose = "1.9.3"
 connectivity = "2.3.0"
 kermit = "2.0.8"
-lifecycleViewmodelCompose = "2.9.5"
+lifecycleViewmodelCompose = "2.9.6"
 material3WindowSizeClass = "1.9.0"
 kmpalette = "3.1.0"
 #equinox-misc

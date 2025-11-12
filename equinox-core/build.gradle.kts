@@ -1,11 +1,8 @@
-
-
 import com.vanniktech.maven.publish.JavadocJar
 import com.vanniktech.maven.publish.KotlinMultiplatform
 import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.targets.wasm.nodejs.WasmNodeJsRootExtension
-
 
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
@@ -15,7 +12,7 @@ plugins {
 }
 
 group = "com.tecknobit.equinoxcore"
-version = "1.1.7"
+version = "1.1.8"
 
 repositories {
     google()
@@ -125,7 +122,7 @@ mavenPublishing {
     coordinates(
         groupId = "io.github.n7ghtm4r3",
         artifactId = "equinox-core",
-        version = "1.1.7"
+        version = "1.1.8"
     )
     pom {
         name.set("Equinox Core")

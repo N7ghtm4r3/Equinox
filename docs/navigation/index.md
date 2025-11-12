@@ -18,7 +18,7 @@ navigation in **Compose Multiplatform applications**
 
 ```toml
 [versions]
-equinox = "1.1.7"
+equinox = "1.1.8"
 equinox-navigation = "1.0.4"
 
 [libraries]
@@ -49,10 +49,10 @@ dependencies {
 dependencies {
     
     // implement the compose utilities
-    implementation("io.github.n7ghtm4r3:equinox-compose:1.1.7")
+    implementation("io.github.n7ghtm4r3:equinox-compose:1.1.8")
     
     // implement the core utilities
-    implementation("io.github.n7ghtm4r3:equinox-core:1.1.7")
+    implementation("io.github.n7ghtm4r3:equinox-core:1.1.8")
     
     // implement the navigation utilities
     implementation("io.github.n7ghtm4r3:equinox-navigation:1.0.4")
@@ -65,10 +65,10 @@ dependencies {
 dependencies {
    
     // implement the compose utilities
-    implementation 'io.github.n7ghtm4r3:equinox-compose:1.1.7'
+    implementation 'io.github.n7ghtm4r3:equinox-compose:1.1.8'
     
     // implement the core utilities
-    implementation 'io.github.n7ghtm4r3:equinox-core:1.1.7'
+    implementation 'io.github.n7ghtm4r3:equinox-core:1.1.8'
     
     // implement the navigation utilities
     implementation 'io.github.n7ghtm4r3:equinox-navigation:1.0.4'
