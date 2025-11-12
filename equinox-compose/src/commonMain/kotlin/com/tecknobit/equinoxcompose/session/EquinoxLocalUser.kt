@@ -168,14 +168,7 @@ open class EquinoxLocalUser(
         get() = "$name $surname"
 
     init {
-        @Suppress("ImplicitThis")
-        // TODO: TO REMOVE THIS TRY-CATCH IN FUTURE RELEASES
-        try {
-            initLocalUser()
-        } catch (e: Exception) {
-            preferencesManager.clearAll()
-            throw e
-        }
+        initLocalUser()
     }
 
     /**
@@ -587,7 +580,7 @@ open class EquinoxLocalUser(
     /**
      * Method used to clear the current local user session
      */
-    fun clear() {
+    open fun clear() {
         preferencesManager.clearAll()
         initLocalUser()
     }
