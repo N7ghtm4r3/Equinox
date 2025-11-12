@@ -606,6 +606,7 @@ fun EquinoxTextField(
         textStyle = textFieldStyle,
         colors = textFieldColors,
         value = value.value,
+        isError = isError.value,
         onValueChange = onValueChange,
         label = if (label != null) {
             {
