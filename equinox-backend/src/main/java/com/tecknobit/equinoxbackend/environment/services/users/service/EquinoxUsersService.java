@@ -149,7 +149,7 @@ public class EquinoxUsersService<T extends EquinoxUser, R extends EquinoxUsersRe
      *
      * @param queryBuilder The builder of the query to execute
      * @param list The list to arrange
-     * @param escape: whether the values of the list must be escaped with the {@link com.tecknobit.equinoxbackend.apis.database.SQLConstants.SINGLE_QUOTE} character
+     * @param escape: whether the values of the list must be escaped with the {@link com.tecknobit.equinoxbackend.apis.database.SQLConstants#SINGLE_QUOTE} character
      *
      * @param <E> Type of the element in the list
      */
