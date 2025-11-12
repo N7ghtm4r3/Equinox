@@ -50,8 +50,6 @@ import androidx.compose.ui.unit.dp
  *   [TextStyle.textDecoration]
  * @param lineHeight line height for the [Paragraph] in [TextUnit] unit, e.g. SP or EM. See
  *   [TextStyle.lineHeight]
- * @param softWrap whether the text should break at soft line breaks. If false, the glyphs in the
- *   text will be positioned as if there was unlimited horizontal space
  * @param onTextLayout callback that is executed when a new text layout is calculated. A
  *   [TextLayoutResult] object that callback provides contains paragraph information, size of the
  *   text, baselines and other details. The callback can be used to add additional decoration or
@@ -82,7 +80,6 @@ fun OutlinedBadgeText(
     letterSpacing: TextUnit = TextUnit.Unspecified,
     textDecoration: TextDecoration? = null,
     lineHeight: TextUnit = TextUnit.Unspecified,
-    softWrap: Boolean = true,
     onTextLayout: ((TextLayoutResult) -> Unit)? = null,
     badgeTextStyle: TextStyle = LocalTextStyle.current,
     color: Color,
@@ -92,8 +89,8 @@ fun OutlinedBadgeText(
 ) {
     Box(
         modifier = Modifier
-            .width(IntrinsicSize.Min)
-            .height(IntrinsicSize.Min)
+            .wrapContentWidth()
+            .wrapContentHeight()
             .border(
                 border = BorderStroke(
                     width = borderWidth,
@@ -116,7 +113,6 @@ fun OutlinedBadgeText(
             letterSpacing = letterSpacing,
             textDecoration = textDecoration,
             lineHeight = lineHeight,
-            softWrap = softWrap,
             onTextLayout = onTextLayout,
             badgeTextStyle = badgeTextStyle,
             badgeColor = color
@@ -148,8 +144,6 @@ fun OutlinedBadgeText(
  *   [TextStyle.textDecoration]
  * @param lineHeight line height for the [Paragraph] in [TextUnit] unit, e.g. SP or EM. See
  *   [TextStyle.lineHeight]
- * @param softWrap whether the text should break at soft line breaks. If false, the glyphs in the
- *   text will be positioned as if there was unlimited horizontal space
  * @param onTextLayout callback that is executed when a new text layout is calculated. A
  *   [TextLayoutResult] object that callback provides contains paragraph information, size of the
  *   text, baselines and other details. The callback can be used to add additional decoration or
@@ -179,7 +173,6 @@ fun BadgeText(
     letterSpacing: TextUnit = TextUnit.Unspecified,
     textDecoration: TextDecoration? = null,
     lineHeight: TextUnit = TextUnit.Unspecified,
-    softWrap: Boolean = true,
     onTextLayout: ((TextLayoutResult) -> Unit)? = null,
     badgeTextStyle: TextStyle = LocalTextStyle.current,
     badgeColor: Color,
@@ -189,8 +182,8 @@ fun BadgeText(
 ) {
     Box(
         modifier = Modifier
-            .width(IntrinsicSize.Min)
-            .height(IntrinsicSize.Min)
+            .wrapContentWidth()
+            .wrapContentHeight()
             .shadow(
                 elevation = elevation,
                 shape = shape
@@ -215,7 +208,7 @@ fun BadgeText(
             letterSpacing = letterSpacing,
             textDecoration = textDecoration,
             lineHeight = lineHeight,
-            softWrap = softWrap,
+            softWrap = false,
             onTextLayout = onTextLayout,
             maxLines = 1,
             overflow = TextOverflow.Ellipsis,
