@@ -46,23 +46,25 @@ open class InputsValidator {
         /**
          * `EMAIL_REGEX` regular expression to validate the emails value
          */
-        protected const val EMAIL_REGEX =
+        const val EMAIL_REGEX =
             "^(?![.])(?!.*\\.\\.{2})[A-Za-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[A-Za-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[A-Za-z0-9-]+\\.)+[A-Za-z]{2,}$"
 
         /**
          * `URL_REGEX` regular expression to validate the urls value
          */
-        protected const val URL_REGEX =
+        const val URL_REGEX =
             "^[a-zA-Z][a-zA-Z0-9+.-]*://(([a-zA-Z0-9\\-]+\\.)+[a-zA-Z]{2,6}|\\d{1,3}(?:\\.\\d{1,3}){3})(?::\\d{1,5})?(/\\S*)?(\\?(\\S*))?(#(\\S*))?$"
 
         /**
          * `emailValidator` helper to validate the emails values
          */
+        @JvmStatic
         protected val emailValidator = Regex(EMAIL_REGEX)
 
         /**
          * `urlValidator` helper to validate the urls values
          */
+        @JvmStatic
         protected val urlValidator = Regex(URL_REGEX)
 
         /**
