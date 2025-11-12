@@ -57,31 +57,6 @@ open class EquinoxLocalUser(
          */
         Auto;
 
-        companion object {
-
-            /**
-             * Method used to get an instance of the [ApplicationTheme]
-             *
-             * @param theme The name of the theme to get
-             * @return the theme instance as [ApplicationTheme]
-             */
-            @Deprecated(
-                message = "Will be removed",
-                level = DeprecationLevel.ERROR
-            )
-            fun getInstance(
-                theme: String?,
-            ): ApplicationTheme {
-                if (theme == null) return Auto
-                return when (theme) {
-                    "Dark" -> Dark
-                    "Light" -> Light
-                    else -> Auto
-                }
-            }
-
-        }
-
     }
 
     companion object {
