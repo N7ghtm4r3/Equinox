@@ -1,14 +1,12 @@
 package com.tecknobit.equinoxcompose.session.sessionflow
 
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableLongState
-import androidx.compose.runtime.mutableLongStateOf
-import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.Saver
 import androidx.compose.runtime.saveable.SaverScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import com.tecknobit.equinoxcompose.session.sessionflow.SessionStatus.*
 import com.tecknobit.equinoxcompose.session.viewmodels.EquinoxViewModel
+import com.tecknobit.equinoxcore.annotations.RequiresDocumentation
 import com.tecknobit.equinoxcore.annotations.Wrapper
 import com.tecknobit.equinoxcore.time.TimeFormatter
 
@@ -100,6 +98,8 @@ class SessionFlowState internal constructor(
      */
     internal val loadingRoutineTrigger: MutableLongState = mutableLongStateOf(TimeFormatter.currentTimestamp())
 
+    internal val isLoading: MutableState<Boolean> = mutableStateOf(false)
+
     /**
      * Method used to attach the viewmodel to the state
      *
@@ -129,24 +129,6 @@ class SessionFlowState internal constructor(
         setAndRestart(
             status = OPERATIONAL
         )
-    }
-
-    /**
-     * Method used to set a status and optionally restart the [EquinoxViewModel]'s routine
-     *
-     * @param status The status to set
-     * @param onSet The callback to invoke when the status has been set
-     */
-    private fun setAndRestart(
-        status: SessionStatus,
-        onSet: (() -> Unit)? = null,
-    ) {
-        whenNetworkAvailable {
-            onSet?.invoke()
-            previousStatus = currentStatus.value
-            currentStatus.value = status
-            viewModel?.restartRetriever()
-        }
     }
 
     /**
@@ -203,7 +185,39 @@ class SessionFlowState internal constructor(
             previousStatus = currentStatus.value
             currentStatus.value = status
             viewModel?.suspendRetriever()
+            notifyLoadingEnd()
         }
+    }
+
+    /**
+     * Method used to set a status and optionally restart the [EquinoxViewModel]'s routine
+     *
+     * @param status The status to set
+     * @param onSet The callback to invoke when the status has been set
+     */
+    private fun setAndRestart(
+        status: SessionStatus,
+        onSet: (() -> Unit)? = null,
+    ) {
+        whenNetworkAvailable {
+            onSet?.invoke()
+            previousStatus = currentStatus.value
+            currentStatus.value = status
+            viewModel?.restartRetriever()
+        }
+    }
+
+    /**
+     * Container method used to safely handle the session status changes when the
+     * network connection is available
+     *
+     * @param then Callback invoked when the network connection is available
+     */
+    private inline fun whenNetworkAvailable(
+        then: () -> Unit,
+    ) {
+        if (currentStatus.value != NO_NETWORK_CONNECTION)
+            then()
     }
 
     /**
@@ -225,6 +239,7 @@ class SessionFlowState internal constructor(
         } else {
             currentStatus.value = NO_NETWORK_CONNECTION
             viewModel?.suspendRetriever()
+            notifyLoadingEnd()
         }
     }
 
@@ -241,17 +256,38 @@ class SessionFlowState internal constructor(
         loadingRoutineTrigger.value = TimeFormatter.currentTimestamp()
     }
 
+    @RequiresDocumentation(
+        additionalNotes = "TO INSERT SINCE 1.1.8"
+    )
+    internal fun notifyLoading() {
+        println("notifyLoading")
+        isLoading.value = true
+    }
+
+    @RequiresDocumentation(
+        additionalNotes = "TO INSERT SINCE 1.1.8"
+    )
+    internal fun notifyLoadingEnd() {
+        println("notifyLoadingEnd")
+        isLoading.value = false
+    }
+
+    @RequiresDocumentation(
+        additionalNotes = "TO INSERT SINCE 1.1.8"
+    )
+    fun isCurrentlyLoading(): State<Boolean> {
+        return isLoading
+    }
+
     /**
-     * Container method used to safely handle the session status changes when the
-     * network connection is available
+     * Method used to retrieve the current status of the session
      *
-     * @param then Callback invoked when the network connection is available
+     * @return the current status of the session as [State] of [SessionStatus]
+     *
+     * @since 1.1.8
      */
-    private fun whenNetworkAvailable(
-        then: () -> Unit,
-    ) {
-        if (currentStatus.value != NO_NETWORK_CONNECTION)
-            then()
+    fun getCurrentStatus(): State<SessionStatus> {
+        return currentStatus
     }
 
 }

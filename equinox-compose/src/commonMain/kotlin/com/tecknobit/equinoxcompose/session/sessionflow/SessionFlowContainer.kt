@@ -71,8 +71,14 @@ fun SessionFlowContainer(
             state.loadingRoutineTrigger.value, triggers,
             containerModifier = modifier,
             initialDelay = initialLoadingRoutineDelay,
-            loadingRoutine = loadingRoutine!!,
-            contentLoaded = content,
+            loadingRoutine = {
+                state.notifyLoading()
+                loadingRoutine!!.invoke()
+            },
+            contentLoaded = {
+                state.notifyLoadingEnd()
+                content()
+            },
             loadingIndicatorBackground = statusContainerColor,
             themeColor = loadingContentColor,
             textStyle = statusTextStyle,
@@ -133,9 +139,7 @@ fun SessionFlowContainer(
                     content()
             }
             SERVER_OFFLINE -> onServerOffline()
-            CUSTOM -> {
-                onCustomError?.invoke(state.customErrorExtra)
-            }
+            CUSTOM -> onCustomError?.invoke(state.customErrorExtra)
             NO_NETWORK_CONNECTION -> onNoNetworkConnection()
             USER_DISCONNECTED -> {
                 LaunchedEffect(Unit) {
