@@ -98,7 +98,6 @@ Check out the table below to apply your customizations to the component:
 | `cornerRadius`   | The radius of the tile                                |
 | `containerColor` | The color scheme to apply to the tile                 |
 | `contentColor`   | The color of the content, icon, and the text          |
-| `elevation`      | The elevation of the tile                             |
 | `iconSize`       | The size of the `icon`                                |
 | `fontWeight`     | The weight to apply to the `text`                     |
 | `textStyle`      | The style to apply to the `text`                      |
