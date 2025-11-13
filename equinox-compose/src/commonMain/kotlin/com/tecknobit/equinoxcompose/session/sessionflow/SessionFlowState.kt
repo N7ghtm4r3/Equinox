@@ -1,14 +1,19 @@
 package com.tecknobit.equinoxcompose.session.sessionflow
 
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableLongState
+import androidx.compose.runtime.mutableLongStateOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.Saver
 import androidx.compose.runtime.saveable.SaverScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import com.tecknobit.equinoxcompose.session.sessionflow.SessionStatus.*
 import com.tecknobit.equinoxcompose.session.viewmodels.EquinoxViewModel
-import com.tecknobit.equinoxcore.annotations.RequiresDocumentation
 import com.tecknobit.equinoxcore.annotations.Wrapper
 import com.tecknobit.equinoxcore.time.TimeFormatter
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 
 /**
  * Method used to create and remember during the recompositions the state for the [SessionFlowContainer] component
@@ -74,7 +79,10 @@ class SessionFlowState internal constructor(
     /**
      * `currentStatus` the current status of the session
      */
-    internal val currentStatus = mutableStateOf(status)
+    internal val _currentStatus = MutableStateFlow(
+        value = status
+    )
+    val currentStatus: StateFlow<SessionStatus> = _currentStatus.asStateFlow()
 
     /**
      * `viewModel` used to autonomously suspend and restart the [com.tecknobit.equinoxcompose.session.Retriever]'s
@@ -98,7 +106,19 @@ class SessionFlowState internal constructor(
      */
     internal val loadingRoutineTrigger: MutableLongState = mutableLongStateOf(TimeFormatter.currentTimestamp())
 
-    internal val isLoading: MutableState<Boolean> = mutableStateOf(false)
+    /**
+     * `isLoading` Whether the session is currently loading data.
+     *
+     * Its value will be `true` just when the [_currentStatus] is [SessionStatus.OPERATIONAL] and have been specified
+     * a `loadingRoutine` that is currently performing, otherwise will be ever `false`. It can be considered a `pseudo-state`
+     * of the session and it is internally handled
+     *
+     * @since 1.1.8
+     */
+    private val _isLoading = MutableStateFlow(
+        value = false
+    )
+    val isLoading: StateFlow<Boolean> = _isLoading.asStateFlow()
 
     /**
      * Method used to attach the viewmodel to the state
@@ -182,8 +202,8 @@ class SessionFlowState internal constructor(
     ) {
         whenNetworkAvailable {
             onSet?.invoke()
-            previousStatus = currentStatus.value
-            currentStatus.value = status
+            previousStatus = _currentStatus.value
+            _currentStatus.value = status
             viewModel?.suspendRetriever()
             notifyLoadingEnd()
         }
@@ -201,8 +221,8 @@ class SessionFlowState internal constructor(
     ) {
         whenNetworkAvailable {
             onSet?.invoke()
-            previousStatus = currentStatus.value
-            currentStatus.value = status
+            previousStatus = _currentStatus.value
+            _currentStatus.value = status
             viewModel?.restartRetriever()
         }
     }
@@ -216,7 +236,7 @@ class SessionFlowState internal constructor(
     private inline fun whenNetworkAvailable(
         then: () -> Unit,
     ) {
-        if (currentStatus.value != NO_NETWORK_CONNECTION)
+        if (_currentStatus.value != NO_NETWORK_CONNECTION)
             then()
     }
 
@@ -228,16 +248,16 @@ class SessionFlowState internal constructor(
     fun handleConnectivityStatus(
         isConnected: Boolean,
     ) {
-        if (currentStatus.value != NO_NETWORK_CONNECTION)
-            previousStatus = currentStatus.value
+        if (_currentStatus.value != NO_NETWORK_CONNECTION)
+            previousStatus = _currentStatus.value
         if (isConnected) {
-            if (currentStatus.value == NO_NETWORK_CONNECTION) {
+            if (_currentStatus.value == NO_NETWORK_CONNECTION) {
                 viewModel?.restartRetriever()
                 onReconnection?.invoke()
             }
-            currentStatus.value = previousStatus
+            _currentStatus.value = previousStatus
         } else {
-            currentStatus.value = NO_NETWORK_CONNECTION
+            _currentStatus.value = NO_NETWORK_CONNECTION
             viewModel?.suspendRetriever()
             notifyLoadingEnd()
         }
@@ -256,38 +276,72 @@ class SessionFlowState internal constructor(
         loadingRoutineTrigger.value = TimeFormatter.currentTimestamp()
     }
 
-    @RequiresDocumentation(
-        additionalNotes = "TO INSERT SINCE 1.1.8"
-    )
-    internal fun notifyLoading() {
-        println("notifyLoading")
-        isLoading.value = true
-    }
-
-    @RequiresDocumentation(
-        additionalNotes = "TO INSERT SINCE 1.1.8"
-    )
-    internal fun notifyLoadingEnd() {
-        println("notifyLoadingEnd")
-        isLoading.value = false
-    }
-
-    @RequiresDocumentation(
-        additionalNotes = "TO INSERT SINCE 1.1.8"
-    )
-    fun isCurrentlyLoading(): State<Boolean> {
-        return isLoading
-    }
-
     /**
-     * Method used to retrieve the current status of the session
+     * Utility method used to check whether the [_currentStatus] is currently [OPERATIONAL].
+     * This helps avoid repeating the same status check in multiple places throughout the code.
      *
-     * @return the current status of the session as [State] of [SessionStatus]
+     * @return whether the current status is [OPERATIONAL] as [Boolean]
      *
      * @since 1.1.8
      */
-    fun getCurrentStatus(): State<SessionStatus> {
-        return currentStatus
+    fun isOperational(): Boolean {
+        return _currentStatus.value == OPERATIONAL
+    }
+
+    /**
+     * Utility method used to check whether the [_currentStatus] is currently [SERVER_OFFLINE].
+     * This helps avoid repeating the same status check in multiple places throughout the code.
+     *
+     * @return whether the current status is [SERVER_OFFLINE] as [Boolean]
+     *
+     * @since 1.1.8
+     */
+    fun isServerOffline(): Boolean {
+        return _currentStatus.value == SERVER_OFFLINE
+    }
+
+    /**
+     * Utility method used to check whether the [_currentStatus] is currently [NO_NETWORK_CONNECTION].
+     * This helps avoid repeating the same status check in multiple places throughout the code.
+     *
+     * @return whether the current status is [NO_NETWORK_CONNECTION] as [Boolean]
+     *
+     * @since 1.1.8
+     */
+    fun isNoNetworkConnection(): Boolean {
+        return _currentStatus.value == NO_NETWORK_CONNECTION
+    }
+
+    /**
+     * Utility method used to check whether the [_currentStatus] is currently [CUSTOM].
+     * This helps avoid repeating the same status check in multiple places throughout the code.
+     *
+     * @return whether the current status is [CUSTOM] as [Boolean]
+     *
+     * @since 1.1.8
+     */
+    fun isOnCustomError(): Boolean {
+        return _currentStatus.value == CUSTOM
+    }
+
+    /**
+     * Method used to notify that is currently performing a `loading routine`, setting the [_isLoading] on `true`
+     *
+     * @since 1.1.8
+     */
+    internal fun notifyLoading() {
+        _isLoading.value = true
+    }
+
+    /**
+     * Method used to notify that is not more performing a `loading routine`, setting the [_isLoading] on `false`.
+     *
+     * That routine could be successfully completed or cancelled due network connection or other error states have been set
+     *
+     * @since 1.1.8
+     */
+    internal fun notifyLoadingEnd() {
+        _isLoading.value = false
     }
 
 }
@@ -321,7 +375,7 @@ internal object SessionFlowSaver : Saver<SessionFlowState, SessionStatus> {
     override fun SaverScope.save(
         value: SessionFlowState,
     ): SessionStatus {
-        return value.currentStatus.value
+        return value._currentStatus.value
     }
 
 }
