@@ -2,6 +2,8 @@ This component allows to dynamically display the correct content based on the se
 
 ## Statuses
 
+### Entries
+
 | Status                  | Description                                                                             |
 |-------------------------|-----------------------------------------------------------------------------------------|
 | `OPERATIONAL`           | The normal status of the session                                                        |
@@ -9,6 +11,92 @@ This component allows to dynamically display the correct content based on the se
 | `NO_NETWORK_CONNECTION` | The status of the session when there is no network connection                           |
 | `USER_DISCONNECTED`     | The status of the session when the user has been disconnected                           |
 | `CUSTOM`                | Status that allows customizing the notification of error or any custom status as needed |
+
+### Checker methods
+
+#### isOperational
+
+Utility method used to check whether the `currentStatus` of the session is currently `OPERATIONAL`
+
+###### Usage
+
+```kotlin
+val sessionFlowState = remembeSessionFlowState()
+...
+if (sessionFlowState.isOperational())
+// your code
+```
+
+#### isServerOffline
+
+Utility method used to check whether the `currentStatus` of the session is currently `SERVER_OFFLINE`
+
+###### Usage
+
+```kotlin
+val sessionFlowState = remembeSessionFlowState()
+...
+if (sessionFlowState.isServerOffline())
+// your code
+```
+
+#### isNoNetworkConnection
+
+Utility method used to check whether the `currentStatus` of the session is currently `NO_NETWORK_CONNECTION`
+
+###### Usage
+
+```kotlin
+val sessionFlowState = remembeSessionFlowState()
+...
+if (sessionFlowState.isNoNetworkConnection())
+// your code
+```
+
+#### isOnCustomError
+
+Utility method used to check whether the `currentStatus` of the session is currently `CUSTOM`
+
+###### Usage
+
+```kotlin
+val sessionFlowState = remembeSessionFlowState()
+...
+if (sessionFlowState.isOnCustomError())
+// your code
+```
+
+## Reading changes
+
+You can read the changes emitted by the `sessionFlowState` as follows:
+
+### Status changes
+
+```kotlin
+// declare a state instance
+val sessionFlowState = remembeSessionFlowState()
+
+// listen for status changes
+val currentStatus = sessionFlowState.currentStatus.collectAsState()
+
+...
+```
+
+### Loading changes
+
+There is a pseudo-status that can be read during the `OPERATIONAL` status when a `loading routine` is currently
+performing,
+the `isLoading` property:
+
+```kotlin
+// declare a state instance
+val sessionFlowState = remembeSessionFlowState()
+
+// listen for loading changes
+val isLoading = sessionFlowState.isLoading.collectAsState()
+
+...
+```
 
 ## Usage
 
