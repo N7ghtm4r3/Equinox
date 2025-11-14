@@ -163,24 +163,28 @@ class TestScreen : EquinoxScreen<EquinoxViewModel>() {
 
 Check out the table below to apply your customizations to the component:
 
-| Parameter      | Description                                           |
-|----------------|-------------------------------------------------------|
-| modifier       | The modifier to apply to the container `Card`         |
-| strokeWidth    | The stroke width to apply as dashed effect            |
-| intervals      | The number of the interval from each part of the line |
-| phase          | The pixel offset for the intervals                    |
-| size           | The size of the tile                                  |
-| cornerRadius   | The radius of the tile                                |
-| containerColor | The color scheme to apply to the tile                 |
-| contentColor   | The color of the content, icon, and the text          |
-| elevation      | The elevation of the tile                             |
-| icon           | The representative icon                               |
-| iconSize       | The size of the `icon`                                |
-| text           | The representative text                               |
-| fontWeight     | The weight to apply to the `text`                     |
-| textStyle      | The style to apply to the `text`                      |
-| applyStyle     | The logic to apply the style to the tile              |
-| onClick        | The action to execute when the tile has been clicked  |
+| Parameter             | Description                                                        |
+|-----------------------|--------------------------------------------------------------------|
+| `modifier`            | The modifier to apply to the container `Card`                      |
+| `strokeWidth`         | The stroke width to apply as dashed effect                         |
+| `intervals`           | The number of the interval from each part of the line              |
+| `phase`               | The pixel offset for the intervals                                 |
+| `size`                | The size of the tile                                               |
+| `cornerRadius`        | The radius of the tile                                             |
+| `containerColor`      | The colors scheme to apply to the tile                             |
+| `contentColor`        | The color of the content, icon and the text                        |
+| `elevation`           | The elevation of the tile                                          |
+| `icon`                | The representative icon                                            |
+| `iconSize`            | The size of the `icon`                                             |
+| `text`                | The representative text                                            |
+| `fontWeight`          | The weight to apply to the `text`                                  |
+| `textStyle`           | The style to apply to the `text`                                   |
+| `applyStyle`          | The logic to apply the style to the tile                           |
+| `onClick`             | The action to execute when the tile has been clicked               |
+| `outerModifier`       | The modifier to apply to the outer `Column` made-up this component |
+| `innerModifier`       | The modifier to apply to the inner `Column` made-up this component |
+| `verticalArrangement` | The vertical arrangement of the `content`                          |
+| `content`             | The content to display inside the container                        |
 
 ### Appearance
 
