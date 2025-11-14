@@ -1,53 +1,45 @@
-package com.tecknobit.equinoxbackend.environment.services.builtin.controller;
+package com.tecknobit.equinoxbackend.environment.services.builtin.controllers;
 
 import com.tecknobit.apimanager.apis.ServerProtector;
 import com.tecknobit.apimanager.formatters.JsonHelper;
 import com.tecknobit.equinoxbackend.apis.resources.ResourcesProvider;
 import com.tecknobit.equinoxbackend.configuration.EquinoxBackendConfiguration;
-import com.tecknobit.equinoxbackend.configuration.EquinoxBackendConfiguration.ResourcesConfig;
-import com.tecknobit.equinoxbackend.configuration.EquinoxBackendConfiguration.ServerProtectorConfig;
-import com.tecknobit.equinoxbackend.environment.services.users.entity.EquinoxUser;
-import com.tecknobit.equinoxbackend.environment.services.users.repository.EquinoxUsersRepository;
-import com.tecknobit.equinoxbackend.environment.services.users.service.EquinoxUsersService;
 import com.tecknobit.equinoxcore.annotations.Assembler;
 import com.tecknobit.equinoxcore.annotations.Returner;
-import com.tecknobit.equinoxcore.annotations.Validator;
+import com.tecknobit.equinoxcore.annotations.Structure;
 import com.tecknobit.equinoxcore.annotations.Wrapper;
 import com.tecknobit.equinoxcore.network.ResponseStatus;
 import jakarta.annotation.Nullable;
+import jdk.jfr.Experimental;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
+import java.util.UUID;
 
 import static com.tecknobit.equinoxbackend.apis.resources.ResourcesManager.RESOURCES_KEY;
-import static com.tecknobit.equinoxcore.helpers.InputsValidator.DEFAULT_LANGUAGE;
-import static com.tecknobit.equinoxcore.network.EquinoxBaseEndpointsSet.BASE_EQUINOX_ENDPOINT;
 import static com.tecknobit.equinoxcore.network.Requester.RESPONSE_DATA_KEY;
 import static com.tecknobit.equinoxcore.network.Requester.RESPONSE_STATUS_KEY;
 import static com.tecknobit.equinoxcore.network.ResponseStatus.FAILED;
 import static com.tecknobit.equinoxcore.network.ResponseStatus.SUCCESSFUL;
 
 /**
- * The {@code EquinoxController} class is useful to give the base behavior of the <b>Equinox's controllers</b>
+ * The {@code EquinoxControllerCore} class provides logic for features such as {@code i18n},
+ * default response messages, and utilities to build responses, enabling controllers
+ * to implement APIs that are ready to use and easy to adopt
  *
  * @author N7ghtm4r3 - Tecknobit
- *
- * @param <T> The type of the {@link EquinoxUser} used in the system, is generic to avoid manual casts if it has been customized
- * @param <R> The type of the {@link EquinoxUsersRepository} used in the system, is generic to avoid manual casts if it has been customized
- * @param <H> The type of the {@link EquinoxUsersService} used in the system, is generic to avoid manual casts if it has been customized
- * @since 1.0.1
+ * @since 1.1.7
  */
-@RestController
-@RequestMapping(BASE_EQUINOX_ENDPOINT)
-abstract public class EquinoxController<T extends EquinoxUser, R extends EquinoxUsersRepository<T>,
-        H extends EquinoxUsersService<T, R>> {
+@Structure
+@Experimental
+abstract public class EquinoxControllerCore {
 
     /**
      * {@code resourcesProvider} the resources provider and manager
@@ -134,22 +126,11 @@ abstract public class EquinoxController<T extends EquinoxUser, R extends Equinox
     protected MessageSource messageSource;
 
     /**
-     * {@code usersRepository} instance for the user repository
-     */
-    @Autowired(required = false)
-    protected R usersRepository;
-
-    /**
-     * {@code me} user representing the user who made a request on the server
-     */
-    protected T me;
-
-    /**
      * Constructor to instantiate the {@link EquinoxController}
      *
      * @apiNote will be instantiated also the {@link #configuration}
      */
-    public EquinoxController() {
+    public EquinoxControllerCore() {
         configuration = EquinoxBackendConfiguration.getInstance();
     }
 
@@ -175,7 +156,7 @@ abstract public class EquinoxController<T extends EquinoxUser, R extends Equinox
      * Method used to load the {@link #jsonHelper}
      *
      * @param payload The payload received with the request
-     * @param <V>      generic type for the values in the payload
+     * @param <V>     generic type for the values in the payload
      */
     protected <V> void loadJsonHelper(Map<String, V> payload) {
         jsonHelper.setJSONObjectSource(new JSONObject(payload));
@@ -188,27 +169,6 @@ abstract public class EquinoxController<T extends EquinoxUser, R extends Equinox
      */
     protected void loadJsonHelper(String payload) {
         jsonHelper.setJSONObjectSource(payload);
-    }
-
-    /**
-     * Method used to check whether the user who made a request is an authorized user <br>
-     * If the user is authorized the {@link #me} instance is loaded
-     *
-     * @param id The identifier of the user
-     * @param token The token of the user
-     * @return whether the user is an authorized user as boolean
-     */
-    @Validator
-    protected boolean isMe(String id, String token) {
-        Optional<T> query = usersRepository.findById(id);
-        me = query.orElse(null);
-        boolean isMe = me != null && me.getToken().equals(token);
-        if (!isMe) {
-            me = null;
-            setSessionLocale(DEFAULT_LANGUAGE);
-        } else
-            setSessionLocale(me.getLanguage());
-        return isMe;
     }
 
     /**
@@ -231,7 +191,7 @@ abstract public class EquinoxController<T extends EquinoxUser, R extends Equinox
     }
 
     /**
-     * Method used to get the payload for a successful response 
+     * Method used to get the payload for a successful response
      *
      * @return the payload for a successful response as {@link String}
      */
@@ -269,7 +229,7 @@ abstract public class EquinoxController<T extends EquinoxUser, R extends Equinox
      * Method used to get the payload for a successful response
      *
      * @param value The value to send as response
-     * @param <V>    generic type for the values in the payload
+     * @param <V>   generic type for the values in the payload
      * @return the payload for a successful response as {@link HashMap} of {@link V}
      */
     @Assembler
@@ -372,8 +332,7 @@ abstract public class EquinoxController<T extends EquinoxUser, R extends Equinox
      * Method used to get the international message
      *
      * @param messageKey The message of the international message
-     * @param args The arguments used to format the international message
-     *
+     * @param args       The arguments used to format the international message
      * @return the internationalized message as {@link String}
      */
     @Returner
@@ -382,7 +341,7 @@ abstract public class EquinoxController<T extends EquinoxUser, R extends Equinox
     }
 
     /**
-     * Method used to generate an identifier of an item 
+     * Method used to generate an identifier of an item
      *
      * @return the identifier as {@link String}
      */
@@ -429,9 +388,9 @@ abstract public class EquinoxController<T extends EquinoxUser, R extends Equinox
     /**
      * Method used to init the {@link #serverProtector} and create the resources directories correctly
      *
-     * @param context The launcher {@link Class} where this method has been invoked
+     * @param context          The launcher {@link Class} where this method has been invoked
      * @param saveMessageExtra Extra arguments used to format the save message displayed by the {@link #serverProtector}
-     * @param args    Custom arguments to share with {@link SpringApplication} and with the {@link #serverProtector}
+     * @param args             Custom arguments to share with {@link SpringApplication} and with the {@link #serverProtector}
      * @apiNote the arguments scheme:
      * <ul>
      *     <li>
@@ -461,7 +420,7 @@ abstract public class EquinoxController<T extends EquinoxUser, R extends Equinox
     public static void initEquinoxEnvironment(Class<?> context, Object[] saveMessageExtra, String[] args) {
         try {
             EquinoxBackendConfiguration backendConfiguration = EquinoxBackendConfiguration.getInstance();
-            ResourcesConfig resourcesConfig = backendConfiguration.getResourcesConfig();
+            EquinoxBackendConfiguration.ResourcesConfig resourcesConfig = backendConfiguration.getResourcesConfig();
             if (resourcesConfig.createResourcesFolder()) {
                 resourcesProvider = new ResourcesProvider(RESOURCES_KEY, resourcesConfig.getSubdirectories());
                 resourcesProvider.createContainerDirectory();
@@ -470,7 +429,7 @@ abstract public class EquinoxController<T extends EquinoxUser, R extends Equinox
             if (backendConfiguration.serverProtectorEnabled()) {
                 if (serverProtector != null)
                     throw new IllegalAccessException("The protector has been already instantiated");
-                ServerProtectorConfig serverProtectorConfig = backendConfiguration.getServerProtectorConfig();
+                EquinoxBackendConfiguration.ServerProtectorConfig serverProtectorConfig = backendConfiguration.getServerProtectorConfig();
                 serverProtector = new ServerProtector(
                         serverProtectorConfig.getStoragePath(),
                         serverProtectorConfig.getSaveMessage(saveMessageExtra)

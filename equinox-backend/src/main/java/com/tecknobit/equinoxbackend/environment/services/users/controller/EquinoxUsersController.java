@@ -1,7 +1,8 @@
 package com.tecknobit.equinoxbackend.environment.services.users.controller;
 
 import com.tecknobit.apimanager.annotations.RequestPath;
-import com.tecknobit.equinoxbackend.environment.services.builtin.controller.EquinoxController;
+import com.tecknobit.equinoxbackend.environment.services.builtin.controllers.EquinoxController;
+import com.tecknobit.equinoxbackend.environment.services.builtin.controllers.EquinoxControllerCore;
 import com.tecknobit.equinoxbackend.environment.services.users.entity.EquinoxUser;
 import com.tecknobit.equinoxbackend.environment.services.users.repository.EquinoxUsersRepository;
 import com.tecknobit.equinoxbackend.environment.services.users.service.EquinoxUsersService;
@@ -20,7 +21,8 @@ import static com.tecknobit.equinoxcore.helpers.InputsValidator.DEFAULT_LANGUAGE
 import static com.tecknobit.equinoxcore.network.EquinoxBaseEndpointsSet.*;
 
 /**
- * The {@code EquinoxUsersController} class is useful to manage all the user operations
+ * The {@code EquinoxUsersController} handles user-related operations, providing the
+ * corresponding endpoints that clients can connect to in order to manage user data
  *
  * @author N7ghtm4r3 - Tecknobit
  * @see EquinoxController
@@ -28,6 +30,9 @@ import static com.tecknobit.equinoxcore.network.EquinoxBaseEndpointsSet.*;
  * @param <T> The type of the {@link EquinoxUser} used in the system, is generic to avoid manual casts if it has been customized
  * @param <R> The type of the {@link EquinoxUsersRepository} used in the system, is generic to avoid manual casts if it has been customized
  * @param <H> The type of the {@link EquinoxUsersService} used in the system, is generic to avoid manual casts if it has been customized
+ *
+ * @see EquinoxControllerCore
+ * @see EquinoxController
  *
  * @since 1.0.1
  */
@@ -47,6 +52,7 @@ public class EquinoxUsersController<T extends EquinoxUser, R extends EquinoxUser
      */
     @Autowired
     public EquinoxUsersController(H usersService) {
+        super();
         this.usersService = usersService;
     }
 
@@ -70,7 +76,9 @@ public class EquinoxUsersController<T extends EquinoxUser, R extends EquinoxUser
      */
     @PostMapping(path = SIGN_UP_ENDPOINT)
     @RequestPath(path = "/api/v1/users/signUp", method = POST)
-    public String signUp(@RequestBody Map<String, Object> payload) {
+    public String signUp(
+            @RequestBody Map<String, Object> payload
+    ) {
         loadJsonHelper(payload);
         setSessionLocale(jsonHelper.getString(LANGUAGE_KEY, DEFAULT_LANGUAGE));
         if (configuration.serverProtectorEnabled() && !serverProtector.serverSecretMatches(jsonHelper.getString(SERVER_SECRET_KEY)))
@@ -190,7 +198,9 @@ public class EquinoxUsersController<T extends EquinoxUser, R extends EquinoxUser
      */
     @PostMapping(path = SIGN_IN_ENDPOINT)
     @RequestPath(path = "/api/v1/users/signIn", method = POST)
-    public String signIn(@RequestBody Map<String, Object> payload) {
+    public String signIn(
+            @RequestBody Map<String, Object> payload
+    ) {
         loadJsonHelper(payload);
         String email = jsonHelper.getString(EMAIL_KEY);
         String password = jsonHelper.getString(PASSWORD_KEY);

@@ -44,6 +44,8 @@ current [window-size-class](https://www.jetbrains.com/help/kotlin-multiplatform-
   current [ResponsiveClass](#responsive-classes)
 - [responsiveAssignment](#responsive-assignment) used to assigns a specific value based on the
   current [ResponsiveClass](#responsive-classes)
+- [responsiveMaxWidth](#responsive-max-width) modifier extension used to assign the max width of a content in responsive
+  way
 
 ## Usage
 
@@ -134,5 +136,29 @@ fun App() {
             println("Hello Compact World!")
         }
     )
+}
+```
+
+### Responsive max width
+
+Using the `responsiveMaxWidth` extension you can assign the max width of a content in responsive way based on the
+current
+width size where your application is running on
+
+```kotlin
+
+@Composable
+fun App() {
+    Column(
+        modifier = Modifier
+            .responsiveMaxWidth() // will be automatically resized based on the width responsive class
+    ) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+        ) {
+            ...
+        }
+    }
 }
 ```

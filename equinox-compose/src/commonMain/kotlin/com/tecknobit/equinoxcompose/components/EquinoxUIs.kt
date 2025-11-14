@@ -15,6 +15,7 @@ import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -132,7 +133,7 @@ private fun LoadingItemUIContent(
     contentLoaded: @Composable () -> Unit,
     vararg triggers: Any?,
 ) {
-    var isLoaded by remember { mutableStateOf(false) }
+    var isLoaded by rememberSaveable { mutableStateOf(false) }
     LaunchedEffect(triggers) {
         isLoaded = false
         initialDelay?.let {

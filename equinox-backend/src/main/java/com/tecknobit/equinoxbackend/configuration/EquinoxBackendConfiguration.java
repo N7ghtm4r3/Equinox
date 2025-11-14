@@ -3,7 +3,7 @@ package com.tecknobit.equinoxbackend.configuration;
 import com.tecknobit.apimanager.apis.ResourcesUtils;
 import com.tecknobit.apimanager.formatters.JsonHelper;
 import com.tecknobit.equinoxbackend.apis.resources.ResourcesManager;
-import com.tecknobit.equinoxbackend.environment.services.builtin.controller.EquinoxController;
+import com.tecknobit.equinoxbackend.environment.services.builtin.controllers.EquinoxController;
 
 import java.io.IOException;
 import java.util.ArrayList;

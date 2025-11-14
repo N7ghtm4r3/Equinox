@@ -6,9 +6,7 @@ import androidx.compose.material.icons.filled.Warning
 import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.contentColorFor
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
@@ -71,8 +69,16 @@ fun SessionFlowContainer(
             state.loadingRoutineTrigger.value, triggers,
             containerModifier = modifier,
             initialDelay = initialLoadingRoutineDelay,
-            loadingRoutine = loadingRoutine!!,
-            contentLoaded = content,
+            loadingRoutine = {
+                if (!state.isOperational())
+                    return@LoadingItemUI false
+                state.notifyLoading()
+                loadingRoutine!!.invoke()
+            },
+            contentLoaded = {
+                state.notifyLoadingEnd()
+                content()
+            },
             loadingIndicatorBackground = statusContainerColor,
             themeColor = loadingContentColor,
             textStyle = statusTextStyle,
@@ -117,8 +123,9 @@ fun SessionFlowContainer(
         connectionState = connectionState,
         state = state
     )
+    val currentStatus by state.currentStatus.collectAsState()
     AnimatedContent(
-        targetState = state.currentStatus.value,
+        targetState = currentStatus,
         transitionSpec = {
             enterTransition.togetherWith(
                 exit = exitTransition
@@ -128,14 +135,12 @@ fun SessionFlowContainer(
         when (status) {
             OPERATIONAL -> {
                 if (loadingRoutine != null)
-                    loadingIndicator.invoke()
+                    loadingIndicator()
                 else
                     content()
             }
             SERVER_OFFLINE -> onServerOffline()
-            CUSTOM -> {
-                onCustomError?.invoke(state.customErrorExtra)
-            }
+            CUSTOM -> onCustomError?.invoke(state.customErrorExtra)
             NO_NETWORK_CONNECTION -> onNoNetworkConnection()
             USER_DISCONNECTED -> {
                 LaunchedEffect(Unit) {

@@ -57,31 +57,6 @@ open class EquinoxLocalUser(
          */
         Auto;
 
-        companion object {
-
-            /**
-             * Method used to get an instance of the [ApplicationTheme]
-             *
-             * @param theme The name of the theme to get
-             * @return the theme instance as [ApplicationTheme]
-             */
-            @Deprecated(
-                message = "Will be removed",
-                level = DeprecationLevel.ERROR
-            )
-            fun getInstance(
-                theme: String?,
-            ): ApplicationTheme {
-                if (theme == null) return Auto
-                return when (theme) {
-                    "Dark" -> Dark
-                    "Light" -> Light
-                    else -> Auto
-                }
-            }
-
-        }
-
     }
 
     companion object {
@@ -193,14 +168,7 @@ open class EquinoxLocalUser(
         get() = "$name $surname"
 
     init {
-        @Suppress("ImplicitThis")
-        // TODO: TO REMOVE THIS TRY-CATCH IN FUTURE RELEASES
-        try {
-            initLocalUser()
-        } catch (e: Exception) {
-            preferencesManager.clearAll()
-            throw e
-        }
+        initLocalUser()
     }
 
     /**
@@ -612,7 +580,7 @@ open class EquinoxLocalUser(
     /**
      * Method used to clear the current local user session
      */
-    fun clear() {
+    open fun clear() {
         preferencesManager.clearAll()
         initLocalUser()
     }

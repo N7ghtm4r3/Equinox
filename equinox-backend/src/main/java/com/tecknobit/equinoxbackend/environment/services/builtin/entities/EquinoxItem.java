@@ -1,4 +1,4 @@
-package com.tecknobit.equinoxbackend.environment.services.builtin.entity;
+package com.tecknobit.equinoxbackend.environment.services.builtin.entities;
 
 import com.tecknobit.apimanager.annotations.Structure;
 import com.tecknobit.apimanager.formatters.JsonHelper;

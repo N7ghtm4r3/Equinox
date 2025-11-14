@@ -2,7 +2,7 @@ package com.tecknobit.equinoxbackend.apis.batch;
 
 import com.tecknobit.equinoxbackend.annotations.BatchQueryItem;
 import com.tecknobit.equinoxbackend.apis.database.SQLConstants;
-import com.tecknobit.equinoxbackend.environment.services.builtin.entity.EquinoxItem;
+import com.tecknobit.equinoxbackend.environment.services.builtin.entities.EquinoxItem;
 import com.tecknobit.equinoxcore.annotations.Wrapper;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;

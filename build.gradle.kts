@@ -1,4 +1,3 @@
-
 import org.jetbrains.dokka.DokkaConfiguration.Visibility.*
 import org.jetbrains.dokka.base.DokkaBase
 import org.jetbrains.dokka.base.DokkaBaseConfiguration
@@ -33,7 +32,7 @@ subprojects {
 tasks.withType<DokkaMultiModuleTask> {
     outputDirectory.set(layout.projectDirectory.dir("doks"))
     pluginConfiguration<DokkaBase, DokkaBaseConfiguration> {
-        version = "1.1.7"
+        version = "1.1.8"
         footerMessage = "(c) 2025 Tecknobit"
     }
 }

@@ -5,54 +5,55 @@ The base environment provides a core set of classes to manage users, controllers
 
 ### Main Classes
 
-- [EquinoxBaseEndpointsSet](https://github.com/N7ghtm4r3/Equinox/blob/main/equinox-core/src/commonMain/kotlin/com/tecknobit/equinoxcore/network/EquinoxBaseEndpointsSet.kt)  
-  A set of pre-defined endpoints for EquinoxUsersController endpoints
+- [EquinoxBaseEndpointsSet](../../equinox-core/src/commonMain/kotlin/com/tecknobit/equinoxcore/network/EquinoxBaseEndpointsSet.kt)   
+  A set of pre-defined endpoints for the Equinox's environment
 
-- [EquinoxController](https://github.com/N7ghtm4r3/Equinox/blob/main/equinox-backend/src/main/java/com/tecknobit/equinoxbackend/environment/services/builtin/controller/EquinoxController.java)  
-  Manages other RestControllers in the backend
+- [EquinoxControllerCore](APIs/EquinoxControllerCore.md)  
+  Provides the logic of an Equinox's controller and some utilities to build responses and to handle the `i18n`
 
-- [DefaultEquinoxController](https://github.com/N7ghtm4r3/Equinox/blob/main/equinox-backend/src/main/java/com/tecknobit/equinoxbackend/environment/services/DefaultEquinoxController.java)  
-  Manages other RestControllers with default usage of
-  the [EquinoxUser](https://github.com/N7ghtm4r3/Equinox/blob/main/equinox-backend/src/main/java/com/tecknobit/equinoxbackend/environment/services/users/entity/EquinoxUser.java)
+- [EquinoxController](../../equinox-backend/src/main/java/com/tecknobit/equinoxbackend/environment/services/builtin/controllers/EquinoxController.java)   
+  Manages other rest controllers in the backend providing utilities for the user handling
+
+- [DefaultEquinoxController](../../equinox-backend/src/main/java/com/tecknobit/equinoxbackend/environment/services/DefaultEquinoxController.java)  
+  Manages other rest controllers with default usage of
+  the [EquinoxUser](../../equinox-backend/src/main/java/com/tecknobit/equinoxbackend/environment/services/users/entity/EquinoxUser.java)  
   class
 
-- [EquinoxItem](https://github.com/N7ghtm4r3/Equinox/blob/main/equinox-backend/src/main/java/com/tecknobit/equinoxbackend/environment/services/builtin/entity/EquinoxItem.java)  
+- [EquinoxItem](../../equinox-backend/src/main/java/com/tecknobit/equinoxbackend/environment/services/builtin/entities/EquinoxItem.java)  
   Base class for items used by an Equinox backend
 
 ### User Utilities
 
-- [EquinoxUser](https://github.com/N7ghtm4r3/Equinox/blob/main/equinox-backend/src/main/java/com/tecknobit/equinoxbackend/environment/services/users/entity/EquinoxUser.java)  
+- [EquinoxUser](../../equinox-backend/src/main/java/com/tecknobit/equinoxbackend/environment/services/users/entity/EquinoxUser.java)  
   Standard Equinox user class
 
 - [EquinoxLocalUser](../compose/APIs/EquinoxLocalUser.md)  
   Helper for managing a local user session in client applications
 
-- [EquinoxUsersController](https://github.com/N7ghtm4r3/Equinox/blob/main/equinox-backend/src/main/java/com/tecknobit/equinoxbackend/environment/services/users/controller/EquinoxUsersController.java)  
+- [EquinoxUsersController](../../equinox-backend/src/main/java/com/tecknobit/equinoxbackend/environment/services/users/controller/EquinoxUsersController.java)  
   Controller for operations on EquinoxUser objects
 
-- [EquinoxUsersService](https://github.com/N7ghtm4r3/Equinox/blob/main/equinox-backend/src/main/java/com/tecknobit/equinoxbackend/environment/services/users/service/EquinoxUsersService.java)  
+- [EquinoxUsersService](../../equinox-backend/src/main/java/com/tecknobit/equinoxbackend/environment/services/users/service/EquinoxUsersService.java)  
   Helper used by EquinoxUsersController to interact with the database
 
-- [EquinoxUsersRepository](https://github.com/N7ghtm4r3/Equinox/blob/main/equinox-backend/src/main/java/com/tecknobit/equinoxbackend/environment/services/users/repository/EquinoxUsersRepository.java)  
+- [EquinoxUsersRepository](../../equinox-backend/src/main/java/com/tecknobit/equinoxbackend/environment/services/users/repository/EquinoxUsersRepository.java)    
   JpaRepository for executing user-related database queries
 
 ### Other Utilities
 
-- [EquinoxRequester](https://github.com/N7ghtm4r3/Equinox/blob/main/equinox-backend/src/main/kotlin/com/tecknobit/equinoxbackend/environment/helpers/EquinoxRequester.kt)  
+- [EquinoxRequester](../../equinox-compose/src/commonMain/kotlin/com/tecknobit/equinoxcompose/network/EquinoxRequester.kt)  
   Request helper with
   pre-implemented [EquinoxUser](https://github.com/N7ghtm4r3/Equinox/blob/main/equinox-backend/src/main/java/com/tecknobit/equinoxbackend/environment/services/users/entity/EquinoxUser.java)
   requests
 
-- [InputsValidator](https://github.com/N7ghtm4r3/Equinox/blob/main/equinox-core/src/commonMain/kotlin/com/tecknobit/equinoxcore/helpers/InputsValidator.kt)  
+- [InputsValidator](../../equinox-core/src/commonMain/kotlin/com/tecknobit/equinoxcore/helpers/InputsValidator.kt)  
   Utility class for input validation,
-  including [EquinoxUser](https://github.com/N7ghtm4r3/Equinox/blob/main/equinox-backend/src/main/java/com/tecknobit/equinoxbackend/environment/services/users/entity/EquinoxUser.java)
+  including [EquinoxUser](../../equinox-backend/src/main/java/com/tecknobit/equinoxbackend/environment/services/users/entity/EquinoxUser.java)
   details
 
-- [EquinoxItemsHelper](https://github.com/N7ghtm4r3/Equinox/blob/main/equinox-backend/src/main/java/com/tecknobit/equinoxbackend/environment/services/builtin/service/EquinoxItemsHelper.java)  
+- [EquinoxItemsHelper](../../equinox-backend/src/main/java/com/tecknobit/equinoxbackend/apis/batch/EquinoxItemsHelper.java)  
   Helper for database operations
-  on [EquinoxItem](https://github.com/N7ghtm4r3/Equinox/blob/main/equinox-backend/src/main/java/com/tecknobit/equinoxbackend/environment/services/builtin/entity/EquinoxItem.java),
-  including batch queries
-
+  on [EquinoxItem](../../equinox-backend/src/main/java/com/tecknobit/equinoxbackend/environment/services/builtin/entities/EquinoxItem.java)
 ## Usage
 
 ### Gradle configuration
@@ -83,10 +84,10 @@ To correctly use this environment you need to use the following base **gradle co
         implementation 'org.json:json:20250517'
     
         // implement the backend utilities
-        implementation 'io.github.n7ghtm4r3:equinox-backend:1.1.6'
+        implementation 'io.github.n7ghtm4r3:equinox-backend:1.1.7'
     
         // implement the core utilities
-        implementation 'io.github.n7ghtm4r3:equinox-core:1.1.7'
+        implementation 'io.github.n7ghtm4r3:equinox-core:1.1.8'
 
         ...
     }
@@ -116,10 +117,10 @@ To correctly use this environment you need to use the following base **gradle co
         implementation("org.json:json:20250517")
     
         // implement the backend utilities
-        implementation("io.github.n7ghtm4r3:equinox-backend:1.1.6")
+        implementation("io.github.n7ghtm4r3:equinox-backend:1.1.7")
         
         // implement the core utilities
-        implementation("io.github.n7ghtm4r3:equinox-core:1.1.7")
+        implementation("io.github.n7ghtm4r3:equinox-core:1.1.8")
     
         ...
     }

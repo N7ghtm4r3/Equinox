@@ -14,7 +14,7 @@ plugins {
 }
 
 group = "com.tecknobit.equinoxcompose"
-version = "1.1.7"
+version = "1.1.8"
 
 repositories {
     google()
@@ -159,7 +159,7 @@ mavenPublishing {
     coordinates(
         groupId = "io.github.n7ghtm4r3",
         artifactId = "equinox-compose",
-        version = "1.1.7"
+        version = "1.1.8"
     )
     pom {
         name.set("Equinox Compose")
