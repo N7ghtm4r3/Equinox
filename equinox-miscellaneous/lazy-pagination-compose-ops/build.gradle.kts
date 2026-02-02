@@ -110,7 +110,7 @@ rootProject.the<WasmNodeJsRootExtension>().versions.webpackDevServer.version = "
 mavenPublishing {
     configure(
         platform = KotlinMultiplatform(
-            javadocJar = JavadocJar.Dokka("dokkaHtml"),
+            javadocJar = JavadocJar.Dokka("dokkaGenerate"),
             sourcesJar = true
         )
     )
@@ -122,7 +122,7 @@ mavenPublishing {
     pom {
         name.set("lazy-pagination-compose-ops")
         description.set("Integration of the lazy-pagination-compose library with the in-place operations")
-        inceptionYear.set("2025")
+        inceptionYear.set("2026")
         url.set("https://github.com/N7ghtm4r3/Equinox")
 
         licenses {

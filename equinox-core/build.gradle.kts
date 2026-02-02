@@ -1,14 +1,13 @@
-import com.android.build.api.dsl.androidLibrary
 import com.vanniktech.maven.publish.JavadocJar
 import com.vanniktech.maven.publish.KotlinMultiplatform
 import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
-import org.jetbrains.kotlin.gradle.targets.wasm.nodejs.WasmNodeJsRootExtension
 
 plugins {
-    alias(libs.plugins.androidApplication)
     alias(libs.plugins.kotlinMultiplatform)
+    alias(libs.plugins.androidKotlinMultiplatformLibrary)
     alias(libs.plugins.kotlinSerialization)
+    alias(libs.plugins.dokka)
     alias(libs.plugins.vanniktech.mavenPublish)
 }
 
@@ -21,18 +20,23 @@ repositories {
 }
 
 kotlin {
+    androidLibrary {
+        compileSdk = libs.versions.android.compileSdk.get().toInt()
+        minSdk = libs.versions.android.minSdk.get().toInt()
+        namespace = "com.tecknobit.equinoxcore"
+        experimentalProperties["android.experimental.kmp.enableAndroidResources"] = true
+
+        compilations {
+            compilerOptions {
+                jvmTarget.set(JvmTarget.JVM_18)
+            }
+        }
+
+    }
 
     jvm {
         compilations.all {
             this@jvm.compilerOptions {
-                jvmTarget.set(JvmTarget.JVM_18)
-            }
-        }
-    }
-
-    android {
-        androidLibrary {
-            compilerOptions {
                 jvmTarget.set(JvmTarget.JVM_18)
             }
         }
@@ -51,18 +55,22 @@ kotlin {
         }
     }
 
+    js {
+        browser()
+        binaries.library()
+    }
+
     @OptIn(ExperimentalWasmDsl::class)
     wasmJs {
-        binaries.executable()
+        binaries.library()
         browser {
             webpackTask {
-            
+
             }
         }
     }
 
     sourceSets {
-
         val androidMain by getting {
             dependencies {
                 implementation(libs.ktor.client.okhttp)
@@ -101,24 +109,34 @@ kotlin {
             }
         }
 
-        val wasmJsMain by getting {
+        val webMain by creating {
             dependencies {
+                dependsOn(commonMain)
                 implementation(libs.ktor.client.js)
             }
         }
 
+        val jsMain by getting {
+            dependencies {
+                dependsOn(webMain)
+            }
+        }
+
+        val wasmJsMain by getting {
+            dependencies {
+                dependsOn(webMain)
+            }
+        }
     }
 
     jvmToolchain(18)
 }
 
-rootProject.the<WasmNodeJsRootExtension>().versions.webpackDevServer.version = "5.2.2"
-
 mavenPublishing {
     configure(
-        platform = KotlinMultiplatform(
-            javadocJar = JavadocJar.Dokka("dokkaHtml"),
-            sourcesJar = true
+        KotlinMultiplatform(
+            javadocJar = JavadocJar.Dokka("dokkaGenerate"),
+            androidVariantsToPublish = listOf("release"),
         )
     )
     coordinates(
@@ -129,7 +147,7 @@ mavenPublishing {
     pom {
         name.set("Equinox Core")
         description.set("Core utilities for CMP and Spring technologies")
-        inceptionYear.set("2025")
+        inceptionYear.set("2026")
         url.set("https://github.com/N7ghtm4r3/Equinox")
 
         licenses {
@@ -152,16 +170,4 @@ mavenPublishing {
     }
     publishToMavenCentral()
     signAllPublications()
-}
-
-android {
-    namespace = "com.tecknobit.equinoxcore"
-    compileSdk = libs.versions.android.compileSdk.get().toInt()
-    defaultConfig {
-        minSdk = libs.versions.android.minSdk.get().toInt()
-    }
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_18
-        targetCompatibility = JavaVersion.VERSION_18
-    }
 }

@@ -1,4 +1,3 @@
-
 import com.vanniktech.maven.publish.JavadocJar
 import com.vanniktech.maven.publish.KotlinMultiplatform
 import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
@@ -9,8 +8,9 @@ plugins {
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
     alias(libs.plugins.androidKotlinMultiplatformLibrary)
-    alias(libs.plugins.vanniktech.mavenPublish)
+    alias(libs.plugins.kotlinSerialization)
     alias(libs.plugins.dokka)
+    alias(libs.plugins.vanniktech.mavenPublish)
 }
 
 group = "com.tecknobit.equinoxcompose"
@@ -96,7 +96,7 @@ kotlin {
                 // TODO: TO CREATE A WORKAROUND TO IMPLEMENT 
                 //implementation(libs.kmprefs)
                 implementation(libs.material3.window.size)
-                //implementation(project(":equinox-core"))
+                implementation(project(":equinox-core"))
             }
         }
 
@@ -167,14 +167,13 @@ kotlin {
                 dependsOn(webMain)
             }
         }
-
     }
 }
 
 mavenPublishing {
     configure(
         KotlinMultiplatform(
-            javadocJar = JavadocJar.Dokka("dokkaHtml"),
+            javadocJar = JavadocJar.Dokka("dokkaGenerate"),
             androidVariantsToPublish = listOf("release"),
         )
     )
@@ -186,7 +185,7 @@ mavenPublishing {
     pom {
         name.set("Equinox Compose")
         description.set("Utilities for Kotlin Multiplatform applications such components, apis for Android, Desktop, iOS and Web platforms")
-        inceptionYear.set("2025")
+        inceptionYear.set("2026")
         url.set("https://github.com/N7ghtm4r3/Equinox")
 
         licenses {

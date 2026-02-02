@@ -114,7 +114,7 @@ rootProject.the<WasmNodeJsRootExtension>().versions.webpackDevServer.version = "
 mavenPublishing {
     configure(
         platform = KotlinMultiplatform(
-            javadocJar = JavadocJar.Dokka("dokkaHtml"),
+            javadocJar = JavadocJar.Dokka("dokkaGenerate"),
             sourcesJar = true
         )
     )
@@ -126,7 +126,7 @@ mavenPublishing {
     pom {
         name.set("navigation-compose-util")
         description.set("Useful utilities to simplify the sharing of the data between the destinations during the navigation with Navigation Compose library")
-        inceptionYear.set("2025")
+        inceptionYear.set("2026")
         url.set("https://github.com/N7ghtm4r3/Equinox")
 
         licenses {

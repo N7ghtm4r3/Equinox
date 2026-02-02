@@ -113,7 +113,7 @@ rootProject.the<WasmNodeJsRootExtension>().versions.webpackDevServer.version = "
 mavenPublishing {
     configure(
         platform = KotlinMultiplatform(
-            javadocJar = JavadocJar.Dokka("dokkaHtml"),
+            javadocJar = JavadocJar.Dokka("dokkaGenerate"),
             sourcesJar = true
         )
     )
@@ -125,7 +125,7 @@ mavenPublishing {
     pom {
         name.set("Equinox Navigation")
         description.set("Utilities to handle the navigation in Compose Multiplatform applications")
-        inceptionYear.set("2025")
+        inceptionYear.set("2026")
         url.set("https://github.com/N7ghtm4r3/Equinox")
 
         licenses {

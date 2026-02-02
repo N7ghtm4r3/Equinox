@@ -1,7 +1,6 @@
 package com.tecknobit.equinoxcore.network
 
 import io.ktor.client.*
-import io.ktor.client.engine.js.*
 import io.ktor.client.plugins.*
 
 /**
@@ -21,7 +20,7 @@ internal actual fun obtainHttpEngine(
     socketTimeout: Long,
     byPassSSLValidation: Boolean,
 ): HttpClient {
-    return HttpClient(Js) {
+    return HttpClient {
         install(HttpTimeout) {
             requestTimeoutMillis = requestTimeout
             connectTimeoutMillis = connectionTimeout
