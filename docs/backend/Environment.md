@@ -87,7 +87,7 @@ To correctly use this environment you need to use the following base **gradle co
         implementation 'io.github.n7ghtm4r3:equinox-backend:1.1.7'
     
         // implement the core utilities
-        implementation 'io.github.n7ghtm4r3:equinox-core:1.1.8'
+        implementation 'io.github.n7ghtm4r3:equinox-core:1.1.9'
 
         ...
     }
@@ -120,7 +120,7 @@ To correctly use this environment you need to use the following base **gradle co
         implementation("io.github.n7ghtm4r3:equinox-backend:1.1.7")
         
         // implement the core utilities
-        implementation("io.github.n7ghtm4r3:equinox-core:1.1.8")
+        implementation("io.github.n7ghtm4r3:equinox-core:1.1.9")
     
         ...
     }

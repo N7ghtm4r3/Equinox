@@ -1,3 +1,4 @@
+import com.android.build.api.dsl.androidLibrary
 import com.vanniktech.maven.publish.JavadocJar
 import com.vanniktech.maven.publish.KotlinMultiplatform
 import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
@@ -5,12 +6,12 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.targets.wasm.nodejs.WasmNodeJsRootExtension
 
 plugins {
+    alias(libs.plugins.androidApplication)
+    alias(libs.plugins.composeCompiler)
+    alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.kotlinMultiplatform)
-    alias(libs.plugins.jetbrainsCompose)
-    alias(libs.plugins.androidLibrary)
+    alias(libs.plugins.kotlinSerialization)
     alias(libs.plugins.vanniktech.mavenPublish)
-    alias(libs.plugins.compose.compiler)
-    kotlin("plugin.serialization") version "2.1.0"
 }
 
 group = "com.tecknobit.equinoxnavigation"
@@ -31,10 +32,11 @@ kotlin {
         }
     }
 
-    androidTarget {
-        publishLibraryVariants("release")
-        compilerOptions {
-            jvmTarget.set(JvmTarget.JVM_18)
+    android {
+        androidLibrary {
+            compilerOptions {
+                jvmTarget.set(JvmTarget.JVM_18)
+            }
         }
     }
 

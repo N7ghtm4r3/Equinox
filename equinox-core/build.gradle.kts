@@ -1,3 +1,4 @@
+import com.android.build.api.dsl.androidLibrary
 import com.vanniktech.maven.publish.JavadocJar
 import com.vanniktech.maven.publish.KotlinMultiplatform
 import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
@@ -5,14 +6,14 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.targets.wasm.nodejs.WasmNodeJsRootExtension
 
 plugins {
+    alias(libs.plugins.androidApplication)
     alias(libs.plugins.kotlinMultiplatform)
-    alias(libs.plugins.androidLibrary)
+    alias(libs.plugins.kotlinSerialization)
     alias(libs.plugins.vanniktech.mavenPublish)
-    kotlin("plugin.serialization") version "2.1.0"
 }
 
 group = "com.tecknobit.equinoxcore"
-version = "1.1.8"
+version = "1.1.9"
 
 repositories {
     google()
@@ -29,10 +30,11 @@ kotlin {
         }
     }
 
-    androidTarget {
-        publishLibraryVariants("release")
-        compilerOptions {
-            jvmTarget.set(JvmTarget.JVM_18)
+    android {
+        androidLibrary {
+            compilerOptions {
+                jvmTarget.set(JvmTarget.JVM_18)
+            }
         }
     }
 
@@ -122,7 +124,7 @@ mavenPublishing {
     coordinates(
         groupId = "io.github.n7ghtm4r3",
         artifactId = "equinox-core",
-        version = "1.1.8"
+        version = "1.1.9"
     )
     pom {
         name.set("Equinox Core")

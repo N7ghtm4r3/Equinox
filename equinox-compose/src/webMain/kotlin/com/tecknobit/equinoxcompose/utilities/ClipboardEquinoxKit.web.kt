@@ -3,6 +3,7 @@
 package com.tecknobit.equinoxcompose.utilities
 
 import kotlinx.browser.window
+import kotlin.js.ExperimentalWasmJsInterop
 
 /**
  * Method used to copy to the clipboard a content value
