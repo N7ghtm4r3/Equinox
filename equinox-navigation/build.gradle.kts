@@ -1,21 +1,20 @@
-import com.android.build.api.dsl.androidLibrary
 import com.vanniktech.maven.publish.JavadocJar
 import com.vanniktech.maven.publish.KotlinMultiplatform
 import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
-import org.jetbrains.kotlin.gradle.targets.wasm.nodejs.WasmNodeJsRootExtension
 
 plugins {
-    alias(libs.plugins.androidApplication)
-    alias(libs.plugins.composeCompiler)
-    alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.kotlinMultiplatform)
+    alias(libs.plugins.composeMultiplatform)
+    alias(libs.plugins.composeCompiler)
+    alias(libs.plugins.androidKotlinMultiplatformLibrary)
     alias(libs.plugins.kotlinSerialization)
+    alias(libs.plugins.dokka)
     alias(libs.plugins.vanniktech.mavenPublish)
 }
 
 group = "com.tecknobit.equinoxnavigation"
-version = "1.0.4"
+version = "1.0.5"
 
 repositories {
     google()
@@ -23,18 +22,23 @@ repositories {
 }
 
 kotlin {
+    androidLibrary {
+        compileSdk = libs.versions.android.compileSdk.get().toInt()
+        minSdk = libs.versions.android.minSdk.get().toInt()
+        namespace = "com.tecknobit.equinoxnavigation"
+        experimentalProperties["android.experimental.kmp.enableAndroidResources"] = true
+
+        compilations {
+            compilerOptions {
+                jvmTarget.set(JvmTarget.JVM_18)
+            }
+        }
+
+    }
 
     jvm {
         compilations.all {
             this@jvm.compilerOptions {
-                jvmTarget.set(JvmTarget.JVM_18)
-            }
-        }
-    }
-
-    android {
-        androidLibrary {
-            compilerOptions {
                 jvmTarget.set(JvmTarget.JVM_18)
             }
         }
@@ -52,9 +56,15 @@ kotlin {
             isStatic = true
         }
     }
+
+    js {
+        browser()
+        binaries.library()
+    }
+
     @OptIn(ExperimentalWasmDsl::class)
     wasmJs {
-        binaries.executable()
+        binaries.library()
         browser {
             webpackTask {
 
@@ -63,7 +73,6 @@ kotlin {
     }
 
     sourceSets {
-
         val androidMain by getting {
             dependencies {
             }
@@ -98,29 +107,39 @@ kotlin {
             macosArm64Main.dependsOn(this)
         }
 
-        val wasmJsMain by getting {
+        val webMain by creating {
             dependencies {
+                dependsOn(commonMain)
             }
         }
 
+        val jsMain by getting {
+            dependencies {
+                dependsOn(webMain)
+            }
+        }
+
+        val wasmJsMain by getting {
+            dependencies {
+                dependsOn(webMain)
+            }
+        }
     }
 
     jvmToolchain(18)
 }
 
-rootProject.the<WasmNodeJsRootExtension>().versions.webpackDevServer.version = "5.2.2"
-
 mavenPublishing {
     configure(
-        platform = KotlinMultiplatform(
+        KotlinMultiplatform(
             javadocJar = JavadocJar.Dokka("dokkaGenerate"),
-            sourcesJar = true
+            androidVariantsToPublish = listOf("release"),
         )
     )
     coordinates(
         groupId = "io.github.n7ghtm4r3",
         artifactId = "equinox-navigation",
-        version = "1.0.4"
+        version = "1.0.5"
     )
     pom {
         name.set("Equinox Navigation")
@@ -148,16 +167,4 @@ mavenPublishing {
     }
     publishToMavenCentral()
     signAllPublications()
-}
-
-android {
-    namespace = "com.tecknobit.equinoxnavigation"
-    compileSdk = libs.versions.android.compileSdk.get().toInt()
-    defaultConfig {
-        minSdk = libs.versions.android.minSdk.get().toInt()
-    }
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_18
-        targetCompatibility = JavaVersion.VERSION_18
-    }
 }

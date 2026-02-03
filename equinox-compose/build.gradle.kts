@@ -93,7 +93,7 @@ kotlin {
                 implementation(libs.connectivity.core)
                 implementation(libs.kotlinx.serialization.json)
                 implementation(libs.ktor.client.core)
-                // TODO: TO CREATE A WORKAROUND TO IMPLEMENT 
+                // TODO: TO CREATE A WORKAROUND TO IMPLEMENT
                 //implementation(libs.kmprefs)
                 implementation(libs.material3.window.size)
                 implementation(project(":equinox-core"))
@@ -168,6 +168,8 @@ kotlin {
             }
         }
     }
+
+    jvmToolchain(18)
 }
 
 mavenPublishing {
