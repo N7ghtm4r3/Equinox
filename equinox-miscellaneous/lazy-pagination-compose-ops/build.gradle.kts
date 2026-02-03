@@ -14,7 +14,7 @@ plugins {
 }
 
 group = "com.tecknobit.equinoxmisc.lazypaginationcomposeops"
-version = "1.0.2"
+version = "1.0.3"
 
 repositories {
     google()
@@ -107,11 +107,6 @@ kotlin {
         val webMain by creating {
             dependencies {
                 dependsOn(commonMain)
-                implementation(libs.connectivity.compose)
-                implementation(libs.connectivity.http)
-                implementation(libs.connectivity.compose.http)
-                implementation(libs.ktor.client.js)
-                implementation(libs.kotlin.browser)
             }
         }
 
@@ -141,7 +136,7 @@ mavenPublishing {
     coordinates(
         groupId = "io.github.n7ghtm4r3",
         artifactId = "equinoxmisc-lazy-pagination-compose-ops",
-        version = "1.0.2"
+        version = "1.0.3"
     )
     pom {
         name.set("lazy-pagination-compose-ops")
