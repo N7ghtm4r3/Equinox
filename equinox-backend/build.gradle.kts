@@ -33,8 +33,7 @@ dependencies {
 mavenPublishing {
     configure(
         platform = KotlinJvm(
-            javadocJar = JavadocJar.Dokka("dokkaGenerate"),
-            sourcesJar = true
+            javadocJar = JavadocJar.Dokka("dokkaGenerate")
         )
     )
     coordinates(

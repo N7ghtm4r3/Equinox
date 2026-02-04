@@ -51,6 +51,9 @@ kotlin {
         macosX64(),
         macosArm64()
     ).forEach { appleTarget ->
+        compilerOptions {
+            freeCompilerArgs.add("-Xklib-duplicated-unique-name-strategy=allow-all-with-warning")
+        }
         appleTarget.binaries.framework {
             baseName = "equinox-compose"
             isStatic = true
@@ -88,13 +91,14 @@ kotlin {
                 implementation(compose.foundation)
                 implementation(compose.material3)
                 implementation(compose.materialIconsExtended)
+                implementation(libs.lifecycle.runtime.compose)
+                implementation(libs.lifecycle.viewmodel.compose)
                 implementation(libs.kermit)
                 //implementation(libs.kmpalette.core)
                 implementation(libs.connectivity.core)
                 implementation(libs.kotlinx.serialization.json)
                 implementation(libs.ktor.client.core)
-                // TODO: TO CREATE A WORKAROUND TO IMPLEMENT
-                //implementation(libs.kmprefs)
+                implementation(libs.kmprefs)
                 implementation(libs.material3.window.size)
                 implementation(project(":equinox-core"))
             }
