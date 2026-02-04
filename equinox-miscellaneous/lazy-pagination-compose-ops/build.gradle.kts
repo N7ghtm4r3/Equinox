@@ -71,6 +71,8 @@ kotlin {
     }
 
     sourceSets {
+        applyDefaultHierarchyTemplate()
+
         val androidMain by getting {
             dependencies {
             }
@@ -92,33 +94,23 @@ kotlin {
             }
         }
 
-        val iosX64Main by getting
-        val iosArm64Main by getting
-        val iosSimulatorArm64Main by getting
-        val iosMain by creating {
-            dependsOn(commonMain)
-            iosX64Main.dependsOn(this)
-            iosArm64Main.dependsOn(this)
-            iosSimulatorArm64Main.dependsOn(this)
+        val iosMain by getting {
             dependencies {
             }
         }
 
-        val webMain by creating {
+        val webMain by getting {
             dependencies {
-                dependsOn(commonMain)
             }
         }
 
         val jsMain by getting {
             dependencies {
-                dependsOn(webMain)
             }
         }
 
         val wasmJsMain by getting {
             dependencies {
-                dependsOn(webMain)
             }
         }
     }

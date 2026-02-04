@@ -76,6 +76,8 @@ kotlin {
     }
 
     sourceSets {
+        applyDefaultHierarchyTemplate()
+
         val androidMain by getting {
             dependencies {
                 implementation(libs.connectivity.compose)
@@ -113,25 +115,13 @@ kotlin {
             }
         }
 
-        val iosX64Main by getting
-        val iosArm64Main by getting
-        val iosSimulatorArm64Main by getting
-        val macosX64Main by getting
-        val macosArm64Main by getting
-
-        val appleMain by creating {
-            dependsOn(commonMain)
+        val appleMain by getting {
             dependencies {
                 implementation(libs.ktor.client.cio)
             }
         }
 
-        val iosMain by creating {
-            dependsOn(commonMain)
-            dependsOn(appleMain)
-            iosX64Main.dependsOn(this)
-            iosArm64Main.dependsOn(this)
-            iosSimulatorArm64Main.dependsOn(this)
+        val iosMain by getting {
             dependencies {
                 implementation(libs.connectivity.compose)
                 implementation(libs.connectivity.device)
@@ -139,19 +129,14 @@ kotlin {
             }
         }
 
-        val macOsMain by creating {
-            dependsOn(commonMain)
-            dependsOn(appleMain)
-            macosX64Main.dependsOn(this)
-            macosArm64Main.dependsOn(this)
+        val macosMain by getting {
             dependencies {
                 implementation(libs.connectivity.http)
             }
         }
 
-        val webMain by creating {
+        val webMain by getting {
             dependencies {
-                dependsOn(commonMain)
                 implementation(libs.connectivity.compose)
                 implementation(libs.connectivity.http)
                 implementation(libs.connectivity.compose.http)
@@ -162,13 +147,11 @@ kotlin {
 
         val jsMain by getting {
             dependencies {
-                dependsOn(webMain)
             }
         }
 
         val wasmJsMain by getting {
             dependencies {
-                dependsOn(webMain)
             }
         }
     }
