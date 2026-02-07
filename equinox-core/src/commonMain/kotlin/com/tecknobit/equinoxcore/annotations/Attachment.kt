@@ -12,8 +12,8 @@ package com.tecknobit.equinoxcore.annotations
  *    // rest of the component
  * }
  *
- * @Composable
  * @Attachment
+ * @Composable
  * @Suppress("ComposableNaming")
  * private fun retrieveData() {
  *     LaunchedEffect(Unit) {
