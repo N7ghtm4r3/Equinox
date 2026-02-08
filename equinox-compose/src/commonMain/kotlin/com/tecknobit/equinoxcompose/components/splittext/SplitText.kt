@@ -73,8 +73,7 @@ fun SplitText(
     state: SplitTextState,
     spacingBetweenBoxes: Dp = 10.dp,
     boxShape: Shape = CardDefaults.shape,
-    boxTextStyle: TextStyle = TextStyle(
-        fontSize = 30.sp,
+    boxTextStyle: TextStyle = MaterialTheme.typography.titleLarge.copy(
         fontWeight = FontWeight.Bold,
         textAlign = TextAlign.Center
     ),
