@@ -1,5 +1,5 @@
 The `EmptyStateComponent` annotation is used to mark a custom standalone composable that wraps and implements
-an [EmptyState](../Components/EmptyState.md)
+an [EmptyState](../Components/EquinoxUIs.md#emptystate)
 
 It indicates that the annotated composable provides the specific,
 custom details (resources, styles, layout, behavior) for an `EmptyState`,

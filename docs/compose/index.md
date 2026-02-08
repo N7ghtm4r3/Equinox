@@ -112,7 +112,7 @@ dependencies {
       Wrapper components of the official `AlertDialog` provided by `Material` with the [EquinoxViewModel](APIs/EquinoxViewModel.md)
       lifecycle handling
 
-    - [EquinoxUIs](https://github.com/N7ghtm4r3/Equinox/blob/main/equinox-compose/src/commonMain/kotlin/com/tecknobit/equinoxcompose/components/EquinoxUIs.kt)   
+    - [EquinoxUIs](Components/EquinoxUIs.md)  
       Are prebuilt UIs to display a representative scenario like errors, loadings, etc
     
     - [ProgressBars](components/ProgressBars.md)  
