@@ -34,7 +34,7 @@ import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 
 /**
- * Method used to display a layout when a list of values is empty
+ * Component used to display a loading state
  *
  * @param triggers The triggers to use to automatically reinvoke the [loadingRoutine]
  * @param containerModifier The modifier to apply to the container column
@@ -111,7 +111,7 @@ fun LoadingItemUI(
 }
 
 /**
- * Method used to display the content of the [EmptyListUI]
+ * Component used to display the content of the [EmptyListUI]
  *
  * @param loadingRoutine The routine used to load the data
  * @param initialDelay An initial delay to apply to the [loadingRoutine] before to start
@@ -156,7 +156,7 @@ private fun LoadingItemUIContent(
 }
 
 /**
- * Method used to display a layout when a list of values is empty
+ * Component used to display a layout when a list of values is empty
  *
  * @param containerModifier The modifier to apply to the container column
  * @param imageModifier The modifier to apply to the image icon
@@ -188,7 +188,7 @@ fun EmptyListUI(
 }
 
 /**
- * Method used to display a layout when a list of values is empty
+ * Component used to display a layout when a list of values is empty
  *
  * @param containerModifier The modifier to apply to the container column
  * @param imageModifier The modifier to apply to the image icon
@@ -236,7 +236,7 @@ fun EmptyListUI(
 }
 
 /**
- * Method used to display the content of the [EmptyListUI]
+ * Component used to display the content of the [EmptyListUI]
  *
  * @param containerModifier The modifier to apply to the container column
  * @param imageModifier The modifier to apply to the image icon
@@ -278,15 +278,15 @@ private fun EmptyListUIContent(
 }
 
 /**
- * Method used to display a layout when an error occurred
+ * Component used to display a layout when an error occurred
  *
  * @param containerModifier The modifier to apply to the container column
  * @param imageModifier The modifier to apply to the image icon
  * @param animations The set of the animations to use to animate the layout
  * @param textStyle The style to apply to the text
  * @param backgroundColor The color of the background
- * @param errorIcon The error icon used, as default is used the **Icons.Default.Error**
- * @param errorColor The error color used, as default is used the **MaterialTheme.colorScheme.errorContainer**
+ * @param errorIcon The error icon used, as default is used the `Icons.Default.Error`
+ * @param errorColor The error color used, as default is used the `MaterialTheme.colorScheme.errorContainer`
  * @param errorMessage The error that occurred or to indicate a generic error
  * @param retryContent The content to retry the failed operation
  */
@@ -316,7 +316,7 @@ fun ErrorUI(
 }
 
 /**
- * Method used to display the layout when an error occurred
+ * Component used to display the layout when an error occurred
  *
  * @param containerModifier The modifier to apply to the container column
  * @param imageModifier The modifier to apply to the image icon
@@ -372,7 +372,7 @@ fun ErrorUI(
 }
 
 /**
- * Method used to display the content of the [ErrorUI] layout
+ * Component used to display the content of the [ErrorUI] layout
  *
  * @param containerModifier The modifier to apply to the container column
  * @param imageModifier The modifier to apply to the image icon
@@ -419,7 +419,7 @@ private fun ErrorUIContent(
 }
 
 /**
- * Container component useful to display a custom empty state graphics
+ * Component for displaying custom empty state graphics
  *
  * @param animations The set of the animations to use to animate the layout
  * @param containerModifier The modifier to apply to the container [Column]
@@ -474,7 +474,7 @@ fun EmptyState(
 }
 
 /**
- * Container component useful to display a custom empty state graphics
+ * Component for displaying custom empty state graphics
  *
  * @param animations The set of the animations to use to animate the layout
  * @param containerModifier The modifier to apply to the container [Column]
@@ -522,7 +522,7 @@ fun EmptyState(
 }
 
 /**
- * Container component useful to display a custom empty state graphics
+ * Component for displaying custom empty state graphics
  *
  * @param animations The set of the animations to use to animate the layout
  * @param containerModifier The modifier to apply to the container [Column]
@@ -577,7 +577,7 @@ fun EmptyState(
 }
 
 /**
- * Container component useful to display a custom empty state graphics
+ * Component for displaying custom empty state graphics
  *
  * @param animations The set of the animations to use to animate the layout
  * @param containerModifier The modifier to apply to the container [Column]
@@ -627,7 +627,7 @@ fun EmptyState(
 }
 
 /**
- * Container component useful to display a custom empty state graphics
+ * Component for displaying custom empty state graphics
  *
  * @param animations The set of the animations to use to animate the layout
  * @param containerModifier The modifier to apply to the container [Column]
@@ -682,7 +682,7 @@ fun EmptyState(
 }
 
 /**
- * Container component useful to display a custom empty state graphics
+ * Component for displaying custom empty state graphics
  *
  * @param animations The set of the animations to use to animate the layout
  * @param containerModifier The modifier to apply to the container [Column]

@@ -84,7 +84,7 @@ dependencies {
 ## Components available
 
 ??? texts "Texts"
-- [TextDivider](Components/TextDivider.md)  
+    - [TextDivider](Components/TextDivider.md)  
     Allows to divide sections with a representative text
 
     - [SplitText](Components/SplitText.md)  
@@ -96,11 +96,11 @@ dependencies {
     - [ChameleonText](Components/ChameleonText.md)  
       Allows to change the text color dynamically based on the background of the container where the text is above
 
-    - [BadgeText](Components/BadgeText.md)  
+    - [BadgeText](Components/BadgesText.md)  
       Allows to display a customizable badge in your UI
 
 ??? inputs "Inputs"
-- [EquinoxInputs](https://github.com/N7ghtm4r3/Equinox/blob/main/equinox-compose/src/commonMain/kotlin/com/tecknobit/equinoxcompose/Components/EquinoxInputs.kt)  
+    - [EquinoxInputs](https://github.com/N7ghtm4r3/Equinox/blob/main/equinox-compose/src/commonMain/kotlin/com/tecknobit/equinoxcompose/Components/EquinoxInputs.kt)  
       Wrapper components of the official `TextField` and `OutlinedTextField` provided by `Material` which provides same 
       extra features such input validation or `onValue` callback behavior defined by default
 
@@ -108,7 +108,7 @@ dependencies {
       Allow to implement a debounce routine handled when the user stop to typing in the inputs fields
 
 ??? feedback "Feedback & Status"
-- [EquinoxDialogs](https://github.com/N7ghtm4r3/Equinox/blob/main/equinox-compose/src/commonMain/kotlin/com/tecknobit/equinoxcompose/Components/EquinoxDialogs.kt)  
+    - [EquinoxDialogs](https://github.com/N7ghtm4r3/Equinox/blob/main/equinox-compose/src/commonMain/kotlin/com/tecknobit/equinoxcompose/Components/EquinoxDialogs.kt)  
       Wrapper components of the official `AlertDialog` provided by `Material` with the [EquinoxViewModel](APIs/EquinoxViewModel.md)
       lifecycle handling
 
