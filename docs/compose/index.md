@@ -84,7 +84,7 @@ dependencies {
 ## Components available
 
 ??? texts "Texts"
-    - [TextDivider](components/TextDivider.md)  
+- [TextDivider](Components/TextDivider.md)  
     Allows to divide sections with a representative text
 
     - [SplitText](components/SplitText.md)  

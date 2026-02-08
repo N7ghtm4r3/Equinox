@@ -22,6 +22,8 @@ package com.tecknobit.equinoxcore.annotations
  * }
  * ```
  *
+ * @property behavior The behavior added to the component
+ *
  * @author N7ghtm4r3 - Tecknobit
  *
  * @since 1.1.9
@@ -29,10 +31,5 @@ package com.tecknobit.equinoxcore.annotations
 @Target(AnnotationTarget.FUNCTION)
 @Retention(AnnotationRetention.SOURCE)
 annotation class Attachment(
-
-    /**
-     * The behavior added to the component
-     */
     val behavior: String = "",
-
-    )
+)
