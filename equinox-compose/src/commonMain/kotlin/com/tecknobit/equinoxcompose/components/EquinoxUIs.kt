@@ -4,10 +4,7 @@ import androidx.compose.animation.*
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Error
 import androidx.compose.material3.CircularProgressIndicator
@@ -23,6 +20,7 @@ import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -786,30 +784,23 @@ private fun EmptyStateContent(
     Column(
         modifier = containerModifier,
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
+        verticalArrangement = Arrangement.spacedBy(verticalSpacing)
     ) {
         Image(
             modifier = resourceModifier
-                .size(resourceSize),
+                .width(resourceSize),
             painter = resource,
-            contentDescription = contentDescription
+            contentDescription = contentDescription,
+            contentScale = ContentScale.Fit
         )
         title?.let {
             Text(
-                modifier = Modifier
-                    .padding(
-                        vertical = verticalSpacing
-                    ),
                 text = title,
                 style = titleStyle
             )
         }
         subTitle?.let {
             Text(
-                modifier = Modifier
-                    .padding(
-                        vertical = verticalSpacing
-                    ),
                 text = subTitle,
                 style = subTitleStyle
             )
