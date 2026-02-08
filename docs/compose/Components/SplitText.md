@@ -20,7 +20,7 @@ class TestScreen : EquinoxScreen<EquinoxViewModel>() {
 
             // create the related component
             SplitText(
-                splitsTextState = splitTextState,
+                state = splitTextState,
                 infoText = InfoText( // if omitted will not be displayed nothing
                     text = "Informative text"
                 )

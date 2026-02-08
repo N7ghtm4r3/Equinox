@@ -60,7 +60,7 @@ data class InfoText(
  *
  * @param columnModifier The modifier to apply to the [Column] container
  * @param rowModifier The modifier to apply to the [LazyRow] container
- * @param splitsTextState The state used to manage this component
+ * @param state The state used to manage this component
  * @param spacingBetweenBoxes The spacing between the boxes
  * @param boxShape The shape to apply to the [SplitBox]
  * @param boxTextStyle The text style to use for the [SplitBox]'s text
@@ -70,7 +70,7 @@ data class InfoText(
 fun SplitText(
     columnModifier: Modifier = Modifier,
     rowModifier: Modifier = Modifier,
-    splitsTextState: SplitTextState,
+    state: SplitTextState,
     spacingBetweenBoxes: Dp = 10.dp,
     boxShape: Shape = CardDefaults.shape,
     boxTextStyle: TextStyle = TextStyle(
@@ -81,7 +81,7 @@ fun SplitText(
     infoText: InfoText? = null,
 ) {
     focusManager = LocalFocusManager.current
-    splitsTextState.CreateSlices()
+    state.createSlices()
     Column(
         modifier = columnModifier
     ) {
@@ -91,10 +91,10 @@ fun SplitText(
             horizontalArrangement = Arrangement.spacedBy(spacingBetweenBoxes)
         ) {
             itemsIndexed(
-                items = splitsTextState.textSlices
+                items = state.textSlices
             ) { index, textSlice ->
                 SplitBox(
-                    currentTextSlices = splitsTextState.textSlices,
+                    currentTextSlices = state.textSlices,
                     boxShape = boxShape,
                     boxTextStyle = boxTextStyle,
                     textSlice = textSlice,

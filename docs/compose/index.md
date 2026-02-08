@@ -87,58 +87,58 @@ dependencies {
 - [TextDivider](Components/TextDivider.md)  
     Allows to divide sections with a representative text
 
-    - [SplitText](components/SplitText.md)  
+    - [SplitText](Components/SplitText.md)  
       Allows the user to insert a split text such OTP codes, PIN or any other texts of this type
-    
-    - [ExpandableText](components/ExpandableText.md)  
+
+    - [ExpandableText](Components/ExpandableText.md)  
       Allows to dynamically display a long expanded text initially collapsed
-    
-    - [ChameleonText](components/ChameleonText.md)  
+
+    - [ChameleonText](Components/ChameleonText.md)  
       Allows to change the text color dynamically based on the background of the container where the text is above
-     
-    - [BadgeText](components/BadgeText.md)  
+
+    - [BadgeText](Components/BadgeText.md)  
       Allows to display a customizable badge in your UI
 
 ??? inputs "Inputs"
-    - [EquinoxInputs](https://github.com/N7ghtm4r3/Equinox/blob/main/equinox-compose/src/commonMain/kotlin/com/tecknobit/equinoxcompose/components/EquinoxInputs.kt)  
+- [EquinoxInputs](https://github.com/N7ghtm4r3/Equinox/blob/main/equinox-compose/src/commonMain/kotlin/com/tecknobit/equinoxcompose/Components/EquinoxInputs.kt)  
       Wrapper components of the official `TextField` and `OutlinedTextField` provided by `Material` which provides same 
       extra features such input validation or `onValue` callback behavior defined by default
-    
-    - [DebouncedInputs](components/DebouncedInputs.md)  
+
+    - [DebouncedInputs](Components/DebouncedInputs.md)  
       Allow to implement a debounce routine handled when the user stop to typing in the inputs fields
 
 ??? feedback "Feedback & Status"
-    - [EquinoxDialogs](https://github.com/N7ghtm4r3/Equinox/blob/main/equinox-compose/src/commonMain/kotlin/com/tecknobit/equinoxcompose/components/EquinoxDialogs.kt)  
+- [EquinoxDialogs](https://github.com/N7ghtm4r3/Equinox/blob/main/equinox-compose/src/commonMain/kotlin/com/tecknobit/equinoxcompose/Components/EquinoxDialogs.kt)  
       Wrapper components of the official `AlertDialog` provided by `Material` with the [EquinoxViewModel](APIs/EquinoxViewModel.md)
       lifecycle handling
 
     - [EquinoxUIs](Components/EquinoxUIs.md)  
       Are prebuilt UIs to display a representative scenario like errors, loadings, etc
     
-    - [ProgressBars](components/ProgressBars.md)  
+    - [ProgressBars](Components/ProgressBars.md)  
       Allow to display progress values on bars
 
-    - [InformativeIcon](components/InformativeIcon.md)  
+    - [InformativeIcon](Components/InformativeIcon.md)  
       Provides the possibility to display an informative text when the user interact with an icon
 
 ??? interactive "Interactive"
 
-    - [TabSelector](components/TabSelector.md)  
+    - [TabSelector](Components/TabSelector.md)  
       Custom tab selector allows to select the tab to display
     
-    - [Tile](components/Tile.md)  
+    - [Tile](Components/Tile.md)  
       Allows users to quickly understand options and interact with them and can group related actions or information
 
-    - [Stepper](components/Stepper.md)  
+    - [Stepper](Components/Stepper.md)  
       Allows to create a dynamic interaction with the user dividing for example a long procedure such item
       creation, customization, etc... in different specific steps where the user can interact
 
-    - [QuantityPicker](components/QuantityPicker.md)  
+    - [QuantityPicker](Components/QuantityPicker.md)  
       Allows to pick a numerical quantity value
 
 ??? containers "Containers"
 
-    - [SessionFlowContainer](components/SessionFlowContainer.md)  
+    - [SessionFlowContainer](Components/SessionFlowContainer.md)  
       Allows to dynamically display the correct content based on the session status
 
 ## Annotations available
