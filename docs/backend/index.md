@@ -10,7 +10,7 @@ Utilities and apis for the backends based on the **Spring Boot** framework
 
 ```toml
 [versions]
-equinox-backend = "1.1.7"
+equinox-backend = "1.1.8"
 equinox = "1.1.9"
 
 [libraries]
@@ -46,7 +46,7 @@ Add the JitPack repository to your build file
     dependencies {
        
         // implement the backend utilities
-        implementation 'io.github.n7ghtm4r3:equinox-backend:1.1.7'
+        implementation 'io.github.n7ghtm4r3:equinox-backend:1.1.8'
         
         // implement the core utilities
         implementation 'io.github.n7ghtm4r3:equinox-core:1.1.9'
@@ -59,7 +59,7 @@ Add the JitPack repository to your build file
     dependencies {
         
         // implement the backend utilities
-        implementation("io.github.n7ghtm4r3:equinox-backend:1.1.7")
+        implementation("io.github.n7ghtm4r3:equinox-backend:1.1.8")
         
         // implement the core utilities
         implementation("io.github.n7ghtm4r3:equinox-core:1.1.9")
