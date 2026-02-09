@@ -7,7 +7,7 @@
 ![Static Badge](https://img.shields.io/badge/desktop-006874?link=https%3A%2F%2Fimg.shields.io%2Fbadge%2Fandroid-4280511051)
 ![Static Badge](https://img.shields.io/badge/web-834C74?link=https%3A%2F%2Fimg.shields.io%2Fbadge%2Fandroid-4280511051)
 
-**v1.0.0**
+**v1.0.1**
 
 Integration of the [Navigation Compose](https://www.jetbrains.com/help/kotlin-multiplatform-dev/compose-navigation.html) 
 library with some useful utilities to simplify the sharing of the data between the destinations during the navigation
