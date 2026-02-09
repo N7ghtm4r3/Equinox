@@ -135,6 +135,9 @@ dependencies {
 
     - [QuantityPicker](Components/QuantityPicker.md)  
       Allows to pick a numerical quantity value
+    
+    - [LetterAvatar](Components/LetterAvatar.md)  
+      Allows to display the letters of a provided name like a user profile placeholder
 
 ??? containers "Containers"
 

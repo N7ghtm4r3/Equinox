@@ -23,6 +23,24 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.tecknobit.equinoxcore.annotations.Returner
 
+/**
+ * Component allows to display the letters of a provided [name] in the format: Name Second-name Third-name (NST)
+ *
+ * Intended to be used as a fallback placeholder when the user does not
+ * have a profile picture or when a network error occurs
+ *
+ * @param modifier The modifier to apply to the component
+ * @param size The size the avatar must have
+ * @param shape The shape to apply to the component
+ * @param elevation The elevation to apply to the component
+ * @param uppercaseFormat Whether the letters must be displayed in uppercase format or displayed as provided
+ * @param name The name of the avatar
+ * @param backgroundColor The color of the background, default color is resolved with [resolveAvatarColor] method
+ * @param style The style of the displayed letters
+ * @param onClick The callback action to invoke when the user click the component
+ *
+ * @since 1.1.9
+ */
 @Composable
 @ExperimentalMaterial3Api
 fun LetterAvatar(
@@ -78,18 +96,16 @@ fun LetterAvatar(
     }
 }
 
-@Returner
-fun resolveAvatarColor(
-    name: String,
-): Color {
-    val hashCode = name.hashCode()
-    return Color(
-        red = hashCode shr 0 and 0xFF,
-        green = hashCode shr 8 and 0xFF,
-        blue = hashCode shr 16 and 0xFF
-    )
-}
-
+/**
+ * Method used to resolve the letters to display on the [LetterAvatar] component based on the provided [name]
+ *
+ * @param name The name of the avatar
+ * @param uppercaseFormat Whether the letters must be displayed in uppercase format or displayed as provided
+ *
+ * @return the letters to display as [String]
+ *
+ * @since 1.1.9
+ */
 @Returner
 private fun resolveInitialLetters(
     name: String,
@@ -104,4 +120,25 @@ private fun resolveInitialLetters(
         initialLetters.uppercase()
     else
         initialLetters
+}
+
+/**
+ * Method used to resolve the background color for the [LetterAvatar] component
+ *
+ * @param name The name of the avatar
+ *
+ * @return the background color as [Color]
+ *
+ * @since 1.1.9
+ */
+@Returner
+fun resolveAvatarColor(
+    name: String,
+): Color {
+    val hashCode = name.hashCode()
+    return Color(
+        red = hashCode shr 0 and 0xFF,
+        green = hashCode shr 8 and 0xFF,
+        blue = hashCode shr 16 and 0xFF
+    )
 }
