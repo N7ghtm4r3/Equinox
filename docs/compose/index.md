@@ -138,6 +138,9 @@ dependencies {
     
     - [LetterAvatar](Components/LetterAvatar.md)  
       Allows to display the letters of a provided name like a user profile placeholder
+    
+    - [Avatars](Components/Avatars.md)  
+      Allows to creatively display a list of avatar items
 
 ??? containers "Containers"
 

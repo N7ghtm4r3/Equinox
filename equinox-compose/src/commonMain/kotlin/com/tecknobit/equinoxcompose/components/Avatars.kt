@@ -17,7 +17,7 @@ import androidx.compose.ui.unit.times
 
 /**
  * This component allows you to creatively display a list of avatar items. It is fully customizable, and the recommended
- * approach is to show either the user's profile picture or, if unavailable, a placeholder using the [LetterAvatar] component
+ * approach is to show either the user's profile picture or a placeholder using for example the [LetterAvatar] component
  *
  * @param modifier The modifier to apply to the component
  * @param visibleAvatars The maximum number of visible avatars
@@ -28,9 +28,11 @@ import androidx.compose.ui.unit.times
  * @param offset The horizontal offset to apply to each item to move it horizontally
  * @param remainingBadge The content used to display how many avatars remain after the [visibleAvatars] number has been exceeded
  * @param avatar The content to display the wanted avatar element
- * @param supportingContent The supporting content to describe this component or to add extra element to it
+ * @param supportingContent The supporting content to describe this component or to add extra elements to it
  *
  * @since 1.1.9
+ *
+ * @see LetterAvatar
  */
 @Composable
 @ExperimentalMaterial3Api
