@@ -3,10 +3,10 @@ package com.tecknobit.equinoxcompose.components.splittext
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.Saver
 import androidx.compose.runtime.saveable.SaverScope
 import androidx.compose.runtime.saveable.rememberSaveable
+import com.tecknobit.equinoxcore.annotations.Attachment
 
 /**
  * The remember function used to create a [SplitTextState] for a [SplitText] component
@@ -50,14 +50,14 @@ class SplitTextState internal constructor(
 
     /**
      * Method used to allocate each slice of the [textSlices] with their values
-     *
      */
+    @Attachment
     @Composable
-    internal fun CreateSlices() {
+    internal fun createSlices() {
         textSlices.clear()
         repeat(splits) { index ->
             textSlices.add(
-                remember {
+                rememberSaveable {
                     mutableStateOf(initialSliceValues[index])
                 }
             )

@@ -3,11 +3,11 @@
 ![Maven Central](https://img.shields.io/maven-central/v/io.github.n7ghtm4r3/equinoxmisc-lazy-pagination-compose-ops.svg?label=Maven%20Central)
 
 ![Static Badge](https://img.shields.io/badge/android-4280511051?link=https%3A%2F%2Fplay.google.com%2Fstore%2Fapps%2Fdetails%3Fid%3Dcom.tecknobit.ametista)
-![Static Badge](https://img.shields.io/badge/ios-445E91?link=https%3A%2F%2Fimg.shields.io%2Fbadge%2Fandroid-4280511051)
+![Static Badge](https://img.shields.io/badge/apple-445E91?link=https%3A%2F%2Fimg.shields.io%2Fbadge%2Fandroid-4280511051)
 ![Static Badge](https://img.shields.io/badge/desktop-006874?link=https%3A%2F%2Fimg.shields.io%2Fbadge%2Fandroid-4280511051)
-![Static Badge](https://img.shields.io/badge/wasmjs-834C74?link=https%3A%2F%2Fimg.shields.io%2Fbadge%2Fandroid-4280511051)
+![Static Badge](https://img.shields.io/badge/web-834C74?link=https%3A%2F%2Fimg.shields.io%2Fbadge%2Fandroid-4280511051)
 
-**v1.0.2**
+**v1.0.3**
 
 Integration of the [lazy-pagination-compose](https://github.com/Ahmad-Hamwi/lazy-pagination-compose) library with the
 `in-place`
@@ -22,7 +22,7 @@ operations such `addInPlace, removeInPlace`, etc...
 ```toml
 [versions]
 lazyPaginationCompose = "1.7.1"
-lazyPaginationComposeOps = "1.0.2"
+lazyPaginationComposeOps = "1.0.3"
 
 [libraries]
 lazy-pagination-compose = { module = "io.github.ahmad-hamwi:lazy-pagination-compose", version.ref = "lazyPaginationCompose" }
@@ -43,7 +43,7 @@ dependencies {
 ```kotlin
 dependencies {
     implementation("io.github.ahmad-hamwi:lazy-pagination-compose:1.7.1")
-    implementation("io.github.n7ghtm4r3:equinoxmisc-lazy-pagination-compose-ops:1.0.2")
+    implementation("io.github.n7ghtm4r3:equinoxmisc-lazy-pagination-compose-ops:1.0.3")
 }
 ```
 
@@ -52,7 +52,7 @@ dependencies {
 ```groovy
 dependencies {
     implementation 'io.github.ahmad-hamwi:lazy-pagination-compose:1.7.1'
-    implementation 'io.github.n7ghtm4r3:equinoxmisc-lazy-pagination-compose-ops:1.0.2'
+    implementation 'io.github.n7ghtm4r3:equinoxmisc-lazy-pagination-compose-ops:1.0.3'
 }
 ```
 
@@ -92,4 +92,4 @@ If you want support project and developer
 If you want support project and developer
 with <a href="https://www.paypal.com/donate/?hosted_button_id=5QMN5UQH7LDT4">PayPal</a>
 
-Copyright © 2025 Tecknobit
+Copyright © 2026 Tecknobit

@@ -2,19 +2,19 @@ import com.vanniktech.maven.publish.JavadocJar
 import com.vanniktech.maven.publish.KotlinMultiplatform
 import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
-import org.jetbrains.kotlin.gradle.targets.wasm.nodejs.WasmNodeJsRootExtension
 
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
-    alias(libs.plugins.jetbrainsCompose)
-    alias(libs.plugins.androidLibrary)
+    alias(libs.plugins.composeMultiplatform)
+    alias(libs.plugins.composeCompiler)
+    alias(libs.plugins.androidKotlinMultiplatformLibrary)
+    alias(libs.plugins.kotlinSerialization)
+    alias(libs.plugins.dokka)
     alias(libs.plugins.vanniktech.mavenPublish)
-    alias(libs.plugins.compose.compiler)
-    kotlin("plugin.serialization") version "2.1.0"
 }
 
 group = "com.tecknobit.equinoxcompose"
-version = "1.1.8"
+version = "1.1.9"
 
 repositories {
     google()
@@ -22,19 +22,25 @@ repositories {
 }
 
 kotlin {
+    androidLibrary {
+        compileSdk = libs.versions.android.compileSdk.get().toInt()
+        minSdk = libs.versions.android.minSdk.get().toInt()
+        namespace = "com.tecknobit.equinoxcompose"
+        experimentalProperties["android.experimental.kmp.enableAndroidResources"] = true
+
+        compilations {
+            compilerOptions {
+                jvmTarget.set(JvmTarget.JVM_18)
+            }
+        }
+
+    }
 
     jvm {
         compilations.all {
             this@jvm.compilerOptions {
                 jvmTarget.set(JvmTarget.JVM_18)
             }
-        }
-    }
-
-    androidTarget {
-        publishLibraryVariants("release", "debug")
-        compilerOptions {
-            jvmTarget.set(JvmTarget.JVM_18)
         }
     }
 
@@ -45,15 +51,23 @@ kotlin {
         macosX64(),
         macosArm64()
     ).forEach { appleTarget ->
+        compilerOptions {
+            freeCompilerArgs.add("-Xklib-duplicated-unique-name-strategy=allow-all-with-warning")
+        }
         appleTarget.binaries.framework {
             baseName = "equinox-compose"
             isStatic = true
         }
     }
 
+    js {
+        browser()
+        binaries.library()
+    }
+
     @OptIn(ExperimentalWasmDsl::class)
     wasmJs {
-        binaries.executable()
+        binaries.library()
         browser {
             webpackTask {
 
@@ -62,6 +76,8 @@ kotlin {
     }
 
     sourceSets {
+        applyDefaultHierarchyTemplate()
+
         val androidMain by getting {
             dependencies {
                 implementation(libs.connectivity.compose)
@@ -77,8 +93,8 @@ kotlin {
                 implementation(compose.foundation)
                 implementation(compose.material3)
                 implementation(compose.materialIconsExtended)
-                implementation(libs.lifecycle.viewmodel.compose)
                 implementation(libs.lifecycle.runtime.compose)
+                implementation(libs.lifecycle.viewmodel.compose)
                 implementation(libs.kermit)
                 //implementation(libs.kmpalette.core)
                 implementation(libs.connectivity.core)
@@ -99,25 +115,13 @@ kotlin {
             }
         }
 
-        val iosX64Main by getting
-        val iosArm64Main by getting
-        val iosSimulatorArm64Main by getting
-        val macosX64Main by getting
-        val macosArm64Main by getting
-
-        val appleMain by creating {
-            dependsOn(commonMain)
+        val appleMain by getting {
             dependencies {
                 implementation(libs.ktor.client.cio)
             }
         }
 
-        val iosMain by creating {
-            dependsOn(commonMain)
-            dependsOn(appleMain)
-            iosX64Main.dependsOn(this)
-            iosArm64Main.dependsOn(this)
-            iosSimulatorArm64Main.dependsOn(this)
+        val iosMain by getting {
             dependencies {
                 implementation(libs.connectivity.compose)
                 implementation(libs.connectivity.device)
@@ -125,46 +129,52 @@ kotlin {
             }
         }
 
-        val macOsMain by creating {
-            dependsOn(commonMain)
-            dependsOn(appleMain)
-            macosX64Main.dependsOn(this)
-            macosArm64Main.dependsOn(this)
+        val macosMain by getting {
             dependencies {
                 implementation(libs.connectivity.http)
             }
         }
 
-        val wasmJsMain by getting {
+        val webMain by getting {
             dependencies {
                 implementation(libs.connectivity.compose)
                 implementation(libs.connectivity.http)
                 implementation(libs.connectivity.compose.http)
                 implementation(libs.ktor.client.js)
+                implementation(libs.kotlin.browser)
+            }
+        }
+
+        val jsMain by getting {
+            dependencies {
+            }
+        }
+
+        val wasmJsMain by getting {
+            dependencies {
             }
         }
     }
-}
 
-rootProject.the<WasmNodeJsRootExtension>().versions.webpackDevServer.version = "5.2.2"
+    jvmToolchain(18)
+}
 
 mavenPublishing {
     configure(
         KotlinMultiplatform(
-            javadocJar = JavadocJar.Dokka("dokkaHtml"),
-            sourcesJar = true,
+            javadocJar = JavadocJar.Dokka("dokkaGenerate"),
             androidVariantsToPublish = listOf("release"),
         )
     )
     coordinates(
         groupId = "io.github.n7ghtm4r3",
         artifactId = "equinox-compose",
-        version = "1.1.8"
+        version = "1.1.9"
     )
     pom {
         name.set("Equinox Compose")
         description.set("Utilities for Kotlin Multiplatform applications such components, apis for Android, Desktop, iOS and Web platforms")
-        inceptionYear.set("2025")
+        inceptionYear.set("2026")
         url.set("https://github.com/N7ghtm4r3/Equinox")
 
         licenses {
@@ -193,16 +203,4 @@ compose.resources {
     publicResClass = true
     packageOfResClass = "com.tecknobit.equinoxcompose.resources"
     generateResClass = always
-}
-
-android {
-    namespace = "com.tecknobit.equinoxcompose"
-    compileSdk = libs.versions.android.compileSdk.get().toInt()
-    defaultConfig {
-        minSdk = libs.versions.android.minSdk.get().toInt()
-    }
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_18
-        targetCompatibility = JavaVersion.VERSION_18
-    }
 }

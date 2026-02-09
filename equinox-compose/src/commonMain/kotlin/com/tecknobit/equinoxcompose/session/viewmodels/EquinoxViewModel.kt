@@ -3,7 +3,8 @@ package com.tecknobit.equinoxcompose.session.viewmodels
 import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
-import androidx.compose.material3.SnackbarResult.*
+import androidx.compose.material3.SnackbarResult.ActionPerformed
+import androidx.compose.material3.SnackbarResult.Dismissed
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.tecknobit.equinoxcompose.session.Retriever

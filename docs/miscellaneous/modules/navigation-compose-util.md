@@ -5,7 +5,7 @@
 ![Static Badge](https://img.shields.io/badge/android-4280511051?link=https%3A%2F%2Fplay.google.com%2Fstore%2Fapps%2Fdetails%3Fid%3Dcom.tecknobit.ametista)
 ![Static Badge](https://img.shields.io/badge/apple-445E91?link=https%3A%2F%2Fimg.shields.io%2Fbadge%2Fandroid-4280511051)
 ![Static Badge](https://img.shields.io/badge/desktop-006874?link=https%3A%2F%2Fimg.shields.io%2Fbadge%2Fandroid-4280511051)
-![Static Badge](https://img.shields.io/badge/wasmjs-834C74?link=https%3A%2F%2Fimg.shields.io%2Fbadge%2Fandroid-4280511051)
+![Static Badge](https://img.shields.io/badge/web-834C74?link=https%3A%2F%2Fimg.shields.io%2Fbadge%2Fandroid-4280511051)
 
 **v1.0.0**
 
@@ -21,7 +21,7 @@ library with some useful utilities to simplify the sharing of the data between t
 ```toml
 [versions]
 navigationCompose = "2.9.1"
-navigationComposeUtil = "1.0.0"
+navigationComposeUtil = "1.0.1"
 
 [libraries]
 navigation-compose = { module = "org.jetbrains.androidx.navigation:navigation-compose", version.ref = "navigationCompose" }
@@ -42,7 +42,7 @@ dependencies {
 ```kotlin
 dependencies {
     implementation("org.jetbrains.androidx.navigation:navigation-compose:2.9.1")
-    implementation("io.github.n7ghtm4r3:equinoxmisc-navigation-compose-util:1.0.0")
+    implementation("io.github.n7ghtm4r3:equinoxmisc-navigation-compose-util:1.0.1")
 }
 ```
 
@@ -51,7 +51,7 @@ dependencies {
 ```groovy
 dependencies {
     implementation 'org.jetbrains.androidx.navigation:navigation-compose:2.9.1'
-    implementation 'io.github.n7ghtm4r3:equinoxmisc-navigation-compose-util:1.0.0'
+    implementation 'io.github.n7ghtm4r3:equinoxmisc-navigation-compose-util:1.0.1'
 }
 ```
 

@@ -10,8 +10,8 @@ Utilities and apis for the backends based on the **Spring Boot** framework
 
 ```toml
 [versions]
-equinox-backend = "1.1.7"
-equinox = "1.1.8"
+equinox-backend = "1.1.8"
+equinox = "1.1.9"
 
 [libraries]
 equinox-backend = { module = "io.github.n7ghtm4r3:equinox-backend", version.ref = "equinox-backend" }
@@ -46,10 +46,10 @@ Add the JitPack repository to your build file
     dependencies {
        
         // implement the backend utilities
-        implementation 'io.github.n7ghtm4r3:equinox-backend:1.1.7'
+        implementation 'io.github.n7ghtm4r3:equinox-backend:1.1.8'
         
         // implement the core utilities
-        implementation 'io.github.n7ghtm4r3:equinox-core:1.1.8'
+        implementation 'io.github.n7ghtm4r3:equinox-core:1.1.9'
     }
     ```
 
@@ -59,10 +59,10 @@ Add the JitPack repository to your build file
     dependencies {
         
         // implement the backend utilities
-        implementation("io.github.n7ghtm4r3:equinox-backend:1.1.7")
+        implementation("io.github.n7ghtm4r3:equinox-backend:1.1.8")
         
         // implement the core utilities
-        implementation("io.github.n7ghtm4r3:equinox-core:1.1.8")
+        implementation("io.github.n7ghtm4r3:equinox-core:1.1.9")
     }
     ```
 
@@ -111,4 +111,4 @@ If you want support project and developer
 If you want support project and developer
 with <a href="https://www.paypal.com/donate/?hosted_button_id=5QMN5UQH7LDT4">PayPal</a>
 
-Copyright © 2025 Tecknobit
+Copyright © 2026 Tecknobit

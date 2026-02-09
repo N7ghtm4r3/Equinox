@@ -5,7 +5,7 @@
 ![Static Badge](https://img.shields.io/badge/android-4280511051?link=https%3A%2F%2Fplay.google.com%2Fstore%2Fapps%2Fdetails%3Fid%3Dcom.tecknobit.ametista)
 ![Static Badge](https://img.shields.io/badge/apple-445E91?link=https%3A%2F%2Fimg.shields.io%2Fbadge%2Fandroid-4280511051)
 ![Static Badge](https://img.shields.io/badge/desktop-006874?link=https%3A%2F%2Fimg.shields.io%2Fbadge%2Fandroid-4280511051)
-![Static Badge](https://img.shields.io/badge/wasmjs-834C74?link=https%3A%2F%2Fimg.shields.io%2Fbadge%2Fandroid-4280511051)
+![Static Badge](https://img.shields.io/badge/web-834C74?link=https%3A%2F%2Fimg.shields.io%2Fbadge%2Fandroid-4280511051)
 
 Responsive navigation systems based on the [EquinoxScreens](../compose/APIs/EquinoxScreens.md) APIs to handle the
 navigation in **Compose Multiplatform applications**
@@ -18,8 +18,8 @@ navigation in **Compose Multiplatform applications**
 
 ```toml
 [versions]
-equinox = "1.1.8"
-equinox-navigation = "1.0.4"
+equinox = "1.1.9"
+equinox-navigation = "1.0.5"
 
 [libraries]
 equinox-compose = { module = "io.github.n7ghtm4r3:equinox-compose", version.ref = "equinox" }
@@ -47,15 +47,14 @@ dependencies {
 
 ```kotlin
 dependencies {
-    
-    // implement the compose utilities
-    implementation("io.github.n7ghtm4r3:equinox-compose:1.1.8")
-    
-    // implement the core utilities
-    implementation("io.github.n7ghtm4r3:equinox-core:1.1.8")
+  // implement the compose utilities 
+  implementation("io.github.n7ghtm4r3:equinox-compose:1.1.9")
+
+  // implement the core utilities 
+  implementation("io.github.n7ghtm4r3:equinox-core:1.1.9")
     
     // implement the navigation utilities
-    implementation("io.github.n7ghtm4r3:equinox-navigation:1.0.4")
+    implementation("io.github.n7ghtm4r3:equinox-navigation:1.0.5")
 }
 ```
 
@@ -63,15 +62,14 @@ dependencies {
 
 ```groovy
 dependencies {
-   
     // implement the compose utilities
-    implementation 'io.github.n7ghtm4r3:equinox-compose:1.1.8'
+  implementation 'io.github.n7ghtm4r3:equinox-compose:1.1.9'
     
     // implement the core utilities
-    implementation 'io.github.n7ghtm4r3:equinox-core:1.1.8'
+  implementation 'io.github.n7ghtm4r3:equinox-core:1.1.9'
     
     // implement the navigation utilities
-    implementation 'io.github.n7ghtm4r3:equinox-navigation:1.0.4'
+    implementation 'io.github.n7ghtm4r3:equinox-navigation:1.0.5'
 }
 ```
 

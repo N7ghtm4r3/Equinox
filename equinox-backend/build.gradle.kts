@@ -5,14 +5,14 @@ import com.vanniktech.maven.publish.KotlinJvm
 plugins {
     id("java")
     kotlin("jvm")
-    id("org.springframework.boot") version "3.2.3"
+    alias(libs.plugins.spring.boot)
+    alias(libs.plugins.spring.dependency.management)
+    alias(libs.plugins.dokka)
     alias(libs.plugins.vanniktech.mavenPublish)
 }
 
-apply(plugin = "io.spring.dependency-management")
-
 group = "com.tecknobit.equinoxbackend"
-version = "1.1.7"
+version = "1.1.8"
 
 repositories {
     mavenCentral()
@@ -33,19 +33,18 @@ dependencies {
 mavenPublishing {
     configure(
         platform = KotlinJvm(
-            javadocJar = JavadocJar.Dokka("dokkaHtml"),
-            sourcesJar = true
+            javadocJar = JavadocJar.Dokka("dokkaGenerate")
         )
     )
     coordinates(
         groupId = "io.github.n7ghtm4r3",
         artifactId = "equinox-backend",
-        version = "1.1.7"
+        version = "1.1.8"
     )
     pom {
         name.set("Equinox")
         description.set("Utilities for backend services based on Springboot framework. Is a support library to implement some utilities both for backend and for client also who comunicate with that Springboot backend")
-        inceptionYear.set("2025")
+        inceptionYear.set("2026")
         url.set("https://github.com/N7ghtm4r3/Equinox")
 
         licenses {

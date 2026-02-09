@@ -1,11 +1,11 @@
 # Equinox Core
 
-**v1.1.8**
+**v1.1.9**
 
 ![Static Badge](https://img.shields.io/badge/android-4280511051?link=https%3A%2F%2Fplay.google.com%2Fstore%2Fapps%2Fdetails%3Fid%3Dcom.tecknobit.ametista)
 ![Static Badge](https://img.shields.io/badge/apple-445E91?link=https%3A%2F%2Fimg.shields.io%2Fbadge%2Fandroid-4280511051)
 ![Static Badge](https://img.shields.io/badge/desktop-006874?link=https%3A%2F%2Fimg.shields.io%2Fbadge%2Fandroid-4280511051)
-![Static Badge](https://img.shields.io/badge/wasmjs-834C74?link=https%3A%2F%2Fimg.shields.io%2Fbadge%2Fandroid-4280511051)
+![Static Badge](https://img.shields.io/badge/web-834C74?link=https%3A%2F%2Fimg.shields.io%2Fbadge%2Fandroid-4280511051)
 ![Static Badge](https://img.shields.io/badge/backend-7d7d7d?link=https%3A%2F%2Fimg.shields.io%2Fbadge%2Fandroid-4280511051)
 
 Core utilities for **Compose Multiplatform** and **Spring** technologies
@@ -18,7 +18,7 @@ Core utilities for **Compose Multiplatform** and **Spring** technologies
 
 ```toml
 [versions]
-equinox = "1.1.8"
+equinox = "1.1.9"
 
 [libraries]
 equinox-core = { module = "io.github.n7ghtm4r3:equinox-core", version.ref = "equinox" }
@@ -36,7 +36,7 @@ dependencies {
 
 ```kotlin
 dependencies {
-    implementation("io.github.n7ghtm4r3:equinox-core:1.1.8")
+    implementation("io.github.n7ghtm4r3:equinox-core:1.1.9")
 }
 ```
 
@@ -44,7 +44,7 @@ dependencies {
 
 ```groovy
 dependencies {
-    implementation 'io.github.n7ghtm4r3:equinox-core:1.1.8'
+    implementation 'io.github.n7ghtm4r3:equinox-core:1.1.9'
 }
 ```
 
@@ -84,4 +84,4 @@ If you want support project and developer
 If you want support project and developer
 with <a href="https://www.paypal.com/donate/?hosted_button_id=5QMN5UQH7LDT4">PayPal</a>
 
-Copyright © 2025 Tecknobit
+Copyright © 2026 Tecknobit
