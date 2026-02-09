@@ -47,7 +47,9 @@ kotlin {
     listOf(
         iosX64(),
         iosArm64(),
-        iosSimulatorArm64()
+        iosSimulatorArm64(),
+        // macosX64(),
+        macosArm64()
     ).forEach { iosTarget ->
         iosTarget.binaries.framework {
             baseName = "equinoxmisc-lazy-pagination-compose-ops"
@@ -94,7 +96,7 @@ kotlin {
             }
         }
 
-        val iosMain by getting {
+        val appleMain by getting {
             dependencies {
             }
         }
