@@ -2,7 +2,6 @@ package com.tecknobit.equinoxcompose.components
 
 import androidx.compose.foundation.interaction.Interaction
 import androidx.compose.foundation.interaction.MutableInteractionSource
-import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
@@ -59,7 +58,6 @@ private val defaultOnValueChange: (
  * @param textFieldStyle The style to apply to the [TextField]
  * @param textFieldColors The colors to use for the [TextField]
  * @param width The width of the text field
- * @param height The height of the text field
  * @param value The action to execute when the alert dialog has been dismissed
  * @param mustBeInLowerCase Whether the input must be in lower case format
  * @param allowsBlankSpaces Whether the input can contain blank spaces or not
@@ -121,7 +119,6 @@ fun DebouncedTextField(
     textFieldStyle: TextStyle = LocalTextStyle.current,
     textFieldColors: TextFieldColors = TextFieldDefaults.colors(),
     width: Dp = TextFieldDefaults.MinWidth,
-    height: Dp = TextFieldDefaults.MinHeight,
     value: MutableState<String>,
     mustBeInLowerCase: Boolean = false,
     allowsBlankSpaces: Boolean = true,
@@ -159,7 +156,6 @@ fun DebouncedTextField(
         textFieldStyle = textFieldStyle,
         textFieldColors = textFieldColors,
         width = width,
-        height = height,
         value = value,
         mustBeInLowerCase = mustBeInLowerCase,
         maxLines = maxLines,
@@ -208,7 +204,6 @@ fun DebouncedTextField(
  * @param textFieldStyle The style to apply to the [TextField]
  * @param textFieldColors The colors to use for the [TextField]
  * @param width The width of the text field
- * @param height The height of the text field
  * @param value The action to execute when the alert dialog has been dismissed
  * @param mustBeInLowerCase Whether the input must be in lower case format
  * @param allowsBlankSpaces Whether the input can contain blank spaces or not
@@ -279,7 +274,6 @@ fun DebouncedTextField(
     textFieldStyle: TextStyle = LocalTextStyle.current,
     textFieldColors: TextFieldColors = TextFieldDefaults.colors(),
     width: Dp = TextFieldDefaults.MinWidth,
-    height: Dp = TextFieldDefaults.MinHeight,
     value: MutableState<String>,
     mustBeInLowerCase: Boolean = false,
     allowsBlankSpaces: Boolean = true,
@@ -322,7 +316,6 @@ fun DebouncedTextField(
         textFieldStyle = textFieldStyle,
         textFieldColors = textFieldColors,
         width = width,
-        height = height,
         value = value,
         mustBeInLowerCase = mustBeInLowerCase,
         allowsBlankSpaces = allowsBlankSpaces,
@@ -360,7 +353,6 @@ fun DebouncedTextField(
  * @param textFieldStyle The style to apply to the [TextField]
  * @param textFieldColors The colors to use for the [TextField]
  * @param width The width of the text field
- * @param height The height of the text field
  * @param value The action to execute when the alert dialog has been dismissed
  * @param mustBeInLowerCase Whether the input must be in lower case format
  * @param allowsBlankSpaces Whether the input can contain blank spaces or not
@@ -429,7 +421,6 @@ fun EquinoxTextField(
     textFieldStyle: TextStyle = LocalTextStyle.current,
     textFieldColors: TextFieldColors = TextFieldDefaults.colors(),
     width: Dp = TextFieldDefaults.MinWidth,
-    height: Dp = TextFieldDefaults.MinHeight,
     value: MutableState<String>,
     mustBeInLowerCase: Boolean = false,
     allowsBlankSpaces: Boolean = true,
@@ -465,7 +456,6 @@ fun EquinoxTextField(
         textFieldStyle = textFieldStyle,
         textFieldColors = textFieldColors,
         width = width,
-        height = height,
         value = value,
         mustBeInLowerCase = mustBeInLowerCase,
         maxLines = maxLines,
@@ -512,7 +502,6 @@ fun EquinoxTextField(
  * @param textFieldStyle The style to apply to the [TextField]
  * @param textFieldColors The colors to use for the [TextField]
  * @param width The width of the text field
- * @param height The height of the text field
  * @param value The action to execute when the alert dialog has been dismissed
  * @param mustBeInLowerCase Whether the input must be in lower case format
  * @param allowsBlankSpaces Whether the input can contain blank spaces or not
@@ -581,7 +570,6 @@ fun EquinoxTextField(
     textFieldStyle: TextStyle = LocalTextStyle.current,
     textFieldColors: TextFieldColors = TextFieldDefaults.colors(),
     width: Dp = TextFieldDefaults.MinWidth,
-    height: Dp = TextFieldDefaults.MinHeight,
     value: MutableState<String>,
     mustBeInLowerCase: Boolean = false,
     allowsBlankSpaces: Boolean = true,
@@ -614,10 +602,7 @@ fun EquinoxTextField(
 ) {
     TextField(
         modifier = modifier
-            .width(width)
-            .heightIn(
-                max = height
-            ),
+            .width(width),
         textStyle = textFieldStyle,
         colors = textFieldColors,
         value = value.value,
@@ -674,7 +659,6 @@ fun EquinoxTextField(
  * @param outlinedTextFieldStyle The style to apply to the [OutlinedTextField]
  * @param outlinedTextFieldColors The colors to use for the [OutlinedTextField]
  * @param width The width of the text field
- * @param height The height of the text field
  * @param value The action to execute when the alert dialog has been dismissed
  * @param mustBeInLowerCase Whether the input must be in lower case format
  * @param allowsBlankSpaces Whether the input can contain blank spaces or not
@@ -743,7 +727,6 @@ fun DebouncedOutlinedTextField(
     outlinedTextFieldStyle: TextStyle = LocalTextStyle.current,
     outlinedTextFieldColors: TextFieldColors = OutlinedTextFieldDefaults.colors(),
     width: Dp = OutlinedTextFieldDefaults.MinWidth,
-    height: Dp = OutlinedTextFieldDefaults.MinHeight,
     value: MutableState<String>,
     mustBeInLowerCase: Boolean = false,
     allowsBlankSpaces: Boolean = true,
@@ -789,7 +772,6 @@ fun DebouncedOutlinedTextField(
         outlinedTextFieldStyle = outlinedTextFieldStyle,
         outlinedTextFieldColors = outlinedTextFieldColors,
         width = width,
-        height = height,
         value = value,
         mustBeInLowerCase = mustBeInLowerCase,
         maxLines = maxLines,
@@ -837,7 +819,6 @@ fun DebouncedOutlinedTextField(
  * @param outlinedTextFieldStyle The style to apply to the [OutlinedTextField]
  * @param outlinedTextFieldColors The colors to use for the [OutlinedTextField]
  * @param width The width of the text field
- * @param height The height of the text field
  * @param value The action to execute when the alert dialog has been dismissed
  * @param mustBeInLowerCase Whether the input must be in lower case format
  * @param allowsBlankSpaces Whether the input can contain blank spaces or not
@@ -906,7 +887,6 @@ fun DebouncedOutlinedTextField(
     outlinedTextFieldStyle: TextStyle = LocalTextStyle.current,
     outlinedTextFieldColors: TextFieldColors = OutlinedTextFieldDefaults.colors(),
     width: Dp = OutlinedTextFieldDefaults.MinWidth,
-    height: Dp = OutlinedTextFieldDefaults.MinHeight,
     value: MutableState<String>,
     mustBeInLowerCase: Boolean = false,
     allowsBlankSpaces: Boolean = true,
@@ -957,7 +937,6 @@ fun DebouncedOutlinedTextField(
         outlinedTextFieldStyle = outlinedTextFieldStyle,
         outlinedTextFieldColors = outlinedTextFieldColors,
         width = width,
-        height = height,
         value = value,
         mustBeInLowerCase = mustBeInLowerCase,
         allowsBlankSpaces = allowsBlankSpaces,
@@ -1020,7 +999,6 @@ private fun debounceRoutine(
  * @param outlinedTextFieldStyle The style to apply to the [OutlinedTextField]
  * @param outlinedTextFieldColors The colors to use for the [OutlinedTextField]
  * @param width The width of the text field
- * @param height The height of the text field
  * @param value The action to execute when the alert dialog has been dismissed
  * @param mustBeInLowerCase Whether the input must be in lower case format
  * @param allowsBlankSpaces Whether the input can contain blank spaces or not
@@ -1087,7 +1065,6 @@ fun EquinoxOutlinedTextField(
     outlinedTextFieldStyle: TextStyle = LocalTextStyle.current,
     outlinedTextFieldColors: TextFieldColors = OutlinedTextFieldDefaults.colors(),
     width: Dp = OutlinedTextFieldDefaults.MinWidth,
-    height: Dp = OutlinedTextFieldDefaults.MinHeight,
     value: MutableState<String>,
     mustBeInLowerCase: Boolean = false,
     allowsBlankSpaces: Boolean = true,
@@ -1131,7 +1108,6 @@ fun EquinoxOutlinedTextField(
         outlinedTextFieldStyle = outlinedTextFieldStyle,
         outlinedTextFieldColors = outlinedTextFieldColors,
         width = width,
-        height = height,
         value = value,
         mustBeInLowerCase = mustBeInLowerCase,
         maxLines = maxLines,
@@ -1177,7 +1153,6 @@ fun EquinoxOutlinedTextField(
  * @param outlinedTextFieldStyle The style to apply to the [OutlinedTextField]
  * @param outlinedTextFieldColors The colors to use for the [OutlinedTextField]
  * @param width The width of the text field
- * @param height The height of the text field
  * @param value The action to execute when the alert dialog has been dismissed
  * @param mustBeInLowerCase Whether the input must be in lower case format
  * @param allowsBlankSpaces Whether the input can contain blank spaces or not
@@ -1244,7 +1219,6 @@ fun EquinoxOutlinedTextField(
     outlinedTextFieldStyle: TextStyle = LocalTextStyle.current,
     outlinedTextFieldColors: TextFieldColors = OutlinedTextFieldDefaults.colors(),
     width: Dp = OutlinedTextFieldDefaults.MinWidth,
-    height: Dp = OutlinedTextFieldDefaults.MinHeight,
     value: MutableState<String>,
     mustBeInLowerCase: Boolean = false,
     allowsBlankSpaces: Boolean = true,
@@ -1285,10 +1259,7 @@ fun EquinoxOutlinedTextField(
 ) {
     OutlinedTextField(
         modifier = modifier
-            .width(width)
-            .heightIn(
-                max = height
-            ),
+            .width(width),
         textStyle = outlinedTextFieldStyle,
         colors = outlinedTextFieldColors,
         value = value.value,
