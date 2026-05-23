@@ -32,7 +32,6 @@ import kotlin.annotation.AnnotationTarget.*
  *
  * @author N7ghtm4r3 - Tecknobit
  */
-
 @Retention(SOURCE)
 @Target(CONSTRUCTOR, FUNCTION, PROPERTY_GETTER, PROPERTY_SETTER)
 annotation class Wrapper(
