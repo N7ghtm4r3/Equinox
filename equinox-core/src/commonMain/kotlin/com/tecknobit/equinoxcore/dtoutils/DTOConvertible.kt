@@ -1,7 +1,7 @@
 package com.tecknobit.equinoxcore.dtoutils
 
 /**
- * The `DTOConvertible` interface allows to convert a complete object into the related Data Transfer Object
+ * The `DTOConvertible` interface allows to convert a complete entity object into the related Data Transfer Object
  *
  * @author N7ghtm4r3 - Tecknobit
  *
