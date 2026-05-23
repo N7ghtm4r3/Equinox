@@ -15,6 +15,7 @@ import com.tecknobit.equinoxcore.network.ResponseStatus.GENERIC_RESPONSE
 import com.tecknobit.equinoxcore.pagination.PaginatedResponse.Companion.PAGE_KEY
 import com.tecknobit.equinoxcore.pagination.PaginatedResponse.Companion.PAGE_SIZE_KEY
 import com.tecknobit.equinoxcore.time.TimeFormatter
+import io.ktor.client.call.*
 import io.ktor.client.request.*
 import io.ktor.client.request.forms.*
 import io.ktor.client.statement.*
@@ -26,7 +27,7 @@ import kotlinx.serialization.json.*
 import kotlin.js.JsName
 
 /**
- * The **Requester** class is useful to communicate with backend based on the **SpringBoot** framework
+ * The `Requester` class is useful to communicate with backend based on the **SpringBoot** framework
  *
  * @param host The host address where is running the backend
  * @param userId The user identifier
@@ -592,8 +593,7 @@ abstract class Requester(
             }
             parameters {
                 query?.entries?.forEach { parameter ->
-                    val value = parameter.value
-                    when (value) {
+                    when (val value = parameter.value) {
                         is JsonArray -> {
                             val parametersList = StringBuilder()
                             val rawParameters = value.jsonArray
@@ -768,6 +768,26 @@ abstract class Requester(
      */
     protected fun interceptRequest() {
         interceptorAction?.invoke()
+    }
+
+    /**
+     * Primitive method to allow to download any resource from a specified [url]
+     *
+     * @param url The `URL` of the resource to download
+     *
+     * @return downloaded resources as [ByteArray]
+     *
+     * @since 1.2.0
+     */
+    @ExperimentalStdlibApi
+    suspend fun downloadFromUrl(
+        url: String
+    ): ByteArray {
+        val result = ktorClient.get(
+            urlString = url
+        )
+
+        return result.body()
     }
 
 }

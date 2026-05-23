@@ -92,3 +92,15 @@ requester.sendPaginatedRequest(
     }
 )
 ```
+
+#### Download resources
+
+Request for a resource download
+
+```kotlin
+val resourcesContent: ByteArray = requester.downloadFromUrl(
+    url = "resource_url.any"
+)
+
+// code to use the downloaded content
+```
