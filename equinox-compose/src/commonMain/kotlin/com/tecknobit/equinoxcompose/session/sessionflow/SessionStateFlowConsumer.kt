@@ -1,6 +1,5 @@
 package com.tecknobit.equinoxcompose.session.sessionflow
 
-import androidx.compose.runtime.ExperimentalComposeApi
 import com.tecknobit.equinoxcompose.session.sessionflow.SessionStatus.SERVER_OFFLINE
 
 /**
@@ -14,7 +13,6 @@ import com.tecknobit.equinoxcompose.session.sessionflow.SessionStatus.SERVER_OFF
  *
  * @since 1.1.4
  */
-@ExperimentalComposeApi
 interface SessionStateFlowConsumer {
 
     /**
