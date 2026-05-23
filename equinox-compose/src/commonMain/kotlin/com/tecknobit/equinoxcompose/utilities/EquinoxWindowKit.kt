@@ -438,9 +438,9 @@ fun <T> responsiveAssignment(
 val EXPANDED_CONTAINER = 1280.dp
 
 /**
- * `EXPANDED_WIDHT_MEDIUM_HEIGHT_CONTAINER` constant value used to give the max width to containers in [EXPANDED_MEDIUM_CONTENT]'s screen class
+ * `EXPANDED_WIDTH_MEDIUM_HEIGHT_CONTAINER` constant value used to give the max width to containers in [EXPANDED_MEDIUM_CONTENT]'s screen class
  */
-val EXPANDED_WIDHT_MEDIUM_HEIGHT_CONTAINER = 990.dp
+val EXPANDED_WIDTH_MEDIUM_HEIGHT_CONTAINER = 990.dp
 
 /**
  * `MEDIUM_CONTAINER` constant value used to give the max width to containers in [MEDIUM_CONTENT]'s screen class
@@ -477,7 +477,7 @@ val COMPACT_CONTAINER = 390.dp
 @Composable
 fun responsiveContainerWidth(
     expandedContainerWidth: Dp = EXPANDED_CONTAINER,
-    expandedWidthMediumHeightContainer: Dp = EXPANDED_WIDHT_MEDIUM_HEIGHT_CONTAINER,
+    expandedWidthMediumHeightContainer: Dp = EXPANDED_WIDTH_MEDIUM_HEIGHT_CONTAINER,
     expandedWidthCompactHeightContainer: Dp = expandedWidthMediumHeightContainer,
     mediumContainer: Dp = MEDIUM_CONTAINER,
     mediumWidthExpandedHeightContainer: Dp = mediumContainer,
@@ -535,7 +535,7 @@ fun responsiveContainerWidth(
 @Composable
 fun Modifier.responsiveMaxWidth(
     expandedContainerWidth: Dp = EXPANDED_CONTAINER,
-    expandedWidthMediumHeightContainer: Dp = EXPANDED_WIDHT_MEDIUM_HEIGHT_CONTAINER,
+    expandedWidthMediumHeightContainer: Dp = EXPANDED_WIDTH_MEDIUM_HEIGHT_CONTAINER,
     expandedWidthCompactHeightContainer: Dp = expandedWidthMediumHeightContainer,
     mediumContainer: Dp = MEDIUM_CONTAINER,
     mediumWidthExpandedHeightContainer: Dp = mediumContainer,
