@@ -50,6 +50,7 @@ Check out the table below to apply your customizations to the component:
 | `outerModifier`       | The modifier to apply to the outer `Column` made-up this component |
 | `innerModifier`       | The modifier to apply to the inner `Column` made-up this component |
 | `verticalArrangement` | The vertical arrangement of the `content`                          |
+| `horizontalAlignment` | The horizontal alignement of the `content`                         |
 
 ## Appearance
 

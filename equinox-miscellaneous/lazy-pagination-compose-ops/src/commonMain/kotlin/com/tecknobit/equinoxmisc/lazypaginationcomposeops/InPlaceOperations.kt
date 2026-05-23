@@ -21,6 +21,7 @@ fun <KEY, T> PaginationState<KEY, T>.addInPlace(
 ) {
     val tmpItems = allItems.orEmpty().toMutableList()
     tmpItems.add(item)
+
     appendPageWithUpdates(
         allItems = tmpItems,
         nextPageKey = nextPageKey,
@@ -43,6 +44,7 @@ fun <KEY, T> PaginationState<KEY, T>.addAllInPlace(
 ) {
     val tmpItems = allItems.orEmpty().toMutableList()
     tmpItems.addAll(items.orEmpty())
+
     appendPageWithUpdates(
         allItems = tmpItems,
         nextPageKey = nextPageKey,
@@ -65,6 +67,7 @@ fun <KEY, T> PaginationState<KEY, T>.removeInPlace(
 ) {
     val tmpItems = allItems.orEmpty().toMutableList()
     tmpItems.remove(item)
+
     appendPageWithUpdates(
         allItems = tmpItems,
         nextPageKey = nextPageKey,
@@ -87,6 +90,7 @@ fun <KEY, T> PaginationState<KEY, T>.removeAllInPlace(
 ) {
     val tmpItems = allItems.orEmpty().toMutableList()
     tmpItems.removeAll(items.orEmpty())
+
     appendPageWithUpdates(
         allItems = tmpItems,
         nextPageKey = nextPageKey,
@@ -150,6 +154,7 @@ fun <KEY, T> PaginationState<KEY, T>.retainAndAllInPlace(
     mutableItems.retainAndAdd(
         supportCollection = items.orEmpty()
     )
+
     appendPageWithUpdates(
         allItems = mutableItems,
         nextPageKey = nextPageKey,
@@ -196,6 +201,7 @@ fun <KEY, T> PaginationState<KEY, T>.mergeIfNotContained(
     mutableItems.mergeIfNotContained(
         collectionToMerge = items.orEmpty()
     )
+
     appendPageWithUpdates(
         allItems = mutableItems,
         nextPageKey = nextPageKey,
@@ -257,10 +263,12 @@ fun <KEY, T> PaginationState<KEY, T>.toggle(
     val result = mutableItems.toggle(
         element = item
     )
+
     appendPageWithUpdates(
         allItems = mutableItems,
         nextPageKey = nextPageKey,
         isLastPage = isLastPage
     )
+
     return result
 }
