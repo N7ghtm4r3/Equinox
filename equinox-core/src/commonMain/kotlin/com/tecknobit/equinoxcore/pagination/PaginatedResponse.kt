@@ -155,4 +155,26 @@ class PaginatedResponse<T> {
         this.isLastPage = isLastPage
     }
 
+    /**
+     * Constructor to init the [PaginatedResponse]
+     *
+     * @param data The data retrieved by the request
+     * @param page The number of the page requested
+     * @param pageSize The size of the maximum items for page
+     * @param totalPages The total amount of available pages
+     *
+     * @since 1.2.0
+     */
+    constructor(
+        data: List<T>,
+        page: Int,
+        pageSize: Int,
+        totalPages: Int,
+    ) : this(
+        data = data,
+        page = page,
+        pageSize = pageSize,
+        isLastPage = page == totalPages
+    )
+
 }
