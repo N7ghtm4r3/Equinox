@@ -17,6 +17,7 @@ import com.tecknobit.equinoxcompose.utilities.responsiveMaxWidth
  * @param outerModifier The modifier to apply to the outer [Column] made-up this component
  * @param innerModifier The modifier to apply to the inner [Column] made-up this component
  * @param verticalArrangement The vertical arrangement of the [content]
+ * @param horizontalAlignment The horizontal alignement of the [content]
  * @param content The content to display inside the container
  *
  * @since 1.1.8
@@ -27,6 +28,7 @@ inline fun ColumnContainer(
     outerModifier: Modifier = Modifier,
     innerModifier: Modifier = Modifier,
     verticalArrangement: Arrangement.Vertical = Arrangement.Top,
+    horizontalAlignment: Alignment.Horizontal = Alignment.CenterHorizontally,
     content: @Composable ColumnScope.() -> Unit,
 ) {
     Column(
@@ -38,6 +40,7 @@ inline fun ColumnContainer(
             modifier = innerModifier
                 .responsiveMaxWidth(),
             verticalArrangement = verticalArrangement,
+            horizontalAlignment = horizontalAlignment,
             content = content
         )
     }
