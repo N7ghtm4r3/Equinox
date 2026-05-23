@@ -11,12 +11,16 @@ import kotlin.reflect.KClass
  *
  * ```kotlin
  * // Home extends EquinoxNoModelScreen
- * @DestinationScreen(Home::class)
+ * @DestinationScreen(
+ *  route = "Home" // optional
+ *  destination = Home::class
+ * )
  * fun navToHomeScreen() {
  *     // your logic of the navigation method
  * }
  * ```
  *
+ * @property route The route used to identify the [destination] in the navigation tree
  * @property destination The screen to which the method navigates
  *
  * @author N7ghtm4r3 - Tecknobit
@@ -29,5 +33,6 @@ import kotlin.reflect.KClass
 @Target(allowedTargets = [AnnotationTarget.FUNCTION])
 @Retention(value = AnnotationRetention.SOURCE)
 annotation class DestinationScreen(
-    val destination: KClass<out EquinoxNoModelScreen>
+    val route: String = "",
+    val destination: KClass<out EquinoxNoModelScreen>,
 )

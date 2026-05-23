@@ -5,7 +5,10 @@ Its purpose is to improve the readability of the code
 
 ```kotlin
 // Home extends EquinoxNoModelScreen
-@DestinationScreen(Home::class)
+@DestinationScreen(
+    route = "Home" // optional
+    destination = Home::class
+)
 fun navToHomeScreen() {
     // your logic of the navigation method
 }
