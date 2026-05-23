@@ -14,7 +14,7 @@ plugins {
 }
 
 group = "com.tecknobit.equinoxmisc.navigationcomposeutil"
-version = "1.0.1"
+version = "1.0.2"
 
 repositories {
     google()
@@ -45,10 +45,8 @@ kotlin {
     }
 
     listOf(
-        iosX64(),
         iosArm64(),
         iosSimulatorArm64(),
-        macosX64(),
         macosArm64()
     ).forEach { appleTarget ->
         appleTarget.binaries.framework {
@@ -129,7 +127,7 @@ mavenPublishing {
     coordinates(
         groupId = "io.github.n7ghtm4r3",
         artifactId = "equinoxmisc-navigation-compose-util",
-        version = "1.0.1"
+        version = "1.0.2"
     )
     pom {
         name.set("navigation-compose-util")

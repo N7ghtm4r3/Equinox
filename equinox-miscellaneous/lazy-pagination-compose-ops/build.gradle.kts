@@ -14,7 +14,7 @@ plugins {
 }
 
 group = "com.tecknobit.equinoxmisc.lazypaginationcomposeops"
-version = "1.0.3"
+version = "1.0.4"
 
 repositories {
     google()
@@ -45,10 +45,8 @@ kotlin {
     }
 
     listOf(
-        iosX64(),
         iosArm64(),
         iosSimulatorArm64(),
-        // macosX64(),
         macosArm64()
     ).forEach { iosTarget ->
         iosTarget.binaries.framework {
@@ -130,7 +128,7 @@ mavenPublishing {
     coordinates(
         groupId = "io.github.n7ghtm4r3",
         artifactId = "equinoxmisc-lazy-pagination-compose-ops",
-        version = "1.0.3"
+        version = "1.0.4"
     )
     pom {
         name.set("lazy-pagination-compose-ops")
