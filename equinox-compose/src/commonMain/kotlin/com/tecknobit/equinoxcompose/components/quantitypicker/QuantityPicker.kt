@@ -124,6 +124,7 @@ fun QuantityPicker(
                 style = informativeTextStyle
             )
         }
+
         DecrementButton(
             colors = decrementButtonColors,
             size = indicatorsSize,
@@ -133,10 +134,12 @@ fun QuantityPicker(
             onDecrement = onDecrement,
             enabled = enabled
         )
+
         Text(
             text = state.quantityPicked.toString(),
             style = quantityIndicatorStyle
         )
+
         IncrementButton(
             colors = incrementButtonColors,
             size = indicatorsSize,
@@ -188,7 +191,7 @@ private fun DecrementButton(
             }
         } else
             null,
-        enabled = enabled
+        enabled = enabled && (state.quantityPicked > state.minQuantity)
     )
 }
 
@@ -231,7 +234,7 @@ private fun IncrementButton(
             }
         } else
             null,
-        enabled = enabled
+        enabled = enabled && (state.quantityPicked < state.maxQuantity)
     )
 }
 
