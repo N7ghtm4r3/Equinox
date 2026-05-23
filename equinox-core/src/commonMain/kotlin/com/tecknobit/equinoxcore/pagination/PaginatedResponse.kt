@@ -21,6 +21,11 @@ class PaginatedResponse<T> {
         /**
          * `DATA_KEY` the key of the "data" value
          */
+        @Deprecated(
+            message = "Use instead CommonKeys one",
+            level = DeprecationLevel.ERROR,
+            replaceWith = ReplaceWith("DATA_KEY", "com.tecknobit.equinoxcore.helpers.DATA_KEY")
+        )
         const val DATA_KEY: String = "data"
 
         /**
