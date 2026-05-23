@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.LocalTextStyle
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -35,6 +36,7 @@ import com.tecknobit.equinoxcore.annotations.Returner
  * @param elevation The elevation to apply to the component
  * @param uppercaseFormat Whether the letters must be displayed in uppercase format or displayed as provided
  * @param name The name of the avatar
+ * @param defaultBackgroundColor The default color when the [name] is empty
  * @param backgroundColor The color of the background, default color is resolved with [resolveAvatarColor] method
  * @param style The style of the displayed letters
  * @param onClick The callback action to invoke when the user click the component
@@ -50,8 +52,10 @@ fun LetterAvatar(
     elevation: Dp = 0.dp,
     uppercaseFormat: Boolean = true,
     name: String,
+    defaultBackgroundColor: Color = MaterialTheme.colorScheme.primary,
     backgroundColor: Color = resolveAvatarColor(
-        name = name
+        name = name,
+        defaultBackgroundColor = defaultBackgroundColor
     ),
     style: TextStyle = LocalTextStyle.current,
     onClick: (() -> Unit)? = null,
@@ -62,6 +66,7 @@ fun LetterAvatar(
             uppercaseFormat = uppercaseFormat
         )
     }
+
     Box(
         modifier = modifier
             .size(size)
@@ -116,6 +121,7 @@ private fun resolveInitialLetters(
         if (namePart.isNotBlank())
             initialLetters += namePart.first()
     }
+
     return if (uppercaseFormat)
         initialLetters.uppercase()
     else
@@ -126,6 +132,7 @@ private fun resolveInitialLetters(
  * Method used to resolve the background color for the [LetterAvatar] component
  *
  * @param name The name of the avatar
+ * @param defaultBackgroundColor The default color when the [name] is empty
  *
  * @return the background color as [Color]
  *
@@ -134,8 +141,13 @@ private fun resolveInitialLetters(
 @Returner
 fun resolveAvatarColor(
     name: String,
+    defaultBackgroundColor: Color
 ): Color {
+    if(name.isBlank())
+        return defaultBackgroundColor
+
     val hashCode = name.hashCode()
+
     return Color(
         red = hashCode shr 0 and 0xFF,
         green = hashCode shr 8 and 0xFF,
