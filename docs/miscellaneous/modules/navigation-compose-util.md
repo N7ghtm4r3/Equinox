@@ -21,7 +21,7 @@ library with some useful utilities to simplify the sharing of the data between t
 ```toml
 [versions]
 navigationCompose = "2.9.1"
-navigationComposeUtil = "1.0.1"
+navigationComposeUtil = "1.0.2"
 
 [libraries]
 navigation-compose = { module = "org.jetbrains.androidx.navigation:navigation-compose", version.ref = "navigationCompose" }
@@ -42,7 +42,7 @@ dependencies {
 ```kotlin
 dependencies {
     implementation("org.jetbrains.androidx.navigation:navigation-compose:2.9.1")
-    implementation("io.github.n7ghtm4r3:equinoxmisc-navigation-compose-util:1.0.1")
+    implementation("io.github.n7ghtm4r3:equinoxmisc-navigation-compose-util:1.0.2")
 }
 ```
 
@@ -51,7 +51,7 @@ dependencies {
 ```groovy
 dependencies {
     implementation 'org.jetbrains.androidx.navigation:navigation-compose:2.9.1'
-    implementation 'io.github.n7ghtm4r3:equinoxmisc-navigation-compose-util:1.0.1'
+    implementation 'io.github.n7ghtm4r3:equinoxmisc-navigation-compose-util:1.0.2'
 }
 ```
 

@@ -12,7 +12,7 @@ plugins {
 }
 
 group = "com.tecknobit.equinoxcore"
-version = "1.1.9"
+version = "1.2.0"
 
 repositories {
     google()
@@ -43,10 +43,8 @@ kotlin {
     }
 
     listOf(
-        iosX64(),
         iosArm64(),
         iosSimulatorArm64(),
-        macosX64(),
         macosArm64()
     ).forEach { appleTarget ->
         appleTarget.binaries.framework {
@@ -130,7 +128,7 @@ mavenPublishing {
     coordinates(
         groupId = "io.github.n7ghtm4r3",
         artifactId = "equinox-core",
-        version = "1.1.9"
+        version = "1.2.0"
     )
     pom {
         name.set("Equinox Core")
