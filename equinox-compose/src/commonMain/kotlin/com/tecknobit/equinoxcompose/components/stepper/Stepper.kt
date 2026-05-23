@@ -46,12 +46,12 @@ fun Stepper(
     containerModifier: Modifier = Modifier,
     stepperModifier: Modifier = Modifier,
     headerSection: @Composable (() -> Unit)? = null,
-    startStepShape: Shape = RoundedCornerShape(
+    startStepShape: RoundedCornerShape = RoundedCornerShape(
         topStart = 12.dp,
         topEnd = 12.dp
     ),
     middleStepShape: Shape = RectangleShape,
-    finalStepShape: Shape = RoundedCornerShape(
+    finalStepShape: RoundedCornerShape = RoundedCornerShape(
         bottomStart = 12.dp,
         bottomEnd = 12.dp
     ),
@@ -65,6 +65,7 @@ fun Stepper(
     val firstIndex = remember { specialIndexes.first }
     val lastIndex = remember { specialIndexes.second }
     val lastStep = remember { steps.last() }
+
     Column(
         modifier = containerModifier,
         verticalArrangement = Arrangement.spacedBy(10.dp)
@@ -79,7 +80,17 @@ fun Stepper(
                     visible = step.isEnabled()
                 ) {
                     val shape = when (index) {
-                        0 -> startStepShape
+                        0 -> {
+                            if(steps.size == 1) {
+                              RoundedCornerShape(
+                                  topStart = startStepShape.topStart,
+                                  topEnd = startStepShape.topEnd,
+                                  bottomStart = startStepShape.topStart,
+                                  bottomEnd = startStepShape.topEnd
+                              )
+                            } else
+                                startStepShape
+                        }
                         firstIndex -> {
                             if (steps[0].isEnabled())
                                 middleStepShape
@@ -97,6 +108,7 @@ fun Stepper(
                         steps.lastIndex -> finalStepShape
                         else -> middleStepShape
                     }
+
                     StepAction(
                         shape = shape,
                         errorColor = errorColor,
