@@ -66,7 +66,9 @@ public abstract class IndexesCreator {
      */
     protected void createIndex(String table, String indexName, String indexType, List<String> fields) {
         String showQuery = SQLConstants.SHOW_INDEX_FROM_ + table + _WHERE_ + _KEY_NAME + indexName + SINGLE_QUOTE;
+
         Session session = entityManager.unwrap(Session.class);
+
         session.doWork(connection -> {
             try (Statement statement = connection.createStatement()) {
                 ResultSet set = statement.executeQuery(showQuery);
@@ -91,13 +93,16 @@ public abstract class IndexesCreator {
     protected String assembleCreateIndexQuery(String table, String indexType, String indexName, List<String> fields) {
         StringBuilder query = new StringBuilder(SQLConstants.ALTER_TABLE_ + table);
         query.append(String.format(indexType, indexName));
+
         int fieldsNumber = fields.size();
         int lastIndex = fieldsNumber - 1;
+
         for (int j = 0; j < fieldsNumber; j++) {
             query.append(fields.get(j));
             if (j < lastIndex)
                 query.append(COMMA);
         }
+
         query.append(CLOSED_ROUND_BRACKET);
         return query.toString();
     }
@@ -141,10 +146,12 @@ public abstract class IndexesCreator {
                                                 String trailingCharacter, boolean escapeDoubleQuotes) {
         if (keywords.isEmpty())
             return "";
+
         keywords = appendEscapeCharacters(keywords, leadingCharacter, trailingCharacter);
         String formattedKeywords = String.join(" ", keywords);
         if (escapeDoubleQuotes)
             formattedKeywords = formattedKeywords.replaceAll("\"", "");
+
         return formattedKeywords;
     }
 
@@ -162,9 +169,11 @@ public abstract class IndexesCreator {
                                                              String trailingCharacter) {
         if (keywords.isEmpty() || (leadingCharacter.isEmpty() && trailingCharacter.isEmpty()))
             return keywords;
+
         String[] tmpKeywords = keywords.toArray(new String[0]);
         for (int j = 0; j < tmpKeywords.length; j++)
             tmpKeywords[j] = leadingCharacter + tmpKeywords[j] + trailingCharacter;
+
         return Arrays.stream(tmpKeywords).toList();
     }
 

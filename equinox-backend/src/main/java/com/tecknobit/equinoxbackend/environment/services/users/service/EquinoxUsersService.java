@@ -5,6 +5,7 @@ import com.tecknobit.equinoxbackend.apis.batch.EquinoxItemsHelper;
 import com.tecknobit.equinoxbackend.apis.resources.ResourcesManager;
 import com.tecknobit.equinoxbackend.environment.services.users.entity.EquinoxUser;
 import com.tecknobit.equinoxbackend.environment.services.users.repository.EquinoxUsersRepository;
+import com.tecknobit.equinoxcore.annotations.Assembler;
 import jakarta.persistence.Query;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -153,6 +154,7 @@ public class EquinoxUsersService<T extends EquinoxUser, R extends EquinoxUsersRe
      *
      * @param <E> Type of the element in the list
      */
+    @Assembler
     private <E> void arrangeQuery(StringBuilder queryBuilder, List<E> list, boolean escape) {
         int listSize = list.size();
         int lastIndex = listSize - 1;
@@ -218,15 +220,19 @@ public class EquinoxUsersService<T extends EquinoxUser, R extends EquinoxUsersRe
     public JSONObject getDynamicAccountData(String userId) {
         StringBuilder queryBuilder = new StringBuilder(SELECT_);
         List<String> dynamicAccountDataKeys = getDynamicAccountDataKeys();
+
         arrangeDynamicDataQuery(queryBuilder, dynamicAccountDataKeys);
         queryBuilder.append(_FROM_ + USERS_KEY);
         queryBuilder.append(_WHERE_);
         queryBuilder.append(IDENTIFIER_KEY + "=").append(SINGLE_QUOTE).append(userId).append(SINGLE_QUOTE);
+
         Query query = entityManager.createNativeQuery(queryBuilder.toString());
         JSONArray result = new JSONArray(query.getResultList().get(0));
         JSONObject dynamicData = new JSONObject();
+
         for (int j = 0; j < result.length(); j++)
             dynamicData.put(dynamicAccountDataKeys.get(j), result.get(j));
+
         return dynamicData;
     }
 
@@ -247,9 +253,11 @@ public class EquinoxUsersService<T extends EquinoxUser, R extends EquinoxUsersRe
      * @param list         The list to arrange
      * @param <E>          Type of the element in the list
      */
+    @Assembler
     private <E> void arrangeDynamicDataQuery(StringBuilder queryBuilder, List<E> list) {
         int ListSize = list.size();
         int lastIndex = ListSize - 1;
+
         for (int j = 0; j < ListSize; j++) {
             queryBuilder.append(list.get(j));
             if (j < lastIndex)
@@ -265,9 +273,12 @@ public class EquinoxUsersService<T extends EquinoxUser, R extends EquinoxUsersRe
      */
     public String changeProfilePic(MultipartFile profilePic, String userId) throws IOException {
         String profilePicPath = createProfileResource(profilePic, userId + currentTimeMillis());
+
         usersRepository.changeProfilePic(profilePicPath, userId);
+
         deleteProfileResource(userId);
         saveResource(profilePic, profilePicPath);
+
         return profilePicPath;
     }
 

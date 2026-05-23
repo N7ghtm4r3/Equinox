@@ -10,23 +10,15 @@ import java.util.List;
  * The {@code JoinTableSyncBatchItem} class is designed to manage data used in batch queries,
  * specifically those that operate on join tables
  *
- * @param <O> The type of the owner entity
- * @param <D> The type of the owned entity
+ * @param <O>   The type of the owner entity
+ * @param <D>   The type of the owned entity
+ * @param owner {@code owner} the owner entity in the relationship
+ * @param owned {@code owned} the owned entity in the relationship
  * @author N7ghtm4r3 - Tecknobit
  * @since 1.0.8
  */
 @BatchQueryItem
-public class JoinTableSyncBatchItem<O, D> implements EquinoxItemsHelper.ComplexBatchItem {
-
-    /**
-     * {@code owner} the owner entity in the relationship
-     */
-    protected final O owner;
-
-    /**
-     * {@code owned} the owned entity in the relationship
-     */
-    protected final D owned;
+public record JoinTableSyncBatchItem<O, D>(O owner, D owned) implements EquinoxItemsHelper.ComplexBatchItem {
 
     /**
      * Method used to initialize the object
@@ -34,9 +26,7 @@ public class JoinTableSyncBatchItem<O, D> implements EquinoxItemsHelper.ComplexB
      * @param owner The owner entity in the relationship
      * @param owned The owned entity in the relationship
      */
-    public JoinTableSyncBatchItem(O owner, D owned) {
-        this.owner = owner;
-        this.owned = owned;
+    public JoinTableSyncBatchItem {
     }
 
     /**
@@ -44,7 +34,8 @@ public class JoinTableSyncBatchItem<O, D> implements EquinoxItemsHelper.ComplexB
      *
      * @return the {@link #owner} as {@link O}
      */
-    public O getOwner() {
+    @Override
+    public O owner() {
         return owner;
     }
 
@@ -53,7 +44,8 @@ public class JoinTableSyncBatchItem<O, D> implements EquinoxItemsHelper.ComplexB
      *
      * @return the {@link #owned} as {@link D}
      */
-    public D getOwned() {
+    @Override
+    public D owned() {
         return owned;
     }
 
@@ -64,17 +56,8 @@ public class JoinTableSyncBatchItem<O, D> implements EquinoxItemsHelper.ComplexB
     public boolean equals(Object o) {
         if (!(o instanceof JoinTableSyncBatchItem<?, ?> that))
             return false;
-        return owner.equals(that.owner) && owned.equals(that.owned);
-    }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public int hashCode() {
-        int result = owner.hashCode();
-        result = 31 * result + owned.hashCode();
-        return result;
+        return owner.equals(that.owner) && owned.equals(that.owned);
     }
 
     /**
@@ -84,8 +67,10 @@ public class JoinTableSyncBatchItem<O, D> implements EquinoxItemsHelper.ComplexB
     @Override
     public List<?> mappedValues() {
         ArrayList<Object> mappedValues = new ArrayList<>();
+
         mappedValues.add(owner);
         mappedValues.add(owned);
+
         return mappedValues;
     }
 
