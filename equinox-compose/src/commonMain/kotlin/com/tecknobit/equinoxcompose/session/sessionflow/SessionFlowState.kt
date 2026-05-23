@@ -336,7 +336,7 @@ class SessionFlowState internal constructor(
     /**
      * Method used to notify that is not more performing a `loading routine`, setting the [_isLoading] on `false`.
      *
-     * That routine could be successfully completed or cancelled due network connection or other error states have been set
+     * That routine could be successfully completed or canceled due network connection or other error states have been set
      *
      * @since 1.1.8
      */

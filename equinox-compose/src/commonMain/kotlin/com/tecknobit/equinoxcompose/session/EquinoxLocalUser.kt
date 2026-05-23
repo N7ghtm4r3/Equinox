@@ -1,5 +1,3 @@
-@file:OptIn(ExperimentalComposeRuntimeApi::class)
-
 package com.tecknobit.equinoxcompose.session
 
 import androidx.compose.runtime.*
@@ -615,7 +613,6 @@ open class EquinoxLocalUser(
      *
      * @since 1.1.6
      */
-    @ExperimentalComposeRuntimeApi
     @Composable
     fun <T> observe(
         key: String
@@ -636,7 +633,6 @@ open class EquinoxLocalUser(
      *
      * @since 1.1.6
      */
-    @ExperimentalComposeRuntimeApi
     protected class EquinoxLocalUserStateStore(
         private val allowedKeys: Set<String> = emptySet()
     ) {
