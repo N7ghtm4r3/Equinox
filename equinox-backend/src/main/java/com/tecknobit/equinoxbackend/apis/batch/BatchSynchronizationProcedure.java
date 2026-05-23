@@ -103,6 +103,7 @@ public abstract class BatchSynchronizationProcedure<O, D, V> extends EquinoxItem
     public void executeBatchSynchronization(InsertCommand command) {
         if (currentDataCallback == null)
             throw new IllegalStateException("You must set the CurrentDataCallback first");
+
         syncBatch(model, command, table, batchQuery);
     }
 

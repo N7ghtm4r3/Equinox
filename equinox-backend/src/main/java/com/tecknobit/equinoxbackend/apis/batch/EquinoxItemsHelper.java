@@ -235,9 +235,12 @@ public abstract class EquinoxItemsHelper {
     protected <V> void syncBatch(SyncBatchModel model, InsertCommand command, String table, BatchQuery<V> batchQuery) {
         Collection<V> updatedData = batchQuery.getData();
         Collection<V> currentData = model.getCurrentData();
+
         batchInsert(command, table, batchQuery);
         currentData.removeAll(updatedData);
+
         batchDelete(table, currentData, model.getDeletingColumns());
+
         model.afterSync();
     }
 
@@ -252,12 +255,15 @@ public abstract class EquinoxItemsHelper {
         Collection<V> values = batchQuery.getData();
         if (values.isEmpty())
             return;
+
         String[] columns = batchQuery.getColumns();
         String insertQuery = command.sql + table + " " + formatColumns(columns) + _VALUES_;
         String placeHolder = formatPlaceholder(columns);
+
         String insertQueryComplete = formatValuesForQuery(insertQuery, values, placeHolder, false);
         Query query = entityManager.createNativeQuery(insertQueryComplete);
         batchQuery.prepareQuery(query, 1, values);
+
         query.executeUpdate();
     }
 
@@ -274,10 +280,12 @@ public abstract class EquinoxItemsHelper {
         int columnsNumber = columns.length;
         if (columnsNumber == 0 || values.isEmpty())
             return;
+
         String columnsFormated = formatValuesForQuery(OPENED_ROUND_BRACKET, Arrays.stream(columns).toList(),
                 null, true);
         String inClause = formatInClause(columnsNumber, values);
         String deleteQuery = DELETE_FROM_ + table + _WHERE_ + columnsFormated + _IN_CLAUSE_ + inClause;
+
         Query query = entityManager.createNativeQuery(deleteQuery);
         query.executeUpdate();
     }
@@ -293,11 +301,13 @@ public abstract class EquinoxItemsHelper {
     private String formatInClause(int columns, Collection<?> inValues) {
         if (inValues.iterator().next() instanceof ComplexBatchItem)
             return formatComplexBatchItemInClause(columns, inValues);
+
         StringBuilder inClause = new StringBuilder(OPENED_ROUND_BRACKET);
         int totalValues = inValues.size();
         int lastValue = totalValues - 1;
         int lastColumn = columns - 1;
         int j = 0;
+
         for (Object inValue : inValues) {
             if (columns > 1)
                 inClause.append(OPENED_ROUND_BRACKET);
@@ -312,6 +322,7 @@ public abstract class EquinoxItemsHelper {
                 inClause.append(COMMA);
         }
         inClause.append(CLOSED_ROUND_BRACKET);
+
         return inClause.toString();
     }
 
@@ -329,6 +340,7 @@ public abstract class EquinoxItemsHelper {
         int lastValue = totalValues - 1;
         int lastColumn = columns - 1;
         int j = 0;
+
         for (Object inValue : inValues) {
             if (columns > 1)
                 inClause.append(OPENED_ROUND_BRACKET);
@@ -347,6 +359,7 @@ public abstract class EquinoxItemsHelper {
                 inClause.append(COMMA);
             j++;
         }
+
         inClause.append(CLOSED_ROUND_BRACKET);
         return inClause.toString();
     }

@@ -76,8 +76,10 @@ public class ResourcesProvider {
     public ResourcesProvider(String containerDirectory, List<String> subDirectories) {
         if(!containerDirectory.endsWith(File.separator))
             containerDirectory += File.separator;
+
         this.containerDirectory = containerDirectory;
         this.subDirectories = subDirectories;
+
         containers = new HashSet<>();
     }
 

@@ -143,6 +143,7 @@ public abstract class EquinoxApplicationEvent<T extends Enum<?>> extends Applica
     public void performOnEventConsumed() {
         if (onEventConsumed == null)
             throw new IllegalStateException("No any OnEventConsumed set");
+
         onEventConsumed.perform(extra);
     }
 

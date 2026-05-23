@@ -98,6 +98,7 @@ public abstract class FilteredQuery<T> {
     public List<T> getEntities() {
         if (predicates.isEmpty())
             prepareQuery();
+
         TypedQuery<T> typedQuery = entityManager.createQuery(query);
         return typedQuery.getResultList();
     }
@@ -107,6 +108,7 @@ public abstract class FilteredQuery<T> {
      */
     private void prepareQuery() {
         fillPredicates();
+
         query.select(root).where(criteriaBuilder.and(predicates.toArray(new Predicate[0])));
     }
 
@@ -124,6 +126,7 @@ public abstract class FilteredQuery<T> {
      */
     protected HashSet<String> extractFiltersByPattern(Pattern pattern) {
         HashSet<String> filtersList = new HashSet<>();
+
         for (String filter : rawFilters) {
             Matcher matcher = pattern.matcher(filter);
             if (matcher.matches()) {
@@ -131,8 +134,10 @@ public abstract class FilteredQuery<T> {
                 rawFilters.remove(filter);
             }
         }
+
         if (filtersList.isEmpty())
             return null;
+
         return filtersList;
     }
 
