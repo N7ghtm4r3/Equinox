@@ -12,7 +12,7 @@ plugins {
 }
 
 group = "com.tecknobit.equinoxbackend"
-version = "1.1.8"
+version = "1.1.9"
 
 repositories {
     mavenCentral()
@@ -39,7 +39,7 @@ mavenPublishing {
     coordinates(
         groupId = "io.github.n7ghtm4r3",
         artifactId = "equinox-backend",
-        version = "1.1.8"
+        version = "1.1.9"
     )
     pom {
         name.set("Equinox")
