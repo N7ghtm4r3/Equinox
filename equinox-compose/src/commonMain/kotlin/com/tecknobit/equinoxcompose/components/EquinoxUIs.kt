@@ -784,29 +784,35 @@ private fun EmptyStateContent(
     Column(
         modifier = containerModifier,
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(verticalSpacing)
-    ) {
-        Image(
-            modifier = resourceModifier
-                .width(resourceSize),
-            painter = resource,
-            contentDescription = contentDescription,
-            contentScale = ContentScale.Fit
-        )
-        title?.let {
-            Text(
-                text = title,
-                style = titleStyle
-            )
+        verticalArrangement = Arrangement.Center,
+        content = {
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.spacedBy(verticalSpacing)
+            ) {
+                Image(
+                    modifier = resourceModifier
+                        .width(resourceSize),
+                    painter = resource,
+                    contentDescription = contentDescription,
+                    contentScale = ContentScale.Fit
+                )
+                title?.let {
+                    Text(
+                        text = title,
+                        style = titleStyle
+                    )
+                }
+                subTitle?.let {
+                    Text(
+                        text = subTitle,
+                        style = subTitleStyle
+                    )
+                }
+                action?.invoke()
+            }
         }
-        subTitle?.let {
-            Text(
-                text = subTitle,
-                style = subTitleStyle
-            )
-        }
-        action?.invoke()
-    }
+    )
 }
 
 /**
