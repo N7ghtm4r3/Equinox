@@ -31,15 +31,16 @@ class TestScreen : EquinoxNoModelScreen() {
 
 Check out the table below to apply your customizations to the component:
 
-| Param             | Description                                                                                                  |
-|-------------------|--------------------------------------------------------------------------------------------------------------|
-| `modifier`        | The modifier to apply to the component                                                                       |
-| `shape`           | The shape to apply to the component                                                                          |
-| `elevation`       | The elevation to apply to the component                                                                      |
-| `uppercaseFormat` | Whether the letters must be displayed in uppercase format or displayed as provided                           |
-| `name`            | The name of the avatar                                                                                       |
-| `backgroundColor` | The color of the background, default color is resolved with [resolveAvatarColor](#resolveavatarcolor) method |
-| `style`           | The style of the displayed letters                                                                           |
+| Param                    | Description                                                                                                  |
+|--------------------------|--------------------------------------------------------------------------------------------------------------|
+| `modifier`               | The modifier to apply to the component                                                                       |
+| `shape`                  | The shape to apply to the component                                                                          |
+| `elevation`              | The elevation to apply to the component                                                                      |
+| `uppercaseFormat`        | Whether the letters must be displayed in uppercase format or displayed as provided                           |
+| `name`                   | The name of the avatar                                                                                       |
+| `defaultBackgroundColor` | The default color when the `name` is empty                                                                   |
+| `backgroundColor`        | The color of the background, default color is resolved with [resolveAvatarColor](#resolveavatarcolor) method |
+| `style`                  | The style of the displayed letters                                                                           |
 
 ## Appearance
 
