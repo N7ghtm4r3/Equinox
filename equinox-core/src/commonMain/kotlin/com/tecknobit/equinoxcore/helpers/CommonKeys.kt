@@ -99,3 +99,24 @@ const val AUTHOR_KEY = "author"
  * `OWNER_KEY` the key for the `owner` field
  */
 const val OWNER_KEY = "owner"
+
+/**
+ * `DATA_KEY` the key for the `data` field
+ *
+ * @since 1.2.0
+ */
+const val DATA_KEY = "data"
+
+/**
+ * `MEMBER_KEY` the key for the `member` field
+ *
+ * @since 1.2.0
+ */
+const val MEMBER_KEY = "member"
+
+/**
+ * `MEMBER_IDENTIFIER_KEY` the key for the `member_id` field
+ *
+ * @since 1.2.0
+ */
+const val MEMBER_IDENTIFIER_KEY = "member_id"
