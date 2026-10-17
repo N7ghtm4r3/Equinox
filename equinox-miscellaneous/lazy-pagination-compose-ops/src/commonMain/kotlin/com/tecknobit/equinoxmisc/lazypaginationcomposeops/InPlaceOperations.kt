@@ -1,8 +1,8 @@
 package com.tecknobit.equinoxmisc.lazypaginationcomposeops
 
-import com.tecknobit.equinoxcore.util.mergeIfNotContained
-import com.tecknobit.equinoxcore.util.retainAndAdd
-import com.tecknobit.equinoxcore.util.toggle
+import com.tecknobit.equinoxcore.utils.mergeIfNotContained
+import com.tecknobit.equinoxcore.utils.retainAndAdd
+import com.tecknobit.equinoxcore.utils.toggle
 import io.github.ahmad_hamwi.compose.pagination.ExperimentalPaginationApi
 import io.github.ahmad_hamwi.compose.pagination.PaginationState
 

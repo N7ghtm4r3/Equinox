@@ -18,10 +18,11 @@ Utilities for **Compose Multiplatform** applications such components, APIs for a
 ```toml
 [versions]
 equinox = "1.2.0"
+equinox-core = "1.2.1"
 
 [libraries]
 equinox-compose = { module = "io.github.n7ghtm4r3:equinox-compose", version.ref = "equinox" }
-equinox-core = { module = "io.github.n7ghtm4r3:equinox-core", version.ref = "equinox" }
+equinox-core = { module = "io.github.n7ghtm4r3:equinox-core", version.ref = "equinox-core" }
 ```
 
 - `build.gradle.kts`
@@ -46,7 +47,7 @@ dependencies {
     implementation("io.github.n7ghtm4r3:equinox-compose:1.2.0")
     
     // implement the core utilities
-    implementation("io.github.n7ghtm4r3:equinox-core:1.2.0")
+    implementation("io.github.n7ghtm4r3:equinox-core:1.2.1")
 }
 ```
 
@@ -59,7 +60,7 @@ dependencies {
     implementation 'io.github.n7ghtm4r3:equinox-compose:1.2.0'
     
     // implement the core utilities
-    implementation 'io.github.n7ghtm4r3:equinox-core:1.2.0'
+    implementation 'io.github.n7ghtm4r3:equinox-core:1.2.1'
 }
 ```
 

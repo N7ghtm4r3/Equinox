@@ -2,7 +2,7 @@ package com.tecknobit.equinoxbackend.utils;
 
 import com.tecknobit.equinoxcore.annotations.Returner;
 import com.tecknobit.equinoxcore.annotations.Wrapper;
-import com.tecknobit.equinoxcore.dtoutils.DTOConvertible;
+import com.tecknobit.equinoxcore.utils.dto.DTOConvertible;
 import org.apache.logging.log4j.util.TriConsumer;
 import org.jetbrains.annotations.ApiStatus;
 
