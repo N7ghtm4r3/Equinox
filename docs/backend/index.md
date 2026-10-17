@@ -1,6 +1,6 @@
 # Overview
 
-**v1.1.7**
+**v2.0.0**
 
 Utilities and apis for the backends based on the **Spring Boot** framework
 
@@ -105,13 +105,12 @@ Add the JitPack repository to your build file
      - [EquinoxEvents](APIs/EquinoxEvents.md)  
        Facilitates event sharing and collection between backend services
 
-## Utils
-
-- [DtoUtil](Utils/DtoUtil.md)
-  Converts entity lists to DTOs with optional custom converters and callbacks
-
-- [FiltersUtil](Utils/FiltersUtil.md)
-  Provides utility methods to handle filters
+??? utils "Utils"
+    - [DtoUtil](Utils/DtoUtil.md)
+      Converts entity lists to DTOs with optional custom converters and callbacks
+    
+    - [FiltersUtil](Utils/FiltersUtil.md)
+      Provides utility methods to handle filters
 
 ## Basic environment available
 

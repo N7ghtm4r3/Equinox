@@ -6,6 +6,9 @@ The optional [EventsNotifier](../Annotations/events/EventsNotifier.md) and
 `com.tecknobit.equinoxbackend.annotations.events` package. They identify the emitter and collector roles
 to improve code readability.
 
+Use [EventsProcessor](../Annotations/events/EventsProcessor.md), available since `2.0.0`, to identify
+a service that both handles and emits events with a single annotation.
+
 ## Implementation
 
 ### Create the events set
