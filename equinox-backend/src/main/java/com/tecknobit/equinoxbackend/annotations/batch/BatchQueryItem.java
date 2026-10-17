@@ -1,4 +1,4 @@
-package com.tecknobit.equinoxbackend.annotations;
+package com.tecknobit.equinoxbackend.annotations.batch;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;

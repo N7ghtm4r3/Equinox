@@ -1,4 +1,4 @@
-package com.tecknobit.equinoxbackend.annotations;
+package com.tecknobit.equinoxbackend.annotations.batch;
 
 /**
  * The {@code BatchSyncProcedureImpl} annotation is useful to indicate an implementation of a

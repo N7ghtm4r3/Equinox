@@ -1,11 +1,15 @@
 This annotation is useful to indicate an object which its scope is the support to handle the data and manipulate them 
 during the batch operations
 
+It belongs to the `com.tecknobit.equinoxbackend.annotations.batch` package.
+
 ## Usage
 
 === "Java"
     
     ```java
+    import com.tecknobit.equinoxbackend.annotations.batch.BatchQueryItem;
+
     @BatchQueryItem(
         // not mandatory
         description = """
@@ -27,6 +31,8 @@ during the batch operations
 === "Kotlin"
 
     ```kotlin
+    import com.tecknobit.equinoxbackend.annotations.batch.BatchQueryItem
+
     @BatchQueryItem(
         // not mandatory
         description = """

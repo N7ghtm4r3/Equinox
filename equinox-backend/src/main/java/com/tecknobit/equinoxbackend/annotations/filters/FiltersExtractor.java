@@ -1,4 +1,4 @@
-package com.tecknobit.equinoxbackend.annotations;
+package com.tecknobit.equinoxbackend.annotations.filters;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

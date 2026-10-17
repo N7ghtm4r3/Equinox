@@ -2,6 +2,11 @@ This API is designed to compact and to clean implement a **batch synchronization
 that a
 batch synchronization need to have
 
+The [BatchQueryItem](../Annotations/batch/BatchQueryItem.md) and
+[BatchSyncProcedureImpl](../Annotations/batch/BatchSyncProcedureImpl.md) annotations belong to the
+`com.tecknobit.equinoxbackend.annotations.batch` package. They identify the supporting item and
+synchronization procedure in the examples below.
+
 ## Implementation
 
 ### Create the support item
