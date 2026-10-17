@@ -1,6 +1,6 @@
 package com.tecknobit.equinoxbackend.apis.events;
 
-import com.tecknobit.equinoxbackend.annotations.EventsHandler;
+import com.tecknobit.equinoxbackend.annotations.events.EventsHandler;
 import org.springframework.context.event.EventListener;
 
 /**

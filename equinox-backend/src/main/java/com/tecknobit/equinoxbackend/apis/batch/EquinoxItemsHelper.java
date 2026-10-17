@@ -1,6 +1,6 @@
 package com.tecknobit.equinoxbackend.apis.batch;
 
-import com.tecknobit.equinoxbackend.annotations.BatchQueryItem;
+import com.tecknobit.equinoxbackend.annotations.batch.BatchQueryItem;
 import com.tecknobit.equinoxbackend.apis.database.SQLConstants;
 import com.tecknobit.equinoxbackend.environment.services.builtin.entities.EquinoxItem;
 import com.tecknobit.equinoxcore.annotations.Wrapper;

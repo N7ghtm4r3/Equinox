@@ -1,11 +1,15 @@
 This annotation is useful to indicate those methods used to extract from the raw filters set
-the specific set indicates by the method, its main usage is related to the [FilteredQuery](../APIs/FilteredQuery.md)
+the specific set indicates by the method, its main usage is related to the [FilteredQuery](../../APIs/FilteredQuery.md).
+
+It belongs to the `com.tecknobit.equinoxbackend.annotations.filters` package.
 
 ## Usage 
 
 === "Java"
 
     ```java
+    import com.tecknobit.equinoxbackend.annotations.filters.FiltersExtractor;
+
     @FiltersExtractor(
         description = "Method used to extracts the plate filters to use"
     )
@@ -17,6 +21,8 @@ the specific set indicates by the method, its main usage is related to the [Filt
 === "Kotlin"
 
     ```kotlin
+    import com.tecknobit.equinoxbackend.annotations.filters.FiltersExtractor
+
     @FiltersExtractor(
         description = "Method used to extracts the plate filters to use"
     )

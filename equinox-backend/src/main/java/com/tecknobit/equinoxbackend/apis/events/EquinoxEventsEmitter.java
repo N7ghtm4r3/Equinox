@@ -1,6 +1,6 @@
 package com.tecknobit.equinoxbackend.apis.events;
 
-import com.tecknobit.equinoxbackend.annotations.EventsNotifier;
+import com.tecknobit.equinoxbackend.annotations.events.EventsNotifier;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Component;

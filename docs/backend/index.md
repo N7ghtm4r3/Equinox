@@ -138,9 +138,19 @@ com.your.package
 ## Annotations available
 
 This module provides a set of annotations that can be used to improve code readability and maintainability.
-You can explore them [here](Annotations/BatchQueryImpl.md)
+The annotation pages follow the package structure:
+
+- `com.tecknobit.equinoxbackend.annotations.batch`: [BatchQueryImpl](Annotations/batch/BatchQueryImpl.md),
+  [BatchQueryItem](Annotations/batch/BatchQueryItem.md), and [BatchSyncProcedureImpl](Annotations/batch/BatchSyncProcedureImpl.md)
+- `com.tecknobit.equinoxbackend.annotations.events`: [EventsHandler](Annotations/events/EventsHandler.md)
+  and [EventsNotifier](Annotations/events/EventsNotifier.md)
+- `com.tecknobit.equinoxbackend.annotations.filters`: [FiltersAdder](Annotations/filters/FiltersAdder.md)
+  and [FiltersExtractor](Annotations/filters/FiltersExtractor.md)
+- `com.tecknobit.equinoxbackend.annotations.dto`: request and response annotations described below
+- `com.tecknobit.equinoxbackend.annotations`: [EmptyConstructor](Annotations/EmptyConstructor.md),
+  [MappingPurpose](Annotations/MappingPurpose.md), and [TableColumns](Annotations/TableColumns.md)
 
 For request and response DTOs, use the following annotations:
 
-- [DtoRequest](Annotations/DtoRequest.md) identifies DTOs carrying incoming request data
-- [DtoResponse](Annotations/DtoResponse.md) identifies DTOs carrying outgoing response data
+- [DtoRequest](Annotations/dto/DtoRequest.md) identifies DTOs carrying incoming request data
+- [DtoResponse](Annotations/dto/DtoResponse.md) identifies DTOs carrying outgoing response data

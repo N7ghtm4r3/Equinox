@@ -1,6 +1,8 @@
 The `DtoResponse` annotation marks types that carry outgoing response data. It makes the role of a
 response DTO clear when reading the backend code
 
+It belongs to the `com.tecknobit.equinoxbackend.annotations.dto` package.
+
 ## Usage
 
 Apply `@DtoResponse` to the class that describes the data returned by the backend. In this example,

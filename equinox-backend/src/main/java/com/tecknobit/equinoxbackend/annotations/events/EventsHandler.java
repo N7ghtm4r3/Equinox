@@ -1,4 +1,4 @@
-package com.tecknobit.equinoxbackend.annotations;
+package com.tecknobit.equinoxbackend.annotations.events;
 
 import com.tecknobit.equinoxbackend.apis.events.EquinoxEventsCollector;
 

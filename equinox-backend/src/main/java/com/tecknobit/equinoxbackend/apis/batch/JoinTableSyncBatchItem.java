@@ -1,6 +1,6 @@
 package com.tecknobit.equinoxbackend.apis.batch;
 
-import com.tecknobit.equinoxbackend.annotations.BatchQueryItem;
+import com.tecknobit.equinoxbackend.annotations.batch.BatchQueryItem;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;

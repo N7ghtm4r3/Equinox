@@ -1,10 +1,13 @@
-This annotation is useful to annotation is useful to indicate an implementation of a [BatchSynchronizationProcedure](../APIs/BatchSynchronizationProcedure.md)
+This annotation is useful to indicate an implementation of [BatchSynchronizationProcedure](../../APIs/BatchSynchronizationProcedure.md).
+It belongs to the `com.tecknobit.equinoxbackend.annotations.batch` package.
 
 ## Usage
 
 === "Java"
 
     ```java
+    import com.tecknobit.equinoxbackend.annotations.batch.BatchSyncProcedureImpl;
+
     @BatchSyncProcedureImpl(
         // not mandatory
         description = """
@@ -21,6 +24,8 @@ This annotation is useful to annotation is useful to indicate an implementation 
 === "Kotlin"
 
     ```kotlin
+    import com.tecknobit.equinoxbackend.annotations.batch.BatchSyncProcedureImpl
+
     @BatchSyncProcedureImpl(
         // not mandatory
         description = """

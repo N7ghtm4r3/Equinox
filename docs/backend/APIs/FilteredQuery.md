@@ -5,6 +5,11 @@ Under the hood, it uses the **CriteriaBuilder** API, making it particularly usef
 multiple
 filters that can be easily applied.
 
+The [FiltersExtractor](../Annotations/filters/FiltersExtractor.md) and
+[FiltersAdder](../Annotations/filters/FiltersAdder.md) annotations belong to the
+`com.tecknobit.equinoxbackend.annotations.filters` package. Use them to identify methods that extract
+filters and add them to a query.
+
 ## Implementation
 
 ### Create your own FilteredQuery instance

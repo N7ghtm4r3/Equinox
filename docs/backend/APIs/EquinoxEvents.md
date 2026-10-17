@@ -1,6 +1,11 @@
 Use the `EquinoxEventsEmitter` API, built on top of the `ApplicationEventPublisher` system, to share events between
 services in a strict and controlled way by leveraging `enums`
 
+The optional [EventsNotifier](../Annotations/events/EventsNotifier.md) and
+[EventsHandler](../Annotations/events/EventsHandler.md) annotations belong to the
+`com.tecknobit.equinoxbackend.annotations.events` package. They identify the emitter and collector roles
+to improve code readability.
+
 ## Implementation
 
 ### Create the events set
