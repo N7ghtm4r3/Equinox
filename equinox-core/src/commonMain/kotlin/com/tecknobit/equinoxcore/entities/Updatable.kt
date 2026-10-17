@@ -12,7 +12,6 @@ package com.tecknobit.equinoxcore.entities
  *
  * product.update(newDetails)
  * ```
- * Replace the example's `TODO` with the entity's own null-handling rules
  *
  * @param D The type of details used to update the entity
  *
