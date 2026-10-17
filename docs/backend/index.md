@@ -136,3 +136,8 @@ com.your.package
 
 This module provides a set of annotations that can be used to improve code readability and maintainability.
 You can explore them [here](Annotations/BatchQueryImpl.md)
+
+For request and response DTOs, use the following annotations:
+
+- [DtoRequest](Annotations/DtoRequest.md) identifies DTOs carrying incoming request data
+- [DtoResponse](Annotations/DtoResponse.md) identifies DTOs carrying outgoing response data
