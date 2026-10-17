@@ -10,7 +10,7 @@ import com.tecknobit.equinoxcore.annotations.Wrapper
 import com.tecknobit.equinoxcore.helpers.*
 import com.tecknobit.equinoxcore.helpers.InputsValidator.Companion.DEFAULT_LANGUAGE
 import com.tecknobit.equinoxcore.helpers.InputsValidator.Companion.SUPPORTED_LANGUAGES
-import com.tecknobit.equinoxcore.json.treatsAsString
+import com.tecknobit.equinoxcore.utils.json.treatsAsString
 import com.tecknobit.kmprefs.KMPrefs
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.JsonObject

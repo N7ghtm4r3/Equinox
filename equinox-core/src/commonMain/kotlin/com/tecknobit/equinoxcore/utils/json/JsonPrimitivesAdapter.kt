@@ -1,4 +1,4 @@
-package com.tecknobit.equinoxcore.json
+package com.tecknobit.equinoxcore.utils.json
 
 import kotlinx.serialization.json.*
 

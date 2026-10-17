@@ -19,11 +19,12 @@ navigation in **Compose Multiplatform applications**
 ```toml
 [versions]
 equinox = "1.2.0"
+equinox-core = "1.2.1"
 equinox-navigation = "1.0.5"
 
 [libraries]
 equinox-compose = { module = "io.github.n7ghtm4r3:equinox-compose", version.ref = "equinox" }
-equinox-core = { module = "io.github.n7ghtm4r3:equinox-core", version.ref = "equinox" }
+equinox-core = { module = "io.github.n7ghtm4r3:equinox-core", version.ref = "equinox-core" }
 equinox-navigation = { module = "io.github.n7ghtm4r3:equinox-navigation", version.ref = "equinox-navigation" }
 ```
 
@@ -51,7 +52,7 @@ dependencies {
   implementation("io.github.n7ghtm4r3:equinox-compose:1.2.0")
 
   // implement the core utilities 
-  implementation("io.github.n7ghtm4r3:equinox-core:1.2.0")
+  implementation("io.github.n7ghtm4r3:equinox-core:1.2.1")
     
     // implement the navigation utilities
     implementation("io.github.n7ghtm4r3:equinox-navigation:1.0.5")
@@ -66,7 +67,7 @@ dependencies {
   implementation 'io.github.n7ghtm4r3:equinox-compose:1.2.0'
     
     // implement the core utilities
-  implementation 'io.github.n7ghtm4r3:equinox-core:1.2.0'
+  implementation 'io.github.n7ghtm4r3:equinox-core:1.2.1'
     
     // implement the navigation utilities
     implementation 'io.github.n7ghtm4r3:equinox-navigation:1.0.5'

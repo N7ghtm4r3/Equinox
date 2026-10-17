@@ -12,7 +12,7 @@ plugins {
 }
 
 group = "com.tecknobit.equinoxcore"
-version = "1.2.0"
+version = "1.2.1"
 
 repositories {
     google()
@@ -128,7 +128,7 @@ mavenPublishing {
     coordinates(
         groupId = "io.github.n7ghtm4r3",
         artifactId = "equinox-core",
-        version = "1.2.0"
+        version = "1.2.1"
     )
     pom {
         name.set("Equinox Core")
