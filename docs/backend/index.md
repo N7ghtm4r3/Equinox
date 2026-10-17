@@ -110,6 +110,9 @@ Add the JitPack repository to your build file
 - [DtoUtil](Utils/DtoUtil.md)
   Converts entity lists to DTOs with optional custom converters and callbacks
 
+- [FiltersUtil](Utils/FiltersUtil.md)
+  Provides utility methods to handle filters
+
 ## Basic environment available
 
 Equinox gives a basic _out-of-the-box_ environment to directly create a **SpringApplication** following the Equinox

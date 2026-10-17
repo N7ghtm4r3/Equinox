@@ -1,20 +1,19 @@
-The `DtoUtil` class converts lists of entities into their related Data Transfer Objects. You can use
-the mapping defined by each entity or provide a converter callback to customize the DTOs
+The `DtoUtil` class provides utility methods for Data Transfer Objects (DTOs), the objects used to send
+data to a client. Its conversion methods help you prepare a list of DTOs from a list of entities
 
 !!! warning "Experimental API"
 
     The conversion methods are experimental and may change in future releases
 
-## Usage
+## Example setup
 
-The following examples convert a list of cars into DTOs containing their names. First, define the
-entity and its DTO, then prepare the list used throughout the conversion examples
+The examples use cars with an identifier and a name. The client only needs the name, so that is
+what each DTO will contain
 
 ### Entity class example
 
-Each `CarEntity` stores the car identifier and name. Implementing
-[DTOConvertible](../APIs/DtoConvertible.md) lets the entity define how to create its DTO through
-`convertToRelatedDTO`
+Implement [DTOConvertible](../APIs/DtoConvertible.md) on the entity and define `convertToRelatedDTO`
+to choose which information to include in its DTO
 
 === "Java"
 
@@ -66,8 +65,7 @@ Each `CarEntity` stores the car identifier and name. Implementing
 
 ### Related DTO example
 
-The `CarEntityDto` contains the name copied from the entity. The identifier belongs to the entity
-and is not needed in this DTO
+Define the object that will carry the car name to the client
 
 === "Java"
 
@@ -103,8 +101,7 @@ and is not needed in this DTO
 
 ### Prepare the entities
 
-Create two cars to use in the following examples. Their position in this list also determines
-their order in the conversion result
+Create the list of cars to convert
 
 === "Java"
 
@@ -129,78 +126,52 @@ their order in the conversion result
     )
     ```
 
-### Convert entities
+## convertToDTOs
 
-With the entities ready, call `convertToDTOs` to create their DTOs. Each entity supplies its own
-mapping through `convertToRelatedDTO`
+Use `convertToDTOs` when you want to turn a list of entities into a list of DTOs.
+It uses each entity's `convertToRelatedDTO` method and keeps the items in the same order
+
+You can also provide `afterConversion` to perform an action for each converted item.
+The action receives the original entity and its DTO, so you can use information from both
+
+To choose different data for a particular conversion, provide a `converter` as the second argument.
+If you also use `afterConversion`, pass the action second and the converter third
+
+### Usage
 
 === "Java"
 
     ```java
     List<CarEntityDto> dtos = DtoUtil.convertToDTOs(entities);
-
-    for (CarEntityDto dto : dtos) {
-        System.out.println(dto.getName()); // e.g. Ferrari
-    }
+    dtos.forEach(dto -> System.out.println(dto.getName())); // Ferrari, then Lamborghini
     ```
 
 === "Kotlin"
 
     ```kotlin
     val dtos = DtoUtil.convertToDTOs<CarEntity, CarEntityDto>(entities)
-
-    for (dto in dtos) {
-        println(dto.name) // e.g. Ferrari
-    }
+    dtos.forEach { println(it.name) } // Ferrari, then Lamborghini
     ```
 
-Both names appear in the same order as the source entities. The DTO type requested in the call
-must match the type returned by `convertToRelatedDTO`
+## convertToDTOsWithIndex
 
-### Process converted DTOs
+Use `convertToDTOsWithIndex` when the action you perform for each DTO also needs its position in the
+list, such as displaying a number beside each item. The action receives the original entity, its
+position, and the DTO. Positions start at `0`
 
-When you need to work with a DTO as soon as it has been created, pass an `afterConversion`
-callback. It receives both the source entity and its DTO, so you can use information from either
+The method returns the converted DTOs in the same order as the entities.
+You can also supply a `converter` to choose different data for the DTOs: pass it as the second
+argument, or as the third argument when you also provide an action
 
-=== "Java"
-
-    ```java
-    List<CarEntityDto> dtos = DtoUtil.convertToDTOs(
-        entities,
-        (entity, dto) -> {
-            System.out.println(entity.getId() + ": " + dto.getName()); // e.g. Ferrari
-        }
-    );
-    ```
-
-=== "Kotlin"
-
-    ```kotlin
-    val dtos = DtoUtil.convertToDTOs<CarEntity, CarEntityDto>(
-        entities,
-        { entity, dto ->
-            println("${entity.id}: ${dto.name}") // e.g. Ferrari
-        }
-    )
-    ```
-
-Here the callback prints the entity identifier beside the DTO name. It runs synchronously after
-each conversion, before the DTO is added to the result
-
-### Access the entity index
-
-If you also need the entity's position in the source list, use `convertToDTOsWithIndex`. Its callback
-receives the entity, its zero-based index and the DTO, in this order
+### Usage
 
 === "Java"
 
     ```java
     List<CarEntityDto> dtos = DtoUtil.convertToDTOsWithIndex(
-        entities,
-        (entity, index, dto) -> {
-            System.out.println(index + ": " + dto.getName()); // e.g. Ferrari
-        }
+            entities, (entity, index, dto) -> System.out.println(index + ": " + dto.getName())
     );
+    // Prints "0: Ferrari" and "1: Lamborghini"
     ```
 
 === "Kotlin"
@@ -208,61 +179,7 @@ receives the entity, its zero-based index and the DTO, in this order
     ```kotlin
     val dtos = DtoUtil.convertToDTOsWithIndex<CarEntity, CarEntityDto>(
         entities,
-        { entity, index, dto ->
-            println("$index: ${dto.name}") // e.g. Ferrari
-        }
+        { _, index, dto -> println("$index: ${dto.name}") }
     )
+    // Prints "0: Ferrari" and "1: Lamborghini"
     ```
-
-The first car has index `0` and the second has index `1`. Calling this method without a callback
-still converts the entities, but does not expose their indices
-
-### Use a custom converter
-
-For a different mapping, supply a converter callback instead of relying on `convertToRelatedDTO`.
-In this example, the callback creates each DTO with the `Car: ` prefix added to its name
-
-=== "Java"
-
-    ```java
-    List<CarEntityDto> dtos = DtoUtil.convertToDTOs(
-        entities,
-        entity -> {
-            return new CarEntityDto("Car: " + entity.getName());
-        }
-    );
-
-    for (CarEntityDto dto : dtos) {
-        System.out.println(dto.getName()); // e.g. Ferrari
-    }
-    ```
-
-=== "Kotlin"
-
-    ```kotlin
-    val dtos = DtoUtil.convertToDTOs<CarEntity, CarEntityDto>(
-        entities,
-        { entity ->
-            CarEntityDto("Car: ${entity.name}")
-        }
-    )
-
-    for (dto in dtos) {
-        println(dto.name) // e.g. Ferrari
-    }
-    ```
-
-You can also combine this mapping with an `afterConversion` callback. Both conversion methods
-accept the converter as the third argument, after that callback. The entities still need to
-implement `DTOConvertible`, even when you supply the mapping yourself
-
-## Conversion behavior
-
-Each call returns a new list with the DTOs in source order. If the source list is empty, the result
-is empty too
-
-Pass a non-null source list. When using the entity's default mapping, its elements must also be
-non-null. A custom converter receives each element as supplied and is responsible for handling it
-
-You can omit the processing callback when you only need the converted list. If a converter or
-callback throws an exception, conversion stops and the exception propagates to the caller
