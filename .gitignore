@@ -43,3 +43,6 @@ local.properties
 .kotlin
 
 .cache
+# From EnvUi
+.env
+workspace.xml
