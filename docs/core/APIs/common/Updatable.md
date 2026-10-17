@@ -35,8 +35,5 @@ val newProduct = ProductDetails(
 product.update(newProduct)
 ```
 
-The `TODO` marks the null-handling policy intentionally left for the entity to define. Replace it with the appropriate
-behavior before using this outline as a complete implementation
-
 The caller does not need to assign `name` and `price` separately. If the product's update rules change, those details
 remain inside `update` and callers continue to use the same operation
