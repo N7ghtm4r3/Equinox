@@ -65,6 +65,8 @@ dependencies {
 - [PaginatedResponse](APIs/common/PaginatedResponse.md)  
   Allows paginating backend responses making data retrieval easier for clients
 
+- [Updatable](APIs/common/Updatable.md) Allows entities to define how their details are updated
+
 ### Android
 
 - [AppContextInitializer](APIs/android/AppContextInitializer.md)  
