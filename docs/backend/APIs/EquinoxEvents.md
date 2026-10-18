@@ -350,3 +350,72 @@ You can create multiple collectors implementing the `EquinoxEventsCollector` int
 
     }
     ```
+
+### Perform the callback with collector extra arguments
+
+Since `2.0.0`, the collector can invoke the callback with its own extra arguments,
+either alone or together with the emitter extra arguments. Set the callback before
+invoking these methods
+
+=== "Java"
+
+    ```java
+    // Use the emitter extra arguments stored in the event
+    event.performOnEventConsumed();
+
+    // Use only the collector extra arguments
+    event.performOnEventConsumedWithCollectorExtra(new Object[]{"result"});
+
+    // Use both sets of extra arguments
+    event.performOnEventConsumed(event.getExtra(), new Object[]{"result"});
+    ```
+
+=== "Kotlin"
+
+    ```kotlin
+    // Use the emitter extra arguments stored in the event
+    event.performOnEventConsumed()
+
+    // Use only the collector extra arguments
+    event.performOnEventConsumedWithCollectorExtra(arrayOf<Any>("result"))
+
+    // Use both sets of extra arguments
+    event.performOnEventConsumed(event.extra, arrayOf<Any>("result"))
+    ```
+
+Override the two-array `perform` method to handle separate extra arguments.
+Its default implementation performs no action. The default
+`performWithCollectorExtra` implementation invokes it with `null` emitter extra arguments
+
+=== "Java"
+
+    ```java
+    event.setOnEventConsumed(new EquinoxEventsCollector.OnEventConsumed() {
+        @Override
+        public void perform(Object... extra) {
+            // Handle the emitter extra arguments
+        }
+
+        @Override
+        public void perform(Object[] emitterExtra, Object[] collectorExtra) {
+            // Handle both sets, or only collectorExtra when emitterExtra is null
+        }
+    });
+    ```
+
+=== "Kotlin"
+
+    ```kotlin
+    event.setOnEventConsumed(object : EquinoxEventsCollector.OnEventConsumed {
+        override fun perform(vararg extra: Any) {
+            // Handle the emitter extra arguments
+        }
+
+        override fun perform(
+            emitterExtra: Array<out Any>?,
+            collectorExtra: Array<out Any>?
+        ) {
+            // Handle both sets, or only collectorExtra when emitterExtra is null
+        }
+    })
+    ```

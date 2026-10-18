@@ -46,9 +46,12 @@ public interface EquinoxEventsCollector<T extends Enum<?>, E extends EquinoxAppl
         void perform(Object... extra);
 
         /**
-         * Method used to perform the callback
+         * Method used to perform the callback with only the collector extra arguments
          *
-         * @param collectorExtra The collector extra arguments shared with the performed event
+         * <p>The default implementation invokes {@link #perform(Object[], Object[])} with {@code null} emitter
+         * extra arguments and the supplied collector extra arguments
+         *
+         * @param collectorExtra The extra arguments provided by the collector
          *
          * @since 2.0.0
          */
@@ -60,7 +63,10 @@ public interface EquinoxEventsCollector<T extends Enum<?>, E extends EquinoxAppl
          * Method used to perform the callback
          *
          * @param emitterExtra The emitter extra arguments shared with the performed event
-         * @param collectorExtra The collector extra arguments shared with the performed event
+         * <p>The default implementation invokes {@link #perform(Object[], Object[])} with {@code null} emitter
+         * extra arguments and the supplied collector extra arguments
+         *
+         * @param collectorExtra The extra arguments provided by the collector
          *
          * @since 2.0.0
          */
