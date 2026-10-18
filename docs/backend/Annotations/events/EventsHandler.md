@@ -1,8 +1,6 @@
 This annotation is useful to mark classes that handle events, such as [EquinoxEventsCollector](../../APIs/EquinoxEvents.md#create-the-collector).
 Its purpose is to improve the readability of the code
 
-It belongs to the `com.tecknobit.equinoxbackend.annotations.events` package.
-
 ## Usage
 
 === "Java"
