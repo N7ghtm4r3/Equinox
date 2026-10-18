@@ -60,6 +60,8 @@ public class EquinoxUsersController<T extends EquinoxUser, R extends EquinoxUser
     /**
      * Method used to sign up in the <b>Equinox's system</b>
      *
+     * <p>The success response includes the configured default profile pic assigned during registration
+     *
      * @param payload Payload of the request
      *                 <pre>
      *                      {@code
@@ -112,7 +114,7 @@ public class EquinoxUsersController<T extends EquinoxUser, R extends EquinoxUser
             return successResponse(response
                     .put(USER_IDENTIFIER_KEY, userId)
                     .put(TOKEN_KEY, token)
-                    .put(PROFILE_PIC_KEY, DEFAULT_PROFILE_PIC)
+                    .put(PROFILE_PIC_KEY, configuration.getDefaultsConfig().getDefaultUserProfilePic())
             );
         } catch (Exception e) {
             return wrongProcedureResponse();

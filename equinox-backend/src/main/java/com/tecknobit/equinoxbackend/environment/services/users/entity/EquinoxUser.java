@@ -4,11 +4,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.tecknobit.apimanager.annotations.Returner;
 import com.tecknobit.equinoxbackend.annotations.EmptyConstructor;
+import com.tecknobit.equinoxbackend.configuration.EquinoxBackendConfiguration;
 import com.tecknobit.equinoxbackend.environment.services.builtin.entities.EquinoxItem;
-import jakarta.persistence.Column;
-import jakarta.persistence.DiscriminatorColumn;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import org.json.JSONObject;
 
 import static com.tecknobit.equinoxcore.helpers.CommonKeysKt.*;
@@ -79,8 +77,7 @@ public class EquinoxUser extends EquinoxItem {
      */
     @Column(
             name = PROFILE_PIC_KEY,
-            columnDefinition = "TEXT DEFAULT '" + DEFAULT_PROFILE_PIC + "'",
-            insertable = false
+            columnDefinition = "TEXT"
     )
     protected String profilePic;
 
@@ -106,6 +103,8 @@ public class EquinoxUser extends EquinoxItem {
     /**
      * Constructor to init the {@link EquinoxUser} class
      *
+     * <p>A missing profile pic is assigned the configured default before insertion through JPA
+     *
      * @param id Identifier of the user
      * @param token The token which the user is allowed to operate on server
      * @param name The name of the user
@@ -115,20 +114,22 @@ public class EquinoxUser extends EquinoxItem {
      * @param language The language of the user
      */
     public EquinoxUser(String id, String token, String name, String surname, String email, String password, String language) {
-        this(id, token, name, surname, email, password, DEFAULT_PROFILE_PIC, language);
+        this(id, token, name, surname, email, password, null, language);
     }
 
     /**
      * Constructor to init the {@link EquinoxUser} class
      *
+     * <p>A missing profile pic is assigned the configured default before insertion through JPA
+     *
      * @param id Identifier of the user
      * @param token The token which the user is allowed to operate on server
-     * @param name The password of the user
+     * @param name The name of the user
      * @param surname The surname of the user
-     * @param email The password of the user
+     * @param email The email of the user
      * @param password The password of the user
      * @param profilePic The profile pic of the user
-     * @param language The password of the user
+     * @param language The language of the user
      */
     public EquinoxUser(String id, String token, String name, String surname, String email, String password, String profilePic,
                        String language) {
@@ -156,6 +157,22 @@ public class EquinoxUser extends EquinoxItem {
         password = hItem.getString(PASSWORD_KEY);
         profilePic = hItem.getString(PROFILE_PIC_KEY);
         language = hItem.getString(LANGUAGE_KEY);
+    }
+
+    /**
+     * Method used to assign the configured default profile pic before inserting the user through JPA
+     *
+     * <p>The default is applied only when {@link #profilePic} is {@code null}. An existing profile pic is preserved
+     *
+     * @since 2.0.0
+     */
+    @PrePersist
+    protected void applyDefaults() {
+        EquinoxBackendConfiguration configuration = EquinoxBackendConfiguration.getInstance();
+        EquinoxBackendConfiguration.DefaultsConfig defaultsConfig = configuration.getDefaultsConfig();
+
+        if (profilePic == null)
+            profilePic = defaultsConfig.getDefaultUserProfilePic();
     }
 
     /**
