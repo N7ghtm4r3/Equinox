@@ -43,7 +43,7 @@ public class EquinoxUser extends EquinoxItem {
             name = NAME_KEY,
             columnDefinition = "VARCHAR(20) NOT NULL"
     )
-    protected final String name;
+    protected String name;
 
     /**
      * {@code surname} the surname of the user
@@ -52,7 +52,7 @@ public class EquinoxUser extends EquinoxItem {
             name = SURNAME_KEY,
             columnDefinition = "VARCHAR(30) NOT NULL"
     )
-    protected final String surname;
+    protected String surname;
 
     /**
      * {@code email} the email of the user
@@ -62,7 +62,7 @@ public class EquinoxUser extends EquinoxItem {
             columnDefinition = "VARCHAR(75) NOT NULL",
             unique = true
     )
-    protected final String email;
+    protected String email;
 
     /**
      * {@code password} the password of the user
@@ -72,7 +72,7 @@ public class EquinoxUser extends EquinoxItem {
             nullable = false
     )
     @JsonIgnore
-    protected final String password;
+    protected String password;
 
     /**
      * {@code profilePic} the profile pic of the user
@@ -82,7 +82,7 @@ public class EquinoxUser extends EquinoxItem {
             columnDefinition = "TEXT DEFAULT '" + DEFAULT_PROFILE_PIC + "'",
             insertable = false
     )
-    protected final String profilePic;
+    protected String profilePic;
 
     /**
      * {@code language} the language of the user
@@ -91,7 +91,7 @@ public class EquinoxUser extends EquinoxItem {
             name = LANGUAGE_KEY,
             columnDefinition = "VARCHAR(2) NOT NULL"
     )
-    protected final String language;
+    protected String language;
 
     /**
      * Constructor to init the {@link EquinoxUser} class <br>
@@ -177,12 +177,34 @@ public class EquinoxUser extends EquinoxItem {
     }
 
     /**
+     * Method used to set the {@link #name} instance
+     *
+     * @param name The name of the user
+     *
+     * @since 2.0.0
+     */
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    /**
      * Method used to get {@link #surname} instance 
      *
      * @return {@link #surname} instance as {@link String}
      */
     public String getSurname() {
         return surname;
+    }
+
+    /**
+     * Method used to set the {@link #surname} instance
+     *
+     * @param surname The surname of the user
+     *
+     * @since 2.0.0
+     */
+    public void setSurname(String surname) {
+        this.surname = surname;
     }
 
     /**
@@ -205,12 +227,34 @@ public class EquinoxUser extends EquinoxItem {
     }
 
     /**
+     * Method used to set the {@link #email} instance
+     *
+     * @param email The email of the user
+     *
+     * @since 2.0.0
+     */
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    /**
      * Method used to get {@link #password} instance 
      *
      * @return {@link #password} instance as {@link String}
      */
     public String getPassword() {
         return password;
+    }
+
+    /**
+     * Method used to set the {@link #password} instance
+     *
+     * @param password The password of the user
+     *
+     * @since 2.0.0
+     */
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     /**
@@ -224,12 +268,34 @@ public class EquinoxUser extends EquinoxItem {
     }
 
     /**
+     * Method used to set the {@link #profilePic} instance
+     *
+     * @param profilePic The profile pic of the user
+     *
+     * @since 2.0.0
+     */
+    public void setProfilePic(String profilePic) {
+        this.profilePic = profilePic;
+    }
+
+    /**
      * Method used to get {@link #language} instance 
      *
      * @return {@link #language} instance as {@link String}
      */
     public String getLanguage() {
         return language;
+    }
+
+    /**
+     * Method used to set the {@link #language} instance
+     *
+     * @param language The language of the user
+     *
+     * @since 2.0.0
+     */
+    public void setLanguage(String language) {
+        this.language = language;
     }
 
     /**
