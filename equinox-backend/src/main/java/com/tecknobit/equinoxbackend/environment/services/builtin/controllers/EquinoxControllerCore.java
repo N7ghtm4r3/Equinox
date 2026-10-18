@@ -49,42 +49,50 @@ abstract public class EquinoxControllerCore {
     /**
      * {@code WRONG_PROCEDURE_MESSAGE} message to use when the procedure is wrong
      */
+    @Deprecated(since = "2.0.0", forRemoval = true)
     public static final String WRONG_PROCEDURE_MESSAGE = "wrong_procedure";
 
     /**
      * {@code NOT_AUTHORIZED_OR_WRONG_DETAILS_MESSAGE} message to use when the request is by a not authorized user or
      * tried to fetch wrong details
      */
+    @Deprecated(since = "2.0.0", forRemoval = true)
     public static final String NOT_AUTHORIZED_OR_WRONG_DETAILS_MESSAGE = "not_authorized";
 
     /**
      * {@code RESPONSE_SUCCESSFUL_MESSAGE} message to use when the request has been successful
      */
+    @Deprecated(since = "2.0.0", forRemoval = true)
     public static final String RESPONSE_SUCCESSFUL_MESSAGE = "operation_executed_successfully";
 
     /**
      * {@code WRONG_NAME_MESSAGE} error message used when the name inserted is not valid
      */
+    @Deprecated(since = "2.0.0", forRemoval = true)
     public static final String WRONG_NAME_MESSAGE = "wrong_name";
 
     /**
      * {@code WRONG_SURNAME_MESSAGE} error message used when the surname inserted is not valid
      */
+    @Deprecated(since = "2.0.0", forRemoval = true)
     public static final String WRONG_SURNAME_MESSAGE = "wrong_surname";
 
     /**
      * {@code WRONG_EMAIL_MESSAGE} error message used when the email inserted is not valid
      */
+    @Deprecated(since = "2.0.0", forRemoval = true)
     public static final String WRONG_EMAIL_MESSAGE = "wrong_email";
 
     /**
      * {@code WRONG_PASSWORD_MESSAGE} error message used when the password inserted is not valid
      */
+    @Deprecated(since = "2.0.0", forRemoval = true)
     public static final String WRONG_PASSWORD_MESSAGE = "wrong_password";
 
     /**
      * {@code WRONG_LANGUAGE_MESSAGE} error message used when the language inserted is not valid
      */
+    @Deprecated(since = "2.0.0", forRemoval = true)
     public static final String WRONG_LANGUAGE_MESSAGE = "wrong_language";
 
     /**
