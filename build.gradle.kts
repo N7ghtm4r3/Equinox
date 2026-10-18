@@ -16,6 +16,8 @@ tasks.register<Exec>("serveMkDocs") {
         "docker", "run", "--rm",
         "-p", "8000:8000",
         "-v", "${rootDir.absolutePath}:/docs",
-        "squidfunk/mkdocs-material"
+        "--entrypoint", "sh",
+        "squidfunk/mkdocs-material",
+        "-c", "pip install --no-cache-dir mkdocs-glightbox && exec mkdocs serve --dev-addr=0.0.0.0:8000"
     )
 }
