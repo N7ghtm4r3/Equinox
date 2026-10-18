@@ -1,6 +1,7 @@
 package com.tecknobit.equinoxbackend.environment.services.users.service;
 
 import com.tecknobit.apimanager.apis.APIRequest;
+import com.tecknobit.equinoxbackend.annotations.EntityRetriever;
 import com.tecknobit.equinoxbackend.apis.batch.EquinoxItemsHelper;
 import com.tecknobit.equinoxbackend.apis.resources.ResourcesManager;
 import com.tecknobit.equinoxbackend.configuration.EquinoxBackendConfiguration;
@@ -23,6 +24,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import static com.tecknobit.apimanager.apis.APIRequest.SHA256_ALGORITHM;
 import static com.tecknobit.equinoxbackend.apis.database.SQLConstants.*;
@@ -289,6 +291,20 @@ public class EquinoxUsersService<T extends EquinoxUser, R extends EquinoxUsersRe
             if (j < lastIndex)
                 queryBuilder.append(COMMA);
         }
+    }
+
+    /**
+     * Method used to retrieve the user associated with the specified token
+     *
+     * @param token The token of the user to retrieve
+     *
+     * @return the matching user, or an empty optional if no user matches the token, as {@link Optional}
+     *
+     * @since 2.0.0
+     */
+    @EntityRetriever
+    public Optional<T> findUserByToken(String token) {
+        return usersRepository.findUserByToken(token);
     }
 
     /**
