@@ -1,12 +1,13 @@
 package com.tecknobit.equinoxbackend.environment.services.users.repository;
 
 import com.tecknobit.equinoxbackend.environment.services.users.entity.EquinoxUser;
-import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+
+import java.util.Optional;
 
 import static com.tecknobit.equinoxbackend.apis.database.SQLConstants._WHERE_;
 import static com.tecknobit.equinoxcore.helpers.CommonKeysKt.*;
@@ -37,6 +38,24 @@ public interface EquinoxUsersRepository<T extends EquinoxUser> extends JpaReposi
     )
     T findUserByEmail(
             @Param(EMAIL_KEY) String email
+    );
+
+    /**
+     * Method used to execute the query to find a user by token
+     *
+     * @param token The token of the user to retrieve
+     *
+     * @return the matching user, or an empty optional if no user matches the token, as {@link Optional}
+     *
+     * @since 2.0.0
+     */
+    @Query(
+            value = "SELECT * FROM " + USERS_KEY +
+                    _WHERE_ + TOKEN_KEY + "=:" + TOKEN_KEY,
+            nativeQuery = true
+    )
+    Optional<T> findUserByToken(
+            @Param(TOKEN_KEY) String token
     );
 
     /**
