@@ -21,17 +21,17 @@ public abstract class EquinoxApplicationEvent<T extends Enum<?>> extends Applica
     /**
      * {@code eventType} the type of the event emitted
      */
-    private final T eventType;
+    protected final T eventType;
 
     /**
      * {@code extra} arguments shared with the event
      */
-    private Object[] extra;
+    protected Object[] extra;
 
     /**
      * {@code onEventConsumed} callback to invoke when the event has been collected and performed
      */
-    private OnEventConsumed onEventConsumed;
+    protected OnEventConsumed onEventConsumed;
 
     /**
      * Constructor used to create the event to emit
