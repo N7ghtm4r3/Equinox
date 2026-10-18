@@ -45,7 +45,7 @@ public interface EquinoxUsersRepository<T extends EquinoxUser> extends JpaReposi
      *
      * @param token The token of the user to retrieve
      *
-     * @return the matching user, or an empty optional if no user matches the token, as {@link Optional}
+     * @return the matching user, or an empty optional if no user matches the token, as {@link Optional} of {@link T}
      *
      * @since 2.0.0
      */
