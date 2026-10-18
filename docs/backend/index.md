@@ -119,6 +119,15 @@ implementation philosophy
 to automatically manage some recurring operations such the users related requests or the inputs validation. You can take
 a look [here](Environment.md) to check how it works and how to implement it on your own backend
 
+## Validation
+
+Use the [validation guide](Validation/index.md) to apply the supplied
+Jakarta Bean Validation constraints to your request DTOs
+
+- [Name](Validation/Name.md) validates names
+- [Surname](Validation/Surname.md) validates surnames
+- [Email](Validation/Email.md) validates email addresses
+
 ## Configure your backend
 
 To configure your backend as you need you can follow this [guide](Configurations.md) to directly copy
