@@ -143,8 +143,6 @@ You can explore the available annotations below:
 - [BatchQueryItem](Annotations/batch/BatchQueryItem.md)
 - [BatchSyncProcedureImpl](Annotations/batch/BatchSyncProcedureImpl.md)
 - [ConstraintValidatorDefinition](Annotations/ConstraintValidatorDefinition.md)
-- [EventsHandler](Annotations/events/EventsHandler.md)
-- [EventsNotifier](Annotations/events/EventsNotifier.md)
 - [FiltersAdder](Annotations/filters/FiltersAdder.md)
 - [FiltersExtractor](Annotations/filters/FiltersExtractor.md)
 - [EmptyConstructor](Annotations/EmptyConstructor.md)
@@ -152,6 +150,13 @@ You can explore the available annotations below:
 - [Manager](Annotations/Manager.md)
 - [MappingPurpose](Annotations/MappingPurpose.md)
 - [TableColumns](Annotations/TableColumns.md)
+
+For event consumers, handlers, and emitters, use the following annotations:
+
+- [EventConsumer](Annotations/events/EventConsumer.md) identifies types and methods that consume application events
+- [EventsHandler](Annotations/events/EventsHandler.md) identifies types that handle events
+- [EventsNotifier](Annotations/events/EventsNotifier.md) identifies types that emit events
+- [EventsProcessor](Annotations/events/EventsProcessor.md) identifies services that both handle and emit events
 
 For request and response DTOs, use the following annotations:
 

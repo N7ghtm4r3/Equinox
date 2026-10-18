@@ -2,12 +2,16 @@ Use the `EquinoxEventsEmitter` API, built on top of the `ApplicationEventPublish
 services in a strict and controlled way by leveraging `enums`
 
 The optional [EventsNotifier](../Annotations/events/EventsNotifier.md) and
-[EventsHandler](../Annotations/events/EventsHandler.md) annotations belong to the
-`com.tecknobit.equinoxbackend.annotations.events` package. They identify the emitter and collector roles
+[EventsHandler](../Annotations/events/EventsHandler.md) annotations identify the emitter and collector roles
 to improve code readability.
 
 Use [EventsProcessor](../Annotations/events/EventsProcessor.md), available since `2.0.0`, to identify
 a service that both handles and emits events with a single annotation.
+
+Use [EventConsumer](../Annotations/events/EventConsumer.md), available since
+`2.0.0`, to mark a type or method that consumes application events and optionally
+identify its application event class. This source-only marker does not register
+listeners or filter events
 
 ## Implementation
 
