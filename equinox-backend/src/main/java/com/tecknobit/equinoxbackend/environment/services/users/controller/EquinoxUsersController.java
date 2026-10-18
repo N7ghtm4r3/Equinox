@@ -1,6 +1,8 @@
 package com.tecknobit.equinoxbackend.environment.services.users.controller;
 
 import com.tecknobit.apimanager.annotations.RequestPath;
+import com.tecknobit.apimanager.apis.ServerProtector;
+import com.tecknobit.equinoxbackend.configuration.EquinoxEnvironmentService;
 import com.tecknobit.equinoxbackend.environment.constants.EquinoxMessages;
 import com.tecknobit.equinoxbackend.environment.services.builtin.controllers.EquinoxController;
 import com.tecknobit.equinoxbackend.environment.services.builtin.controllers.EquinoxControllerCore;
@@ -82,6 +84,9 @@ public class EquinoxUsersController<T extends EquinoxUser, R extends EquinoxUser
     public String signUp(
             @RequestBody Map<String, Object> payload
     ) {
+        EquinoxEnvironmentService environmentService = EquinoxEnvironmentService.getInstance();
+        ServerProtector serverProtector = environmentService.getServerProtector();
+
         loadJsonHelper(payload);
         setSessionLocale(jsonHelper.getString(LANGUAGE_KEY, DEFAULT_LANGUAGE));
         if (configuration.serverProtectorEnabled() && !serverProtector.serverSecretMatches(jsonHelper.getString(SERVER_SECRET_KEY)))
@@ -98,8 +103,8 @@ public class EquinoxUsersController<T extends EquinoxUser, R extends EquinoxUser
             return failedResponse(signUpValidation);
         try {
             JSONObject response = new JSONObject();
-            String userId = generateIdentifier();
-            String token = generateIdentifier();
+            String userId = environmentService.generateIdentifier();
+            String token = environmentService.generateIdentifier();
             usersService.signUpUser(
                     userId,
                     token,

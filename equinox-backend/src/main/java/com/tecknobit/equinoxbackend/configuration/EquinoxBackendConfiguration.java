@@ -3,8 +3,6 @@ package com.tecknobit.equinoxbackend.configuration;
 import com.tecknobit.apimanager.apis.ResourcesUtils;
 import com.tecknobit.apimanager.formatters.JsonHelper;
 import com.tecknobit.equinoxbackend.apis.resources.ResourcesManager;
-import com.tecknobit.equinoxbackend.environment.services.builtin.controllers.EquinoxController;
-import com.tecknobit.equinoxbackend.environment.services.users.entity.EquinoxUser;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -244,7 +242,7 @@ public class EquinoxBackendConfiguration {
 
     /**
      * The {@code ServerProtectorConfig} represents the configuration used to configure the
-     * {@link EquinoxController#serverProtector} instance
+     * {@link EquinoxEnvironmentService#serverProtector} instance
      *
      * @author N7ghtm4r3 - Tecknobit
      * @since 1.1.0
@@ -365,7 +363,7 @@ public class EquinoxBackendConfiguration {
      *
      * @return the current {@link #configuration} instance as {@link EquinoxBackendConfiguration}
      */
-    public static EquinoxBackendConfiguration getInstance() {
+    static EquinoxBackendConfiguration getInstance() {
         return configuration;
     }
 
