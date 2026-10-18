@@ -308,6 +308,7 @@ public class EquinoxUser extends EquinoxItem {
     public static EquinoxUser getInstance(JSONObject jUser) {
         if (jUser != null)
             return new EquinoxUser(jUser);
+
         return null;
     }
 
