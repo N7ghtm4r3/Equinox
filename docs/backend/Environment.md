@@ -41,6 +41,9 @@ The base environment provides a core set of classes to manage users, controllers
 
 ### Other Utilities
 
+- [EquinoxMessages](APIs/EquinoxMessages.md)  
+  Collection of message keys used for backend validation and response messages
+
 - [EquinoxRequester](../../equinox-compose/src/commonMain/kotlin/com/tecknobit/equinoxcompose/network/EquinoxRequester.kt)  
   Request helper with
   pre-implemented [EquinoxUser](https://github.com/N7ghtm4r3/Equinox/blob/main/equinox-backend/src/main/java/com/tecknobit/equinoxbackend/environment/services/users/entity/EquinoxUser.java)

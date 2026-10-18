@@ -2,18 +2,8 @@ Provides the logic of an **Equinox's controller** and some utilities to build re
 
 ## Constants
 
-These following messages are `i18n` ready
-
-| **Constant**                              | **Description**                                                                             |
-|-------------------------------------------|---------------------------------------------------------------------------------------------|
-| `WRONG_PROCEDURE_MESSAGE`                 | Message to use when the procedure is wrong                                                  |
-| `NOT_AUTHORIZED_OR_WRONG_DETAILS_MESSAGE` | Message to use when the request is by a not authorized user or tried to fetch wrong details |
-| `RESPONSE_SUCCESSFUL_MESSAGE`             | Message to use when the request has been successful                                         |
-| `WRONG_NAME_MESSAGE`                      | Error message used when the name inserted is not valid                                      |
-| `WRONG_SURNAME_MESSAGE`                   | Error message used when the surname inserted is not valid                                   |
-| `WRONG_EMAIL_MESSAGE`                     | Error message used when the email inserted is not valid                                     |
-| `WRONG_PASSWORD_MESSAGE`                  | Error message used when the password inserted is not valid                                  |
-| `WRONG_LANGUAGE_MESSAGE`                  | Error message used when the language inserted is not valid                                  |
+The predefined message keys are available in
+[EquinoxMessages](EquinoxMessages.md) and support internationalization
 
 ## JSON utilities
 

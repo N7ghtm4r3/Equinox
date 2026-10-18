@@ -1,6 +1,7 @@
 package com.tecknobit.equinoxbackend.environment.services.users.controller;
 
 import com.tecknobit.apimanager.annotations.RequestPath;
+import com.tecknobit.equinoxbackend.environment.constants.EquinoxMessages;
 import com.tecknobit.equinoxbackend.environment.services.builtin.controllers.EquinoxController;
 import com.tecknobit.equinoxbackend.environment.services.builtin.controllers.EquinoxControllerCore;
 import com.tecknobit.equinoxbackend.environment.services.users.entity.EquinoxUser;
@@ -169,15 +170,15 @@ public class EquinoxUsersController<T extends EquinoxUser, R extends EquinoxUser
     protected String validateSignUp(String name, String surname, String email, String password, String language,
                                     Object... custom) {
         if (!InputsValidator.isNameValid(name))
-            return WRONG_NAME_MESSAGE;
+            return EquinoxMessages.WRONG_NAME_MESSAGE;
         if (!InputsValidator.isSurnameValid(surname))
-            return WRONG_SURNAME_MESSAGE;
+            return EquinoxMessages.WRONG_SURNAME_MESSAGE;
         if (!InputsValidator.isEmailValid(email))
-            return WRONG_EMAIL_MESSAGE;
+            return EquinoxMessages.WRONG_EMAIL_MESSAGE;
         if (!InputsValidator.isPasswordValid(password))
-            return WRONG_PASSWORD_MESSAGE;
+            return EquinoxMessages.WRONG_PASSWORD_MESSAGE;
         if (!InputsValidator.isLanguageValid(language))
-            return WRONG_LANGUAGE_MESSAGE;
+            return EquinoxMessages.WRONG_LANGUAGE_MESSAGE;
         return null;
     }
 
@@ -271,11 +272,11 @@ public class EquinoxUsersController<T extends EquinoxUser, R extends EquinoxUser
      */
     protected String validateSignIn(String email, String password, String language, Object... custom) {
         if (!InputsValidator.isEmailValid(email))
-            return WRONG_EMAIL_MESSAGE;
+            return EquinoxMessages.WRONG_EMAIL_MESSAGE;
         if (!InputsValidator.isPasswordValid(password))
-            return WRONG_PASSWORD_MESSAGE;
+            return EquinoxMessages.WRONG_PASSWORD_MESSAGE;
         if (!InputsValidator.isLanguageValid(language))
-            return WRONG_LANGUAGE_MESSAGE;
+            return EquinoxMessages.WRONG_LANGUAGE_MESSAGE;
         return null;
     }
 
@@ -398,7 +399,7 @@ public class EquinoxUsersController<T extends EquinoxUser, R extends EquinoxUser
         loadJsonHelper(payload);
         String email = jsonHelper.getString(EMAIL_KEY);
         if (!InputsValidator.isEmailValid(email))
-            return failedResponse(WRONG_EMAIL_MESSAGE);
+            return failedResponse(EquinoxMessages.WRONG_EMAIL_MESSAGE);
         try {
             usersService.changeEmail(email, userId);
             return successResponse();
@@ -439,7 +440,7 @@ public class EquinoxUsersController<T extends EquinoxUser, R extends EquinoxUser
         loadJsonHelper(payload);
         String password = jsonHelper.getString(PASSWORD_KEY);
         if (!InputsValidator.isPasswordValid(password))
-            return failedResponse(WRONG_PASSWORD_MESSAGE);
+            return failedResponse(EquinoxMessages.WRONG_PASSWORD_MESSAGE);
         try {
             usersService.changePassword(password, userId);
             return successResponse();
@@ -480,7 +481,7 @@ public class EquinoxUsersController<T extends EquinoxUser, R extends EquinoxUser
         loadJsonHelper(payload);
         String language = jsonHelper.getString(LANGUAGE_KEY);
         if (!InputsValidator.isLanguageValid(language))
-            return failedResponse(WRONG_LANGUAGE_MESSAGE);
+            return failedResponse(EquinoxMessages.WRONG_LANGUAGE_MESSAGE);
         try {
             usersService.changeLanguage(language, userId);
             return successResponse();
