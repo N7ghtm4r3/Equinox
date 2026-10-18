@@ -137,17 +137,19 @@ com.your.package
 ## Annotations available
 
 This module provides a set of annotations that can be used to improve code readability and maintainability.
-The annotation pages follow the package structure:
+You can explore the available annotations below:
 
-- `com.tecknobit.equinoxbackend.annotations.batch`: [BatchQueryImpl](Annotations/batch/BatchQueryImpl.md),
-  [BatchQueryItem](Annotations/batch/BatchQueryItem.md), and [BatchSyncProcedureImpl](Annotations/batch/BatchSyncProcedureImpl.md)
-- `com.tecknobit.equinoxbackend.annotations.events`: [EventsHandler](Annotations/events/EventsHandler.md)
-  and [EventsNotifier](Annotations/events/EventsNotifier.md)
-- `com.tecknobit.equinoxbackend.annotations.filters`: [FiltersAdder](Annotations/filters/FiltersAdder.md)
-  and [FiltersExtractor](Annotations/filters/FiltersExtractor.md)
-- `com.tecknobit.equinoxbackend.annotations.dto`: request and response annotations described below
-- `com.tecknobit.equinoxbackend.annotations`: [EmptyConstructor](Annotations/EmptyConstructor.md),
-  [MappingPurpose](Annotations/MappingPurpose.md), and [TableColumns](Annotations/TableColumns.md)
+- [BatchQueryImpl](Annotations/batch/BatchQueryImpl.md)
+- [BatchQueryItem](Annotations/batch/BatchQueryItem.md)
+- [BatchSyncProcedureImpl](Annotations/batch/BatchSyncProcedureImpl.md)
+- [EventsHandler](Annotations/events/EventsHandler.md)
+- [EventsNotifier](Annotations/events/EventsNotifier.md)
+- [FiltersAdder](Annotations/filters/FiltersAdder.md)
+- [FiltersExtractor](Annotations/filters/FiltersExtractor.md)
+- [EmptyConstructor](Annotations/EmptyConstructor.md)
+- [Manager](Annotations/Manager.md)
+- [MappingPurpose](Annotations/MappingPurpose.md)
+- [TableColumns](Annotations/TableColumns.md)
 
 For request and response DTOs, use the following annotations:
 
