@@ -4,6 +4,7 @@ import com.tecknobit.apimanager.apis.ServerProtector;
 import com.tecknobit.apimanager.formatters.JsonHelper;
 import com.tecknobit.equinoxbackend.apis.resources.ResourcesProvider;
 import com.tecknobit.equinoxbackend.configuration.EquinoxBackendConfiguration;
+import com.tecknobit.equinoxbackend.configuration.EquinoxEnvironmentService;
 import com.tecknobit.equinoxcore.annotations.Assembler;
 import com.tecknobit.equinoxcore.annotations.Returner;
 import com.tecknobit.equinoxcore.annotations.Structure;
@@ -23,7 +24,6 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.UUID;
 
-import static com.tecknobit.equinoxbackend.apis.resources.ResourcesManager.RESOURCES_KEY;
 import static com.tecknobit.equinoxcore.network.Requester.RESPONSE_DATA_KEY;
 import static com.tecknobit.equinoxcore.network.Requester.RESPONSE_STATUS_KEY;
 import static com.tecknobit.equinoxcore.network.ResponseStatus.FAILED;
@@ -44,6 +44,7 @@ abstract public class EquinoxControllerCore {
     /**
      * {@code resourcesProvider} the resources provider and manager
      */
+    @Deprecated(since = "2.0.0", forRemoval = true)
     public static ResourcesProvider resourcesProvider;
 
     /**
@@ -115,6 +116,7 @@ abstract public class EquinoxControllerCore {
      *     </li>
      * </ul>
      */
+    @Deprecated(since = "2.0.0", forRemoval = true)
     protected static ServerProtector serverProtector;
 
     /**
@@ -139,7 +141,8 @@ abstract public class EquinoxControllerCore {
      * @apiNote will be instantiated also the {@link #configuration}
      */
     public EquinoxControllerCore() {
-        configuration = EquinoxBackendConfiguration.getInstance();
+        EquinoxEnvironmentService equinoxEnvironmentService = EquinoxEnvironmentService.getInstance();
+        configuration = equinoxEnvironmentService.getBackendConfiguration();
     }
 
     /**
@@ -353,6 +356,7 @@ abstract public class EquinoxControllerCore {
      *
      * @return the identifier as {@link String}
      */
+    @Deprecated(since = "2.0.0", forRemoval = true)
     public static String generateIdentifier() {
         return UUID.randomUUID().toString().replaceAll("-", "");
     }
@@ -388,6 +392,7 @@ abstract public class EquinoxControllerCore {
      * </ul>
      * @since 1.1.0
      */
+    @Deprecated(since = "2.0.0", forRemoval = true)
     @Wrapper
     public static void initEquinoxEnvironment(Class<?> context, String[] args) {
         initEquinoxEnvironment(context, null, args);
@@ -425,28 +430,9 @@ abstract public class EquinoxControllerCore {
      * </ul>
      * @since 1.1.2
      */
+    @Deprecated(since = "2.0.0", forRemoval = true)
     public static void initEquinoxEnvironment(Class<?> context, Object[] saveMessageExtra, String[] args) {
-        try {
-            EquinoxBackendConfiguration backendConfiguration = EquinoxBackendConfiguration.getInstance();
-            EquinoxBackendConfiguration.ResourcesConfig resourcesConfig = backendConfiguration.getResourcesConfig();
-            if (resourcesConfig.createResourcesFolder()) {
-                resourcesProvider = new ResourcesProvider(RESOURCES_KEY, resourcesConfig.getSubdirectories());
-                resourcesProvider.createContainerDirectory();
-                resourcesProvider.createSubDirectories();
-            }
-            if (backendConfiguration.serverProtectorEnabled()) {
-                if (serverProtector != null)
-                    throw new IllegalAccessException("The protector has been already instantiated");
-                EquinoxBackendConfiguration.ServerProtectorConfig serverProtectorConfig = backendConfiguration.getServerProtectorConfig();
-                serverProtector = new ServerProtector(
-                        serverProtectorConfig.getStoragePath(),
-                        serverProtectorConfig.getSaveMessage(saveMessageExtra)
-                );
-                serverProtector.launch(args);
-            }
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+        throw new RuntimeException("To use EquinoxEnvironmentService instead");
     }
 
 }

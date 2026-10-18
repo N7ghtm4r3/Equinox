@@ -5,6 +5,9 @@ The base environment provides a core set of classes to manage users, controllers
 
 ### Main Classes
 
+- [EquinoxEnvironmentService](../../equinox-backend/src/main/java/com/tecknobit/equinoxbackend/configuration/EquinoxEnvironmentService.java)\
+  Initializes the backend environment and provides access to its configuration, resources, and server protector
+
 - [EquinoxBaseEndpointsSet](../../equinox-core/src/commonMain/kotlin/com/tecknobit/equinoxcore/network/EquinoxBaseEndpointsSet.kt)   
   A set of pre-defined endpoints for the Equinox's environment
 
@@ -133,15 +136,15 @@ To correctly use this environment you need to use the following base **gradle co
 
 ### Out-of-the-Box Launch
 
-To launch the out-of-the-box environment, simply follow the snippet below showing the main method of a
-**SpringApplication**
+The **EquinoxEnvironmentService** initializes the resource directories and server protector according to the
+backend configuration. Call it before starting the **SpringApplication**, as shown below
 
 === "Java"
 
     ```java
     package other.packages;
 
-    import com.tecknobit.equinoxbackend.environment.services.builtin.controller.EquinoxController;
+    import com.tecknobit.equinoxbackend.configuration.EquinoxEnvironmentService;
     import org.springframework.boot.SpringApplication;
     import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
     import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -175,7 +178,7 @@ To launch the out-of-the-box environment, simply follow the snippet below showin
     public class Launcher {
     
         public static void main(String[] args) {
-            EquinoxController.initEquinoxEnvironment(Launcher.class, args);
+            EquinoxEnvironmentService.getInstance().initEquinoxEnvironment(args);
             // ... your code ...
             // then normally launch your SpringBoot's application
             SpringApplication.run(Launcher.class, args);
@@ -189,7 +192,7 @@ To launch the out-of-the-box environment, simply follow the snippet below showin
     ```kotlin
     package other.packages
 
-    import com.tecknobit.equinoxbackend.environment.services.builtin.controller.EquinoxController
+    import com.tecknobit.equinoxbackend.configuration.EquinoxEnvironmentService
     import org.springframework.boot.SpringApplication
     import org.springframework.boot.autoconfigure.SpringBootApplication
     import org.springframework.boot.autoconfigure.domain.EntityScan
@@ -221,10 +224,7 @@ To launch the out-of-the-box environment, simply follow the snippet below showin
         companion object {
             @JvmStatic
             fun main(args: Array<String>) {
-                EquinoxController.initEquinoxEnvironment(
-                    Launcher::class.java,
-                    args
-                )
+                EquinoxEnvironmentService.getInstance().initEquinoxEnvironment(args)
                 // ... your code ...
                 // then normally launch your SpringBoot's application
                 SpringApplication.run(Launcher::class.java, *args)
@@ -238,6 +238,67 @@ To launch the out-of-the-box environment, simply follow the snippet below showin
 
      The REQUIRED annotations are necessary to correctly launch automatically the **EquinoxUsersController** and its
      related workflow, so if you don't want to use that controller you can simply remove them, and it will not automatically start
+
+#### Environment service
+
+The **EquinoxEnvironmentService** manages the backend environment through a shared instance
+
+##### Access the service
+
+=== "Java"
+
+    ```java
+    EquinoxEnvironmentService environmentService = EquinoxEnvironmentService.getInstance();
+    ```
+
+=== "Kotlin"
+
+    ```kotlin
+    val environmentService = EquinoxEnvironmentService.getInstance()
+    ```
+
+##### Generate identifiers
+
+Generates random UUID identifiers without hyphens
+
+=== "Java"
+
+    ```java
+    String identifier = environmentService.generateIdentifier();
+    ```
+
+=== "Kotlin"
+
+    ```kotlin
+    val identifier = environmentService.generateIdentifier()
+    ```
+
+##### Access configuration and components
+
+| Method | Provides access to |
+|--------|--------------------|
+| `getBackendConfiguration()` | The configuration defined in [equinox.config](#additional-backend-setup) |
+| `getResourcesProvider()` | The [resources provider](APIs/ResourcesProvider.md) |
+| `getServerProtector()` | The server protector |
+
+The resources provider and server protector getters return `null` until their components are instantiated.
+Disabled components remain `null`
+
+##### Format the protector's save message
+
+Pass the message values after the command-line arguments when initializing the environment:
+
+=== "Java"
+
+    ```java
+    environmentService.initEquinoxEnvironment(args, "My backend");
+    ```
+
+=== "Kotlin"
+
+    ```kotlin
+    environmentService.initEquinoxEnvironment(args, "My backend")
+    ```
 
 #### Inspect the current mapped endpoints
 

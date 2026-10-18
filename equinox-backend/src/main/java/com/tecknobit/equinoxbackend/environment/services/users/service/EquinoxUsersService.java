@@ -4,6 +4,7 @@ import com.tecknobit.apimanager.apis.APIRequest;
 import com.tecknobit.equinoxbackend.apis.batch.EquinoxItemsHelper;
 import com.tecknobit.equinoxbackend.apis.resources.ResourcesManager;
 import com.tecknobit.equinoxbackend.configuration.EquinoxBackendConfiguration;
+import com.tecknobit.equinoxbackend.configuration.EquinoxEnvironmentService;
 import com.tecknobit.equinoxbackend.environment.services.users.entity.EquinoxUser;
 import com.tecknobit.equinoxbackend.environment.services.users.repository.EquinoxUsersRepository;
 import com.tecknobit.equinoxcore.annotations.Assembler;
@@ -102,6 +103,7 @@ public class EquinoxUsersService<T extends EquinoxUser, R extends EquinoxUsersRe
      * @param usersRepository The instance for the users repository
      */
     @Autowired
+    @SuppressWarnings("unchecked")
     public EquinoxUsersService(R usersRepository) {
         this.usersRepository = usersRepository;
         try {
@@ -162,7 +164,8 @@ public class EquinoxUsersService<T extends EquinoxUser, R extends EquinoxUsersRe
      */
     @Returner
     private String resolveUserDefaultProfilePic() {
-        EquinoxBackendConfiguration configuration = EquinoxBackendConfiguration.getInstance();
+        EquinoxEnvironmentService equinoxEnvironmentService = EquinoxEnvironmentService.getInstance();
+        EquinoxBackendConfiguration configuration = equinoxEnvironmentService.getBackendConfiguration();
         EquinoxBackendConfiguration.DefaultsConfig defaultsConfig = configuration.getDefaultsConfig();
 
         return defaultsConfig.getDefaultUserProfilePic();

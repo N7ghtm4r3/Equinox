@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.tecknobit.apimanager.annotations.Returner;
 import com.tecknobit.equinoxbackend.annotations.EmptyConstructor;
 import com.tecknobit.equinoxbackend.configuration.EquinoxBackendConfiguration;
+import com.tecknobit.equinoxbackend.configuration.EquinoxEnvironmentService;
 import com.tecknobit.equinoxbackend.environment.services.builtin.entities.EquinoxItem;
 import jakarta.persistence.*;
 import org.json.JSONObject;
@@ -168,7 +169,8 @@ public class EquinoxUser extends EquinoxItem {
      */
     @PrePersist
     protected void applyDefaults() {
-        EquinoxBackendConfiguration configuration = EquinoxBackendConfiguration.getInstance();
+        EquinoxEnvironmentService equinoxEnvironmentService = EquinoxEnvironmentService.getInstance();
+        EquinoxBackendConfiguration configuration = equinoxEnvironmentService.getBackendConfiguration();
         EquinoxBackendConfiguration.DefaultsConfig defaultsConfig = configuration.getDefaultsConfig();
 
         if (profilePic == null)
