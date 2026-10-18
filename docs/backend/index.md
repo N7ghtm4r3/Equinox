@@ -142,6 +142,7 @@ You can explore the available annotations below:
 - [BatchQueryImpl](Annotations/batch/BatchQueryImpl.md)
 - [BatchQueryItem](Annotations/batch/BatchQueryItem.md)
 - [BatchSyncProcedureImpl](Annotations/batch/BatchSyncProcedureImpl.md)
+- [ConstraintValidatorDefinition](Annotations/ConstraintValidatorDefinition.md)
 - [EventsHandler](Annotations/events/EventsHandler.md)
 - [EventsNotifier](Annotations/events/EventsNotifier.md)
 - [FiltersAdder](Annotations/filters/FiltersAdder.md)

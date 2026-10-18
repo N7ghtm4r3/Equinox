@@ -20,6 +20,7 @@ import static java.lang.annotation.ElementType.*;
  * }
  * </pre>
  *
+ * @author N7ghtm4r3 - Tecknobit
  * @since 2.0.0
  */
 @Target(value = {METHOD})
