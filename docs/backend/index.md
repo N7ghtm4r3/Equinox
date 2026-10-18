@@ -147,6 +147,7 @@ You can explore the available annotations below:
 - [FiltersAdder](Annotations/filters/FiltersAdder.md)
 - [FiltersExtractor](Annotations/filters/FiltersExtractor.md)
 - [EmptyConstructor](Annotations/EmptyConstructor.md)
+- [EntityRetriever](Annotations/EntityRetriever.md)
 - [Manager](Annotations/Manager.md)
 - [MappingPurpose](Annotations/MappingPurpose.md)
 - [TableColumns](Annotations/TableColumns.md)
