@@ -7,6 +7,7 @@ import com.tecknobit.equinoxbackend.environment.services.users.entity.EquinoxUse
 import com.tecknobit.equinoxbackend.environment.services.users.repository.EquinoxUsersRepository;
 import com.tecknobit.equinoxcore.annotations.Assembler;
 import jakarta.persistence.Query;
+import jakarta.transaction.Transactional;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -271,6 +272,7 @@ public class EquinoxUsersService<T extends EquinoxUser, R extends EquinoxUsersRe
      * @param profilePic The profile pic resource
      * @param userId:     the identifier of the user
      */
+    @Transactional
     public String changeProfilePic(MultipartFile profilePic, String userId) throws IOException {
         String profilePicPath = createProfileResource(profilePic, userId + currentTimeMillis());
 
@@ -288,6 +290,7 @@ public class EquinoxUsersService<T extends EquinoxUser, R extends EquinoxUsersRe
      * @param newEmail The new email of the user
      * @param userId:   the identifier of the user
      */
+    @Transactional
     public void changeEmail(String newEmail, String userId) {
         usersRepository.changeEmail(newEmail, userId);
     }
@@ -298,6 +301,7 @@ public class EquinoxUsersService<T extends EquinoxUser, R extends EquinoxUsersRe
      * @param newPassword The new password of the user
      * @param userId:      the identifier of the user
      */
+    @Transactional
     public void changePassword(String newPassword, String userId) throws NoSuchAlgorithmException {
         usersRepository.changePassword(hash(newPassword), userId);
     }
@@ -308,6 +312,7 @@ public class EquinoxUsersService<T extends EquinoxUser, R extends EquinoxUsersRe
      * @param newLanguage The new language of the user
      * @param userId:      the identifier of the user
      */
+    @Transactional
     public void changeLanguage(String newLanguage, String userId) {
         usersRepository.changeLanguage(newLanguage, userId);
     }

@@ -46,7 +46,6 @@ public interface EquinoxUsersRepository<T extends EquinoxUser> extends JpaReposi
      * @param id:            the identifier of the user
      */
     @Modifying(clearAutomatically = true)
-    @Transactional
     @Query(
             value = "UPDATE " + USERS_KEY + " SET " + PROFILE_PIC_KEY + "=:" + PROFILE_PIC_KEY +
                     _WHERE_ + IDENTIFIER_KEY + "=:" + IDENTIFIER_KEY,
@@ -64,7 +63,6 @@ public interface EquinoxUsersRepository<T extends EquinoxUser> extends JpaReposi
      * @param id:       the identifier of the user
      */
     @Modifying(clearAutomatically = true)
-    @Transactional
     @Query(
             value = "UPDATE " + USERS_KEY + " SET " + EMAIL_KEY + "=:" + EMAIL_KEY +
                     _WHERE_ + IDENTIFIER_KEY + "=:" + IDENTIFIER_KEY,
@@ -82,7 +80,6 @@ public interface EquinoxUsersRepository<T extends EquinoxUser> extends JpaReposi
      * @param id:          the identifier of the user
      */
     @Modifying(clearAutomatically = true)
-    @Transactional
     @Query(
             value = "UPDATE " + USERS_KEY + " SET " + PASSWORD_KEY + "=:" + PASSWORD_KEY +
                     _WHERE_ + IDENTIFIER_KEY + "=:" + IDENTIFIER_KEY,
@@ -100,7 +97,6 @@ public interface EquinoxUsersRepository<T extends EquinoxUser> extends JpaReposi
      * @param id:          the identifier of the user
      */
     @Modifying(clearAutomatically = true)
-    @Transactional
     @Query(
             value = "UPDATE " + USERS_KEY + " SET " + LANGUAGE_KEY + "=:" + LANGUAGE_KEY +
                     _WHERE_ + IDENTIFIER_KEY + "=:" + IDENTIFIER_KEY,

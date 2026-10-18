@@ -453,7 +453,6 @@ as follows:
     public interface CustomUsersRepository extends EquinoxUsersRepository<CustomUser> {
     
           @Modifying(clearAutomatically = true)
-          @Transactional
           @Query(
                   value = "UPDATE " + USERS_KEY + " SET " + "currency" + "=:" + "currency" + " WHERE "
                           + IDENTIFIER_KEY + "=:" + IDENTIFIER_KEY,
@@ -485,7 +484,6 @@ as follows:
     interface CustomUsersRepository : EquinoxUsersRepository<CustomUser> {
     
         @Modifying(clearAutomatically = true)
-        @Transactional
         @Query(
             value = "UPDATE $USERS_KEY SET currency =: currency WHERE $IDENTIFIER_KEY =: $IDENTIFIER_KEY",
             nativeQuery = true
@@ -510,6 +508,7 @@ as follows:
     package other.packages
     
     import com.tecknobit.equinoxbackend.environment.services.users.service.EquinoxUsersService;
+    import jakarta.transaction.Transactional;
     import org.springframework.beans.factory.annotation.Autowired;
     import org.springframework.context.annotation.Primary;
     import org.springframework.stereotype.Service;
@@ -517,6 +516,7 @@ as follows:
     @Service
     public class CustomUsersService extends EquinoxUsersService<CustomUser, CustomUsersRepository> {
     
+        @Transactional
         public void changeCurrency(String newCurrency, String userId) {
             usersRepository.changeCurrency(newCurrency, userId);
         }
@@ -530,11 +530,13 @@ as follows:
     package other.packages
 
     import com.tecknobit.equinoxbackend.environment.services.users.service.EquinoxUsersService
+    import jakarta.transaction.Transactional
     import org.springframework.stereotype.Service
     
     @Service
     class CustomUsersService : EquinoxUsersService<CustomUser, CustomUsersRepository>() {
     
+        @Transactional
         fun changeCurrency(
             newCurrency: String,
             userId: String
