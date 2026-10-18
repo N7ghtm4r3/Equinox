@@ -3,9 +3,11 @@ package com.tecknobit.equinoxbackend.environment.services.users.service;
 import com.tecknobit.apimanager.apis.APIRequest;
 import com.tecknobit.equinoxbackend.apis.batch.EquinoxItemsHelper;
 import com.tecknobit.equinoxbackend.apis.resources.ResourcesManager;
+import com.tecknobit.equinoxbackend.configuration.EquinoxBackendConfiguration;
 import com.tecknobit.equinoxbackend.environment.services.users.entity.EquinoxUser;
 import com.tecknobit.equinoxbackend.environment.services.users.repository.EquinoxUsersRepository;
 import com.tecknobit.equinoxcore.annotations.Assembler;
+import com.tecknobit.equinoxcore.annotations.Returner;
 import jakarta.persistence.Query;
 import jakarta.transaction.Transactional;
 import org.json.JSONArray;
@@ -76,7 +78,7 @@ public class EquinoxUsersService<T extends EquinoxUser, R extends EquinoxUsersRe
      * {@code DEFAULT_USER_SIGN_UP_KEYS} the default keys of the values to use in the {@link #BASE_SIGN_UP_QUERY}
      */
     protected static final List<String> DEFAULT_USER_SIGN_UP_KEYS = List.of(DISCRIMINATOR_VALUE_KEY, IDENTIFIER_KEY,
-            TOKEN_KEY, NAME_KEY, SURNAME_KEY, EMAIL_KEY, PASSWORD_KEY, LANGUAGE_KEY);
+            TOKEN_KEY, NAME_KEY, SURNAME_KEY, EMAIL_KEY, PASSWORD_KEY, PROFILE_PIC_KEY, LANGUAGE_KEY);
 
     /**
      * {@code DEFAULT_DYNAMIC_ACCOUNT_DATA_KEYS} the default keys of the values to retrieve with the
@@ -113,6 +115,8 @@ public class EquinoxUsersService<T extends EquinoxUser, R extends EquinoxUsersRe
     /**
      * Method used to sign up a new user in the system
      *
+     * <p>The configured default profile pic is included in the user insertion
+     *
      * @param id The identifier of the user
      * @param token The token of the user
      * @param name The name of the user
@@ -128,9 +132,12 @@ public class EquinoxUsersService<T extends EquinoxUser, R extends EquinoxUsersRe
                            String language, Object... custom) throws NoSuchAlgorithmException {
         StringBuilder queryBuilder = new StringBuilder(BASE_SIGN_UP_QUERY);
         arrangeQuery(queryBuilder, getSignUpKeys(), false);
+
+        String defaultProfilePic = resolveUserDefaultProfilePic();
         List<Object> values = new ArrayList<>(List.of(discriminatorValue, id, token, name, surname, email, hash(password),
-                language));
+                defaultProfilePic, language));
         values.addAll(Arrays.stream(custom).toList());
+
         queryBuilder.append(VALUES_QUERY_PART);
         arrangeQuery(queryBuilder, values, true);
         entityManager.createNativeQuery(queryBuilder.toString()).executeUpdate();
@@ -144,6 +151,21 @@ public class EquinoxUsersService<T extends EquinoxUser, R extends EquinoxUsersRe
      */
     protected List<String> getSignUpKeys() {
         return DEFAULT_USER_SIGN_UP_KEYS;
+    }
+
+    /**
+     * Method used to retrieve the configured default profile pic for user registration
+     *
+     * @return the default profile pic used in the sign-up insertion as {@link String}
+     *
+     * @since 2.0.0
+     */
+    @Returner
+    private String resolveUserDefaultProfilePic() {
+        EquinoxBackendConfiguration configuration = EquinoxBackendConfiguration.getInstance();
+        EquinoxBackendConfiguration.DefaultsConfig defaultsConfig = configuration.getDefaultsConfig();
+
+        return defaultsConfig.getDefaultUserProfilePic();
     }
 
     /**

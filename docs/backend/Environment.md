@@ -331,6 +331,10 @@ You can copy and fill the below `JSON` as you need:
     "subdirectories": [
       // list of subdirectories to create inside the resources folder, omit to avoid the creation
     ]
+  },
+  "defaults": {
+    // profile pic saved and returned at sign-up; defaults to profiles/defProfilePic.png if omitted
+    "default_user_profile_pic": "profiles/customDefault.png"
   }
 }
 ```

@@ -4,6 +4,7 @@ import com.tecknobit.apimanager.apis.ResourcesUtils;
 import com.tecknobit.apimanager.formatters.JsonHelper;
 import com.tecknobit.equinoxbackend.apis.resources.ResourcesManager;
 import com.tecknobit.equinoxbackend.environment.services.builtin.controllers.EquinoxController;
+import com.tecknobit.equinoxbackend.environment.services.users.entity.EquinoxUser;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -11,6 +12,8 @@ import java.util.Collections;
 import java.util.List;
 
 import static com.tecknobit.equinoxbackend.apis.resources.ResourcesManager.RESOURCES_KEY;
+import static com.tecknobit.equinoxbackend.configuration.EquinoxBackendConfiguration.DefaultsConfig.DEFAULTS_CONFIG_KEY;
+import static com.tecknobit.equinoxcore.helpers.CommonKeysKt.DEFAULT_PROFILE_PIC;
 
 /**
  * The {@code EquinoxBackendConfiguration} contains the current configuration used for an Equinox's
@@ -20,6 +23,13 @@ import static com.tecknobit.equinoxbackend.apis.resources.ResourcesManager.RESOU
  * @since 1.0.6
  */
 public class EquinoxBackendConfiguration {
+
+    /**
+     * {@code EMPTY_CONFIG_SECTION} the empty configuration used when an optional section is not specified
+     *
+     * @since 2.0.0
+     */
+    private static final JsonHelper EMPTY_CONFIG_SECTION = new JsonHelper("{}");
 
     /**
      * {@code configuration} the current configuration of the Equinox's backend instance
@@ -42,16 +52,27 @@ public class EquinoxBackendConfiguration {
     private ServerProtectorConfig serverProtectorConfig;
 
     /**
+     * {@code defaultsConfig} the default values used when creating users
+     *
+     * @since 2.0.0
+     */
+    private DefaultsConfig defaultsConfig;
+
+    /**
      * Private constructor to instantiate the configuration instance
      */
     private EquinoxBackendConfiguration() {
         String rawConfiguration = getConfigurationContent();
         if (rawConfiguration != null) {
             JsonHelper hConfig = new JsonHelper(rawConfiguration);
+
             loadResourcesConfig(hConfig);
             loadServerProtectorConfig(hConfig);
-        } else
+            loadDefaultsConfig(hConfig);
+        } else {
             resourcesConfig = new ResourcesConfig();
+            defaultsConfig = new DefaultsConfig();
+        }
     }
 
     /**
@@ -62,6 +83,7 @@ public class EquinoxBackendConfiguration {
     private String getConfigurationContent() {
         ResourcesUtils<Class<EquinoxBackendConfiguration>> resourcesUtils = new ResourcesUtils<>(
                 EquinoxBackendConfiguration.class);
+
         try {
             return resourcesUtils.getResourceContent(EQUINOX_CONFIGURATION_PATHNAME);
         } catch (IOException e) {
@@ -75,8 +97,24 @@ public class EquinoxBackendConfiguration {
      * @param hConfig The configuration retrieved from the {@link #getConfigurationContent()} method
      */
     private void loadResourcesConfig(JsonHelper hConfig) {
-        JsonHelper hResources = hConfig.getJsonHelper(RESOURCES_KEY);
+        JsonHelper hResources = hConfig.getJsonHelper(RESOURCES_KEY, EMPTY_CONFIG_SECTION);
+
         resourcesConfig = new ResourcesConfig(hResources);
+    }
+
+    /**
+     * Method used to load the {@link #defaultsConfig} instance
+     *
+     * <p>Missing configuration properties retain their standard default values
+     *
+     * @param hConfig The configuration retrieved from the {@link #getConfigurationContent()} method
+     *
+     * @since 2.0.0
+     */
+    private void loadDefaultsConfig(JsonHelper hConfig) {
+        JsonHelper hDefaults = hConfig.getJsonHelper(DEFAULTS_CONFIG_KEY, EMPTY_CONFIG_SECTION);
+
+        defaultsConfig = new DefaultsConfig(hDefaults);
     }
 
     /**
@@ -117,6 +155,17 @@ public class EquinoxBackendConfiguration {
      */
     public boolean serverProtectorEnabled() {
         return serverProtectorConfig != null;
+    }
+
+    /**
+     * Method used to get the {@link #defaultsConfig} instance
+     *
+     * @return the {@link #defaultsConfig} instance as {@link DefaultsConfig}
+     *
+     * @since 2.0.0
+     */
+    public DefaultsConfig getDefaultsConfig() {
+        return defaultsConfig;
     }
 
     /**
@@ -255,6 +304,58 @@ public class EquinoxBackendConfiguration {
          */
         public String getSaveMessage(Object... extra) {
             return String.format(saveMessage, extra);
+        }
+
+    }
+
+    /**
+     * The {@code DefaultsConfig} class is useful to configure the default values
+     *
+     * @author N7ghtm4r3 - Tecknobit
+     *
+     * @since 2.0.0
+     */
+    public static final class DefaultsConfig {
+
+        /**
+         * {@code DEFAULTS_CONFIG_KEY} the key of the {@code defaults} configuration section
+         */
+        public static final String DEFAULTS_CONFIG_KEY = "defaults";
+
+        /**
+         * {@code DEFAULT_USER_PROFILE_PIC_KEY} the key of the default user profile pic property
+         */
+        public static final String DEFAULT_USER_PROFILE_PIC_KEY = "default_user_profile_pic";
+
+        /**
+         * {@code defaultUserProfilePic} the profile pic assigned to newly created users without a custom pic
+         */
+        private final String defaultUserProfilePic;
+
+        /**
+         * Constructor to init the {@link DefaultsConfig} class with the standard default values
+         */
+        public DefaultsConfig() {
+            this.defaultUserProfilePic = DEFAULT_PROFILE_PIC;
+        }
+
+        /**
+         * Constructor to init the {@link DefaultsConfig} class from the defaults configuration
+         *
+         * @param hConfig The defaults configuration section, with missing profile pic values falling back to
+         *                {@code DEFAULT_PROFILE_PIC}
+         */
+        public DefaultsConfig(JsonHelper hConfig) {
+            this.defaultUserProfilePic = hConfig.getString(DEFAULT_USER_PROFILE_PIC_KEY, DEFAULT_PROFILE_PIC);
+        }
+
+        /**
+         * Method used to get the {@link #defaultUserProfilePic} instance
+         *
+         * @return the {@link #defaultUserProfilePic} instance as {@link String}
+         */
+        public String getDefaultUserProfilePic() {
+            return defaultUserProfilePic;
         }
 
     }

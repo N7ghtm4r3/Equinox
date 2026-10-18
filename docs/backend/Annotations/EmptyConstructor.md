@@ -1,5 +1,9 @@
 This annotation is used to mark the default constructors required for the **Spring Boot** entities management
 
+When no profile pic is supplied, it remains `null` until JPA applies the configured default before inserting the user.
+An explicitly supplied profile pic is preserved. See the [backend configuration](../Environment.md#fill-the-configuration)
+to customize the default
+
 ## Usage
 
 === "Java"
@@ -12,7 +16,7 @@ This annotation is used to mark the default constructors required for the **Spri
     }
     
     public EquinoxUser(String id, String token, String name, String surname, String email, String password, String language) {
-        this(id, token, name, surname, email, password, DEFAULT_PROFILE_PIC, language);
+        this(id, token, name, surname, email, password, null, language);
     }
     
     public EquinoxUser(String id, String token, String name, String surname, String email, String password, String profilePic,
@@ -49,7 +53,7 @@ This annotation is used to mark the default constructors required for the **Spri
     constructor(
         id: String?, token: String?, name: String?, surname: String?,
         email: String?, password: String?, language: String?
-    ) : this(id, token, name, surname, email, password, DEFAULT_PROFILE_PIC, language)
+    ) : this(id, token, name, surname, email, password, null, language)
 
     constructor(
         id: String?, token: String?, name: String?, surname: String?,
