@@ -80,6 +80,7 @@ To correctly use this environment you need to use the following base **gradle co
     
     dependencies {
         implementation 'org.springframework.boot:spring-boot-starter-web:3.2.3'
+        implementation 'org.springframework.boot:spring-boot-starter-validation:3.2.3'
         implementation 'org.springframework.boot:spring-boot-starter-data-jpa:3.2.3'
         implementation 'com.fasterxml.jackson.core:jackson-databind:2.15.4'
         implementation 'mysql:mysql-connector-java:8.0.33'
@@ -113,6 +114,7 @@ To correctly use this environment you need to use the following base **gradle co
     
     dependencies {
         implementation("org.springframework.boot:spring-boot-starter-web:3.2.3")
+        implementation("org.springframework.boot:spring-boot-starter-validation:3.2.3")
         implementation("org.springframework.boot:spring-boot-starter-data-jpa:3.2.3")
         implementation("com.fasterxml.jackson.core:jackson-databind:2.15.4")
         implementation("mysql:mysql-connector-java:8.0.33")

@@ -24,6 +24,7 @@ dependencies {
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.spring.boot.starter.data.jpa)
     implementation(libs.boot.spring.boot.starter.web)
+    implementation(libs.spring.boot.starter.validation)
     implementation(libs.jackson.databind)
     implementation(libs.apimanager)
     implementation(libs.json)
