@@ -147,10 +147,30 @@ public abstract class EquinoxApplicationEvent<T extends Enum<?>> extends Applica
         onEventConsumed.perform(extra);
     }
 
+    /**
+     * Method used to perform the {@link #onEventConsumed} callback with only the collector extra arguments
+     *
+     * @param collectorExtra The extra arguments provided by the collector
+     * @throws NullPointerException when the {@link #onEventConsumed} is {@code null}
+     *
+     * @since 2.0.0
+     */
     public void performOnEventConsumedWithCollectorExtra(Object[] collectorExtra) {
-        performOnEventConsumed(null, collectorExtra);
+        onEventConsumed.performWithCollectorExtra(collectorExtra);
     }
 
+    /**
+     * Method used to perform the {@link #onEventConsumed} callback with separate emitter and collector extra arguments
+     *
+     * <p>The emitter extra arguments must be provided explicitly. The stored {@link #extra} arguments are not
+     * included automatically
+     *
+     * @param emitterExtra The extra arguments provided by the emitter
+     * @param collectorExtra The extra arguments provided by the collector
+     * @throws IllegalStateException when the {@link #onEventConsumed} is {@code null}
+     *
+     * @since 2.0.0
+     */
     public void performOnEventConsumed(Object[] emitterExtra, Object[] collectorExtra) {
         if (onEventConsumed == null)
             throw new IllegalStateException("No any OnEventConsumed set");
