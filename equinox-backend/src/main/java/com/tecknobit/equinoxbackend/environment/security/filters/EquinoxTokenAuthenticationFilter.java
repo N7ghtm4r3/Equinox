@@ -2,7 +2,7 @@ package com.tecknobit.equinoxbackend.environment.security.filters;
 
 import static com.tecknobit.equinoxcore.helpers.CommonKeysKt.TOKEN_KEY;
 
-import com.tecknobit.equinoxbackend.configuration.EquinoxBackendConfiguration;
+import com.tecknobit.equinoxbackend.environment.configuration.EquinoxBackendConfiguration;
 import com.tecknobit.equinoxcore.annotations.FutureEquinoxApi;
 import com.tecknobit.laniakea.security.authentication.LaniakeaUserAuthentication;
 import com.tecknobit.laniakea.services.users.entity.LaniakeaUser;

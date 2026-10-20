@@ -6,7 +6,7 @@ import static com.tecknobit.equinoxcore.network.EquinoxBaseEndpointsSet.SIGN_UP_
 import static com.tecknobit.laniakea.core.helpers.LaniakeaEndpoints.USERS_CUSTOMERS_SIGN_UP_ENDPOINT;
 import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
 
-import com.tecknobit.equinoxbackend.configuration.EquinoxBackendConfiguration;
+import com.tecknobit.equinoxbackend.environment.configuration.EquinoxBackendConfiguration;
 import com.tecknobit.equinoxcore.annotations.FutureEquinoxApi;
 import com.tecknobit.equinoxcore.annotations.Returner;
 import com.tecknobit.equinoxcore.annotations.Wrapper;
