@@ -2,6 +2,7 @@ package com.tecknobit.equinoxbackend.environment.configuration;
 
 import com.tecknobit.apimanager.apis.ServerProtector;
 import com.tecknobit.equinoxbackend.apis.resources.ResourcesProvider;
+import com.tecknobit.equinoxbackend.environment.services.users.entity.EquinoxUser;
 
 import java.util.UUID;
 
@@ -30,7 +31,7 @@ public class EquinoxEnvironmentService {
     /**
      * {@code resourcesProvider} the resources provider and manager
      */
-    private ResourcesProvider resourcesProvider;
+    protected ResourcesProvider resourcesProvider;
 
     /**
      * {@code serverProtector} the server protector used to manage access to the backend
@@ -52,17 +53,17 @@ public class EquinoxEnvironmentService {
      *     </li>
      * </ul>
      */
-    private ServerProtector serverProtector;
+    protected ServerProtector serverProtector;
 
     /**
      * {@code backendConfiguration} the current configuration of the backend environment
      */
-    private final EquinoxBackendConfiguration backendConfiguration;
+    protected final EquinoxBackendConfiguration backendConfiguration;
 
     /**
      * Constructor to init the {@link EquinoxEnvironmentService} class with the backend configuration
      */
-    private EquinoxEnvironmentService() {
+    protected EquinoxEnvironmentService() {
         backendConfiguration = EquinoxBackendConfiguration.getInstance();
     }
 
@@ -150,6 +151,10 @@ public class EquinoxEnvironmentService {
      */
     public ResourcesProvider getResourcesProvider() {
         return resourcesProvider;
+    }
+
+    public <U extends EquinoxUser> EquinoxUserLocaleResolver<U> getUserLocaleResolver() {
+        return new EquinoxUserLocaleResolver<>();
     }
 
     /**

@@ -16,7 +16,9 @@ public class EquinoxLocaleConfig {
 
     @Bean
     public LocaleResolver localeResolver() {
-        return new EquinoxUserLocaleResolver();
+        EquinoxEnvironmentService environmentService = EquinoxEnvironmentService.getInstance();
+
+        return environmentService.getUserLocaleResolver();
     }
 
 }

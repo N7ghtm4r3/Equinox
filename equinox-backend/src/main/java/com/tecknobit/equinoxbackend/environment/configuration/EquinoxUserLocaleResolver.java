@@ -2,6 +2,7 @@ package com.tecknobit.equinoxbackend.environment.configuration;
 
 import com.tecknobit.equinoxbackend.environment.services.users.entity.EquinoxUser;
 import com.tecknobit.equinoxcore.annotations.FutureEquinoxApi;
+import com.tecknobit.equinoxcore.annotations.Returner;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.jspecify.annotations.NonNull;
@@ -15,6 +16,8 @@ import org.springframework.web.servlet.LocaleResolver;
 
 import java.util.Locale;
 
+import static com.tecknobit.equinoxcore.helpers.InputsValidator.DEFAULT_LANGUAGE;
+
 @Configuration
 @FutureEquinoxApi(
         releaseVersion = "2.0.0",
@@ -23,7 +26,7 @@ import java.util.Locale;
                 - Add related docu page (also in Configurations like MessageSourceConfig)
                 """
 )
-public class EquinoxUserLocaleResolver implements LocaleResolver {
+public class EquinoxUserLocaleResolver<U extends EquinoxUser> implements LocaleResolver {
 
     @Override
     public @NonNull Locale resolveLocale(@NonNull HttpServletRequest request) {
@@ -32,9 +35,19 @@ public class EquinoxUserLocaleResolver implements LocaleResolver {
         if (authentication == null || !authentication.isAuthenticated())
             return LocaleContextHolder.getLocale();
 
-        EquinoxUser user = (EquinoxUser) authentication.getPrincipal();
+        String language = resolveAuthenticatedUserLanguage(authentication);
+        return Locale.forLanguageTag(language);
+    }
 
-        return Locale.forLanguageTag(user.getLanguage());
+    @Returner
+    @SuppressWarnings("unchecked")
+    protected String resolveAuthenticatedUserLanguage(Authentication authentication) {
+        U user = (U) authentication.getPrincipal();
+        String language = DEFAULT_LANGUAGE;
+        if(user != null)
+            language = user.getLanguage();
+
+        return language;
     }
 
     @Override
