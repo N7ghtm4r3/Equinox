@@ -128,6 +128,15 @@ Jakarta Bean Validation constraints to your request DTOs
 - [Surname](Validation/Surname.md) validates surnames
 - [Email](Validation/Email.md) validates email addresses
 
+## Security
+
+The backend provides Spring Security components for token authentication and user authorization
+
+- [SecurityConfig](../../equinox-backend/src/main/java/com/tecknobit/equinoxbackend/environment/security/configuration/SecurityConfig.java) configures the security filter chain and permitted request patterns
+- [EquinoxTokenAuthenticationFilter](../../equinox-backend/src/main/java/com/tecknobit/equinoxbackend/environment/security/filters/EquinoxTokenAuthenticationFilter.java) retrieves users from the token request header
+- [EquinoxUserAuthentication](../../equinox-backend/src/main/java/com/tecknobit/equinoxbackend/environment/security/authentication/EquinoxUserAuthentication.java) exposes the user as the authentication principal
+- [IsAuthorizedUser](../../equinox-backend/src/main/java/com/tecknobit/equinoxbackend/environment/security/authorization/annotations/IsAuthorizedUser.java) checks that the requested user identifier matches the authenticated user's identifier
+
 ## Configure your backend
 
 To configure your backend as you need you can follow this [guide](Configurations.md) to directly copy
