@@ -1,4 +1,4 @@
-package com.tecknobit.equinoxbackend.configuration;
+package com.tecknobit.equinoxbackend.environment.configuration;
 
 import com.tecknobit.apimanager.apis.ResourcesUtils;
 import com.tecknobit.apimanager.formatters.JsonHelper;
@@ -10,7 +10,7 @@ import java.util.Collections;
 import java.util.List;
 
 import static com.tecknobit.equinoxbackend.apis.resources.ResourcesManager.RESOURCES_KEY;
-import static com.tecknobit.equinoxbackend.configuration.EquinoxBackendConfiguration.DefaultsConfig.DEFAULTS_CONFIG_KEY;
+import static com.tecknobit.equinoxbackend.environment.configuration.EquinoxBackendConfiguration.DefaultsConfig.DEFAULTS_CONFIG_KEY;
 import static com.tecknobit.equinoxcore.helpers.CommonKeysKt.DEFAULT_PROFILE_PIC;
 
 /**
@@ -18,14 +18,12 @@ import static com.tecknobit.equinoxcore.helpers.CommonKeysKt.DEFAULT_PROFILE_PIC
  * backend instance. It is based on a singleton design pattern to avoid useless instantiation
  *
  * @author N7ghtm4r3 - Tecknobit
- * @since 1.0.6
+ * @since 2.0.0
  */
 public class EquinoxBackendConfiguration {
 
     /**
      * {@code EMPTY_CONFIG_SECTION} the empty configuration used when an optional section is not specified
-     *
-     * @since 2.0.0
      */
     private static final JsonHelper EMPTY_CONFIG_SECTION = new JsonHelper("{}");
 

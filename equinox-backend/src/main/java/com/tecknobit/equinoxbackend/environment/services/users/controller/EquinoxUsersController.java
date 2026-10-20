@@ -2,7 +2,7 @@ package com.tecknobit.equinoxbackend.environment.services.users.controller;
 
 import com.tecknobit.apimanager.annotations.RequestPath;
 import com.tecknobit.apimanager.apis.ServerProtector;
-import com.tecknobit.equinoxbackend.configuration.EquinoxEnvironmentService;
+import com.tecknobit.equinoxbackend.environment.configuration.EquinoxEnvironmentService;
 import com.tecknobit.equinoxbackend.environment.constants.EquinoxMessages;
 import com.tecknobit.equinoxbackend.environment.services.builtin.controllers.EquinoxController;
 import com.tecknobit.equinoxbackend.environment.services.builtin.controllers.EquinoxControllerCore;

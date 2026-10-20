@@ -144,7 +144,7 @@ backend configuration. Call it before starting the **SpringApplication**, as sho
     ```java
     package other.packages;
 
-    import com.tecknobit.equinoxbackend.configuration.EquinoxEnvironmentService;
+    import com.tecknobit.equinoxbackend.environment.configuration.EquinoxEnvironmentService;
     import org.springframework.boot.SpringApplication;
     import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
     import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -192,7 +192,7 @@ backend configuration. Call it before starting the **SpringApplication**, as sho
     ```kotlin
     package other.packages
 
-    import com.tecknobit.equinoxbackend.configuration.EquinoxEnvironmentService
+    import com.tecknobit.equinoxbackend.environment.configuration.EquinoxEnvironmentService
     import org.springframework.boot.SpringApplication
     import org.springframework.boot.autoconfigure.SpringBootApplication
     import org.springframework.boot.autoconfigure.domain.EntityScan

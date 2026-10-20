@@ -1,4 +1,4 @@
-package com.tecknobit.equinoxbackend.configuration;
+package com.tecknobit.equinoxbackend.environment.configuration;
 
 import com.tecknobit.apimanager.apis.ServerProtector;
 import com.tecknobit.equinoxbackend.apis.resources.ResourcesProvider;
@@ -6,8 +6,8 @@ import com.tecknobit.equinoxbackend.apis.resources.ResourcesProvider;
 import java.util.UUID;
 
 import static com.tecknobit.equinoxbackend.apis.resources.ResourcesManager.RESOURCES_KEY;
-import static com.tecknobit.equinoxbackend.configuration.EquinoxBackendConfiguration.ResourcesConfig;
-import static com.tecknobit.equinoxbackend.configuration.EquinoxBackendConfiguration.ServerProtectorConfig;
+import static com.tecknobit.equinoxbackend.environment.configuration.EquinoxBackendConfiguration.ResourcesConfig;
+import static com.tecknobit.equinoxbackend.environment.configuration.EquinoxBackendConfiguration.ServerProtectorConfig;
 
 /**
  * The {@code EquinoxEnvironmentService} class is useful to initialize the backend environment
