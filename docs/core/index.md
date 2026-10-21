@@ -52,6 +52,9 @@ dependencies {
 
 ### Common
 
+- [EquinoxBaseEndpointsSet](APIs/common/EquinoxBaseEndpointsSet.md)
+  Defines the shared API base path and user endpoint constants
+
 - [Timeformatter](APIs/common/Timeformatter.md)  
   Allows to format the temporal values and calculate temporal gap
 

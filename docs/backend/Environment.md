@@ -5,10 +5,10 @@ The base environment provides a core set of classes to manage users, controllers
 
 ### Main Classes
 
-- [EquinoxEnvironmentService](../../equinox-backend/src/main/java/com/tecknobit/equinoxbackend/configuration/EquinoxEnvironmentService.java)\
+- [EquinoxEnvironmentService](APIs/EquinoxEnvironmentService.md)  
   Initializes the backend environment and provides access to its configuration, resources, and server protector
 
-- [EquinoxBaseEndpointsSet](../../equinox-core/src/commonMain/kotlin/com/tecknobit/equinoxcore/network/EquinoxBaseEndpointsSet.kt)   
+- [EquinoxBaseEndpointsSet](../core/APIs/common/EquinoxBaseEndpointsSet.md)  
   A set of pre-defined endpoints for the Equinox's environment
 
 - [EquinoxControllerCore](APIs/EquinoxControllerCore.md)  

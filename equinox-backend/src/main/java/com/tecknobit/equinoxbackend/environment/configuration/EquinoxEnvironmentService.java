@@ -14,8 +14,10 @@ import static com.tecknobit.equinoxbackend.environment.configuration.EquinoxBack
  * The {@code EquinoxEnvironmentService} class is useful to initialize the backend environment
  * and provide access to its configuration, resources, and server protector
  *
- * <p>The shared instance is available through {@link #getInstance()}. Initialize the environment
- * before starting the Spring Boot application
+ * <p>Register a custom service through {@link #initialize(EquinoxEnvironmentService)} before
+ * the first call to {@link #getInstance()}. Otherwise, the shared service is created on first access
+ *
+ * <p>Initialize the environment before starting the Spring Boot application
  *
  * @author N7ghtm4r3 - Tecknobit
  *
@@ -24,9 +26,9 @@ import static com.tecknobit.equinoxbackend.environment.configuration.EquinoxBack
 public class EquinoxEnvironmentService {
 
     /**
-     * {@code equinoxEnvironmentService} the shared instance of the environment service
+     * {@code equinoxEnvironmentService} the shared environment service, or {@code null} before initialization
      */
-    private static final EquinoxEnvironmentService equinoxEnvironmentService = new EquinoxEnvironmentService();
+    private static EquinoxEnvironmentService equinoxEnvironmentService;
 
     /**
      * {@code resourcesProvider} the resources provider and manager
@@ -61,10 +63,17 @@ public class EquinoxEnvironmentService {
     protected final EquinoxBackendConfiguration backendConfiguration;
 
     /**
+     * {@code equinoxUserLocaleResolver} the user locale resolver retained by this environment service
+     */
+    protected final EquinoxUserLocaleResolver<?> equinoxUserLocaleResolver;
+
+    /**
      * Constructor to init the {@link EquinoxEnvironmentService} class with the backend configuration
+     * and the default user locale resolver
      */
     protected EquinoxEnvironmentService() {
         backendConfiguration = EquinoxBackendConfiguration.getInstance();
+        equinoxUserLocaleResolver = new EquinoxUserLocaleResolver<>();
     }
 
     /**
@@ -153,17 +162,53 @@ public class EquinoxEnvironmentService {
         return resourcesProvider;
     }
 
-    public <U extends EquinoxUser> EquinoxUserLocaleResolver<U> getUserLocaleResolver() {
-        return new EquinoxUserLocaleResolver<>();
+    /**
+     * Method used to get the locale resolver retained by this environment service
+     *
+     * <p>The default implementation returns the same resolver on each call. Subclasses can override
+     * this method to provide a resolver for their own user type
+     *
+     * @return the {@link #equinoxUserLocaleResolver} instance as {@link EquinoxUserLocaleResolver}
+     */
+    public EquinoxUserLocaleResolver<? extends EquinoxUser> getUserLocaleResolver() {
+        return equinoxUserLocaleResolver;
     }
 
     /**
      * Method used to get the shared environment service
      *
-     * @return the {@link #equinoxEnvironmentService} instance as {@link EquinoxEnvironmentService}
+     * <p>A default service is registered on first access if no custom service has been registered.
+     * Concurrent first access must be coordinated by the caller
+     *
+     * @return the shared service as {@link EquinoxEnvironmentService}
+     * @throws IllegalStateException if another call registers a service between the initialization
+     *     check and the attempt to register the default service
      */
     public static EquinoxEnvironmentService getInstance() {
+        if(equinoxEnvironmentService == null)
+            initialize(new EquinoxEnvironmentService());
+
         return equinoxEnvironmentService;
+    }
+
+    /**
+     * Method used to register the shared environment service
+     *
+     * <p>Register a custom service before the first call to {@link #getInstance()}. An existing
+     * non-null service cannot be replaced
+     *
+     * @param environmentService The non-null environment service to share with backend components
+     * @throws IllegalArgumentException if {@code environmentService} is {@code null}
+     * @throws IllegalStateException if a non-null service has already been registered
+     */
+    public static synchronized void initialize(EquinoxEnvironmentService environmentService) {
+        if(environmentService == null)
+            throw new IllegalArgumentException("Environment service instance must be not null");
+
+        if(equinoxEnvironmentService != null)
+            throw new IllegalStateException("Environment service instance already initialized");
+
+        equinoxEnvironmentService = environmentService;
     }
 
 }
