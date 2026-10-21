@@ -161,7 +161,12 @@ This configuration class allows to set the `CORS` origin policy for the backend
 
 ## MessageSource
 
-This configuration is used to configure the messages resources bundle to internationalize your backend application
+This configuration provides the message resource bundles used to internationalize your backend application.
+It loads the configured bundles with UTF-8 encoding and uses English as the default message source locale.
+
+Request locale selection is configured separately by [EquinoxLocaleConfig](#equinoxlocaleconfig).
+Use both configurations together: `MessageSourceConfig` provides the `messageSource` bean, while
+`EquinoxLocaleConfig` provides the `localeResolver` bean.
 
 === "Java"
 
@@ -169,19 +174,12 @@ This configuration is used to configure the messages resources bundle to interna
     package com.tecknobit.equinoxbackend.environment.configuration;
     
     import com.tecknobit.equinoxcore.annotations.Assembler;
-    import com.tecknobit.equinoxcore.helpers.CommonKeysKt;
     import org.springframework.context.annotation.Bean;
     import org.springframework.context.annotation.Configuration;
     import org.springframework.context.support.ResourceBundleMessageSource;
-    import org.springframework.web.servlet.LocaleResolver;
-    import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
-    import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-    import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
-    import org.springframework.web.servlet.i18n.SessionLocaleResolver;
     
     import java.nio.charset.StandardCharsets;
     
-    import static com.tecknobit.equinoxcore.helpers.CommonKeysKt.LANGUAGE_KEY;
     import static java.util.Locale.ENGLISH;
     
     /**
@@ -190,12 +188,10 @@ This configuration is used to configure the messages resources bundle to interna
      *
      * @author N7ghtm4r3 - Tecknobit
      *
-     * @since 1.0.9
-     *
-     * @see WebMvcConfigurer
+     * @since 2.0.0
      */
     @Configuration
-    public class MessageSourceConfig implements WebMvcConfigurer {
+    public class MessageSourceConfig {
     
         /**
          * {@code MESSAGES_KEY} default path where are placed the resources bundle
@@ -219,40 +215,8 @@ This configuration is used to configure the messages resources bundle to interna
             messageSource.setBasenames(MESSAGES_KEY, CUSTOM_MESSAGES_KEY); // customize as needed
             messageSource.setDefaultEncoding(StandardCharsets.UTF_8.name());
             messageSource.setDefaultLocale(ENGLISH); // customize as needed
-            messageSource.setUseCodeAsDefaultMessage(true); // Set false to prevent exceptions from being thrown when resources are not found
+            messageSource.setUseCodeAsDefaultMessage(true); // Use the message code when no translation is available
             return messageSource;
-        }
-    
-        /**
-         * Method used to resolve the current locale of the current session
-         *
-         * @return the resolver as {@link LocaleResolver}
-         */
-        @Bean
-        public LocaleResolver localeResolver() {
-            SessionLocaleResolver resolver = new SessionLocaleResolver();
-            resolver.setDefaultLocale(ENGLISH); // customize as needed
-            return resolver;
-        }
-    
-        /**
-         * Method used to add a custom interceptor to detect the locale change by the {@code "language"} key
-         *
-         * @return the interceptor as {@link LocaleChangeInterceptor}
-         */
-        @Bean
-        public LocaleChangeInterceptor localeChangeInterceptor() {
-            LocaleChangeInterceptor interceptor = new LocaleChangeInterceptor();
-            interceptor.setParamName("language"); // customize as needed
-            return interceptor;
-        }
-    
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public void addInterceptors(InterceptorRegistry registry) {
-            registry.addInterceptor(localeChangeInterceptor());
         }
     
     }
@@ -261,18 +225,23 @@ This configuration is used to configure the messages resources bundle to interna
 === "Kotlin"
 
     ```kotlin
+    import com.tecknobit.equinoxcore.annotations.Assembler
+    import org.springframework.context.annotation.Bean
+    import org.springframework.context.annotation.Configuration
+    import org.springframework.context.support.ResourceBundleMessageSource
+    import java.nio.charset.StandardCharsets
+    import java.util.Locale
+
     /**
      * The `MessageSourceConfig` class configures the message resources bundle
      * used by the backend application.
      *
      * @author N7ghtm4r3 - Tecknobit
      *
-     * @since 1.0.9
-     *
-     * @see WebMvcConfigurer
+     * @since 2.0.0
      */
     @Configuration
-    class MessageSourceConfig : WebMvcConfigurer {
+    open class MessageSourceConfig {
     
         companion object {
     
@@ -295,45 +264,71 @@ This configuration is used to configure the messages resources bundle to interna
          */
         @Bean
         @Assembler
-        fun messageSource(): ResourceBundleMessageSource {
+        open fun messageSource(): ResourceBundleMessageSource {
             val messageSource = ResourceBundleMessageSource()
             messageSource.setBasenames(MESSAGES_KEY, CUSTOM_MESSAGES_KEY) // customize as needed
             messageSource.setDefaultEncoding(StandardCharsets.UTF_8.name())
             messageSource.setDefaultLocale(Locale.ENGLISH) // customize as needed
-            messageSource.setUseCodeAsDefaultMessage(true) // Set false to prevent exceptions from being thrown when resources are not found
+            messageSource.setUseCodeAsDefaultMessage(true) // Use the message code when no translation is available
             return messageSource
-        }
-    
-        /**
-         * Method used to resolve the current locale of the current session
-         *
-         * @return the resolver as [LocaleResolver]
-         */
-        @Bean
-        fun localeResolver(): LocaleResolver {
-            val resolver = SessionLocaleResolver()
-            resolver.setDefaultLocale(Locale.ENGLISH) // customize as needed
-            return resolver
-        }
-    
-        /**
-         * Method used to add a custom interceptor to detect the locale change by the `language` key
-         *
-         * @return the interceptor as [LocaleChangeInterceptor]
-         */
-        @Bean
-        fun localeChangeInterceptor(): LocaleChangeInterceptor {
-            val interceptor = LocaleChangeInterceptor()
-            interceptor.paramName = "language" // customize as needed
-            return interceptor
-        }
-    
-        /**
-         * {@inheritDoc}
-         */
-        override fun addInterceptors(registry: InterceptorRegistry) {
-            registry.addInterceptor(localeChangeInterceptor())
         }
     
     }
     ```
+
+## EquinoxLocaleConfig
+
+This configuration exposes the `localeResolver` bean used to resolve request locales from the authenticated
+user's language. It retrieves the resolver from the shared
+[environment service](Environment.md#environment-service), so a custom service can supply its own
+[EquinoxUserLocaleResolver](APIs/EquinoxUserLocaleResolver.md).
+
+The default environment service creates its resolver once and returns the same instance on subsequent
+calls. Register a custom environment service before the first call to `getInstance()` and before Spring
+creates the `localeResolver` bean.
+
+Use this configuration alongside [MessageSource](#messagesource): the resolver selects the request locale,
+and the message source uses that locale to look up translations in the configured bundles.
+
+=== "Java"
+
+    ```java
+    import com.tecknobit.equinoxbackend.environment.configuration.EquinoxEnvironmentService;
+    import org.springframework.context.annotation.Bean;
+    import org.springframework.context.annotation.Configuration;
+    import org.springframework.web.servlet.LocaleResolver;
+
+    @Configuration(proxyBeanMethods = false)
+    public final class EquinoxLocaleConfig {
+
+        @Bean
+        public LocaleResolver localeResolver() {
+            EquinoxEnvironmentService environmentService = EquinoxEnvironmentService.getInstance();
+            return environmentService.getUserLocaleResolver();
+        }
+
+    }
+    ```
+
+=== "Kotlin"
+
+    ```kotlin
+    import com.tecknobit.equinoxbackend.environment.configuration.EquinoxEnvironmentService
+    import org.springframework.context.annotation.Bean
+    import org.springframework.context.annotation.Configuration
+    import org.springframework.web.servlet.LocaleResolver
+
+    @Configuration(proxyBeanMethods = false)
+    class EquinoxLocaleConfig {
+
+        @Bean
+        fun localeResolver(): LocaleResolver {
+            val environmentService = EquinoxEnvironmentService.getInstance()
+            return environmentService.getUserLocaleResolver()
+        }
+
+    }
+    ```
+
+For the default resolution rules and a custom resolver example, see
+[EquinoxUserLocaleResolver](APIs/EquinoxUserLocaleResolver.md).
