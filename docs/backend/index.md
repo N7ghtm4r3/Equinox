@@ -128,6 +128,14 @@ Jakarta Bean Validation constraints to your request DTOs
 - [Surname](Validation/Surname.md) validates surnames
 - [Email](Validation/Email.md) validates email addresses
 
+## Exceptions
+
+Use the [exception guide](Exceptions/index.md) to return localized failure responses
+with the supplied exceptions
+
+- [EquinoxGlobalExceptionHandler](Exceptions/EquinoxGlobalExceptionHandler.md)
+  converts Equinox exceptions and request validation failures into HTTP responses
+
 ## Security
 
 The backend provides Spring Security components for token authentication and user authorization

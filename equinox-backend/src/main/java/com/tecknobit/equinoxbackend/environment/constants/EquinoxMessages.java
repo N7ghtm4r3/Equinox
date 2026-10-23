@@ -22,6 +22,16 @@ public abstract class EquinoxMessages {
     public static final String NOT_AUTHORIZED_OR_WRONG_DETAILS_MESSAGE = "not_authorized";
 
     /**
+     * {@code SERVER_ERROR_MESSAGE} the message key used for an unexpected server error
+     */
+    public static final String SERVER_ERROR_MESSAGE = "server_error";
+
+    /**
+     * {@code UNKNOWN_SERVER_ERROR_MESSAGE} the fallback message key used when an exception message cannot be resolved
+     */
+    public static final String UNKNOWN_SERVER_ERROR_MESSAGE = "unknown_server_error";
+
+    /**
      * {@code RESPONSE_SUCCESSFUL_MESSAGE} the message key used when the request has been successful
      */
     public static final String RESPONSE_SUCCESSFUL_MESSAGE = "operation_executed_successfully";

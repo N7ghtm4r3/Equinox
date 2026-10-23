@@ -72,10 +72,10 @@ mavenPublishing {
 }
 
 kotlin {
-    jvmToolchain(18)
+    jvmToolchain(21)
 }
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_18
-    targetCompatibility = JavaVersion.VERSION_18
+    sourceCompatibility = JavaVersion.VERSION_21
+    targetCompatibility = JavaVersion.VERSION_21
 }
