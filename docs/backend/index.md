@@ -143,7 +143,9 @@ The backend provides Spring Security components for token authentication and use
 - [SecurityConfig](../../equinox-backend/src/main/java/com/tecknobit/equinoxbackend/environment/security/configuration/SecurityConfig.java) configures the security filter chain and permitted request patterns
 - [EquinoxTokenAuthenticationFilter](../../equinox-backend/src/main/java/com/tecknobit/equinoxbackend/environment/security/filters/EquinoxTokenAuthenticationFilter.java) retrieves users from the token request header
 - [EquinoxUserAuthentication](../../equinox-backend/src/main/java/com/tecknobit/equinoxbackend/environment/security/authentication/EquinoxUserAuthentication.java) exposes the user as the authentication principal
-- [IsAuthorizedUser](../../equinox-backend/src/main/java/com/tecknobit/equinoxbackend/environment/security/authorization/annotations/IsAuthorizedUser.java) checks that the requested user identifier matches the authenticated user's identifier
+- [IsAuthorizedUser](Security/authorization/annotations/IsAuthorizedUser.md) checks that the requested user identifier matches the authenticated user's identifier
+
+See the [security guide](Security/index.md) for user authorization usage
 
 ## Configure your backend
 
