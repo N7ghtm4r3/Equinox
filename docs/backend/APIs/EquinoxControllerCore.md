@@ -18,7 +18,7 @@ This API allows to retrieve values from the `JSON` payload without to specify th
 ```java
 
 @PostMapping(path = SIGN_UP_ENDPOINT)
-@RequestPath(path = "/api/v1/users/signUp", method = POST)
+@RequestPath(path = "/api/v2/users/signUp", method = POST)
 public String signUp(
         @RequestBody Map<String, Object> payload
 ) {
@@ -45,7 +45,7 @@ If the request path append in the search params the `language` param will be set
 ```java
 
 @PostMapping(path = SIGN_UP_ENDPOINT)
-@RequestPath(path = "/api/v1/users/hello?language=it", method = POST)
+@RequestPath(path = "/api/v2/users/hello?language=it", method = POST)
 public String signUp(
         @RequestBody Map<String, Object> payload
 ) {
@@ -61,7 +61,7 @@ If the request payload specifies the `language` param will be set the locale spe
 ```java
 
 @PostMapping(path = SIGN_UP_ENDPOINT)
-@RequestPath(path = "/api/v1/users/hello", method = POST)
+@RequestPath(path = "/api/v2/users/hello", method = POST)
 public String signUp(
         @RequestBody Map<String, Object> payload
 ) {
@@ -90,7 +90,7 @@ resources
 ```java
 
 @PostMapping(path = SIGN_UP_ENDPOINT)
-@RequestPath(path = "/api/v1/users/hello?language=it", method = POST)
+@RequestPath(path = "/api/v2/users/hello?language=it", method = POST)
 public String signUp(
         @RequestBody Map<String, Object> payload
 ) {
@@ -119,7 +119,7 @@ Gets the payload for a successful response
 ```java
 
 @PostMapping(path = SIGN_UP_ENDPOINT)
-@RequestPath(path = "/api/v1/users/hello", method = POST)
+@RequestPath(path = "/api/v2/users/hello", method = POST)
 public String signUp(
         @RequestBody Map<String, Object> payload
 ) {
@@ -133,7 +133,7 @@ public String signUp(
 ```java
 
 @PostMapping(path = SIGN_UP_ENDPOINT)
-@RequestPath(path = "/api/v1/users/hello", method = POST)
+@RequestPath(path = "/api/v2/users/hello", method = POST)
 public String signUp(
         @RequestBody Map<String, Object> payload
 ) {
@@ -147,7 +147,7 @@ public String signUp(
 ```java
 
 @PostMapping(path = SIGN_UP_ENDPOINT)
-@RequestPath(path = "/api/v1/users/hello", method = POST)
+@RequestPath(path = "/api/v2/users/hello", method = POST)
 public String signUp(
         @RequestBody Map<String, Object> payload
 ) {
@@ -167,7 +167,7 @@ Gets the payload for a failed response
 ```java
 
 @PostMapping(path = SIGN_UP_ENDPOINT)
-@RequestPath(path = "/api/v1/users/hello", method = POST)
+@RequestPath(path = "/api/v2/users/hello", method = POST)
 public String signUp(
         @RequestBody Map<String, Object> payload
 ) {
@@ -181,7 +181,7 @@ public String signUp(
 ```java
 
 @PostMapping(path = SIGN_UP_ENDPOINT)
-@RequestPath(path = "/api/v1/users/hello", method = POST)
+@RequestPath(path = "/api/v2/users/hello", method = POST)
 public String signUp(
         @RequestBody Map<String, Object> payload
 ) {
@@ -199,7 +199,7 @@ Preconfigured [failed response](#failedresponse) with the `NOT_AUTHORIZED_OR_WRO
 ```java
 
 @PostMapping(path = SIGN_UP_ENDPOINT)
-@RequestPath(path = "/api/v1/users/hello", method = POST)
+@RequestPath(path = "/api/v2/users/hello", method = POST)
 public String signUp(
         @RequestBody Map<String, Object> payload
 ) {
@@ -217,7 +217,7 @@ Preconfigured [failed response](#failedresponse) with the `WRONG_PROCEDURE_MESSA
 ```java
 
 @PostMapping(path = SIGN_UP_ENDPOINT)
-@RequestPath(path = "/api/v1/users/hello", method = POST)
+@RequestPath(path = "/api/v2/users/hello", method = POST)
 public String signUp(
         @RequestBody Map<String, Object> payload
 ) {

@@ -4,7 +4,7 @@ Provides the shared API base path and user endpoint constants for Equinox client
 
 | Constant | Value |
 |----------|-------|
-| `BASE_EQUINOX_ENDPOINT` | `/api/v1/` |
+| `BASE_EQUINOX_ENDPOINT` | `/api/v2/` |
 | `SIGN_UP_ENDPOINT` | `users/signUp` |
 | `SIGN_IN_ENDPOINT` | `users/signIn` |
 | `DYNAMIC_ACCOUNT_DATA_ENDPOINT` | `/dynamicAccountData` |
@@ -35,5 +35,5 @@ Append the sign-up or sign-in endpoint directly to the base path:
     val signUpPath = BASE_EQUINOX_ENDPOINT + SIGN_UP_ENDPOINT
     ```
 
-Both examples produce `/api/v1/users/signUp`. The remaining user endpoints include a leading slash and append to a
+Both examples produce `/api/v2/users/signUp`. The remaining user endpoints include a leading slash and append to a
 user-specific route.

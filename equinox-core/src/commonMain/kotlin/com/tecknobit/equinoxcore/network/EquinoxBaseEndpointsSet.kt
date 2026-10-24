@@ -14,7 +14,7 @@ open class EquinoxBaseEndpointsSet {
         /**
          * `BASE_ENDPOINT` the base endpoint for the backend service
          */
-        const val BASE_EQUINOX_ENDPOINT: String = "/api/v1/"
+        const val BASE_EQUINOX_ENDPOINT: String = "/api/v2/"
 
         /**
          * `SIGN_UP_ENDPOINT` the endpoint to execute the sign-up auth action

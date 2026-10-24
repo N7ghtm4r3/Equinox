@@ -6,7 +6,8 @@ import com.tecknobit.equinoxbackend.environment.configuration.EquinoxEnvironment
 import com.tecknobit.equinoxbackend.environment.constants.EquinoxMessages;
 import com.tecknobit.equinoxbackend.environment.services.builtin.controllers.EquinoxController;
 import com.tecknobit.equinoxbackend.environment.services.builtin.controllers.EquinoxControllerCore;
-import com.tecknobit.equinoxbackend.environment.services.users.dtos.SignUpRequestDto;
+import com.tecknobit.equinoxbackend.environment.services.users.dtos.requests.SignUpRequestDto;
+import com.tecknobit.equinoxbackend.environment.services.users.dtos.responses.SignUpResponseDto;
 import com.tecknobit.equinoxbackend.environment.services.users.entity.EquinoxUser;
 import com.tecknobit.equinoxbackend.environment.services.users.repository.EquinoxUsersRepository;
 import com.tecknobit.equinoxbackend.environment.services.users.service.EquinoxUsersService;
@@ -14,10 +15,11 @@ import com.tecknobit.equinoxcore.helpers.InputsValidator;
 import jakarta.validation.Valid;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.validation.annotation.Validated;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.security.NoSuchAlgorithmException;
 import java.util.Map;
 
 import static com.tecknobit.apimanager.apis.APIRequest.RequestMethod.*;
@@ -62,136 +64,17 @@ public class EquinoxUsersController<T extends EquinoxUser, R extends EquinoxUser
         this.usersService = usersService;
     }
 
-    /**
-     * Method used to sign up in the <b>Equinox's system</b>
-     *
-     * <p>The success response includes the configured default profile pic assigned during registration
-     *
-     * @param payload Payload of the request
-     *                 <pre>
-     *                      {@code
-     *                              {
-     *                                  "server_secret" : "the secret of the server" -> [String],
-     *                                  "name" : "the name of the user" -> [String],
-     *                                  "surname": "the surname of the user" -> [String],
-     *                                  "email": "the email of the user" -> [String],
-     *                                  "password": "the password of the user" -> [String],
-     *                                  "language": "the language of the user" -> [String]
-     *                              }
-     *                      }
-     *                 </pre>
-     * @return the result of the request as {@link String}
-     */
     @PostMapping(path = SIGN_UP_ENDPOINT)
-    @RequestPath(path = "/api/v1/users/signUp", method = POST)
-    public String signUp(
-            @RequestBody Map<String, Object> payload
-    ) {
-        EquinoxEnvironmentService environmentService = EquinoxEnvironmentService.getInstance();
-        ServerProtector serverProtector = environmentService.getServerProtector();
-
-        loadJsonHelper(payload);
-        setSessionLocale(jsonHelper.getString(LANGUAGE_KEY, DEFAULT_LANGUAGE));
-        if (configuration.serverProtectorEnabled() && !serverProtector.serverSecretMatches(jsonHelper.getString(SERVER_SECRET_KEY)))
-            return notAuthorizedOrWrongDetailsResponse();
-        String name = jsonHelper.getString(NAME_KEY);
-        String surname = jsonHelper.getString(SURNAME_KEY);
-        String email = jsonHelper.getString(EMAIL_KEY);
-        String password = jsonHelper.getString(PASSWORD_KEY);
-        String language = jsonHelper.getString(LANGUAGE_KEY, DEFAULT_LANGUAGE);
-        setSessionLocale(language);
-        Object[] custom = getSignUpCustomParams();
-        String signUpValidation = validateSignUp(name, surname, email, password, language, custom);
-        if (signUpValidation != null)
-            return failedResponse(signUpValidation);
-        try {
-            JSONObject response = new JSONObject();
-            String userId = environmentService.generateIdentifier();
-            String token = environmentService.generateIdentifier();
-            usersService.signUpUser(
-                    userId,
-                    token,
-                    name,
-                    surname,
-                    email.toLowerCase(),
-                    password,
-                    language,
-                    custom
-            );
-            setSessionLocale(DEFAULT_LANGUAGE);
-            return successResponse(response
-                    .put(USER_IDENTIFIER_KEY, userId)
-                    .put(TOKEN_KEY, token)
-                    .put(PROFILE_PIC_KEY, configuration.getDefaultsConfig().getDefaultUserProfilePic())
-            );
-        } catch (Exception e) {
-            return wrongProcedureResponse();
-        }
-    }
-
-
-    /**
-     * Method used to sign up in the <b>Equinox's system</b>
-     *
-     * <p>The success response includes the configured default profile pic assigned during registration
-     *
-     * @param payload Payload of the request
-     *                 <pre>
-     *                      {@code
-     *                              {
-     *                                  "server_secret" : "the secret of the server" -> [String],
-     *                                  "name" : "the name of the user" -> [String],
-     *                                  "surname": "the surname of the user" -> [String],
-     *                                  "email": "the email of the user" -> [String],
-     *                                  "password": "the password of the user" -> [String],
-     *                                  "language": "the language of the user" -> [String]
-     *                              }
-     *                      }
-     *                 </pre>
-     * @return the result of the request as {@link String}
-     */
-    @PostMapping(path = SIGN_UP_ENDPOINT)
-    @RequestPath(path = "/api/v1/users/signUp", method = POST)
-    public String signUp(
+    @RequestPath(path = "/api/v2/users/signUp", method = POST)
+    public ResponseEntity<?> signUp(
             @RequestBody @Valid SignUpRequestDto signUpRequest
     ) {
-        EquinoxEnvironmentService environmentService = EquinoxEnvironmentService.getInstance();
-        ServerProtector serverProtector = environmentService.getServerProtector();
+        setSessionLocale(signUpRequest.getLanguage());
 
-        loadJsonHelper(payload);
-        setSessionLocale(jsonHelper.getString(LANGUAGE_KEY, DEFAULT_LANGUAGE));
-        if (configuration.serverProtectorEnabled() && !serverProtector.serverSecretMatches(jsonHelper.getString(SERVER_SECRET_KEY)))
-            return notAuthorizedOrWrongDetailsResponse();
-        String name = jsonHelper.getString(NAME_KEY);
-        String surname = jsonHelper.getString(SURNAME_KEY);
-        String email = jsonHelper.getString(EMAIL_KEY);
-        String password = jsonHelper.getString(PASSWORD_KEY);
-        String language = jsonHelper.getString(LANGUAGE_KEY, DEFAULT_LANGUAGE);
-        setSessionLocale(language);
-        Object[] custom = getSignUpCustomParams();
-        String signUpValidation = validateSignUp(name, surname, email, password, language, custom);
-        if (signUpValidation != null)
-            return failedResponse(signUpValidation);
         try {
-            JSONObject response = new JSONObject();
-            String userId = environmentService.generateIdentifier();
-            String token = environmentService.generateIdentifier();
-            usersService.signUpUser(
-                    userId,
-                    token,
-                    name,
-                    surname,
-                    email.toLowerCase(),
-                    password,
-                    language,
-                    custom
-            );
-            setSessionLocale(DEFAULT_LANGUAGE);
-            return successResponse(response
-                    .put(USER_IDENTIFIER_KEY, userId)
-                    .put(TOKEN_KEY, token)
-                    .put(PROFILE_PIC_KEY, configuration.getDefaultsConfig().getDefaultUserProfilePic())
-            );
+            SignUpResponseDto signUpResponse = usersService.signUpUser(signUpRequest);
+
+            return successResponse(signUpResponse);
         } catch (Exception e) {
             return wrongProcedureResponse();
         }
@@ -213,6 +96,7 @@ public class EquinoxUsersController<T extends EquinoxUser, R extends EquinoxUser
      * </pre>
      * @implNote as default will be returned an empty array, so that means no customized user has being used
      */
+    @Deprecated(since = "2.0.0", forRemoval = true)
     protected Object[] getSignUpCustomParams() {
         return new Object[0];
     }
@@ -245,6 +129,7 @@ public class EquinoxUsersController<T extends EquinoxUser, R extends EquinoxUser
      *     }
      * </pre>
      */
+    @Deprecated(since = "2.0.0", forRemoval = true)
     protected String validateSignUp(String name, String surname, String email, String password, String language,
                                     Object... custom) {
         if (!InputsValidator.isNameValid(name))
@@ -276,7 +161,7 @@ public class EquinoxUsersController<T extends EquinoxUser, R extends EquinoxUser
      * @return the result of the request as {@link String}
      */
     @PostMapping(path = SIGN_IN_ENDPOINT)
-    @RequestPath(path = "/api/v1/users/signIn", method = POST)
+    @RequestPath(path = "/api/v2/users/signIn", method = POST)
     public String signIn(
             @RequestBody Map<String, Object> payload
     ) {
@@ -401,7 +286,7 @@ public class EquinoxUsersController<T extends EquinoxUser, R extends EquinoxUser
                     TOKEN_KEY
             }
     )
-    @RequestPath(path = "/api/v1/users/{user_id}/dynamicAccountData", method = GET)
+    @RequestPath(path = "/api/v2/users/{user_id}/dynamicAccountData", method = GET)
     public String getDynamicAccountData(
             @PathVariable(USER_IDENTIFIER_KEY) String userId,
             @RequestHeader(TOKEN_KEY) String token
@@ -425,7 +310,7 @@ public class EquinoxUsersController<T extends EquinoxUser, R extends EquinoxUser
                     TOKEN_KEY
             }
     )
-    @RequestPath(path = "/api/v1/users/{user_id}/changeProfilePic", method = POST)
+    @RequestPath(path = "/api/v2/users/{user_id}/changeProfilePic", method = POST)
     public String changeProfilePic(
             @PathVariable(USER_IDENTIFIER_KEY) String userId,
             @RequestHeader(TOKEN_KEY) String token,
@@ -466,7 +351,7 @@ public class EquinoxUsersController<T extends EquinoxUser, R extends EquinoxUser
                     TOKEN_KEY
             }
     )
-    @RequestPath(path = "/api/v1/users/{user_id}/changeEmail", method = PATCH)
+    @RequestPath(path = "/api/v2/users/{user_id}/changeEmail", method = PATCH)
     public String changeEmail(
             @PathVariable(USER_IDENTIFIER_KEY) String userId,
             @RequestHeader(TOKEN_KEY) String token,
@@ -507,7 +392,7 @@ public class EquinoxUsersController<T extends EquinoxUser, R extends EquinoxUser
                     TOKEN_KEY
             }
     )
-    @RequestPath(path = "/api/v1/users/{user_id}/changePassword", method = PATCH)
+    @RequestPath(path = "/api/v2/users/{user_id}/changePassword", method = PATCH)
     public String changePassword(
             @PathVariable(USER_IDENTIFIER_KEY) String userId,
             @RequestHeader(TOKEN_KEY) String token,
@@ -548,7 +433,7 @@ public class EquinoxUsersController<T extends EquinoxUser, R extends EquinoxUser
                     TOKEN_KEY
             }
     )
-    @RequestPath(path = "/api/v1/users/{user_id}/changeLanguage", method = PATCH)
+    @RequestPath(path = "/api/v2/users/{user_id}/changeLanguage", method = PATCH)
     public String changeLanguage(
             @PathVariable(USER_IDENTIFIER_KEY) String userId,
             @RequestHeader(TOKEN_KEY) String token,
@@ -581,7 +466,7 @@ public class EquinoxUsersController<T extends EquinoxUser, R extends EquinoxUser
                     TOKEN_KEY
             }
     )
-    @RequestPath(path = "/api/v1/users/{user_id}", method = DELETE)
+    @RequestPath(path = "/api/v2/users/{user_id}", method = DELETE)
     public String deleteAccount(
             @PathVariable(USER_IDENTIFIER_KEY) String userId,
             @RequestHeader(TOKEN_KEY) String token
