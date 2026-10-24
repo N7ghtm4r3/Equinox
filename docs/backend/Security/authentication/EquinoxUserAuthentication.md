@@ -10,14 +10,15 @@ It belongs to the `com.tecknobit.equinoxbackend.environment.security.authenticat
 
 | Constructor or method | Result |
 | --- | --- |
-| `EquinoxUserAuthentication(user)` | Creates an unauthenticated token without authorities |
+| `EquinoxUserAuthentication(user)` | Creates an authenticated token without authorities |
 | `EquinoxUserAuthentication(user, authorities)` | Creates an authenticated token with the supplied authorities |
 | `getPrincipal()` | Returns the supplied user |
 | `getCredentials()` | Returns `null` |
 
-Passing empty or `null` authorities to the second constructor still creates an authenticated token
-without authorities. Authentication state and granted permissions are separate: an authenticated
-user does not automatically receive a role
+Both constructors mark the token as authenticated. Passing empty or `null` authorities to the second
+constructor creates a token without authorities, like the single-argument constructor
+Authentication state and granted permissions are separate: an authenticated user does not automatically
+receive a role
 
 The token does not check passwords, validate incoming tokens, load users, or install itself in
 the security context
@@ -60,6 +61,6 @@ that your application has already verified. The user receives no granted authori
 The current security context now exposes the verified user through `authentication.getPrincipal()`
 The example does not configure persistence between requests
 
-Use the single-argument constructor when you need an unauthenticated representation instead
+Use the single-argument constructor after verifying the user when no granted authorities are needed
 For ownership checks against the authenticated user's identifier, see
 [IsAuthorizedUser](../authorization/annotations/IsAuthorizedUser.md)
