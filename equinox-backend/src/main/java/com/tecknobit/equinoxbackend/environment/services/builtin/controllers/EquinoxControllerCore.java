@@ -18,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.http.ResponseEntity;
 
 import java.util.HashMap;
 import java.util.Locale;
@@ -202,129 +203,167 @@ abstract public class EquinoxControllerCore {
     }
 
     /**
-     * Method used to get the payload for a successful response
+     * Method used to assemble a successful response with HTTP status {@code 200} and the localized
+     * {@link #RESPONSE_SUCCESSFUL_MESSAGE} message
      *
-     * @return the payload for a successful response as {@link String}
+     * @return the successful response as {@link ResponseEntity} of {@link JSONObject}
      */
     @Wrapper
     @Assembler
-    protected String successResponse() {
+    protected ResponseEntity<JSONObject> successResponse() {
         return successResponse(RESPONSE_SUCCESSFUL_MESSAGE);
     }
 
     /**
-     * Method used to get the payload for a successful response
+     * Method used to assemble a successful response with HTTP status {@code 200}
      *
-     * @param message The message to send as response
-     * @return the payload for a successful response as {@link String}
+     * @param message The message key to resolve using the current locale
+     *
+     * @return the successful response as {@link ResponseEntity} of {@link JSONObject}
      */
     @Wrapper
     @Assembler
-    protected String successResponse(String message) {
+    protected ResponseEntity<JSONObject> successResponse(String message) {
         return successResponse(message, (Object) null);
     }
 
     /**
-     * Method used to get the payload for a successful response
+     * Method used to assemble a successful response with HTTP status {@code 200}
      *
-     * @param message The message to send as response
-     * @return the payload for a successful response as {@link String}
+     * @param message The message key to resolve using the current locale
+     * @param args    The arguments used to format the localized message
+     *
+     * @return the successful response as {@link ResponseEntity} of {@link JSONObject}
      */
     @Wrapper
     @Assembler
-    protected String successResponse(String message, Object... args) {
+    protected ResponseEntity<JSONObject> successResponse(String message, Object... args) {
         return plainResponse(SUCCESSFUL, getInternationalizedMessage(message, args));
     }
 
     /**
-     * Method used to get the payload for a successful response
+     * Method used to assemble a successful response with HTTP status {@code 200}
      *
      * @param value The value to send as response
-     * @param <V>   generic type for the values in the payload
-     * @return the payload for a successful response as {@link HashMap} of {@link V}
+     * @param <V>   The type of the response data
+     *
+     * @return the successful response as {@link ResponseEntity} containing a {@link HashMap} with {@link String} keys and {@code V} values
      */
     @Assembler
-    protected <V> HashMap<String, V> successResponse(V value) {
+    protected <V> ResponseEntity<HashMap<String, V>> successResponse(V value) {
         HashMap<String, V> response = new HashMap<>();
         response.put(RESPONSE_DATA_KEY, value);
         response.put(RESPONSE_STATUS_KEY, (V) SUCCESSFUL);
-        return response;
+        return ResponseEntity.ok(response);
     }
 
     /**
-     * Method used to get the payload for a successful response
+     * Method used to assemble a successful response with HTTP status {@code 200}
      *
-     * @param message The message to send as response
-     * @return the payload for a successful response as {@link String}
+     * @param message The JSON object to include as the response data
+     *
+     * @return the successful response as {@link ResponseEntity} of {@link JSONObject}
      */
     @Assembler
-    protected String successResponse(JSONObject message) {
-        return new JSONObject()
-                .put(RESPONSE_STATUS_KEY, SUCCESSFUL)
-                .put(RESPONSE_DATA_KEY, message).toString();
+    protected ResponseEntity<JSONObject> successResponse(JSONObject message) {
+        return plainResponse(SUCCESSFUL, message);
     }
 
     /**
      * Wrapper method used to assemble a {@link #failedResponse(String)} with the {@link #NOT_AUTHORIZED_OR_WRONG_DETAILS_MESSAGE}
      * message
      *
-     * @return the error response as {@link String}
+     * @return the error response as {@link ResponseEntity} of {@link JSONObject}
+     *
      * @since 1.1.3
      */
     @Wrapper
     @Assembler
-    protected String notAuthorizedOrWrongDetailsResponse() {
+    protected ResponseEntity<JSONObject> notAuthorizedOrWrongDetailsResponse() {
         return failedResponse(NOT_AUTHORIZED_OR_WRONG_DETAILS_MESSAGE);
     }
 
     /**
      * Wrapper method used to assemble a {@link #failedResponse(String)} with the {@link #WRONG_PROCEDURE_MESSAGE} message
      *
-     * @return the error response as {@link String}
+     * @return the error response as {@link ResponseEntity} of {@link JSONObject}
+     *
      * @since 1.1.3
      */
     @Wrapper
     @Assembler
-    protected String wrongProcedureResponse() {
+    protected ResponseEntity<JSONObject> wrongProcedureResponse() {
         return failedResponse(WRONG_PROCEDURE_MESSAGE);
     }
 
     /**
-     * Method used to get the payload for a failed response
+     * Method used to assemble a failed response with the HTTP status defined by {@link ResponseStatus#FAILED}
      *
      * @param errorKey The key of the error
-     * @return the payload for a failed response as {@link String}
+     *
+     * @return the failed response as {@link ResponseEntity} of {@link JSONObject}
      */
     @Wrapper
     @Assembler
-    protected String failedResponse(String errorKey) {
+    protected ResponseEntity<JSONObject> failedResponse(String errorKey) {
         return failedResponse(errorKey, null);
     }
 
     /**
-     * Method used to get the payload for a failed response
+     * Method used to assemble a failed response with the HTTP status defined by {@link ResponseStatus#FAILED}
      *
      * @param errorKey The key of the error
-     * @param args     The arguments used to format the response
-     * @return the payload for a failed response as {@link String}
+     * @param args     The arguments used to format the localized message, or {@code null} when none are needed
+     *
+     * @return the failed response as {@link ResponseEntity} of {@link JSONObject}
      */
     @Wrapper
     @Assembler
-    protected String failedResponse(String errorKey, @Nullable Object[] args) {
+    protected ResponseEntity<JSONObject> failedResponse(String errorKey, @Nullable Object[] args) {
         return plainResponse(FAILED, getInternationalizedMessage(errorKey, args));
     }
 
     /**
-     * Method used to assemble the payload for a response
+     * Method used to assemble a response containing the status and the supplied data
      *
-     * @param status  The response code value
-     * @param message The message to send as response
-     * @return the payload for a response as {@link String}
+     * <p>Successful responses use HTTP status {@code 200}. Other responses use the code provided by
+     * {@link ResponseStatus#getCode()}
+     *
+     * @param status  The response status used in the body and to select the HTTP status
+     * @param message The value to include as the response data, preserving JSON objects as nested objects
+     *
+     * @return the response as {@link ResponseEntity} of {@link JSONObject}
      */
-    protected String plainResponse(ResponseStatus status, String message) {
-        return new JSONObject()
-                .put(RESPONSE_STATUS_KEY, status)
-                .put(RESPONSE_DATA_KEY, message).toString();
+    @Assembler
+    protected ResponseEntity<JSONObject> plainResponse(ResponseStatus status, Object message) {
+        JSONObject response = new JSONObject();
+        response.put(RESPONSE_STATUS_KEY, status);
+        response.put(RESPONSE_DATA_KEY, message);
+
+        return resolveResponseFormat(status, response);
+    }
+
+    /**
+     * Method used to wrap the supplied response body with the HTTP status matching the response status
+     *
+     * <p>Successful responses use HTTP status {@code 200}. Other responses use the code provided by
+     * {@link ResponseStatus#getCode()}
+     *
+     * @param status   The response status used to select the HTTP status
+     * @param response The JSON response body to return
+     *
+     * @return the response with the selected HTTP status as {@link ResponseEntity} of {@link JSONObject}
+     *
+     * @since 2.0.0
+     */
+    @Returner
+    protected ResponseEntity<JSONObject> resolveResponseFormat(ResponseStatus status, JSONObject response) {
+        if(status == SUCCESSFUL)
+            return ResponseEntity.ok(response);
+        else {
+            ResponseEntity.BodyBuilder responseEntity =  ResponseEntity.status(status.getCode());
+            return responseEntity.body(response);
+        }
     }
 
     /**
