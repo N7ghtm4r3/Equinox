@@ -147,17 +147,21 @@ For a custom filter bean, see [Register the filter](Security/authentication/Equi
 Extend `SecurityConfig` when you want to retain its bean factories and customize selected parts of the
 baseline. Register the subclass as an application configuration
 
-!!! warning "Use only the subclass configuration"
+The inherited `@Bean` methods supply the beans through the subclass, so its protected method overrides
+apply. With the current `@ConditionalOnMissingBean` conditions, the original auto-configuration skips
+its default beans when the subclass has already supplied their definitions
 
-    Exclude the original auto-configuration so only your subclass supplies the configuration
-    Add the following entry to your application's `application.properties`:
+!!! note "Optional auto-configuration exclusion"
+
+    Excluding the original auto-configuration is not required for this customization. If you want to
+    disable its automatic loading entirely, add the following entry to your application's `application.properties`:
 
     ```properties
     spring.autoconfigure.exclude=com.tecknobit.equinoxbackend.environment.security.configuration.SecurityConfig
     ```
 
-    Unlike the component scan filter, this setting disables automatic loading of the original
-    `SecurityConfig`. Your application configuration subclass supplies the inherited beans instead
+    This setting controls auto-configuration loading separately from component scanning. Your
+    registered application configuration subclass still supplies the inherited beans
 
 The following subclass adds `/health` to the existing public patterns. Resource paths are still added by
 `getPermittedPatterns()`, and the remaining baseline settings are retained

@@ -127,6 +127,8 @@ Jakarta Bean Validation constraints to your request DTOs
 - [Name](Validation/Name.md) validates names
 - [Surname](Validation/Surname.md) validates surnames
 - [Email](Validation/Email.md) validates email addresses
+- [UserLanguage](Validation/UserLanguage.md) validates supported user languages
+- [ServerSecret](Validation/ServerSecret.md) validates the server protection secret
 
 ## Exceptions
 
