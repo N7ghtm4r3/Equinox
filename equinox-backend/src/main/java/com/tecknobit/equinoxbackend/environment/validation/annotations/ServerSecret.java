@@ -4,7 +4,6 @@ import com.tecknobit.equinoxbackend.environment.constants.EquinoxMessages;
 import com.tecknobit.equinoxbackend.environment.validation.validators.ServerSecretValidator;
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
-import jakarta.validation.constraints.NotBlank;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
@@ -24,7 +23,6 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Constraint(validatedBy = ServerSecretValidator.class)
 @Target({METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER, TYPE_USE})
 @Retention(RUNTIME)
-@NotBlank(message = EquinoxMessages.NOT_AUTHORIZED_OR_WRONG_DETAILS_MESSAGE)
 public @interface ServerSecret {
 
     /**

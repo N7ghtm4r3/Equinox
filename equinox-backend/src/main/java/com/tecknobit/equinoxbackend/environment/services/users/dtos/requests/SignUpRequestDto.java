@@ -1,9 +1,8 @@
-package com.tecknobit.equinoxbackend.environment.services.users.dtos;
+package com.tecknobit.equinoxbackend.environment.services.users.dtos.requests;
 
 import com.tecknobit.equinoxbackend.annotations.dto.DtoRequest;
 import com.tecknobit.equinoxbackend.environment.validation.annotations.*;
 import com.tecknobit.equinoxcore.annotations.Structure;
-import jakarta.validation.constraints.NotBlank;
 
 import static com.tecknobit.equinoxcore.helpers.InputsValidator.DEFAULT_LANGUAGE;
 
@@ -20,7 +19,7 @@ public class SignUpRequestDto {
     @Email
     protected String email;
 
-    @NotBlank
+    @UserPassword
     protected String password;
 
     @UserLanguage

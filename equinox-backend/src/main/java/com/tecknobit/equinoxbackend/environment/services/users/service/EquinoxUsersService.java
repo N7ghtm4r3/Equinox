@@ -6,6 +6,8 @@ import com.tecknobit.equinoxbackend.apis.batch.EquinoxItemsHelper;
 import com.tecknobit.equinoxbackend.apis.resources.ResourcesManager;
 import com.tecknobit.equinoxbackend.environment.configuration.EquinoxBackendConfiguration;
 import com.tecknobit.equinoxbackend.environment.configuration.EquinoxEnvironmentService;
+import com.tecknobit.equinoxbackend.environment.services.users.dtos.requests.SignUpRequestDto;
+import com.tecknobit.equinoxbackend.environment.services.users.dtos.responses.SignUpResponseDto;
 import com.tecknobit.equinoxbackend.environment.services.users.entity.EquinoxUser;
 import com.tecknobit.equinoxbackend.environment.services.users.repository.EquinoxUsersRepository;
 import com.tecknobit.equinoxcore.annotations.Assembler;
@@ -38,13 +40,13 @@ import static java.lang.System.currentTimeMillis;
  * @author N7ghtm4r3 - Tecknobit
  * @see ResourcesManager
  *
- * @param <T> The type of the {@link EquinoxUser} used in the system, is generic to avoid manual casts if it has been customized
+ * @param <U> The type of the {@link EquinoxUser} used in the system, is generic to avoid manual casts if it has been customized
  * @param <R> The type of the {@link EquinoxUsersRepository} used in the system, is generic to avoid manual casts if it has been customized
  *
  * @since 1.0.1
  */
 @Service
-public class EquinoxUsersService<T extends EquinoxUser, R extends EquinoxUsersRepository<T>> extends EquinoxItemsHelper
+public class EquinoxUsersService<U extends EquinoxUser, R extends EquinoxUsersRepository<U>> extends EquinoxItemsHelper
         implements ResourcesManager {
 
     /**
@@ -109,11 +111,44 @@ public class EquinoxUsersService<T extends EquinoxUser, R extends EquinoxUsersRe
     public EquinoxUsersService(R usersRepository) {
         this.usersRepository = usersRepository;
         try {
-            discriminatorValue = ((Class<T>) ((ParameterizedType) getClass().getGenericSuperclass())
+            discriminatorValue = ((Class<U>) ((ParameterizedType) getClass().getGenericSuperclass())
                     .getActualTypeArguments()[0]).getSimpleName();
         } catch (ClassCastException e) {
             discriminatorValue = "EquinoxUser";
         }
+    }
+
+    @SuppressWarnings("unchecked")
+    public SignUpResponseDto signUpUser(SignUpRequestDto signUpRequest) throws NoSuchAlgorithmException {
+        EquinoxEnvironmentService environmentService = EquinoxEnvironmentService.getInstance();
+        EquinoxBackendConfiguration configuration = environmentService.getBackendConfiguration();
+        EquinoxBackendConfiguration.DefaultsConfig defaultsConfig = configuration.getDefaultsConfig();
+        String userId = environmentService.generateIdentifier();
+        String userToken = environmentService.generateIdentifier();
+        String password = hash(signUpRequest.getPassword());
+
+        U signUpUser = (U) resolveSignUpUser(userId, userToken, password, signUpRequest);
+        usersRepository.save(signUpUser);
+
+        return new SignUpResponseDto(
+                userId,
+                userToken,
+                defaultsConfig.getDefaultUserProfilePic()
+        );
+    }
+
+    @Assembler
+    protected EquinoxUser resolveSignUpUser(String userId, String userToken, String safePassword,
+                                            SignUpRequestDto signUpRequest) {
+        return new EquinoxUser(
+                userId,
+                userToken,
+                signUpRequest.getName(),
+                signUpRequest.getSurname(),
+                signUpRequest.getEmail(),
+                safePassword,
+                signUpRequest.getLanguage()
+        );
     }
 
     /**
@@ -132,6 +167,7 @@ public class EquinoxUsersService<T extends EquinoxUser, R extends EquinoxUsersRe
      *
      * @apiNote the order of the custom parameters must be the same of that specified in the {@link #getSignUpKeys()}
      */
+    @Deprecated(since = "2.0.0", forRemoval = true)
     public void signUpUser(String id, String token, String name, String surname, String email, String password,
                            String language, Object... custom) throws NoSuchAlgorithmException {
         StringBuilder queryBuilder = new StringBuilder(BASE_SIGN_UP_QUERY);
@@ -153,6 +189,7 @@ public class EquinoxUsersService<T extends EquinoxUser, R extends EquinoxUsersRe
      * @return a list of keys as {@link List} of {@link String}
      * @apiNote This method allows a customizable sign-up with custom parameters added in a customization of the {@link EquinoxUser}
      */
+    @Deprecated(since = "2.0.0", forRemoval = true)
     protected List<String> getSignUpKeys() {
         return DEFAULT_USER_SIGN_UP_KEYS;
     }
@@ -164,6 +201,7 @@ public class EquinoxUsersService<T extends EquinoxUser, R extends EquinoxUsersRe
      *
      * @since 2.0.0
      */
+    // TODO: 24/10/2026 TO REMOVE
     @Returner
     private String resolveUserDefaultProfilePic() {
         EquinoxEnvironmentService equinoxEnvironmentService = EquinoxEnvironmentService.getInstance();
@@ -183,6 +221,7 @@ public class EquinoxUsersService<T extends EquinoxUser, R extends EquinoxUsersRe
      * @param <E> Type of the element in the list
      */
     @Assembler
+    @Deprecated(since = "2.0.0", forRemoval = true)
     private <E> void arrangeQuery(StringBuilder queryBuilder, List<E> list, boolean escape) {
         int listSize = list.size();
         int lastIndex = listSize - 1;
@@ -208,8 +247,8 @@ public class EquinoxUsersService<T extends EquinoxUser, R extends EquinoxUsersRe
      *
      * @return the authenticated user as {@link EquinoxUser} if the credentials inserted were correct
      */
-    public T signInUser(String email, String password, Object... custom) throws NoSuchAlgorithmException {
-        T user = usersRepository.findUserByEmail(email);
+    public U signInUser(String email, String password, Object... custom) throws NoSuchAlgorithmException {
+        U user = usersRepository.findUserByEmail(email);
         if (validateSignIn(user, password, custom))
             return user;
         return null;
@@ -225,7 +264,7 @@ public class EquinoxUsersService<T extends EquinoxUser, R extends EquinoxUsersRe
      *
      * @return the authenticated user as {@link EquinoxUser} if the credentials inserted were correct null otherwise
      */
-    protected boolean validateSignIn(T user, String password, Object... custom) throws NoSuchAlgorithmException {
+    protected boolean validateSignIn(U user, String password, Object... custom) throws NoSuchAlgorithmException {
         return user != null && user.getPassword().equals(hash(password));
     }
 
@@ -303,7 +342,7 @@ public class EquinoxUsersService<T extends EquinoxUser, R extends EquinoxUsersRe
      * @since 2.0.0
      */
     @EntityRetriever
-    public Optional<T> findUserByToken(String token) {
+    public Optional<U> findUserByToken(String token) {
         return usersRepository.findUserByToken(token);
     }
 

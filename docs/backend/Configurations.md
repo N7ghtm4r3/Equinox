@@ -30,7 +30,7 @@ and provide an `EquinoxUsersRepository` bean for your user type
 | Component | Behavior |
 | --- | --- |
 | Filter chain | Stateless sessions, CSRF and form login disabled |
-| Public paths | `/api/v1/users/signUp`, `/api/v1/users/signIn`, and configured resource directories through `/directory/**` |
+| Public paths | `/api/v2/users/signUp`, `/api/v2/users/signIn`, and configured resource directories through `/directory/**` |
 | Other paths | Require an authenticated security context |
 | Token filter | Runs before `AnonymousAuthenticationFilter` |
 | Access denied handler | Delegates `EquinoxForbiddenException` to MVC for a localized HTTP `403` failure response |
