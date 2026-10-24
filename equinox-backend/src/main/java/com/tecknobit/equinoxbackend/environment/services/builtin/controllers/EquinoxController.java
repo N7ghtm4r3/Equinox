@@ -41,6 +41,7 @@ abstract public class EquinoxController<T extends EquinoxUser, R extends Equinox
     /**
      * {@code me} user representing the user who made a request on the server
      */
+    @Deprecated(since = "2.0.0", forRemoval = true)
     protected T me;
 
     /**
@@ -52,6 +53,7 @@ abstract public class EquinoxController<T extends EquinoxUser, R extends Equinox
      * @return whether the user is an authorized user as boolean
      */
     @Validator
+    @Deprecated(since = "2.0.0", forRemoval = true)
     protected boolean isMe(String id, String token) {
         Optional<T> query = usersRepository.findById(id);
         me = query.orElse(null);
