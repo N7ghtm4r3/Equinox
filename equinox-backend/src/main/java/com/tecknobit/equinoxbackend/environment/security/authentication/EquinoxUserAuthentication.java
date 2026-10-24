@@ -11,9 +11,9 @@ import java.util.List;
 /**
  * The {@code EquinoxUserAuthentication} class is useful to represent an Equinox user as an authentication principal
  *
- * <p>The user-only constructor creates an unauthenticated token without authorities. The constructor
- * accepting authorities creates an authenticated token and must be used only after the caller has
- * verified the user. This class does not validate credentials or register itself in a security context
+ * <p>Both constructors create authenticated tokens and must be used only after the caller has
+ * verified the user. The user-only constructor assigns no authorities. This class does not validate
+ * credentials or register itself in a security context
  *
  * @param <U> The user type exposed as the authentication principal
  *
@@ -30,15 +30,17 @@ public class EquinoxUserAuthentication<U extends EquinoxUser> extends AbstractAu
     protected final U user;
 
     /**
-     * Constructor to init the {@link EquinoxUserAuthentication} class with an unauthenticated user
+     * Constructor to init the {@link EquinoxUserAuthentication} class with an authenticated user without authorities
      *
-     * <p>The token has no granted authorities. Creating it does not verify the supplied user
+     * <p>The caller must verify the user before invoking this constructor. The token is marked
+     * authenticated without granting authorities
      *
-     * @param user The user to expose as the authentication principal
+     * @param user The previously verified user to expose as the authentication principal
      */
     public EquinoxUserAuthentication(U user) {
         super(List.of());
         this.user = user;
+        setAuthenticated(true);
     }
 
     /**

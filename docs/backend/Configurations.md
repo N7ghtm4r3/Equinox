@@ -1,5 +1,224 @@
 In this page you can find different configuration components ready to be implemented in your backend
 
+## SecurityConfig
+
+`SecurityConfig` provides the default stateless security filter chain and token filter. It belongs to the
+`com.tecknobit.equinoxbackend.environment.security.configuration` package and is shipped as a Spring Boot
+auto-configuration, so you do not need to copy or import it into your application
+
+Initialize the [Equinox environment](Environment.md#out-of-the-box-launch) before Spring Boot startup
+and provide an `EquinoxUsersRepository` bean for your user type
+
+!!! note "Let Spring Boot load the security defaults"
+
+    Component scanning searches selected packages for components such as controllers, services, and
+    configuration classes. Auto-configuration is a separate loading mechanism: Spring Boot discovers
+    `SecurityConfig` through the `.imports` file already included in the Equinox JAR and processes it
+    after your application's bean definitions
+
+    If your application explicitly scans Equinox packages with `@ComponentScan`, exclude registered
+    auto-configuration classes from that scan using `AutoConfigurationExcludeFilter`, as shown in the
+    [Java and Kotlin launch examples](Environment.md#out-of-the-box-launch)
+
+    This exclusion does not disable `SecurityConfig`. It lets Spring Boot load it as an auto-configuration,
+    so `@ConditionalOnMissingBean` can see your custom beans before registering defaults.
+
+    You do not need to create the `.imports` file in your application or import `SecurityConfig` manually
+
+### Default behavior
+
+| Component | Behavior |
+| --- | --- |
+| Filter chain | Stateless sessions, CSRF and form login disabled |
+| Public paths | `/api/v1/users/signUp`, `/api/v1/users/signIn`, and configured resource directories through `/directory/**` |
+| Other paths | Require an authenticated security context |
+| Token filter | Runs before `AnonymousAuthenticationFilter` |
+| Access denied handler | Delegates `EquinoxForbiddenException` to MVC for a localized HTTP `403` failure response |
+
+The access denied handler uses the `localeResolver` bean supplied by
+[EquinoxLocaleConfig](#equinoxlocaleconfig) and delegates the exception to the MVC
+`handlerExceptionResolver`. Register [EquinoxGlobalExceptionHandler](Exceptions/EquinoxGlobalExceptionHandler.md#registration)
+to produce the localized Equinox failure response
+
+With the default locale resolver, authenticated users use their stored language; absent, unauthenticated,
+or anonymous authentication uses the request locale. The handler resolves this locale explicitly because
+Security can reject a request before MVC establishes its locale context
+
+!!! warning "Documentation endpoints in production"
+
+    Swagger UI and OpenAPI paths are permitted only when both `springdoc.api-docs.enabled` and
+    `springdoc.swagger-ui.enabled` are `true`. Both flags default to `false` in this configuration
+    Keep documentation endpoints restricted in production
+
+!!! note "Authentication does not grant roles"
+
+    The default [token filter](Security/authentication/EquinoxTokenAuthenticationFilter.md) creates an
+    authenticated `EquinoxUserAuthentication` after finding a user by token. No authorities are assigned,
+    so the user satisfies `.authenticated()` without automatically receiving a role
+
+### Replace a default bean
+
+Spring Boot processes application bean definitions before Equinox's auto-configuration
+`@ConditionalOnMissingBean` then provides only the components that your application has not declared
+
+- A `SecurityFilterChain` bean replaces the default chain
+- An `EquinoxTokenAuthenticationFilter` bean, including a subclass, replaces the default filter
+
+!!! warning "A custom chain owns its security rules"
+
+    The conditions are independent. Replacing the chain does not remove the default filter bean or
+    automatically add it to your own chain. Include the filter explicitly when your chain uses Equinox
+    token authentication
+
+    Your chain does not inherit Equinox's sign-in, sign-up, resource, or documentation rules
+    Declare all public paths and other security settings that your application needs
+
+This example adds a public `/health` path and uses the application-provided filter or the default one
+
+=== "Java"
+
+    ```java
+    import com.tecknobit.equinoxbackend.environment.security.filters.EquinoxTokenAuthenticationFilter;
+    import org.springframework.context.annotation.Bean;
+    import org.springframework.context.annotation.Configuration;
+    import org.springframework.security.config.http.SessionCreationPolicy;
+    import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+    import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+    import org.springframework.security.web.SecurityFilterChain;
+    import org.springframework.security.web.authentication.AnonymousAuthenticationFilter;
+
+    @Configuration(proxyBeanMethods = false)
+    public class ApplicationSecurityConfig {
+
+        @Bean
+        public SecurityFilterChain applicationSecurityFilterChain(
+                HttpSecurity http,
+                EquinoxTokenAuthenticationFilter<?, ?> tokenFilter) throws Exception {
+            http.csrf(AbstractHttpConfigurer::disable)
+                    .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                    .authorizeHttpRequests(authorize -> authorize
+                            .requestMatchers("/health").permitAll()
+                            .anyRequest().authenticated())
+                    .formLogin(AbstractHttpConfigurer::disable)
+                    .addFilterBefore(tokenFilter, AnonymousAuthenticationFilter.class);
+            return http.build();
+        }
+
+    }
+    ```
+
+=== "Kotlin"
+
+    ```kotlin
+    import com.tecknobit.equinoxbackend.environment.security.filters.EquinoxTokenAuthenticationFilter
+    import org.springframework.context.annotation.Bean
+    import org.springframework.context.annotation.Configuration
+    import org.springframework.security.config.http.SessionCreationPolicy
+    import org.springframework.security.config.annotation.web.builders.HttpSecurity
+    import org.springframework.security.web.SecurityFilterChain
+    import org.springframework.security.web.authentication.AnonymousAuthenticationFilter
+
+    @Configuration(proxyBeanMethods = false)
+    class ApplicationSecurityConfig {
+
+        @Bean
+        fun applicationSecurityFilterChain(
+            http: HttpSecurity,
+            tokenFilter: EquinoxTokenAuthenticationFilter<*, *>
+        ): SecurityFilterChain {
+            http.csrf { it.disable() }
+                .sessionManagement { it.sessionCreationPolicy(SessionCreationPolicy.STATELESS) }
+                .authorizeHttpRequests {
+                    it.requestMatchers("/health").permitAll()
+                        .anyRequest().authenticated()
+                }
+                .formLogin { it.disable() }
+                .addFilterBefore(tokenFilter, AnonymousAuthenticationFilter::class.java)
+            return http.build()
+        }
+
+    }
+    ```
+
+For a custom filter bean, see [Register the filter](Security/authentication/EquinoxTokenAuthenticationFilter.md#register-the-filter)
+
+### Customize through inheritance
+
+Extend `SecurityConfig` when you want to retain its bean factories and customize selected parts of the
+baseline. Register the subclass as an application configuration
+
+!!! warning "Use only the subclass configuration"
+
+    Exclude the original auto-configuration so only your subclass supplies the configuration
+    Add the following entry to your application's `application.properties`:
+
+    ```properties
+    spring.autoconfigure.exclude=com.tecknobit.equinoxbackend.environment.security.configuration.SecurityConfig
+    ```
+
+    Unlike the component scan filter, this setting disables automatic loading of the original
+    `SecurityConfig`. Your application configuration subclass supplies the inherited beans instead
+
+The following subclass adds `/health` to the existing public patterns. Resource paths are still added by
+`getPermittedPatterns()`, and the remaining baseline settings are retained
+
+=== "Java"
+
+    ```java
+    import com.tecknobit.equinoxbackend.environment.security.configuration.SecurityConfig;
+    import org.springframework.context.annotation.Configuration;
+    import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
+    import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+
+    import java.util.ArrayList;
+
+    @Configuration(proxyBeanMethods = false)
+    @EnableWebSecurity
+    @EnableMethodSecurity
+    public class CustomSecurityConfig extends SecurityConfig {
+
+        @Override
+        protected ArrayList<String> resolvePermittedPatterns() {
+            ArrayList<String> patterns = super.resolvePermittedPatterns();
+            patterns.add("/health");
+            return patterns;
+        }
+
+    }
+    ```
+
+=== "Kotlin"
+
+    ```kotlin
+    import com.tecknobit.equinoxbackend.environment.security.configuration.SecurityConfig
+    import org.springframework.context.annotation.Configuration
+    import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity
+    import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
+
+    @Configuration(proxyBeanMethods = false)
+    @EnableWebSecurity
+    @EnableMethodSecurity
+    class CustomSecurityConfig : SecurityConfig() {
+
+        override fun resolvePermittedPatterns(): ArrayList<String> {
+            val patterns = super.resolvePermittedPatterns()
+            patterns.add("/health")
+            return patterns
+        }
+
+    }
+    ```
+
+| Protected method | Customization |
+| --- | --- |
+| `resolvePermittedPatterns()` | Change base public paths while retaining the automatic resource paths |
+| `getPermittedPatterns()` | Replace the complete public path list |
+| `assembleFilterChainBaseline(http, tokenFilter)` | Customize the security builder before the inherited factory calls `build()` |
+| `useAccessDeniedHandler()` | Replace the access denied response handler |
+
+Call the corresponding superclass method when you want to retain its defaults. When extending the assembled
+baseline, add settings to the returned `HttpSecurity` builder; the inherited factory builds the chain
+
 ## ResourcesConfig
 
 This configuration class allows the backend to serve static resources

@@ -148,11 +148,13 @@ backend configuration. Call it before starting the **SpringApplication**, as sho
 
     import com.tecknobit.equinoxbackend.environment.configuration.EquinoxEnvironmentService;
     import org.springframework.boot.SpringApplication;
+    import org.springframework.boot.autoconfigure.AutoConfigurationExcludeFilter;
     import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
     import org.springframework.boot.autoconfigure.SpringBootApplication;
     import org.springframework.boot.autoconfigure.domain.EntityScan;
     import org.springframework.context.ApplicationContext;
     import org.springframework.context.annotation.ComponentScan;
+    import org.springframework.context.annotation.FilterType;
     import org.springframework.context.event.ContextRefreshedEvent;
     import org.springframework.context.event.EventListener;
     import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
@@ -174,7 +176,11 @@ backend configuration. Call it before starting the **SpringApplication**, as sho
             "com.tecknobit.*" /* REQUIRED */,
             "other.packages...",
             "com.tecknobit.equinoxbackend.environment.configuration" /* REQUIRED TO USE THE PROVIDED MESSAGES BUNDLE */
-        }
+        },
+        excludeFilters = @ComponentScan.Filter(
+            type = FilterType.CUSTOM,
+            classes = AutoConfigurationExcludeFilter.class
+        )
     )
     @SpringBootApplication
     public class Launcher {
@@ -196,12 +202,14 @@ backend configuration. Call it before starting the **SpringApplication**, as sho
 
     import com.tecknobit.equinoxbackend.environment.configuration.EquinoxEnvironmentService
     import org.springframework.boot.SpringApplication
+    import org.springframework.boot.autoconfigure.AutoConfigurationExcludeFilter
     import org.springframework.boot.autoconfigure.SpringBootApplication
     import org.springframework.boot.autoconfigure.domain.EntityScan
     import org.springframework.context.ApplicationContext
     import org.springframework.context.event.ContextRefreshedEvent
     import org.springframework.context.event.EventListener
     import org.springframework.context.annotation.ComponentScan
+    import org.springframework.context.annotation.FilterType
     import org.springframework.data.jpa.repository.config.EnableJpaRepositories
     import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping
     import org.springframework.web.servlet.mvc.method.RequestMappingInfo
@@ -218,7 +226,11 @@ backend configuration. Call it before starting the **SpringApplication**, as sho
             "com.tecknobit.*" /* REQUIRED */,
             "other.packages...",
             "com.tecknobit.equinoxbackend.environment.configuration" /* REQUIRED TO USE THE PROVIDED MESSAGES BUNDLE */
-        ]
+        ],
+        excludeFilters = [ComponentScan.Filter(
+            type = FilterType.CUSTOM,
+            classes = [AutoConfigurationExcludeFilter::class]
+        )]
     )
     @SpringBootApplication
     class Launcher {
@@ -235,6 +247,16 @@ backend configuration. Call it before starting the **SpringApplication**, as sho
 
     }
     ```
+
+!!! note "Component scanning and security auto-configuration"
+
+    The examples scan Equinox packages to discover the backend components
+    `AutoConfigurationExcludeFilter` keeps registered auto-configurations, including `SecurityConfig`,
+    out of that component scan. Spring Boot still loads them automatically after your application's
+    bean definitions, allowing your custom beans to take precedence over the security defaults
+
+    This filter does not disable auto-configuration. See
+    [SecurityConfig](Configurations.md#securityconfig) for replacing its default beans or using a subclass
 
 !!! note
 
