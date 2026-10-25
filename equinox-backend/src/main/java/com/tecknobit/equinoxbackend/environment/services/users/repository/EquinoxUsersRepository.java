@@ -1,7 +1,7 @@
 package com.tecknobit.equinoxbackend.environment.services.users.repository;
 
 import com.tecknobit.equinoxbackend.environment.services.users.entity.EquinoxUser;
-import org.springframework.data.jpa.repository.JpaRepository;
+import com.tecknobit.equinoxbackend.environment.services.builtin.repositories.EquinoxCrudRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -18,13 +18,13 @@ import static com.tecknobit.equinoxcore.helpers.CommonKeysKt.*;
  * @param <T>: generic type to allow the use of custom users inherited from {@link EquinoxUser}
  *
  * @author N7ghtm4r3 - Tecknobit
- * @see JpaRepository
+ * @see EquinoxCrudRepository
  * @see EquinoxUser
  *
  * @since 1.0.1
  */
 @Repository
-public interface EquinoxUsersRepository<T extends EquinoxUser> extends JpaRepository<T, String> {
+public interface EquinoxUsersRepository<T extends EquinoxUser> extends EquinoxCrudRepository<T> {
 
     /**
      * Method used to execute the query to find a {@link EquinoxUser} by email field
@@ -123,6 +123,29 @@ public interface EquinoxUsersRepository<T extends EquinoxUser> extends JpaReposi
     )
     void changeLanguage(
             @Param(LANGUAGE_KEY) String newLanguage,
+            @Param(IDENTIFIER_KEY) String id
+    );
+
+    @Override
+    @Modifying(clearAutomatically = true)
+    @Query(
+            value = "UPDATE " + USERS_KEY + " SET " + DELETED_AT_KEY + "=:" + DELETED_AT_KEY +
+                    _WHERE_ + IDENTIFIER_KEY + "=:" + IDENTIFIER_KEY,
+            nativeQuery = true
+    )
+    void softDelete(
+            @Param(IDENTIFIER_KEY) String id,
+            @Param(DELETED_AT_KEY) long deletedAt
+    );
+
+    @Override
+    @Modifying(clearAutomatically = true)
+    @Query(
+            value = "UPDATE " + USERS_KEY + " SET " + DELETED_AT_KEY + "= -1" +
+                    _WHERE_ + IDENTIFIER_KEY + "=:" + IDENTIFIER_KEY,
+            nativeQuery = true
+    )
+    void restoreSoftDeletedEntity(
             @Param(IDENTIFIER_KEY) String id
     );
 

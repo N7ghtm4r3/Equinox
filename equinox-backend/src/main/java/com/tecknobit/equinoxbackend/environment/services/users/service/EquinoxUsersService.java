@@ -2,13 +2,13 @@ package com.tecknobit.equinoxbackend.environment.services.users.service;
 
 import com.tecknobit.apimanager.apis.APIRequest;
 import com.tecknobit.equinoxbackend.annotations.EntityRetriever;
-import com.tecknobit.equinoxbackend.apis.batch.EquinoxItemsHelper;
 import com.tecknobit.equinoxbackend.apis.resources.ResourcesManager;
 import com.tecknobit.equinoxbackend.environment.configuration.EquinoxEnvironmentService;
 import com.tecknobit.equinoxbackend.environment.exceptions.EquinoxBadRequestException;
 import com.tecknobit.equinoxbackend.environment.exceptions.EquinoxForbiddenException;
 import com.tecknobit.equinoxbackend.environment.exceptions.EquinoxFormException;
 import com.tecknobit.equinoxbackend.environment.exceptions.EquinoxServerException;
+import com.tecknobit.equinoxbackend.environment.services.builtin.services.EquinoxCrudService;
 import com.tecknobit.equinoxbackend.environment.services.users.dtos.requests.*;
 import com.tecknobit.equinoxbackend.environment.services.users.dtos.responses.ChangeProfilePicResponseDto;
 import com.tecknobit.equinoxbackend.environment.services.users.dtos.responses.DynamicAccountDataResponseDto;
@@ -17,9 +17,8 @@ import com.tecknobit.equinoxbackend.environment.services.users.dtos.responses.Si
 import com.tecknobit.equinoxbackend.environment.services.users.entity.EquinoxUser;
 import com.tecknobit.equinoxbackend.environment.services.users.repository.EquinoxUsersRepository;
 import com.tecknobit.equinoxcore.annotations.Assembler;
-import jakarta.persistence.Query;
+import com.tecknobit.equinoxcore.annotations.Wrapper;
 import jakarta.transaction.Transactional;
-import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -52,7 +51,7 @@ import static java.lang.System.currentTimeMillis;
  * @since 1.0.1
  */
 @Service
-public class EquinoxUsersService<U extends EquinoxUser, R extends EquinoxUsersRepository<U>> extends EquinoxItemsHelper
+public class EquinoxUsersService<U extends EquinoxUser, R extends EquinoxUsersRepository<U>> extends EquinoxCrudService<U>
         implements ResourcesManager {
 
     /**
@@ -124,6 +123,7 @@ public class EquinoxUsersService<U extends EquinoxUser, R extends EquinoxUsersRe
     @Autowired
     @SuppressWarnings("unchecked")
     public EquinoxUsersService(R usersRepository) {
+        super(usersRepository);
         this.usersRepository = usersRepository;
 
         //TODO: TO REMOVE
@@ -249,7 +249,7 @@ public class EquinoxUsersService<U extends EquinoxUser, R extends EquinoxUsersRe
 
         queryBuilder.append(VALUES_QUERY_PART);
         arrangeQuery(queryBuilder, values, true);
-        entityManager.createNativeQuery(queryBuilder.toString()).executeUpdate();
+        // entityManager.createNativeQuery(queryBuilder.toString()).executeUpdate();
     }
 
     /**
@@ -307,6 +307,7 @@ public class EquinoxUsersService<U extends EquinoxUser, R extends EquinoxUsersRe
      *
      * @since 2.0.0
      */
+    @Transactional
     public SignInResponseDto signInUser(SignInRequestDto signInRequest) {
         String email = signInRequest.getEmail();
         U user = usersRepository.findUserByEmail(email);
@@ -314,9 +315,12 @@ public class EquinoxUsersService<U extends EquinoxUser, R extends EquinoxUsersRe
         String password = signInRequest.getPassword();
         String safePassword = hash(password);
 
-        if (validateSignIn(user, safePassword, signInRequest))
+        if (validateSignIn(user, safePassword, signInRequest)) {
+            if(user.isSoftDeleted())
+                restoreSoftDeletedEntity(user);
+
             return resolveSignInResponse(user);
-        else
+        } else
             throw new EquinoxForbiddenException();
     }
 
@@ -378,6 +382,7 @@ public class EquinoxUsersService<U extends EquinoxUser, R extends EquinoxUsersRe
         U user = usersRepository.findUserByEmail(email);
         if (validateSignIn(user, password, custom))
             return user;
+
         return null;
     }
 
@@ -403,8 +408,24 @@ public class EquinoxUsersService<U extends EquinoxUser, R extends EquinoxUsersRe
      * @param userId The identifier of the user to check
      * @return whether the user exists as {@code boolean}
      */
+    @Wrapper
     public boolean userExists(String userId) {
-        return usersRepository.findById(userId).isPresent();
+        return userExists(userId, false);
+    }
+
+    /**
+     * Method used to get whether the user is present in the database
+     *
+     * @param userId The identifier of the user to check
+     * @return whether the user exists as {@code boolean}
+     */
+    public boolean userExists(String userId, boolean includeSoftDeleted) {
+        Optional<U> userEntry = usersRepository.findById(userId);
+        boolean userExists = userEntry.isPresent();
+        if(includeSoftDeleted)
+            return userExists;
+
+        return userExists && !userEntry.get().isSoftDeleted();
     }
 
     /**
@@ -418,22 +439,24 @@ public class EquinoxUsersService<U extends EquinoxUser, R extends EquinoxUsersRe
      */
     @Deprecated(since = "2.0.0", forRemoval = true)
     public JSONObject getDynamicAccountData(String userId) {
-        StringBuilder queryBuilder = new StringBuilder(SELECT_);
-        List<String> dynamicAccountDataKeys = getDynamicAccountDataKeys();
+//        StringBuilder queryBuilder = new StringBuilder(SELECT_);
+//        List<String> dynamicAccountDataKeys = getDynamicAccountDataKeys();
+//
+//        arrangeDynamicDataQuery(queryBuilder, dynamicAccountDataKeys);
+//        queryBuilder.append(_FROM_ + USERS_KEY);
+//        queryBuilder.append(_WHERE_);
+//        queryBuilder.append(IDENTIFIER_KEY + "=").append(SINGLE_QUOTE).append(userId).append(SINGLE_QUOTE);
+//
+//        Query query = entityManager.createNativeQuery(queryBuilder.toString());
+//        JSONArray result = new JSONArray(query.getResultList().get(0));
+//        JSONObject dynamicData = new JSONObject();
+//
+//        for (int j = 0; j < result.length(); j++)
+//            dynamicData.put(dynamicAccountDataKeys.get(j), result.get(j));
+//
+//        return dynamicData;
 
-        arrangeDynamicDataQuery(queryBuilder, dynamicAccountDataKeys);
-        queryBuilder.append(_FROM_ + USERS_KEY);
-        queryBuilder.append(_WHERE_);
-        queryBuilder.append(IDENTIFIER_KEY + "=").append(SINGLE_QUOTE).append(userId).append(SINGLE_QUOTE);
-
-        Query query = entityManager.createNativeQuery(queryBuilder.toString());
-        JSONArray result = new JSONArray(query.getResultList().get(0));
-        JSONObject dynamicData = new JSONObject();
-
-        for (int j = 0; j < result.length(); j++)
-            dynamicData.put(dynamicAccountDataKeys.get(j), result.get(j));
-
-        return dynamicData;
+        return null;
     }
 
     /**
@@ -446,26 +469,6 @@ public class EquinoxUsersService<U extends EquinoxUser, R extends EquinoxUsersRe
     @Deprecated(since = "2.0.0", forRemoval = true)
     protected List<String> getDynamicAccountDataKeys() {
         return DEFAULT_DYNAMIC_ACCOUNT_DATA_KEYS;
-    }
-
-    /**
-     * Method used to arrange the dynamic data query to execute by the {@link #getDynamicAccountData(String)} method
-     *
-     * @param queryBuilder The builder of the query to execute
-     * @param list         The list to arrange
-     * @param <E>          Type of the element in the list
-     */
-    @Assembler
-    @Deprecated(since = "2.0.0", forRemoval = true)
-    private <E> void arrangeDynamicDataQuery(StringBuilder queryBuilder, List<E> list) {
-        int ListSize = list.size();
-        int lastIndex = ListSize - 1;
-
-        for (int j = 0; j < ListSize; j++) {
-            queryBuilder.append(list.get(j));
-            if (j < lastIndex)
-                queryBuilder.append(COMMA);
-        }
     }
 
     /**
@@ -484,11 +487,11 @@ public class EquinoxUsersService<U extends EquinoxUser, R extends EquinoxUsersRe
      * @since 2.0.0
      */
     public DynamicAccountDataResponseDto getDynamicAccountData(U user) {
-        return new DynamicAccountDataResponseDto(
+        return requireEntityNotSoftDeleted(user, () -> new DynamicAccountDataResponseDto(
                 user.getEmail(),
                 user.getProfilePic(),
                 user.getLanguage()
-        );
+        ));
     }
 
     /**
@@ -502,7 +505,11 @@ public class EquinoxUsersService<U extends EquinoxUser, R extends EquinoxUsersRe
      */
     @EntityRetriever
     public Optional<U> findUserByToken(String token) {
-        return usersRepository.findUserByToken(token);
+        Optional<U> user = usersRepository.findUserByToken(token);
+        if(user.isPresent() && isSoftDeleted(user.get()))
+            return Optional.empty();
+
+        return user;
     }
 
     /**
@@ -518,19 +525,21 @@ public class EquinoxUsersService<U extends EquinoxUser, R extends EquinoxUsersRe
         if(profilePic.isEmpty())
             throw new EquinoxFormException(WRONG_PROFILE_PIC_MESSAGE);
 
-        String profilePicPath = createProfileResource(profilePic, userId + currentTimeMillis());
-        usersRepository.changeProfilePic(profilePicPath, userId);
+        return requireEntityNotSoftDeleted(userId, user -> {
+            String profilePicPath = createProfileResource(profilePic, userId + currentTimeMillis());
+            usersRepository.changeProfilePic(profilePicPath, userId);
 
-        try {
-            deleteProfileResource(userId);
-            saveResource(profilePic, profilePicPath);
-        } catch (IOException e) {
-            throw new EquinoxServerException(e);
-        }
+            try {
+                deleteProfileResource(userId);
+                saveResource(profilePic, profilePicPath);
+            } catch (IOException e) {
+                throw new EquinoxServerException(e);
+            }
 
-        return new ChangeProfilePicResponseDto(
-                profilePicPath
-        );
+            return new ChangeProfilePicResponseDto(
+                    profilePicPath
+            );
+        });
     }
 
     /**
@@ -545,13 +554,15 @@ public class EquinoxUsersService<U extends EquinoxUser, R extends EquinoxUsersRe
      */
     @Transactional
     public void changeEmail(ChangeEmailRequestDto changeEmailRequest, String userId) {
-        String newEmail = changeEmailRequest.getEmail();
+        requireEntityNotSoftDeleted(userId, u -> {
+            String newEmail = changeEmailRequest.getEmail();
 
-        try {
-            usersRepository.changeEmail(newEmail, userId);
-        } catch (Exception e) {
-            throw new EquinoxBadRequestException();
-        }
+            try {
+                usersRepository.changeEmail(newEmail, userId);
+            } catch (Exception e) {
+                throw new EquinoxBadRequestException();
+            }
+        });
     }
 
     /**
@@ -568,9 +579,11 @@ public class EquinoxUsersService<U extends EquinoxUser, R extends EquinoxUsersRe
      */
     @Transactional
     public void changePassword(ChangePasswordRequestDto changePasswordRequest, String userId) {
-        String safePassword = hash(changePasswordRequest.getPassword());
+        requireEntityNotSoftDeleted(userId, u -> {
+            String safePassword = hash(changePasswordRequest.getPassword());
 
-        usersRepository.changePassword(safePassword, userId);
+            usersRepository.changePassword(safePassword, userId);
+        });
     }
 
     /**
@@ -583,9 +596,11 @@ public class EquinoxUsersService<U extends EquinoxUser, R extends EquinoxUsersRe
      */
     @Transactional
     public void changeLanguage(ChangeLanguageRequestDto changeLanguageRequest, String userId) {
-        String newLanguage = changeLanguageRequest.getLanguage();
+        requireEntityNotSoftDeleted(userId, u -> {
+            String newLanguage = changeLanguageRequest.getLanguage();
 
-        usersRepository.changeLanguage(newLanguage, userId);
+            usersRepository.changeLanguage(newLanguage, userId);
+        });
     }
 
     /**
@@ -594,8 +609,14 @@ public class EquinoxUsersService<U extends EquinoxUser, R extends EquinoxUsersRe
      * @param id The identifier of the user to delete
      */
     @Transactional
-    public void deleteUser(String id) {
-        usersRepository.deleteById(id);
+    public void deleteUser(String id, boolean hardDelete) {
+        deleteEntity(id, hardDelete);
+    }
+
+    @Override
+    protected void hardDelete(String id) {
+        super.hardDelete(id);
+
         deleteProfileResource(id);
     }
 

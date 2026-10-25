@@ -110,7 +110,7 @@ public class EquinoxTokenAuthenticationFilter<U extends EquinoxUser, R extends E
         }
 
         U user = usersRepository.findUserByToken(token).orElse(null);
-        if (user == null) {
+        if (user == null || user.isSoftDeleted()) {
             filterChain.doFilter(request, response);
             return;
         }

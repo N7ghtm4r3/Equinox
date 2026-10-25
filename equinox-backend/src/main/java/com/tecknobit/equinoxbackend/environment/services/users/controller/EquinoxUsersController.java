@@ -352,9 +352,10 @@ public class EquinoxUsersController<U extends EquinoxUser, R extends EquinoxUser
     )
     @RequestPath(path = "/api/v2/users/{user_id}", method = DELETE)
     public ResponseEntity<?> deleteAccount(
-            @PathVariable(USER_IDENTIFIER_KEY) String userId
+            @PathVariable(USER_IDENTIFIER_KEY) String userId,
+            @RequestParam(value = HARD_DELETE_KEY, required = false, defaultValue = "false") boolean hardDelete
     ) {
-        usersService.deleteUser(userId);
+        usersService.deleteUser(userId, hardDelete);
 
         return successResponse();
     }

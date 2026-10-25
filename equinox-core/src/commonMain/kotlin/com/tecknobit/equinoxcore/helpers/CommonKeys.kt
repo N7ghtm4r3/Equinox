@@ -120,3 +120,17 @@ const val MEMBER_KEY = "member"
  * @since 1.2.0
  */
 const val MEMBER_IDENTIFIER_KEY = "member_id"
+
+/**
+ * `DELETED_AT_KEY` the key for the `deleted_at` field
+ *
+ * @since 2.0.0
+ */
+const val DELETED_AT_KEY = "deleted_at"
+
+/**
+ * `HARD_DELETE_KEY` the key for the `hard_delete` field
+ *
+ * @since 2.0.0
+ */
+const val HARD_DELETE_KEY = "hard_delete"
