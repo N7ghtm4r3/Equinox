@@ -6,6 +6,7 @@ import com.tecknobit.equinoxbackend.environment.security.authorization.annotatio
 import com.tecknobit.equinoxbackend.environment.services.builtin.controllers.EquinoxController;
 import com.tecknobit.equinoxbackend.environment.services.builtin.controllers.EquinoxControllerCore;
 import com.tecknobit.equinoxbackend.environment.services.users.dtos.requests.ChangeEmailRequestDto;
+import com.tecknobit.equinoxbackend.environment.services.users.dtos.requests.ChangePasswordRequestDto;
 import com.tecknobit.equinoxbackend.environment.services.users.dtos.requests.SignInRequestDto;
 import com.tecknobit.equinoxbackend.environment.services.users.dtos.requests.SignUpRequestDto;
 import com.tecknobit.equinoxbackend.environment.services.users.dtos.responses.ChangeProfilePicResponseDto;
@@ -281,7 +282,7 @@ public class EquinoxUsersController<U extends EquinoxUser, R extends EquinoxUser
             }
     )
     @RequestPath(path = "/api/v2/users/{user_id}/changeEmail", method = PATCH)
-    public ResponseEntity<JSONObject> changeEmail(
+    public ResponseEntity<?> changeEmail(
             @PathVariable(USER_IDENTIFIER_KEY) String userId,
             @RequestBody @Valid ChangeEmailRequestDto changeEmailRequest
     ) {
@@ -291,20 +292,14 @@ public class EquinoxUsersController<U extends EquinoxUser, R extends EquinoxUser
     }
 
     /**
-     * Method used to change the password of the user
+     * Method used to change the authenticated user's password from the request
      *
-     * @param userId The identifier of the user
-     * @param token The token of the user
-     * @param payload Payload of the request
-     *                 <pre>
-     *                      {@code
-     *                              {
-     *                                  "password": "the new password of the user" -> [String]
-     *                              }
-     *                      }
-     *                 </pre>
-     * @return the result of the request as {@link String}
+     * @param userId                The requested user identifier, which must match the authenticated user
+     * @param changePasswordRequest The request containing the new plain-text password
+     *
+     * @return the successful response with the localized confirmation message as {@link ResponseEntity}
      */
+    @IsAuthorizedUser
     @PatchMapping(
             path = USERS_KEY + "/{" + USER_IDENTIFIER_KEY + "}" + CHANGE_PASSWORD_ENDPOINT,
             headers = {
@@ -312,23 +307,13 @@ public class EquinoxUsersController<U extends EquinoxUser, R extends EquinoxUser
             }
     )
     @RequestPath(path = "/api/v2/users/{user_id}/changePassword", method = PATCH)
-    public String changePassword(
+    public ResponseEntity<?> changePassword(
             @PathVariable(USER_IDENTIFIER_KEY) String userId,
-            @RequestHeader(TOKEN_KEY) String token,
-            @RequestBody Map<String, String> payload
+            @RequestBody @Valid ChangePasswordRequestDto changePasswordRequest
     ) {
-        if (!isMe(userId, token))
-            return notAuthorizedOrWrongDetailsResponse();
-        loadJsonHelper(payload);
-        String password = jsonHelper.getString(PASSWORD_KEY);
-        if (!InputsValidator.isPasswordValid(password))
-            return failedResponse(EquinoxMessages.WRONG_PASSWORD_MESSAGE);
-        try {
-            usersService.changePassword(password, userId);
-            return successResponse();
-        } catch (Exception e) {
-            return wrongProcedureResponse();
-        }
+        usersService.changePassword(changePasswordRequest, userId);
+
+        return successResponse();
     }
 
     /**
