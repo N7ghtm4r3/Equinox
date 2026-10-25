@@ -5,9 +5,11 @@ import com.tecknobit.equinoxbackend.annotations.EntityRetriever;
 import com.tecknobit.equinoxbackend.apis.batch.EquinoxItemsHelper;
 import com.tecknobit.equinoxbackend.apis.resources.ResourcesManager;
 import com.tecknobit.equinoxbackend.environment.configuration.EquinoxEnvironmentService;
+import com.tecknobit.equinoxbackend.environment.exceptions.EquinoxBadRequestException;
 import com.tecknobit.equinoxbackend.environment.exceptions.EquinoxForbiddenException;
 import com.tecknobit.equinoxbackend.environment.exceptions.EquinoxFormException;
 import com.tecknobit.equinoxbackend.environment.exceptions.EquinoxServerException;
+import com.tecknobit.equinoxbackend.environment.services.users.dtos.requests.ChangeEmailRequestDto;
 import com.tecknobit.equinoxbackend.environment.services.users.dtos.requests.SignInRequestDto;
 import com.tecknobit.equinoxbackend.environment.services.users.dtos.requests.SignUpRequestDto;
 import com.tecknobit.equinoxbackend.environment.services.users.dtos.responses.ChangeProfilePicResponseDto;
@@ -534,14 +536,24 @@ public class EquinoxUsersService<U extends EquinoxUser, R extends EquinoxUsersRe
     }
 
     /**
-     * Method used to change the email of the {@link EquinoxUser}
+     * Method used to change the user's email from the request
      *
-     * @param newEmail The new email of the user
-     * @param userId:   the identifier of the user
+     * @param changeEmailRequest The request containing the new email address
+     * @param userId             The identifier of the user whose email is changed
+     *
+     * @throws EquinoxBadRequestException when the repository email update throws an exception
+     *
+     * @since 2.0.0
      */
     @Transactional
-    public void changeEmail(String newEmail, String userId) {
-        usersRepository.changeEmail(newEmail, userId);
+    public void changeEmail(ChangeEmailRequestDto changeEmailRequest, String userId) {
+        String newEmail = changeEmailRequest.getEmail();
+
+        try {
+            usersRepository.changeEmail(newEmail, userId);
+        } catch (Exception e) {
+            throw new EquinoxBadRequestException();
+        }
     }
 
     /**

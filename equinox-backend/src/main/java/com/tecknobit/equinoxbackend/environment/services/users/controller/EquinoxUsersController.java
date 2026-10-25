@@ -5,6 +5,7 @@ import com.tecknobit.equinoxbackend.environment.constants.EquinoxMessages;
 import com.tecknobit.equinoxbackend.environment.security.authorization.annotations.IsAuthorizedUser;
 import com.tecknobit.equinoxbackend.environment.services.builtin.controllers.EquinoxController;
 import com.tecknobit.equinoxbackend.environment.services.builtin.controllers.EquinoxControllerCore;
+import com.tecknobit.equinoxbackend.environment.services.users.dtos.requests.ChangeEmailRequestDto;
 import com.tecknobit.equinoxbackend.environment.services.users.dtos.requests.SignInRequestDto;
 import com.tecknobit.equinoxbackend.environment.services.users.dtos.requests.SignUpRequestDto;
 import com.tecknobit.equinoxbackend.environment.services.users.dtos.responses.ChangeProfilePicResponseDto;
@@ -23,8 +24,6 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
-import java.security.NoSuchAlgorithmException;
 import java.util.Map;
 
 import static com.tecknobit.apimanager.apis.APIRequest.RequestMethod.*;
@@ -244,7 +243,6 @@ public class EquinoxUsersController<U extends EquinoxUser, R extends EquinoxUser
     /**
      * Method used to change the authenticated user's profile pic from a multipart upload
      *
-     * @param user       The authenticated user resolved from the security context
      * @param userId     The requested user identifier, which must match the authenticated user
      * @param profilePic The uploaded file to set as the new profile pic
      *
@@ -259,7 +257,6 @@ public class EquinoxUsersController<U extends EquinoxUser, R extends EquinoxUser
     )
     @RequestPath(path = "/api/v2/users/{user_id}/changeProfilePic", method = POST)
     public ResponseEntity<?> changeProfilePic(
-            @AuthenticationPrincipal U user,
             @PathVariable(USER_IDENTIFIER_KEY) String userId,
             @RequestParam(PROFILE_PIC_KEY) MultipartFile profilePic
     ) {
@@ -269,20 +266,14 @@ public class EquinoxUsersController<U extends EquinoxUser, R extends EquinoxUser
     }
 
     /**
-     * Method used to change the email of the user
+     * Method used to change the authenticated user's email from a validated request
      *
-     * @param userId The identifier of the user
-     * @param token The token of the user
-     * @param payload Payload of the request
-     *                 <pre>
-     *                      {@code
-     *                              {
-     *                                  "email": "the new email of the user" -> [String]
-     *                              }
-     *                      }
-     *                 </pre>
-     * @return the result of the request as {@link String}
+     * @param userId             The requested user identifier, which must match the authenticated user
+     * @param changeEmailRequest The validated request containing the new email address
+     *
+     * @return the successful response with the localized confirmation message as {@link ResponseEntity}
      */
+    @IsAuthorizedUser
     @PatchMapping(
             path = USERS_KEY + "/{" + USER_IDENTIFIER_KEY + "}" + CHANGE_EMAIL_ENDPOINT,
             headers = {
@@ -290,23 +281,13 @@ public class EquinoxUsersController<U extends EquinoxUser, R extends EquinoxUser
             }
     )
     @RequestPath(path = "/api/v2/users/{user_id}/changeEmail", method = PATCH)
-    public String changeEmail(
+    public ResponseEntity<JSONObject> changeEmail(
             @PathVariable(USER_IDENTIFIER_KEY) String userId,
-            @RequestHeader(TOKEN_KEY) String token,
-            @RequestBody Map<String, String> payload
+            @RequestBody @Valid ChangeEmailRequestDto changeEmailRequest
     ) {
-        if (!isMe(userId, token))
-            return notAuthorizedOrWrongDetailsResponse();
-        loadJsonHelper(payload);
-        String email = jsonHelper.getString(EMAIL_KEY);
-        if (!InputsValidator.isEmailValid(email))
-            return failedResponse(EquinoxMessages.WRONG_EMAIL_MESSAGE);
-        try {
-            usersService.changeEmail(email, userId);
-            return successResponse();
-        } catch (Exception e) {
-            return wrongProcedureResponse();
-        }
+        usersService.changeEmail(changeEmailRequest, userId);
+
+        return successResponse();
     }
 
     /**
