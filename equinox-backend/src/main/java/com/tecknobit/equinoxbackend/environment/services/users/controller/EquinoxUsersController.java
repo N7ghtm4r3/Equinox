@@ -5,10 +5,7 @@ import com.tecknobit.equinoxbackend.environment.constants.EquinoxMessages;
 import com.tecknobit.equinoxbackend.environment.security.authorization.annotations.IsAuthorizedUser;
 import com.tecknobit.equinoxbackend.environment.services.builtin.controllers.EquinoxController;
 import com.tecknobit.equinoxbackend.environment.services.builtin.controllers.EquinoxControllerCore;
-import com.tecknobit.equinoxbackend.environment.services.users.dtos.requests.ChangeEmailRequestDto;
-import com.tecknobit.equinoxbackend.environment.services.users.dtos.requests.ChangePasswordRequestDto;
-import com.tecknobit.equinoxbackend.environment.services.users.dtos.requests.SignInRequestDto;
-import com.tecknobit.equinoxbackend.environment.services.users.dtos.requests.SignUpRequestDto;
+import com.tecknobit.equinoxbackend.environment.services.users.dtos.requests.*;
 import com.tecknobit.equinoxbackend.environment.services.users.dtos.responses.ChangeProfilePicResponseDto;
 import com.tecknobit.equinoxbackend.environment.services.users.dtos.responses.DynamicAccountDataResponseDto;
 import com.tecknobit.equinoxbackend.environment.services.users.dtos.responses.SignInResponseDto;
@@ -317,20 +314,14 @@ public class EquinoxUsersController<U extends EquinoxUser, R extends EquinoxUser
     }
 
     /**
-     * Method used to change the language of the user
+     * Method used to change the authenticated user's language from a validated request
      *
-     * @param userId The identifier of the user
-     * @param token The token of the user
-     * @param payload Payload of the request
-     *                 <pre>
-     *                      {@code
-     *                              {
-     *                                  "language": "the new language of the user" -> [String]
-     *                              }
-     *                      }
-     *                 </pre>
-     * @return the result of the request as {@link String}
+     * @param userId                The requested user identifier, which must match the authenticated user
+     * @param changeLanguageRequest The validated request containing the new supported language
+     *
+     * @return the successful response with the localized confirmation message as {@link ResponseEntity}
      */
+    @IsAuthorizedUser
     @PatchMapping(
             path = USERS_KEY + "/{" + USER_IDENTIFIER_KEY + "}" + CHANGE_LANGUAGE_ENDPOINT,
             headers = {
@@ -338,23 +329,13 @@ public class EquinoxUsersController<U extends EquinoxUser, R extends EquinoxUser
             }
     )
     @RequestPath(path = "/api/v2/users/{user_id}/changeLanguage", method = PATCH)
-    public String changeLanguage(
+    public ResponseEntity<?> changeLanguage(
             @PathVariable(USER_IDENTIFIER_KEY) String userId,
-            @RequestHeader(TOKEN_KEY) String token,
-            @RequestBody Map<String, String> payload
+            @RequestBody @Valid ChangeLanguageRequestDto changeLanguageRequest
     ) {
-        if (!isMe(userId, token))
-            return notAuthorizedOrWrongDetailsResponse();
-        loadJsonHelper(payload);
-        String language = jsonHelper.getString(LANGUAGE_KEY);
-        if (!InputsValidator.isLanguageValid(language))
-            return failedResponse(EquinoxMessages.WRONG_LANGUAGE_MESSAGE);
-        try {
-            usersService.changeLanguage(language, userId);
-            return successResponse();
-        } catch (Exception e) {
-            return wrongProcedureResponse();
-        }
+        usersService.changeLanguage(changeLanguageRequest, userId);
+
+        return successResponse();
     }
 
     /**
