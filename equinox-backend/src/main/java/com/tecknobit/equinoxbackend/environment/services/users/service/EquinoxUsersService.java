@@ -6,7 +6,10 @@ import com.tecknobit.equinoxbackend.apis.batch.EquinoxItemsHelper;
 import com.tecknobit.equinoxbackend.apis.resources.ResourcesManager;
 import com.tecknobit.equinoxbackend.environment.configuration.EquinoxBackendConfiguration;
 import com.tecknobit.equinoxbackend.environment.configuration.EquinoxEnvironmentService;
+import com.tecknobit.equinoxbackend.environment.exceptions.EquinoxForbiddenException;
+import com.tecknobit.equinoxbackend.environment.services.users.dtos.requests.SignInRequestDto;
 import com.tecknobit.equinoxbackend.environment.services.users.dtos.requests.SignUpRequestDto;
+import com.tecknobit.equinoxbackend.environment.services.users.dtos.responses.SignInResponseDto;
 import com.tecknobit.equinoxbackend.environment.services.users.dtos.responses.SignUpResponseDto;
 import com.tecknobit.equinoxbackend.environment.services.users.entity.EquinoxUser;
 import com.tecknobit.equinoxbackend.environment.services.users.repository.EquinoxUsersRepository;
@@ -99,6 +102,7 @@ public class EquinoxUsersService<U extends EquinoxUser, R extends EquinoxUsersRe
     /**
      * {@code discriminatorValue} value of the discriminator to use to save the users in the related table
      */
+    @Deprecated(since = "2.0.0", forRemoval = true)
     protected String discriminatorValue;
 
     /**
@@ -110,6 +114,8 @@ public class EquinoxUsersService<U extends EquinoxUser, R extends EquinoxUsersRe
     @SuppressWarnings("unchecked")
     public EquinoxUsersService(R usersRepository) {
         this.usersRepository = usersRepository;
+
+        //TODO: TO REMOVE
         try {
             discriminatorValue = ((Class<U>) ((ParameterizedType) getClass().getGenericSuperclass())
                     .getActualTypeArguments()[0]).getSimpleName();
@@ -292,14 +298,91 @@ public class EquinoxUsersService<U extends EquinoxUser, R extends EquinoxUsersRe
     }
 
     /**
-     * Method used to sign in an existing user
+     * Method used to authenticate a user from the sign-in request and assemble the response
      *
-     * @param email:    the email of the user
-     * @param password The password of the user
-     * @param custom The custom parameters added in a customization of the {@link EquinoxUser}
+     * <p>The request email identifies the user to authenticate. The supplied password is hashed before
+     * it is passed to {@link #validateSignIn(EquinoxUser, String, SignInRequestDto)} with the original request.
+     * Missing users and rejected credentials cause the same forbidden exception
      *
-     * @return the authenticated user as {@link EquinoxUser} if the credentials inserted were correct
+     * <p>Override the validation hook to apply additional checks and
+     * {@link #resolveSignInResponse(EquinoxUser)} to customize the response
+     *
+     * @param signInRequest The request containing the credentials and any custom sign-in data
+     *
+     * @return the authenticated user details as {@link SignInResponseDto}
+     * @throws EquinoxForbiddenException when the user does not exist or sign-in validation fails
+     * @throws NoSuchAlgorithmException when the password hashing algorithm is unavailable
+     *
+     * @since 2.0.0
      */
+    public SignInResponseDto signInUser(SignInRequestDto signInRequest) throws NoSuchAlgorithmException {
+        String email = signInRequest.getEmail();
+        U user = usersRepository.findUserByEmail(email);
+
+        String password = signInRequest.getPassword();
+        String safePassword = hash(password);
+
+        if (validateSignIn(user, safePassword, signInRequest))
+            return resolveSignInResponse(user);
+        else
+            throw new EquinoxForbiddenException();
+    }
+
+    /**
+     * Method used to validate the credentials and any custom sign-in conditions
+     *
+     * <p>The default implementation rejects a missing user and compares the stored password with
+     * the supplied hash. Overrides can inspect additional properties of the original request subclass
+     * and should preserve these credential checks. The supplied password must not be hashed again
+     *
+     * @param user          The user found by email, or {@code null} when no user matches
+     * @param safePassword  The already hashed password to compare with the stored password
+     * @param signInRequest The original request containing the credentials and any custom sign-in data
+     *
+     * @return whether the sign-in conditions are satisfied as {@code boolean}
+     *
+     * @since 2.0.0
+     */
+    protected boolean validateSignIn(U user, String safePassword, SignInRequestDto signInRequest) {
+        return user != null && user.getPassword().equals(safePassword);
+    }
+
+    /**
+     * Method used to assemble the sign-in response from the authenticated user
+     *
+     * <p>The response contains the saved identifier, token, profile pic, name, surname, and language.
+     * Override this method to return a subclass of {@link SignInResponseDto} with additional response data
+     *
+     * @param user The authenticated user whose details are included in the response
+     *
+     * @return the authenticated user details as {@link SignInResponseDto}
+     *
+     * @since 2.0.0
+     */
+    @Assembler
+    protected SignInResponseDto resolveSignInResponse(U user) {
+        return new SignInResponseDto(
+                user.getId(),
+                user.getToken(),
+                user.getProfilePic(),
+                user.getName(),
+                user.getSurname(),
+                user.getLanguage()
+        );
+    }
+
+    /**
+     * Method used to authenticate a user through the legacy sign-in overload
+     *
+     * @param email    The email address used to find the user
+     * @param password The plain-text password to verify
+     * @param custom   The custom values passed to the legacy credential validation hook
+     *
+     * @return the authenticated user, or {@code null} when validation fails, as {@link EquinoxUser}
+     * @throws NoSuchAlgorithmException when the password hashing algorithm is unavailable
+     * @deprecated use {@link #signInUser(SignInRequestDto)} to authenticate a request and return its response DTO
+     */
+    @Deprecated(since = "2.0.0", forRemoval = true)
     public U signInUser(String email, String password, Object... custom) throws NoSuchAlgorithmException {
         U user = usersRepository.findUserByEmail(email);
         if (validateSignIn(user, password, custom))
@@ -308,15 +391,18 @@ public class EquinoxUsersService<U extends EquinoxUser, R extends EquinoxUsersRe
     }
 
     /**
-     * Method used to validate the sign in request
+     * Method used to validate credentials through the legacy sign-in hook
      *
-     * @param user:    the user to validated
-     * @param password The password of the user
-     * @param custom The custom parameters added in a customization of the {@link EquinoxUser} to execute a customized
-     *             sign in validation
+     * @param user     The user found by email, or {@code null} when no user matches
+     * @param password The plain-text password to verify
+     * @param custom   The additional sign-in values, unused by the default implementation
      *
-     * @return the authenticated user as {@link EquinoxUser} if the credentials inserted were correct null otherwise
+     * @return whether the user exists and the password matches as {@code boolean}
+     * @throws NoSuchAlgorithmException when the password hashing algorithm is unavailable
+     * @deprecated use {@link #validateSignIn(EquinoxUser, String, SignInRequestDto)} with the already hashed password
+     * and the original request. The request-based sign-in flow does not invoke this legacy hook
      */
+    @Deprecated(since = "2.0.0", forRemoval = true)
     protected boolean validateSignIn(U user, String password, Object... custom) throws NoSuchAlgorithmException {
         return user != null && user.getPassword().equals(hash(password));
     }
@@ -337,6 +423,7 @@ public class EquinoxUsersService<U extends EquinoxUser, R extends EquinoxUsersRe
      * @param userId The identifier of the user
      * @return the dynamic data as {@link JSONObject}
      */
+    @Deprecated(since = "2.0.0", forRemoval = true)
     public JSONObject getDynamicAccountData(String userId) {
         StringBuilder queryBuilder = new StringBuilder(SELECT_);
         List<String> dynamicAccountDataKeys = getDynamicAccountDataKeys();
@@ -362,6 +449,7 @@ public class EquinoxUsersService<U extends EquinoxUser, R extends EquinoxUsersRe
      * @return a list of keys as {@link List} of {@link String}
      * @apiNote This method allows a customizable retrieving of custom parameters added in a customization of the {@link EquinoxUser}
      */
+    @Deprecated(since = "2.0.0", forRemoval = true)
     protected List<String> getDynamicAccountDataKeys() {
         return DEFAULT_DYNAMIC_ACCOUNT_DATA_KEYS;
     }
@@ -374,6 +462,7 @@ public class EquinoxUsersService<U extends EquinoxUser, R extends EquinoxUsersRe
      * @param <E>          Type of the element in the list
      */
     @Assembler
+    @Deprecated(since = "2.0.0", forRemoval = true)
     private <E> void arrangeDynamicDataQuery(StringBuilder queryBuilder, List<E> list) {
         int ListSize = list.size();
         int lastIndex = ListSize - 1;
