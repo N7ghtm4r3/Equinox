@@ -9,10 +9,7 @@ import com.tecknobit.equinoxbackend.environment.exceptions.EquinoxBadRequestExce
 import com.tecknobit.equinoxbackend.environment.exceptions.EquinoxForbiddenException;
 import com.tecknobit.equinoxbackend.environment.exceptions.EquinoxFormException;
 import com.tecknobit.equinoxbackend.environment.exceptions.EquinoxServerException;
-import com.tecknobit.equinoxbackend.environment.services.users.dtos.requests.ChangeEmailRequestDto;
-import com.tecknobit.equinoxbackend.environment.services.users.dtos.requests.ChangePasswordRequestDto;
-import com.tecknobit.equinoxbackend.environment.services.users.dtos.requests.SignInRequestDto;
-import com.tecknobit.equinoxbackend.environment.services.users.dtos.requests.SignUpRequestDto;
+import com.tecknobit.equinoxbackend.environment.services.users.dtos.requests.*;
 import com.tecknobit.equinoxbackend.environment.services.users.dtos.responses.ChangeProfilePicResponseDto;
 import com.tecknobit.equinoxbackend.environment.services.users.dtos.responses.DynamicAccountDataResponseDto;
 import com.tecknobit.equinoxbackend.environment.services.users.dtos.responses.SignInResponseDto;
@@ -577,13 +574,17 @@ public class EquinoxUsersService<U extends EquinoxUser, R extends EquinoxUsersRe
     }
 
     /**
-     * Method used to change the language of the {@link EquinoxUser}
+     * Method used to change the user's language from the request
      *
-     * @param newLanguage The new language of the user
-     * @param userId:      the identifier of the user
+     * @param changeLanguageRequest The request containing the new language to persist
+     * @param userId                The identifier of the user whose language is changed
+     *
+     * @since 2.0.0
      */
     @Transactional
-    public void changeLanguage(String newLanguage, String userId) {
+    public void changeLanguage(ChangeLanguageRequestDto changeLanguageRequest, String userId) {
+        String newLanguage = changeLanguageRequest.getLanguage();
+
         usersRepository.changeLanguage(newLanguage, userId);
     }
 
