@@ -1,6 +1,5 @@
 package com.tecknobit.equinoxbackend.environment.security.filters;
 
-import com.tecknobit.equinoxbackend.environment.configuration.EquinoxBackendConfiguration;
 import com.tecknobit.equinoxbackend.environment.configuration.EquinoxEnvironmentService;
 import com.tecknobit.equinoxbackend.environment.security.authentication.EquinoxUserAuthentication;
 import com.tecknobit.equinoxbackend.environment.services.users.entity.EquinoxUser;
@@ -63,10 +62,8 @@ public class EquinoxTokenAuthenticationFilter<U extends EquinoxUser, R extends E
     public EquinoxTokenAuthenticationFilter(R usersRepository) {
         this.usersRepository = usersRepository;
         EquinoxEnvironmentService environmentService = EquinoxEnvironmentService.getInstance();
-        EquinoxBackendConfiguration backendConfiguration = environmentService.getBackendConfiguration();
-        EquinoxBackendConfiguration.ResourcesConfig config = backendConfiguration.getResourcesConfig();
 
-        excludedPaths = new HashSet<>(config.getSubdirectories());
+        excludedPaths = environmentService.useResourcesConfig(config -> new HashSet<>(config.getSubdirectories()));
     }
 
     /**
