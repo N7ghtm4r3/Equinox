@@ -5,6 +5,7 @@ import com.tecknobit.equinoxbackend.apis.resources.ResourcesProvider;
 import com.tecknobit.equinoxbackend.environment.services.users.entity.EquinoxUser;
 
 import java.util.UUID;
+import java.util.function.Function;
 
 import static com.tecknobit.equinoxbackend.apis.resources.ResourcesManager.RESOURCES_KEY;
 import static com.tecknobit.equinoxbackend.environment.configuration.EquinoxBackendConfiguration.ResourcesConfig;
@@ -172,6 +173,60 @@ public class EquinoxEnvironmentService {
      */
     public EquinoxUserLocaleResolver<? extends EquinoxUser> getUserLocaleResolver() {
         return equinoxUserLocaleResolver;
+    }
+
+    /**
+     * Method used to apply a callback to the {@link EquinoxBackendConfiguration.ResourcesConfig} instance
+     *
+     * <p>The callback is invoked synchronously with the current configuration instance. Its result
+     * is returned unchanged, and any exception it throws propagates to the caller
+     *
+     * @param usage The non-null callback to apply to the resources configuration
+     * @param <T>   The type of the callback result
+     *
+     * @return the result returned by the callback as {@code T}
+     */
+    public <T> T useResourcesConfig(Function<EquinoxBackendConfiguration.ResourcesConfig, T> usage) {
+        EquinoxBackendConfiguration.ResourcesConfig resourcesConfig = backendConfiguration.getResourcesConfig();
+
+        return usage.apply(resourcesConfig);
+    }
+
+    /**
+     * Method used to apply a callback to the {@link EquinoxBackendConfiguration.ServerProtectorConfig} instance
+     *
+     * <p>The callback is invoked synchronously with the current configuration instance. Its result
+     * is returned unchanged, and any exception it throws propagates to the caller
+     *
+     * <p>The callback is invoked even when the server protector is not configured, in which case
+     * it receives {@code null}
+     *
+     * @param usage The non-null callback to apply to the server protector configuration
+     * @param <T>   The type of the callback result
+     *
+     * @return the result returned by the callback as {@code T}
+     */
+    public <T> T useServerProtectorConfig(Function<EquinoxBackendConfiguration.ServerProtectorConfig, T> usage) {
+        EquinoxBackendConfiguration.ServerProtectorConfig serverProtectorConfig = backendConfiguration.getServerProtectorConfig();
+
+        return usage.apply(serverProtectorConfig);
+    }
+
+    /**
+     * Method used to apply a callback to the {@link EquinoxBackendConfiguration.DefaultsConfig} instance
+     *
+     * <p>The callback is invoked synchronously with the current configuration instance. Its result
+     * is returned unchanged, and any exception it throws propagates to the caller
+     *
+     * @param usage The non-null callback to apply to the defaults configuration
+     * @param <T>   The type of the callback result
+     *
+     * @return the result returned by the callback as {@code T}
+     */
+    public <T> T useDefaultsConfig(Function<EquinoxBackendConfiguration.DefaultsConfig, T> usage) {
+        EquinoxBackendConfiguration.DefaultsConfig defaultsConfig = backendConfiguration.getDefaultsConfig();
+
+        return usage.apply(defaultsConfig);
     }
 
     /**

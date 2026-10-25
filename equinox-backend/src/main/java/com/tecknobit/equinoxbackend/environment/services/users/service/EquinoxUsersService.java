@@ -121,8 +121,7 @@ public class EquinoxUsersService<U extends EquinoxUser, R extends EquinoxUsersRe
     @SuppressWarnings("unchecked")
     public SignUpResponseDto signUpUser(SignUpRequestDto signUpRequest) throws NoSuchAlgorithmException {
         EquinoxEnvironmentService environmentService = EquinoxEnvironmentService.getInstance();
-        EquinoxBackendConfiguration configuration = environmentService.getBackendConfiguration();
-        EquinoxBackendConfiguration.DefaultsConfig defaultsConfig = configuration.getDefaultsConfig();
+
         String userId = environmentService.generateIdentifier();
         String userToken = environmentService.generateIdentifier();
         String password = hash(signUpRequest.getPassword());
@@ -130,11 +129,7 @@ public class EquinoxUsersService<U extends EquinoxUser, R extends EquinoxUsersRe
         U signUpUser = (U) resolveSignUpUser(userId, userToken, password, signUpRequest);
         usersRepository.save(signUpUser);
 
-        return new SignUpResponseDto(
-                userId,
-                userToken,
-                defaultsConfig.getDefaultUserProfilePic()
-        );
+        return resolveSignUpResponse(userId, userToken);
     }
 
     @Assembler
@@ -149,6 +144,17 @@ public class EquinoxUsersService<U extends EquinoxUser, R extends EquinoxUsersRe
                 safePassword,
                 signUpRequest.getLanguage()
         );
+    }
+
+    @Returner
+    protected SignUpResponseDto resolveSignUpResponse(String userId, String userToken) {
+        EquinoxEnvironmentService environmentService = EquinoxEnvironmentService.getInstance();
+
+        return environmentService.useDefaultsConfig(defaultsConfig -> new SignUpResponseDto(
+                userId,
+                userToken,
+                defaultsConfig.getDefaultUserProfilePic()
+        ));
     }
 
     /**

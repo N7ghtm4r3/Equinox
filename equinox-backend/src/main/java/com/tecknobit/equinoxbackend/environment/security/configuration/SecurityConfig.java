@@ -1,6 +1,5 @@
 package com.tecknobit.equinoxbackend.environment.security.configuration;
 
-import com.tecknobit.equinoxbackend.environment.configuration.EquinoxBackendConfiguration;
 import com.tecknobit.equinoxbackend.environment.configuration.EquinoxEnvironmentService;
 import com.tecknobit.equinoxbackend.environment.exceptions.EquinoxForbiddenException;
 import com.tecknobit.equinoxbackend.environment.security.filters.EquinoxTokenAuthenticationFilter;
@@ -169,15 +168,15 @@ public class SecurityConfig {
      * @return the permitted request patterns as {@code String[]}
      */
     protected String[] getPermittedPatterns() {
+        EquinoxEnvironmentService environmentService = EquinoxEnvironmentService.getInstance();
         ArrayList<String> permittedPatterns = resolvePermittedPatterns();
 
-        EquinoxEnvironmentService environmentService = EquinoxEnvironmentService.getInstance();
-        EquinoxBackendConfiguration backendConfiguration = environmentService.getBackendConfiguration();
-        EquinoxBackendConfiguration.ResourcesConfig config = backendConfiguration.getResourcesConfig();
-        for (String directory : config.getSubdirectories())
-            permittedPatterns.add("/" + directory + "/**");
+        return environmentService.useResourcesConfig(config -> {
+            for (String directory : config.getSubdirectories())
+                permittedPatterns.add("/" + directory + "/**");
 
-        return permittedPatterns.toArray(new String[0]);
+            return permittedPatterns.toArray(new String[0]);
+        });
     }
 
     /**
