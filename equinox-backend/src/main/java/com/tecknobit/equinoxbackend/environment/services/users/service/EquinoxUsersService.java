@@ -593,6 +593,7 @@ public class EquinoxUsersService<U extends EquinoxUser, R extends EquinoxUsersRe
      *
      * @param id The identifier of the user to delete
      */
+    @Transactional
     public void deleteUser(String id) {
         usersRepository.deleteById(id);
         deleteProfileResource(id);

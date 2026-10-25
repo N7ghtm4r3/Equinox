@@ -22,8 +22,6 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.Map;
-
 import static com.tecknobit.apimanager.apis.APIRequest.RequestMethod.*;
 import static com.tecknobit.equinoxcore.helpers.CommonKeysKt.*;
 import static com.tecknobit.equinoxcore.network.EquinoxBaseEndpointsSet.*;
@@ -339,12 +337,13 @@ public class EquinoxUsersController<U extends EquinoxUser, R extends EquinoxUser
     }
 
     /**
-     * Method used to delete the account of the user
+     * Method used to delete the authenticated user's account
      *
-     * @param userId The identifier of the user
-     * @param token The token of the user
-     * @return the result of the request as {@link String}
+     * @param userId The requested user identifier, which must match the authenticated user
+     *
+     * @return the successful response with the localized confirmation message as {@link ResponseEntity}
      */
+    @IsAuthorizedUser
     @DeleteMapping(
             path = USERS_KEY + "/{" + USER_IDENTIFIER_KEY + "}",
             headers = {
@@ -352,13 +351,11 @@ public class EquinoxUsersController<U extends EquinoxUser, R extends EquinoxUser
             }
     )
     @RequestPath(path = "/api/v2/users/{user_id}", method = DELETE)
-    public String deleteAccount(
-            @PathVariable(USER_IDENTIFIER_KEY) String userId,
-            @RequestHeader(TOKEN_KEY) String token
+    public ResponseEntity<?> deleteAccount(
+            @PathVariable(USER_IDENTIFIER_KEY) String userId
     ) {
-        if (!isMe(userId, token))
-            return notAuthorizedOrWrongDetailsResponse();
         usersService.deleteUser(userId);
+
         return successResponse();
     }
 
