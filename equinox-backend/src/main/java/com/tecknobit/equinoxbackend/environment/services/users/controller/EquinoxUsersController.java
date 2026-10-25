@@ -2,10 +2,12 @@ package com.tecknobit.equinoxbackend.environment.services.users.controller;
 
 import com.tecknobit.apimanager.annotations.RequestPath;
 import com.tecknobit.equinoxbackend.environment.constants.EquinoxMessages;
+import com.tecknobit.equinoxbackend.environment.security.authorization.annotations.IsAuthorizedUser;
 import com.tecknobit.equinoxbackend.environment.services.builtin.controllers.EquinoxController;
 import com.tecknobit.equinoxbackend.environment.services.builtin.controllers.EquinoxControllerCore;
 import com.tecknobit.equinoxbackend.environment.services.users.dtos.requests.SignInRequestDto;
 import com.tecknobit.equinoxbackend.environment.services.users.dtos.requests.SignUpRequestDto;
+import com.tecknobit.equinoxbackend.environment.services.users.dtos.responses.DynamicAccountDataResponseDto;
 import com.tecknobit.equinoxbackend.environment.services.users.dtos.responses.SignInResponseDto;
 import com.tecknobit.equinoxbackend.environment.services.users.dtos.responses.SignUpResponseDto;
 import com.tecknobit.equinoxbackend.environment.services.users.entity.EquinoxUser;
@@ -16,6 +18,7 @@ import jakarta.validation.Valid;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -33,7 +36,7 @@ import static com.tecknobit.equinoxcore.network.EquinoxBaseEndpointsSet.*;
  * @author N7ghtm4r3 - Tecknobit
  * @see EquinoxController
  *
- * @param <T> The type of the {@link EquinoxUser} used in the system, is generic to avoid manual casts if it has been customized
+ * @param <U> The type of the {@link EquinoxUser} used in the system, is generic to avoid manual casts if it has been customized
  * @param <R> The type of the {@link EquinoxUsersRepository} used in the system, is generic to avoid manual casts if it has been customized
  * @param <H> The type of the {@link EquinoxUsersService} used in the system, is generic to avoid manual casts if it has been customized
  *
@@ -43,8 +46,8 @@ import static com.tecknobit.equinoxcore.network.EquinoxBaseEndpointsSet.*;
  * @since 1.0.1
  */
 @RestController
-public class EquinoxUsersController<T extends EquinoxUser, R extends EquinoxUsersRepository<T>,
-        H extends EquinoxUsersService<T, R>> extends EquinoxController<T, R, H> {
+public class EquinoxUsersController<U extends EquinoxUser, R extends EquinoxUsersRepository<U>,
+        H extends EquinoxUsersService<U, R>> extends EquinoxController<U, R, H> {
 
     /**
      * {@code usersService} helper to manage the users database operations
@@ -218,7 +221,7 @@ public class EquinoxUsersController<T extends EquinoxUser, R extends EquinoxUser
      * response DTO. The {@link #signIn(SignInRequestDto)} endpoint does not invoke this assembler
      */
     @Deprecated(since = "2.0.0", forRemoval = true)
-    protected JSONObject assembleSignInSuccessResponse(T user) {
+    protected JSONObject assembleSignInSuccessResponse(U user) {
         JSONObject response = new JSONObject();
         response.put(USER_IDENTIFIER_KEY, user.getId());
         response.put(TOKEN_KEY, user.getToken());
@@ -230,12 +233,20 @@ public class EquinoxUsersController<T extends EquinoxUser, R extends EquinoxUser
     }
 
     /**
-     * Method used to get the dynamic data of the user to correctly update in all the devices where the user is connected
+     * Method used to retrieve the authenticated user's dynamic account data for synchronization across devices
      *
-     * @param userId    The identifier of the user
-     * @param token The token of the user
-     * @return the result of the request as {@link String}
+     * <p>The requested identifier must match the authenticated user's identifier, as enforced by
+     * {@link IsAuthorizedUser}. The response contains the data assembled from the authenticated user by
+     * {@link EquinoxUsersService#getDynamicAccountData(EquinoxUser)}, including any custom response properties
+     *
+     * @param user   The authenticated user resolved from the security context
+     * @param userId The requested user identifier, which must match the authenticated user
+     *
+     * @return the dynamic account data wrapped in the success body as {@link ResponseEntity}
+     *
+     * @since 2.0.0
      */
+    @IsAuthorizedUser
     @GetMapping(
             path = USERS_KEY + "/{" + USER_IDENTIFIER_KEY + "}" + DYNAMIC_ACCOUNT_DATA_ENDPOINT,
             headers = {
@@ -243,13 +254,13 @@ public class EquinoxUsersController<T extends EquinoxUser, R extends EquinoxUser
             }
     )
     @RequestPath(path = "/api/v2/users/{user_id}/dynamicAccountData", method = GET)
-    public String getDynamicAccountData(
-            @PathVariable(USER_IDENTIFIER_KEY) String userId,
-            @RequestHeader(TOKEN_KEY) String token
+    public ResponseEntity<?> getDynamicAccountData(
+            @AuthenticationPrincipal U user,
+            @PathVariable(USER_IDENTIFIER_KEY) String userId
     ) {
-        if (!isMe(userId, token))
-            return notAuthorizedOrWrongDetailsResponse();
-        return successResponse(usersService.getDynamicAccountData(userId));
+        DynamicAccountDataResponseDto accountDataResponse = usersService.getDynamicAccountData(user);
+
+        return successResponse(accountDataResponse);
     }
 
     /**

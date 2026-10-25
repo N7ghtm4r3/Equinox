@@ -1246,6 +1246,86 @@ The `resolveSignInResponse` override in `CustomUsersService` returns the custom 
 
 The inherited controller includes the DTO in the success response. No controller override is required
 
+#### Custom dynamic account data
+
+In this example, the saved `currency` is included in the account data used to synchronize the user's devices
+
+The inherited endpoint returns the authenticated user's email, profile pic, and language.
+[IsAuthorizedUser](Security/authorization/annotations/IsAuthorizedUser.md) checks that the requested user identifier
+matches the authenticated user
+
+###### Customize the dynamic account data response
+
+The response extends `DynamicAccountDataResponseDto` to include the currency saved with
+[CustomUser](#creating-a-customuser)
+
+=== "Java"
+
+    ```java
+    package other.packages;
+
+    import com.tecknobit.equinoxbackend.annotations.dto.DtoResponse;
+    import com.tecknobit.equinoxbackend.environment.services.users.dtos.responses.DynamicAccountDataResponseDto;
+
+    @DtoResponse
+    public class CustomDynamicAccountDataResponseDto extends DynamicAccountDataResponseDto {
+
+        private final String currency;
+
+        public CustomDynamicAccountDataResponseDto(CustomUser user) {
+            super(
+                    user.getEmail(),
+                    user.getProfilePic(),
+                    user.getLanguage()
+            );
+            currency = user.getCurrency();
+        }
+
+        public String getCurrency() {
+            return currency;
+        }
+    }
+    ```
+
+=== "Kotlin"
+
+    ```kotlin
+    package other.packages
+
+    import com.tecknobit.equinoxbackend.annotations.dto.DtoResponse
+    import com.tecknobit.equinoxbackend.environment.services.users.dtos.responses.DynamicAccountDataResponseDto
+
+    @DtoResponse
+    class CustomDynamicAccountDataResponseDto(user: CustomUser) : DynamicAccountDataResponseDto(
+        user.email,
+        user.profilePic,
+        user.language
+    ) {
+        val currency: String = user.currency
+    }
+    ```
+
+The `getDynamicAccountData` override in [CustomUsersService](#creating-the-dedicated-service) returns the custom DTO:
+
+=== "Java"
+
+    ```java
+    @Override
+    public CustomDynamicAccountDataResponseDto getDynamicAccountData(CustomUser user) {
+        return new CustomDynamicAccountDataResponseDto(user);
+    }
+    ```
+
+=== "Kotlin"
+
+    ```kotlin
+    override fun getDynamicAccountData(user: CustomUser): CustomDynamicAccountDataResponseDto {
+        return CustomDynamicAccountDataResponseDto(user)
+    }
+    ```
+
+The inherited controller includes the DTO in the success response. No controller override is required
+
 ### Customizing the messages resource bundle
 
 You can create your own resource set to internationalize your backend by defining it as follows:
