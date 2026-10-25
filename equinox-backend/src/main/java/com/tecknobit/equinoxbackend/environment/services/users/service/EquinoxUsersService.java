@@ -10,6 +10,7 @@ import com.tecknobit.equinoxbackend.environment.exceptions.EquinoxForbiddenExcep
 import com.tecknobit.equinoxbackend.environment.exceptions.EquinoxFormException;
 import com.tecknobit.equinoxbackend.environment.exceptions.EquinoxServerException;
 import com.tecknobit.equinoxbackend.environment.services.users.dtos.requests.ChangeEmailRequestDto;
+import com.tecknobit.equinoxbackend.environment.services.users.dtos.requests.ChangePasswordRequestDto;
 import com.tecknobit.equinoxbackend.environment.services.users.dtos.requests.SignInRequestDto;
 import com.tecknobit.equinoxbackend.environment.services.users.dtos.requests.SignUpRequestDto;
 import com.tecknobit.equinoxbackend.environment.services.users.dtos.responses.ChangeProfilePicResponseDto;
@@ -557,14 +558,22 @@ public class EquinoxUsersService<U extends EquinoxUser, R extends EquinoxUsersRe
     }
 
     /**
-     * Method used to change the password of the {@link EquinoxUser}
+     * Method used to change the user's password from the request
      *
-     * @param newPassword The new password of the user
-     * @param userId:      the identifier of the user
+     * <p>The supplied password is hashed before updating the stored password
+     *
+     * @param changePasswordRequest The request containing the new plain-text password to hash
+     * @param userId                The identifier of the user whose password is changed
+     *
+     * @throws EquinoxServerException when the hashing algorithm is unavailable
+     *
+     * @since 2.0.0
      */
     @Transactional
-    public void changePassword(String newPassword, String userId) throws NoSuchAlgorithmException {
-        usersRepository.changePassword(hash(newPassword), userId);
+    public void changePassword(ChangePasswordRequestDto changePasswordRequest, String userId) {
+        String safePassword = hash(changePasswordRequest.getPassword());
+
+        usersRepository.changePassword(safePassword, userId);
     }
 
     /**
