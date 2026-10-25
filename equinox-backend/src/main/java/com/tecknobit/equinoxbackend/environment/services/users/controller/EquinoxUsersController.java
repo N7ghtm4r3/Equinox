@@ -1,5 +1,6 @@
 package com.tecknobit.equinoxbackend.environment.services.users.controller;
 
+import com.fasterxml.jackson.annotation.JsonDeserializeAs;
 import com.tecknobit.apimanager.annotations.RequestPath;
 import com.tecknobit.apimanager.apis.ServerProtector;
 import com.tecknobit.equinoxbackend.environment.configuration.EquinoxEnvironmentService;
@@ -64,6 +65,22 @@ public class EquinoxUsersController<T extends EquinoxUser, R extends EquinoxUser
         this.usersService = usersService;
     }
 
+    /**
+     * Method used to register a user from a validated sign-up request
+     *
+     * <p>Request constraints are validated before this method is invoked. Registration is delegated to
+     * {@link EquinoxUsersService#signUpUser(SignUpRequestDto)}, and its response is included in the success body
+     *
+     * <p>A custom request subclass must be selected by the configured JSON deserializer. Declaring a
+     * subclass alone does not change the request type instantiated for this endpoint
+     *
+     * @param signUpRequest The validated request containing the user details and server secret
+     *
+     * @return the registration response, or the procedure failure response if registration throws an exception,
+     * as {@link ResponseEntity}
+     *
+     * @since 2.0.0
+     */
     @PostMapping(path = SIGN_UP_ENDPOINT)
     @RequestPath(path = "/api/v2/users/signUp", method = POST)
     public ResponseEntity<?> signUp(

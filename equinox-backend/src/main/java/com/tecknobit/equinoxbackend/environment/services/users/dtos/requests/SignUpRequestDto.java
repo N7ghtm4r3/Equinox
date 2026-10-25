@@ -50,7 +50,7 @@ public class SignUpRequestDto {
     }
 
     public String getEmail() {
-        return email;
+        return email.toLowerCase();
     }
 
     public String getPassword() {
