@@ -4,17 +4,16 @@ import com.tecknobit.apimanager.apis.APIRequest;
 import com.tecknobit.equinoxbackend.annotations.EntityRetriever;
 import com.tecknobit.equinoxbackend.apis.batch.EquinoxItemsHelper;
 import com.tecknobit.equinoxbackend.apis.resources.ResourcesManager;
-import com.tecknobit.equinoxbackend.environment.configuration.EquinoxBackendConfiguration;
 import com.tecknobit.equinoxbackend.environment.configuration.EquinoxEnvironmentService;
 import com.tecknobit.equinoxbackend.environment.exceptions.EquinoxForbiddenException;
 import com.tecknobit.equinoxbackend.environment.services.users.dtos.requests.SignInRequestDto;
 import com.tecknobit.equinoxbackend.environment.services.users.dtos.requests.SignUpRequestDto;
+import com.tecknobit.equinoxbackend.environment.services.users.dtos.responses.DynamicAccountDataResponseDto;
 import com.tecknobit.equinoxbackend.environment.services.users.dtos.responses.SignInResponseDto;
 import com.tecknobit.equinoxbackend.environment.services.users.dtos.responses.SignUpResponseDto;
 import com.tecknobit.equinoxbackend.environment.services.users.entity.EquinoxUser;
 import com.tecknobit.equinoxbackend.environment.services.users.repository.EquinoxUsersRepository;
 import com.tecknobit.equinoxcore.annotations.Assembler;
-import com.tecknobit.equinoxcore.annotations.Returner;
 import jakarta.persistence.Query;
 import jakarta.transaction.Transactional;
 import org.json.JSONArray;
@@ -55,36 +54,43 @@ public class EquinoxUsersService<U extends EquinoxUser, R extends EquinoxUsersRe
     /**
      * {@code SELECT_} query command
      */
+    @Deprecated(since = "2.0.0", forRemoval = true)
     protected static final String SELECT_ = "SELECT ";
 
     /**
      * {@code _FROM_} query command
      */
+    @Deprecated(since = "2.0.0", forRemoval = true)
     protected static final String _FROM_ = " FROM ";
 
     /**
      * {@code ALTER_TABLE_} query command
      */
+    @Deprecated(since = "2.0.0", forRemoval = true)
     protected static final String ALTER_TABLE_ = "ALTER TABLE ";
 
     /**
      * {@code _DROP_COLUMN_} query command
      */
+    @Deprecated(since = "2.0.0", forRemoval = true)
     protected static final String _DROP_COLUMN_ = " DROP COLUMN ";
 
     /**
      * {@code VALUES_QUERY_PART} values query part
      */
+    @Deprecated(since = "2.0.0", forRemoval = true)
     protected static final String VALUES_QUERY_PART = " VALUES (";
 
     /**
      * {@code BASE_SIGN_UP_QUERY} base part of the insertion query
      */
+    @Deprecated(since = "2.0.0", forRemoval = true)
     protected static final String BASE_SIGN_UP_QUERY = "INSERT INTO " + USERS_KEY + "(";
 
     /**
      * {@code DEFAULT_USER_SIGN_UP_KEYS} the default keys of the values to use in the {@link #BASE_SIGN_UP_QUERY}
      */
+    @Deprecated(since = "2.0.0", forRemoval = true)
     protected static final List<String> DEFAULT_USER_SIGN_UP_KEYS = List.of(DISCRIMINATOR_VALUE_KEY, IDENTIFIER_KEY,
             TOKEN_KEY, NAME_KEY, SURNAME_KEY, EMAIL_KEY, PASSWORD_KEY, PROFILE_PIC_KEY, LANGUAGE_KEY);
 
@@ -92,6 +98,7 @@ public class EquinoxUsersService<U extends EquinoxUser, R extends EquinoxUsersRe
      * {@code DEFAULT_DYNAMIC_ACCOUNT_DATA_KEYS} the default keys of the values to retrieve with the
      * {@link #getDynamicAccountData(String)} method
      */
+    @Deprecated(since = "2.0.0", forRemoval = true)
     protected static final List<String> DEFAULT_DYNAMIC_ACCOUNT_DATA_KEYS = List.of(EMAIL_KEY, PROFILE_PIC_KEY, LANGUAGE_KEY);
 
     /**
@@ -232,7 +239,7 @@ public class EquinoxUsersService<U extends EquinoxUser, R extends EquinoxUsersRe
         StringBuilder queryBuilder = new StringBuilder(BASE_SIGN_UP_QUERY);
         arrangeQuery(queryBuilder, getSignUpKeys(), false);
 
-        String defaultProfilePic = resolveUserDefaultProfilePic();
+        String defaultProfilePic = "resolveUserDefaultProfilePic()";
         List<Object> values = new ArrayList<>(List.of(discriminatorValue, id, token, name, surname, email, hash(password),
                 defaultProfilePic, language));
         values.addAll(Arrays.stream(custom).toList());
@@ -251,23 +258,6 @@ public class EquinoxUsersService<U extends EquinoxUser, R extends EquinoxUsersRe
     @Deprecated(since = "2.0.0", forRemoval = true)
     protected List<String> getSignUpKeys() {
         return DEFAULT_USER_SIGN_UP_KEYS;
-    }
-
-    /**
-     * Method used to retrieve the configured default profile pic for user registration
-     *
-     * @return the default profile pic used in the sign-up insertion as {@link String}
-     *
-     * @since 2.0.0
-     */
-    // TODO: 24/10/2026 TO REMOVE
-    @Returner
-    private String resolveUserDefaultProfilePic() {
-        EquinoxEnvironmentService equinoxEnvironmentService = EquinoxEnvironmentService.getInstance();
-        EquinoxBackendConfiguration configuration = equinoxEnvironmentService.getBackendConfiguration();
-        EquinoxBackendConfiguration.DefaultsConfig defaultsConfig = configuration.getDefaultsConfig();
-
-        return defaultsConfig.getDefaultUserProfilePic();
     }
 
     /**
@@ -418,10 +408,13 @@ public class EquinoxUsersService<U extends EquinoxUser, R extends EquinoxUsersRe
     }
 
     /**
-     * Method used to get the dynamic data of the user to correctly update in all the devices where the user is connected
+     * Method used to retrieve dynamic account data through the legacy SQL query
      *
      * @param userId The identifier of the user
-     * @return the dynamic data as {@link JSONObject}
+     *
+     * @return the selected dynamic account data as {@link JSONObject}
+     * @deprecated use {@link #getDynamicAccountData(EquinoxUser)} to assemble the response from the authenticated
+     * user. The DTO-based endpoint does not invoke this overload
      */
     @Deprecated(since = "2.0.0", forRemoval = true)
     public JSONObject getDynamicAccountData(String userId) {
@@ -444,10 +437,11 @@ public class EquinoxUsersService<U extends EquinoxUser, R extends EquinoxUsersRe
     }
 
     /**
-     * Method used to get the list of keys to use in the {@link #getDynamicAccountData(String)} method
+     * Method used to select the columns returned by the legacy dynamic account data query
      *
-     * @return a list of keys as {@link List} of {@link String}
-     * @apiNote This method allows a customizable retrieving of custom parameters added in a customization of the {@link EquinoxUser}
+     * @return the selected column names as {@link List} of {@link String}
+     * @deprecated override {@link #getDynamicAccountData(EquinoxUser)} and return a custom
+     * {@link DynamicAccountDataResponseDto}. The DTO-based flow does not invoke this hook
      */
     @Deprecated(since = "2.0.0", forRemoval = true)
     protected List<String> getDynamicAccountDataKeys() {
@@ -472,6 +466,29 @@ public class EquinoxUsersService<U extends EquinoxUser, R extends EquinoxUsersRe
             if (j < lastIndex)
                 queryBuilder.append(COMMA);
         }
+    }
+
+    /**
+     * Method used to assemble dynamic account data from the authenticated user
+     *
+     * <p>The default response contains the user's email, profile pic, and saved language. This method
+     * reads the supplied user without querying the database or modifying the account
+     *
+     * <p>Override this method to include custom user properties in a subclass of
+     * {@link DynamicAccountDataResponseDto}
+     *
+     * @param user The authenticated user whose current account data is included in the response
+     *
+     * @return the dynamic account data as {@link DynamicAccountDataResponseDto}
+     *
+     * @since 2.0.0
+     */
+    public DynamicAccountDataResponseDto getDynamicAccountData(U user) {
+        return new DynamicAccountDataResponseDto(
+                user.getEmail(),
+                user.getProfilePic(),
+                user.getLanguage()
+        );
     }
 
     /**
