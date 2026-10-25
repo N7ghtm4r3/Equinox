@@ -1,5 +1,7 @@
 package com.tecknobit.equinoxbackend.environment.services.builtin.entities;
 
+import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.tecknobit.apimanager.annotations.Structure;
 import com.tecknobit.apimanager.formatters.JsonHelper;
 import com.tecknobit.equinoxcore.annotations.Wrapper;
@@ -9,6 +11,7 @@ import jakarta.persistence.MappedSuperclass;
 import jakarta.persistence.Transient;
 import org.json.JSONObject;
 
+import static com.tecknobit.equinoxcore.helpers.CommonKeysKt.DELETED_AT_KEY;
 import static com.tecknobit.equinoxcore.helpers.CommonKeysKt.IDENTIFIER_KEY;
 
 /**
@@ -41,6 +44,13 @@ public abstract class EquinoxItem {
     @Transient
     protected final JsonHelper hItem;
 
+    @Column(
+            name = DELETED_AT_KEY,
+            columnDefinition = "BIGINT DEFAULT -1",
+            insertable = false
+    )
+    protected long deletedAt;
+
     /**
      * Constructor to init the {@link EquinoxItem} class
      *
@@ -49,6 +59,7 @@ public abstract class EquinoxItem {
     public EquinoxItem(String id) {
         this.id = id;
         hItem = null;
+        deletedAt = -1;
     }
 
     /**
@@ -69,6 +80,7 @@ public abstract class EquinoxItem {
     public EquinoxItem(JSONObject jItem, String identifierKey) {
         hItem = new JsonHelper(jItem);
         id = hItem.getString(identifierKey);
+        deletedAt = hItem.getLong(DELETED_AT_KEY, -1);
     }
 
     /**
@@ -78,6 +90,20 @@ public abstract class EquinoxItem {
      */
     public String getId() {
         return id;
+    }
+
+    @JsonGetter(DELETED_AT_KEY)
+    public long getDeletedAt() {
+        return deletedAt;
+    }
+
+    public void setDeletedAt(long deletedAt) {
+        this.deletedAt = deletedAt;
+    }
+
+    @JsonIgnore
+    public boolean isSoftDeleted() {
+        return deletedAt != -1L;
     }
 
     /**

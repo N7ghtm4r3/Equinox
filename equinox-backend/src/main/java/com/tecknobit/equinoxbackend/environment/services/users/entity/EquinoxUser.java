@@ -133,6 +133,11 @@ public class EquinoxUser extends EquinoxItem {
      */
     public EquinoxUser(String id, String token, String name, String surname, String email, String password, String profilePic,
                        String language) {
+        this(id, token, name, surname, email, password, profilePic, language, -1);
+    }
+
+    public EquinoxUser(String id, String token, String name, String surname, String email, String password, String profilePic,
+                       String language, long deletedAt) {
         super(id);
         this.token = token;
         this.name = name;
@@ -141,6 +146,7 @@ public class EquinoxUser extends EquinoxItem {
         this.password = password;
         this.profilePic = profilePic;
         this.language = language;
+        this.deletedAt = deletedAt;
     }
 
     /**
