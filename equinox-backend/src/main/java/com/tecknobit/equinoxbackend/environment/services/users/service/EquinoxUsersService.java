@@ -118,6 +118,20 @@ public class EquinoxUsersService<U extends EquinoxUser, R extends EquinoxUsersRe
         }
     }
 
+    /**
+     * Method used to register a user from the sign-up request and assemble the response
+     *
+     * <p>The password is hashed before constructing the user. The user returned by
+     * {@link #resolveSignUpUser(String, String, String, SignUpRequestDto)} is saved through the users repository
+     * before assembling the response. The same request instance is passed to both customization hooks
+     *
+     * @param signUpRequest The request containing the user details and the password to hash
+     *
+     * @return the registration details as {@link SignUpResponseDto}
+     * @throws NoSuchAlgorithmException when the password hashing algorithm is unavailable
+     *
+     * @since 2.0.0
+     */
     @SuppressWarnings("unchecked")
     public SignUpResponseDto signUpUser(SignUpRequestDto signUpRequest) throws NoSuchAlgorithmException {
         EquinoxEnvironmentService environmentService = EquinoxEnvironmentService.getInstance();
@@ -129,9 +143,25 @@ public class EquinoxUsersService<U extends EquinoxUser, R extends EquinoxUsersRe
         U signUpUser = (U) resolveSignUpUser(userId, userToken, password, signUpRequest);
         usersRepository.save(signUpUser);
 
-        return resolveSignUpResponse(userId, userToken);
+        return resolveSignUpResponse(userId, userToken, signUpRequest);
     }
 
+    /**
+     * Method used to assemble the user to save during registration
+     *
+     * <p>Override this method to construct a customized {@link EquinoxUser} using additional request data.
+     * The returned user must be compatible with the user type managed by the repository. This method only
+     * constructs the user; persistence is performed by {@link #signUpUser(SignUpRequestDto)}
+     *
+     * @param userId        The generated identifier of the user
+     * @param userToken     The generated token of the user
+     * @param safePassword  The already hashed password to assign to the user
+     * @param signUpRequest The request containing the standard and any custom user details
+     *
+     * @return the user to save as {@link EquinoxUser}
+     *
+     * @since 2.0.0
+     */
     @Assembler
     protected EquinoxUser resolveSignUpUser(String userId, String userToken, String safePassword,
                                             SignUpRequestDto signUpRequest) {
@@ -146,8 +176,25 @@ public class EquinoxUsersService<U extends EquinoxUser, R extends EquinoxUsersRe
         );
     }
 
-    @Returner
-    protected SignUpResponseDto resolveSignUpResponse(String userId, String userToken) {
+    /**
+     * Method used to assemble the sign-up response after saving the user
+     *
+     * <p>The default response contains the generated identifier, token, and configured default profile pic.
+     * Override this method to return a subclass of {@link SignUpResponseDto} with additional response data
+     *
+     * <p>The request retains its concrete type, allowing overrides to access custom fields by casting it
+     * to the configured request subclass. The password in the request is not replaced with its hash
+     *
+     * @param userId        The generated identifier of the registered user
+     * @param userToken     The generated token of the registered user
+     * @param signUpRequest The original request containing the standard and any custom user details
+     *
+     * @return the registration details as {@link SignUpResponseDto}
+     *
+     * @since 2.0.0
+     */
+    @Assembler
+    protected SignUpResponseDto resolveSignUpResponse(String userId, String userToken, SignUpRequestDto signUpRequest) {
         EquinoxEnvironmentService environmentService = EquinoxEnvironmentService.getInstance();
 
         return environmentService.useDefaultsConfig(defaultsConfig -> new SignUpResponseDto(

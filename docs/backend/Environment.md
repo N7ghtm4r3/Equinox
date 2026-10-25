@@ -759,33 +759,153 @@ with your own [CustomUser](#creating-a-customuser) instead:
 
 #### Custom sign-up
 
-Follow this guide to correctly perform a custom sign-up operation
+Follow this guide to register a [CustomUser](#creating-a-customuser) with the additional `currency` field.
+The sign-up request is represented by a DTO, while the dedicated service creates the user and the response
 
-###### Override the getSignUpKeys() method
+###### Define the custom request DTO
 
-To create the correct sign-up query with your custom parameters for the [CustomUser](#creating-a-customuser),
-override the method below and include the keys of any custom properties you want to insert during the sign-up operation
+To add custom request parameters, extend `SignUpRequestDto` as follows. The `@NotBlank` constraint makes
+`currency` required; the validation constraints inherited from `SignUpRequestDto` remain active
+
+The `@JacksonMixin` and `@JsonDeserializeAs` annotations configure Jackson to create your DTO when the inherited
+controller accepts a `SignUpRequestDto`. Place the class in a package scanned by Spring Boot
+
+These examples use Spring Boot 4 with its auto-configured Jackson 3.1 or later mapper.
+For Java, compile with `-parameters` so Jackson can read constructor parameter names.
+For Kotlin, include `tools.jackson.module:jackson-module-kotlin`, using the version managed by Spring Boot,
+so Jackson can read the Kotlin constructor without additional annotations
 
 === "Java"
 
     ```java
+    package other.packages;
+
+    import com.fasterxml.jackson.annotation.JsonDeserializeAs;
+    import com.tecknobit.equinoxbackend.annotations.dto.DtoRequest;
+    import com.tecknobit.equinoxbackend.environment.services.users.dtos.requests.SignUpRequestDto;
+    import jakarta.validation.constraints.NotBlank;
+    import org.springframework.boot.jackson.JacksonMixin;
+
+    @DtoRequest
+    @JacksonMixin(SignUpRequestDto.class)
+    @JsonDeserializeAs(CustomSignUpRequestDto.class)
+    public class CustomSignUpRequestDto extends SignUpRequestDto {
+
+        @NotBlank
+        private final String currency;
+
+        public CustomSignUpRequestDto(
+                String name,
+                String surname,
+                String email,
+                String password,
+                String language,
+                String serverSecretKey,
+                String currency
+        ) {
+            super(name, surname, email, password, language, serverSecretKey);
+            this.currency = currency;
+        }
+
+        public String getCurrency() {
+            return currency;
+        }
+    }
+    ```
+
+=== "Kotlin"
+
+    ```kotlin
     package other.packages
-    
+
+    import com.fasterxml.jackson.annotation.JsonDeserializeAs
+    import com.tecknobit.equinoxbackend.annotations.dto.DtoRequest
+    import com.tecknobit.equinoxbackend.environment.services.users.dtos.requests.SignUpRequestDto
+    import jakarta.validation.constraints.NotBlank
+    import org.springframework.boot.jackson.JacksonMixin
+
+    @DtoRequest
+    @JacksonMixin(SignUpRequestDto::class)
+    @JsonDeserializeAs(CustomSignUpRequestDto::class)
+    class CustomSignUpRequestDto(
+        name: String,
+        surname: String,
+        email: String,
+        password: String,
+        language: String,
+        serverSecretKey: String,
+        currency: String
+    ) : SignUpRequestDto(name, surname, email, password, language, serverSecretKey) {
+
+        @field:NotBlank
+        val currency: String = currency
+
+    }
+    ```
+
+You can now include `currency` in the sign-up payload:
+
+```json
+{
+  "name": "Jane",
+  "surname": "Doe",
+  "email": "jane@example.com",
+  "password": "your-valid-password",
+  "language": "en",
+  "serverSecretKey": "your-server-secret",
+  "currency": "EUR"
+}
+```
+
+The controller creates and validates `CustomSignUpRequestDto`, including the inherited fields and `currency`.
+You do not need to override the controller endpoint. Use the server secret configured for your application
+
+For details about constructor discovery, see the
+[Jackson Java parameter-name support](https://github.com/FasterXML/jackson-databind/blob/3.x/src/main/java/tools/jackson/databind/MapperFeature.java)
+and the [Jackson Kotlin module](https://github.com/FasterXML/jackson-module-kotlin)
+
+###### Construct the custom user
+
+Override `resolveSignUpUser` in the [CustomUsersService](#creating-the-dedicated-service) to create your user
+with the custom request parameters:
+
+=== "Java"
+
+    ```java
+    package other.packages;
+
+    import com.tecknobit.equinoxbackend.environment.services.users.dtos.requests.SignUpRequestDto;
     import com.tecknobit.equinoxbackend.environment.services.users.service.EquinoxUsersService;
-    import org.springframework.beans.factory.annotation.Autowired;
-    import org.springframework.context.annotation.Primary;
     import org.springframework.stereotype.Service;
-    
+
     @Service
     public class CustomUsersService extends EquinoxUsersService<CustomUser, CustomUsersRepository> {
-    
-        @Override
-        protected List<String> getSignUpKeys() {
-            ArrayList<String> custom = new ArrayList<>(super.getSignUpKeys());
-            custom.add("currency");
-            return custom;
+
+        public CustomUsersService(CustomUsersRepository usersRepository) {
+            super(usersRepository);
         }
-    
+
+        @Override
+        protected CustomUser resolveSignUpUser(
+                String userId,
+                String userToken,
+                String safePassword,
+                SignUpRequestDto signUpRequest
+        ) {
+            CustomSignUpRequestDto request = (CustomSignUpRequestDto) signUpRequest;
+
+            return new CustomUser(
+                    userId,
+                    userToken,
+                    request.getName(),
+                    request.getSurname(),
+                    request.getEmail(),
+                    safePassword,
+                    request.getLanguage(),
+                    request.getCurrency()
+            );
+        }
+
     }
     ```
 
@@ -794,44 +914,71 @@ override the method below and include the keys of any custom properties you want
     ```kotlin
     package other.packages
 
+    import com.tecknobit.equinoxbackend.environment.services.users.dtos.requests.SignUpRequestDto
     import com.tecknobit.equinoxbackend.environment.services.users.service.EquinoxUsersService
     import org.springframework.stereotype.Service
-    
+
     @Service
-    class CustomUsersService : EquinoxUsersService<CustomUser, CustomUsersRepository>() {
-    
-        override fun getSignUpKeys(): List<String> {
-            val custom = ArrayList(super.getSignUpKeys())
-            custom.add("currency")
-            return custom
+    class CustomUsersService(
+        usersRepository: CustomUsersRepository
+    ) : EquinoxUsersService<CustomUser, CustomUsersRepository>(usersRepository) {
+
+        override fun resolveSignUpUser(
+            userId: String,
+            userToken: String,
+            safePassword: String,
+            signUpRequest: SignUpRequestDto
+        ): CustomUser {
+            val request = signUpRequest as CustomSignUpRequestDto
+
+            return CustomUser(
+                userId,
+                userToken,
+                request.name,
+                request.surname,
+                request.email,
+                safePassword,
+                request.language,
+                request.currency
+            )
         }
-    
+
     }
     ```
 
-###### Retrive the custom parameters from the payload
+Cast the request to `CustomSignUpRequestDto` to access `currency`. Keep the base `SignUpRequestDto` parameter
+in the override signature
 
-Next, retrieve the custom parameters from the sign-up request by overriding the method below in the
-[CustomUsersController](#creating-the-dedicated-controller)
+The `safePassword` parameter already contains the hashed password. Equinox saves the returned `CustomUser`
+through your repository, including its mapped `currency` field
+
+###### Customize the sign-up response
+
+You can also include your custom parameters in the sign-up response by extending `SignUpResponseDto`:
 
 === "Java"
 
     ```java
-    package other.packages
-            
-    import com.tecknobit.equinoxbackend.environment.services.users.controller.EquinoxUsersController;
-    import org.json.JSONObject;
-    import org.springframework.web.bind.annotation.*;
-    
-    @RestController
-    public class CustomUsersController extends EquinoxUsersController<CustomUser, CustomUsersRepository, CustomUsersService> {
-    
-        @Override
-        @CustomParametersOrder(order = {"currency"}) // optional annotation
-        protected Object[] getSignUpCustomParams() {
-            return new Object[]{jsonHelper.getString("currency", null), /* other parameters */};
+    package other.packages;
+
+    import com.tecknobit.equinoxbackend.annotations.dto.DtoResponse;
+    import com.tecknobit.equinoxbackend.environment.services.users.dtos.responses.SignUpResponseDto;
+
+    @DtoResponse
+    public class CustomSignUpResponseDto extends SignUpResponseDto {
+
+        private final String currency;
+
+        public CustomSignUpResponseDto(
+                String userId, String userToken, String profilePic, String currency
+        ) {
+            super(userId, userToken, profilePic);
+            this.currency = currency;
         }
-    
+
+        public String getCurrency() {
+            return currency;
+        }
     }
     ```
 
@@ -840,93 +987,68 @@ Next, retrieve the custom parameters from the sign-up request by overriding the 
     ```kotlin
     package other.packages
 
-    import com.tecknobit.equinoxbackend.environment.services.users.controller.EquinoxUsersController
-    import org.json.JSONObject
-    import org.springframework.web.bind.annotation.RestController
-    
-    @RestController
-    class CustomUsersController : EquinoxUsersController<CustomUser, CustomUsersRepository, CustomUsersService>() {
-    
-        @CustomParametersOrder(order = ["currency"]) // optional annotation
-        override fun getSignUpCustomParams(): Array<Any?> {
-            return arrayOf(
-                jsonHelper.getString("currency",null)
-                // other parameters
-            )
-        }
-    
-    }
+    import com.tecknobit.equinoxbackend.annotations.dto.DtoResponse
+    import com.tecknobit.equinoxbackend.environment.services.users.dtos.responses.SignUpResponseDto
+
+    @DtoResponse
+    class CustomSignUpResponseDto(
+        userId: String,
+        userToken: String,
+        profilePic: String,
+        val currency: String
+    ) : SignUpResponseDto(userId, userToken, profilePic)
     ```
 
-###### Custom parameters validation
-
-You can also validate your custom parameters if needed by overriding the **validateSignUp** method from
-[CustomUsersController](#creating-the-dedicated-controller) as follows:
+Add the following override to `CustomUsersService` to return your DTO. The original request is also available
+in this hook, so you can retrieve `currency` in the same way:
 
 === "Java"
 
     ```java
-    package other.packages
-    
-    import com.tecknobit.equinoxbackend.environment.services.users.controller.EquinoxUsersController;
-    import org.json.JSONObject;
-    import org.springframework.web.bind.annotation.*;
-    
-    @RestController
-    public class CustomUsersController extends EquinoxUsersController<CustomUser, CustomUsersRepository, CustomUsersService> {
-    
-        @Override
-        @CustomParametersOrder(order = {"currency"}) // optional annotation
-        protected String validateSignUp(String name, String surname, String email, String password, 
-                                        String language, Object... custom) {
-            String validation = super.validateSignUp(name, surname, email, password, language, custom);
-            if (validation != null)
-                return validation;
-            if (custom[0] == null)
-                return "wrong_currency_key";
-            return null;
-        }
-    
+    @Override
+    protected CustomSignUpResponseDto resolveSignUpResponse(
+            String userId,
+            String userToken,
+            SignUpRequestDto signUpRequest
+    ) {
+        CustomSignUpRequestDto request = (CustomSignUpRequestDto) signUpRequest;
+        SignUpResponseDto base = super.resolveSignUpResponse(userId, userToken, signUpRequest);
+
+        return new CustomSignUpResponseDto(
+                base.getUserId(),
+                base.getUserToken(),
+                base.getProfilePic(),
+                request.getCurrency()
+        );
     }
     ```
 
 === "Kotlin"
 
     ```kotlin
-    package other.packages
+    override fun resolveSignUpResponse(
+        userId: String,
+        userToken: String,
+        signUpRequest: SignUpRequestDto
+    ): CustomSignUpResponseDto {
+        val request = signUpRequest as CustomSignUpRequestDto
+        val base = super.resolveSignUpResponse(userId, userToken, signUpRequest)
 
-    import com.tecknobit.equinoxbackend.environment.services.users.controller.EquinoxUsersController
-    import org.springframework.web.bind.annotation.RestController
-    
-    @RestController
-    class CustomUsersController : EquinoxUsersController<CustomUser, CustomUsersRepository, CustomUsersService>() {
-    
-        @CustomParametersOrder(order = ["currency"]) // optional annotation
-        override fun validateSignUp(
-            name: String,
-            surname: String,
-            email: String,
-            password: String,
-            language: String,
-            vararg custom: Any?
-        ): String? {
-            val validation = super.validateSignUp(
-                name,
-                surname,
-                email,
-                password,
-                language,
-                *custom
-            )
-            if (validation != null) 
-                return validation
-            if (custom[0] == null) 
-                return "wrong_currency_key"
-            return null
-        }
-    
+        return CustomSignUpResponseDto(
+            base.userId,
+            base.userToken,
+            base.profilePic,
+            request.currency
+        )
     }
     ```
+
+Use the DTO imports shown above when adding the override to your service.
+The response includes the standard properties and `currency`, exposed by the custom getter.
+No controller override or response mixin is required
+
+The request DTO, its validation constraints, and these service hooks replace the deprecated
+`getSignUpKeys`, `getSignUpCustomParams`, and `validateSignUp` methods
 
 #### Custom sign-in
 
