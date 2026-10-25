@@ -1,13 +1,12 @@
 package com.tecknobit.equinoxbackend.environment.services.users.controller;
 
-import com.fasterxml.jackson.annotation.JsonDeserializeAs;
 import com.tecknobit.apimanager.annotations.RequestPath;
-import com.tecknobit.apimanager.apis.ServerProtector;
-import com.tecknobit.equinoxbackend.environment.configuration.EquinoxEnvironmentService;
 import com.tecknobit.equinoxbackend.environment.constants.EquinoxMessages;
 import com.tecknobit.equinoxbackend.environment.services.builtin.controllers.EquinoxController;
 import com.tecknobit.equinoxbackend.environment.services.builtin.controllers.EquinoxControllerCore;
+import com.tecknobit.equinoxbackend.environment.services.users.dtos.requests.SignInRequestDto;
 import com.tecknobit.equinoxbackend.environment.services.users.dtos.requests.SignUpRequestDto;
+import com.tecknobit.equinoxbackend.environment.services.users.dtos.responses.SignInResponseDto;
 import com.tecknobit.equinoxbackend.environment.services.users.dtos.responses.SignUpResponseDto;
 import com.tecknobit.equinoxbackend.environment.services.users.entity.EquinoxUser;
 import com.tecknobit.equinoxbackend.environment.services.users.repository.EquinoxUsersRepository;
@@ -24,9 +23,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.Map;
 
 import static com.tecknobit.apimanager.apis.APIRequest.RequestMethod.*;
-import static com.tecknobit.apimanager.apis.ServerProtector.SERVER_SECRET_KEY;
 import static com.tecknobit.equinoxcore.helpers.CommonKeysKt.*;
-import static com.tecknobit.equinoxcore.helpers.InputsValidator.DEFAULT_LANGUAGE;
 import static com.tecknobit.equinoxcore.network.EquinoxBaseEndpointsSet.*;
 
 /**
@@ -86,7 +83,8 @@ public class EquinoxUsersController<T extends EquinoxUser, R extends EquinoxUser
     public ResponseEntity<?> signUp(
             @RequestBody @Valid SignUpRequestDto signUpRequest
     ) {
-        setSessionLocale(signUpRequest.getLanguage());
+        String language = signUpRequest.getLanguage();
+        setSessionLocale(language);
 
         try {
             SignUpResponseDto signUpResponse = usersService.signUpUser(signUpRequest);
@@ -98,20 +96,11 @@ public class EquinoxUsersController<T extends EquinoxUser, R extends EquinoxUser
     }
 
     /**
-     * Method used to get the list of the custom parameters of a custom {@link EquinoxUser} from the payload of the {@link #signUp(Map)}
-     * method
+     * Method used to provide custom parameters for the legacy sign-up flow
      *
-     * @return the custom parameters as array of {@link Object}
-     * @apiNote to get the parameters from the payload you have to use the {@link #jsonHelper} instance previously loaded
-     * by the {@link #signUp(Map)} method:
-     * <pre>
-     *     {@code
-     *          protected Object[] getSignUpCustomParams() {
-     *              return new Object[]{jsonHelper.getString("anything")};
-     *          }
-     *     }
-     * </pre>
-     * @implNote as default will be returned an empty array, so that means no customized user has being used
+     * @return the custom parameters, empty by default, as {@code Object[]}
+     * @deprecated declare custom fields in a subclass of {@link SignUpRequestDto} and configure its JSON deserialization.
+     * The {@link #signUp(SignUpRequestDto)} endpoint does not invoke this hook
      */
     @Deprecated(since = "2.0.0", forRemoval = true)
     protected Object[] getSignUpCustomParams() {
@@ -119,32 +108,18 @@ public class EquinoxUsersController<T extends EquinoxUser, R extends EquinoxUser
     }
 
     /**
-     * Method used to validate the inputs of the {@link #signUp(Map)} method to correctly execute a sign-up operation
+     * Method used to validate the standard inputs of the legacy sign-up flow
      *
-     * @param name The name of the user
-     * @param surname The surname of the user
-     * @param email The email of the user
-     * @param password The password of the user
+     * @param name     The name of the user
+     * @param surname  The surname of the user
+     * @param email    The email address of the user
+     * @param password The plain-text password of the user
      * @param language The language of the user
-     * @param custom The custom parameters added in a customization of the {@link EquinoxUser} to execute a customized
-     *             sign up validation
+     * @param custom   The additional sign-up values, unused by the default implementation
      *
-     * @return the key of the error if any inputs is wrong, null otherwise as {@link String}
-     *
-     * @apiNote workflow example:
-     * <pre>
-     *     {@code
-     *          @Override
-     *          protected String validateSignUp(String name, String surname, String email, String password, String language, Object... custom) {
-     *              String validation = super.validateSignUp(name, surname, email, password, language, custom);
-     *              if (validation != null)
-     *                  return validation;
-     *              if(custom[0] == null)
-     *                  return "error_key";
-     *              return null;
-     *          }
-     *     }
-     * </pre>
+     * @return the first validation error key, or {@code null} when all inputs are valid, as {@link String}
+     * @deprecated declare validation constraints on {@link SignUpRequestDto} or a custom request subclass.
+     * The {@link #signUp(SignUpRequestDto)} endpoint does not invoke this hook
      */
     @Deprecated(since = "2.0.0", forRemoval = true)
     protected String validateSignUp(String name, String surname, String email, String password, String language,
@@ -163,93 +138,66 @@ public class EquinoxUsersController<T extends EquinoxUser, R extends EquinoxUser
     }
 
     /**
-     * Method used to sign in the <b>Equinox's system</b>
+     * Method used to authenticate a user from the validated sign-in request
      *
-     * @param payload The payload of the request
-     *                 <pre>
-     *                      {@code
-     *                              {
-     *                                  "email": "the email of the user", -> [String]
-     *                                  "password": "the password of the user" -> [String],
-     *                                  "language": "the language of the user" -> [String]
-     *                              }
-     *                      }
-     *                 </pre>
-     * @return the result of the request as {@link String}
+     * <p>Request constraints are validated before this method is invoked. The request language
+     * selects the locale, and the response DTO returned by {@link EquinoxUsersService#signInUser(SignInRequestDto)}
+     * is included in the success body
+     *
+     * <p>A custom request subclass must be selected by the configured JSON deserializer.
+     * Declaring a subclass alone does not change the request type instantiated for this endpoint
+     *
+     * @param signInRequest The validated request containing the credentials and the request language
+     *
+     * @return the sign-in response, or the procedure failure response when hashing fails, as {@link ResponseEntity}
+     * @throws com.tecknobit.equinoxbackend.environment.exceptions.EquinoxForbiddenException
+     *         when the user does not exist or sign-in validation fails
+     *
+     * @since 2.0.0
      */
     @PostMapping(path = SIGN_IN_ENDPOINT)
     @RequestPath(path = "/api/v2/users/signIn", method = POST)
-    public String signIn(
-            @RequestBody Map<String, Object> payload
+    public ResponseEntity<?> signIn(
+            @RequestBody @Valid SignInRequestDto signInRequest
     ) {
-        loadJsonHelper(payload);
-        String email = jsonHelper.getString(EMAIL_KEY);
-        String password = jsonHelper.getString(PASSWORD_KEY);
-        String language = jsonHelper.getString(LANGUAGE_KEY, DEFAULT_LANGUAGE);
+        String language = signInRequest.getLanguage();
         setSessionLocale(language);
-        Object[] custom = getSignInCustomParams();
-        String signInValidation = validateSignIn(email, password, language, custom);
-        if (signInValidation != null)
-            return failedResponse(signInValidation);
+
         try {
-            T user = usersService.signInUser(email.toLowerCase(), password, custom);
-            if (user == null)
-                return notAuthorizedOrWrongDetailsResponse();
-            setSessionLocale(DEFAULT_LANGUAGE);
-            return successResponse(assembleSignInSuccessResponse(user));
-        } catch (Exception e) {
+            SignInResponseDto response = usersService.signInUser(signInRequest);
+
+            return successResponse(response);
+        } catch (NoSuchAlgorithmException e) {
             return wrongProcedureResponse();
         }
     }
 
     /**
-     * Method used to get the list of the custom parameters of a custom {@link EquinoxUser} from the payload of the {@link #signIn(Map)}
-     * method 
+     * Method used to provide custom parameters for the legacy sign-in flow
      *
-     * @return the custom parameters as array of {@link Object}
-     *
-     * @apiNote to get the parameters from the payload you have to use the {@link #jsonHelper} instance previously loaded
-     * by the {@link #signIn(Map)} method:
-     * <pre>
-     *     {@code
-     *          protected Object[] getSignInCustomParams() {
-     *              return new Object[]{jsonHelper.getString("anything")};
-     *          }
-     *     }
-     * </pre>
-     *
-     * @implNote as default will be returned an empty array, so that means no customized user has being used
+     * @return the custom parameters, empty by default, as {@code Object[]}
+     * @deprecated declare custom fields in a subclass of {@link SignInRequestDto} and configure its JSON deserialization.
+     * The {@link #signIn(SignInRequestDto)} endpoint does not invoke this hook
      */
+    @Deprecated(since = "2.0.0", forRemoval = true)
     protected Object[] getSignInCustomParams() {
         return new Object[0];
     }
 
     /**
-     * Method used to validate the inputs of the {@link #signIn(Map)} method to correctly execute a sign-in operation
+     * Method used to validate the standard inputs of the legacy sign-in flow
      *
-     * @param email The email of the user
-     * @param password The password of the user
-     * @param language The language of the user
-     * @param custom The custom parameters added in a customization of the {@link EquinoxUser} to execute a customized
-     *             sign-in validation
+     * @param email    The email address of the user
+     * @param password The plain-text password of the user
+     * @param language The language used to localize the request
+     * @param custom   The additional sign-in values, unused by the default implementation
      *
-     * @return the key of the error if any inputs is wrong, null otherwise as {@link String}
-     *
-     * @apiNote workflow example:
-     * <pre>
-     *     {@code
-     *          @Override
-     *          protected String validateSignIn(String email, String password, String language, Object... custom) {
-     *              String validation = super.validateSignIn(email, password, language, custom);
-     *              if (validation != null)
-     *                  return validation;
-     *              if(custom[0] == null)
-     *                  return "error_key";
-     *              return null;
-     *          }
-     *     }
-     * </pre>
+     * @return the first validation error key, or {@code null} when all inputs are valid, as {@link String}
+     * @deprecated declare request constraints on {@link SignInRequestDto} or a custom subclass and apply
+     * additional authentication checks in the users service. The {@link #signIn(SignInRequestDto)} endpoint
+     * does not invoke this hook
      */
+    @Deprecated(since = "2.0.0", forRemoval = true)
     protected String validateSignIn(String email, String password, String language, Object... custom) {
         if (!InputsValidator.isEmailValid(email))
             return EquinoxMessages.WRONG_EMAIL_MESSAGE;
@@ -261,24 +209,15 @@ public class EquinoxUsersController<T extends EquinoxUser, R extends EquinoxUser
     }
 
     /**
-     * Method used to assemble the sign-in response with the user details
+     * Method used to assemble user details for the legacy sign-in response
      *
-     * @param user The user authenticated in that operation
+     * @param user The authenticated user whose details are included in the response
      *
-     * @return the response as {@link JSONObject}
-     *
-     * @apiNote workflow example to add custom user property of a custom {@link EquinoxUser}:
-     * <pre>
-     *     {@code
-     *          @Override
-     *          protected JSONObject assembleSignInSuccessResponse(CustomUser user) {
-     *              JSONObject response = super.assembleSignInSuccessResponse(user);
-     *              response.put("custom_property", user.customProperty());
-     *              return response;
-     *          }
-     *     }
-     * </pre>
+     * @return the user details as {@link JSONObject}
+     * @deprecated override {@link EquinoxUsersService#resolveSignInResponse(EquinoxUser)} to return a custom
+     * response DTO. The {@link #signIn(SignInRequestDto)} endpoint does not invoke this assembler
      */
+    @Deprecated(since = "2.0.0", forRemoval = true)
     protected JSONObject assembleSignInSuccessResponse(T user) {
         JSONObject response = new JSONObject();
         response.put(USER_IDENTIFIER_KEY, user.getId());
