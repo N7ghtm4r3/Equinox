@@ -6,8 +6,11 @@ import com.tecknobit.equinoxbackend.apis.batch.EquinoxItemsHelper;
 import com.tecknobit.equinoxbackend.apis.resources.ResourcesManager;
 import com.tecknobit.equinoxbackend.environment.configuration.EquinoxEnvironmentService;
 import com.tecknobit.equinoxbackend.environment.exceptions.EquinoxForbiddenException;
+import com.tecknobit.equinoxbackend.environment.exceptions.EquinoxFormException;
+import com.tecknobit.equinoxbackend.environment.exceptions.EquinoxServerException;
 import com.tecknobit.equinoxbackend.environment.services.users.dtos.requests.SignInRequestDto;
 import com.tecknobit.equinoxbackend.environment.services.users.dtos.requests.SignUpRequestDto;
+import com.tecknobit.equinoxbackend.environment.services.users.dtos.responses.ChangeProfilePicResponseDto;
 import com.tecknobit.equinoxbackend.environment.services.users.dtos.responses.DynamicAccountDataResponseDto;
 import com.tecknobit.equinoxbackend.environment.services.users.dtos.responses.SignInResponseDto;
 import com.tecknobit.equinoxbackend.environment.services.users.dtos.responses.SignUpResponseDto;
@@ -32,6 +35,7 @@ import java.util.Optional;
 
 import static com.tecknobit.apimanager.apis.APIRequest.SHA256_ALGORITHM;
 import static com.tecknobit.equinoxbackend.apis.database.SQLConstants.*;
+import static com.tecknobit.equinoxbackend.environment.constants.EquinoxMessages.WRONG_PROFILE_PIC_MESSAGE;
 import static com.tecknobit.equinoxbackend.environment.services.users.entity.EquinoxUser.DISCRIMINATOR_VALUE_KEY;
 import static com.tecknobit.equinoxcore.helpers.CommonKeysKt.*;
 import static java.lang.System.currentTimeMillis;
@@ -141,12 +145,11 @@ public class EquinoxUsersService<U extends EquinoxUser, R extends EquinoxUsersRe
      * @param signUpRequest The request containing the user details and the password to hash
      *
      * @return the registration details as {@link SignUpResponseDto}
-     * @throws NoSuchAlgorithmException when the password hashing algorithm is unavailable
      *
      * @since 2.0.0
      */
     @SuppressWarnings("unchecked")
-    public SignUpResponseDto signUpUser(SignUpRequestDto signUpRequest) throws NoSuchAlgorithmException {
+    public SignUpResponseDto signUpUser(SignUpRequestDto signUpRequest)  {
         EquinoxEnvironmentService environmentService = EquinoxEnvironmentService.getInstance();
 
         String userId = environmentService.generateIdentifier();
@@ -301,11 +304,10 @@ public class EquinoxUsersService<U extends EquinoxUser, R extends EquinoxUsersRe
      *
      * @return the authenticated user details as {@link SignInResponseDto}
      * @throws EquinoxForbiddenException when the user does not exist or sign-in validation fails
-     * @throws NoSuchAlgorithmException when the password hashing algorithm is unavailable
      *
      * @since 2.0.0
      */
-    public SignInResponseDto signInUser(SignInRequestDto signInRequest) throws NoSuchAlgorithmException {
+    public SignInResponseDto signInUser(SignInRequestDto signInRequest) {
         String email = signInRequest.getEmail();
         U user = usersRepository.findUserByEmail(email);
 
@@ -369,7 +371,6 @@ public class EquinoxUsersService<U extends EquinoxUser, R extends EquinoxUsersRe
      * @param custom   The custom values passed to the legacy credential validation hook
      *
      * @return the authenticated user, or {@code null} when validation fails, as {@link EquinoxUser}
-     * @throws NoSuchAlgorithmException when the password hashing algorithm is unavailable
      * @deprecated use {@link #signInUser(SignInRequestDto)} to authenticate a request and return its response DTO
      */
     @Deprecated(since = "2.0.0", forRemoval = true)
@@ -388,7 +389,6 @@ public class EquinoxUsersService<U extends EquinoxUser, R extends EquinoxUsersRe
      * @param custom   The additional sign-in values, unused by the default implementation
      *
      * @return whether the user exists and the password matches as {@code boolean}
-     * @throws NoSuchAlgorithmException when the password hashing algorithm is unavailable
      * @deprecated use {@link #validateSignIn(EquinoxUser, String, SignInRequestDto)} with the already hashed password
      * and the original request. The request-based sign-in flow does not invoke this legacy hook
      */
@@ -506,21 +506,31 @@ public class EquinoxUsersService<U extends EquinoxUser, R extends EquinoxUsersRe
     }
 
     /**
-     * Method used to change the profile pic of the {@link EquinoxUser}
+     * Method used to change the user's profile pic
      *
-     * @param profilePic The profile pic resource
-     * @param userId:     the identifier of the user
+     * @param profilePic The uploaded file to set as the new profile pic
+     * @param userId     The identifier of the user whose profile pic is changed
+     *
+     * @return the new profile pic path as {@link ChangeProfilePicResponseDto}
      */
     @Transactional
-    public String changeProfilePic(MultipartFile profilePic, String userId) throws IOException {
-        String profilePicPath = createProfileResource(profilePic, userId + currentTimeMillis());
+    public ChangeProfilePicResponseDto changeProfilePic(MultipartFile profilePic, String userId) {
+        if(profilePic.isEmpty())
+            throw new EquinoxFormException(WRONG_PROFILE_PIC_MESSAGE);
 
+        String profilePicPath = createProfileResource(profilePic, userId + currentTimeMillis());
         usersRepository.changeProfilePic(profilePicPath, userId);
 
-        deleteProfileResource(userId);
-        saveResource(profilePic, profilePicPath);
+        try {
+            deleteProfileResource(userId);
+            saveResource(profilePic, profilePicPath);
+        } catch (IOException e) {
+            throw new EquinoxServerException(e);
+        }
 
-        return profilePicPath;
+        return new ChangeProfilePicResponseDto(
+                profilePicPath
+        );
     }
 
     /**
@@ -570,10 +580,15 @@ public class EquinoxUsersService<U extends EquinoxUser, R extends EquinoxUsersRe
      * Method used to hash a sensitive user data
      *
      * @param secret The user value to hash
-     * @throws NoSuchAlgorithmException when the hash of the user value fails
+     *
+     * @return the Base64-encoded SHA-256 digest as {@link String}
      */
-    protected String hash(String secret) throws NoSuchAlgorithmException {
-        return APIRequest.base64Digest(secret, SHA256_ALGORITHM);
+    protected String hash(String secret) {
+        try {
+            return APIRequest.base64Digest(secret, SHA256_ALGORITHM);
+        } catch (NoSuchAlgorithmException e) {
+            throw new EquinoxServerException(e);
+        }
     }
 
 }

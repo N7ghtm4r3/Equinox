@@ -61,4 +61,6 @@ public abstract class EquinoxMessages {
      */
     public static final String WRONG_LANGUAGE_MESSAGE = "wrong_language";
 
+    public static final String WRONG_PROFILE_PIC_MESSAGE = "wrong_profile_pic";
+
 }

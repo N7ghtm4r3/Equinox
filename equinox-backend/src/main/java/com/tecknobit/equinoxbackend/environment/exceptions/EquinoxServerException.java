@@ -11,6 +11,8 @@ import static com.tecknobit.equinoxbackend.environment.constants.EquinoxMessages
  * {@link com.tecknobit.equinoxbackend.environment.constants.EquinoxMessages#SERVER_ERROR_MESSAGE}. Constructors
  * without a locale capture the current {@link org.springframework.context.i18n.LocaleContextHolder} locale
  *
+ * <p>The supplied failure is retained as the cause returned by {@link #getCause()}
+ *
  * @author N7ghtm4r3 - Tecknobit
  * @see EquinoxException
  *
@@ -25,27 +27,32 @@ public class EquinoxServerException extends EquinoxException {
 
     /**
      * Constructor to init the {@link EquinoxServerException} class
+     *
+     * @param throwable The original failure retained as the cause, or {@code null} when unavailable
      */
-    public EquinoxServerException() {
-        this(SERVER_ERROR_MESSAGE);
+    public EquinoxServerException(Throwable throwable) {
+        this(SERVER_ERROR_MESSAGE, throwable);
     }
 
     /**
      * Constructor to init the {@link EquinoxServerException} class
      *
      * @param key The message key to resolve
+     * @param throwable The original failure retained as the cause, or {@code null} when unavailable
      */
-    public EquinoxServerException(String key) {
+    public EquinoxServerException(String key, Throwable throwable) {
         super(key, SERVER_EXCEPTION_CODE);
+        initCause(throwable);
     }
 
     /**
      * Constructor to init the {@link EquinoxServerException} class
      *
      * @param locale The locale used to resolve the message
+     * @param throwable The original failure retained as the cause, or {@code null} when unavailable
      */
-    public EquinoxServerException(Locale locale) {
-        this(SERVER_ERROR_MESSAGE, locale);
+    public EquinoxServerException(Locale locale, Throwable throwable) {
+        this(SERVER_ERROR_MESSAGE, locale, throwable);
     }
 
     /**
@@ -53,18 +60,22 @@ public class EquinoxServerException extends EquinoxException {
      *
      * @param key    The message key to resolve
      * @param locale The locale used to resolve the message
+     * @param throwable The original failure retained as the cause, or {@code null} when unavailable
      */
-    public EquinoxServerException(String key, Locale locale) {
+    public EquinoxServerException(String key, Locale locale, Throwable throwable) {
         super(key, locale, SERVER_EXCEPTION_CODE);
+        initCause(throwable);
     }
 
     /**
      * Constructor to init the {@link EquinoxServerException} class
      *
      * @param args The message formatting arguments, or {@code null} when none are required
+     * @param throwable The original failure retained as the cause, or {@code null} when unavailable
      */
-    public EquinoxServerException(String[] args) {
+    public EquinoxServerException(String[] args, Throwable throwable) {
         super(SERVER_ERROR_MESSAGE, args, SERVER_EXCEPTION_CODE);
+        initCause(throwable);
     }
 
     /**
@@ -72,9 +83,11 @@ public class EquinoxServerException extends EquinoxException {
      *
      * @param key  The message key to resolve
      * @param args The message formatting arguments, or {@code null} when none are required
+     * @param throwable The original failure retained as the cause, or {@code null} when unavailable
      */
-    public EquinoxServerException(String key, String[] args) {
+    public EquinoxServerException(String key, String[] args, Throwable throwable) {
         super(key, args, SERVER_EXCEPTION_CODE);
+        initCause(throwable);
     }
 
     /**
@@ -82,9 +95,10 @@ public class EquinoxServerException extends EquinoxException {
      *
      * @param args   The message formatting arguments, or {@code null} when none are required
      * @param locale The locale used to resolve the message
+     * @param throwable The original failure retained as the cause, or {@code null} when unavailable
      */
-    public EquinoxServerException(String[] args, Locale locale) {
-        this(SERVER_ERROR_MESSAGE, args, locale);
+    public EquinoxServerException(String[] args, Locale locale, Throwable throwable) {
+        this(SERVER_ERROR_MESSAGE, args, locale, throwable);
     }
 
     /**
@@ -93,9 +107,11 @@ public class EquinoxServerException extends EquinoxException {
      * @param key    The message key to resolve
      * @param args   The message formatting arguments, or {@code null} when none are required
      * @param locale The locale used to resolve the message
+     * @param throwable The original failure retained as the cause, or {@code null} when unavailable
      */
-    public EquinoxServerException(String key, String[] args, Locale locale) {
+    public EquinoxServerException(String key, String[] args, Locale locale, Throwable throwable) {
         super(key, args, locale, SERVER_EXCEPTION_CODE);
+        initCause(throwable);
     }
 
 }

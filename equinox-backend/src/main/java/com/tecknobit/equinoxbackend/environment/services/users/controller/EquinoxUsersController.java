@@ -7,6 +7,7 @@ import com.tecknobit.equinoxbackend.environment.services.builtin.controllers.Equ
 import com.tecknobit.equinoxbackend.environment.services.builtin.controllers.EquinoxControllerCore;
 import com.tecknobit.equinoxbackend.environment.services.users.dtos.requests.SignInRequestDto;
 import com.tecknobit.equinoxbackend.environment.services.users.dtos.requests.SignUpRequestDto;
+import com.tecknobit.equinoxbackend.environment.services.users.dtos.responses.ChangeProfilePicResponseDto;
 import com.tecknobit.equinoxbackend.environment.services.users.dtos.responses.DynamicAccountDataResponseDto;
 import com.tecknobit.equinoxbackend.environment.services.users.dtos.responses.SignInResponseDto;
 import com.tecknobit.equinoxbackend.environment.services.users.dtos.responses.SignUpResponseDto;
@@ -22,6 +23,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.util.Map;
 
@@ -68,16 +70,12 @@ public class EquinoxUsersController<U extends EquinoxUser, R extends EquinoxUser
     /**
      * Method used to register a user from a validated sign-up request
      *
-     * <p>Request constraints are validated before this method is invoked. Registration is delegated to
-     * {@link EquinoxUsersService#signUpUser(SignUpRequestDto)}, and its response is included in the success body
-     *
      * <p>A custom request subclass must be selected by the configured JSON deserializer. Declaring a
      * subclass alone does not change the request type instantiated for this endpoint
      *
      * @param signUpRequest The validated request containing the user details and server secret
      *
-     * @return the registration response, or the procedure failure response if registration throws an exception,
-     * as {@link ResponseEntity}
+     * @return the registration details wrapped in the success body as {@link ResponseEntity}
      *
      * @since 2.0.0
      */
@@ -89,13 +87,8 @@ public class EquinoxUsersController<U extends EquinoxUser, R extends EquinoxUser
         String language = signUpRequest.getLanguage();
         setSessionLocale(language);
 
-        try {
-            SignUpResponseDto signUpResponse = usersService.signUpUser(signUpRequest);
-
-            return successResponse(signUpResponse);
-        } catch (Exception e) {
-            return wrongProcedureResponse();
-        }
+        SignUpResponseDto signUpResponse = usersService.signUpUser(signUpRequest);
+        return successResponse(signUpResponse);
     }
 
     /**
@@ -143,18 +136,12 @@ public class EquinoxUsersController<U extends EquinoxUser, R extends EquinoxUser
     /**
      * Method used to authenticate a user from the validated sign-in request
      *
-     * <p>Request constraints are validated before this method is invoked. The request language
-     * selects the locale, and the response DTO returned by {@link EquinoxUsersService#signInUser(SignInRequestDto)}
-     * is included in the success body
-     *
      * <p>A custom request subclass must be selected by the configured JSON deserializer.
      * Declaring a subclass alone does not change the request type instantiated for this endpoint
      *
      * @param signInRequest The validated request containing the credentials and the request language
      *
-     * @return the sign-in response, or the procedure failure response when hashing fails, as {@link ResponseEntity}
-     * @throws com.tecknobit.equinoxbackend.environment.exceptions.EquinoxForbiddenException
-     *         when the user does not exist or sign-in validation fails
+     * @return the sign-in details wrapped in the success body as {@link ResponseEntity}
      *
      * @since 2.0.0
      */
@@ -166,13 +153,8 @@ public class EquinoxUsersController<U extends EquinoxUser, R extends EquinoxUser
         String language = signInRequest.getLanguage();
         setSessionLocale(language);
 
-        try {
-            SignInResponseDto response = usersService.signInUser(signInRequest);
-
-            return successResponse(response);
-        } catch (NoSuchAlgorithmException e) {
-            return wrongProcedureResponse();
-        }
+        SignInResponseDto response = usersService.signInUser(signInRequest);
+        return successResponse(response);
     }
 
     /**
@@ -235,10 +217,6 @@ public class EquinoxUsersController<U extends EquinoxUser, R extends EquinoxUser
     /**
      * Method used to retrieve the authenticated user's dynamic account data for synchronization across devices
      *
-     * <p>The requested identifier must match the authenticated user's identifier, as enforced by
-     * {@link IsAuthorizedUser}. The response contains the data assembled from the authenticated user by
-     * {@link EquinoxUsersService#getDynamicAccountData(EquinoxUser)}, including any custom response properties
-     *
      * @param user   The authenticated user resolved from the security context
      * @param userId The requested user identifier, which must match the authenticated user
      *
@@ -264,13 +242,15 @@ public class EquinoxUsersController<U extends EquinoxUser, R extends EquinoxUser
     }
 
     /**
-     * Method used to change the profile pic of the user
+     * Method used to change the authenticated user's profile pic from a multipart upload
      *
-     * @param userId The identifier of the user
-     * @param token The token of the user
-     * @param profilePic The profile pic chosen by the user to set as the new profile pic
-     * @return the result of the request as {@link String}
+     * @param user       The authenticated user resolved from the security context
+     * @param userId     The requested user identifier, which must match the authenticated user
+     * @param profilePic The uploaded file to set as the new profile pic
+     *
+     * @return the new profile pic path wrapped in the success body as {@link ResponseEntity}
      */
+    @IsAuthorizedUser
     @PostMapping(
             path = USERS_KEY + "/{" + USER_IDENTIFIER_KEY + "}" + CHANGE_PROFILE_PIC_ENDPOINT,
             headers = {
@@ -278,23 +258,14 @@ public class EquinoxUsersController<U extends EquinoxUser, R extends EquinoxUser
             }
     )
     @RequestPath(path = "/api/v2/users/{user_id}/changeProfilePic", method = POST)
-    public String changeProfilePic(
+    public ResponseEntity<?> changeProfilePic(
+            @AuthenticationPrincipal U user,
             @PathVariable(USER_IDENTIFIER_KEY) String userId,
-            @RequestHeader(TOKEN_KEY) String token,
             @RequestParam(PROFILE_PIC_KEY) MultipartFile profilePic
     ) {
-        if (!isMe(userId, token))
-            return notAuthorizedOrWrongDetailsResponse();
-        if (profilePic.isEmpty())
-            return wrongProcedureResponse();
-        JSONObject response = new JSONObject();
-        try {
-            String profilePicUrl = usersService.changeProfilePic(profilePic, userId);
-            response.put(PROFILE_PIC_KEY, profilePicUrl);
-            return successResponse(response);
-        } catch (Exception e) {
-            return wrongProcedureResponse();
-        }
+        ChangeProfilePicResponseDto response = usersService.changeProfilePic(profilePic, userId);
+
+        return successResponse(response);
     }
 
     /**
