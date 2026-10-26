@@ -17,10 +17,17 @@ version = "1.0.0"
 
 repositories {
     mavenCentral()
+    maven("https://jitpack.io")
 }
 
 dependencies {
-
+    implementation(project(":equinox-backend"))
+    implementation(project(":equinox-core"))
+    implementation(libs.spring.boot.starter.data.jpa)
+    implementation(libs.boot.spring.boot.starter.web)
+    implementation(libs.spring.boot.starter.validation)
+    implementation(libs.spring.boot.starter.security)
+    implementation(libs.jackson.databind)
 }
 
 mavenPublishing {
