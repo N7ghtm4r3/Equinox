@@ -1,8 +1,14 @@
 # Equinox Miscellaneous
 
-A collection of external library integrations and extensions developed in accordance with the `Equinox` architecture
+A collection of optional extensions for Equinox modules and integrations with external libraries, developed in accordance with the `Equinox` architecture.
 
 ## Modules available
+
+### Backend
+
+- [backend-membership](backend-membership/README.md)
+
+### Compose
 
 - [lazy-pagination-compose-ops](lazy-pagination-compose-ops/README.md)
 - [navigation-compose-util](navigation-compose-util/README.md)

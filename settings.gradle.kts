@@ -21,3 +21,5 @@ include("equinox-backend")
 include("equinox-navigation")
 include("equinox-miscellaneous:lazy-pagination-compose-ops")
 include("equinox-miscellaneous:navigation-compose-util")
+
+include("equinox-miscellaneous:backend-membership")
