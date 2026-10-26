@@ -18,8 +18,6 @@ import static com.tecknobit.equinoxcore.helpers.CommonKeysKt.*;
  * @param <T>: generic type to allow the use of custom users inherited from {@link EquinoxUser}
  *
  * @author N7ghtm4r3 - Tecknobit
- * @see EquinoxCrudRepository
- * @see EquinoxUser
  *
  * @since 1.0.1
  */
@@ -126,6 +124,14 @@ public interface EquinoxUsersRepository<T extends EquinoxUser> extends EquinoxCr
             @Param(IDENTIFIER_KEY) String id
     );
 
+    /**
+     * Method used to record the deletion timestamp of a user without removing the account
+     *
+     * @param id        The identifier of the user
+     * @param deletedAt The deletion timestamp in milliseconds since the Unix epoch
+     *
+     * @since 2.0.0
+     */
     @Override
     @Modifying(clearAutomatically = true)
     @Query(
@@ -138,6 +144,13 @@ public interface EquinoxUsersRepository<T extends EquinoxUser> extends EquinoxCr
             @Param(DELETED_AT_KEY) long deletedAt
     );
 
+    /**
+     * Method used to restore a user by resetting the stored deletion timestamp to {@code -1}
+     *
+     * @param id The identifier of the user to restore
+     *
+     * @since 2.0.0
+     */
     @Override
     @Modifying(clearAutomatically = true)
     @Query(

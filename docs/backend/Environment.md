@@ -587,6 +587,9 @@ as follows:
     }
     ```
 
+Custom user repositories inherit the soft deletion queries from `EquinoxUsersRepository`. See the
+[soft deletion guide](SoftDeletion.md#user-accounts) for account state and lookup behavior
+
 #### Creating the dedicated service
 
 To handle the requests of your custom user, you have to create the dedicated service extending the
@@ -640,6 +643,10 @@ as follows:
     
     }
     ```
+
+For custom operations that require an active user, use the inherited
+[`requireEntityNotSoftDeleted()` guard](SoftDeletion.md#guard-custom-operations). It rejects missing and
+soft deleted users before running your callback
 
 #### Creating the dedicated controller
 

@@ -16,14 +16,18 @@ created. The constructor copies the configured resource subdirectories into the 
 | URI starts with an excluded resource directory prefix | Skips token processing |
 | Missing or blank `token` header | Continues without changing the security context |
 | No user matches `findUserByToken(token)` | Continues without changing the security context |
-| User matches the token | Replaces the context authentication with `getUserAuthentication(user)` and continues |
+| Token belongs to a soft deleted user | Continues without changing the security context |
+| Active user matches the token | Replaces the context authentication with `getUserAuthentication(user)` and continues |
+
+A soft deleted account is restored after a successful request-based sign-in. See the
+[soft deletion guide](../../SoftDeletion.md#authentication-and-restoration) for the full account lifecycle
 
 The filter does not directly reject missing or unknown tokens. The security chain decides whether the
 request can access the endpoint
 
 The default `getUserAuthentication(user)` uses the single-argument
 [EquinoxUserAuthentication](EquinoxUserAuthentication.md) constructor, which creates an authenticated
-token without authorities. A matching user therefore satisfies the default chain's `.authenticated()`
+token without authorities. A matching active user therefore satisfies the default chain's `.authenticated()`
 requirement without automatically receiving a role
 
 ## Customization

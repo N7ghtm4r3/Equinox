@@ -119,6 +119,11 @@ implementation philosophy
 to automatically manage some recurring operations such the users related requests or the inputs validation. You can take
 a look [here](Environment.md) to check how it works and how to implement it on your own backend
 
+## Soft deletion
+
+Use the [soft deletion guide](SoftDeletion.md) to retain recoverable entities, permanently delete accounts,
+and guard custom service operations. It also explains account restoration during sign-in
+
 ## Validation
 
 Use the [validation guide](Validation/index.md) to apply the supplied

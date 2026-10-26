@@ -25,7 +25,9 @@ import static com.tecknobit.equinoxcore.helpers.CommonKeysKt.TOKEN_KEY;
  * and expose them in the current security context
  *
  * <p>Requests with a missing, blank, or unknown token continue without this filter changing the
- * security context. Requests whose URI starts with a configured resource directory prefix are skipped
+ * security context. Tokens belonging to soft deleted users also leave the context unchanged
+ *
+ * <p>Requests whose URI starts with a configured resource directory prefix are skipped
  *
  * <p>Override {@link #shouldNotFilter(HttpServletRequest)} to customize exclusions and
  * {@link #getUserAuthentication(EquinoxUser)} to customize the authentication representation.
@@ -89,7 +91,8 @@ public class EquinoxTokenAuthenticationFilter<U extends EquinoxUser, R extends E
     /**
      * Method used to expose the user matching the token header in the current security context
      *
-     * <p>Missing, blank, or unknown tokens leave the context unchanged. For a matching user, the
+     * <p>Missing, blank, or unknown tokens and tokens belonging to soft deleted users leave the context
+     * unchanged. For a matching active user, the
      * result of {@link #getUserAuthentication(EquinoxUser)} replaces the context authentication.
      * The filter continues the chain without directly rejecting missing or unknown tokens
      *
