@@ -43,6 +43,7 @@ import static java.lang.System.currentTimeMillis;
  * The {@code EquinoxUsersService} class is useful to manage all the user database operations
  *
  * @author N7ghtm4r3 - Tecknobit
+ * @see EquinoxCrudService
  * @see ResourcesManager
  *
  * @param <U> The type of the {@link EquinoxUser} used in the system, is generic to avoid manual casts if it has been customized
@@ -297,6 +298,8 @@ public class EquinoxUsersService<U extends EquinoxUser, R extends EquinoxUsersRe
      * it is passed to {@link #validateSignIn(EquinoxUser, String, SignInRequestDto)} with the original request.
      * Missing users and rejected credentials cause the same forbidden exception
      *
+     * <p>A soft deleted account is restored after successful validation and before assembling the response
+     *
      * <p>Override the validation hook to apply additional checks and
      * {@link #resolveSignInResponse(EquinoxUser)} to customize the response
      *
@@ -403,10 +406,11 @@ public class EquinoxUsersService<U extends EquinoxUser, R extends EquinoxUsersRe
     }
 
     /**
-     * Method used to get whether the user is present in the database
+     * Method used to check whether a user exists and is not soft deleted
      *
      * @param userId The identifier of the user to check
-     * @return whether the user exists as {@code boolean}
+     *
+     * @return whether an active user exists as {@code boolean}
      */
     @Wrapper
     public boolean userExists(String userId) {
@@ -414,10 +418,14 @@ public class EquinoxUsersService<U extends EquinoxUser, R extends EquinoxUsersRe
     }
 
     /**
-     * Method used to get whether the user is present in the database
+     * Method used to check whether a user exists with optional inclusion of soft deleted accounts
      *
-     * @param userId The identifier of the user to check
-     * @return whether the user exists as {@code boolean}
+     * @param userId             The identifier of the user to check
+     * @param includeSoftDeleted Whether soft deleted accounts count as existing users
+     *
+     * @return whether the user exists under the selected deletion policy as {@code boolean}
+     *
+     * @since 2.0.0
      */
     public boolean userExists(String userId, boolean includeSoftDeleted) {
         Optional<U> userEntry = usersRepository.findById(userId);
@@ -429,11 +437,13 @@ public class EquinoxUsersService<U extends EquinoxUser, R extends EquinoxUsersRe
     }
 
     /**
-     * Method used to retrieve dynamic account data through the legacy SQL query
+     * Method used to retain the legacy dynamic account data entry point
+     *
+     * <p>The current implementation returns {@code null} without executing a query
      *
      * @param userId The identifier of the user
      *
-     * @return the selected dynamic account data as {@link JSONObject}
+     * @return the unavailable legacy result, always {@code null}, as {@link JSONObject}
      * @deprecated use {@link #getDynamicAccountData(EquinoxUser)} to assemble the response from the authenticated
      * user. The DTO-based endpoint does not invoke this overload
      */
@@ -483,6 +493,7 @@ public class EquinoxUsersService<U extends EquinoxUser, R extends EquinoxUsersRe
      * @param user The authenticated user whose current account data is included in the response
      *
      * @return the dynamic account data as {@link DynamicAccountDataResponseDto}
+     * @throws EquinoxForbiddenException when the user is missing or soft deleted
      *
      * @since 2.0.0
      */
@@ -499,7 +510,8 @@ public class EquinoxUsersService<U extends EquinoxUser, R extends EquinoxUsersRe
      *
      * @param token The token of the user to retrieve
      *
-     * @return the matching user, or an empty optional if no user matches the token, as {@link Optional}
+     * @return the matching active user, or an empty optional if the token is unknown or the user is soft deleted,
+     * as {@link Optional}
      *
      * @since 2.0.0
      */
@@ -519,6 +531,9 @@ public class EquinoxUsersService<U extends EquinoxUser, R extends EquinoxUsersRe
      * @param userId     The identifier of the user whose profile pic is changed
      *
      * @return the new profile pic path as {@link ChangeProfilePicResponseDto}
+     * @throws EquinoxForbiddenException when the user is missing or soft deleted
+     * @throws EquinoxFormException when the uploaded file is empty
+     * @throws EquinoxServerException when saving the uploaded resource fails with an input or output error
      */
     @Transactional
     public ChangeProfilePicResponseDto changeProfilePic(MultipartFile profilePic, String userId) {
@@ -548,6 +563,7 @@ public class EquinoxUsersService<U extends EquinoxUser, R extends EquinoxUsersRe
      * @param changeEmailRequest The request containing the new email address
      * @param userId             The identifier of the user whose email is changed
      *
+     * @throws EquinoxForbiddenException when the user is missing or soft deleted
      * @throws EquinoxBadRequestException when the repository email update throws an exception
      *
      * @since 2.0.0
@@ -573,6 +589,7 @@ public class EquinoxUsersService<U extends EquinoxUser, R extends EquinoxUsersRe
      * @param changePasswordRequest The request containing the new plain-text password to hash
      * @param userId                The identifier of the user whose password is changed
      *
+     * @throws EquinoxForbiddenException when the user is missing or soft deleted
      * @throws EquinoxServerException when the hashing algorithm is unavailable
      *
      * @since 2.0.0
@@ -592,6 +609,8 @@ public class EquinoxUsersService<U extends EquinoxUser, R extends EquinoxUsersRe
      * @param changeLanguageRequest The request containing the new language to persist
      * @param userId                The identifier of the user whose language is changed
      *
+     * @throws EquinoxForbiddenException when the user is missing or soft deleted
+     *
      * @since 2.0.0
      */
     @Transactional
@@ -604,15 +623,26 @@ public class EquinoxUsersService<U extends EquinoxUser, R extends EquinoxUsersRe
     }
 
     /**
-     * Method used to delete a user
+     * Method used to delete a user permanently or mark the account as soft deleted
      *
-     * @param id The identifier of the user to delete
+     * <p>Soft deletion preserves the account and profile resource. A successful request-based sign-in
+     * restores a soft deleted account. Hard deletion also deletes the user profile resource
+     *
+     * @param id         The identifier of the user to delete
+     * @param hardDelete Whether to permanently remove the account instead of marking it as deleted
      */
     @Transactional
     public void deleteUser(String id, boolean hardDelete) {
         deleteEntity(id, hardDelete);
     }
 
+    /**
+     * Method used to permanently remove the user and then delete the user profile resource
+     *
+     * @param id The identifier of the user to delete
+     *
+     * @since 2.0.0
+     */
     @Override
     protected void hardDelete(String id) {
         super.hardDelete(id);

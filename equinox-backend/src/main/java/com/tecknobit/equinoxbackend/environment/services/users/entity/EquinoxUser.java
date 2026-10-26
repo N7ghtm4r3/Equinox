@@ -136,6 +136,23 @@ public class EquinoxUser extends EquinoxItem {
         this(id, token, name, surname, email, password, profilePic, language, -1);
     }
 
+    /**
+     * Constructor to init the {@link EquinoxUser} class with an explicit deletion state
+     *
+     * <p>A missing profile pic is assigned the configured default before insertion through JPA
+     *
+     * @param id         The identifier of the user
+     * @param token      The token used to operate on the server
+     * @param name       The name of the user
+     * @param surname    The surname of the user
+     * @param email      The email address of the user
+     * @param password   The password of the user
+     * @param profilePic The profile pic of the user
+     * @param language   The language of the user
+     * @param deletedAt  The deletion timestamp in milliseconds since the Unix epoch, or {@code -1} when active
+     *
+     * @since 2.0.0
+     */
     public EquinoxUser(String id, String token, String name, String surname, String email, String password, String profilePic,
                        String language, long deletedAt) {
         super(id);

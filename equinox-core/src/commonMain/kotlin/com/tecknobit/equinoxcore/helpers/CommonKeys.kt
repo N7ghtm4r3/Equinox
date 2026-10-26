@@ -122,14 +122,15 @@ const val MEMBER_KEY = "member"
 const val MEMBER_IDENTIFIER_KEY = "member_id"
 
 /**
- * `DELETED_AT_KEY` the key for the `deleted_at` field
+ * `DELETED_AT_KEY` the key for the deletion timestamp in milliseconds since the Unix epoch,
+ * or `-1` when the entity is active
  *
  * @since 2.0.0
  */
 const val DELETED_AT_KEY = "deleted_at"
 
 /**
- * `HARD_DELETE_KEY` the key for the `hard_delete` field
+ * `HARD_DELETE_KEY` the key for the flag selecting permanent deletion instead of soft deletion
  *
  * @since 2.0.0
  */

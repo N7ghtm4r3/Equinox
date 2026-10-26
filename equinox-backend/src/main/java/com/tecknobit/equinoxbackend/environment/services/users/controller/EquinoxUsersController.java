@@ -339,7 +339,11 @@ public class EquinoxUsersController<U extends EquinoxUser, R extends EquinoxUser
     /**
      * Method used to delete the authenticated user's account
      *
-     * @param userId The requested user identifier, which must match the authenticated user
+     * <p>Soft deletion is the default and preserves the account and profile resource. A successful
+     * request-based sign-in restores the account. Hard deletion permanently removes both
+     *
+     * @param userId     The requested user identifier, which must match the authenticated user
+     * @param hardDelete Whether to permanently remove the account; defaults to {@code false} when omitted
      *
      * @return the successful response with the localized confirmation message as {@link ResponseEntity}
      */

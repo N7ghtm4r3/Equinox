@@ -44,6 +44,11 @@ public abstract class EquinoxItem {
     @Transient
     protected final JsonHelper hItem;
 
+    /**
+     * {@code deletedAt} the deletion timestamp in milliseconds since the Unix epoch, or {@code -1} when active
+     *
+     * @since 2.0.0
+     */
     @Column(
             name = DELETED_AT_KEY,
             columnDefinition = "BIGINT DEFAULT -1",
@@ -73,9 +78,12 @@ public abstract class EquinoxItem {
     }
 
     /**
-     * Constructor to init the {@link EquinoxItem} class
+     * Constructor to init the {@link EquinoxItem} class from JSON
      *
-     * @param jItem: item formatted as JSON
+     * <p>The deletion timestamp defaults to {@code -1} when the JSON does not provide it
+     *
+     * @param jItem         The item details formatted as JSON
+     * @param identifierKey The key used to retrieve the item identifier
      */
     public EquinoxItem(JSONObject jItem, String identifierKey) {
         hItem = new JsonHelper(jItem);
@@ -92,15 +100,36 @@ public abstract class EquinoxItem {
         return id;
     }
 
+    /**
+     * Method used to get the deletion timestamp of the item
+     *
+     * @return the deletion timestamp in milliseconds since the Unix epoch, or {@code -1} when active, as {@code long}
+     *
+     * @since 2.0.0
+     */
     @JsonGetter(DELETED_AT_KEY)
     public long getDeletedAt() {
         return deletedAt;
     }
 
+    /**
+     * Method used to set the deletion timestamp of this item without persisting it
+     *
+     * @param deletedAt The deletion timestamp in milliseconds since the Unix epoch, or {@code -1} to mark the item active
+     *
+     * @since 2.0.0
+     */
     public void setDeletedAt(long deletedAt) {
         this.deletedAt = deletedAt;
     }
 
+    /**
+     * Method used to check whether the item is soft deleted
+     *
+     * @return whether the deletion timestamp differs from {@code -1} as {@code boolean}
+     *
+     * @since 2.0.0
+     */
     @JsonIgnore
     public boolean isSoftDeleted() {
         return deletedAt != -1L;
