@@ -71,6 +71,9 @@ Repository configuration is covered by the [backend installation guide](../../..
 The examples model users belonging to projects. A user can belong to several projects, with a separate membership
 record for each association. Membership in one project does not establish membership in another
 
+`ProjectMember` represents the stored association. Its response, `ProjectMemberDto`, includes the user's profile
+and the identifier of the project to which the membership belongs
+
 Each record has its own identifier. A membership lookup instead uses the project identifier and the associated
 user's identifier to determine whether that user belongs to the requested project
 

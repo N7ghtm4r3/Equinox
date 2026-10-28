@@ -11,7 +11,6 @@ and property names, so the query does not depend on the physical table name
 
 ```java
 import com.tecknobit.equinoxbackend.environment.services.users.entity.EquinoxUser;
-import com.tecknobit.equinoxmisc.backendmembership.dtos.Member;
 import com.tecknobit.equinoxmisc.backendmembership.repositories.MembersRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -20,7 +19,7 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface ProjectMembersRepository extends MembersRepository<Member, EquinoxUser, ProjectMember> {
+public interface ProjectMembersRepository extends MembersRepository<ProjectMemberDto, EquinoxUser, ProjectMember> {
 
     @Override
     @Query("""

@@ -9,13 +9,12 @@ The inherited checks use that service to resolve the user's membership in the re
 import com.tecknobit.equinoxbackend.environment.services.users.entity.EquinoxUser;
 import com.tecknobit.equinoxmisc.backendmembership.annotations.ScopeProvider;
 import com.tecknobit.equinoxmisc.backendmembership.annotations.StandardMember;
-import com.tecknobit.equinoxmisc.backendmembership.dtos.Member;
 import com.tecknobit.equinoxmisc.backendmembership.interfaces.Scoped;
 import org.springframework.stereotype.Component;
 
 @Component
 @ScopeProvider
-public class ProjectAccess implements Scoped<Member, EquinoxUser, ProjectMember, ProjectMembersService> {
+public class ProjectAccess implements Scoped<ProjectMemberDto, EquinoxUser, ProjectMember, ProjectMembersService> {
 
     private final ProjectMembersService membersService;
 
@@ -29,8 +28,8 @@ public class ProjectAccess implements Scoped<Member, EquinoxUser, ProjectMember,
     }
 
     @StandardMember
-    public Member getProjectMember(String projectId, EquinoxUser user) {
-        Member member = requireIsScopedMember(projectId, user).convertToRelatedDTO();
+    public ProjectMemberDto getProjectMember(String projectId, EquinoxUser user) {
+        ProjectMemberDto member = requireIsScopedMember(projectId, user).convertToRelatedDTO();
 
         return member;
     }
@@ -41,7 +40,8 @@ The `getProjectMember` operation returns the member DTO only after confirming th
 to the requested project
 
 ```java
-Member member = projectAccess.getProjectMember(projectId, authenticatedUser);
+ProjectMemberDto member = projectAccess.getProjectMember(projectId, authenticatedUser);
+String memberProjectId = member.getProjectId();
 ```
 
 Both `requireIsScopedMember(entityId, user)` and `requireIsScopedMember(entityId, userId)` return the membership record

@@ -10,11 +10,10 @@ before converting the record to a DTO
     ```java
     import com.tecknobit.equinoxbackend.environment.services.users.entity.EquinoxUser;
     import com.tecknobit.equinoxmisc.backendmembership.annotations.StandardMember;
-    import com.tecknobit.equinoxmisc.backendmembership.dtos.Member;
 
     @StandardMember
-    public Member getProjectMember(String projectId, EquinoxUser user) {
-        Member member = requireIsScopedMember(projectId, user).convertToRelatedDTO();
+    public ProjectMemberDto getProjectMember(String projectId, EquinoxUser user) {
+        ProjectMemberDto member = requireIsScopedMember(projectId, user).convertToRelatedDTO();
 
         return member;
     }
@@ -25,10 +24,9 @@ before converting the record to a DTO
     ```kotlin
     import com.tecknobit.equinoxbackend.environment.services.users.entity.EquinoxUser
     import com.tecknobit.equinoxmisc.backendmembership.annotations.StandardMember
-    import com.tecknobit.equinoxmisc.backendmembership.dtos.Member
 
     @StandardMember
-    fun getProjectMember(projectId: String, user: EquinoxUser): Member {
+    fun getProjectMember(projectId: String, user: EquinoxUser): ProjectMemberDto {
         val member = requireIsScopedMember(projectId, user).convertToRelatedDTO()
 
         return member

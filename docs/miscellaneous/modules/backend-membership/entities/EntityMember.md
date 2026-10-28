@@ -14,7 +14,6 @@ In this example, `projectId` identifies the scope. `membershipId` identifies the
 import com.tecknobit.equinoxbackend.annotations.EmptyConstructor;
 import com.tecknobit.equinoxbackend.environment.services.users.entity.EquinoxUser;
 import com.tecknobit.equinoxcore.annotations.Returner;
-import com.tecknobit.equinoxmisc.backendmembership.dtos.Member;
 import com.tecknobit.equinoxmisc.backendmembership.entities.EntityMember;
 import jakarta.persistence.AssociationOverride;
 import jakarta.persistence.Column;
@@ -29,7 +28,7 @@ import jakarta.persistence.UniqueConstraint;
         uniqueConstraints = @UniqueConstraint(columnNames = {"project_id", "member_id"})
 )
 @AssociationOverride(name = "member", joinColumns = @JoinColumn(name = "member_id", nullable = false))
-public class ProjectMember extends EntityMember<Member, EquinoxUser> {
+public class ProjectMember extends EntityMember<ProjectMemberDto, EquinoxUser> {
 
     @Column(name = "project_id", nullable = false)
     private String projectId;
@@ -46,8 +45,15 @@ public class ProjectMember extends EntityMember<Member, EquinoxUser> {
 
     @Override
     @Returner
-    public Member convertToRelatedDTO() {
-        Member member = new Member(getMemberId(), getProfilePic(), getName(), getSurname(), getEmail());
+    public ProjectMemberDto convertToRelatedDTO() {
+        ProjectMemberDto member = new ProjectMemberDto(
+            getMemberId(),
+            getProfilePic(),
+            getName(),
+            getSurname(),
+            getEmail(),
+            projectId
+        );
 
         return member;
     }
