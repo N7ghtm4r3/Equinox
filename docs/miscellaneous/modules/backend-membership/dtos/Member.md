@@ -12,9 +12,8 @@ The `Member` class transfers a member identifier and profile details
 
 ## Usage
 
-The [EntityMember example](../entities/EntityMember.md) returns a `Member` containing the associated user's identifier
-and profile details. A subclass can carry information about the membership itself: `ProjectMemberDto` below adds
-the project identifier
+The [ProjectMember entity](../entities/EntityMember.md) returns `ProjectMemberDto`, which adds the project identifier
+to the associated user's identifier and profile details
 
 === "Java"
 

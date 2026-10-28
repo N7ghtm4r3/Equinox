@@ -7,12 +7,11 @@ lookups. The service provides the common retrieval and conversion behavior, whil
 
 ```java
 import com.tecknobit.equinoxbackend.environment.services.users.entity.EquinoxUser;
-import com.tecknobit.equinoxmisc.backendmembership.dtos.Member;
 import com.tecknobit.equinoxmisc.backendmembership.services.MembersService;
 import org.springframework.stereotype.Service;
 
 @Service
-public class ProjectMembersService extends MembersService<Member, EquinoxUser, ProjectMember, ProjectMembersRepository> {
+public class ProjectMembersService extends MembersService<ProjectMemberDto, EquinoxUser, ProjectMember, ProjectMembersRepository> {
 
     public ProjectMembersService(ProjectMembersRepository membersRepository) {
         super(membersRepository);
