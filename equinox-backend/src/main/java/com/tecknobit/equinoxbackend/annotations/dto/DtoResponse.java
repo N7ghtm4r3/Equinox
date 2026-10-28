@@ -1,6 +1,8 @@
 package com.tecknobit.equinoxbackend.annotations.dto;
 
 
+import com.tecknobit.equinoxcore.annotations.DTO;
+
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
@@ -22,8 +24,11 @@ import static java.lang.annotation.ElementType.TYPE;
  *
  * @author N7ghtm4r3 - Tecknobit
  *
+ * @see DTO
+ *
  * @since 2.0.0
  */
+@DTO
 @Target(value = {TYPE, RECORD_COMPONENT})
 @Retention(RetentionPolicy.SOURCE)
 public @interface DtoResponse {
