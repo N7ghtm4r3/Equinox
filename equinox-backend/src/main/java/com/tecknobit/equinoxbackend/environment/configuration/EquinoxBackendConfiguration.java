@@ -1,8 +1,8 @@
 package com.tecknobit.equinoxbackend.environment.configuration;
 
-import com.tecknobit.apimanager.apis.ResourcesUtils;
-import com.tecknobit.apimanager.formatters.JsonHelper;
+import com.tecknobit.equinoxbackend.apis.json.JsonHelper;
 import com.tecknobit.equinoxbackend.apis.resources.ResourcesManager;
+import com.tecknobit.equinoxbackend.apis.resources.ResourcesUtils;
 
 import java.io.IOException;
 import java.util.ArrayList;

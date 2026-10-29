@@ -1,8 +1,8 @@
 package com.tecknobit.equinoxbackend.environment.services.builtin.controllers;
 
-import com.tecknobit.apimanager.apis.ServerProtector;
-import com.tecknobit.apimanager.formatters.JsonHelper;
+import com.tecknobit.equinoxbackend.apis.json.JsonHelper;
 import com.tecknobit.equinoxbackend.apis.resources.ResourcesProvider;
+import com.tecknobit.equinoxbackend.configuration.ServerProtector;
 import com.tecknobit.equinoxbackend.environment.configuration.EquinoxBackendConfiguration;
 import com.tecknobit.equinoxbackend.environment.configuration.EquinoxEnvironmentService;
 import com.tecknobit.equinoxcore.annotations.Assembler;

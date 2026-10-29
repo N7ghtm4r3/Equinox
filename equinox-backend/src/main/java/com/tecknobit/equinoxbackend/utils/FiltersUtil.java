@@ -1,6 +1,6 @@
 package com.tecknobit.equinoxbackend.utils;
 
-import com.tecknobit.apimanager.annotations.Returner;
+import com.tecknobit.equinoxcore.annotations.Returner;
 
 import java.util.Arrays;
 import java.util.HashSet;

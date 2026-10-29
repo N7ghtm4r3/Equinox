@@ -27,7 +27,6 @@ dependencies {
     implementation(libs.spring.boot.starter.validation)
     implementation(libs.spring.boot.starter.security)
     implementation(libs.jackson.databind)
-    implementation(libs.apimanager)
     implementation(libs.json)
     implementation(project(":equinox-core"))
 }

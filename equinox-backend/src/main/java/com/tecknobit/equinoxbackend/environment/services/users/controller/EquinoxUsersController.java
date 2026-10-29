@@ -1,6 +1,5 @@
 package com.tecknobit.equinoxbackend.environment.services.users.controller;
 
-import com.tecknobit.apimanager.annotations.RequestPath;
 import com.tecknobit.equinoxbackend.environment.constants.EquinoxMessages;
 import com.tecknobit.equinoxbackend.environment.security.authorization.annotations.IsAuthorizedUser;
 import com.tecknobit.equinoxbackend.environment.services.builtin.controllers.EquinoxController;
@@ -13,6 +12,7 @@ import com.tecknobit.equinoxbackend.environment.services.users.dtos.responses.Si
 import com.tecknobit.equinoxbackend.environment.services.users.entity.EquinoxUser;
 import com.tecknobit.equinoxbackend.environment.services.users.repository.EquinoxUsersRepository;
 import com.tecknobit.equinoxbackend.environment.services.users.service.EquinoxUsersService;
+import com.tecknobit.equinoxcore.annotations.RequestPath;
 import com.tecknobit.equinoxcore.helpers.InputsValidator;
 import jakarta.validation.Valid;
 import org.json.JSONObject;
@@ -22,9 +22,9 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import static com.tecknobit.apimanager.apis.APIRequest.RequestMethod.*;
 import static com.tecknobit.equinoxcore.helpers.CommonKeysKt.*;
 import static com.tecknobit.equinoxcore.network.EquinoxBaseEndpointsSet.*;
+import static com.tecknobit.equinoxcore.network.RequestMethod.*;
 
 /**
  * The {@code EquinoxUsersController} handles user-related operations, providing the

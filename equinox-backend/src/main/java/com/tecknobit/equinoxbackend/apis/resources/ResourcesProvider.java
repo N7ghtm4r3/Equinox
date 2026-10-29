@@ -1,6 +1,6 @@
 package com.tecknobit.equinoxbackend.apis.resources;
 
-import com.tecknobit.apimanager.annotations.Wrapper;
+import com.tecknobit.equinoxcore.annotations.Wrapper;
 
 import java.io.File;
 import java.util.HashSet;

@@ -1,7 +1,7 @@
 package com.tecknobit.equinoxbackend.apis.resources;
 
 
-import com.tecknobit.apimanager.annotations.Wrapper;
+import com.tecknobit.equinoxcore.annotations.Wrapper;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
