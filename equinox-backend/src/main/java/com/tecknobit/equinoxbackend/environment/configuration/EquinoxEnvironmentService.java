@@ -1,7 +1,7 @@
 package com.tecknobit.equinoxbackend.environment.configuration;
 
-import com.tecknobit.apimanager.apis.ServerProtector;
 import com.tecknobit.equinoxbackend.apis.resources.ResourcesProvider;
+import com.tecknobit.equinoxbackend.configuration.ServerProtector;
 import com.tecknobit.equinoxbackend.environment.services.users.entity.EquinoxUser;
 
 import java.util.UUID;

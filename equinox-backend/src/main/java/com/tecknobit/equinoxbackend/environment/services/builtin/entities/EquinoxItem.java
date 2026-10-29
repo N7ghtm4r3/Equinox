@@ -2,8 +2,8 @@ package com.tecknobit.equinoxbackend.environment.services.builtin.entities;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.tecknobit.apimanager.annotations.Structure;
-import com.tecknobit.apimanager.formatters.JsonHelper;
+import com.tecknobit.equinoxbackend.apis.json.JsonHelper;
+import com.tecknobit.equinoxcore.annotations.Structure;
 import com.tecknobit.equinoxcore.annotations.Wrapper;
 import jakarta.persistence.Column;
 import jakarta.persistence.Id;

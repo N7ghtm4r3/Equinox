@@ -2,10 +2,10 @@ package com.tecknobit.equinoxbackend.environment.services.users.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.tecknobit.apimanager.annotations.Returner;
 import com.tecknobit.equinoxbackend.annotations.EmptyConstructor;
 import com.tecknobit.equinoxbackend.environment.configuration.EquinoxEnvironmentService;
 import com.tecknobit.equinoxbackend.environment.services.builtin.entities.EquinoxItem;
+import com.tecknobit.equinoxcore.annotations.Returner;
 import jakarta.persistence.*;
 import org.json.JSONObject;
 
