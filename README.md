@@ -10,11 +10,13 @@ Framework for integrating **Spring Boot** backends with **Compose Multiplatform*
 |          **[equinox-core](equinox-core/README.md)**          | Core utilities for **CMP** and **Spring** technologies                        | Cross-platform functionality (Android, Desktop, iOS, Web and Spring)                                  | ![Maven Central](https://img.shields.io/maven-central/v/io.github.n7ghtm4r3/equinox-core.svg?label=Maven%20Central)       |
 |       **[equinox-compose](equinox-compose/README.md)**       | Utilities for **Compose Multiplatform Project**                               | Components, utilities, APIs for Android, Desktop, iOS and Web platforms                               | ![Maven Central](https://img.shields.io/maven-central/v/io.github.n7ghtm4r3/equinox-compose.svg?label=Maven%20Central)    |
 | **[equinox-miscellaneous](equinox-miscellaneous/README.md)** | Miscellaneous of integrations or extensions of external libraries             | Integrate or extend external libraries according to the Equinox architecture                          | N/A                                                                                                                       |
-|    **[equinox-navigation](equinox-navigation/README.md)**    | Utilities to handle the navigation in a **Compose Multiplatform application** | Responsive navigation systems based on the [EquinoxScreens](docs/compose/APIs/EquinoxScreens.md) APIs | ![Maven Central](https://img.shields.io/maven-central/v/io.github.n7ghtm4r3/equinox-navigation.svg?label=Maven%20Central) |
+|    **[equinox-navigation](equinox-navigation/README.md)**    | Utilities to handle the navigation in a **Compose Multiplatform application** | Responsive navigation systems based on the [EquinoxScreens](docs/src/content/docs/compose/APIs/EquinoxScreens.md) APIs | ![Maven Central](https://img.shields.io/maven-central/v/io.github.n7ghtm4r3/equinox-navigation.svg?label=Maven%20Central) |
 
 ## Documentation 
 
 Check out the framework documentation [here!](https://n7ghtm4r3.github.io/Equinox/)
+
+For local development, see the [documentation project](docs/README.md).
 
 ## Support
 

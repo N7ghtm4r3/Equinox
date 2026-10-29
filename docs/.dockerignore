@@ -1,0 +1,10 @@
+.git
+.gradle
+.idea
+.kotlin
+.cache
+**/build
+node_modules
+.astro
+dist
+docs-verification.json
