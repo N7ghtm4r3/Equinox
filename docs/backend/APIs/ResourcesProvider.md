@@ -59,3 +59,9 @@ containerFolder_1
 ├── subfolder_1
 └── subfolder_2
 ```
+
+## Classpath resources
+
+This provider creates writable resource directories. Use [ResourcesUtils](ResourcesUtils.md) to read
+configuration files, templates, or binary resources packaged with the backend. To download files
+from a URL into those directories, use [WebUtil](../Utils/WebUtil.md#download-a-file)

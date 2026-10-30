@@ -121,7 +121,6 @@ public class EquinoxUsersService<U extends EquinoxUser, R extends EquinoxUsersRe
      * @param usersRepository The instance for the users repository
      */
     @Autowired
-    @SuppressWarnings("unchecked")
     public EquinoxUsersService(R usersRepository) {
         super(usersRepository);
         this.usersRepository = usersRepository;
@@ -148,7 +147,6 @@ public class EquinoxUsersService<U extends EquinoxUser, R extends EquinoxUsersRe
      *
      * @since 2.0.0
      */
-    @SuppressWarnings("unchecked")
     public SignUpResponseDto signUpUser(SignUpRequestDto signUpRequest)  {
         EquinoxEnvironmentService environmentService = EquinoxEnvironmentService.getInstance();
 

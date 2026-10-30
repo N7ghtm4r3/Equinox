@@ -88,7 +88,6 @@ To correctly use this environment you need to use the following base **gradle co
         implementation 'org.springframework.boot:spring-boot-starter-data-jpa:3.2.3'
         implementation 'com.fasterxml.jackson.core:jackson-databind:2.15.4'
         implementation 'mysql:mysql-connector-java:8.0.33'
-        implementation 'com.github.N7ghtm4r3:APIManager:2.2.4'
         implementation 'org.json:json:20250517'
     
         // implement the backend utilities
@@ -123,7 +122,6 @@ To correctly use this environment you need to use the following base **gradle co
         implementation("org.springframework.boot:spring-boot-starter-data-jpa:3.2.3")
         implementation("com.fasterxml.jackson.core:jackson-databind:2.15.4")
         implementation("mysql:mysql-connector-java:8.0.33")
-        implementation("com.github.N7ghtm4r3:APIManager:2.2.4")
         implementation("org.json:json:20250517")
     
         // implement the backend utilities
@@ -303,7 +301,7 @@ Generates random UUID identifiers without hyphens
 |--------|--------------------|
 | `getBackendConfiguration()` | The configuration defined in [equinox.config](#additional-backend-setup) |
 | `getResourcesProvider()` | The [resources provider](APIs/ResourcesProvider.md) |
-| `getServerProtector()` | The server protector |
+| `getServerProtector()` | The [server protector](APIs/ServerProtector.md) |
 
 The resources provider and server protector getters return `null` until their components are instantiated.
 Disabled components remain `null`
@@ -400,6 +398,11 @@ resources
 ```
 
 #### Fill the configuration
+
+The backend loads `equinox.config` from the classpath with [ResourcesUtils](APIs/ResourcesUtils.md) and reads
+its sections with [JsonHelper](APIs/JsonHelper.md). Both APIs are included in `equinox-backend`.
+The optional `server_protector` section enables the [server protector](APIs/ServerProtector.md) and
+controls the first-launch secret generation flow.
 
 You can copy and fill the below `JSON` as you need:
 

@@ -61,3 +61,10 @@ your [custom resource bundle](../Environment.md#customizing-the-messages-resourc
 
     throw EquinoxException("item_conflict", 409)
     ```
+
+## Initialization signals
+
+[SaveData](SaveData.md) is a checked exception used when initialization produces content that an
+administrator must save. The [server protector](../APIs/ServerProtector.md) raises it after generating
+a new secret. It belongs to `com.tecknobit.equinoxbackend.exceptions` and does not define an HTTP
+response status; see its page for direct and environment-service handling

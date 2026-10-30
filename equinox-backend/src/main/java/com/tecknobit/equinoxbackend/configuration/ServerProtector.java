@@ -133,13 +133,12 @@ public class ServerProtector {
      *
      * @param serverSecretToCompare The clear-text secret to verify, or {@code null} to reject the value
      *
-     * @return whether the secret matches; {@code false} for null input or an unavailable digest algorithm,
-     *         as {@code boolean}
-     * @throws NullPointerException when a non-null secret is checked without a stored digest
+     * @return whether the secret matches; {@code false} for null input, an absent stored digest, or an
+     *         unavailable digest algorithm, as {@code boolean}
      */
     public boolean serverSecretMatches(String serverSecretToCompare) {
         String currentServerSecret = getCurrentServerSecret();
-        if (serverSecretToCompare == null)
+        if (serverSecretToCompare == null || currentServerSecret == null)
             return false;
 
         try {

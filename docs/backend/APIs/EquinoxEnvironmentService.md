@@ -1,4 +1,4 @@
-Provides shared access to the backend configuration, resources, server protector, and user locale resolver.
+Provides shared access to the backend configuration, resources, [server protector](ServerProtector.md), and user locale resolver.
 
 ## Usage
 
@@ -32,6 +32,10 @@ An enabled server protector can be initialized only once. Initialization failure
 Additional arguments to `initEquinoxEnvironment(args, ...)` format the protector's save message;
 see the [configuration example](../Environment.md#format-the-protectors-save-message).
 
+When protection has no stored secret, the protector generates one and raises
+[SaveData](../Exceptions/SaveData.md), which this service wraps in `RuntimeException`. Save the exposed
+value and restart before serving requests. See the [first-launch flow](ServerProtector.md#first-launch).
+
 ## Available methods
 
 | Method | Description |
@@ -44,7 +48,7 @@ see the [configuration example](../Environment.md#format-the-protectors-save-mes
 | `useServerProtectorConfig(usage)` | Applies a callback to the server protector configuration and returns its result |
 | `useDefaultsConfig(usage)` | Applies a callback to the defaults configuration and returns its result |
 | `getResourcesProvider()` | Gets the [resources provider](ResourcesProvider.md), or `null` before initialization or when disabled |
-| `getServerProtector()` | Gets the server protector, or `null` before initialization or when disabled |
+| `getServerProtector()` | Gets the [server protector](ServerProtector.md), or `null` before initialization or when disabled |
 | `getUserLocaleResolver()` | Gets the retained [user locale resolver](EquinoxUserLocaleResolver.md) |
 | `generateIdentifier()` | Generates a random UUID as a 32-character string without hyphens |
 
