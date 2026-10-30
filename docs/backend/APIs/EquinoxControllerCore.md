@@ -7,7 +7,8 @@ The predefined message keys are available in
 
 ## JSON utilities
 
-This API provide an instance to work with the `JSON` payloads sent with the request
+The controller retains a [JsonHelper](JsonHelper.md) for the JSON payload loaded from a request.
+Use its typed accessors to read values and select fallbacks for missing fields
 
 ### jsonHelper
 

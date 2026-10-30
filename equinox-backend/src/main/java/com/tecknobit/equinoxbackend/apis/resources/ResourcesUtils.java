@@ -3,9 +3,10 @@ package com.tecknobit.equinoxbackend.apis.resources;
 import com.tecknobit.equinoxcore.annotations.Wrapper;
 
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 
@@ -42,7 +43,7 @@ public class ResourcesUtils<T> {
     }
 
     /**
-     * Method used to copy a classpath text resource to a file scheduled for deletion when the JVM exits
+     * Method used to copy a classpath resource to a file scheduled for deletion when the JVM exits
      *
      * @param pathname The classpath resource name, also used as the destination file path
      *
@@ -55,10 +56,10 @@ public class ResourcesUtils<T> {
     }
 
     /**
-     * Method used to copy a classpath text resource to a file
+     * Method used to copy a classpath resource to a file
      *
-     * <p>The resource is decoded as UTF-8 and written using the default file-writer charset. An existing
-     * file at the destination is overwritten; this operation does not preserve arbitrary binary content
+     * <p>The original bytes are preserved, including binary content. An existing destination file is
+     * overwritten, and the resource stream is closed after the copy
      *
      * @param pathname The classpath resource name, also used as the destination file path
      *
@@ -111,7 +112,7 @@ public class ResourcesUtils<T> {
     }
 
     /**
-     * Method used to copy a classpath text resource to a file scheduled for deletion when the JVM exits
+     * Method used to copy a classpath resource to a file scheduled for deletion when the JVM exits
      *
      * @param pathname The classpath resource name, also used as the destination file path
      * @param context  The class whose class loader is used to locate the resource
@@ -127,10 +128,10 @@ public class ResourcesUtils<T> {
     }
 
     /**
-     * Method used to copy a classpath text resource to a file
+     * Method used to copy a classpath resource to a file
      *
-     * <p>The resource is decoded as UTF-8 and written using the default file-writer charset. An existing
-     * file at the destination is overwritten; this operation does not preserve arbitrary binary content
+     * <p>The original bytes are preserved, including binary content. An existing destination file is
+     * overwritten, and the resource stream is closed after the copy
      *
      * @param pathname The classpath resource name, also used as the destination file path
      * @param context  The class whose class loader is used to locate the resource
@@ -140,11 +141,9 @@ public class ResourcesUtils<T> {
      * @throws IOException when the resource cannot be found, read, or written
      */
     public static <T> File getResourceFileCopy(String pathname, Class<T> context) throws IOException {
-        String content = getResourceContent(pathname, context);
         File resourceCopy = new File(pathname);
-        try (FileWriter writer = new FileWriter(resourceCopy, false)) {
-            writer.write(content);
-            writer.flush();
+        try (InputStream resource = getResourceStream(pathname, context)) {
+            Files.copy(resource, resourceCopy.toPath(), StandardCopyOption.REPLACE_EXISTING);
         }
         return resourceCopy;
     }
@@ -167,6 +166,8 @@ public class ResourcesUtils<T> {
     /**
      * Method used to read the UTF-8 content of a classpath resource
      *
+     * <p>The resource stream is closed after reading, including when reading fails
+     *
      * @param pathname The classpath resource name
      * @param context  The class whose class loader is used to locate the resource
      * @param <T>      The type of the context class
@@ -175,7 +176,9 @@ public class ResourcesUtils<T> {
      * @throws IOException when the resource cannot be found or read
      */
     public static <T> String getResourceContent(String pathname, Class<T> context) throws IOException {
-        return new String(getResourceStream(pathname, context).readAllBytes(), UTF_8);
+        try (InputStream resource = getResourceStream(pathname, context)) {
+            return new String(resource.readAllBytes(), UTF_8);
+        }
     }
 
     /**

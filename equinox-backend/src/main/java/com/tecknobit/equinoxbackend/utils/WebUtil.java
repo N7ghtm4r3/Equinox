@@ -5,21 +5,19 @@ import com.tecknobit.equinoxbackend.environment.exceptions.EquinoxServerExceptio
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.nio.channels.Channels;
-import java.nio.channels.FileChannel;
-import java.nio.channels.ReadableByteChannel;
 import java.nio.file.Files;
+import java.nio.file.InvalidPathException;
 import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-import static java.lang.Long.MAX_VALUE;
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.util.Base64.getDecoder;
 import static java.util.Base64.getEncoder;
@@ -217,64 +215,64 @@ public class WebUtil {
     }
 
     /**
-     * Method used to download URL content to the supplied destination path
+     * Method used to download URL content to a permanent or temporary file
      *
-     * <p>The destination is overwritten. When {@code save} is {@code false}, the method additionally
-     * creates and returns a separate empty temporary file scheduled for deletion when the JVM exits;
-     * the downloaded content remains at {@code pathName}
+     * <p>Permanent downloads overwrite the supplied destination and create missing parent directories.
+     * Temporary downloads use a file in the default temporary directory with the supplied file-name suffix
+     * and are scheduled for deletion when the JVM exits. The source stream is closed after the download
      *
      * @param url      The source URL
-     * @param pathName The destination file path, which must contain a dot
-     * @param save     Whether to return the downloaded file instead of a separate temporary file
+     * @param pathName The destination path including a file-name suffix; only the suffix is used for temporary downloads
+     * @param save     Whether to retain the download at the supplied destination instead of a temporary file
      *
-     * @return the downloaded file, or a separate empty temporary file when {@code save} is {@code false},
-     *         as {@link File}
+     * @return the file containing the downloaded content as {@link File}
      * @throws IOException when the URL or destination is invalid, or downloading or file creation fails
      */
     public static File downloadFile(String url, String pathName, boolean save) throws IOException {
         if (url == null)
             throw new IOException("The URL source cannot be null");
-        if (pathName == null || pathName.replace(" ", "").isEmpty())
-            throw new IOException("The path name for the file cannot be null or blank");
-        try {
-            URL urlRef = new URI(url).toURL();
-            ReadableByteChannel byteChannel = Channels.newChannel(urlRef.openStream());
-            if (!pathName.contains("."))
-                throw new IOException("Path name must also contains the suffix for the file");
-            checkToCreateDirs(pathName);
-            try (FileOutputStream fileOutputStream = new FileOutputStream(pathName)) {
-                FileChannel fileChannel = fileOutputStream.getChannel();
-                fileChannel.transferFrom(byteChannel, 0, MAX_VALUE);
-                if (!save) {
-                    String suffix = "." + pathName.split("\\.")[1];
-                    File runtimeFile = File.createTempFile(pathName.replace(suffix, ""), suffix);
-                    runtimeFile.deleteOnExit();
-                    return runtimeFile;
-                } else
-                    return new File(pathName);
-            }
-        } catch (URISyntaxException | MalformedURLException e) {
-            throw new IOException("The URL source is not a valid source: " + e.getLocalizedMessage());
-        }
-    }
+        if (pathName == null || pathName.isBlank())
+            throw new IOException("The path name cannot be null or blank");
 
-    /**
-     * Method used to create the parent directories identified by forward slashes in a destination path
-     *
-     * @param pathName The destination file path, including the file name
-     * @throws IOException when missing parent directories cannot be created
-     */
-    private static void checkToCreateDirs(String pathName) throws IOException {
-        int lastIndexOf = pathName.lastIndexOf("/");
-        if (lastIndexOf != -1) {
-            String pathValue = pathName.substring(0, pathName.lastIndexOf("/"));
-            Path path = Path.of(pathValue);
-            if (!Files.exists(path)) {
-                boolean success = new File(pathValue).mkdirs();
-                if (!success)
-                    throw new IOException("The pathname cannot be created");
-            }
+        Path requestedPath;
+        try {
+            requestedPath = Path.of(pathName);
+        } catch (InvalidPathException e) {
+            throw new IOException("The path name is not valid", e);
         }
+
+        Path fileName = requestedPath.getFileName();
+        if (fileName == null)
+            throw new IOException("The path must include a file name");
+
+        int extensionIndex = fileName.toString().lastIndexOf('.');
+        if (extensionIndex < 0)
+            throw new IOException("The file name must include a suffix");
+
+        URL sourceUrl;
+        try {
+            sourceUrl = new URI(url).toURL();
+        } catch (URISyntaxException | MalformedURLException | IllegalArgumentException e) {
+            throw new IOException("The URL source is not a valid source", e);
+        }
+
+        Path destination;
+        if (save) {
+            Path parent = requestedPath.toAbsolutePath().getParent();
+            if (parent != null)
+                Files.createDirectories(parent);
+            destination = requestedPath;
+        } else {
+            String suffix = fileName.toString().substring(extensionIndex);
+            destination = Files.createTempFile("equinox-download-", suffix);
+            destination.toFile().deleteOnExit();
+        }
+
+        try (InputStream source = sourceUrl.openStream()) {
+            Files.copy(source, destination, StandardCopyOption.REPLACE_EXISTING);
+        }
+
+        return destination.toFile();
     }
 
     /**

@@ -1,4 +1,4 @@
-The `ServerSecret` annotation validates the server secret used to protect backend requests. Null, empty, and whitespace-only values are always rejected. When the server protector is enabled, the value must also match the configured server secret. When it is disabled, any non-blank value passes.
+The `ServerSecret` annotation validates the [server secret](../APIs/ServerProtector.md) used to protect backend requests. Null, empty, and whitespace-only values are always rejected. When the server protector is enabled, the value must also match the configured server secret. When it is disabled, any non-blank value passes.
 The default validation message is `not_authorized`
 
 ## Usage

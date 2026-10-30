@@ -99,6 +99,13 @@ Add the JitPack repository to your build file
         Collection of constants used in the SQL context
 
 ??? api-miscellaneous "Miscellaneous"
+
+     - [JsonHelper](APIs/JsonHelper.md)
+       Reads JSON configuration and payloads with typed accessors and fallback values
+     - [ResourcesUtils](APIs/ResourcesUtils.md)
+       Reads and copies classpath resources, including resources packaged in a JAR
+     - [ServerProtector](APIs/ServerProtector.md)
+       Manages the shared secret used to protect backend requests
      - [ResourcesProvider](APIs/ResourcesProvider.md)  
        Manages static resources to serve to client applications
 
@@ -106,6 +113,9 @@ Add the JitPack repository to your build file
        Facilitates event sharing and collection between backend services
 
 ??? utils "Utils"
+
+    - [WebUtil](Utils/WebUtil.md)
+      Computes digests and request signatures, downloads files, and creates data URIs
     - [DtoUtil](Utils/DtoUtil.md)
       Converts entity lists to DTOs with optional custom converters and callbacks
     
@@ -142,6 +152,8 @@ with the supplied exceptions
 
 - [EquinoxGlobalExceptionHandler](Exceptions/EquinoxGlobalExceptionHandler.md)
   converts Equinox exceptions and request validation failures into HTTP responses
+
+Use [SaveData](Exceptions/SaveData.md) to handle initialization that exposes a newly generated server secret
 
 ## Security
 
