@@ -3,6 +3,7 @@ package com.tecknobit.equinoxbackend.environment.configuration;
 import com.tecknobit.equinoxbackend.apis.json.JsonHelper;
 import com.tecknobit.equinoxbackend.apis.resources.ResourcesManager;
 import com.tecknobit.equinoxbackend.apis.resources.ResourcesUtils;
+import com.tecknobit.equinoxbackend.configuration.ServerProtector;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -77,8 +78,7 @@ public class EquinoxBackendConfiguration {
      * @return the content of the configuration for the backend as {@link String}, {@code null} if not specified
      */
     private String getConfigurationContent() {
-        ResourcesUtils<Class<EquinoxBackendConfiguration>> resourcesUtils = new ResourcesUtils<>(
-                EquinoxBackendConfiguration.class);
+        ResourcesUtils<EquinoxBackendConfiguration> resourcesUtils = new ResourcesUtils<>(EquinoxBackendConfiguration.class);
 
         try {
             return resourcesUtils.getResourceContent(EQUINOX_CONFIGURATION_PATHNAME);
@@ -143,10 +143,10 @@ public class EquinoxBackendConfiguration {
     }
 
     /**
-     * Method used to check whether the protection by the {@link com.tecknobit.apimanager.apis.ServerProtector} is
+     * Method used to check whether the protection by the {@link ServerProtector} is
      * currently enabled
      *
-     * @return whether the protection by the {@link com.tecknobit.apimanager.apis.ServerProtector} is
+     * @return whether the protection by the {@link ServerProtector} is
      * currently enabled as {@code boolean}
      */
     public boolean serverProtectorEnabled() {

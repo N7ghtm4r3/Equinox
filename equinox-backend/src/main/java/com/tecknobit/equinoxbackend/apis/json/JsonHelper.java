@@ -11,65 +11,56 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * The {@code JsonHelper} class is a useful tool class to works with {@code "JSON"} data format
+ * The {@code JsonHelper} class is useful to read JSON configuration and payloads used by Equinox backends
  *
- * @author N7ghtm4r3 - Tecknobit 
- * @apiNote this class is helpful to avoid the {@link JSONException} because if searched value is not present in {@code "JSON"}, will be
- * returned a default value or a custom value choose by you. For all the operations to get values you don't need to pass
- * the correct {@code "JSON"} path ro reach the wanted value because it will be automatically reached autonomously
- * @implSpec this class uses as default {@link org.json} library to work with {@code "JSON"}, the classes are:
- * <ul>
- *     <li>
- *         {@link JSONObject}
- *     </li>
- *     <li>
- *         {@link JSONArray}
- *     </li>
- * </ul>
- * This means that all methods where a {@code "JSON"}'s structure is requested will be returned one of that classes. <br>
- * In other methods, if this class has been instantiated using the constructor with {@link String} parameter, will be
- * possible work on {@code "JSON"} and return the result requested
+ * <p>Instances retain a {@link JSONObject} or {@link JSONArray} source, while static methods operate
+ * on a supplied source. Key-based lookups search nested structures without requiring a full path;
+ * index-based lookups read the selected array element
+ *
+ * <p>Typed accessors provide overloads with fallback values. Missing values and conversion failures
+ * are handled according to each accessor's contract, including the numeric sentinel constants
+ *
+ * @author N7ghtm4r3 - Tecknobit
+ *
+ * @since 2.0.0
  */
 public class JsonHelper{
 
     /**
-     * {@code NUMERIC_DEF_VALUE_IF_MISSED} is constant that memorizes default numeric value if the main is missed
+     * {@code NUMERIC_DEF_VALUE_IF_MISSED} the default sentinel used by primitive numeric lookups for missing values
      */
     public static final int NUMERIC_DEF_VALUE_IF_MISSED = -1234567890;
 
     /**
-     * {@code NUMERIC_CLASS_CAST_ERROR_VALUE} is constant that memorizes default numeric value if {@link ClassCastException}
-     * has been thrown
+     * {@code NUMERIC_CLASS_CAST_ERROR_VALUE} the sentinel used when a key-based numeric conversion fails
      */
     public static final int NUMERIC_CLASS_CAST_ERROR_VALUE = -987654321;
 
     /**
-     * {@code jsonObjectSource} is instance that memorizes {@link JSONObject} to work on
+     * {@code jsonObjectSource} the object source used by instance key-based lookups
      */
     private JSONObject jsonObjectSource;
 
     /**
-     * {@code jsonArraySource} is instance that memorizes {@link JSONArray} to work on
+     * {@code jsonArraySource} the array source used by instance index-based lookups
      */
     private JSONArray jsonArraySource;
 
     /**
-     * Constructor to init {@link JsonHelper} tool class
+     * Constructor to init the {@link JsonHelper} class from an object's string representation
      *
-     * @param jsonSource: the source of {@code "JSON"} to work on, it can be formatted as object or array {@code "JSON"} structures
-     * @throws IllegalArgumentException when {@code "jsonSource"} inserted is not a valid {@code "JSON"} source
-     * @apiNote will be called the {@code "toString()"} method, if it will be thrown an {@link IllegalArgumentException}
-     * use directly the {@code "JsonHelper(String jsonSource)"} constructor or check validity of the {@code "JSON"} source
-     * inserted
+     * @param jsonSource The value whose string representation contains a JSON object or array
+     * @param <T>        The type of the supplied source
+     * @throws IllegalArgumentException when the string representation is not a valid JSON object or array
      */
     public <T> JsonHelper(T jsonSource) {
         this(jsonSource.toString());
     }
 
     /**
-     * Constructor to init {@link JsonHelper} tool class
+     * Constructor to init the {@link JsonHelper} class with an object source and an empty array source
      *
-     * @param jsonObjectSource: jsonObject used to fetch data
+     * @param jsonObjectSource The JSON object used for key-based lookups
      */
     public JsonHelper(JSONObject jsonObjectSource) {
         this.jsonObjectSource = jsonObjectSource;
@@ -77,9 +68,9 @@ public class JsonHelper{
     }
 
     /**
-     * Constructor to init {@link JsonHelper} tool class
+     * Constructor to init the {@link JsonHelper} class with an array source and an empty object source
      *
-     * @param jsonArraySource: jsonArray used to fetch data
+     * @param jsonArraySource The JSON array used for index-based lookups
      */
     public JsonHelper(JSONArray jsonArraySource) {
         this.jsonArraySource = jsonArraySource;
@@ -87,10 +78,10 @@ public class JsonHelper{
     }
 
     /**
-     * Constructor to init {@link JsonHelper} tool class
+     * Constructor to init the {@link JsonHelper} class by parsing a JSON object or array
      *
-     * @param jsonSource: the source of {@code "JSON"} to work on, it can be formatted as object or array {@code "JSON"} structures
-     * @throws IllegalArgumentException when {@code "jsonSource"} inserted is not a valid {@code "JSON"} source
+     * @param jsonSource The JSON object or array to parse
+     * @throws IllegalArgumentException when the source is not a valid JSON object or array
      */
     public JsonHelper(String jsonSource) throws IllegalArgumentException {
         try {
@@ -105,10 +96,10 @@ public class JsonHelper{
     }
 
     /**
-     * Constructor to init {@link JsonHelper} tool class
+     * Constructor to init the {@link JsonHelper} class with object and array sources
      *
-     * @param jsonObjectSource: jsonObject used to fetch data
-     * @param jsonArraySource:  jsonArray used to fetch data
+     * @param jsonObjectSource The JSON object used for key-based lookups
+     * @param jsonArraySource  The JSON array used for index-based lookups
      */
     public JsonHelper(JSONObject jsonObjectSource, JSONArray jsonArraySource) {
         this.jsonObjectSource = jsonObjectSource;
@@ -116,11 +107,13 @@ public class JsonHelper{
     }
 
     /**
-     * Method to get from {@link JSONObject} a string value
+     * Method used to retrieve a string by searching the JSON object for a key
      *
-     * @param key: key of string value to get from json
-     * @return value as {@link String}, if it is not exist will return null value
-     * @throws ClassCastException: when this exception has been trowed will be returned null as default value
+     * <p>A failed cast returns {@code null}, including when a fallback was supplied
+     *
+     * @param key The key to search for in the object and its nested structures
+     *
+     * @return the retrieved value, or {@code null} when the key is not found, as {@link String}
      */
     @Wrapper
     public String getString(String key) {
@@ -128,12 +121,14 @@ public class JsonHelper{
     }
 
     /**
-     * Method to get from {@link JSONObject} a string value
+     * Method used to retrieve a string by searching the JSON object for a key
      *
-     * @param key:      key of string value to get from json
-     * @param defValue: default value to return if primary value not exists
-     * @return value as {@link String}, if it is not exist will return {@code defValue}
-     * @throws ClassCastException: when this exception has been trowed will be returned null as default value
+     * <p>A failed cast returns {@code null}, including when a fallback was supplied
+     *
+     * @param key      The key to search for in the object and its nested structures
+     * @param defValue The fallback to use when the requested value is unavailable
+     *
+     * @return the retrieved value, or {@code defValue} when the key is not found, as {@link String}
      */
     public String getString(String key, String defValue) {
         try {
@@ -144,15 +139,14 @@ public class JsonHelper{
     }
 
     /**
-     * Method to get from {@link JSONObject} a string value
+     * Method used to retrieve a string by searching the JSON object for a key
      *
-     * @param jsonDetails: {@code "JSON"} from fetch data
-     * @param key:         key of string value to get from json
-     * @return value as {@link String}, if it is not exist will return null value
-     * @throws ClassCastException: when this exception has been trowed will be returned null as default value
-     * @implNote this static method is useful when you have to fetch a single value from {@link JSONObject} avoiding
-     * instantiation of {@link JsonHelper} class, but if you have to fetch multiple value from the same
-     * {@link JSONObject} is recommended instantiate {@link JsonHelper} class first.
+     * <p>A failed cast returns {@code null}, including when a fallback was supplied
+     *
+     * @param jsonDetails The JSON object to read
+     * @param key         The key to search for in the object and its nested structures
+     *
+     * @return the retrieved value, or {@code null} when the key is not found, as {@link String}
      */
     @Wrapper
     public static String getString(JSONObject jsonDetails, String key) {
@@ -160,16 +154,15 @@ public class JsonHelper{
     }
 
     /**
-     * Method to get from {@link JSONObject} a string value
+     * Method used to retrieve a string by searching the JSON object for a key
      *
-     * @param jsonDetails: {@code "JSON"} from fetch data
-     * @param key:         key of string value to get from json
-     * @param defValue:    default value to return if primary value not exists
-     * @return value as {@link String}, if it is not exist will return {@code defValue}
-     * @throws ClassCastException: when this exception has been trowed will be returned null as default value
-     * @implNote this static method is useful when you have to fetch a single value from {@link JSONObject} avoiding
-     * instantiation of {@link JsonHelper} class, but if you have to fetch multiple value from the same
-     * {@link JSONObject} is recommended instantiate {@link JsonHelper} class first.
+     * <p>A failed cast returns {@code null}, including when a fallback was supplied
+     *
+     * @param jsonDetails The JSON object to read
+     * @param key         The key to search for in the object and its nested structures
+     * @param defValue    The fallback to use when the requested value is unavailable
+     *
+     * @return the retrieved value, or {@code defValue} when the key is not found, as {@link String}
      */
     public static String getString(JSONObject jsonDetails, String key, String defValue) {
         try {
@@ -180,10 +173,11 @@ public class JsonHelper{
     }
 
     /**
-     * Method to get from {@link JSONArray} a string value
+     * Method used to retrieve a string at a zero-based JSON array index
      *
-     * @param index: index of string value to get from json
-     * @return value as {@link String}, if it is not exist will return null value
+     * @param index The zero-based index of the array element
+     *
+     * @return the retrieved value, or {@code null} when the element cannot be read, as {@link String}
      */
     @Wrapper
     public String getString(int index) {
@@ -191,11 +185,12 @@ public class JsonHelper{
     }
 
     /**
-     * Method to get from {@link JSONArray} a string value
+     * Method used to retrieve a string at a zero-based JSON array index
      *
-     * @param index:    index of string value to get from json
-     * @param defValue: default value to return if primary value not exists
-     * @return value as {@link String}, if it is not exist will return {@code defValue}
+     * @param index    The zero-based index of the array element
+     * @param defValue The fallback to use when the requested value is unavailable
+     *
+     * @return the retrieved value, or {@code defValue} when the element cannot be read, as {@link String}
      */
     public String getString(int index, String defValue) {
         try {
@@ -206,12 +201,13 @@ public class JsonHelper{
     }
 
     /**
-     * Method to get from {@link JSONObject} a double value
+     * Method used to retrieve a double value by searching the JSON object for a key
      *
-     * @param key: key of double value to get from json
-     * @return value as double, if it is not exist will return {@link #NUMERIC_DEF_VALUE_IF_MISSED}
-     * @throws ClassCastException: when this exception has been thrown will be returned {@link #NUMERIC_CLASS_CAST_ERROR_VALUE}
-     *                             as default value
+     * <p>Failed numeric conversions return {@link #NUMERIC_CLASS_CAST_ERROR_VALUE}
+     *
+     * @param key The key to search for in the object and its nested structures
+     *
+     * @return the retrieved value, or {@link #NUMERIC_DEF_VALUE_IF_MISSED} when the key is not found, as {@code double}
      */
     @Wrapper
     public double getDouble(String key) {
@@ -219,13 +215,14 @@ public class JsonHelper{
     }
 
     /**
-     * Method to get from {@link JSONObject} a double value
+     * Method used to retrieve a double value by searching the JSON object for a key
      *
-     * @param key:      key of double value to get from json
-     * @param defValue: default value to return if primary value not exists
-     * @return value as double, if it is not exist will return {@code defValue}
-     * @throws ClassCastException: when this exception has been thrown will be returned {@link #NUMERIC_CLASS_CAST_ERROR_VALUE}
-     *                             as default value
+     * <p>Failed numeric conversions return {@link #NUMERIC_CLASS_CAST_ERROR_VALUE}
+     *
+     * @param key      The key to search for in the object and its nested structures
+     * @param defValue The fallback to use when the requested value is unavailable
+     *
+     * @return the retrieved value, or {@code defValue} when the key is not found, as {@code double}
      */
     public double getDouble(String key, double defValue) {
         try {
@@ -240,16 +237,14 @@ public class JsonHelper{
     }
 
     /**
-     * Method to get from {@link JSONObject} a double value
+     * Method used to retrieve a double value by searching the JSON object for a key
      *
-     * @param jsonDetails: {@code "JSON"} from fetch data
-     * @param key:         key of double value to get from json
-     * @return value as double, if it is not exist will return {@link #NUMERIC_DEF_VALUE_IF_MISSED}
-     * @throws ClassCastException: when this exception has been thrown will be returned {@link #NUMERIC_CLASS_CAST_ERROR_VALUE}
-     *                             as default value
-     * @implNote this static method is useful when you have to fetch a single value from {@link JSONObject} avoiding
-     * instantiation of {@link JsonHelper} class, but if you have to fetch multiple value from the same
-     * {@link JSONObject} is recommended instantiate {@link JsonHelper} class first.
+     * <p>Failed numeric conversions return {@link #NUMERIC_CLASS_CAST_ERROR_VALUE}
+     *
+     * @param jsonDetails The JSON object to read
+     * @param key         The key to search for in the object and its nested structures
+     *
+     * @return the retrieved value, or {@link #NUMERIC_DEF_VALUE_IF_MISSED} when the key is not found, as {@code double}
      */
     @Wrapper
     public static double getDouble(JSONObject jsonDetails, String key) {
@@ -257,18 +252,16 @@ public class JsonHelper{
     }
 
     /**
-     * Method to get from {@link JSONObject} a double value
+     * Method used to retrieve a double value by searching the JSON object for a key
      *
-     * @implNote this static method is useful when you have to fetch a single value from {@link JSONObject} avoiding
-     * instantiation of {@link JsonHelper} class, but if you have to fetch multiple value from the same
-     * {@link JSONObject} is recommended instantiate {@link JsonHelper} class first.
-     * @param jsonDetails: {@code "JSON"} from fetch data
-     * @param key: key of double value to get from json
-     * @param defValue: default value to return if primary value not exists
-     * @exception ClassCastException: when this exception has been thrown will be returned {@link #NUMERIC_CLASS_CAST_ERROR_VALUE}
-     * as default value
-     * @return value as double, if it is not exist will return {@code defValue}
-     * */
+     * <p>Failed numeric conversions return {@link #NUMERIC_CLASS_CAST_ERROR_VALUE}
+     *
+     * @param jsonDetails The JSON object to read
+     * @param key         The key to search for in the object and its nested structures
+     * @param defValue    The fallback to use when the requested value is unavailable
+     *
+     * @return the retrieved value, or {@code defValue} when the key is not found, as {@code double}
+     */
     public static double getDouble(JSONObject jsonDetails, String key, double defValue) {
         try {
             Object value = autoSearch(jsonDetails, key, defValue);
@@ -282,10 +275,11 @@ public class JsonHelper{
     }
 
     /**
-     * Method to get from {@link JSONArray} a double value
+     * Method used to retrieve a double value at a zero-based JSON array index
      *
-     * @param index: index of double value to get from json
-     * @return value as double, if it is not exist will return {@link #NUMERIC_DEF_VALUE_IF_MISSED}
+     * @param index The zero-based index of the array element
+     *
+     * @return the retrieved value, or {@link #NUMERIC_DEF_VALUE_IF_MISSED} when the element cannot be read, as {@code double}
      */
     @Wrapper
     public double getDouble(int index) {
@@ -293,11 +287,12 @@ public class JsonHelper{
     }
 
     /**
-     * Method to get from {@link JSONArray} a double value
+     * Method used to retrieve a double value at a zero-based JSON array index
      *
-     * @param index:    index of double value to get from json
-     * @param defValue: default value to return if primary value not exists
-     * @return value as double, if it is not exist will return {@code defValue}
+     * @param index    The zero-based index of the array element
+     * @param defValue The fallback to use when the requested value is unavailable
+     *
+     * @return the retrieved value, or {@code defValue} when the element cannot be read, as {@code double}
      */
     public double getDouble(int index, double defValue) {
         try {
@@ -308,12 +303,13 @@ public class JsonHelper{
     }
 
     /**
-     * Method to get from {@link JSONObject} an int value
+     * Method used to retrieve an integer value by searching the JSON object for a key
      *
-     * @param key: key of int value to get from json
-     * @return value as int, if it is not exist will return {@link #NUMERIC_DEF_VALUE_IF_MISSED}
-     * @throws ClassCastException: when this exception has been thrown will be returned {@link #NUMERIC_CLASS_CAST_ERROR_VALUE}
-     *                             as default value
+     * <p>Failed numeric conversions return {@link #NUMERIC_CLASS_CAST_ERROR_VALUE}
+     *
+     * @param key The key to search for in the object and its nested structures
+     *
+     * @return the retrieved value, or {@link #NUMERIC_DEF_VALUE_IF_MISSED} when the key is not found, as {@code int}
      */
     @Wrapper
     public int getInt(String key) {
@@ -321,13 +317,14 @@ public class JsonHelper{
     }
 
     /**
-     * Method to get from {@link JSONObject} an int value
+     * Method used to retrieve an integer value by searching the JSON object for a key
      *
-     * @param key:      key of int value to get from json
-     * @param defValue: default value to return if primary value not exists
-     * @return value as int, if it is not exist will return {@code defValue}
-     * @throws ClassCastException: when this exception has been thrown will be returned {@link #NUMERIC_CLASS_CAST_ERROR_VALUE}
-     *                             as default value
+     * <p>Failed numeric conversions return {@link #NUMERIC_CLASS_CAST_ERROR_VALUE}
+     *
+     * @param key      The key to search for in the object and its nested structures
+     * @param defValue The fallback to use when the requested value is unavailable
+     *
+     * @return the retrieved value, or {@code defValue} when the key is not found, as {@code int}
      */
     public int getInt(String key, int defValue) {
         try {
@@ -342,16 +339,14 @@ public class JsonHelper{
     }
 
     /**
-     * Method to get from {@link JSONObject} an int value
+     * Method used to retrieve an integer value by searching the JSON object for a key
      *
-     * @param jsonDetails: {@code "JSON"} from fetch data
-     * @param key:         key of int value to get from json
-     * @return value as int, if it is not exist will return {@link #NUMERIC_DEF_VALUE_IF_MISSED}
-     * @throws ClassCastException: when this exception has been thrown will be returned {@link #NUMERIC_CLASS_CAST_ERROR_VALUE}
-     *                             as default value
-     * @implNote this static method is useful when you have to fetch a single value from {@link JSONObject} avoiding
-     * instantiation of {@link JsonHelper} class, but if you have to fetch multiple value from the same
-     * {@link JSONObject} is recommended instantiate {@link JsonHelper} class first.
+     * <p>Failed numeric conversions return {@link #NUMERIC_CLASS_CAST_ERROR_VALUE}
+     *
+     * @param jsonDetails The JSON object to read
+     * @param key         The key to search for in the object and its nested structures
+     *
+     * @return the retrieved value, or {@link #NUMERIC_DEF_VALUE_IF_MISSED} when the key is not found, as {@code int}
      */
     @Wrapper
     public static int getInt(JSONObject jsonDetails, String key) {
@@ -359,18 +354,16 @@ public class JsonHelper{
     }
 
     /**
-     * Method to get from {@link JSONObject} an int value
+     * Method used to retrieve an integer value by searching the JSON object for a key
      *
-     * @implNote this static method is useful when you have to fetch a single value from {@link JSONObject} avoiding
-     * instantiation of {@link JsonHelper} class, but if you have to fetch multiple value from the same
-     * {@link JSONObject} is recommended instantiate {@link JsonHelper} class first.
-     * @param jsonDetails: {@code "JSON"} from fetch data
-     * @param key: key of int value to get from json
-     * @param defValue: default value to return if primary value not exists
-     * @exception ClassCastException: when this exception has been thrown will be returned {@link #NUMERIC_CLASS_CAST_ERROR_VALUE}
-     * as default value
-     * @return value as int, if it is not exist will return {@code defValue}
-     * */
+     * <p>Failed numeric conversions return {@link #NUMERIC_CLASS_CAST_ERROR_VALUE}
+     *
+     * @param jsonDetails The JSON object to read
+     * @param key         The key to search for in the object and its nested structures
+     * @param defValue    The fallback to use when the requested value is unavailable
+     *
+     * @return the retrieved value, or {@code defValue} when the key is not found, as {@code int}
+     */
     public static int getInt(JSONObject jsonDetails, String key, int defValue) {
         try {
             Object value = autoSearch(jsonDetails, key, defValue);
@@ -384,10 +377,11 @@ public class JsonHelper{
     }
 
     /**
-     * Method to get from {@link JSONArray} an int value
+     * Method used to retrieve an integer value at a zero-based JSON array index
      *
-     * @param index: index of int value to get from json
-     * @return value as int, if it is not exist will return {@link #NUMERIC_DEF_VALUE_IF_MISSED}
+     * @param index The zero-based index of the array element
+     *
+     * @return the retrieved value, or {@link #NUMERIC_DEF_VALUE_IF_MISSED} when the element cannot be read, as {@code int}
      */
     @Wrapper
     public int getInt(int index) {
@@ -395,11 +389,12 @@ public class JsonHelper{
     }
 
     /**
-     * Method to get from {@link JSONArray} an int value
+     * Method used to retrieve an integer value at a zero-based JSON array index
      *
-     * @param index:    index of int value to get from json
-     * @param defValue: default value to return if primary value not exists
-     * @return value as int, if it is not exist will return {@code defValue}
+     * @param index    The zero-based index of the array element
+     * @param defValue The fallback to use when the requested value is unavailable
+     *
+     * @return the retrieved value, or {@code defValue} when the element cannot be read, as {@code int}
      */
     public int getInt(int index, int defValue) {
         try {
@@ -410,12 +405,13 @@ public class JsonHelper{
     }
 
     /**
-     * Method to get from {@link JSONObject} a float value
+     * Method used to retrieve a float value by searching the JSON object for a key
      *
-     * @param key: key of float value to get from json
-     * @return value as float, if it is not exist will return {@link #NUMERIC_DEF_VALUE_IF_MISSED}
-     * @throws ClassCastException: when this exception has been thrown will be returned {@link #NUMERIC_CLASS_CAST_ERROR_VALUE}
-     *                             as default value
+     * <p>Failed numeric conversions return {@link #NUMERIC_CLASS_CAST_ERROR_VALUE}
+     *
+     * @param key The key to search for in the object and its nested structures
+     *
+     * @return the retrieved value, or {@link #NUMERIC_DEF_VALUE_IF_MISSED} when the key is not found, as {@code float}
      */
     @Wrapper
     public float getFloat(String key) {
@@ -423,13 +419,14 @@ public class JsonHelper{
     }
 
     /**
-     * Method to get from {@link JSONObject} a float value
+     * Method used to retrieve a float value by searching the JSON object for a key
      *
-     * @param key:      key of float value to get from json
-     * @param defValue: default value to return if primary value not exists
-     * @return value as float, if it is not exist will return {@code defValue}
-     * @throws ClassCastException: when this exception has been thrown will be returned {@link #NUMERIC_CLASS_CAST_ERROR_VALUE}
-     *                             as default value
+     * <p>Failed numeric conversions return {@link #NUMERIC_CLASS_CAST_ERROR_VALUE}
+     *
+     * @param key      The key to search for in the object and its nested structures
+     * @param defValue The fallback to use when the requested value is unavailable
+     *
+     * @return the retrieved value, or {@code defValue} when the key is not found, as {@code float}
      */
     public float getFloat(String key, float defValue) {
         try {
@@ -444,16 +441,14 @@ public class JsonHelper{
     }
 
     /**
-     * Method to get from {@link JSONObject} a float value
+     * Method used to retrieve a float value by searching the JSON object for a key
      *
-     * @param jsonDetails: {@code "JSON"} from fetch data
-     * @param key:         key of float value to get from json
-     * @return value as float, if it is not exist will return {@link #NUMERIC_DEF_VALUE_IF_MISSED}
-     * @throws ClassCastException: when this exception has been thrown will be returned {@link #NUMERIC_CLASS_CAST_ERROR_VALUE}
-     *                             as default value
-     * @implNote this static method is useful when you have to fetch a single value from {@link JSONObject} avoiding
-     * instantiation of {@link JsonHelper} class, but if you have to fetch multiple value from the same
-     * {@link JSONObject} is recommended instantiate {@link JsonHelper} class first.
+     * <p>Failed numeric conversions return {@link #NUMERIC_CLASS_CAST_ERROR_VALUE}
+     *
+     * @param jsonDetails The JSON object to read
+     * @param key         The key to search for in the object and its nested structures
+     *
+     * @return the retrieved value, or {@link #NUMERIC_DEF_VALUE_IF_MISSED} when the key is not found, as {@code float}
      */
     @Wrapper
     public static float getFloat(JSONObject jsonDetails, String key) {
@@ -461,17 +456,16 @@ public class JsonHelper{
     }
 
     /**
-     * Method to get from {@link JSONObject} a float value
-     * @implNote this static method is useful when you have to fetch a single value from {@link JSONObject} avoiding
-     * instantiation of {@link JsonHelper} class, but if you have to fetch multiple value from the same
-     * {@link JSONObject} is recommended instantiate {@link JsonHelper} class first.
-     * @param jsonDetails: {@code "JSON"} from fetch data
-     * @param key: key of float value to get from json
-     * @param defValue: default value to return if primary value not exists
-     * @exception ClassCastException: when this exception has been thrown will be returned {@link #NUMERIC_CLASS_CAST_ERROR_VALUE}
-     * as default value
-     * @return value as float, if it is not exist will return {@code defValue}
-     * */
+     * Method used to retrieve a float value by searching the JSON object for a key
+     *
+     * <p>Failed numeric conversions return {@link #NUMERIC_CLASS_CAST_ERROR_VALUE}
+     *
+     * @param jsonDetails The JSON object to read
+     * @param key         The key to search for in the object and its nested structures
+     * @param defValue    The fallback to use when the requested value is unavailable
+     *
+     * @return the retrieved value, or {@code defValue} when the key is not found, as {@code float}
+     */
     public static float getFloat(JSONObject jsonDetails, String key, float defValue) {
         try {
             Object value = autoSearch(jsonDetails, key, defValue);
@@ -485,10 +479,11 @@ public class JsonHelper{
     }
 
     /**
-     * Method to get from {@link JSONArray} a float value
+     * Method used to retrieve a float value at a zero-based JSON array index
      *
-     * @param index: index of float value to get from json
-     * @return value as float, if it is not exist will return {@link #NUMERIC_DEF_VALUE_IF_MISSED}
+     * @param index The zero-based index of the array element
+     *
+     * @return the retrieved value, or {@link #NUMERIC_DEF_VALUE_IF_MISSED} when the element cannot be read, as {@code float}
      */
     @Wrapper
     public float getFloat(int index) {
@@ -496,11 +491,12 @@ public class JsonHelper{
     }
 
     /**
-     * Method to get from {@link JSONArray} a float value
+     * Method used to retrieve a float value at a zero-based JSON array index
      *
-     * @param index:    index of float value to get from json
-     * @param defValue: default value to return if primary value not exists
-     * @return value as float, if it is not exist will return {@code defValue}
+     * @param index    The zero-based index of the array element
+     * @param defValue The fallback to use when the requested value is unavailable
+     *
+     * @return the retrieved value, or {@code defValue} when the element cannot be read, as {@code float}
      */
     public float getFloat(int index, float defValue) {
         try {
@@ -511,12 +507,13 @@ public class JsonHelper{
     }
 
     /**
-     * Method to get from {@link JSONObject} a long value
+     * Method used to retrieve a long value by searching the JSON object for a key
      *
-     * @param key: key of long value to get from json
-     * @return value as long, if it is not exist will return {@link #NUMERIC_DEF_VALUE_IF_MISSED}
-     * @throws ClassCastException: when this exception has been thrown will be returned {@link #NUMERIC_CLASS_CAST_ERROR_VALUE}
-     *                             as default value
+     * <p>Failed numeric conversions return {@link #NUMERIC_CLASS_CAST_ERROR_VALUE}
+     *
+     * @param key The key to search for in the object and its nested structures
+     *
+     * @return the retrieved value, or {@link #NUMERIC_DEF_VALUE_IF_MISSED} when the key is not found, as {@code long}
      */
     @Wrapper
     public long getLong(String key) {
@@ -524,13 +521,14 @@ public class JsonHelper{
     }
 
     /**
-     * Method to get from {@link JSONObject} a long value
+     * Method used to retrieve a long value by searching the JSON object for a key
      *
-     * @param key:      key of long value to get from json
-     * @param defValue: default value to return if primary value not exists
-     * @return value as long, if it is not exist will return {@code defValue}
-     * @throws ClassCastException: when this exception has been thrown will be returned {@link #NUMERIC_CLASS_CAST_ERROR_VALUE}
-     *                             as default value
+     * <p>Failed numeric conversions return {@link #NUMERIC_CLASS_CAST_ERROR_VALUE}
+     *
+     * @param key      The key to search for in the object and its nested structures
+     * @param defValue The fallback to use when the requested value is unavailable
+     *
+     * @return the retrieved value, or {@code defValue} when the key is not found, as {@code long}
      */
     public long getLong(String key, long defValue) {
         try {
@@ -545,16 +543,14 @@ public class JsonHelper{
     }
 
     /**
-     * Method to get from {@link JSONObject} a long value
+     * Method used to retrieve a long value by searching the JSON object for a key
      *
-     * @param jsonDetails: {@code "JSON"} from fetch data
-     * @param key:         key of long value to get from json
-     * @return value as long, if it is not exist will return {@link #NUMERIC_DEF_VALUE_IF_MISSED}
-     * @throws ClassCastException: when this exception has been thrown will be returned {@link #NUMERIC_CLASS_CAST_ERROR_VALUE}
-     *                             as default value
-     * @implNote this static method is useful when you have to fetch a single value from {@link JSONObject} avoiding
-     * instantiation of {@link JsonHelper} class, but if you have to fetch multiple value from the same
-     * {@link JSONObject} is recommended instantiate {@link JsonHelper} class first.
+     * <p>Failed numeric conversions return {@link #NUMERIC_CLASS_CAST_ERROR_VALUE}
+     *
+     * @param jsonDetails The JSON object to read
+     * @param key         The key to search for in the object and its nested structures
+     *
+     * @return the retrieved value, or {@link #NUMERIC_DEF_VALUE_IF_MISSED} when the key is not found, as {@code long}
      */
     @Wrapper
     public static long getLong(JSONObject jsonDetails, String key) {
@@ -562,17 +558,16 @@ public class JsonHelper{
     }
 
     /**
-     * Method to get from {@link JSONObject} a long value
-     * @implNote this static method is useful when you have to fetch a single value from {@link JSONObject} avoiding
-     * instantiation of {@link JsonHelper} class, but if you have to fetch multiple value from the same
-     * {@link JSONObject} is recommended instantiate {@link JsonHelper} class first.
-     * @param jsonDetails: {@code "JSON"} from fetch data
-     * @param key: key of long value to get from json
-     * @param defValue: default value to return if primary value not exists
-     * @exception ClassCastException: when this exception has been thrown will be returned {@link #NUMERIC_CLASS_CAST_ERROR_VALUE}
-     * as default value
-     * @return value as long, if it is not exist will return {@code defValue}
-     * */
+     * Method used to retrieve a long value by searching the JSON object for a key
+     *
+     * <p>Failed numeric conversions return {@link #NUMERIC_CLASS_CAST_ERROR_VALUE}
+     *
+     * @param jsonDetails The JSON object to read
+     * @param key         The key to search for in the object and its nested structures
+     * @param defValue    The fallback to use when the requested value is unavailable
+     *
+     * @return the retrieved value, or {@code defValue} when the key is not found, as {@code long}
+     */
     public static long getLong(JSONObject jsonDetails, String key, long defValue) {
         try {
             Object value = autoSearch(jsonDetails, key, defValue);
@@ -586,10 +581,11 @@ public class JsonHelper{
     }
 
     /**
-     * Method to get from {@link JSONArray} a long value
+     * Method used to retrieve a long value at a zero-based JSON array index
      *
-     * @param index: index of long value to get from json
-     * @return value as long, if it is not exist will return {@link #NUMERIC_DEF_VALUE_IF_MISSED}
+     * @param index The zero-based index of the array element
+     *
+     * @return the retrieved value, or {@link #NUMERIC_DEF_VALUE_IF_MISSED} when the element cannot be read, as {@code long}
      */
     @Wrapper
     public long getLong(int index) {
@@ -597,11 +593,12 @@ public class JsonHelper{
     }
 
     /**
-     * Method to get from {@link JSONArray} a long value
+     * Method used to retrieve a long value at a zero-based JSON array index
      *
-     * @param index:    index of long value to get from json
-     * @param defValue: default value to return if primary value not exists
-     * @return value as long, if it is not exist will return {@code defValue}
+     * @param index    The zero-based index of the array element
+     * @param defValue The fallback to use when the requested value is unavailable
+     *
+     * @return the retrieved value, or {@code defValue} when the element cannot be read, as {@code long}
      */
     public long getLong(int index, long defValue) {
         try {
@@ -612,11 +609,13 @@ public class JsonHelper{
     }
 
     /**
-     * Method to get from {@link JSONObject} a BigDecimal value
+     * Method used to retrieve a decimal value by searching the JSON object for a key
      *
-     * @param key: key of BigDecimal value to get from json
-     * @return value as {@link BigDecimal}, if it is not exist will return null value
-     * @throws ClassCastException: when this exception has been trowed will be returned null as default value
+     * <p>Failed numeric conversions return a {@link BigDecimal} representation of {@link #NUMERIC_CLASS_CAST_ERROR_VALUE}. A null fallback also produces this sentinel
+     *
+     * @param key The key to search for in the object and its nested structures
+     *
+     * @return the retrieved value, or the numeric conversion-error sentinel when no value can be converted, as {@link BigDecimal}
      */
     @Wrapper
     public BigDecimal getBigDecimal(String key) {
@@ -624,12 +623,14 @@ public class JsonHelper{
     }
 
     /**
-     * Method to get from {@link JSONObject} a BigDecimal value
+     * Method used to retrieve a decimal value by searching the JSON object for a key
      *
-     * @param key:      key of BigDecimal value to get from json
-     * @param defValue: default value to return if primary value not exists
-     * @return value as {@link BigDecimal}, if it is not exist will return {@code defValue}
-     * @throws ClassCastException: when this exception has been trowed will be returned null as default value
+     * <p>Failed numeric conversions return a {@link BigDecimal} representation of {@link #NUMERIC_CLASS_CAST_ERROR_VALUE}. A null fallback also produces this sentinel
+     *
+     * @param key      The key to search for in the object and its nested structures
+     * @param defValue The fallback to use when the requested value is unavailable
+     *
+     * @return the retrieved value, or {@code defValue} when the key is not found, as {@link BigDecimal}
      */
     public BigDecimal getBigDecimal(String key, BigDecimal defValue) {
         try {
@@ -643,15 +644,14 @@ public class JsonHelper{
     }
 
     /**
-     * Method to get from {@link JSONObject} a BigDecimal value
+     * Method used to retrieve a decimal value by searching the JSON object for a key
      *
-     * @param jsonDetails: {@code "JSON"} from fetch data
-     * @param key:         key of BigDecimal value to get from json
-     * @return value as {@link BigDecimal}, if it is not exist will return null value
-     * @throws ClassCastException: when this exception has been trowed will be returned null as default value
-     * @implNote this static method is useful when you have to fetch a single value from {@link JSONObject} avoiding
-     * instantiation of {@link JsonHelper} class, but if you have to fetch multiple value from the same
-     * {@link JSONObject} is recommended instantiate {@link JsonHelper} class first.
+     * <p>Failed numeric conversions return a {@link BigDecimal} representation of {@link #NUMERIC_CLASS_CAST_ERROR_VALUE}. A null fallback also produces this sentinel
+     *
+     * @param jsonDetails The JSON object to read
+     * @param key         The key to search for in the object and its nested structures
+     *
+     * @return the retrieved value, or the numeric conversion-error sentinel when no value can be converted, as {@link BigDecimal}
      */
     @Wrapper
     public static BigDecimal getBigDecimal(JSONObject jsonDetails, String key) {
@@ -659,17 +659,16 @@ public class JsonHelper{
     }
 
     /**
-     * Method to get from {@link JSONObject} a BigDecimal value
+     * Method used to retrieve a decimal value by searching the JSON object for a key
      *
-     * @implNote this static method is useful when you have to fetch a single value from {@link JSONObject} avoiding
-     * instantiation of {@link JsonHelper} class, but if you have to fetch multiple value from the same
-     * {@link JSONObject} is recommended instantiate {@link JsonHelper} class first.
-     * @param jsonDetails: {@code "JSON"} from fetch data
-     * @param key: key of BigDecimal value to get from json
-     * @param defValue: default value to return if primary value not exists
-     * @exception ClassCastException: when this exception has been trowed will be returned null as default value
-     * @return value as {@link BigDecimal}, if it is not exist will return {@code defValue}
-     * */
+     * <p>Failed numeric conversions return a {@link BigDecimal} representation of {@link #NUMERIC_CLASS_CAST_ERROR_VALUE}. A null fallback also produces this sentinel
+     *
+     * @param jsonDetails The JSON object to read
+     * @param key         The key to search for in the object and its nested structures
+     * @param defValue    The fallback to use when the requested value is unavailable
+     *
+     * @return the retrieved value, or {@code defValue} when the key is not found, as {@link BigDecimal}
+     */
     public static BigDecimal getBigDecimal(JSONObject jsonDetails, String key, BigDecimal defValue) {
         try {
             Object value = autoSearch(jsonDetails, key, defValue);
@@ -682,10 +681,11 @@ public class JsonHelper{
     }
 
     /**
-     * Method to get from {@link JSONArray} a BigDecimal value
+     * Method used to retrieve a decimal value at a zero-based JSON array index
      *
-     * @param index: index of BigDecimal value to get from json
-     * @return value as {@link BigDecimal}, if it is not exist will return null value
+     * @param index The zero-based index of the array element
+     *
+     * @return the retrieved value, or {@code null} when the element cannot be read, as {@link BigDecimal}
      */
     @Wrapper
     public BigDecimal getBigDecimal(int index) {
@@ -693,11 +693,12 @@ public class JsonHelper{
     }
 
     /**
-     * Method to get from {@link JSONArray} a BigDecimal value
+     * Method used to retrieve a decimal value at a zero-based JSON array index
      *
-     * @param index:    index of BigDecimal value to get from json
-     * @param defValue: default value to return if primary value not exists
-     * @return value as {@link BigDecimal}, if it is not exist will return {@code defValue}
+     * @param index    The zero-based index of the array element
+     * @param defValue The fallback to use when the requested value is unavailable
+     *
+     * @return the retrieved value, or {@code defValue} when the element cannot be read, as {@link BigDecimal}
      */
     public BigDecimal getBigDecimal(int index, BigDecimal defValue) {
         try {
@@ -708,11 +709,13 @@ public class JsonHelper{
     }
 
     /**
-     * Method to get from {@link JSONObject} a BigInteger value
+     * Method used to retrieve an integer value by searching the JSON object for a key
      *
-     * @param key: key of BigInteger value to get from json
-     * @return value as {@link BigInteger}, if it is not exist will return null value
-     * @throws ClassCastException: when this exception has been trowed will be returned null as default value
+     * <p>Failed numeric conversions return a {@link BigInteger} representation of {@link #NUMERIC_CLASS_CAST_ERROR_VALUE}. A null fallback also produces this sentinel
+     *
+     * @param key The key to search for in the object and its nested structures
+     *
+     * @return the retrieved value, or the numeric conversion-error sentinel when no value can be converted, as {@link BigInteger}
      */
     @Wrapper
     public BigInteger getBigInteger(String key) {
@@ -720,12 +723,14 @@ public class JsonHelper{
     }
 
     /**
-     * Method to get from {@link JSONObject} a BigInteger value
+     * Method used to retrieve an integer value by searching the JSON object for a key
      *
-     * @param key:      key of BigInteger value to get from json
-     * @param defValue: default value to return if primary value not exists
-     * @return value as {@link BigInteger}, if it is not exist will return {@code defValue}
-     * @throws ClassCastException: when this exception has been trowed will be returned null as default value
+     * <p>Failed numeric conversions return a {@link BigInteger} representation of {@link #NUMERIC_CLASS_CAST_ERROR_VALUE}. A null fallback also produces this sentinel
+     *
+     * @param key      The key to search for in the object and its nested structures
+     * @param defValue The fallback to use when the requested value is unavailable
+     *
+     * @return the retrieved value, or {@code defValue} when the key is not found, as {@link BigInteger}
      */
     public BigInteger getBigInteger(String key, BigInteger defValue) {
         try {
@@ -739,15 +744,14 @@ public class JsonHelper{
     }
 
     /**
-     * Method to get from {@link JSONObject} a BigInteger value
+     * Method used to retrieve an integer value by searching the JSON object for a key
      *
-     * @param jsonDetails: {@code "JSON"} from fetch data
-     * @param key:         key of BigInteger value to get from json
-     * @return value as {@link BigInteger}, if it is not exist will return null value
-     * @throws ClassCastException: when this exception has been trowed will be returned null as default value
-     * @implNote this static method is useful when you have to fetch a single value from {@link JSONObject} avoiding
-     * instantiation of {@link JsonHelper} class, but if you have to fetch multiple value from the same
-     * {@link JSONObject} is recommended instantiate {@link JsonHelper} class first.
+     * <p>Failed numeric conversions return a {@link BigInteger} representation of {@link #NUMERIC_CLASS_CAST_ERROR_VALUE}. A null fallback also produces this sentinel
+     *
+     * @param jsonDetails The JSON object to read
+     * @param key         The key to search for in the object and its nested structures
+     *
+     * @return the retrieved value, or the numeric conversion-error sentinel when no value can be converted, as {@link BigInteger}
      */
     @Wrapper
     public static BigInteger getBigInteger(JSONObject jsonDetails, String key) {
@@ -755,17 +759,16 @@ public class JsonHelper{
     }
 
     /**
-     * Method to get from {@link JSONObject} a BigInteger value
+     * Method used to retrieve an integer value by searching the JSON object for a key
      *
-     * @implNote this static method is useful when you have to fetch a single value from {@link JSONObject} avoiding
-     * instantiation of {@link JsonHelper} class, but if you have to fetch multiple value from the same
-     * {@link JSONObject} is recommended instantiate {@link JsonHelper} class first.
-     * @param jsonDetails: {@code "JSON"} from fetch data
-     * @param key: key of BigInteger value to get from json
-     * @param defValue: default value to return if primary value not exists
-     * @exception ClassCastException: when this exception has been trowed will be returned null as default value
-     * @return value as {@link BigInteger}, if it is not exist will return {@code defValue}
-     * */
+     * <p>Failed numeric conversions return a {@link BigInteger} representation of {@link #NUMERIC_CLASS_CAST_ERROR_VALUE}. A null fallback also produces this sentinel
+     *
+     * @param jsonDetails The JSON object to read
+     * @param key         The key to search for in the object and its nested structures
+     * @param defValue    The fallback to use when the requested value is unavailable
+     *
+     * @return the retrieved value, or {@code defValue} when the key is not found, as {@link BigInteger}
+     */
     public static BigInteger getBigInteger(JSONObject jsonDetails, String key, BigInteger defValue) {
         try {
             Object value = autoSearch(jsonDetails, key, defValue);
@@ -778,10 +781,11 @@ public class JsonHelper{
     }
 
     /**
-     * Method to get from {@link JSONArray} a BigInteger value
+     * Method used to retrieve an integer value at a zero-based JSON array index
      *
-     * @param index: index of BigInteger value to get from json
-     * @return value as {@link BigInteger}, if it is not exist will return null value
+     * @param index The zero-based index of the array element
+     *
+     * @return the retrieved value, or {@code null} when the element cannot be read, as {@link BigInteger}
      */
     @Wrapper
     public BigInteger getBigInteger(int index) {
@@ -789,11 +793,12 @@ public class JsonHelper{
     }
 
     /**
-     * Method to get from {@link JSONArray} a BigInteger value
+     * Method used to retrieve an integer value at a zero-based JSON array index
      *
-     * @param index:    index of BigInteger value to get from json
-     * @param defValue: default value to return if primary value not exists
-     * @return value as {@link BigInteger}, if it is not exist will return {@code defValue}
+     * @param index    The zero-based index of the array element
+     * @param defValue The fallback to use when the requested value is unavailable
+     *
+     * @return the retrieved value, or {@code defValue} when the element cannot be read, as {@link BigInteger}
      */
     public BigInteger getBigInteger(int index, BigInteger defValue) {
         try {
@@ -804,11 +809,13 @@ public class JsonHelper{
     }
 
     /**
-     * Method to get from {@link JSONObject} a Number value
+     * Method used to retrieve a numeric value by searching the JSON object for a key
      *
-     * @param key: key of Number value to get from json
-     * @return value as {@link Number}, if it is not exist will return null value
-     * @throws ClassCastException: when this exception has been trowed will be returned null as default value
+     * <p>Failed numeric conversions return {@link #NUMERIC_CLASS_CAST_ERROR_VALUE}
+     *
+     * @param key The key to search for in the object and its nested structures
+     *
+     * @return the retrieved value, or {@link #NUMERIC_DEF_VALUE_IF_MISSED} when the key is not found, as {@link Number}
      */
     @Wrapper
     public Number getNumber(String key) {
@@ -816,12 +823,14 @@ public class JsonHelper{
     }
 
     /**
-     * Method to get from {@link JSONObject} a Number value
+     * Method used to retrieve a numeric value by searching the JSON object for a key
      *
-     * @param key:      key of Number value to get from json
-     * @param defValue: default value to return if primary value not exists
-     * @return value as {@link Number}, if it is not exist will return {@code defValue}
-     * @throws ClassCastException: when this exception has been trowed will be returned null as default value
+     * <p>Failed numeric conversions return {@link #NUMERIC_CLASS_CAST_ERROR_VALUE}
+     *
+     * @param key      The key to search for in the object and its nested structures
+     * @param defValue The fallback to use when the requested value is unavailable
+     *
+     * @return the retrieved value, or {@code defValue} when the key is not found, as {@link Number}
      */
     public Number getNumber(String key, Number defValue) {
         try {
@@ -833,15 +842,14 @@ public class JsonHelper{
     }
 
     /**
-     * Method to get from {@link JSONObject} a Number value
+     * Method used to retrieve a numeric value by searching the JSON object for a key
      *
-     * @param jsonDetails: {@code "JSON"} from fetch data
-     * @param key:         key of Number value to get from json
-     * @return value as {@link Number}, if it is not exist will return null value
-     * @throws ClassCastException: when this exception has been trowed will be returned null as default value
-     * @implNote this static method is useful when you have to fetch a single value from {@link JSONObject} avoiding
-     * instantiation of {@link JsonHelper} class, but if you have to fetch multiple value from the same
-     * {@link JSONObject} is recommended instantiate {@link JsonHelper} class first.
+     * <p>Failed numeric conversions return {@link #NUMERIC_CLASS_CAST_ERROR_VALUE}
+     *
+     * @param jsonDetails The JSON object to read
+     * @param key         The key to search for in the object and its nested structures
+     *
+     * @return the retrieved value, or {@link #NUMERIC_DEF_VALUE_IF_MISSED} when the key is not found, as {@link Number}
      */
     @Wrapper
     public static Number getNumber(JSONObject jsonDetails, String key) {
@@ -849,16 +857,15 @@ public class JsonHelper{
     }
 
     /**
-     * Method to get from {@link JSONObject} a Number value
+     * Method used to retrieve a numeric value by searching the JSON object for a key
      *
-     * @param jsonDetails: {@code "JSON"} from fetch data
-     * @param key:         key of Number value to get from json
-     * @param defValue:    default value to return if primary value not exists
-     * @return value as {@link Number}, if it is not exist will return {@code defValue}
-     * @throws ClassCastException: when this exception has been trowed will be returned null as default value
-     * @implNote this static method is useful when you have to fetch a single value from {@link JSONObject} avoiding
-     * instantiation of {@link JsonHelper} class, but if you have to fetch multiple value from the same
-     * {@link JSONObject} is recommended instantiate {@link JsonHelper} class first.
+     * <p>Failed numeric conversions return {@link #NUMERIC_CLASS_CAST_ERROR_VALUE}
+     *
+     * @param jsonDetails The JSON object to read
+     * @param key         The key to search for in the object and its nested structures
+     * @param defValue    The fallback to use when the requested value is unavailable
+     *
+     * @return the retrieved value, or {@code defValue} when the key is not found, as {@link Number}
      */
     public static Number getNumber(JSONObject jsonDetails, String key, Number defValue) {
         try {
@@ -870,10 +877,11 @@ public class JsonHelper{
     }
 
     /**
-     * Method to get from {@link JSONArray} a Number value
+     * Method used to retrieve a numeric value at a zero-based JSON array index
      *
-     * @param index: index of Number value to get from json
-     * @return value as {@link Number}, if it is not exist will return null value
+     * @param index The zero-based index of the array element
+     *
+     * @return the retrieved value, or {@code null} when the element cannot be read, as {@link Number}
      */
     @Wrapper
     public Number getNumber(int index) {
@@ -881,11 +889,12 @@ public class JsonHelper{
     }
 
     /**
-     * Method to get from {@link JSONArray} a Number value
+     * Method used to retrieve a numeric value at a zero-based JSON array index
      *
-     * @param index:    index of Number value to get from json
-     * @param defValue: default value to return if primary value not exists
-     * @return value as {@link Number}, if it is not exist will return {@code defValue}
+     * @param index    The zero-based index of the array element
+     * @param defValue The fallback to use when the requested value is unavailable
+     *
+     * @return the retrieved value, or {@code defValue} when the element cannot be read, as {@link Number}
      */
     public Number getNumber(int index, Number defValue) {
         try {
@@ -896,11 +905,13 @@ public class JsonHelper{
     }
 
     /**
-     * Method to get from {@link JSONObject} an object value
+     * Method used to retrieve a value by searching the JSON object for a key
      *
-     * @param key: key of Object value to get from json
-     * @return value as {@link Object}, if it is not exist will return null value
-     * @throws ClassCastException: when this exception has been trowed will be returned null as default value
+     * <p>A failed cast returns {@code null}, including when a fallback was supplied
+     *
+     * @param key The key to search for in the object and its nested structures
+     *
+     * @return the retrieved value, or {@code null} when the key is not found, as {@link Object}
      */
     @Wrapper
     public Object get(String key) {
@@ -908,12 +919,14 @@ public class JsonHelper{
     }
 
     /**
-     * Method to get from {@link JSONObject} an object value
+     * Method used to retrieve a value by searching the JSON object for a key
      *
-     * @param key:      key of Object value to get from json
-     * @param defValue: default value to return if primary value not exists
-     * @return value as {@link Object}, if it is not exist will return {@code defValue}
-     * @throws ClassCastException: when this exception has been trowed will be returned null as default value
+     * <p>A failed cast returns {@code null}, including when a fallback was supplied
+     *
+     * @param key      The key to search for in the object and its nested structures
+     * @param defValue The fallback to use when the requested value is unavailable
+     *
+     * @return the retrieved value, or {@code defValue} when the key is not found, as {@link Object}
      */
     public Object get(String key, Object defValue) {
         try {
@@ -924,15 +937,14 @@ public class JsonHelper{
     }
 
     /**
-     * Method to get from {@link JSONObject} an Object value
+     * Method used to retrieve a value by searching the JSON object for a key
      *
-     * @param jsonDetails: {@code "JSON"} from fetch data
-     * @param key:         key of Object value to get from json
-     * @return value as {@link Object}, if it is not exist will return null value
-     * @throws ClassCastException: when this exception has been trowed will be returned null as default value
-     * @implNote this static method is useful when you have to fetch a single value from {@link JSONObject} avoiding
-     * instantiation of {@link JsonHelper} class, but if you have to fetch multiple value from the same
-     * {@link JSONObject} is recommended instantiate {@link JsonHelper} class first.
+     * <p>A failed cast returns {@code null}, including when a fallback was supplied
+     *
+     * @param jsonDetails The JSON object to read
+     * @param key         The key to search for in the object and its nested structures
+     *
+     * @return the retrieved value, or {@code null} when the key is not found, as {@link Object}
      */
     @Wrapper
     public static Object get(JSONObject jsonDetails, String key) {
@@ -940,16 +952,15 @@ public class JsonHelper{
     }
 
     /**
-     * Method to get from {@link JSONObject} an Object value
+     * Method used to retrieve a value by searching the JSON object for a key
      *
-     * @param jsonDetails: {@code "JSON"} from fetch data
-     * @param key:         key of Object value to get from json
-     * @param defValue:    default value to return if primary value not exists
-     * @return value as {@link Object}, if it is not exist will return {@code defValue}
-     * @throws ClassCastException: when this exception has been trowed will be returned null as default value
-     * @implNote this static method is useful when you have to fetch a single value from {@link JSONObject} avoiding
-     * instantiation of {@link JsonHelper} class, but if you have to fetch multiple value from the same
-     * {@link JSONObject} is recommended instantiate {@link JsonHelper} class first.
+     * <p>A failed cast returns {@code null}, including when a fallback was supplied
+     *
+     * @param jsonDetails The JSON object to read
+     * @param key         The key to search for in the object and its nested structures
+     * @param defValue    The fallback to use when the requested value is unavailable
+     *
+     * @return the retrieved value, or {@code defValue} when the key is not found, as {@link Object}
      */
     public static Object get(JSONObject jsonDetails, String key, Object defValue) {
         try {
@@ -960,10 +971,11 @@ public class JsonHelper{
     }
 
     /**
-     * Method to get from {@link JSONArray} an object value
+     * Method used to retrieve a value at a zero-based JSON array index
      *
-     * @param index: index of Object value to get from json
-     * @return value as {@link Object}, if it is not exist will return null value
+     * @param index The zero-based index of the array element
+     *
+     * @return the retrieved value, or {@code null} when the element cannot be read, as {@link Object}
      */
     @Wrapper
     public Object get(int index) {
@@ -971,11 +983,12 @@ public class JsonHelper{
     }
 
     /**
-     * Method to get from {@link JSONArray} an object value
+     * Method used to retrieve a value at a zero-based JSON array index
      *
-     * @param index:    index of Object value to get from json
-     * @param defValue: default value to return if primary value not exists
-     * @return value as {@link Object}, if it is not exist will return {@code defValue}
+     * @param index    The zero-based index of the array element
+     * @param defValue The fallback to use when the requested value is unavailable
+     *
+     * @return the retrieved value, or {@code defValue} when the element cannot be read, as {@link Object}
      */
     public Object get(int index, Object defValue) {
         try {
@@ -986,23 +999,27 @@ public class JsonHelper{
     }
 
     /**
-     * Method to get from {@link JSONObject} a boolean value
+     * Method used to retrieve a boolean value by searching the JSON object for a key
      *
-     * @param key: key of boolean value to get from json
-     * @return value as boolean, if it is not exist will return false value
-     * @throws ClassCastException: when this exception has been trowed will be returned false as default value
+     * <p>Boolean values are used directly; other values are parsed as text. A failed cast returns {@code false}
+     *
+     * @param key The key to search for in the object and its nested structures
+     *
+     * @return the retrieved value, or {@code false} when the key is not found, as {@code boolean}
      */
     public boolean getBoolean(String key) {
         return getBoolean(key, false);
     }
 
     /**
-     * Method to get from {@link JSONObject} a boolean value
+     * Method used to retrieve a boolean value by searching the JSON object for a key
      *
-     * @param key:      key of boolean value to get from json
-     * @param defValue: default value to return if primary value not exists
-     * @return value as boolean, if it is not exist will return {@code defValue}
-     * @throws ClassCastException: when this exception has been trowed will be returned false as default value
+     * <p>Boolean values are used directly; other values are parsed as text. A failed cast returns {@code defValue}
+     *
+     * @param key      The key to search for in the object and its nested structures
+     * @param defValue The fallback to use when the requested value is unavailable
+     *
+     * @return the retrieved value, or {@code defValue} when the key is not found, as {@code boolean}
      */
     public boolean getBoolean(String key, boolean defValue) {
         try {
@@ -1017,10 +1034,11 @@ public class JsonHelper{
     }
 
     /**
-     * Method to get from {@link JSONArray} a boolean value
+     * Method used to retrieve a boolean value at a zero-based JSON array index
      *
-     * @param index: index of boolean value to get from json
-     * @return value as boolean, if it is not exist will return false value
+     * @param index The zero-based index of the array element
+     *
+     * @return the retrieved value, or {@code false} when the element cannot be read, as {@code boolean}
      */
     @Wrapper
     public boolean getBoolean(int index) {
@@ -1028,11 +1046,12 @@ public class JsonHelper{
     }
 
     /**
-     * Method to get from {@link JSONArray} a boolean value
+     * Method used to retrieve a boolean value at a zero-based JSON array index
      *
-     * @param index:    index of boolean value to get from json
-     * @param defValue: default value to return if primary value not exists
-     * @return value as boolean, if it is not exist will return {@code defValue}
+     * @param index    The zero-based index of the array element
+     * @param defValue The fallback to use when the requested value is unavailable
+     *
+     * @return the retrieved value, or {@code defValue} when the element cannot be read, as {@code boolean}
      */
     public boolean getBoolean(int index, boolean defValue) {
         try {
@@ -1043,31 +1062,31 @@ public class JsonHelper{
     }
 
     /**
-     * Method to get from {@link JSONObject} a boolean value
+     * Method used to retrieve a boolean value by searching the JSON object for a key
      *
-     * @param jsonDetails: {@code "JSON"} from fetch data
-     * @param key:         key of boolean value to get from json
-     * @return value as boolean, if it is not exist will return false value
-     * @throws ClassCastException: when this exception has been trowed will be returned false as default value
-     * @implNote this static method is useful when you have to fetch a single value from {@link JSONObject} avoiding
-     * instantiation of {@link JsonHelper} class, but if you have to fetch multiple value from the same
-     * {@link JSONObject} is recommended instantiate {@link JsonHelper} class first.
+     * <p>Boolean values are used directly; other values are parsed as text. A failed cast returns {@code false}
+     *
+     * @param jsonDetails The JSON object to read
+     * @param key         The key to search for in the object and its nested structures
+     *
+     * @return the retrieved value, or {@code false} when the key is not found, as {@code boolean}
      */
     @Wrapper
     public static boolean getBoolean(JSONObject jsonDetails, String key) {
         return getBoolean(jsonDetails, key, false);
     }
 
-    /** Method to get from {@link JSONObject} a boolean value
-     * @implNote this static method is useful when you have to fetch a single value from {@link JSONObject} avoiding
-     * instantiation of {@link JsonHelper} class, but if you have to fetch multiple value from the same
-     * {@link JSONObject} is recommended instantiate {@link JsonHelper} class first.
-     * @param jsonDetails: {@code "JSON"} from fetch data
-     * @param key: key of boolean value to get from json
-     * @param defValue: default value to return if primary value not exists
-     * @exception ClassCastException: when this exception has been trowed will be returned false as default value
-     * @return value as boolean, if it is not exist will return {@code defValue}
-     * */
+    /**
+     * Method used to retrieve a boolean value by searching the JSON object for a key
+     *
+     * <p>Boolean values are used directly; other values are parsed as text. A failed cast returns {@code defValue}
+     *
+     * @param jsonDetails The JSON object to read
+     * @param key         The key to search for in the object and its nested structures
+     * @param defValue    The fallback to use when the requested value is unavailable
+     *
+     * @return the retrieved value, or {@code defValue} when the key is not found, as {@code boolean}
+     */
     public static boolean getBoolean(JSONObject jsonDetails, String key, boolean defValue) {
         try {
             Object value = autoSearch(jsonDetails, key, defValue);
@@ -1081,11 +1100,11 @@ public class JsonHelper{
     }
 
     /**
-     * Method to get from {@link JSONObject}  a list of values
+     * Method used to retrieve an array by searching the JSON object for a key
      *
-     * @param key: key of JSONArray to get from json
-     * @return value as {@link JSONArray}, if it is not exist will return null value
-     * @throws ClassCastException: when this exception has been trowed will be returned null as default value
+     * @param key The key to search for in the object and its nested structures
+     *
+     * @return the matching array, or {@code null} when absent or of another type, as {@link JSONArray}
      */
     @Wrapper
     public JSONArray getJSONArray(String key) {
@@ -1093,12 +1112,12 @@ public class JsonHelper{
     }
 
     /**
-     * Method to get from {@link JSONObject}  a list of values
+     * Method used to retrieve an array by searching the JSON object for a key
      *
-     * @param key:      key of JSONArray to get from json
-     * @param defValue: default value to return if primary value not exists
-     * @return value as {@link JSONArray}, if it is not exist will return {@code defValue}
-     * @throws ClassCastException: when this exception has been trowed will be returned null as default value
+     * @param key      The key to search for in the object and its nested structures
+     * @param defValue The fallback to use when the requested value is unavailable
+     *
+     * @return the matching array, or {@code defValue} when absent or of another type, as {@link JSONArray}
      */
     public JSONArray getJSONArray(String key, JSONArray defValue) {
         Object value = autoSearch(jsonObjectSource, key, defValue);
@@ -1109,15 +1128,12 @@ public class JsonHelper{
     }
 
     /**
-     * Method to get from {@link JSONObject}  a list of values
+     * Method used to retrieve an array by searching the JSON object for a key
      *
-     * @param jsonDetails: {@code "JSON"} from fetch data
-     * @param key:         key of JSONArray to get from json
-     * @return value as {@link JSONArray}, if it is not exist will return null value
-     * @throws ClassCastException: when this exception has been trowed will be returned null as default value
-     * @implNote this static method is useful when you have to fetch a single value from {@link JSONObject} avoiding
-     * instantiation of {@link JsonHelper} class, but if you have to fetch multiple value from the same
-     * {@link JSONObject} is recommended instantiate {@link JsonHelper} class first.
+     * @param jsonDetails The JSON object to read
+     * @param key         The key to search for in the object and its nested structures
+     *
+     * @return the matching array, or {@code null} when absent or of another type, as {@link JSONArray}
      */
     @Wrapper
     public static JSONArray getJSONArray(JSONObject jsonDetails, String key) {
@@ -1125,16 +1141,13 @@ public class JsonHelper{
     }
 
     /**
-     * Method to get from {@link JSONObject}  a list of values
+     * Method used to retrieve an array by searching the JSON object for a key
      *
-     * @param jsonDetails: {@code "JSON"} from fetch data
-     * @param key:         key of JSONArray to get from json
-     * @param defValue:    default value to return if primary value not exists
-     * @return value as {@link JSONArray}, if it is not exist will return {@code defValue}
-     * @throws ClassCastException: when this exception has been trowed will be returned null as default value
-     * @implNote this static method is useful when you have to fetch a single value from {@link JSONObject} avoiding
-     * instantiation of {@link JsonHelper} class, but if you have to fetch multiple value from the same
-     * {@link JSONObject} is recommended instantiate {@link JsonHelper} class first.
+     * @param jsonDetails The JSON object to read
+     * @param key         The key to search for in the object and its nested structures
+     * @param defValue    The fallback to use when the requested value is unavailable
+     *
+     * @return the matching array, or {@code defValue} when absent or of another type, as {@link JSONArray}
      */
     public static JSONArray getJSONArray(JSONObject jsonDetails, String key, JSONArray defValue) {
         Object value = autoSearch(jsonDetails, key, defValue);
@@ -1145,10 +1158,11 @@ public class JsonHelper{
     }
 
     /**
-     * Method to get from {@link JSONArray}  a list of values
+     * Method used to retrieve an array at a zero-based JSON array index
      *
-     * @param index: index of JSONArray to get from json
-     * @return value as {@link JSONArray}, if it is not exist will return null value
+     * @param index The zero-based index of the array element
+     *
+     * @return the retrieved value, or {@code null} when the element cannot be read, as {@link JSONArray}
      */
     @Wrapper
     public JSONArray getJSONArray(int index) {
@@ -1156,11 +1170,12 @@ public class JsonHelper{
     }
 
     /**
-     * Method to get from {@link JSONArray}  a list of values
+     * Method used to retrieve an array at a zero-based JSON array index
      *
-     * @param index:    index of JSONArray to get from json
-     * @param defValue: default value to return if primary value not exists
-     * @return value as {@link JSONArray}, if it is not exist will return {@code defValue}
+     * @param index    The zero-based index of the array element
+     * @param defValue The fallback to use when the requested value is unavailable
+     *
+     * @return the retrieved value, or {@code defValue} when the element cannot be read, as {@link JSONArray}
      */
     public JSONArray getJSONArray(int index, JSONArray defValue) {
         try {
@@ -1171,15 +1186,12 @@ public class JsonHelper{
     }
 
     /**
-     * Method to get from {@link JSONObject} a jsonObject
+     * Method used to retrieve an object by searching the JSON object for a key
      *
-     * @param jsonDetails: {@code "JSON"} from fetch data
-     * @param key:         key of {@link JSONObject} to get from json
-     * @return value as {@link JSONObject}, if it is not exist will return null value
-     * @throws ClassCastException: when this exception has been trowed will be returned null as default value
-     * @implNote this static method is useful when you have to fetch a single value from {@link JSONObject} avoiding
-     * instantiation of {@link JsonHelper} class, but if you have to fetch multiple value from the same
-     * {@link JSONObject} is recommended instantiate {@link JsonHelper} class first.
+     * @param jsonDetails The JSON object to read
+     * @param key         The key to search for in the object and its nested structures
+     *
+     * @return the matching object, or {@code null} when absent or of another type, as {@link JSONObject}
      */
     @Wrapper
     public static JSONObject getJSONObject(JSONObject jsonDetails, String key) {
@@ -1187,16 +1199,13 @@ public class JsonHelper{
     }
 
     /**
-     * Method to get from {@link JSONObject} a jsonObject
+     * Method used to retrieve an object by searching the JSON object for a key
      *
-     * @param jsonDetails: {@code "JSON"} from fetch data
-     * @param key:         key of {@link JSONObject} to get from json
-     * @param defValue:    default value to return if primary value not exists
-     * @return value as {@link JSONObject}, if it is not exist will return {@code defValue}
-     * @throws ClassCastException: when this exception has been trowed will be returned null as default value
-     * @implNote this static method is useful when you have to fetch a single value from {@link JSONObject} avoiding
-     * instantiation of {@link JsonHelper} class, but if you have to fetch multiple value from the same
-     * {@link JSONObject} is recommended instantiate {@link JsonHelper} class first.
+     * @param jsonDetails The JSON object to read
+     * @param key         The key to search for in the object and its nested structures
+     * @param defValue    The fallback to use when the requested value is unavailable
+     *
+     * @return the matching object, or {@code defValue} when absent or of another type, as {@link JSONObject}
      */
     public static JSONObject getJSONObject(JSONObject jsonDetails, String key, JSONObject defValue) {
         Object value = autoSearch(jsonDetails, key, defValue);
@@ -1206,29 +1215,27 @@ public class JsonHelper{
     }
 
     /**
-     * Method to get from {@link JSONArray} a jsonObject
+     * Method used to retrieve an object at a zero-based JSON array index
      *
-     * @param jsonDetails: {@code "JSON"} from fetch data
-     * @param index:       index of {@link JSONObject} to get from json
-     * @return value as {@link JSONObject}, if it is not exist will return null value
-     * @implNote this static method is useful when you have to fetch a single value from {@link JSONArray} avoiding
-     * instantiation of {@link JsonHelper} class, but if you have to fetch multiple value from the same
-     * {@link JSONArray} is recommended instantiate {@link JsonHelper} class first.
+     * @param jsonDetails The JSON array to read
+     * @param index       The zero-based index of the array element
+     *
+     * @return the retrieved value, or {@code null} when the element cannot be read, as {@link JSONObject}
      */
     @Wrapper
     public static JSONObject getJSONObject(JSONArray jsonDetails, int index) {
         return getJSONObject(jsonDetails, index, null);
     }
 
-    /** Method to get from {@link JSONArray} a jsonObject
-     * @implNote this static method is useful when you have to fetch a single value from {@link JSONArray} avoiding
-     * instantiation of {@link JsonHelper} class, but if you have to fetch multiple value from the same
-     * {@link JSONArray} is recommended instantiate {@link JsonHelper} class first.
-     * @param jsonDetails: {@code "JSON"} from fetch data
-     * @param index: index of {@link JSONObject} to get from json
-     * @param defValue: default value to return if primary value not exists
-     * @return value as {@link JSONObject}, if it is not exist will return {@code defValue}
-     * */
+    /**
+     * Method used to retrieve an object at a zero-based JSON array index
+     *
+     * @param jsonDetails The JSON array to read
+     * @param index       The zero-based index of the array element
+     * @param defValue    The fallback to use when the requested value is unavailable
+     *
+     * @return the retrieved value, or {@code defValue} when the element cannot be read, as {@link JSONObject}
+     */
     public static JSONObject getJSONObject(JSONArray jsonDetails, int index, JSONObject defValue){
         try {
             return jsonDetails.getJSONObject(index);
@@ -1238,14 +1245,12 @@ public class JsonHelper{
     }
 
     /**
-     * Method to get from {@link JSONArray} a string value
+     * Method used to retrieve a string at a zero-based JSON array index
      *
-     * @param jsonDetails: {@code "JSON"} from fetch data
-     * @param index:       index of string value to get from json
-     * @return value as {@link String}, if it is not exist will return null value
-     * @implNote this static method is useful when you have to fetch a single value from {@link JSONArray} avoiding
-     * instantiation of {@link JsonHelper} class, but if you have to fetch multiple value from the same
-     * {@link JSONArray} is recommended instantiate {@link JsonHelper} class first.
+     * @param jsonDetails The JSON array to read
+     * @param index       The zero-based index of the array element
+     *
+     * @return the retrieved value, or {@code null} when the element cannot be read, as {@link String}
      */
     @Wrapper
     public static String getString(JSONArray jsonDetails, int index) {
@@ -1253,15 +1258,13 @@ public class JsonHelper{
     }
 
     /**
-     * Method to get from {@link JSONObject} a string value
+     * Method used to retrieve a string at a zero-based JSON array index
      *
-     * @param jsonDetails: {@code "JSON"} from fetch data
-     * @param index:       key of string value to get from json
-     * @param defValue:    default value to return if primary value not exists
-     * @return value as {@link String}, if it is not exist will return {@code defValue}
-     * @implNote this static method is useful when you have to fetch a single value from {@link JSONObject} avoiding
-     * instantiation of {@link JsonHelper} class, but if you have to fetch multiple value from the same
-     * {@link JSONObject} is recommended instantiate {@link JsonHelper} class first.
+     * @param jsonDetails The JSON array to read
+     * @param index       The zero-based index of the array element
+     * @param defValue    The fallback to use when the requested value is unavailable
+     *
+     * @return the retrieved value, or {@code defValue} when the element cannot be read, as {@link String}
      */
     public static String getString(JSONArray jsonDetails, int index, String defValue) {
         try {
@@ -1272,14 +1275,12 @@ public class JsonHelper{
     }
 
     /**
-     * Method to get from {@link JSONArray} a double value
+     * Method used to retrieve a double value at a zero-based JSON array index
      *
-     * @param jsonDetails: {@code "JSON"} from fetch data
-     * @param index:       index of double value to get from json
-     * @return value as double, if it is not exist will return {@link #NUMERIC_DEF_VALUE_IF_MISSED}
-     * @implNote this static method is useful when you have to fetch a single value from {@link JSONArray} avoiding
-     * instantiation of {@link JsonHelper} class, but if you have to fetch multiple value from the same
-     * {@link JSONArray} is recommended instantiate {@link JsonHelper} class first.
+     * @param jsonDetails The JSON array to read
+     * @param index       The zero-based index of the array element
+     *
+     * @return the retrieved value, or {@link #NUMERIC_DEF_VALUE_IF_MISSED} when the element cannot be read, as {@code double}
      */
     @Wrapper
     public static double getDouble(JSONArray jsonDetails, int index) {
@@ -1287,15 +1288,13 @@ public class JsonHelper{
     }
 
     /**
-     * Method to get from {@link JSONArray} a double value
+     * Method used to retrieve a double value at a zero-based JSON array index
      *
-     * @param jsonDetails: {@code "JSON"} from fetch data
-     * @param index:       index of double value to get from json
-     * @param defValue:    default value to return if primary value not exists
-     * @return value as double, if it is not exist will return {@code defValue}
-     * @implNote this static method is useful when you have to fetch a single value from {@link JSONArray} avoiding
-     * instantiation of {@link JsonHelper} class, but if you have to fetch multiple value from the same
-     * {@link JSONArray} is recommended instantiate {@link JsonHelper} class first.
+     * @param jsonDetails The JSON array to read
+     * @param index       The zero-based index of the array element
+     * @param defValue    The fallback to use when the requested value is unavailable
+     *
+     * @return the retrieved value, or {@code defValue} when the element cannot be read, as {@code double}
      */
     @Wrapper
     public static double getDouble(JSONArray jsonDetails, int index, double defValue) {
@@ -1307,29 +1306,25 @@ public class JsonHelper{
     }
 
     /**
-     * Method to get from {@link JSONArray} an int value
+     * Method used to retrieve an integer value at a zero-based JSON array index
      *
-     * @param jsonDetails: {@code "JSON"} from fetch data
-     * @param index:       index of int value to get from json
-     * @return value as int, if it is not exist will return {@link #NUMERIC_DEF_VALUE_IF_MISSED}
-     * @implNote this static method is useful when you have to fetch a single value from {@link JSONArray} avoiding
-     * instantiation of {@link JsonHelper} class, but if you have to fetch multiple value from the same
-     * {@link JSONArray} is recommended instantiate {@link JsonHelper} class first.
+     * @param jsonDetails The JSON array to read
+     * @param index       The zero-based index of the array element
+     *
+     * @return the retrieved value, or {@link #NUMERIC_DEF_VALUE_IF_MISSED} when the element cannot be read, as {@code int}
      */
     public static int getInt(JSONArray jsonDetails, int index) {
         return getInt(jsonDetails, index, NUMERIC_DEF_VALUE_IF_MISSED);
     }
 
     /**
-     * Method to get from {@link JSONArray} an int value
+     * Method used to retrieve an integer value at a zero-based JSON array index
      *
-     * @param jsonDetails: {@code "JSON"} from fetch data
-     * @param index:       index of int value to get from json
-     * @param defValue:    default value to return if primary value not exists
-     * @return value as int, if it is not exist will return {@code defValue}
-     * @implNote this static method is useful when you have to fetch a single value from {@link JSONArray} avoiding
-     * instantiation of {@link JsonHelper} class, but if you have to fetch multiple value from the same
-     * {@link JSONArray} is recommended instantiate {@link JsonHelper} class first.
+     * @param jsonDetails The JSON array to read
+     * @param index       The zero-based index of the array element
+     * @param defValue    The fallback to use when the requested value is unavailable
+     *
+     * @return the retrieved value, or {@code defValue} when the element cannot be read, as {@code int}
      */
     public static int getInt(JSONArray jsonDetails, int index, int defValue) {
         try {
@@ -1340,14 +1335,12 @@ public class JsonHelper{
     }
 
     /**
-     * Method to get from {@link JSONArray} a float value
+     * Method used to retrieve a float value at a zero-based JSON array index
      *
-     * @param jsonDetails: {@code "JSON"} from fetch data
-     * @param index:       index of float value to get from json
-     * @return value as float, if it is not exist will return {@link #NUMERIC_DEF_VALUE_IF_MISSED}
-     * @implNote this static method is useful when you have to fetch a single value from {@link JSONArray} avoiding
-     * instantiation of {@link JsonHelper} class, but if you have to fetch multiple value from the same
-     * {@link JSONArray} is recommended instantiate {@link JsonHelper} class first.
+     * @param jsonDetails The JSON array to read
+     * @param index       The zero-based index of the array element
+     *
+     * @return the retrieved value, or {@link #NUMERIC_DEF_VALUE_IF_MISSED} when the element cannot be read, as {@code float}
      */
     @Wrapper
     public static float getFloat(JSONArray jsonDetails, int index) {
@@ -1355,15 +1348,13 @@ public class JsonHelper{
     }
 
     /**
-     * Method to get from {@link JSONArray} a float value
+     * Method used to retrieve a float value at a zero-based JSON array index
      *
-     * @param jsonDetails: {@code "JSON"} from fetch data
-     * @param index:       index of float value to get from json
-     * @param defValue:    default value to return if primary value not exists
-     * @return value as float, if it is not exist will return {@code defValue}
-     * @implNote this static method is useful when you have to fetch a single value from {@link JSONArray} avoiding
-     * instantiation of {@link JsonHelper} class, but if you have to fetch multiple value from the same
-     * {@link JSONArray} is recommended instantiate {@link JsonHelper} class first.
+     * @param jsonDetails The JSON array to read
+     * @param index       The zero-based index of the array element
+     * @param defValue    The fallback to use when the requested value is unavailable
+     *
+     * @return the retrieved value, or {@code defValue} when the element cannot be read, as {@code float}
      */
     public static float getFloat(JSONArray jsonDetails, int index, float defValue) {
         try {
@@ -1374,14 +1365,12 @@ public class JsonHelper{
     }
 
     /**
-     * Method to get from {@link JSONArray} a long value
+     * Method used to retrieve a long value at a zero-based JSON array index
      *
-     * @param jsonDetails: {@code "JSON"} from fetch data
-     * @param index:       index of long value to get from json
-     * @return value as long, if it is not exist will return {@link #NUMERIC_DEF_VALUE_IF_MISSED}
-     * @implNote this static method is useful when you have to fetch a single value from {@link JSONArray} avoiding
-     * instantiation of {@link JsonHelper} class, but if you have to fetch multiple value from the same
-     * {@link JSONArray} is recommended instantiate {@link JsonHelper} class first.
+     * @param jsonDetails The JSON array to read
+     * @param index       The zero-based index of the array element
+     *
+     * @return the retrieved value, or {@link #NUMERIC_DEF_VALUE_IF_MISSED} when the element cannot be read, as {@code long}
      */
     @Wrapper
     public static long getLong(JSONArray jsonDetails, int index) {
@@ -1389,15 +1378,13 @@ public class JsonHelper{
     }
 
     /**
-     * Method to get from {@link JSONArray} a long value
+     * Method used to retrieve a long value at a zero-based JSON array index
      *
-     * @param jsonDetails: {@code "JSON"} from fetch data
-     * @param index:       index of long value to get from json
-     * @param defValue:    default value to return if primary value not exists
-     * @return value as long, if it is not exist will return {@code defValue}
-     * @implNote this static method is useful when you have to fetch a single value from {@link JSONArray} avoiding
-     * instantiation of {@link JsonHelper} class, but if you have to fetch multiple value from the same
-     * {@link JSONArray} is recommended instantiate {@link JsonHelper} class first.
+     * @param jsonDetails The JSON array to read
+     * @param index       The zero-based index of the array element
+     * @param defValue    The fallback to use when the requested value is unavailable
+     *
+     * @return the retrieved value, or {@code defValue} when the element cannot be read, as {@code long}
      */
     public static long getLong(JSONArray jsonDetails, int index, long defValue) {
         try {
@@ -1408,14 +1395,12 @@ public class JsonHelper{
     }
 
     /**
-     * Method to get from {@link JSONArray} a BigDecimal value
+     * Method used to retrieve a decimal value at a zero-based JSON array index
      *
-     * @param jsonDetails: {@code "JSON"} from fetch data
-     * @param index:       index of BigDecimal value to get from json
-     * @return value as {@link BigDecimal}, if it is not exist will return null value
-     * @implNote this static method is useful when you have to fetch a single value from {@link JSONArray} avoiding
-     * instantiation of {@link JsonHelper} class, but if you have to fetch multiple value from the same
-     * {@link JSONArray} is recommended instantiate {@link JsonHelper} class first.
+     * @param jsonDetails The JSON array to read
+     * @param index       The zero-based index of the array element
+     *
+     * @return the retrieved value, or {@code null} when the element cannot be read, as {@link BigDecimal}
      */
     @Wrapper
     public static BigDecimal getBigDecimal(JSONArray jsonDetails, int index) {
@@ -1423,15 +1408,13 @@ public class JsonHelper{
     }
 
     /**
-     * Method to get from {@link JSONArray} a BigDecimal value
+     * Method used to retrieve a decimal value at a zero-based JSON array index
      *
-     * @param jsonDetails: {@code "JSON"} from fetch data
-     * @param index:       index of BigDecimal value to get from json
-     * @param defValue:    default value to return if primary value not exists
-     * @return value as {@link BigDecimal}, if it is not exist will return {@code defValue}
-     * @implNote this static method is useful when you have to fetch a single value from {@link JSONArray} avoiding
-     * instantiation of {@link JsonHelper} class, but if you have to fetch multiple value from the same
-     * {@link JSONArray} is recommended instantiate {@link JsonHelper} class first.
+     * @param jsonDetails The JSON array to read
+     * @param index       The zero-based index of the array element
+     * @param defValue    The fallback to use when the requested value is unavailable
+     *
+     * @return the retrieved value, or {@code defValue} when the element cannot be read, as {@link BigDecimal}
      */
     public static BigDecimal getBigDecimal(JSONArray jsonDetails, int index, BigDecimal defValue) {
         try {
@@ -1442,29 +1425,27 @@ public class JsonHelper{
     }
 
     /**
-     * Method to get from {@link JSONArray} a BigInteger value
+     * Method used to retrieve an integer value at a zero-based JSON array index
      *
-     * @param jsonDetails: {@code "JSON"} from fetch data
-     * @param index:       index of BigInteger value to get from json
-     * @return value as {@link BigInteger}, if it is not exist will return null value
-     * @implNote this static method is useful when you have to fetch a single value from {@link JSONArray} avoiding
-     * instantiation of {@link JsonHelper} class, but if you have to fetch multiple value from the same
-     * {@link JSONArray} is recommended instantiate {@link JsonHelper} class first.
+     * @param jsonDetails The JSON array to read
+     * @param index       The zero-based index of the array element
+     *
+     * @return the retrieved value, or {@code null} when the element cannot be read, as {@link BigInteger}
      */
     @Wrapper
     public static BigInteger getBigInteger(JSONArray jsonDetails, int index) {
         return getBigInteger(jsonDetails, index, null);
     }
 
-    /** Method to get from {@link JSONArray} a BigInteger value
-     * @implNote this static method is useful when you have to fetch a single value from {@link JSONArray} avoiding
-     * instantiation of {@link JsonHelper} class, but if you have to fetch multiple value from the same
-     * {@link JSONArray} is recommended instantiate {@link JsonHelper} class first.
-     * @param jsonDetails: {@code "JSON"} from fetch data
-     * @param index: index of BigInteger value to get from json
-     * @param defValue: default value to return if primary value not exists
-     * @return value as {@link BigInteger}, if it is not exist will return {@code defValue}
-     * */
+    /**
+     * Method used to retrieve an integer value at a zero-based JSON array index
+     *
+     * @param jsonDetails The JSON array to read
+     * @param index       The zero-based index of the array element
+     * @param defValue    The fallback to use when the requested value is unavailable
+     *
+     * @return the retrieved value, or {@code defValue} when the element cannot be read, as {@link BigInteger}
+     */
     public static BigInteger getBigInteger(JSONArray jsonDetails, int index, BigInteger defValue){
         try {
             return jsonDetails.getBigInteger(index);
@@ -1474,14 +1455,12 @@ public class JsonHelper{
     }
 
     /**
-     * Method to get from {@link JSONArray} a Number value
+     * Method used to retrieve a numeric value at a zero-based JSON array index
      *
-     * @param jsonDetails: {@code "JSON"} from fetch data
-     * @param index:       index of Number value to get from json
-     * @return value as {@link Number}, if it is not exist will return null value
-     * @implNote this static method is useful when you have to fetch a single value from {@link JSONArray} avoiding
-     * instantiation of {@link JsonHelper} class, but if you have to fetch multiple value from the same
-     * {@link JSONArray} is recommended instantiate {@link JsonHelper} class first.
+     * @param jsonDetails The JSON array to read
+     * @param index       The zero-based index of the array element
+     *
+     * @return the retrieved value, or {@code null} when the element cannot be read, as {@link Number}
      */
     @Wrapper
     public static Number getNumber(JSONArray jsonDetails, int index) {
@@ -1489,16 +1468,14 @@ public class JsonHelper{
     }
 
     /**
-     * Method to get from {@link JSONArray} a Number value
+     * Method used to retrieve a numeric value at a zero-based JSON array index
      *
-     * @implNote this static method is useful when you have to fetch a single value from {@link JSONArray} avoiding
-     * instantiation of {@link JsonHelper} class, but if you have to fetch multiple value from the same
-     * {@link JSONArray} is recommended instantiate {@link JsonHelper} class first.
-     * @param jsonDetails: {@code "JSON"} from fetch data
-     * @param index: index of Number value to get from json
-     * @param defValue: default value to return if primary value not exists
-     * @return value as {@link Number}, if it is not exist will return {@code defValue}
-     * */
+     * @param jsonDetails The JSON array to read
+     * @param index       The zero-based index of the array element
+     * @param defValue    The fallback to use when the requested value is unavailable
+     *
+     * @return the retrieved value, or {@code defValue} when the element cannot be read, as {@link Number}
+     */
     public static Number getNumber(JSONArray jsonDetails, int index, Number defValue){
         try {
             return jsonDetails.getNumber(index);
@@ -1508,29 +1485,27 @@ public class JsonHelper{
     }
 
     /**
-     * Method to get from {@link JSONArray} an object value
+     * Method used to retrieve a value at a zero-based JSON array index
      *
-     * @param jsonDetails: {@code "JSON"} from fetch data
-     * @param index:       index of Object value to get from json
-     * @return value as {@link Object}, if it is not exist will return null value
-     * @implNote this static method is useful when you have to fetch a single value from {@link JSONArray} avoiding
-     * instantiation of {@link JsonHelper} class, but if you have to fetch multiple value from the same
-     * {@link JSONArray} is recommended instantiate {@link JsonHelper} class first.
+     * @param jsonDetails The JSON array to read
+     * @param index       The zero-based index of the array element
+     *
+     * @return the retrieved value, or {@code null} when the element cannot be read, as {@link Object}
      */
     @Wrapper
     public static Object get(JSONArray jsonDetails, int index){
         return get(jsonDetails, index, null);
     }
 
-    /** Method to get from {@link JSONArray} an object value
-     * @implNote this static method is useful when you have to fetch a single value from {@link JSONArray} avoiding
-     * instantiation of {@link JsonHelper} class, but if you have to fetch multiple value from the same
-     * {@link JSONArray} is recommended instantiate {@link JsonHelper} class first.
-     * @param jsonDetails: {@code "JSON"} from fetch data
-     * @param index: index of Object value to get from json
-     * @param defValue: default value to return if primary value not exists
-     * @return value as {@link Object}, if it is not exist will return {@code defValue}
-     * */
+    /**
+     * Method used to retrieve a value at a zero-based JSON array index
+     *
+     * @param jsonDetails The JSON array to read
+     * @param index       The zero-based index of the array element
+     * @param defValue    The fallback to use when the requested value is unavailable
+     *
+     * @return the retrieved value, or {@code defValue} when the element cannot be read, as {@link Object}
+     */
     public static Object get(JSONArray jsonDetails, int index, Object defValue){
         try {
             return jsonDetails.get(index);
@@ -1540,14 +1515,12 @@ public class JsonHelper{
     }
 
     /**
-     * Method to get from {@link JSONArray} a boolean value
+     * Method used to retrieve a boolean value at a zero-based JSON array index
      *
-     * @param jsonDetails: {@code "JSON"} from fetch data
-     * @param index:       index of boolean value to get from json
-     * @return value as boolean, if it is not exist will return false value
-     * @implNote this static method is useful when you have to fetch a single value from {@link JSONArray} avoiding
-     * instantiation of {@link JsonHelper} class, but if you have to fetch multiple value from the same
-     * {@link JSONArray} is recommended instantiate {@link JsonHelper} class first.
+     * @param jsonDetails The JSON array to read
+     * @param index       The zero-based index of the array element
+     *
+     * @return the retrieved value, or {@code false} when the element cannot be read, as {@code boolean}
      */
     @Wrapper
     public static boolean getBoolean(JSONArray jsonDetails, int index) {
@@ -1555,15 +1528,13 @@ public class JsonHelper{
     }
 
     /**
-     * Method to get from {@link JSONArray} a boolean value
+     * Method used to retrieve a boolean value at a zero-based JSON array index
      *
-     * @param jsonDetails: {@code "JSON"} from fetch data
-     * @param index:       index of boolean value to get from json
-     * @param defValue:    default value to return if primary value not exists
-     * @return value as boolean, if it is not exist will return {@code defValue}
-     * @implNote this static method is useful when you have to fetch a single value from {@link JSONArray} avoiding
-     * instantiation of {@link JsonHelper} class, but if you have to fetch multiple value from the same
-     * {@link JSONArray} is recommended instantiate {@link JsonHelper} class first.
+     * @param jsonDetails The JSON array to read
+     * @param index       The zero-based index of the array element
+     * @param defValue    The fallback to use when the requested value is unavailable
+     *
+     * @return the retrieved value, or {@code defValue} when the element cannot be read, as {@code boolean}
      */
     public static boolean getBoolean(JSONArray jsonDetails, int index, boolean defValue){
         try {
@@ -1574,14 +1545,12 @@ public class JsonHelper{
     }
 
     /**
-     * Method to get from {@link JSONArray}  a list of values
+     * Method used to retrieve an array at a zero-based JSON array index
      *
-     * @param jsonDetails: {@code "JSON"} from fetch data
-     * @param index:       index of JSONArray to get from json
-     * @return value as {@link JSONArray}, if it is not exist will return null value
-     * @implNote this static method is useful when you have to fetch a single value from {@link JSONArray} avoiding
-     * instantiation of {@link JsonHelper} class, but if you have to fetch multiple value from the same
-     * {@link JSONArray} is recommended instantiate {@link JsonHelper} class first.
+     * @param jsonDetails The JSON array to read
+     * @param index       The zero-based index of the array element
+     *
+     * @return the retrieved value, or {@code null} when the element cannot be read, as {@link JSONArray}
      */
     @Wrapper
     public static JSONArray getJSONArray(JSONArray jsonDetails, int index) {
@@ -1589,15 +1558,13 @@ public class JsonHelper{
     }
 
     /**
-     * Method to get from {@link JSONArray}  a list of values
+     * Method used to retrieve an array at a zero-based JSON array index
      *
-     * @param jsonDetails: {@code "JSON"} from fetch data
-     * @param index:       index of JSONArray to get from json
-     * @param defValue:    default value to return if primary value not exists
-     * @return value as {@link JSONArray}, if it is not exist will return {@code defValue}
-     * @implNote this static method is useful when you have to fetch a single value from {@link JSONArray} avoiding
-     * instantiation of {@link JsonHelper} class, but if you have to fetch multiple value from the same
-     * {@link JSONArray} is recommended instantiate {@link JsonHelper} class first.
+     * @param jsonDetails The JSON array to read
+     * @param index       The zero-based index of the array element
+     * @param defValue    The fallback to use when the requested value is unavailable
+     *
+     * @return the retrieved value, or {@code defValue} when the element cannot be read, as {@link JSONArray}
      */
     public static JSONArray getJSONArray(JSONArray jsonDetails, int index, JSONArray defValue) {
         try {
@@ -1608,41 +1575,14 @@ public class JsonHelper{
     }
 
     /**
-     * Method to get a list from the {@link #jsonArraySource}<br>
-     * No-any params required
+     * Method used to convert the retained array source to a Java list
      *
-     * @return list value as {@link List} of {@link T}
-     * @implNote The {@link #jsonArraySource} must have the explicit type to create the correct list type, for example:
-     * <ul>
-     *     <li>
-     *         With the list formatted as:
-     *         <pre>
-     *             {@code
-     *                  [
-     *                    true,
-     *                    true,
-     *                    false,
-     *                    true
-     *                 ]
-     *             }
-     *         </pre>
-     *         the method will return a {@link List} of {@link Boolean}
-     *     </li>
-     *     <li>
-     *         With the list formatted as:
-     *         <pre>
-     *             {@code
-     *                  [
-     *                    "true",
-     *                    "true",
-     *                    "false",
-     *                    "true"
-     *                 ]
-     *             }
-     *         </pre>
-     *         the method will return a {@link List} of {@link String}
-     *     </li>
-     * </ul>
+     * <p>Element types follow the JSON values. Nested arrays and objects are converted by the JSON
+     * library to lists and maps; the type parameter does not convert or validate element types
+     *
+     * @param <T> The expected list element type
+     *
+     * @return the converted elements as {@link List} of {@code T}
      */
     @Wrapper
     public <T> List<T> toList() {
@@ -1650,52 +1590,26 @@ public class JsonHelper{
     }
 
     /**
-     * Method to get a list from a {@link JSONArray}
+     * Method used to convert a supplied JSON array to a Java list
      *
-     * @param jsonArray: the {@link JSONArray} source from fetch the list
-     * @return list value as {@link List} of {@link T}
-     * @implNote The {@link #jsonArraySource} must have the explicit type to create the correct list type, for example:
-     * <ul>
-     *     <li>
-     *         With the list formatted as:
-     *         <pre>
-     *             {@code
-     *                  [
-     *                    true,
-     *                    true,
-     *                    false,
-     *                    true
-     *                 ]
-     *             }
-     *         </pre>
-     *         the method will return a {@link List} of {@link Boolean}
-     *     </li>
-     *     <li>
-     *         With the list formatted as:
-     *         <pre>
-     *             {@code
-     *                  [
-     *                    "true",
-     *                    "true",
-     *                    "false",
-     *                    "true"
-     *                 ]
-     *             }
-     *         </pre>
-     *         the method will return a {@link List} of {@link String}
-     *     </li>
-     * </ul>
+     * <p>Element types follow the JSON values. Nested arrays and objects are converted by the JSON
+     * library to lists and maps; the type parameter does not convert or validate element types
+     *
+     * @param jsonArray The JSON array to convert
+     * @param <T>       The expected list element type
+     *
+     * @return the converted elements as {@link List} of {@code T}
      */
     public static <T> List<T> toList(JSONArray jsonArray) {
         return (List<T>) jsonArray.toList();
     }
 
     /**
-     * Method to get from {@link JSONObject} a jsonObject
+     * Method used to retrieve an object by searching the JSON object for a key
      *
-     * @param key: key of {@link JSONObject} to get from json
-     * @return value as {@link JSONObject}, if it is not exist will return null value
-     * @throws ClassCastException: when this exception has been trowed will be returned null as default value
+     * @param key The key to search for in the object and its nested structures
+     *
+     * @return the matching object, or {@code null} when absent or of another type, as {@link JSONObject}
      */
     @Wrapper
     public JSONObject getJSONObject(String key) {
@@ -1703,12 +1617,12 @@ public class JsonHelper{
     }
 
     /**
-     * Method to get from {@link JSONObject} a jsonObject
+     * Method used to retrieve an object by searching the JSON object for a key
      *
-     * @param key:      key of {@link JSONObject} to get from json
-     * @param defValue: default value to return if primary value not exists
-     * @return value as {@link JSONObject}, if it is not exist will return {@code defValue}
-     * @throws ClassCastException: when this exception has been trowed will be returned null as default value
+     * @param key      The key to search for in the object and its nested structures
+     * @param defValue The fallback to use when the requested value is unavailable
+     *
+     * @return the matching object, or {@code defValue} when absent or of another type, as {@link JSONObject}
      */
     public JSONObject getJSONObject(String key, JSONObject defValue) {
         Object value = autoSearch(jsonObjectSource, key, defValue);
@@ -1719,10 +1633,11 @@ public class JsonHelper{
     }
 
     /**
-     * Method to get from {@link JSONArray} a jsonObject
+     * Method used to retrieve an object at a zero-based JSON array index
      *
-     * @param index: index of {@link JSONObject} to get from json
-     * @return value as {@link JSONObject}, if it is not exist will return null value
+     * @param index The zero-based index of the array element
+     *
+     * @return the retrieved value, or {@code null} when the element cannot be read, as {@link JSONObject}
      */
     @Wrapper
     public JSONObject getJSONObject(int index) {
@@ -1730,11 +1645,12 @@ public class JsonHelper{
     }
 
     /**
-     * Method to get from {@link JSONArray} a jsonObject
+     * Method used to retrieve an object at a zero-based JSON array index
      *
-     * @param index:    index of {@link JSONObject} to get from json
-     * @param defValue: default value to return if primary value not exists
-     * @return value as {@link JSONObject}, if it is not exist will return {@code defValue}
+     * @param index    The zero-based index of the array element
+     * @param defValue The fallback to use when the requested value is unavailable
+     *
+     * @return the retrieved value, or {@code defValue} when the element cannot be read, as {@link JSONObject}
      */
     public JSONObject getJSONObject(int index, JSONObject defValue) {
         try {
@@ -1745,14 +1661,14 @@ public class JsonHelper{
     }
 
     /**
-     * Method to get from JSON a jsonHelper
+     * Method used to wrap a nested JSON object or array in a helper
      *
-     * @param jsonDetails: {@code "JSON"} from fetch data
-     * @param key:         key of {@link JsonHelper} to get from json
-     * @return value as {@link T}, if it is not exist will return null
-     * @implNote this static method is useful when you have to fetch a single value from JSON avoiding
-     * instantiation of {@link JsonHelper} class, but if you have to fetch multiple value from the same
-     * JSON source is recommended instantiate {@link JsonHelper} class first.
+     * @param jsonDetails The JSON object to read
+     * @param key         The key used to locate the nested JSON source
+     * @param <T>         The result type, compatible with JsonHelper and the supplied fallback
+     *
+     * @return the nested helper, or {@code null} when no source is found, as {@code T}
+     * @throws IllegalArgumentException when a found value cannot be parsed as a JSON object or array
      */
     @Wrapper
     public static <T> T getJsonHelper(JSONObject jsonDetails, String key) {
@@ -1760,15 +1676,15 @@ public class JsonHelper{
     }
 
     /**
-     * Method to get from JSON a jsonHelper
+     * Method used to wrap a nested JSON object or array in a helper
      *
-     * @param jsonDetails: {@code "JSON"} from fetch data
-     * @param key:         key of {@link JsonHelper} to get from json
-     * @param defValue:    default value to return if primary value not exists
-     * @return value as {@link JsonHelper}, if it is not exist will return {@code defValue}
-     * @implNote this static method is useful when you have to fetch a single value from JSON avoiding
-     * instantiation of {@link JsonHelper} class, but if you have to fetch multiple value from the same
-     * JSON source is recommended instantiate {@link JsonHelper} class first.
+     * @param jsonDetails The JSON object to read
+     * @param key         The key used to locate the nested JSON source
+     * @param defValue    The fallback to return when no source is found
+     * @param <T>         The result type, compatible with JsonHelper and the supplied fallback
+     *
+     * @return the nested helper, or {@code defValue} when no source is found, as {@code T}
+     * @throws IllegalArgumentException when a found value cannot be parsed as a JSON object or array
      */
     public static <T> T getJsonHelper(JSONObject jsonDetails, String key, T defValue) {
         Object value = get(jsonDetails, key);
@@ -1779,14 +1695,14 @@ public class JsonHelper{
     }
 
     /**
-     * Method to get from JSON a jsonHelper
+     * Method used to wrap a nested JSON object or array in a helper
      *
-     * @param jsonDetails: {@code "JSON"} from fetch data
-     * @param index:       index of {@link JsonHelper} to get from json
-     * @return value as {@link T}, if it is not exist will return null
-     * @implNote this static method is useful when you have to fetch a single value from JSON avoiding
-     * instantiation of {@link JsonHelper} class, but if you have to fetch multiple value from the same
-     * JSON source is recommended instantiate {@link JsonHelper} class first.
+     * @param jsonDetails The JSON array to read
+     * @param index       The zero-based index of the nested JSON source
+     * @param <T>         The result type, compatible with JsonHelper and the supplied fallback
+     *
+     * @return the nested helper, or {@code null} when no source is found, as {@code T}
+     * @throws IllegalArgumentException when a found value cannot be parsed as a JSON object or array
      */
     @Wrapper
     public static <T> T getJsonHelper(JSONArray jsonDetails, int index) {
@@ -1794,15 +1710,15 @@ public class JsonHelper{
     }
 
     /**
-     * Method to get from JSON a jsonHelper
+     * Method used to wrap a nested JSON object or array in a helper
      *
-     * @param jsonDetails: {@code "JSON"} from fetch data
-     * @param index:       index of {@link JsonHelper} to get from json
-     * @param defValue:    default value to return if primary value not exists
-     * @return value as {@link JsonHelper}, if it is not exist will return {@code defValue}
-     * @implNote this static method is useful when you have to fetch a single value from JSON avoiding
-     * instantiation of {@link JsonHelper} class, but if you have to fetch multiple value from the same
-     * JSON source is recommended instantiate {@link JsonHelper} class first.
+     * @param jsonDetails The JSON array to read
+     * @param index       The zero-based index of the nested JSON source
+     * @param defValue    The fallback to return when no source is found
+     * @param <T>         The result type, compatible with JsonHelper and the supplied fallback
+     *
+     * @return the nested helper, or {@code defValue} when no source is found, as {@code T}
+     * @throws IllegalArgumentException when a found value cannot be parsed as a JSON object or array
      */
     public static <T> T getJsonHelper(JSONArray jsonDetails, int index, T defValue) {
         Object value = get(jsonDetails, index);
@@ -1813,10 +1729,12 @@ public class JsonHelper{
     }
 
     /**
-     * Method to get from JSON a jsonHelper
+     * Method used to wrap a nested JSON object or array in a helper
      *
-     * @param key: key of {@link JsonHelper} to get from json
-     * @return value as {@link JsonHelper}, if it is not exist will return null
+     * @param key The key used to locate the nested JSON source
+     *
+     * @return the nested helper, or {@code null} when no source is found, as {@link JsonHelper}
+     * @throws IllegalArgumentException when a found value cannot be parsed as a JSON object or array
      */
     @Wrapper
     public JsonHelper getJsonHelper(String key) {
@@ -1824,11 +1742,14 @@ public class JsonHelper{
     }
 
     /**
-     * Method to get from JSON a jsonHelper
+     * Method used to wrap a nested JSON object or array in a helper
      *
-     * @param key:      key of {@link JsonHelper} to get from json
-     * @param defValue: default value to return if primary value not exists
-     * @return value as {@link JsonHelper} if exists, if it is not exist will return {@code defValue} as {@link T}
+     * @param key      The key used to locate the nested JSON source
+     * @param defValue The fallback to return when no source is found
+     * @param <T>      The result type, compatible with JsonHelper and the supplied fallback
+     *
+     * @return the nested helper, or {@code defValue} when no source is found, as {@code T}
+     * @throws IllegalArgumentException when a found value cannot be parsed as a JSON object or array
      */
     public <T> T getJsonHelper(String key, T defValue) {
         Object value = get(key);
@@ -1839,10 +1760,12 @@ public class JsonHelper{
     }
 
     /**
-     * Method to get from JSON a jsonHelper
+     * Method used to wrap a nested JSON object or array in a helper
      *
-     * @param index: index of {@link JsonHelper} to get from json
-     * @return value as {@link JsonHelper}, if it is not exist will return null
+     * @param index The zero-based index of the nested JSON source
+     *
+     * @return the nested helper, or {@code null} when no source is found, as {@link JsonHelper}
+     * @throws IllegalArgumentException when a found value cannot be parsed as a JSON object or array
      */
     @Wrapper
     public JsonHelper getJsonHelper(int index) {
@@ -1850,11 +1773,14 @@ public class JsonHelper{
     }
 
     /**
-     * Method to get from JSON a jsonHelper
+     * Method used to wrap a nested JSON object or array in a helper
      *
-     * @param index:    index of {@link JsonHelper} to get from json
-     * @param defValue: default value to return if primary value not exists
-     * @return value as {@link JsonHelper} if exists, if it is not exist will return {@code defValue} as {@link T}
+     * @param index    The zero-based index of the nested JSON source
+     * @param defValue The fallback to return when no source is found
+     * @param <T>      The result type, compatible with JsonHelper and the supplied fallback
+     *
+     * @return the nested helper, or {@code defValue} when no source is found, as {@code T}
+     * @throws IllegalArgumentException when a found value cannot be parsed as a JSON object or array
      */
     public <T> T getJsonHelper(int index, T defValue) {
         Object value = get(index);
@@ -1865,12 +1791,15 @@ public class JsonHelper{
     }
 
     /**
-     * Method to get from {@link JSONArray} a list of values automatically
+     * Method used to retrieve the elements of a named JSON array
      *
-     * @param searchKey: key for value to fetch
-     * @return list of values as {@link ArrayList} of {@link T}, if it is not exist will return null
-     * @apiNote this method does not need specific path of the {@link JSONArray} to fetch value, but it will in automatic
-     * reach the value requested directly from the entire {@code "JSON"} file without path inserted by hand
+     * <p>The search follows nested object branches and returns the elements of the first matching array.
+     * Element values retain their JSON types
+     *
+     * @param searchKey The key identifying the array whose elements are requested
+     * @param <T>       The expected element type, compatible with the retrieved values
+     *
+     * @return the retrieved values, or null when no array is selected, as {@link ArrayList} of {@code T}
      */
     @Wrapper
     public <T> ArrayList<T> fetchList(String searchKey) {
@@ -1878,13 +1807,17 @@ public class JsonHelper{
     }
 
     /**
-     * Method to get from {@link JSONArray} a list of values automatically
+     * Method used to retrieve the elements of a named JSON array
      *
-     * @param searchKey: key for value to fetch
-     * @param defValue:  default value to return if not found what searched
-     * @return list of values as {@link ArrayList} of {@link T}, if it is not exist will return null
-     * @apiNote this method does not need specific path of the {@link JSONArray} to fetch value, but it will in automatic
-     * reach the value requested directly from the entire {@code "JSON"} file without path inserted by hand
+     * <p>The search follows nested object branches and returns the elements of the first matching array.
+     * Element values retain their JSON types
+     *
+     * @param searchKey The key identifying the array whose elements are requested
+     * @param defValue  The fallback list used when the search reaches its no-result fallback
+     * @param <T>       The expected element type, compatible with the retrieved values
+     * @param <V>       The type of the fallback list
+     *
+     * @return the retrieved values, or the fallback or null when no array is selected, as {@link ArrayList} of {@code T}
      */
     @Wrapper
     public <T, V extends ArrayList<?>> ArrayList<T> fetchList(String searchKey, V defValue) {
@@ -1892,11 +1825,16 @@ public class JsonHelper{
     }
 
     /**
-     * Method to get from {@link JSONArray} a list of values automatically
+     * Method used to retrieve the elements of a named JSON array
      *
-     * @param source:    {@link JSONObject} source to search the {@link JSONArray} from fetch the list
-     * @param searchKey: key for value to fetch
-     * @return list of values as {@link ArrayList} of {@link T}, if it is not exist will return null
+     * <p>The search follows nested object branches and returns the elements of the first matching array.
+     * Element values retain their JSON types
+     *
+     * @param source    The JSON object whose object branches are searched
+     * @param searchKey The key identifying the array whose elements are requested
+     * @param <T>       The expected element type, compatible with the retrieved values
+     *
+     * @return the retrieved values, or null when no array is selected, as {@link ArrayList} of {@code T}
      */
     @Wrapper
     public static <T> ArrayList<T> fetchList(JSONObject source, String searchKey) {
@@ -1904,12 +1842,18 @@ public class JsonHelper{
     }
 
     /**
-     * Method to get from {@link JSONArray} a list of values automatically
+     * Method used to retrieve the elements of a named JSON array
      *
-     * @param source:    {@link JSONObject} source to search the {@link JSONArray} from fetch the list
-     * @param searchKey: key for value to fetch
-     * @param defValue:  default value to return if not found what searched
-     * @return list of values as {@link ArrayList} of {@link T}, if it is not exist will return null
+     * <p>The search follows nested object branches and returns the elements of the first matching array.
+     * Element values retain their JSON types
+     *
+     * @param source    The JSON object whose object branches are searched
+     * @param searchKey The key identifying the array whose elements are requested
+     * @param defValue  The fallback list used when the search reaches its no-result fallback
+     * @param <T>       The expected element type, compatible with the retrieved values
+     * @param <V>       The type of the fallback list
+     *
+     * @return the retrieved values, or the fallback or null when no array is selected, as {@link ArrayList} of {@code T}
      */
     public static <T, V extends ArrayList<?>> ArrayList<T> fetchList(JSONObject source, String searchKey, V defValue) {
         ArrayList<T> listFetched = null;
@@ -1932,12 +1876,15 @@ public class JsonHelper{
     }
 
     /**
-     * Method to get from {@link JSONObject} a list of values automatically
+     * Method used to retrieve a key value from each object in a matching JSON array
      *
-     * @param searchKey: key for value to fetch
-     * @return list of values as {@link ArrayList} of {@link T}, if it is not exist will return null
-     * @apiNote this method does not need specific path of the {@link JSONObject} to fetch value, but it will in automatic
-     * reach the value requested directly from the entire {@code "JSON"} file without path inserted by hand
+     * <p>Matching arrays must contain JSON objects. Values retain their JSON types and array order
+     *
+     * @param searchKey The key whose value is retrieved from each array element
+     * @param <T>       The expected element type, compatible with the retrieved values
+     *
+     * @return the retrieved values, or null when no array is selected, as {@link ArrayList} of {@code T}
+     * @throws JSONException when a matching array contains an element that is not a JSON object
      */
     @Wrapper
     public <T> ArrayList<T> fetchVList(String searchKey) {
@@ -1945,13 +1892,19 @@ public class JsonHelper{
     }
 
     /**
-     * Method to get from {@link JSONObject} a list of values automatically
+     * Method used to retrieve a key value from each object in a matching JSON array
      *
-     * @param searchKey: key for value to fetch
-     * @param defValue:  default value to return if not found what searched
-     * @return list of values as {@link ArrayList} of {@link T}, if it is not exist will return null
-     * @apiNote this method does not need specific path of the {@link JSONObject} to fetch value, but it will in automatic
-     * reach the value requested directly from the entire {@code "JSON"} file without path inserted by hand
+     * <p>Matching arrays must contain JSON objects. Values retain their JSON types and array order
+     *
+     * <p>Recursive searches in nested objects do not propagate the supplied fallback
+     *
+     * @param searchKey The key whose value is retrieved from each array element
+     * @param defValue  The fallback list used when the search reaches its no-result fallback
+     * @param <T>       The expected element type, compatible with the retrieved values
+     * @param <V>       The type of the fallback list
+     *
+     * @return the retrieved values, or the fallback or null when no array is selected, as {@link ArrayList} of {@code T}
+     * @throws JSONException when a matching array contains an element that is not a JSON object
      */
     @Wrapper
     public <T, V extends ArrayList<?>> ArrayList<T> fetchVList(String searchKey, V defValue) {
@@ -1959,13 +1912,16 @@ public class JsonHelper{
     }
 
     /**
-     * Method to get from {@link JSONObject} a list of values automatically
+     * Method used to retrieve a key value from each object in a matching JSON array
      *
-     * @param json:      {@link JSONObject} from fetch list
-     * @param searchKey: key for value to fetch
-     * @return list of values as {@link ArrayList} of {@link T}, if it is not exist will return null
-     * @apiNote this method does not need specific path of the {@link JSONObject} to fetch value, but it will in automatic
-     * reach the value requested directly from the entire {@code "JSON"} file without path inserted by hand
+     * <p>Matching arrays must contain JSON objects. Values retain their JSON types and array order
+     *
+     * @param json      The JSON object whose object branches are searched
+     * @param searchKey The key whose value is retrieved from each array element
+     * @param <T>       The expected element type, compatible with the retrieved values
+     *
+     * @return the retrieved values, or null when no array is selected, as {@link ArrayList} of {@code T}
+     * @throws JSONException when a matching array contains an element that is not a JSON object
      */
     @Wrapper
     public static <T> ArrayList<T> fetchVList(JSONObject json, String searchKey) {
@@ -1973,14 +1929,20 @@ public class JsonHelper{
     }
 
     /**
-     * Method to get from {@link JSONObject} a list of values automatically
+     * Method used to retrieve a key value from each object in a matching JSON array
      *
-     * @param json:      {@link JSONObject} from fetch list
-     * @param searchKey: key for value to fetch
-     * @param defValue:  default value to return if not found what searched
-     * @return list of values as {@link ArrayList} of {@link T}, if it is not exist will return null
-     * @apiNote this method does not need specific path of the {@link JSONObject} to fetch value, but it will in automatic
-     * reach the value requested directly from the entire {@code "JSON"} file without path inserted by hand
+     * <p>Matching arrays must contain JSON objects. Values retain their JSON types and array order
+     *
+     * <p>Recursive searches in nested objects do not propagate the supplied fallback
+     *
+     * @param json      The JSON object whose object branches are searched
+     * @param searchKey The key whose value is retrieved from each array element
+     * @param defValue  The fallback list used when the search reaches its no-result fallback
+     * @param <T>       The expected element type, compatible with the retrieved values
+     * @param <V>       The type of the fallback list
+     *
+     * @return the retrieved values, or the fallback or null when no array is selected, as {@link ArrayList} of {@code T}
+     * @throws JSONException when a matching array contains an element that is not a JSON object
      */
     @Wrapper
     public static <T, V extends ArrayList<?>> ArrayList<T> fetchVList(JSONObject json, String searchKey, V defValue) {
@@ -1988,14 +1950,18 @@ public class JsonHelper{
     }
 
     /**
-     * Method to get from {@link JSONObject} a list of values automatically
+     * Method used to retrieve a key value from each object in a matching JSON array
      *
-     * @param searchKey: key for value to fetch
-     * @param listKey:   list key for value to fetch
-     * @return list of values as {@link ArrayList} of {@link T}, if it is not exist will return null
-     * @apiNote this method does not need specific path of the {@link JSONObject} to fetch value, but it will in automatic
-     * reach the value requested directly from the entire {@code "JSON"} file without path inserted by hand
-     * @implNote This method is useful when the value to fetch appears in multiple list
+     * <p>Matching arrays must contain JSON objects. Values retain their JSON types and array order
+     *
+     * <p>The array key restricts which matching array supplies the values
+     *
+     * @param searchKey The key whose value is retrieved from each array element
+     * @param listKey   The array key to select, or null to accept any matching array
+     * @param <T>       The expected element type, compatible with the retrieved values
+     *
+     * @return the retrieved values, or null when no array is selected, as {@link ArrayList} of {@code T}
+     * @throws JSONException when a matching array contains an element that is not a JSON object
      */
     @Wrapper
     public <T> ArrayList<T> fetchVList(String searchKey, String listKey) {
@@ -2003,15 +1969,22 @@ public class JsonHelper{
     }
 
     /**
-     * Method to get from {@link JSONObject} a list of values automatically
+     * Method used to retrieve a key value from each object in a matching JSON array
      *
-     * @param searchKey: key for value to fetch
-     * @param listKey:   list key for value to fetch
-     * @param defValue:  default value to return if not found what searched
-     * @return list of values as {@link ArrayList} of {@link T}, if it is not exist will return null
-     * @apiNote this method does not need specific path of the {@link JSONObject} to fetch value, but it will in automatic
-     * reach the value requested directly from the entire {@code "JSON"} file without path inserted by hand
-     * @implNote This method is useful when the value to fetch appears in multiple list
+     * <p>Matching arrays must contain JSON objects. Values retain their JSON types and array order
+     *
+     * <p>The array key restricts which matching array supplies the values
+     *
+     * <p>Recursive searches in nested objects do not propagate the supplied fallback
+     *
+     * @param searchKey The key whose value is retrieved from each array element
+     * @param listKey   The array key to select, or null to accept any matching array
+     * @param defValue  The fallback list used when the search reaches its no-result fallback
+     * @param <T>       The expected element type, compatible with the retrieved values
+     * @param <V>       The type of the fallback list
+     *
+     * @return the retrieved values, or the fallback or null when no array is selected, as {@link ArrayList} of {@code T}
+     * @throws JSONException when a matching array contains an element that is not a JSON object
      */
     @Wrapper
     public <T, V extends ArrayList<?>> ArrayList<T> fetchVList(String searchKey, String listKey, V defValue) {
@@ -2019,15 +1992,19 @@ public class JsonHelper{
     }
 
     /**
-     * Method to get from {@link JSONObject} a list of values automatically
+     * Method used to retrieve a key value from each object in a matching JSON array
      *
-     * @param json:      {@link JSONObject} from fetch list
-     * @param searchKey: key for value to fetch
-     * @param listKey:   list key for value to fetch
-     * @return list of values as {@link ArrayList} of {@link T}, if it is not exist will return null
-     * @apiNote this method does not need specific path of the {@link JSONObject} to fetch value, but it will in automatic
-     * reach the value requested directly from the entire {@code "JSON"} file without path inserted by hand
-     * @implNote This method is useful when the value to fetch appears in multiple list
+     * <p>Matching arrays must contain JSON objects. Values retain their JSON types and array order
+     *
+     * <p>The array key restricts which matching array supplies the values
+     *
+     * @param json      The JSON object whose object branches are searched
+     * @param searchKey The key whose value is retrieved from each array element
+     * @param listKey   The array key to select, or null to accept any matching array
+     * @param <T>       The expected element type, compatible with the retrieved values
+     *
+     * @return the retrieved values, or null when no array is selected, as {@link ArrayList} of {@code T}
+     * @throws JSONException when a matching array contains an element that is not a JSON object
      */
     @Wrapper
     public static <T> ArrayList<T> fetchVList(JSONObject json, String searchKey, String listKey) {
@@ -2035,16 +2012,23 @@ public class JsonHelper{
     }
 
     /**
-     * Method to get from {@link JSONObject} a list of values automatically
+     * Method used to retrieve a key value from each object in a matching JSON array
      *
-     * @param json:      {@link JSONObject} from fetch list
-     * @param searchKey: key for value to fetch
-     * @param listKey:   list key for value to fetch
-     * @param defValue:  default value to return if not found what searched
-     * @return list of values as {@link ArrayList} of {@link T}, if it is not exist will return null
-     * @apiNote this method does not need specific path of the {@link JSONObject} to fetch value, but it will in automatic
-     * reach the value requested directly from the entire {@code "JSON"} file without path inserted by hand
-     * @implNote This method is useful when the value to fetch appears in multiple list
+     * <p>Matching arrays must contain JSON objects. Values retain their JSON types and array order
+     *
+     * <p>The array key restricts which matching array supplies the values
+     *
+     * <p>Recursive searches in nested objects do not propagate the supplied fallback
+     *
+     * @param json      The JSON object whose object branches are searched
+     * @param searchKey The key whose value is retrieved from each array element
+     * @param listKey   The array key to select, or null to accept any matching array
+     * @param defValue  The fallback list used when the search reaches its no-result fallback
+     * @param <T>       The expected element type, compatible with the retrieved values
+     * @param <V>       The type of the fallback list
+     *
+     * @return the retrieved values, or the fallback or null when no array is selected, as {@link ArrayList} of {@code T}
+     * @throws JSONException when a matching array contains an element that is not a JSON object
      */
     public static <T, V extends ArrayList<?>> ArrayList<T> fetchVList(JSONObject json, String searchKey, String listKey,
                                                                       V defValue) {
@@ -2071,13 +2055,16 @@ public class JsonHelper{
     }
 
     /**
-     * Method to get from {@link JSONObject} a generic value
+     * Method used to locate a value by key in an object or a selected nested branch
      *
-     * @param json:      {@link JSONObject} from fetch data
-     * @param searchKey: key for value to fetch
-     * @return value as {@link T}, if it is not exist will return null
-     * @apiNote this method does not need specific path of the {@link JSONObject} to fetch value, but it will in automatic
-     * reach the value requested directly from the entire {@code "JSON"} file without path inserted by hand
+     * <p>Direct object keys take precedence. A selected nested object is searched recursively; a selected
+     * array is returned as a list of its elements
+     *
+     * @param json      The JSON object to search
+     * @param searchKey The key text used to select a value or nested branch
+     * @param <T>       The expected result type, compatible with the selected value or list
+     *
+     * @return the selected value or list, or null when no value is found, as {@code T}
      */
     private static <T> T autoSearch(JSONObject json, String searchKey) {
         if (containsKey(json, searchKey)) {
@@ -2104,25 +2091,26 @@ public class JsonHelper{
     }
 
     /**
-     * Method to check if a {@code "JSON"} source contains a specific key
+     * Method used to check whether a JSON representation contains the quoted key text
      *
-     * @param json:      {@code "JSON"} source
-     * @param searchKey: key for value to fetch
-     * @return whether the source constants the key specified
+     * @param json      The value whose JSON representation is inspected
+     * @param searchKey The key text to search for between double quotes
+     *
+     * @return whether the quoted text occurs, including when it appears as a value, as {@code boolean}
      */
     private static boolean containsKey(Object json, String searchKey) {
         return json.toString().contains("\"" + searchKey + "\":");
     }
 
     /**
-     * Method to get from {@link JSONObject} a generic value
+     * Method used to locate a JSON value with a fallback for an unsuccessful search
      *
-     * @param json:      {@link JSONObject} from fetch data
-     * @param searchKey: key for value to fetch
-     * @param defValue:  default value to return if primary value not exists
-     * @return value as {@link T}, if it is not exist will return {@code defValue}
-     * @apiNote this method does not need specific path of the {@link JSONObject} to fetch value, but it will in automatic
-     * reach the value requested directly from the entire {@code "JSON"} file without path inserted by hand
+     * @param json      The JSON object to search
+     * @param searchKey The key text used to select a value or nested branch
+     * @param defValue  The fallback to return when the selected search finds no value
+     * @param <T>       The expected result type, compatible with the selected value and fallback
+     *
+     * @return the selected value or fallback as {@code T}
      */
     private static <T> T autoSearch(JSONObject json, String searchKey, T defValue) {
         T search = autoSearch(json, searchKey);
@@ -2132,12 +2120,12 @@ public class JsonHelper{
     }
 
     /**
-     * Method to assemble a list from {@link JSONArray} a generic value
+     * Method used to copy JSON array elements into a Java array list
      *
-     * @param list : {@link JSONArray} from fetch data
-     * @return value as {@link ArrayList} of {@link T}, if it is not exist will return null
-     * @apiNote this method does not need specific path of the {@link JSONArray} to fetch value, but it will in automatic
-     * reach the value requested directly from the entire {@code "JSON"} file without path inserted by hand
+     * @param list The array to copy, or null to produce an empty list
+     * @param <T>  The expected result type, compatible with ArrayList
+     *
+     * @return the copied elements, or an empty list for null input, as {@code T}
      */
     private static <T> T assembleList(JSONArray list) {
         ArrayList<T> values = new ArrayList<>();
@@ -2148,22 +2136,20 @@ public class JsonHelper{
     }
 
     /**
-     * Method to get {@link #jsonObjectSource} instance <br>
-     * No-any params required
+     * Method used to get the object source retained for key-based lookups
      *
-     * @return {@link #jsonObjectSource} instance as {@link JSONObject}
+     * @return the object source, or null when not initialized, as {@link JSONObject}
      */
     public JSONObject getJSONObjectSource() {
         return jsonObjectSource;
     }
 
     /**
-     * Method to set {@link #jsonObjectSource} instance
+     * Method used to replace the object source using a supplied bean
      *
-     * @param jsonObjectSource : new {@code "JSON"} source for {@link #jsonObjectSource}
-     * @throws IllegalArgumentException when {@code "jsonObjectSource"} inserted is not a valid {@code "JSON"} source
-     * @apiNote if it will be thrown an {@link IllegalArgumentException} use directly the {@link #setJSONArraySource(String)}
-     * method or check validity of the {@code "JSON"} source inserted
+     * @param jsonObjectSource The bean whose readable properties supply the JSON object
+     * @param <T>              The bean type
+     * @throws IllegalArgumentException when the JSON library rejects the supplied source
      */
     public <T> void setJSONObjectSource(T jsonObjectSource) {
         try {
@@ -2174,10 +2160,10 @@ public class JsonHelper{
     }
 
     /**
-     * Method to set {@link #jsonObjectSource} instance
+     * Method used to replace the object source by parsing JSON text
      *
-     * @param jsonObjectSource : new {@code "JSON"} source for {@link #jsonObjectSource}
-     * @throws IllegalArgumentException when {@code "jsonObjectSource"} inserted is not a valid {@code "JSON"} source
+     * @param jsonObjectSource The JSON object text to parse
+     * @throws IllegalArgumentException when the text is not a valid JSON object
      */
     public void setJSONObjectSource(String jsonObjectSource) {
         try {
@@ -2188,10 +2174,9 @@ public class JsonHelper{
     }
 
     /**
-     * Method to set {@link #jsonObjectSource} instance
+     * Method used to replace the object source retained for key-based lookups
      *
-     * @param jsonObjectSource : new {@code "JSON"} source for {@link #jsonObjectSource}
-     * @throws IllegalArgumentException when {@code "jsonObjectSource"} inserted is not a valid {@code "JSON"} source
+     * @param jsonObjectSource The JSON object to retain
      */
     public void setJSONObjectSource(JSONObject jsonObjectSource) {
         try {
@@ -2202,22 +2187,20 @@ public class JsonHelper{
     }
 
     /**
-     * Method to get {@link #jsonArraySource} instance <br>
-     * No-any params required
+     * Method used to get the array source retained for index-based lookups
      *
-     * @return {@link #jsonArraySource} instance as {@link JSONArray}
+     * @return the array source, or null when not initialized, as {@link JSONArray}
      */
     public JSONArray getJSONArraySource() {
         return jsonArraySource;
     }
 
     /**
-     * Method to set {@link #jsonArraySource} instance
+     * Method used to replace the array source by parsing a value's string representation
      *
-     * @param jsonArraySource: new {@code "JSON"} source for {@link #jsonArraySource}
-     * @throws IllegalArgumentException when {@code "jsonArraySource"} inserted is not a valid {@code "JSON"} source
-     * @apiNote if it will be thrown an {@link IllegalArgumentException} use directly the {@link #setJSONArraySource(String)}
-     * method or check validity of the {@code "JSON"} source inserted
+     * @param jsonArraySource The value whose string representation contains a JSON array
+     * @param <T>             The type of the supplied source
+     * @throws IllegalArgumentException when the string representation is not a valid JSON array
      */
     public <T> void setJSONArraySource(T jsonArraySource) {
         try {
@@ -2228,10 +2211,10 @@ public class JsonHelper{
     }
 
     /**
-     * Method to set {@link #jsonArraySource} instance
+     * Method used to replace the array source by parsing JSON text
      *
-     * @param jsonArraySource: new {@code "JSON"} source for {@link #jsonArraySource}
-     * @throws IllegalArgumentException when {@code "jsonArraySource"} inserted is not a valid {@code "JSON"} source
+     * @param jsonArraySource The JSON array text to parse
+     * @throws IllegalArgumentException when the text is not a valid JSON array
      */
     public void setJSONArraySource(String jsonArraySource) {
         try {
@@ -2242,10 +2225,9 @@ public class JsonHelper{
     }
 
     /**
-     * Method to set {@link #jsonArraySource} instance
+     * Method used to replace the array source retained for index-based lookups
      *
-     * @param jsonArraySource: new {@code "JSON"} source for {@link #jsonArraySource}
-     * @throws IllegalArgumentException when {@code "jsonArraySource"} inserted is not a valid {@code "JSON"} source
+     * @param jsonArraySource The JSON array to retain
      */
     public void setJSONArraySource(JSONArray jsonArraySource) {
         try {
@@ -2256,10 +2238,9 @@ public class JsonHelper{
     }
 
     /**
-     * Returns a string representation of the object <br>
-     * No-any params required
+     * Method used to serialize the helper's exposed source properties as JSON
      *
-     * @return a string representation of the object as {@link String}
+     * @return the JSON representation of the helper as {@link String}
      */
     @Override
     public String toString() {

@@ -10,56 +10,44 @@ import java.io.InputStream;
 import static java.nio.charset.StandardCharsets.UTF_8;
 
 /**
- * The {@code ResourcesUtils} class is useful to manage the resources folder to get its resources, both with methods
- * working in the JAR scope and both with method working a runtime outside a JAR
- * <pre>
- * {@code
+ * The {@code ResourcesUtils} class is useful to access classpath resources used by Equinox backends
  *
- *      // Invoking a ResourcesUtils method one time
- *      String resourceContent = ResourcesUtils.getResourceContent("my_path_name.resource", MyCallingClass.class);
+ * <p>Content and stream access also support resources packaged in a JAR. Direct file access requires
+ * an unpacked resource. Instances reuse the supplied context class for repeated lookups
  *
- *      // Invoking a ResourcesUtils methods multiple time is more efficient instantiating a dedicated object
- *      ResourcesUtils<Class<MyCallingClass>> resourcesUtils = new ResourcesUtils<>(MyCallingClass.class);
+ * <pre>{@code
+ * ResourcesUtils<ResourcesUtils> resourcesUtils = new ResourcesUtils<>(ResourcesUtils.class);
+ * String configuration = resourcesUtils.getResourceContent("equinox.config");
+ * }</pre>
  *
- *      String firstResourceContent = resourcesUtils.getResourceContent("my_first_path_name.resource");
- *
- *      String secondResourceContent = resourcesUtils.getResourceContent("my_second_path_name.resource");
- *
- * }
- * </pre>
- *
- * @param <T> the class from get its classloader to reach the resources folder
+ * @param <T> The type whose class loader is used to locate resources
  * @author N7ghtm4r3 - Tecknobit
- * @apiNote see the usage at <a href="https://github.com/N7ghtm4r3/APIManager/blob/main/documd/ResourcesUtils.md">ResourcesUtils.md</a>
- * @since 2.2.2
+ *
+ * @since 2.0.0
  */
-public class ResourcesUtils<T extends Class<?>> {
+public class ResourcesUtils<T> {
 
     /**
-     * {@code context} the context class from get its classloader to reach the resources folder
+     * {@code context} the class whose class loader is used to locate backend resources
      */
     private final Class<T> context;
 
     /**
      * Constructor to init the {@link ResourcesUtils} class
      *
-     * @param context: the context class from get its classloader to reach the resources folder
-     *
+     * @param context The class whose class loader is used to locate resources
      */
     public ResourcesUtils(Class<T> context) {
         this.context = context;
     }
 
     /**
-     * Method to get a copy of a resource file during the runtime. <br>
-     * That copy will be deleted when the program terminates, this invoking
-     * the {@link File#deleteOnExit()} method
+     * Method used to copy a classpath text resource to a file scheduled for deletion when the JVM exits
      *
-     * @param pathname: the pathname of the resource to get
+     * @param pathname The classpath resource name, also used as the destination file path
      *
-     * @return a copy of a resource file that will be deleted when the program terminates as {@link File}
-     *
-     * @throws IOException when an error occurred during the fetching of the resource
+     * @return the resource copy scheduled for deletion as {@link File}
+     * @throws IOException when the resource cannot be found, read, or written
      */
     @Wrapper
     public File getResourceFileRuntimeCopy(String pathname) throws IOException {
@@ -67,13 +55,15 @@ public class ResourcesUtils<T extends Class<?>> {
     }
 
     /**
-     * Method to get a copy of a resource file
+     * Method used to copy a classpath text resource to a file
      *
-     * @param pathname: the pathname of the resource to get
+     * <p>The resource is decoded as UTF-8 and written using the default file-writer charset. An existing
+     * file at the destination is overwritten; this operation does not preserve arbitrary binary content
      *
-     * @return a copy of a resource file as {@link File}
+     * @param pathname The classpath resource name, also used as the destination file path
      *
-     * @throws IOException when an error occurred during the fetching of the resource
+     * @return the resource copy as {@link File}
+     * @throws IOException when the resource cannot be found, read, or written
      */
     @Wrapper
     public File getResourceFileCopy(String pathname) throws IOException {
@@ -81,13 +71,13 @@ public class ResourcesUtils<T extends Class<?>> {
     }
 
     /**
-     * Method to a resource file
+     * Method used to resolve an unpacked classpath resource as a file
      *
-     * @param pathname: the pathname of the resource to get
+     * <p>This operation does not extract resources packaged in a JAR
      *
-     * @return a resource file as {@link File}
+     * @param pathname The classpath resource name
      *
-     * @apiNote this method doesn't work when is invoked in a JAR environment
+     * @return the file corresponding to the resource URL as {@link File}
      */
     @Wrapper
     public File getResourceFile(String pathname) {
@@ -95,13 +85,12 @@ public class ResourcesUtils<T extends Class<?>> {
     }
 
     /**
-     * Method to get the content of a resource file
+     * Method used to read the UTF-8 content of a classpath resource
      *
-     * @param pathname: the pathname of the resource to get its content
+     * @param pathname The classpath resource name
      *
-     * @return the content of a resource file as {@link String}
-     *
-     * @throws IOException when an error occurred during the fetching of the resource
+     * @return the decoded resource content as {@link String}
+     * @throws IOException when the resource cannot be found or read
      */
     @Wrapper
     public String getResourceContent(String pathname) throws IOException {
@@ -109,11 +98,12 @@ public class ResourcesUtils<T extends Class<?>> {
     }
 
     /**
-     * Method to get the stream of a resource file
+     * Method used to open a classpath resource for reading
      *
-     * @param pathname: the pathname of the resource to get its stream
-     * @return the stream of a resource file as {@link InputStream}
-     * @throws IOException when an error occurred during the fetching of the resource
+     * @param pathname The classpath resource name
+     *
+     * @return the resource stream, which the caller must close, as {@link InputStream}
+     * @throws IOException when the resource cannot be found
      */
     @Wrapper
     public InputStream getResourceStream(String pathname) throws IOException {
@@ -121,17 +111,14 @@ public class ResourcesUtils<T extends Class<?>> {
     }
 
     /**
-     * Method to get a copy of a resource file during the runtime. <br>
-     * That copy will be deleted when the program terminates, this invoking
-     * the {@link File#deleteOnExit()} method
+     * Method used to copy a classpath text resource to a file scheduled for deletion when the JVM exits
      *
-     * @param pathname: the pathname of the resource to get
-     * @param context: the context class from get its classloader to reach the resources folder
-     * @param <T> the class type of the context e.g. MyCallingClass.class
+     * @param pathname The classpath resource name, also used as the destination file path
+     * @param context  The class whose class loader is used to locate the resource
+     * @param <T>      The type of the context class
      *
-     * @return a copy of a resource file that will be deleted when the program terminates as {@link File}
-     *
-     * @throws IOException when an error occurred during the fetching of the resource
+     * @return the resource copy scheduled for deletion as {@link File}
+     * @throws IOException when the resource cannot be found, read, or written
      */
     public static <T> File getResourceFileRuntimeCopy(String pathname, Class<T> context) throws IOException {
         File resourceCopy = getResourceFileCopy(pathname, context);
@@ -140,13 +127,17 @@ public class ResourcesUtils<T extends Class<?>> {
     }
 
     /**
-     * Method to get a copy of a resource file
+     * Method used to copy a classpath text resource to a file
      *
-     * @param pathname: the pathname of the resource to get
-     * @param context:  the context class from get its classloader to reach the resources folder
-     * @param <T>       the class type of the context e.g. MyCallingClass.class
-     * @return a copy of a resource file as {@link File}
-     * @throws IOException when an error occurred during the fetching of the resource
+     * <p>The resource is decoded as UTF-8 and written using the default file-writer charset. An existing
+     * file at the destination is overwritten; this operation does not preserve arbitrary binary content
+     *
+     * @param pathname The classpath resource name, also used as the destination file path
+     * @param context  The class whose class loader is used to locate the resource
+     * @param <T>      The type of the context class
+     *
+     * @return the resource copy as {@link File}
+     * @throws IOException when the resource cannot be found, read, or written
      */
     public static <T> File getResourceFileCopy(String pathname, Class<T> context) throws IOException {
         String content = getResourceContent(pathname, context);
@@ -159,39 +150,43 @@ public class ResourcesUtils<T extends Class<?>> {
     }
 
     /**
-     * Method to a resource file
+     * Method used to resolve an unpacked classpath resource as a file
      *
-     * @param pathname: the pathname of the resource to get
-     * @param context:  the context class from get its classloader to reach the resources folder
-     * @param <T>       the class type of the context e.g. MyCallingClass.class
-     * @return a resource file as {@link File}
-     * @apiNote this method doesn't work when is invoked in a JAR environment
+     * <p>This operation does not extract resources packaged in a JAR
+     *
+     * @param pathname The classpath resource name
+     * @param context  The class whose class loader is used to locate the resource
+     * @param <T>      The type of the context class
+     *
+     * @return the file corresponding to the resource URL as {@link File}
      */
     public static <T> File getResourceFile(String pathname, Class<T> context) {
         return new File(context.getClassLoader().getResource(pathname).getFile());
     }
 
     /**
-     * Method to get the content of a resource file
+     * Method used to read the UTF-8 content of a classpath resource
      *
-     * @param pathname: the pathname of the resource to get its content
-     * @param context:  the context class from get its classloader to reach the resources folder
-     * @param <T>       the class type of the context e.g. MyCallingClass.class
-     * @return the content of a resource file as {@link String}
-     * @throws IOException when an error occurred during the fetching of the resource
+     * @param pathname The classpath resource name
+     * @param context  The class whose class loader is used to locate the resource
+     * @param <T>      The type of the context class
+     *
+     * @return the decoded resource content as {@link String}
+     * @throws IOException when the resource cannot be found or read
      */
     public static <T> String getResourceContent(String pathname, Class<T> context) throws IOException {
         return new String(getResourceStream(pathname, context).readAllBytes(), UTF_8);
     }
 
     /**
-     * Method to get the stream of a resource file
+     * Method used to open a classpath resource for reading
      *
-     * @param pathname: the pathname of the resource to get its stream
-     * @param context:  the context class from get its classloader to reach the resources folder
-     * @param <T>       the class type of the context e.g. MyCallingClass.class
-     * @return the stream of a resource file as {@link InputStream}
-     * @throws IOException when an error occurred during the fetching of the resource
+     * @param pathname The classpath resource name
+     * @param context  The class whose class loader is used to locate the resource
+     * @param <T>      The type of the context class
+     *
+     * @return the resource stream, which the caller must close, as {@link InputStream}
+     * @throws IOException when the resource cannot be found
      */
     public static <T> InputStream getResourceStream(String pathname, Class<T> context) throws IOException {
         InputStream resource = context.getClassLoader().getResourceAsStream(pathname);

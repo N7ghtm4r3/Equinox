@@ -1,7 +1,7 @@
 package com.tecknobit.equinoxbackend.environment.validation.validators;
 
-import com.tecknobit.apimanager.apis.ServerProtector;
 import com.tecknobit.equinoxbackend.annotations.ConstraintValidatorDefinition;
+import com.tecknobit.equinoxbackend.configuration.ServerProtector;
 import com.tecknobit.equinoxbackend.environment.configuration.EquinoxBackendConfiguration;
 import com.tecknobit.equinoxbackend.environment.configuration.EquinoxEnvironmentService;
 import com.tecknobit.equinoxbackend.environment.validation.annotations.ServerSecret;

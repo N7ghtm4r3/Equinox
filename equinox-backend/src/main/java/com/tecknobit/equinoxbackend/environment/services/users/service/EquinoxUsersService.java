@@ -1,6 +1,5 @@
 package com.tecknobit.equinoxbackend.environment.services.users.service;
 
-import com.tecknobit.apimanager.apis.APIRequest;
 import com.tecknobit.equinoxbackend.annotations.EntityRetriever;
 import com.tecknobit.equinoxbackend.apis.resources.ResourcesManager;
 import com.tecknobit.equinoxbackend.environment.configuration.EquinoxEnvironmentService;
@@ -32,10 +31,10 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-import static com.tecknobit.apimanager.apis.APIRequest.SHA256_ALGORITHM;
 import static com.tecknobit.equinoxbackend.apis.database.SQLConstants.*;
 import static com.tecknobit.equinoxbackend.environment.constants.EquinoxMessages.WRONG_PROFILE_PIC_MESSAGE;
 import static com.tecknobit.equinoxbackend.environment.services.users.entity.EquinoxUser.DISCRIMINATOR_VALUE_KEY;
+import static com.tecknobit.equinoxbackend.utils.WebUtil.hashSha256Base64;
 import static com.tecknobit.equinoxcore.helpers.CommonKeysKt.*;
 import static java.lang.System.currentTimeMillis;
 
@@ -155,7 +154,7 @@ public class EquinoxUsersService<U extends EquinoxUser, R extends EquinoxUsersRe
 
         String userId = environmentService.generateIdentifier();
         String userToken = environmentService.generateIdentifier();
-        String password = hash(signUpRequest.getPassword());
+        String password = hashSha256Base64(signUpRequest.getPassword());
 
         U signUpUser = (U) resolveSignUpUser(userId, userToken, password, signUpRequest);
         usersRepository.save(signUpUser);
@@ -244,7 +243,7 @@ public class EquinoxUsersService<U extends EquinoxUser, R extends EquinoxUsersRe
         arrangeQuery(queryBuilder, getSignUpKeys(), false);
 
         String defaultProfilePic = "resolveUserDefaultProfilePic()";
-        List<Object> values = new ArrayList<>(List.of(discriminatorValue, id, token, name, surname, email, hash(password),
+        List<Object> values = new ArrayList<>(List.of(discriminatorValue, id, token, name, surname, email, hashSha256Base64(password),
                 defaultProfilePic, language));
         values.addAll(Arrays.stream(custom).toList());
 
@@ -316,7 +315,7 @@ public class EquinoxUsersService<U extends EquinoxUser, R extends EquinoxUsersRe
         U user = usersRepository.findUserByEmail(email);
 
         String password = signInRequest.getPassword();
-        String safePassword = hash(password);
+        String safePassword = hashSha256Base64(password);
 
         if (validateSignIn(user, safePassword, signInRequest)) {
             if(user.isSoftDeleted())
@@ -381,7 +380,7 @@ public class EquinoxUsersService<U extends EquinoxUser, R extends EquinoxUsersRe
      * @deprecated use {@link #signInUser(SignInRequestDto)} to authenticate a request and return its response DTO
      */
     @Deprecated(since = "2.0.0", forRemoval = true)
-    public U signInUser(String email, String password, Object... custom) throws NoSuchAlgorithmException {
+    public U signInUser(String email, String password, Object... custom) {
         U user = usersRepository.findUserByEmail(email);
         if (validateSignIn(user, password, custom))
             return user;
@@ -401,8 +400,8 @@ public class EquinoxUsersService<U extends EquinoxUser, R extends EquinoxUsersRe
      * and the original request. The request-based sign-in flow does not invoke this legacy hook
      */
     @Deprecated(since = "2.0.0", forRemoval = true)
-    protected boolean validateSignIn(U user, String password, Object... custom) throws NoSuchAlgorithmException {
-        return user != null && user.getPassword().equals(hash(password));
+    protected boolean validateSignIn(U user, String password, Object... custom) {
+        return user != null && user.getPassword().equals(hashSha256Base64(password));
     }
 
     /**
@@ -597,7 +596,7 @@ public class EquinoxUsersService<U extends EquinoxUser, R extends EquinoxUsersRe
     @Transactional
     public void changePassword(ChangePasswordRequestDto changePasswordRequest, String userId) {
         requireEntityNotSoftDeleted(userId, u -> {
-            String safePassword = hash(changePasswordRequest.getPassword());
+            String safePassword = hashSha256Base64(changePasswordRequest.getPassword());
 
             usersRepository.changePassword(safePassword, userId);
         });
@@ -648,21 +647,6 @@ public class EquinoxUsersService<U extends EquinoxUser, R extends EquinoxUsersRe
         super.hardDelete(id);
 
         deleteProfileResource(id);
-    }
-
-    /**
-     * Method used to hash a sensitive user data
-     *
-     * @param secret The user value to hash
-     *
-     * @return the Base64-encoded SHA-256 digest as {@link String}
-     */
-    protected String hash(String secret) {
-        try {
-            return APIRequest.base64Digest(secret, SHA256_ALGORITHM);
-        } catch (NoSuchAlgorithmException e) {
-            throw new EquinoxServerException(e);
-        }
     }
 
 }
