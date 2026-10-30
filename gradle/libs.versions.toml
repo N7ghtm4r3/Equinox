@@ -33,6 +33,7 @@ jacksonDatabind = "2.22.3"
 kotlinxCoroutinesCore = "1.10.2"
 apimanager = "2.2.4"
 json = "20260814"
+commonsCodec = "1.23.0"
 
 # Miscellaneous
 navigationCompose = "2.9.1"
@@ -75,6 +76,7 @@ jackson-databind = { module = "com.fasterxml.jackson.core:jackson-databind", ver
 kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinxCoroutinesCore" }
 apimanager = { module = "com.github.N7ghtm4r3:APIManager", version.ref = "apimanager" }
 json = { module = "org.json:json", version.ref = "json" }
+commons-codec = { module = "commons-codec:commons-codec", version.ref = "commonsCodec" }
 
 # Miscellaneous: navigation-compose-util
 navigation-compose = { module = "org.jetbrains.androidx.navigation:navigation-compose", version.ref = "navigationCompose" }

@@ -28,6 +28,7 @@ dependencies {
     implementation(libs.spring.boot.starter.security)
     implementation(libs.jackson.databind)
     implementation(libs.json)
+    implementation(libs.commons.codec)
     implementation(project(":equinox-core"))
 }
 
