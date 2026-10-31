@@ -7,7 +7,7 @@
 ![Static Badge](https://img.shields.io/badge/desktop-006874?link=https%3A%2F%2Fimg.shields.io%2Fbadge%2Fandroid-4280511051)
 ![Static Badge](https://img.shields.io/badge/web-834C74?link=https%3A%2F%2Fimg.shields.io%2Fbadge%2Fandroid-4280511051)
 
-**v1.0.4**
+**v1.0.5**
 
 Integration of the [lazy-pagination-compose](https://github.com/Ahmad-Hamwi/lazy-pagination-compose) library with the
 `in-place`
@@ -22,7 +22,7 @@ operations such `addInPlace, removeInPlace`, etc...
 ```toml
 [versions]
 lazyPaginationCompose = "1.7.2"
-lazyPaginationComposeOps = "1.0.4"
+lazyPaginationComposeOps = "1.0.5"
 
 [libraries]
 lazy-pagination-compose = { module = "io.github.ahmad-hamwi:lazy-pagination-compose", version.ref = "lazyPaginationCompose" }
@@ -43,7 +43,7 @@ dependencies {
 ```kotlin
 dependencies {
     implementation("io.github.ahmad-hamwi:lazy-pagination-compose:1.7.2")
-    implementation("io.github.n7ghtm4r3:equinoxmisc-lazy-pagination-compose-ops:1.0.4")
+    implementation("io.github.n7ghtm4r3:equinoxmisc-lazy-pagination-compose-ops:1.0.5")
 }
 ```
 
@@ -52,7 +52,7 @@ dependencies {
 ```groovy
 dependencies {
     implementation 'io.github.ahmad-hamwi:lazy-pagination-compose:1.7.2'
-    implementation 'io.github.n7ghtm4r3:equinoxmisc-lazy-pagination-compose-ops:1.0.4'
+    implementation 'io.github.n7ghtm4r3:equinoxmisc-lazy-pagination-compose-ops:1.0.5'
 }
 ```
 
