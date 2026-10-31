@@ -1,0 +1,185 @@
+name: Release Equinox
+
+on:
+  push:
+    branches: [develop, main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: equinox-release
+  cancel-in-progress: false
+  queue: max
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  core:
+    uses: ./.github/workflows/publish-module.yml
+    with:
+      module: ':equinox-core'
+      artifact: equinox-core
+    secrets:
+      MAVEN_CENTRAL_USERNAME: ${{ secrets.MAVEN_CENTRAL_USERNAME }}
+      MAVEN_CENTRAL_PASSWORD: ${{ secrets.MAVEN_CENTRAL_PASSWORD }}
+      SIGNING_KEY: ${{ secrets.SIGNING_KEY }}
+      SIGNING_KEY_ID: ${{ secrets.SIGNING_KEY_ID }}
+      SIGNING_PASSWORD: ${{ secrets.SIGNING_PASSWORD }}
+
+  modules:
+    needs: core
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - module: ':equinox-compose'
+            artifact: equinox-compose
+          - module: ':equinox-backend'
+            artifact: equinox-backend
+          - module: ':equinox-miscellaneous:lazy-pagination-compose-ops'
+            artifact: equinoxmisc-lazy-pagination-compose-ops
+          - module: ':equinox-miscellaneous:navigation-compose-util'
+            artifact: equinoxmisc-navigation-compose-util
+    uses: ./.github/workflows/publish-module.yml
+    with:
+      module: ${{ matrix.module }}
+      artifact: ${{ matrix.artifact }}
+    secrets:
+      MAVEN_CENTRAL_USERNAME: ${{ secrets.MAVEN_CENTRAL_USERNAME }}
+      MAVEN_CENTRAL_PASSWORD: ${{ secrets.MAVEN_CENTRAL_PASSWORD }}
+      SIGNING_KEY: ${{ secrets.SIGNING_KEY }}
+      SIGNING_KEY_ID: ${{ secrets.SIGNING_KEY_ID }}
+      SIGNING_PASSWORD: ${{ secrets.SIGNING_PASSWORD }}
+
+  dependents:
+    needs: modules
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - module: ':equinox-navigation'
+            artifact: equinox-navigation
+          - module: ':equinox-miscellaneous:backend-membership'
+            artifact: equinoxmisc-backend-membership
+    uses: ./.github/workflows/publish-module.yml
+    with:
+      module: ${{ matrix.module }}
+      artifact: ${{ matrix.artifact }}
+    secrets:
+      MAVEN_CENTRAL_USERNAME: ${{ secrets.MAVEN_CENTRAL_USERNAME }}
+      MAVEN_CENTRAL_PASSWORD: ${{ secrets.MAVEN_CENTRAL_PASSWORD }}
+      SIGNING_KEY: ${{ secrets.SIGNING_KEY }}
+      SIGNING_KEY_ID: ${{ secrets.SIGNING_KEY_ID }}
+      SIGNING_PASSWORD: ${{ secrets.SIGNING_PASSWORD }}
+
+  docs-build:
+    if: github.ref == 'refs/heads/main'
+    uses: ./.github/workflows/mkp.yml
+    with:
+      phase: build
+
+  release:
+    needs: [core, modules, dependents, docs-build]
+    if: >-
+      ${{ !cancelled() && needs.core.result == 'success' &&
+          needs.modules.result == 'success' && needs.dependents.result == 'success' &&
+          (needs.docs-build.result == 'success' ||
+           (github.ref == 'refs/heads/develop' && needs.docs-build.result == 'skipped')) }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    permissions:
+      contents: write
+      pull-requests: read
+    outputs:
+      tag: ${{ steps.tag.outputs.value }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Select release tag
+        id: tag
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PRERELEASE: ${{ github.ref_name == 'develop' }}
+        run: |
+          set -euo pipefail
+          core="$(awk -F '"' '/^version[[:space:]]*=/ {print $2; exit}' equinox-core/build.gradle.kts)"
+          gh api --paginate --slurp "repos/$GITHUB_REPOSITORY/releases?per_page=100" |
+            jq -r --argjson rc "$PRERELEASE" '.[][] | select(.prerelease == $rc and (.draft | not)) | .tag_name' > "$RUNNER_TEMP/releases.txt"
+          matches=()
+          while IFS= read -r candidate; do
+            [[ "$candidate" =~ ^v[0-9][0-9A-Za-z.-]*$ ]] || continue
+            matches+=(--match "$candidate")
+          done < "$RUNNER_TEMP/releases.txt"
+          previous=''
+          if (( ${#matches[@]} )); then
+            previous="$(git describe --tags --always --abbrev=0 "${matches[@]}" "$GITHUB_SHA")"
+            [[ "$previous" == v* ]] || previous=''
+          fi
+          if [[ -n "$previous" && "$(git rev-parse "refs/tags/$previous^{commit}")" == "$GITHUB_SHA" ]]; then
+            echo "Release $previous already exists for this commit."
+            echo "value=$previous" >> "$GITHUB_OUTPUT"
+            echo 'exists=true' >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          previous_core=''
+          if [[ -n "$previous" ]]; then
+            previous_core="$(git show "$previous:equinox-core/build.gradle.kts" |
+              awk -F '"' '/^version[[:space:]]*=/ {print $2; exit}')"
+          fi
+          tag="v$core"
+          if [[ "$previous_core" == "$core" ]]; then
+            created="$(gh api "repos/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID" --jq '.created_at')"
+            date="${created:0:10}"
+            suffix="${GITHUB_SHA:0:12}"
+            [[ "$PRERELEASE" == false ]] || suffix="rc.$suffix"
+            tag="v${date//-/.}-$suffix"
+          fi
+          if git show-ref --verify --quiet "refs/tags/$tag"; then
+            [[ "$(git rev-parse "refs/tags/$tag^{commit}")" == "$GITHUB_SHA" ]] || { echo '::error::Release tag belongs to another commit.'; exit 1; }
+          fi
+          echo "value=$tag" >> "$GITHUB_OUTPUT"
+          echo "previous=$previous" >> "$GITHUB_OUTPUT"
+      - name: Create GitHub release with PR and generated notes
+        if: steps.tag.outputs.exists != 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RELEASE_TAG: ${{ steps.tag.outputs.value }}
+          PREVIOUS_TAG: ${{ steps.tag.outputs.previous }}
+          PRERELEASE: ${{ github.ref_name == 'develop' }}
+          LATEST: ${{ github.ref_name == 'main' }}
+        run: |
+          set -euo pipefail
+          gh api --paginate --slurp "repos/$GITHUB_REPOSITORY/commits/$GITHUB_SHA/pulls?per_page=100" |
+            jq -r --arg branch "$GITHUB_REF_NAME" '.[][] |
+              select(.merged_at != null and .base.ref == $branch) |
+              "### PR #\(.number): \(.title)\n\n\(.body // "")\n"' > "$RUNNER_TEMP/notes.md"
+          if [[ ! -s "$RUNNER_TEMP/notes.md" ]]; then
+            printf '%s\n\n' 'No merged PR associated with this push; see the generated GitHub notes.' > "$RUNNER_TEMP/notes.md"
+          fi
+          printf '\n### Module versions\n\n| Module | Maven version |\n| --- | --- |\n' >> "$RUNNER_TEMP/notes.md"
+          for file in equinox-*/build.gradle.kts equinox-miscellaneous/*/build.gradle.kts; do
+            artifact="$(awk -F '"' '/artifactId[[:space:]]*=/ {print $2; exit}' "$file")"
+            version="$(awk -F '"' '/^version[[:space:]]*=/ {print $2; exit}' "$file")"
+            [[ -z "$artifact" ]] || printf '| %s | %s |\n' "$artifact" "$version" >> "$RUNNER_TEMP/notes.md"
+          done
+          head="$(gh api "repos/$GITHUB_REPOSITORY/git/ref/heads/$GITHUB_REF_NAME" --jq '.object.sha')"
+          [[ "$head" == "$GITHUB_SHA" ]] || LATEST=false
+          gh release create "$RELEASE_TAG" --repo "$GITHUB_REPOSITORY" --target "$GITHUB_SHA" \
+            --title "$RELEASE_TAG" --notes-file "$RUNNER_TEMP/notes.md" --generate-notes \
+            --notes-start-tag "$PREVIOUS_TAG" --prerelease="$PRERELEASE" --latest="$LATEST"
+
+  docs-deploy:
+    needs: [release, docs-build]
+    if: github.ref == 'refs/heads/main'
+    permissions:
+      contents: write
+    uses: ./.github/workflows/mkp.yml
+    with:
+      phase: deploy
+      artifact-name: ${{ needs.docs-build.outputs.artifact-name }}

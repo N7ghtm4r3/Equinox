@@ -1,0 +1,125 @@
+name: Publish Equinox module
+
+on:
+  workflow_call:
+    inputs:
+      module:
+        required: true
+        type: string
+      artifact:
+        required: true
+        type: string
+    secrets:
+      MAVEN_CENTRAL_USERNAME:
+        required: true
+      MAVEN_CENTRAL_PASSWORD:
+        required: true
+      SIGNING_KEY:
+        required: true
+      SIGNING_KEY_ID:
+        required: false
+      SIGNING_PASSWORD:
+        required: true
+
+permissions:
+  contents: read
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  publish:
+    if: >-
+      ${{ github.event_name == 'push' &&
+          (github.ref == 'refs/heads/develop' || github.ref == 'refs/heads/main') }}
+    runs-on: macos-15
+    timeout-minutes: 90
+    env:
+      MODULE: ${{ inputs.module }}
+      ARTIFACT: ${{ inputs.artifact }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803
+        with:
+          persist-credentials: false
+      - name: Set up Java
+        uses: actions/setup-java@b6effb05e454b25005698d916606bdc6ffcbf961
+        with:
+          distribution: temurin
+          java-version: |
+            18
+            21
+      - name: Set up Gradle
+        uses: gradle/actions/setup-gradle@8da46b539cd8fe6ab27ca75128919a18d757604c
+        with:
+          cache-disabled: true
+      - name: Install Android platform
+        run: |
+          set -euo pipefail
+          sdk="$(awk -F '"' '/^android-compileSdk =/ {print $2}' gradle/libs.versions.toml)"
+          [[ "$sdk" =~ ^[0-9]+$ ]]
+          "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" --install "platforms;android-$sdk"
+      - name: Read and validate module version
+        id: version
+        run: |
+          set -euo pipefail
+          [[ "$MODULE" =~ ^:equinox-[a-z-]+(:[a-z-]+)?$ && "$ARTIFACT" =~ ^[a-z0-9-]+$ ]]
+          version="$(./gradlew "$MODULE:properties" -q --no-daemon --no-configuration-cache |
+            awk -F ': ' '$1 == "version" {print $2; exit}')"
+          pattern='^[0-9]+\.[0-9]+\.[0-9]+$'
+          [[ "$GITHUB_REF_NAME" != develop ]] || pattern='^[0-9]+\.[0-9]+\.[0-9]+-rc\.[1-9][0-9]*$'
+          if [[ ! "$version" =~ $pattern ]]; then
+            echo "::error::$MODULE requires an RC version on develop and a stable version on main; found $version."
+            exit 1
+          fi
+          directory="${MODULE#:}"
+          directory="${directory//://}"
+          while IFS= read -r declared; do
+            [[ "$declared" == "$version" ]] || { echo '::error::Project and Maven versions differ.'; exit 1; }
+          done < <(awk -F '"' '/^[[:space:]]*version[[:space:]]*=/ {print $2}' "$directory/build.gradle.kts")
+          echo "value=$version" >> "$GITHUB_OUTPUT"
+      - name: Build and check module
+        run: ./gradlew "$MODULE:build" --no-daemon --no-configuration-cache --console=plain
+      - name: Publish with Vanniktech
+        id: publish
+        continue-on-error: true
+        env:
+          ORG_GRADLE_PROJECT_mavenCentralUsername: ${{ secrets.MAVEN_CENTRAL_USERNAME }}
+          ORG_GRADLE_PROJECT_mavenCentralPassword: ${{ secrets.MAVEN_CENTRAL_PASSWORD }}
+          ORG_GRADLE_PROJECT_signingInMemoryKey: ${{ secrets.SIGNING_KEY }}
+          ORG_GRADLE_PROJECT_signingInMemoryKeyId: ${{ secrets.SIGNING_KEY_ID }}
+          ORG_GRADLE_PROJECT_signingInMemoryKeyPassword: ${{ secrets.SIGNING_PASSWORD }}
+        run: |
+          [[ -n "$ORG_GRADLE_PROJECT_signingInMemoryKeyId" ]] || unset ORG_GRADLE_PROJECT_signingInMemoryKeyId
+          ./gradlew "$MODULE:publishAndReleaseToMavenCentral" --no-daemon --no-configuration-cache --console=plain
+      - name: Recover only an already published Maven version
+        if: ${{ !cancelled() && steps.publish.outcome == 'failure' }}
+        env:
+          VERSION: ${{ steps.version.outputs.value }}
+        run: |
+          set -euo pipefail
+          base="https://repo.maven.apache.org/maven2/io/github/n7ghtm4r3"
+          request=(curl --fail --silent --show-error --retry 3 --retry-all-errors --retry-delay 5 --connect-timeout 15 --max-time 60)
+          "${request[@]}" "$base/$ARTIFACT/$VERSION/$ARTIFACT-$VERSION.module" -o "$RUNNER_TEMP/root.module"
+          jq -er --arg root "$ARTIFACT" --arg version "$VERSION" '
+            select(.component.group == "io.github.n7ghtm4r3" and .component.module == $root and .component.version == $version) |
+            [$root, (.variants[]?."available-at".module // empty)] | unique[]
+          ' "$RUNNER_TEMP/root.module" > "$RUNNER_TEMP/publications.txt"
+          while IFS= read -r publication; do
+            [[ "$publication" =~ ^[a-z0-9-]+$ && ( "$publication" == "$ARTIFACT" || "$publication" == "$ARTIFACT-"* ) ]]
+            url="$base/$publication/$VERSION/$publication-$VERSION"
+            "${request[@]}" --head "$url.pom" -o /dev/null
+            "${request[@]}" --head "$url.pom.asc" -o /dev/null
+            "${request[@]}" "$url.module" -o "$RUNNER_TEMP/publication.module"
+            jq -e --arg artifact "$publication" --arg version "$VERSION" '
+              .component.group == "io.github.n7ghtm4r3" and .component.module == $artifact and .component.version == $version
+            ' "$RUNNER_TEMP/publication.module" > /dev/null
+            jq -r '.variants[]?.files[]?.url' "$RUNNER_TEMP/publication.module" | sort -u > "$RUNNER_TEMP/files.txt"
+            test -s "$RUNNER_TEMP/files.txt"
+            while IFS= read -r file; do
+              [[ "$file" =~ ^[A-Za-z0-9._-]+$ && "$file" == "$publication-$VERSION"* ]]
+              "${request[@]}" --head "$base/$publication/$VERSION/$file" -o /dev/null
+            done < "$RUNNER_TEMP/files.txt"
+          done < "$RUNNER_TEMP/publications.txt"
+          echo "::notice::$ARTIFACT:$VERSION is already available on Maven Central; continuing."
