@@ -17,7 +17,38 @@ defaults:
     shell: bash
 
 jobs:
+  validate:
+    name: Validate (${{ matrix.module }})
+    strategy:
+      fail-fast: true
+      matrix:
+        include:
+          - module: ':equinox-core'
+            artifact: equinox-core
+          - module: ':equinox-compose'
+            artifact: equinox-compose
+          - module: ':equinox-backend'
+            artifact: equinox-backend
+          - module: ':equinox-miscellaneous:lazy-pagination-compose-ops'
+            artifact: equinoxmisc-lazy-pagination-compose-ops
+          - module: ':equinox-miscellaneous:navigation-compose-util'
+            artifact: equinoxmisc-navigation-compose-util
+          - module: ':equinox-navigation'
+            artifact: equinox-navigation
+          - module: ':equinox-miscellaneous:backend-membership'
+            artifact: equinoxmisc-backend-membership
+    uses: ./.github/workflows/publish-module.yml
+    with:
+      module: ${{ matrix.module }}
+      artifact: ${{ matrix.artifact }}
+      validate-only: true
+
   core:
+    needs: [validate, docs-build]
+    if: >-
+      ${{ !cancelled() && needs.validate.result == 'success' &&
+          (needs.docs-build.result == 'success' ||
+           (github.ref == 'refs/heads/develop' && needs.docs-build.result == 'skipped')) }}
     uses: ./.github/workflows/publish-module.yml
     with:
       module: ':equinox-core'

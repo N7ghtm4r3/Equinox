@@ -1,4 +1,4 @@
-name: Publish Equinox module
+name: Validate or publish Equinox module
 
 on:
   workflow_call:
@@ -9,17 +9,21 @@ on:
       artifact:
         required: true
         type: string
+      validate-only:
+        description: Build and test without signing or publishing
+        type: boolean
+        default: false
     secrets:
       MAVEN_CENTRAL_USERNAME:
-        required: true
+        required: false
       MAVEN_CENTRAL_PASSWORD:
-        required: true
+        required: false
       SIGNING_KEY:
-        required: true
+        required: false
       SIGNING_KEY_ID:
         required: false
       SIGNING_PASSWORD:
-        required: true
+        required: false
 
 permissions:
   contents: read
@@ -30,6 +34,7 @@ defaults:
 
 jobs:
   publish:
+    name: ${{ inputs.validate-only && 'Validate' || 'Publish' }}
     if: >-
       ${{ github.event_name == 'push' &&
           (github.ref == 'refs/heads/develop' || github.ref == 'refs/heads/main') }}
@@ -87,7 +92,22 @@ jobs:
           echo "value=$version" >> "$GITHUB_OUTPUT"
       - name: Build and check module
         run: ./gradlew "$MODULE:build" --no-daemon --no-configuration-cache --console=plain
+      - name: Check publishing credentials
+        if: ${{ !inputs.validate-only }}
+        env:
+          MAVEN_USERNAME: ${{ secrets.MAVEN_CENTRAL_USERNAME }}
+          MAVEN_PASSWORD: ${{ secrets.MAVEN_CENTRAL_PASSWORD }}
+          SIGNING_KEY: ${{ secrets.SIGNING_KEY }}
+          SIGNING_PASSWORD: ${{ secrets.SIGNING_PASSWORD }}
+        run: |
+          for variable in MAVEN_USERNAME MAVEN_PASSWORD SIGNING_KEY SIGNING_PASSWORD; do
+            if [[ -z "${!variable}" ]]; then
+              echo "::error::Missing required publishing credential: $variable"
+              exit 1
+            fi
+          done
       - name: Publish with Vanniktech
+        if: ${{ !inputs.validate-only }}
         id: publish
         continue-on-error: true
         env:
@@ -100,7 +120,7 @@ jobs:
           [[ -n "$ORG_GRADLE_PROJECT_signingInMemoryKeyId" ]] || unset ORG_GRADLE_PROJECT_signingInMemoryKeyId
           ./gradlew "$MODULE:publishAndReleaseToMavenCentral" --no-daemon --no-configuration-cache --console=plain
       - name: Recover only an already published Maven version
-        if: ${{ !cancelled() && steps.publish.outcome == 'failure' }}
+        if: ${{ !cancelled() && !inputs.validate-only && steps.publish.outcome == 'failure' }}
         env:
           VERSION: ${{ steps.version.outputs.value }}
         run: |

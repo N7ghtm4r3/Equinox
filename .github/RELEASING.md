@@ -15,11 +15,22 @@ Each module owns its project version and Maven coordinates in its
 - All module versions are prepared in every job so project dependencies use the
   same RC coordinates as their publications. No version changes are committed.
 
-Adding a module requires updating the workflow matrices.
+Adding a module requires updating both the validation and publication matrices.
 
-Modules run through `publish-module.yml`: core first, then compose/backend and
+Before any Maven upload, the `validate` matrix builds and tests all seven modules
+through `publish-module.yml` with `validate-only: true`. It receives no publishing
+secrets and uses `fail-fast: true`: a failed case cancels the other validation
+cases. Documentation builds in parallel on main. Core publication starts only
+when every validation case succeeds and the applicable documentation build passes.
+On develop, skipped documentation does not block publication.
+
+Publication then follows the existing order: core first, then compose/backend and
 the two core-dependent miscellaneous modules, then navigation and
-backend-membership. Independent modules within a matrix run concurrently.
+backend-membership. Independent publications within a matrix run concurrently,
+with `fail-fast: false` so started publications can finish their recovery checks.
+Validation and publication use the same setup and derived release versions.
+Each publication job rebuilds from the same commit; build artifacts are not
+transferred from validation jobs.
 Each job uses macOS for Apple targets and installs JDKs 18/21 and the Android
 platform selected by the version catalog. Gradle's setup action validates the
 wrapper and has caching disabled.
@@ -78,8 +89,8 @@ line. PR bodies are processed as data through `jq` and `--notes-file`.
 ## Documentation
 
 The original `mkp.yml` is retained as a reusable workflow with separate `build`
-and `deploy` jobs. `release.yml` calls its build phase in parallel with Maven
-jobs on main, then calls its deploy phase only after the GitHub release succeeds.
+and `deploy` jobs. `release.yml` calls its build phase in parallel with module
+validation on main, then calls its deploy phase only after the GitHub release succeeds.
 It has no independent push trigger, so the documentation is never deployed ahead
 of the release.
 
@@ -112,7 +123,10 @@ Configure these repository secrets without placing their values in files:
 | `SIGNING_KEY_ID` | Optional signing-key ID |
 
 These secrets are mapped explicitly to the reusable workflow and exposed only
-to the publication step. Default repository permissions are read-only. Only
+to the credential-presence check and publication step. In validation-only mode,
+credential checks, publication and Maven recovery are skipped. Publishing callers
+must provide the credentials; empty required values fail before upload.
+Default repository permissions are read-only. Only
 GitHub release creation receives `contents: write` and `pull-requests: read`.
 Documentation build has read-only permissions; its separate deployment job has
 `contents: write` for the gh-pages push. The token is exposed through `GH_TOKEN`
@@ -136,8 +150,10 @@ waiting and is not a guarantee of commit order.
   publications remain immutable and are accepted by the recovery check.
 - If Central has a failed/incomplete/pending deployment, inspect it in Central
   Portal before retrying. The workflow does not delete or reset deployments.
-- A documentation-build failure blocks GitHub release creation, but parallel
-  Maven publications may already have succeeded. They are not rolled back.
+- A module-validation or documentation-build failure prevents all Maven uploads
+  and GitHub release creation. Fix the failure before retrying validation.
+- A later publication failure can leave a partial Maven release. Completed
+  publications are not rolled back; existing Maven recovery checks remain active.
 - A documentation-deploy failure leaves Maven and the GitHub release intact.
   Retry the failed deploy within artifact retention. After expiration, rerun the
   entire workflow to rebuild the site; the existing GitHub release is reused.
