@@ -1,4 +1,4 @@
-
+import com.vanniktech.maven.publish.DeploymentValidation
 import com.vanniktech.maven.publish.JavadocJar
 import com.vanniktech.maven.publish.KotlinJvm
 
@@ -8,10 +8,10 @@ plugins {
     alias(libs.plugins.spring.dependency.management)
     alias(libs.plugins.dokka)
     alias(libs.plugins.vanniktech.mavenPublish)
+    alias(libs.plugins.axion)
 }
 
 group = "com.tecknobit.equinoxbackend"
-version = "2.0.0"
 
 repositories {
     mavenCentral()
@@ -32,7 +32,7 @@ dependencies {
     implementation(libs.spring.boot.starter.validation)
     implementation(libs.spring.boot.starter.security)
     implementation(libs.jackson.databind)
-    implementation(libs.json)
+    api(libs.json)
     implementation(libs.commons.codec)
     implementation(project(":equinox-core"))
 }
@@ -46,7 +46,7 @@ mavenPublishing {
     coordinates(
         groupId = "io.github.n7ghtm4r3",
         artifactId = "equinox-backend",
-        version = "2.0.0"
+        version = version.toString()
     )
     pom {
         name.set("Equinox")
@@ -72,7 +72,10 @@ mavenPublishing {
             url.set("https://github.com/N7ghtm4r3/Equinox")
         }
     }
-    publishToMavenCentral()
+    publishToMavenCentral(
+        automaticRelease = true,
+        validateDeployment = DeploymentValidation.PUBLISHED
+    )
     signAllPublications()
 }
 

@@ -1,3 +1,4 @@
+import com.vanniktech.maven.publish.DeploymentValidation
 import com.vanniktech.maven.publish.JavadocJar
 import com.vanniktech.maven.publish.KotlinMultiplatform
 import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
@@ -11,10 +12,10 @@ plugins {
     alias(libs.plugins.kotlinSerialization)
     alias(libs.plugins.dokka)
     alias(libs.plugins.vanniktech.mavenPublish)
+    alias(libs.plugins.axion)
 }
 
 group = "com.tecknobit.equinoxcompose"
-version = "1.2.1"
 
 repositories {
     google()
@@ -176,7 +177,7 @@ mavenPublishing {
     coordinates(
         groupId = "io.github.n7ghtm4r3",
         artifactId = "equinox-compose",
-        version = "1.2.1"
+        version = version.toString()
     )
     pom {
         name.set("Equinox Compose")
@@ -202,7 +203,10 @@ mavenPublishing {
             url.set("https://github.com/N7ghtm4r3/Equinox")
         }
     }
-    publishToMavenCentral()
+    publishToMavenCentral(
+        automaticRelease = true,
+        validateDeployment = DeploymentValidation.PUBLISHED
+    )
     signAllPublications()
 }
 

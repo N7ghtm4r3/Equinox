@@ -1,19 +1,20 @@
+import com.vanniktech.maven.publish.DeploymentValidation
 import com.vanniktech.maven.publish.JavadocJar
 import com.vanniktech.maven.publish.KotlinJvm
 import org.gradle.kotlin.dsl.kotlin
 import org.gradle.kotlin.dsl.repositories
 
 plugins {
-    id("java")
+    `java-library`
     kotlin("jvm")
     alias(libs.plugins.spring.boot)
     alias(libs.plugins.spring.dependency.management)
     alias(libs.plugins.dokka)
     alias(libs.plugins.vanniktech.mavenPublish)
+    alias(libs.plugins.axion)
 }
 
 group = "com.tecknobit.equinoxmisc.backendmembership"
-version = "1.0.0"
 
 repositories {
     mavenCentral()
@@ -39,7 +40,7 @@ mavenPublishing {
     coordinates(
         groupId = "io.github.n7ghtm4r3",
         artifactId = "equinoxmisc-backend-membership",
-        version = "1.0.0"
+        version = version.toString()
     )
     pom {
         name.set("backend-membership")
@@ -65,7 +66,10 @@ mavenPublishing {
             url.set("https://github.com/N7ghtm4r3/Equinox")
         }
     }
-    publishToMavenCentral()
+    publishToMavenCentral(
+        automaticRelease = true,
+        validateDeployment = DeploymentValidation.PUBLISHED
+    )
     signAllPublications()
 }
 

@@ -7,6 +7,7 @@ android-minSdk = "24"
 composeMultiplatform = "1.11.0"
 mavenPublish = "0.36.0"
 dokka = "2.2.0"
+axion = "1.21.4"
 
 # Shared
 kotlinxSerializationJson = "1.10.0"
@@ -91,6 +92,7 @@ androidKotlinMultiplatformLibrary = { id = "com.android.kotlin.multiplatform.lib
 kotlinSerialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 dokka = { id = "org.jetbrains.dokka", version.ref = "dokka" }
 vanniktech-mavenPublish = { id = "com.vanniktech.maven.publish", version.ref = "mavenPublish" }
+axion = { id = "pl.allegro.tech.build.axion-release", version.ref = "axion" }
 
 # Compose
 composeMultiplatform = { id = "org.jetbrains.compose", version.ref = "composeMultiplatform" }

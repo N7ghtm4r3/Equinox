@@ -1,225 +1,215 @@
-name: Release Equinox
+name: release
 
 on:
   push:
-    branches: [develop, main]
+    branches: [main, develop]
 
 permissions:
   contents: read
 
+# Axion reads shared tag history across both release branches.
 concurrency:
   group: equinox-release
   cancel-in-progress: false
-  queue: max
 
 defaults:
   run:
     shell: bash
 
 jobs:
-  validate:
-    name: Validate (${{ matrix.module }})
+  build:
+    name: Build (${{ matrix.module }})
     strategy:
       fail-fast: true
-      matrix:
-        include:
-          - module: ':equinox-core'
-            artifact: equinox-core
-          - module: ':equinox-compose'
-            artifact: equinox-compose
-          - module: ':equinox-backend'
-            artifact: equinox-backend
-          - module: ':equinox-miscellaneous:lazy-pagination-compose-ops'
-            artifact: equinoxmisc-lazy-pagination-compose-ops
-          - module: ':equinox-miscellaneous:navigation-compose-util'
-            artifact: equinoxmisc-navigation-compose-util
-          - module: ':equinox-navigation'
-            artifact: equinox-navigation
-          - module: ':equinox-miscellaneous:backend-membership'
-            artifact: equinoxmisc-backend-membership
-    uses: ./.github/workflows/publish-module.yml
+      matrix: &modules
+        module:
+          - ':equinox-core'
+          - ':equinox-compose'
+          - ':equinox-backend'
+          - ':equinox-navigation'
+          - ':equinox-miscellaneous:backend-membership'
+          - ':equinox-miscellaneous:lazy-pagination-compose-ops'
+          - ':equinox-miscellaneous:navigation-compose-util'
+    uses: ./.github/workflows/module-management.yml
     with:
       module: ${{ matrix.module }}
-      artifact: ${{ matrix.artifact }}
-      validate-only: true
-
-  core:
-    needs: [validate, docs-build]
-    if: >-
-      ${{ !cancelled() && needs.validate.result == 'success' &&
-          (needs.docs-build.result == 'success' ||
-           (github.ref == 'refs/heads/develop' && needs.docs-build.result == 'skipped')) }}
-    uses: ./.github/workflows/publish-module.yml
-    with:
-      module: ':equinox-core'
-      artifact: equinox-core
-    secrets:
-      MAVEN_CENTRAL_USERNAME: ${{ secrets.MAVEN_CENTRAL_USERNAME }}
-      MAVEN_CENTRAL_PASSWORD: ${{ secrets.MAVEN_CENTRAL_PASSWORD }}
-      SIGNING_KEY: ${{ secrets.SIGNING_KEY }}
-      SIGNING_KEY_ID: ${{ secrets.SIGNING_KEY_ID }}
-      SIGNING_PASSWORD: ${{ secrets.SIGNING_PASSWORD }}
-
-  modules:
-    needs: core
-    strategy:
-      fail-fast: false
-      matrix:
-        include:
-          - module: ':equinox-compose'
-            artifact: equinox-compose
-          - module: ':equinox-backend'
-            artifact: equinox-backend
-          - module: ':equinox-miscellaneous:lazy-pagination-compose-ops'
-            artifact: equinoxmisc-lazy-pagination-compose-ops
-          - module: ':equinox-miscellaneous:navigation-compose-util'
-            artifact: equinoxmisc-navigation-compose-util
-    uses: ./.github/workflows/publish-module.yml
-    with:
-      module: ${{ matrix.module }}
-      artifact: ${{ matrix.artifact }}
-    secrets:
-      MAVEN_CENTRAL_USERNAME: ${{ secrets.MAVEN_CENTRAL_USERNAME }}
-      MAVEN_CENTRAL_PASSWORD: ${{ secrets.MAVEN_CENTRAL_PASSWORD }}
-      SIGNING_KEY: ${{ secrets.SIGNING_KEY }}
-      SIGNING_KEY_ID: ${{ secrets.SIGNING_KEY_ID }}
-      SIGNING_PASSWORD: ${{ secrets.SIGNING_PASSWORD }}
-
-  dependents:
-    needs: modules
-    strategy:
-      fail-fast: false
-      matrix:
-        include:
-          - module: ':equinox-navigation'
-            artifact: equinox-navigation
-          - module: ':equinox-miscellaneous:backend-membership'
-            artifact: equinoxmisc-backend-membership
-    uses: ./.github/workflows/publish-module.yml
-    with:
-      module: ${{ matrix.module }}
-      artifact: ${{ matrix.artifact }}
-    secrets:
-      MAVEN_CENTRAL_USERNAME: ${{ secrets.MAVEN_CENTRAL_USERNAME }}
-      MAVEN_CENTRAL_PASSWORD: ${{ secrets.MAVEN_CENTRAL_PASSWORD }}
-      SIGNING_KEY: ${{ secrets.SIGNING_KEY }}
-      SIGNING_KEY_ID: ${{ secrets.SIGNING_KEY_ID }}
-      SIGNING_PASSWORD: ${{ secrets.SIGNING_PASSWORD }}
 
   docs-build:
+    name: Build documentation
     if: github.ref == 'refs/heads/main'
-    # The called workflow is validated including its conditional deploy job.
-    permissions:
-      contents: write
-    uses: ./.github/workflows/mkp.yml
-    with:
-      phase: build
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+      - &setup-python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - &install-docs
+        name: Install documentation dependencies
+        run: python -m pip install --no-cache-dir mkdocs==1.6.1 mkdocs-material==9.8.0 mkdocs-glightbox==0.5.3
+      - name: Build documentation
+        run: mkdocs build
 
-  release:
-    needs: [core, modules, dependents, docs-build]
+  tag:
+    name: Tag releases with Axion
+    needs: [build, docs-build]
     if: >-
-      ${{ !cancelled() && needs.core.result == 'success' &&
-          needs.modules.result == 'success' && needs.dependents.result == 'success' &&
+      ${{ !cancelled() && needs.build.result == 'success' &&
           (needs.docs-build.result == 'success' ||
            (github.ref == 'refs/heads/develop' && needs.docs-build.result == 'skipped')) }}
     runs-on: ubuntu-24.04
-    timeout-minutes: 15
+    timeout-minutes: 20
     permissions:
       contents: write
-      pull-requests: read
     outputs:
-      tag: ${{ steps.tag.outputs.value }}
+      versions: ${{ steps.summary.outputs.table }}
+      version: ${{ steps.versions.outputs.root }}
     steps:
-      - name: Checkout
-        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803
+      # Do not advance versions again when an operator reruns the tagging job.
+      # Reconcile partial tags/publications manually; never rerun all jobs blindly.
+      - name: Reject tagging retries
+        if: github.run_attempt != '1'
+        run: |
+          echo '::error::Tagging retries require manual recovery. Reconcile tags and Central before starting a new run.'
+          exit 1
+      - uses: actions/checkout@v4
         with:
+          ref: ${{ github.sha }}
           fetch-depth: 0
           persist-credentials: false
-      - name: Derive release versions for tags and notes
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: |
+            18
+            21
+      - uses: gradle/actions/setup-gradle@v4
+        with:
+          cache-disabled: true
+      - name: Create local release tags
         run: |
-          if [[ "$GITHUB_REF_NAME" == develop ]]; then
-            perl -pi -e 's/^(\s*version\s*=\s*")(\d+\.\d+\.\d+)(")/$1$2-rc.$ENV{GITHUB_RUN_NUMBER}$3/' \
-              equinox-*/build.gradle.kts equinox-miscellaneous/*/build.gradle.kts
-          fi
-      - name: Select release tag
-        id: tag
-        env:
-          GH_TOKEN: ${{ github.token }}
-          PRERELEASE: ${{ github.ref_name == 'develop' }}
+          ./gradlew createRelease -Prelease.localOnly -Prelease.disableSnapshotsCheck \
+            --no-daemon --no-configuration-cache --no-build-cache --console=plain
+      - name: Promote release channels
+        id: versions
         run: |
-          set -euo pipefail
-          core="$(awk -F '"' '/^version[[:space:]]*=/ {print $2; exit}' equinox-core/build.gradle.kts)"
-          gh api --paginate --slurp "repos/$GITHUB_REPOSITORY/releases?per_page=100" |
-            jq -r --argjson rc "$PRERELEASE" '.[][] | select(.prerelease == $rc and (.draft | not)) | .tag_name' > "$RUNNER_TEMP/releases.txt"
-          matches=()
-          while IFS= read -r candidate; do
-            [[ "$candidate" =~ ^v[0-9][0-9A-Za-z.-]*$ ]] || continue
-            matches+=(--match "$candidate")
-          done < "$RUNNER_TEMP/releases.txt"
-          previous=''
-          if (( ${#matches[@]} )); then
-            previous="$(git describe --tags --always --abbrev=0 "${matches[@]}" "$GITHUB_SHA")"
-            [[ "$previous" == v* ]] || previous=''
-          fi
-          if [[ -n "$previous" && "$(git rev-parse "refs/tags/$previous^{commit}")" == "$GITHUB_SHA" ]]; then
-            echo "Release $previous already exists for this commit."
-            echo "value=$previous" >> "$GITHUB_OUTPUT"
-            echo 'exists=true' >> "$GITHUB_OUTPUT"
-            exit 0
-          fi
-          previous_core=''
-          if [[ -n "$previous" ]]; then
-            previous_core="$(git show "$previous:equinox-core/build.gradle.kts" |
-              awk -F '"' '/^version[[:space:]]*=/ {print $2; exit}')"
-          fi
-          tag="v$core"
-          if [[ "$previous_core" == "$core" ]]; then
-            created="$(gh api "repos/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID" --jq '.created_at')"
-            date="${created:0:10}"
-            suffix="${GITHUB_SHA:0:12}"
-            [[ "$PRERELEASE" == false ]] || suffix="rc.$suffix"
-            tag="v${date//-/.}-$suffix"
-          fi
-          if git show-ref --verify --quiet "refs/tags/$tag"; then
-            [[ "$(git rev-parse "refs/tags/$tag^{commit}")" == "$GITHUB_SHA" ]] || { echo '::error::Release tag belongs to another commit.'; exit 1; }
-          fi
-          echo "value=$tag" >> "$GITHUB_OUTPUT"
-          echo "previous=$previous" >> "$GITHUB_OUTPUT"
-      - name: Create GitHub release with PR and generated notes
-        if: steps.tag.outputs.exists != 'true'
-        env:
-          GH_TOKEN: ${{ github.token }}
-          RELEASE_TAG: ${{ steps.tag.outputs.value }}
-          PREVIOUS_TAG: ${{ steps.tag.outputs.previous }}
-          PRERELEASE: ${{ github.ref_name == 'develop' }}
-          LATEST: ${{ github.ref_name == 'main' }}
-        run: |
-          set -euo pipefail
-          gh api --paginate --slurp "repos/$GITHUB_REPOSITORY/commits/$GITHUB_SHA/pulls?per_page=100" |
-            jq -r --arg branch "$GITHUB_REF_NAME" '.[][] |
-              select(.merged_at != null and .base.ref == $branch) |
-              "### PR #\(.number): \(.title)\n\n\(.body // "")\n"' > "$RUNNER_TEMP/notes.md"
-          if [[ ! -s "$RUNNER_TEMP/notes.md" ]]; then
-            printf '%s\n\n' 'No merged PR associated with this push; see the generated GitHub notes.' > "$RUNNER_TEMP/notes.md"
-          fi
-          printf '\n### Module versions\n\n| Module | Maven version |\n| --- | --- |\n' >> "$RUNNER_TEMP/notes.md"
-          for file in equinox-*/build.gradle.kts equinox-miscellaneous/*/build.gradle.kts; do
-            artifact="$(awk -F '"' '/artifactId[[:space:]]*=/ {print $2; exit}' "$file")"
-            version="$(awk -F '"' '/^version[[:space:]]*=/ {print $2; exit}' "$file")"
-            [[ -z "$artifact" ]] || printf '| %s | %s |\n' "$artifact" "$version" >> "$RUNNER_TEMP/notes.md"
+          # An empty project path selects the root Gradle project.
+          for module in \
+            '' \
+            :equinox-core \
+            :equinox-compose \
+            :equinox-backend \
+            :equinox-navigation \
+            :equinox-miscellaneous:backend-membership \
+            :equinox-miscellaneous:lazy-pagination-compose-ops \
+            :equinox-miscellaneous:navigation-compose-util; do
+            version=$(./gradlew "$module:currentVersion" -q -Prelease.quiet \
+              --no-daemon --no-configuration-cache --no-build-cache)
+            # Promote unchanged RCs on main; the root release follows the branch too.
+            if [[ "$GITHUB_REF_NAME" == main && "$version" == *-rc.* ]] ||
+               [[ -z "$module" && "$GITHUB_REF_NAME" == develop && "$version" != *-rc.* ]]; then
+              ./gradlew "$module:createRelease" -Prelease.localOnly -Prelease.forceSnapshot \
+                -Prelease.disableSnapshotsCheck --no-daemon --no-configuration-cache --no-build-cache --console=plain
+              version=$(./gradlew "$module:currentVersion" -q -Prelease.quiet \
+                --no-daemon --no-configuration-cache --no-build-cache)
+            fi
+            name=${module##*:}
+            echo "${name:-root}=$version" >> "$GITHUB_OUTPUT"
           done
-          head="$(gh api "repos/$GITHUB_REPOSITORY/git/ref/heads/$GITHUB_REF_NAME" --jq '.object.sha')"
-          [[ "$head" == "$GITHUB_SHA" ]] || LATEST=false
-          gh release create "$RELEASE_TAG" --repo "$GITHUB_REPOSITORY" --target "$GITHUB_SHA" \
-            --title "$RELEASE_TAG" --notes-file "$RUNNER_TEMP/notes.md" --generate-notes \
-            --notes-start-tag "$PREVIOUS_TAG" --prerelease="$PRERELEASE" --latest="$LATEST"
+      - name: Summarize module versions
+        id: summary
+        env:
+          VERSIONS: ${{ toJSON(steps.versions.outputs) }}
+        run: |
+          {
+            echo 'table<<VERSIONS'
+            echo '| Module | Version |'
+            echo '| --- | --- |'
+            jq -r 'del(.root) | to_entries[] | "| \(.key) | \(.value) |"' <<< "$VERSIONS"
+            echo 'VERSIONS'
+          } >> "$GITHUB_OUTPUT"
+      - name: Push release tags with Axion
+        env:
+          AXION_TOKEN: ${{ github.token }}
+        run: |
+          ./gradlew :pushRelease -Prelease.customUsername=x-access-token \
+            --no-daemon --no-configuration-cache --no-build-cache --console=plain
 
-  docs-deploy:
-    needs: [release, docs-build]
-    if: github.ref == 'refs/heads/main'
+  publish:
+    name: Publish (${{ matrix.module }})
+    needs: tag
+    # Override skipped-docs propagation on develop, but require successful tags.
+    if: ${{ !cancelled() && needs.tag.result == 'success' }}
+    strategy:
+      # A failed upload must not cancel another module's publication in flight.
+      fail-fast: false
+      matrix: *modules
+    uses: ./.github/workflows/module-management.yml
+    with:
+      module: ${{ matrix.module }}
+      publish: true
+    secrets:
+      MAVEN_CENTRAL_USERNAME: ${{ secrets.MAVEN_CENTRAL_USERNAME }}
+      MAVEN_CENTRAL_PASSWORD: ${{ secrets.MAVEN_CENTRAL_PASSWORD }}
+      SIGNING_KEY: ${{ secrets.SIGNING_KEY }}
+      SIGNING_KEY_ID: ${{ secrets.SIGNING_KEY_ID }}
+      SIGNING_PASSWORD: ${{ secrets.SIGNING_PASSWORD }}
+
+  release:
+    name: Create GitHub release
+    needs: [tag, publish]
+    if: ${{ !cancelled() && needs.tag.result == 'success' && needs.publish.result == 'success' }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
     permissions:
       contents: write
-    uses: ./.github/workflows/mkp.yml
-    with:
-      phase: deploy
-      artifact-name: ${{ needs.docs-build.outputs.artifact-name }}
+    steps:
+      # The root Axion tag identifies the aggregate release independently of core.
+      # If this fails, recover only this job: the Maven publications already succeeded.
+      - name: Create the release with all module versions
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RELEASE_TAG: v${{ needs.tag.outputs.version }}
+          PRERELEASE: ${{ github.ref == 'refs/heads/develop' }}
+          VERSIONS: ${{ needs.tag.outputs.versions }}
+        run: |
+          printf '%s\n' "$VERSIONS" > "$RUNNER_TEMP/release-notes.md"
+          gh release create "$RELEASE_TAG" --repo "$GITHUB_REPOSITORY" --verify-tag \
+            --title "$RELEASE_TAG" --notes-file "$RUNNER_TEMP/release-notes.md" \
+            --generate-notes --prerelease="$PRERELEASE" --latest=false
+
+  docs-deploy:
+    name: Publish documentation
+    needs: [release, docs-build]
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 0
+          persist-credentials: false
+      - *setup-python
+      - *install-docs
+      - name: Deploy documentation
+        env:
+          # A repository-scoped token triggers the branch-based Pages deployment.
+          GH_TOKEN: ${{ secrets.DOCS_DEPLOY_TOKEN }}
+        run: |
+          [[ -n "$GH_TOKEN" ]] || { echo '::error::Missing DOCS_DEPLOY_TOKEN'; exit 1; }
+          head=$(gh api "repos/$GITHUB_REPOSITORY/git/ref/heads/main" --jq .object.sha)
+          if [[ "$head" != "$GITHUB_SHA" ]]; then
+            echo '::notice::A newer main commit exists; skipping the outdated documentation deployment.'
+            exit 0
+          fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          gh auth setup-git
+          mkdocs gh-deploy --force

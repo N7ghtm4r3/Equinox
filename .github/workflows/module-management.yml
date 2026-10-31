@@ -1,0 +1,99 @@
+name: module management
+
+on:
+  workflow_call:
+    inputs:
+      module:
+        required: true
+        type: string
+      publish:
+        type: boolean
+        default: false
+    secrets:
+      MAVEN_CENTRAL_USERNAME:
+        required: false
+      MAVEN_CENTRAL_PASSWORD:
+        required: false
+      SIGNING_KEY:
+        required: false
+      SIGNING_KEY_ID:
+        required: false
+      SIGNING_PASSWORD:
+        required: false
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  module:
+    if: >-
+      ${{ github.event_name == 'push' &&
+          (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop') }}
+    # Apple targets require macOS; project dependencies compile from this checkout.
+    runs-on: macos-15
+    timeout-minutes: 90
+    env:
+      MODULE: ${{ inputs.module }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: |
+            18
+            21
+      - uses: gradle/actions/setup-gradle@v4
+        with:
+          cache-disabled: true
+      - name: Read module version
+        id: version
+        if: inputs.publish
+        run: |
+          version=$(./gradlew "$MODULE:currentVersion" -q -Prelease.quiet \
+            --no-daemon --no-configuration-cache --no-build-cache)
+          pattern='^[0-9]+\.[0-9]+\.[0-9]+(-rc\.[1-9][0-9]*)?$'
+          [[ "$version" =~ $pattern ]]
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+      - name: Read tag commit
+        id: tag
+        if: inputs.publish
+        env:
+          GH_TOKEN: ${{ github.token }}
+          VERSION: ${{ steps.version.outputs.version }}
+        run: |
+          commit=$(gh api "repos/$GITHUB_REPOSITORY/commits/tags/${MODULE##*:}/$VERSION" --jq .sha)
+          echo "commit=$commit" >> "$GITHUB_OUTPUT"
+      - name: Install Android platform
+        if: ${{ !inputs.publish || steps.tag.outputs.commit == github.sha }}
+        run: |
+          sdk=$(awk -F '"' '/^android-compileSdk =/ {print $2}' gradle/libs.versions.toml)
+          [[ "$sdk" =~ ^[0-9]+$ ]]
+          "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" --install "platforms;android-$sdk"
+      - name: Build and check module
+        if: ${{ !inputs.publish }}
+        run: ./gradlew "$MODULE:build" --no-daemon --no-configuration-cache --no-build-cache --console=plain
+      - name: Publish to Maven Central
+        # A stable tag inherited from main is not a new develop publication.
+        if: >-
+          ${{ inputs.publish && steps.tag.outputs.commit == github.sha &&
+              (github.ref_name == 'main' || contains(steps.version.outputs.version, '-rc.')) }}
+        env:
+          VERSION: ${{ steps.version.outputs.version }}
+          ORG_GRADLE_PROJECT_mavenCentralUsername: ${{ secrets.MAVEN_CENTRAL_USERNAME }}
+          ORG_GRADLE_PROJECT_mavenCentralPassword: ${{ secrets.MAVEN_CENTRAL_PASSWORD }}
+          ORG_GRADLE_PROJECT_signingInMemoryKey: ${{ secrets.SIGNING_KEY }}
+          ORG_GRADLE_PROJECT_signingInMemoryKeyId: ${{ secrets.SIGNING_KEY_ID }}
+          ORG_GRADLE_PROJECT_signingInMemoryKeyPassword: ${{ secrets.SIGNING_PASSWORD }}
+        run: |
+          # The format was validated above; main only accepts stable versions.
+          if [[ "$GITHUB_REF_NAME" == main ]]; then
+            [[ "$VERSION" != *-rc.* ]]
+          fi
+          [[ -n "$ORG_GRADLE_PROJECT_signingInMemoryKeyId" ]] || unset ORG_GRADLE_PROJECT_signingInMemoryKeyId
+          ./gradlew "$MODULE:publishAndReleaseToMavenCentral" \
+            --no-daemon --no-configuration-cache --no-build-cache --console=plain
