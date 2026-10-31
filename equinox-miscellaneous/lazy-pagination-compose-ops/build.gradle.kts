@@ -14,7 +14,7 @@ plugins {
 }
 
 group = "com.tecknobit.equinoxmisc.lazypaginationcomposeops"
-version = "1.0.4"
+version = "1.0.5"
 
 repositories {
     google()
@@ -128,7 +128,7 @@ mavenPublishing {
     coordinates(
         groupId = "io.github.n7ghtm4r3",
         artifactId = "equinoxmisc-lazy-pagination-compose-ops",
-        version = "1.0.4"
+        version = "1.0.5"
     )
     pom {
         name.set("lazy-pagination-compose-ops")

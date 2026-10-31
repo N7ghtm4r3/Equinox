@@ -18,7 +18,7 @@ navigation in **Compose Multiplatform applications**
 
 ```toml
 [versions]
-equinox = "1.2.0"
+equinox = "1.2.1"
 equinox-core = "1.2.1"
 equinox-navigation = "1.0.5"
 
@@ -49,7 +49,7 @@ dependencies {
 ```kotlin
 dependencies {
   // implement the compose utilities 
-  implementation("io.github.n7ghtm4r3:equinox-compose:1.2.0")
+  implementation("io.github.n7ghtm4r3:equinox-compose:1.2.1")
 
   // implement the core utilities 
   implementation("io.github.n7ghtm4r3:equinox-core:1.2.1")
@@ -64,7 +64,7 @@ dependencies {
 ```groovy
 dependencies {
     // implement the compose utilities
-  implementation 'io.github.n7ghtm4r3:equinox-compose:1.2.0'
+  implementation 'io.github.n7ghtm4r3:equinox-compose:1.2.1'
     
     // implement the core utilities
   implementation 'io.github.n7ghtm4r3:equinox-core:1.2.1'
