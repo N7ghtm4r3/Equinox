@@ -7,7 +7,6 @@ import org.gradle.kotlin.dsl.repositories
 plugins {
     `java-library`
     kotlin("jvm")
-    alias(libs.plugins.spring.boot)
     alias(libs.plugins.spring.dependency.management)
     alias(libs.plugins.dokka)
     alias(libs.plugins.vanniktech.mavenPublish)
@@ -19,6 +18,12 @@ group = "com.tecknobit.equinoxmisc.backendmembership"
 repositories {
     mavenCentral()
     maven("https://jitpack.io")
+}
+
+dependencyManagement {
+    imports {
+        mavenBom("org.springframework.boot:spring-boot-dependencies:${libs.versions.springBoot.get()}")
+    }
 }
 
 dependencies {
