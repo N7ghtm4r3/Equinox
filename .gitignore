@@ -38,7 +38,6 @@ bin/
 ### Mac OS ###
 .DS_Store
 
-gradle.properties
 local.properties
 .kotlin
 
