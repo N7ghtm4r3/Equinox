@@ -104,6 +104,12 @@ jobs:
         with:
           fetch-depth: 0
           persist-credentials: false
+      - name: Derive release versions for tags and notes
+        run: |
+          if [[ "$GITHUB_REF_NAME" == develop ]]; then
+            perl -pi -e 's/^(\s*version\s*=\s*")(\d+\.\d+\.\d+)(")/$1$2-rc.$ENV{GITHUB_RUN_NUMBER}$3/' \
+              equinox-*/build.gradle.kts equinox-miscellaneous/*/build.gradle.kts
+          fi
       - name: Select release tag
         id: tag
         env:

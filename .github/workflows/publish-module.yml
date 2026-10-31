@@ -60,6 +60,12 @@ jobs:
           sdk="$(awk -F '"' '/^android-compileSdk =/ {print $2}' gradle/libs.versions.toml)"
           [[ "$sdk" =~ ^[0-9]+$ ]]
           "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" --install "platforms;android-$sdk"
+      - name: Derive release versions for all modules
+        run: |
+          if [[ "$GITHUB_REF_NAME" == develop ]]; then
+            perl -pi -e 's/^(\s*version\s*=\s*")(\d+\.\d+\.\d+)(")/$1$2-rc.$ENV{GITHUB_RUN_NUMBER}$3/' \
+              equinox-*/build.gradle.kts equinox-miscellaneous/*/build.gradle.kts
+          fi
       - name: Read and validate module version
         id: version
         run: |
@@ -70,7 +76,7 @@ jobs:
           pattern='^[0-9]+\.[0-9]+\.[0-9]+$'
           [[ "$GITHUB_REF_NAME" != develop ]] || pattern='^[0-9]+\.[0-9]+\.[0-9]+-rc\.[1-9][0-9]*$'
           if [[ ! "$version" =~ $pattern ]]; then
-            echo "::error::$MODULE requires an RC version on develop and a stable version on main; found $version."
+            echo "::error::$MODULE has an invalid derived release version: $version."
             exit 1
           fi
           directory="${MODULE#:}"

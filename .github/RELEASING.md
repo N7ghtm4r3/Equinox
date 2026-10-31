@@ -2,19 +2,19 @@
 
 `release.yml` runs on pushes to `develop` and `main`. All orchestration lives in
 workflow YAML: existing Gradle tasks, Vanniktech, GitHub Actions, `gh`, `jq` and
-small Bash steps. Python is used only to install/run MkDocs, not for release logic.
+small inline Bash steps. Python is used only to install/run MkDocs, not for release logic.
 
 ## Versions and publication
 
 Each module owns its project version and Maven coordinates in its
-`build.gradle.kts`. Keep both values equal. The workflows never rewrite them.
+`build.gradle.kts`. Keep both values equal, using stable `X.Y.Z` base versions.
 
-- `develop` requires `X.Y.Z-rc.N`, with a positive RC number.
-- `main` requires `X.Y.Z`.
-- Every included module is validated, including unchanged modules.
+- `develop` derives `X.Y.Z-rc.<GITHUB_RUN_NUMBER>` in the CI checkout only.
+- `main` publishes the declared `X.Y.Z` version unchanged.
+- Retries of the same run keep the same RC version; a new run gets a new RC.
+- All module versions are prepared in every job so project dependencies use the
+  same RC coordinates as their publications. No version changes are committed.
 
-The current module versions are stable. Before releasing from `develop`, declare
-RC versions in the module build files through the normal development process.
 Adding a module requires updating the workflow matrices.
 
 Modules run through `publish-module.yml`: core first, then compose/backend and
@@ -52,7 +52,7 @@ skipped without blocking the prerelease.
 Release tags use the following rules:
 
 - First managed release on a channel, or changed core version: `v<core-version>`.
-  An RC core already contains its `-rc.N` suffix; it is not appended twice.
+  On `develop`, the derived core version includes `-rc.<GITHUB_RUN_NUMBER>`.
 - Unchanged core: `vYYYY.MM.DD-<12-character-commit-SHA>` on `main`, or
   `vYYYY.MM.DD-rc.<12-character-commit-SHA>` on `develop`.
 - The UTC date comes from the workflow run's creation time, so rerunning the same
@@ -61,8 +61,9 @@ Release tags use the following rules:
 The baseline is selected by native `git describe` among ancestor releases on the
 same channel. Only tags
 starting with `v` are considered managed releases; the existing unprefixed legacy
-tags do not establish a baseline. The previous core version is read from the
-source at that tag, including for date-based releases.
+tags do not establish a baseline. The previous base core version is read from the
+source at that tag, including for date-based releases. On `develop`, the derived
+RC differs from that base, so each new run uses `v<core-base>-rc.<run-number>`.
 
 A published release for the same commit/channel is reused. A tag pointing at
 another commit fails the job and is never moved. RC releases are marked
