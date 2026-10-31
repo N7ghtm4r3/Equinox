@@ -3,9 +3,8 @@ import com.vanniktech.maven.publish.JavadocJar
 import com.vanniktech.maven.publish.KotlinJvm
 
 plugins {
-    id("java")
+    `java-library`
     kotlin("jvm")
-    alias(libs.plugins.spring.boot)
     alias(libs.plugins.spring.dependency.management)
     alias(libs.plugins.dokka)
     alias(libs.plugins.vanniktech.mavenPublish)
@@ -18,6 +17,12 @@ repositories {
     mavenCentral()
     maven("https://jitpack.io")
     maven("https://repo.clojars.org")
+}
+
+dependencyManagement {
+    imports {
+        mavenBom("org.springframework.boot:spring-boot-dependencies:${libs.versions.springBoot.get()}")
+    }
 }
 
 dependencies {

@@ -98,7 +98,16 @@ kotlin {
                 implementation(libs.connectivity.core)
                 implementation(libs.kotlinx.serialization.json)
                 implementation(libs.ktor.client.core)
-                implementation(libs.kmprefs)
+                implementation(
+                    libs.kmprefs.get().copy().apply {
+                        exclude(
+                            mapOf(
+                                "group" to "io.github.n7ghtm4r3",
+                                "module" to "equinox-core"
+                            )
+                        )
+                    }
+                )
                 implementation(libs.material3.window.size)
                 implementation(project(":equinox-core"))
             }
