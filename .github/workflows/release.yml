@@ -93,6 +93,7 @@ jobs:
       - name: Create local release tags
         run: |
           ./gradlew createRelease -Prelease.localOnly -Prelease.disableSnapshotsCheck \
+            -Prelease.overriddenBranchName="$GITHUB_REF_NAME" \
             --no-daemon --no-configuration-cache --no-build-cache --console=plain
       - name: Promote release channels
         id: versions
@@ -108,16 +109,33 @@ jobs:
             :equinox-miscellaneous:lazy-pagination-compose-ops \
             :equinox-miscellaneous:navigation-compose-util; do
             version=$(./gradlew "$module:currentVersion" -q -Prelease.quiet \
+              -Prelease.overriddenBranchName="$GITHUB_REF_NAME" \
               --no-daemon --no-configuration-cache --no-build-cache)
             # Promote unchanged RCs on main; the root release follows the branch too.
             if [[ "$GITHUB_REF_NAME" == main && "$version" == *-rc.* ]] ||
                [[ -z "$module" && "$GITHUB_REF_NAME" == develop && "$version" != *-rc.* ]]; then
               ./gradlew "$module:createRelease" -Prelease.localOnly -Prelease.forceSnapshot \
+                -Prelease.overriddenBranchName="$GITHUB_REF_NAME" \
                 -Prelease.disableSnapshotsCheck --no-daemon --no-configuration-cache --no-build-cache --console=plain
               version=$(./gradlew "$module:currentVersion" -q -Prelease.quiet \
+                -Prelease.overriddenBranchName="$GITHUB_REF_NAME" \
                 --no-daemon --no-configuration-cache --no-build-cache)
             fi
             name=${module##*:}
+            pattern='^[0-9]+\.[0-9]+\.[0-9]+(-rc\.[1-9][0-9]*)?$'
+            if [[ ! "$version" =~ $pattern ]] ||
+               [[ "$GITHUB_REF_NAME" == main && "$version" == *-rc.* ]]; then
+              echo "::error::Invalid release version for ${name:-root}: $version"
+              exit 1
+            fi
+            tag="v$version"
+            if [[ -n "$module" ]]; then
+              tag="$name/$version"
+            fi
+            if ! git rev-parse --verify --quiet "refs/tags/$tag^{commit}" > /dev/null; then
+              echo "::error::Missing release tag: $tag"
+              exit 1
+            fi
             echo "${name:-root}=$version" >> "$GITHUB_OUTPUT"
           done
       - name: Summarize module versions
@@ -137,6 +155,7 @@ jobs:
           AXION_TOKEN: ${{ github.token }}
         run: |
           ./gradlew :pushRelease -Prelease.customUsername=x-access-token \
+            -Prelease.overriddenBranchName="$GITHUB_REF_NAME" \
             --no-daemon --no-configuration-cache --no-build-cache --console=plain
 
   publish:

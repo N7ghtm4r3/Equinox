@@ -54,11 +54,17 @@ jobs:
         id: version
         if: inputs.publish
         run: |
+          # Keep wrapper downloads and Gradle diagnostics out of the version output.
           version=$(./gradlew "$MODULE:currentVersion" -q -Prelease.quiet \
-            --no-daemon --no-configuration-cache --no-build-cache)
+            -Prelease.overriddenBranchName="$GITHUB_REF_NAME" \
+            --no-daemon --no-configuration-cache --no-build-cache --console=plain \
+            | tee /dev/stderr | tail -n 1)
           pattern='^[0-9]+\.[0-9]+\.[0-9]+(-rc\.[1-9][0-9]*)?$'
-          [[ "$version" =~ $pattern ]]
-          echo "version=$version" >> "$GITHUB_OUTPUT"
+          if [[ ! "$version" =~ $pattern ]]; then
+            echo '::error::Expected a stable or RC release version on the last line of Gradle output.'
+            exit 1
+          fi
+          printf 'version=%s\n' "$version" >> "$GITHUB_OUTPUT"
       - name: Read tag commit
         id: tag
         if: inputs.publish
@@ -76,7 +82,7 @@ jobs:
           "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" --install "platforms;android-$sdk"
       - name: Build and check module
         if: ${{ !inputs.publish }}
-        run: ./gradlew "$MODULE:build" --no-daemon --no-configuration-cache --no-build-cache --console=plain
+        run: ./gradlew "$MODULE:build" -Prelease.overriddenBranchName="$GITHUB_REF_NAME" --no-daemon --no-configuration-cache --no-build-cache --console=plain
       - name: Publish to Maven Central
         # A stable tag inherited from main is not a new develop publication.
         if: >-
@@ -96,4 +102,5 @@ jobs:
           fi
           [[ -n "$ORG_GRADLE_PROJECT_signingInMemoryKeyId" ]] || unset ORG_GRADLE_PROJECT_signingInMemoryKeyId
           ./gradlew "$MODULE:publishAndReleaseToMavenCentral" \
+            -Prelease.overriddenBranchName="$GITHUB_REF_NAME" \
             --no-daemon --no-configuration-cache --no-build-cache --console=plain
