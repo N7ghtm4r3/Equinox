@@ -53,10 +53,6 @@ kotlin {
         compilerOptions {
             freeCompilerArgs.add("-Xklib-duplicated-unique-name-strategy=allow-all-with-warning")
         }
-        appleTarget.binaries.framework {
-            baseName = "equinox-navigation"
-            isStatic = true
-        }
     }
 
     js {

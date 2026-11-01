@@ -72,7 +72,7 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           VERSION: ${{ steps.version.outputs.version }}
         run: |
-          commit=$(gh api "repos/$GITHUB_REPOSITORY/commits/tags/${MODULE##*:}/$VERSION" --jq .sha)
+          commit=$(gh api "repos/$GITHUB_REPOSITORY/commits/refs/tags/${MODULE##*:}/$VERSION" --jq .sha)
           echo "commit=$commit" >> "$GITHUB_OUTPUT"
       - name: Install Android platform
         if: ${{ !inputs.publish || steps.tag.outputs.commit == github.sha }}

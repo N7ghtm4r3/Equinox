@@ -50,10 +50,6 @@ kotlin {
         iosSimulatorArm64(),
         macosArm64()
     ).forEach { appleTarget ->
-        appleTarget.binaries.framework {
-            baseName = "equinoxmisc-navigation-compose-util"
-            isStatic = true
-        }
     }
 
     js {

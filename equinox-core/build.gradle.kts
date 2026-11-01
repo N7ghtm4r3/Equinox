@@ -48,10 +48,6 @@ kotlin {
         iosSimulatorArm64(),
         macosArm64()
     ).forEach { appleTarget ->
-        appleTarget.binaries.framework {
-            baseName = "equinox-core"
-            isStatic = true
-        }
     }
 
     js {

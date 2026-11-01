@@ -50,10 +50,6 @@ kotlin {
         iosSimulatorArm64(),
         macosArm64()
     ).forEach { iosTarget ->
-        iosTarget.binaries.framework {
-            baseName = "equinoxmisc-lazy-pagination-compose-ops"
-            isStatic = true
-        }
     }
 
     js {
