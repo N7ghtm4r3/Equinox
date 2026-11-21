@@ -806,10 +806,10 @@ select this subtype for the inherited endpoint; the class belongs to a package s
                 String email,
                 String password,
                 String language,
-                String serverSecretKey,
+                String serverSecret,
                 String currency
         ) {
-            super(name, surname, email, password, language, serverSecretKey);
+            super(name, surname, email, password, language, serverSecret);
             this.currency = currency;
         }
 
@@ -839,9 +839,9 @@ select this subtype for the inherited endpoint; the class belongs to a package s
         email: String,
         password: String,
         language: String,
-        serverSecretKey: String,
+        serverSecret: String,
         currency: String
-    ) : SignUpRequestDto(name, surname, email, password, language, serverSecretKey) {
+    ) : SignUpRequestDto(name, surname, email, password, language, serverSecret) {
 
         @field:NotBlank
         val currency: String = currency
@@ -858,13 +858,13 @@ The sign-up payload includes the custom `currency` value:
   "email": "jane@example.com",
   "password": "your-valid-password",
   "language": "en",
-  "serverSecretKey": "your-server-secret",
+  "serverSecret": "your-server-secret",
   "currency": "EUR"
 }
 ```
 
 The inherited endpoint validates both standard and custom fields.
-`serverSecretKey` is the server secret configured for the application
+`serverSecret` is the server secret configured for the application
 
 For details about constructor discovery, see the
 [Jackson Java parameter-name support](https://github.com/FasterXML/jackson-databind/blob/3.x/src/main/java/tools/jackson/databind/MapperFeature.java)
