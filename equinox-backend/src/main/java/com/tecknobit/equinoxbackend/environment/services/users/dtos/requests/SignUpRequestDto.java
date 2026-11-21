@@ -1,5 +1,6 @@
 package com.tecknobit.equinoxbackend.environment.services.users.dtos.requests;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.tecknobit.equinoxbackend.annotations.EmptyConstructor;
 import com.tecknobit.equinoxbackend.annotations.dto.DtoRequest;
 import com.tecknobit.equinoxbackend.environment.validation.annotations.*;
@@ -7,6 +8,7 @@ import com.tecknobit.equinoxcore.annotations.Structure;
 
 import java.util.Locale;
 
+import static com.tecknobit.equinoxcore.helpers.CommonKeysKt.SERVER_SECRET_KEY;
 import static com.tecknobit.equinoxcore.helpers.InputsValidator.DEFAULT_LANGUAGE;
 
 /**
@@ -57,10 +59,11 @@ public class SignUpRequestDto {
     protected String language;
 
     /**
-     * {@code serverSecretKey} the server secret checked by request validation
+     * {@code serverSecret} the server secret checked by request validation
      */
     @ServerSecret
-    protected String serverSecretKey;
+    @JsonProperty(SERVER_SECRET_KEY)
+    protected String serverSecret;
 
     /**
      * Constructor to init the {@link SignUpRequestDto} class for JSON deserialization
@@ -80,10 +83,10 @@ public class SignUpRequestDto {
      * @param surname         The surname of the user
      * @param email           The email address of the user
      * @param password        The plain-text password of the user
-     * @param serverSecretKey The server secret checked by request validation
+     * @param serverSecret The server secret checked by request validation
      */
-    public SignUpRequestDto(String name, String surname, String email, String password, String serverSecretKey) {
-        this(name, surname, email, password, DEFAULT_LANGUAGE, serverSecretKey);
+    public SignUpRequestDto(String name, String surname, String email, String password, String serverSecret) {
+        this(name, surname, email, password, DEFAULT_LANGUAGE, serverSecret);
     }
 
     /**
@@ -94,15 +97,15 @@ public class SignUpRequestDto {
      * @param email           The email address of the user
      * @param password        The plain-text password of the user
      * @param language        The language of the user
-     * @param serverSecretKey The server secret checked by request validation
+     * @param serverSecret The server secret checked by request validation
      */
-    public SignUpRequestDto(String name, String surname, String email, String password, String language, String serverSecretKey) {
+    public SignUpRequestDto(String name, String surname, String email, String password, String language, String serverSecret) {
         this.name = name;
         this.surname = surname;
         this.email = email;
         this.password = password;
         this.language = language;
-        this.serverSecretKey = serverSecretKey;
+        this.serverSecret = serverSecret;
     }
 
     /**
@@ -151,12 +154,12 @@ public class SignUpRequestDto {
     }
 
     /**
-     * Method used to get the {@link #serverSecretKey} instance
+     * Method used to get the {@link #serverSecret} instance
      *
-     * @return the {@link #serverSecretKey} instance as {@link String}
+     * @return the {@link #serverSecret} instance as {@link String}
      */
-    public String getServerSecretKey() {
-        return serverSecretKey;
+    public String getServerSecret() {
+        return serverSecret;
     }
 
 }
