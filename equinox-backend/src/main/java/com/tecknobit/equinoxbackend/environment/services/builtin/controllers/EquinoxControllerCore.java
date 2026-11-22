@@ -5,6 +5,7 @@ import com.tecknobit.equinoxbackend.apis.resources.ResourcesProvider;
 import com.tecknobit.equinoxbackend.configuration.ServerProtector;
 import com.tecknobit.equinoxbackend.environment.configuration.EquinoxBackendConfiguration;
 import com.tecknobit.equinoxbackend.environment.configuration.EquinoxEnvironmentService;
+import com.tecknobit.equinoxbackend.environment.constants.EquinoxMessages;
 import com.tecknobit.equinoxcore.annotations.Assembler;
 import com.tecknobit.equinoxcore.annotations.Returner;
 import com.tecknobit.equinoxcore.annotations.Structure;
@@ -204,14 +205,14 @@ abstract public class EquinoxControllerCore {
 
     /**
      * Method used to assemble a successful response with HTTP status {@code 200} and the localized
-     * {@link #RESPONSE_SUCCESSFUL_MESSAGE} message
+     * {@link EquinoxMessages#RESPONSE_SUCCESSFUL_MESSAGE} message
      *
-     * @return the successful response as {@link ResponseEntity} of {@link JSONObject}
+     * @return the successful response with a serialized JSON body as {@link ResponseEntity} of {@link String}
      */
     @Wrapper
     @Assembler
-    protected ResponseEntity<JSONObject> successResponse() {
-        return successResponse(RESPONSE_SUCCESSFUL_MESSAGE);
+    protected ResponseEntity<String> successResponse() {
+        return successResponse(EquinoxMessages.RESPONSE_SUCCESSFUL_MESSAGE);
     }
 
     /**
@@ -219,25 +220,25 @@ abstract public class EquinoxControllerCore {
      *
      * @param message The message key to resolve using the current locale
      *
-     * @return the successful response as {@link ResponseEntity} of {@link JSONObject}
+     * @return the successful response with a serialized JSON body as {@link ResponseEntity} of {@link String}
      */
     @Wrapper
     @Assembler
-    protected ResponseEntity<JSONObject> successResponse(String message) {
-        return successResponse(message, (Object) null);
+    protected ResponseEntity<String> successResponse(String message) {
+        return successResponse(message, (Object[]) null);
     }
 
     /**
      * Method used to assemble a successful response with HTTP status {@code 200}
      *
      * @param message The message key to resolve using the current locale
-     * @param args    The arguments used to format the localized message
+     * @param args    The arguments used to format the localized message, or {@code null} when none are needed
      *
-     * @return the successful response as {@link ResponseEntity} of {@link JSONObject}
+     * @return the successful response with a serialized JSON body as {@link ResponseEntity} of {@link String}
      */
     @Wrapper
     @Assembler
-    protected ResponseEntity<JSONObject> successResponse(String message, Object... args) {
+    protected ResponseEntity<String> successResponse(String message, @Nullable Object... args) {
         return plainResponse(SUCCESSFUL, getInternationalizedMessage(message, args));
     }
 
@@ -247,13 +248,15 @@ abstract public class EquinoxControllerCore {
      * @param value The value to send as response
      * @param <V>   The type of the response data
      *
-     * @return the successful response as {@link ResponseEntity} containing a {@link HashMap} with {@link String} keys and {@code V} values
+     * @return the successful response containing a {@link HashMap} of the supplied data and success status
+     * as {@link ResponseEntity}
      */
     @Assembler
     protected <V> ResponseEntity<HashMap<String, V>> successResponse(V value) {
         HashMap<String, V> response = new HashMap<>();
         response.put(RESPONSE_DATA_KEY, value);
         response.put(RESPONSE_STATUS_KEY, (V) SUCCESSFUL);
+
         return ResponseEntity.ok(response);
     }
 
@@ -262,10 +265,10 @@ abstract public class EquinoxControllerCore {
      *
      * @param message The JSON object to include as the response data
      *
-     * @return the successful response as {@link ResponseEntity} of {@link JSONObject}
+     * @return the successful response with a serialized JSON body as {@link ResponseEntity} of {@link String}
      */
     @Assembler
-    protected ResponseEntity<JSONObject> successResponse(JSONObject message) {
+    protected ResponseEntity<String> successResponse(JSONObject message) {
         return plainResponse(SUCCESSFUL, message);
     }
 
@@ -273,26 +276,26 @@ abstract public class EquinoxControllerCore {
      * Wrapper method used to assemble a {@link #failedResponse(String)} with the {@link #NOT_AUTHORIZED_OR_WRONG_DETAILS_MESSAGE}
      * message
      *
-     * @return the error response as {@link ResponseEntity} of {@link JSONObject}
+     * @return the error response with a serialized JSON body as {@link ResponseEntity} of {@link String}
      *
      * @since 1.1.3
      */
     @Wrapper
     @Assembler
-    protected ResponseEntity<JSONObject> notAuthorizedOrWrongDetailsResponse() {
+    protected ResponseEntity<String> notAuthorizedOrWrongDetailsResponse() {
         return failedResponse(NOT_AUTHORIZED_OR_WRONG_DETAILS_MESSAGE);
     }
 
     /**
      * Wrapper method used to assemble a {@link #failedResponse(String)} with the {@link #WRONG_PROCEDURE_MESSAGE} message
      *
-     * @return the error response as {@link ResponseEntity} of {@link JSONObject}
+     * @return the error response with a serialized JSON body as {@link ResponseEntity} of {@link String}
      *
      * @since 1.1.3
      */
     @Wrapper
     @Assembler
-    protected ResponseEntity<JSONObject> wrongProcedureResponse() {
+    protected ResponseEntity<String> wrongProcedureResponse() {
         return failedResponse(WRONG_PROCEDURE_MESSAGE);
     }
 
@@ -301,11 +304,11 @@ abstract public class EquinoxControllerCore {
      *
      * @param errorKey The key of the error
      *
-     * @return the failed response as {@link ResponseEntity} of {@link JSONObject}
+     * @return the failed response with a serialized JSON body as {@link ResponseEntity} of {@link String}
      */
     @Wrapper
     @Assembler
-    protected ResponseEntity<JSONObject> failedResponse(String errorKey) {
+    protected ResponseEntity<String> failedResponse(String errorKey) {
         return failedResponse(errorKey, null);
     }
 
@@ -315,16 +318,16 @@ abstract public class EquinoxControllerCore {
      * @param errorKey The key of the error
      * @param args     The arguments used to format the localized message, or {@code null} when none are needed
      *
-     * @return the failed response as {@link ResponseEntity} of {@link JSONObject}
+     * @return the failed response with a serialized JSON body as {@link ResponseEntity} of {@link String}
      */
     @Wrapper
     @Assembler
-    protected ResponseEntity<JSONObject> failedResponse(String errorKey, @Nullable Object[] args) {
+    protected ResponseEntity<String> failedResponse(String errorKey, @Nullable Object[] args) {
         return plainResponse(FAILED, getInternationalizedMessage(errorKey, args));
     }
 
     /**
-     * Method used to assemble a response containing the status and the supplied data
+     * Method used to assemble a response containing the status and the supplied data as serialized JSON
      *
      * <p>Successful responses use HTTP status {@code 200}. Other responses use the code provided by
      * {@link ResponseStatus#getCode()}
@@ -332,10 +335,10 @@ abstract public class EquinoxControllerCore {
      * @param status  The response status used in the body and to select the HTTP status
      * @param message The value to include as the response data, preserving JSON objects as nested objects
      *
-     * @return the response as {@link ResponseEntity} of {@link JSONObject}
+     * @return the response with a serialized JSON body as {@link ResponseEntity} of {@link String}
      */
     @Assembler
-    protected ResponseEntity<JSONObject> plainResponse(ResponseStatus status, Object message) {
+    protected ResponseEntity<String> plainResponse(ResponseStatus status, Object message) {
         JSONObject response = new JSONObject();
         response.put(RESPONSE_STATUS_KEY, status);
         response.put(RESPONSE_DATA_KEY, message);
@@ -344,25 +347,27 @@ abstract public class EquinoxControllerCore {
     }
 
     /**
-     * Method used to wrap the supplied response body with the HTTP status matching the response status
+     * Method used to serialize the supplied JSON body and wrap it with the HTTP status matching the response status
      *
      * <p>Successful responses use HTTP status {@code 200}. Other responses use the code provided by
      * {@link ResponseStatus#getCode()}
      *
      * @param status   The response status used to select the HTTP status
-     * @param response The JSON response body to return
+     * @param response The JSON response body to serialize as text
      *
-     * @return the response with the selected HTTP status as {@link ResponseEntity} of {@link JSONObject}
+     * @return the serialized JSON body with the selected HTTP status as {@link ResponseEntity} of {@link String}
      *
      * @since 2.0.0
      */
     @Returner
-    protected ResponseEntity<JSONObject> resolveResponseFormat(ResponseStatus status, JSONObject response) {
+    protected ResponseEntity<String> resolveResponseFormat(ResponseStatus status, JSONObject response) {
+        String responseValue = response.toString();
+
         if(status == SUCCESSFUL)
-            return ResponseEntity.ok(response);
+            return ResponseEntity.ok(responseValue);
         else {
             ResponseEntity.BodyBuilder responseEntity =  ResponseEntity.status(status.getCode());
-            return responseEntity.body(response);
+            return responseEntity.body(responseValue);
         }
     }
 
