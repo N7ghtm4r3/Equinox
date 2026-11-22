@@ -107,11 +107,14 @@ public String signUp(
 
 ## Response Utilities
 
-The following methods allows to build or to use preconfigured response messages
+The following methods build responses with a status and response data.
+The message and `JSONObject` overloads return `ResponseEntity<String>` with the complete JSON body already
+serialized as text. The generic `successResponse(V value)` overload returns a map body for Spring to serialize
 
 ### successResponse
 
-Gets the payload for a successful response
+Builds a response with HTTP status `200`. The no-argument overload uses the default success message;
+string arguments are message keys resolved using the current locale
 
 #### Usage
 
@@ -121,7 +124,7 @@ Gets the payload for a successful response
 
 @PostMapping(path = SIGN_UP_ENDPOINT)
 @RequestPath(path = "/api/v2/users/hello", method = POST)
-public String signUp(
+public ResponseEntity<String> signUp(
         @RequestBody Map<String, Object> payload
 ) {
     ...
@@ -135,11 +138,11 @@ public String signUp(
 
 @PostMapping(path = SIGN_UP_ENDPOINT)
 @RequestPath(path = "/api/v2/users/hello", method = POST)
-public String signUp(
+public ResponseEntity<String> signUp(
         @RequestBody Map<String, Object> payload
 ) {
     ...
-    return successResponse("My success message");
+    return successResponse("success_key");
 }
 ```
 
@@ -149,17 +152,18 @@ public String signUp(
 
 @PostMapping(path = SIGN_UP_ENDPOINT)
 @RequestPath(path = "/api/v2/users/hello", method = POST)
-public String signUp(
+public ResponseEntity<String> signUp(
         @RequestBody Map<String, Object> payload
 ) {
     ...
-    return successResponse("My success message", args1, args2, etc...)
+    return successResponse("success_key", args1, args2);
 }
 ```
 
 ### failedResponse
 
-Gets the payload for a failed response
+Builds a response with the HTTP status defined by `ResponseStatus.FAILED` (`500`).
+The error key is resolved using the current locale
 
 #### Usage
 
@@ -169,7 +173,7 @@ Gets the payload for a failed response
 
 @PostMapping(path = SIGN_UP_ENDPOINT)
 @RequestPath(path = "/api/v2/users/hello", method = POST)
-public String signUp(
+public ResponseEntity<String> signUp(
         @RequestBody Map<String, Object> payload
 ) {
     ...
@@ -183,11 +187,11 @@ public String signUp(
 
 @PostMapping(path = SIGN_UP_ENDPOINT)
 @RequestPath(path = "/api/v2/users/hello", method = POST)
-public String signUp(
+public ResponseEntity<String> signUp(
         @RequestBody Map<String, Object> payload
 ) {
     ...
-    return failedResponse("error_key", args1, args2, etc...)
+    return failedResponse("error_key", new Object[] { args1, args2 });
 }
 ```
 
@@ -201,7 +205,7 @@ Preconfigured [failed response](#failedresponse) with the `NOT_AUTHORIZED_OR_WRO
 
 @PostMapping(path = SIGN_UP_ENDPOINT)
 @RequestPath(path = "/api/v2/users/hello", method = POST)
-public String signUp(
+public ResponseEntity<String> signUp(
         @RequestBody Map<String, Object> payload
 ) {
     ...
@@ -219,7 +223,7 @@ Preconfigured [failed response](#failedresponse) with the `WRONG_PROCEDURE_MESSA
 
 @PostMapping(path = SIGN_UP_ENDPOINT)
 @RequestPath(path = "/api/v2/users/hello", method = POST)
-public String signUp(
+public ResponseEntity<String> signUp(
         @RequestBody Map<String, Object> payload
 ) {
     ...
