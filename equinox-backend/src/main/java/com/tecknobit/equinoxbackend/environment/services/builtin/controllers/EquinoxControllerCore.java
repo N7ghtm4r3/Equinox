@@ -30,6 +30,7 @@ import static com.tecknobit.equinoxcore.network.Requester.RESPONSE_DATA_KEY;
 import static com.tecknobit.equinoxcore.network.Requester.RESPONSE_STATUS_KEY;
 import static com.tecknobit.equinoxcore.network.ResponseStatus.FAILED;
 import static com.tecknobit.equinoxcore.network.ResponseStatus.SUCCESSFUL;
+import static org.springframework.http.MediaType.APPLICATION_JSON;
 
 /**
  * The {@code EquinoxControllerCore} class provides logic for features such as {@code i18n},
@@ -362,13 +363,16 @@ abstract public class EquinoxControllerCore {
     @Returner
     protected ResponseEntity<String> resolveResponseFormat(ResponseStatus status, JSONObject response) {
         String responseValue = response.toString();
+        ResponseEntity.BodyBuilder responseEntity;
 
         if(status == SUCCESSFUL)
-            return ResponseEntity.ok(responseValue);
-        else {
-            ResponseEntity.BodyBuilder responseEntity =  ResponseEntity.status(status.getCode());
-            return responseEntity.body(responseValue);
-        }
+            responseEntity = ResponseEntity.ok();
+        else
+            responseEntity = ResponseEntity.status(status.getCode());
+
+        return responseEntity
+                .contentType(APPLICATION_JSON)
+                .body(responseValue);
     }
 
     /**
