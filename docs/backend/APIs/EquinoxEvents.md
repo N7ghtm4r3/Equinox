@@ -10,8 +10,9 @@ a service that both handles and emits events with a single annotation.
 
 Use [EventConsumer](../Annotations/events/EventConsumer.md), available since
 `2.0.0`, to mark a type or method that consumes application events and optionally
-identify its application event class. This source-only marker does not register
-listeners or filter events
+identify its application event class with `event` and describe its event type with
+`type`, for example `type = "EVENT_ONE"`. The `type` parameter defaults to `""`.
+This source-only marker does not register listeners or filter events
 
 ## Implementation
 

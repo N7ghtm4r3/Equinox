@@ -12,12 +12,15 @@ import java.lang.annotation.Target;
  * that consume application events
  *
  * <p>The optional {@link #event()} element identifies the application event
- * class associated with the consumer. This annotation is retained only
- * in source code
+ * class associated with the consumer. The optional {@link #type()} element
+ * describes the consumed event type as a string
+ *
+ * <p>This annotation is retained only in source code and does not register
+ * listeners or filter events
  *
  * <pre>
  * {@code
- * @EventConsumer(event = TestApplicationEvent.class)
+ * @EventConsumer(event = TestApplicationEvent.class, type = "EVENT_ONE")
  * public void consume(TestApplicationEvent event) {
  *     // handle the event
  * }
@@ -40,5 +43,13 @@ public @interface EventConsumer {
      * {@link EquinoxApplicationEvent}
      */
     Class<? extends EquinoxApplicationEvent> event() default EquinoxApplicationEvent.class;
+
+    /**
+     * The consumed type of the specified {@link #event()}, such as {@code "EVENT_ONE"}.
+     * Defaults to an empty string when no specific event type is documented
+     *
+     * <p>This value is descriptive and is not checked against the event's enum
+     */
+    String type() default "";
 
 }
